@@ -1,0 +1,21 @@
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceScreen
+		android:id="@+id/info"
+		android:key="info"
+		android:title="@string/app_name">
+	</PreferenceScreen>
+	<PreferenceCategory android:title="@string/server_preferences">
+		<EditTextPreference android:id="@+id/server_url" android:key="server_url" android:defaultValue="@string/default_server_url" android:title="@string/server_url" android:dialogTitle="@string/change_server_url" />
+		<EditTextPreference android:id="@+id/username" android:key="username" android:title="@string/prompt_user" android:dialogTitle="@string/change_user" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/app_preferences">
+		<CheckBoxPreference android:id="@+id/barcode" android:key="barcode" android:defaultValue="true" android:title="@string/desc_barcode" />
+		<Preference android:title="@string/update_app_preferences" >
+		    <intent android:action="android.intent.action.VIEW"
+		            android:data="http://192.168.1.98/estudios-ics/resources/apk/estudios-ics-app.apk" />
+		</Preference>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/version_app_preferences"></PreferenceCategory>
+	<PreferenceCategory android:title="@string/versiondate_app_preferences"></PreferenceCategory>
+</PreferenceScreen>

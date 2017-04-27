@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Estudios ICS</string>
-    <string name="main_header">Zika en infantes y en el embarazo (Estudio ZIP)</string>
+    <string name="main_header">Estudios de Investigación</string>
     <string name="desc_logo">Instituto de Ciencias Sostenibles</string>
     
     <string name="success">Operación exitosa!</string>

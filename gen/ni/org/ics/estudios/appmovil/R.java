@@ -73,11 +73,11 @@ public final class R {
     }
     public static final class id {
         public static final int MENU_BACK=0x7f0b0024;
-        public static final int MENU_CARGA=0x7f0b0026;
-        public static final int MENU_DESCARGA=0x7f0b0025;
-        public static final int MENU_EXIT=0x7f0b0028;
+        public static final int MENU_CARGA=0x7f0b0028;
+        public static final int MENU_DESCARGA=0x7f0b0027;
+        public static final int MENU_EXIT=0x7f0b0026;
         public static final int MENU_HOME=0x7f0b0022;
-        public static final int MENU_PREFERENCES=0x7f0b0027;
+        public static final int MENU_PREFERENCES=0x7f0b0025;
         public static final int MENU_VIEW=0x7f0b0023;
         public static final int barcode=0x7f0b001f;
         public static final int checkServer=0x7f0b000f;
@@ -131,6 +131,7 @@ public final class R {
         public static final int control=0x7f0a0001;
         public static final int general=0x7f0a0002;
         public static final int main=0x7f0a0003;
+        public static final int r01=0x7f0a0004;
     }
     public static final class string {
         public static final int action_sign_in=0x7f08003f;

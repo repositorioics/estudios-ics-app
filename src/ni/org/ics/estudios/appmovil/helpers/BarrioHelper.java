@@ -18,7 +18,7 @@ public class BarrioHelper {
 	public static Barrio crearBarrio(Cursor cursorBarrio){
 		
 		Barrio mBarrio = new Barrio();
-		mBarrio.setCodigo(cursorBarrio.getInt(cursorBarrio.getColumnIndex(MainDBConstants.barrio)));
+		mBarrio.setCodigo(cursorBarrio.getInt(cursorBarrio.getColumnIndex(MainDBConstants.codigo)));
 		mBarrio.setNombre(cursorBarrio.getString(cursorBarrio.getColumnIndex(MainDBConstants.nombre)));
 		return mBarrio;
 	}

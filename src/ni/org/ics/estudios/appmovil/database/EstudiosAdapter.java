@@ -248,6 +248,7 @@ public class EstudiosAdapter {
 			cursorCasa.moveToFirst();
 			mCasa=CasaHelper.crearCasa(cursorCasa);
 			Cursor cursorBarrio = crearCursor(MainDBConstants.BARRIO_TABLE , MainDBConstants.codigo + "=" +cursorCasa.getInt(cursorCasa.getColumnIndex(MainDBConstants.barrio)), null, orden);
+			cursorBarrio.moveToFirst();
 			if (cursorBarrio != null && cursorBarrio.getCount() > 0) {
 				mCasa.setBarrio(BarrioHelper.crearBarrio(cursorBarrio));
 			}
@@ -267,9 +268,11 @@ public class EstudiosAdapter {
 				Casa mCasa = null;
 				mCasa = CasaHelper.crearCasa(cursorCasas);
 				Cursor cursorBarrio = crearCursor(MainDBConstants.BARRIO_TABLE , MainDBConstants.codigo + "=" +cursorCasas.getInt(cursorCasas.getColumnIndex(MainDBConstants.barrio)), null, orden);
+				cursorBarrio.moveToFirst();
 				if (cursorBarrio != null && cursorBarrio.getCount() > 0) {
 					mCasa.setBarrio(BarrioHelper.crearBarrio(cursorBarrio));
 				}
+				if (!cursorBarrio.isClosed()) cursorBarrio.close();
 				mCasas.add(mCasa);
 			} while (cursorCasas.moveToNext());
 		}

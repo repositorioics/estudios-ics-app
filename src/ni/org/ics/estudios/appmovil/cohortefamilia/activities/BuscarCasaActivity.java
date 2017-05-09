@@ -8,6 +8,7 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.adapters.CasaAdapter;
+import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -46,6 +47,7 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 	private ImageButton mFindButton;
 	
 	public static final int BARCODE_CAPTURE = 2;
+	private int opcion;
 
 	private EstudiosAdapter estudiosAdapter;
 	private List<Casa> mCasas = new ArrayList<Casa>();
@@ -80,6 +82,7 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 		mMetodoView.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				opcion = position;
 				if (position==0){
 					mParametroView.setVisibility(View.GONE);
 					mFindButton.setVisibility(View.GONE);
@@ -142,7 +145,7 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 					mParametroView.setError(getString(R.string.search_hint));
 					return;
 				}
-				buscarCasa(mParametroView.getText().toString());
+				buscarCasa(mParametroView.getText().toString(),opcion);
 			}
 		});
 
@@ -221,7 +224,8 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 			String sb = intent.getStringExtra("SCAN_RESULT");
 			if (sb != null && sb.length() > 0) {
 				try{
-					buscarCasa(sb);
+					Integer.parseInt(sb);
+					buscarCasa(sb,0);
 				}
 				catch(Exception e){
 					showToast(e.getLocalizedMessage());
@@ -233,8 +237,22 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 
 	}
 	
-	public void buscarCasa(String parametro){
-		String filtro = MainDBConstants.codigo + "='" + parametro + "'";
+	public void buscarCasa(String parametro, int opcion){
+		String filtro = "";
+		switch (opcion) {
+		case 0:
+			filtro = MainDBConstants.codigo + "=" + parametro;
+			break;
+		case 1:
+			filtro = MainDBConstants.codigo + "=" + parametro;
+			break;	
+		case 2:
+			filtro = MainDBConstants.nombre1JefeFamilia + " like '%" + parametro + "%' or " + MainDBConstants.nombre2JefeFamilia + " like '%" + parametro + "%'";
+			break;
+		case 3:
+			filtro = MainDBConstants.apellido1JefeFamilia + " like '%" + parametro + "%' or " + MainDBConstants.apellido1JefeFamilia + " like '%" + parametro + "%'";
+			break;			
+		}
 		new FetchDataTask().execute(filtro);
 	}
 	
@@ -243,7 +261,7 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 	// Private classes
 	// ***************************************
 	private class FetchDataTask extends AsyncTask<String, Void, String> {
-		//private String filtro = null;
+		private String filtro = null;
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -252,10 +270,19 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 
 		@Override
 		protected String doInBackground(String... values) {
-			//filtro = values[0];
+			filtro = values[0];
 			try {
 				estudiosAdapter.open();
-				//mCasas = estudiosAdapter.get
+				Barrio barrio = new Barrio(2,"Cuba");
+				estudiosAdapter.crearBarrio(barrio);
+				Casa casa = new Casa();
+				casa.setCodigo(2);
+				casa.setNombre1JefeFamilia("Pedro");
+				casa.setApellido1JefeFamilia("Perez");
+				casa.setDireccion("fff");
+				casa.setBarrio(barrio);
+				estudiosAdapter.crearCasa(casa);
+				mCasas = estudiosAdapter.getCasas(filtro, MainDBConstants.codigo);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

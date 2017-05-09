@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="barrio">Barrio</string>
-    <string name="new_screen">Nuevo Tamizaje Casa</string>
+    <string name="new_screen">Nuevo Tamizaje</string>
     <string name="casa_search">Buscar Casa</string>
     <string name="casa_id">Código Casa</string>
     <string name="casa_jefe_familia_nombre">Nombre jefe de familia</string>

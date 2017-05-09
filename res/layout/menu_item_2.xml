@@ -6,6 +6,6 @@
     android:paddingLeft="@dimen/padding_small"
     android:paddingRight="@dimen/padding_small"
     android:paddingTop="@dimen/padding_small"
-    style="?android:textAppearanceSmall"
+    style="?android:textAppearanceLarge"
     android:gravity="center"
     android:textStyle="italic"/>

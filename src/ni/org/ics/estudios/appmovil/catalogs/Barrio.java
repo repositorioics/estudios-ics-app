@@ -17,8 +17,18 @@ public class Barrio extends BaseMetaData {
 	private static final long serialVersionUID = 1L;
 	private Integer codigo;
 	private String nombre;
+	
+	public Barrio() {
+		
+	}
 
-    public Integer getCodigo() {
+    public Barrio(Integer codigo, String nombre) {
+		super();
+		this.codigo = codigo;
+		this.nombre = nombre;
+	}
+
+	public Integer getCodigo() {
         return codigo;
     }
 

@@ -39,7 +39,7 @@
     <string name="err_duplicated">Error! Codigo ya existe en la base de datos!</string>
     <string name="err_cancel">Ha cancelado el proceso!</string>
     <string name="notelegible">Participante no es elegible para participar en el estudio!</string>
-    <string name="study_id">Código del estudio</string>
+    <string name="code">Código</string>
     <string name="pending">Pendiente</string>
     <string name="done">Realizado</string>
     <string name="notdone">No Realizado</string>

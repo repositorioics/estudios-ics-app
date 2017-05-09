@@ -2,7 +2,9 @@ package ni.org.ics.estudios.appmovil;
 
 
 import ni.org.ics.estudios.appmovil.adapters.MainActivityAdapter;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCohorteFamiliaActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -67,7 +69,14 @@ public class MainActivity extends ListActivity {
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
 		// Opcion de menu seleccionada
+		Intent i;
 		switch(position){
+		case 0: 
+			i = new Intent(getApplicationContext(),
+					MenuCohorteFamiliaActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i);
+			break;
 		default: 
 			String s = (String) getListAdapter().getItem(position);
 			Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();

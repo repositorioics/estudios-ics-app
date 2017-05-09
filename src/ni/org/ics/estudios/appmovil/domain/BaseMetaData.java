@@ -13,17 +13,8 @@ public class BaseMetaData implements Serializable
 	private Date recordDate;
 	private String recordUser;
 	private char pasive = '0';
-	//Manejo ODK
-	private Integer idInstancia;
-	private String instancePath;
-	private String estado;
-	//Metadata del formulario movil
-	private String start;
-	private String end;
+	private char estado='0';
 	private String deviceid;
-	private String simserial;
-	private String phonenumber;
-	private Date today;	
 	
 	public BaseMetaData() {
 
@@ -38,22 +29,15 @@ public class BaseMetaData implements Serializable
 	
 	
 	public BaseMetaData(Date recordDate, String recordUser, char pasive,
-			Integer idInstancia, String instancePath, String estado,
+			Integer idInstancia, String instancePath, char estado,
 			String start, String end, String deviceid, String simserial,
 			String phonenumber, Date today) {
 		super();
 		this.recordDate = recordDate;
 		this.recordUser = recordUser;
 		this.pasive = pasive;
-		this.idInstancia = idInstancia;
-		this.instancePath = instancePath;
 		this.estado = estado;
-		this.start = start;
-		this.end = end;
 		this.deviceid = deviceid;
-		this.simserial = simserial;
-		this.phonenumber = phonenumber;
-		this.today = today;
 	}
 
 	public Date getRecordDate() {
@@ -80,44 +64,12 @@ public class BaseMetaData implements Serializable
 		this.pasive = pasive;
 	}
 
-	public Integer getIdInstancia() {
-		return idInstancia;
-	}
-
-	public void setIdInstancia(Integer idInstancia) {
-		this.idInstancia = idInstancia;
-	}
-
-	public String getInstancePath() {
-		return instancePath;
-	}
-
-	public void setInstancePath(String instancePath) {
-		this.instancePath = instancePath;
-	}
-
-	public String getEstado() {
+	public char getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(char estado) {
 		this.estado = estado;
-	}
-
-	public String getStart() {
-		return start;
-	}
-
-	public void setStart(String start) {
-		this.start = start;
-	}
-
-	public String getEnd() {
-		return end;
-	}
-
-	public void setEnd(String end) {
-		this.end = end;
 	}
 
 	public String getDeviceid() {
@@ -126,30 +78,6 @@ public class BaseMetaData implements Serializable
 
 	public void setDeviceid(String deviceid) {
 		this.deviceid = deviceid;
-	}
-
-	public String getSimserial() {
-		return simserial;
-	}
-
-	public void setSimserial(String simserial) {
-		this.simserial = simserial;
-	}
-
-	public String getPhonenumber() {
-		return phonenumber;
-	}
-
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
-	}
-
-	public Date getToday() {
-		return today;
-	}
-
-	public void setToday(Date today) {
-		this.today = today;
 	}
 
 }  

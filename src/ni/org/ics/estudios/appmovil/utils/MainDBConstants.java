@@ -28,6 +28,14 @@ public class MainDBConstants {
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
 	public static final int DATABASE_VERSION = 1;
 	
+	//Campos metadata
+	public static final String recordDate = "recordDate";
+	public static final String recordUser = "recordUser";
+	public static final String pasive = "pasive";
+	public static final String deviceId = "identificador_equipo";
+	public static final String estado = "estado";
+	
+	
 	//Tabla usuarios
 	public static final String USER_TABLE = "users";
 	//Campos usuarios
@@ -75,20 +83,52 @@ public class MainDBConstants {
 			+ role + " text not null, "
 			+ "primary key (" + username + "," + role + "));";
 	
-	//Campos metadata
-	public static final String recordDate = "recordDate";
-	public static final String recordUser = "recordUser";
-	public static final String pasive = "pasive";
-	//Campos comunes para manejo ODK
-	public static final String ID_INSTANCIA = "id_instancia";
-	public static final String FILE_PATH = "path_instancia";
-	public static final String STATUS = "estado";
-	//Campos comunes para metadata movil
-	public static final String START = "creado";
-	public static final String END = "finalizado";
-	public static final String DEVICE_ID = "identificador_equipo";
-	public static final String SIM_SERIAL = "serie_sim";
-	public static final String PHONE_NUMBER = "numero_telefono";
-	public static final String TODAY = "fecha_registro";
+	//Tabla barrios
+	public static final String BARRIO_TABLE = "barrios";
+	//Campos barrios
+	public static final String codigo = "codigo";
+	public static final String nombre = "nombre";
+	//Crear tabla barrios
+	public static final String CREATE_BARRIO_TABLE = "create table if not exists "
+			+ BARRIO_TABLE + " ("
+			+ codigo + " integer not null, "  
+			+ nombre + " text not null, "
+			+ recordDate + " date, " 
+			+ recordUser + " text, "
+			+ pasive + " text, "
+			+ deviceId + " text, "
+			+ "primary key (" + codigo + "));";
+	
+	//Tabla casas
+	public static final String CASA_TABLE = "casas";
+	//Campos casas
+	public static final String barrio = "barrio";
+	public static final String direccion = "direccion";
+	public static final String manzana = "manzana";
+	public static final String latitud = "latitud";
+	public static final String longitud = "longitud";
+	public static final String nombre1JefeFamilia = "nombre1JefeFamilia";
+	public static final String nombre2JefeFamilia = "nombre2JefeFamilia";
+	public static final String apellido1JefeFamilia = "apellido1JefeFamilia";
+	public static final String apellido2JefeFamilia = "apellido2JefeFamilia";
+	
+	//Crear tabla barrios
+	public static final String CREATE_CASA_TABLE = "create table if not exists "
+			+ CASA_TABLE + " ("
+			+ codigo + " integer not null, "
+			+ barrio + " integer not null, "
+			+ direccion + " text not null, "
+			+ manzana + " text, "
+			+ latitud + " real, "
+			+ longitud + " real, "
+			+ nombre1JefeFamilia + " text not null, "
+			+ nombre2JefeFamilia + " text not null, "
+			+ apellido1JefeFamilia + " text not null, "
+			+ apellido2JefeFamilia + " text not null, "
+			+ recordDate + " date, " 
+			+ recordUser + " text, "
+			+ pasive + " text, "
+			+ deviceId + " text, "
+			+ "primary key (" + codigo + "));";
 
 }

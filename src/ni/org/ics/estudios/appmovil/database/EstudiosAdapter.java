@@ -51,6 +51,8 @@ public class EstudiosAdapter {
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(MainDBConstants.CREATE_USER_TABLE);
 			db.execSQL(MainDBConstants.CREATE_ROLE_TABLE);
+			db.execSQL(MainDBConstants.CREATE_BARRIO_TABLE);
+			db.execSQL(MainDBConstants.CREATE_CASA_TABLE);
 		}
 
 		@Override

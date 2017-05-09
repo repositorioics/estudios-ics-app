@@ -11,6 +11,7 @@ public class BarrioHelper {
 	public static ContentValues crearBarrioContentValues(Barrio barrio){
 		ContentValues cv = new ContentValues();
 		cv.put(MainDBConstants.codigo, barrio.getCodigo());
+		cv.put(MainDBConstants.nombre, barrio.getNombre());
 		return cv; 
 	}	
 	
@@ -18,6 +19,7 @@ public class BarrioHelper {
 		
 		Barrio mBarrio = new Barrio();
 		mBarrio.setCodigo(cursorBarrio.getInt(cursorBarrio.getColumnIndex(MainDBConstants.barrio)));
+		mBarrio.setNombre(cursorBarrio.getString(cursorBarrio.getColumnIndex(MainDBConstants.nombre)));
 		return mBarrio;
 	}
 	

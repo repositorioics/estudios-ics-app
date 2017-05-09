@@ -9,6 +9,8 @@ package ni.org.ics.estudios.appmovil.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import ni.org.ics.estudios.appmovil.catalogs.Barrio;
+import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.helpers.*;
@@ -162,6 +164,117 @@ public class EstudiosAdapter {
 		boolean result = c != null && c.getCount()>0; 
 		c.close();
 		return result;
+	}
+	
+	
+	/**
+	 * Metodos para barrios en la base de datos
+	 * 
+	 * @param barrio
+	 *            Objeto Barrio que contiene la informacion
+	 *
+	 */
+	//Crear nuevo barrio en la base de datos
+	public void crearBarrio(Barrio barrio) {
+		ContentValues cv = BarrioHelper.crearBarrioContentValues(barrio);
+		mDb.insert(MainDBConstants.BARRIO_TABLE, null, cv);
+	}
+	//Editar barrio existente en la base de datos
+	public boolean editarBarrio(Barrio barrio) {
+		ContentValues cv = BarrioHelper.crearBarrioContentValues(barrio);
+		return mDb.update(MainDBConstants.BARRIO_TABLE , cv, MainDBConstants.codigo + "=" 
+				+ barrio.getCodigo(), null) > 0;
+	}
+	//Limpiar la tabla de barrios de la base de datos
+	public boolean borrarBarrios() {
+		return mDb.delete(MainDBConstants.BARRIO_TABLE, null, null) > 0;
+	}
+	//Obtener un barrio de la base de datos
+	public Barrio getBarrio(String filtro, String orden) throws SQLException {
+		Barrio mBarrio = null;
+		Cursor cursorBarrio = crearCursor(MainDBConstants.BARRIO_TABLE , filtro, null, orden);
+		if (cursorBarrio != null && cursorBarrio.getCount() > 0) {
+			cursorBarrio.moveToFirst();
+			mBarrio=BarrioHelper.crearBarrio(cursorBarrio);
+		}
+		if (!cursorBarrio.isClosed()) cursorBarrio.close();
+		return mBarrio;
+	}
+	//Obtener una lista de barrios de la base de datos
+	public List<Barrio> getBarrios(String filtro, String orden) throws SQLException {
+		List<Barrio> mBarrios = new ArrayList<Barrio>();
+		Cursor cursorBarrios = crearCursor(MainDBConstants.BARRIO_TABLE, filtro, null, orden);
+		if (cursorBarrios != null && cursorBarrios.getCount() > 0) {
+			cursorBarrios.moveToFirst();
+			mBarrios.clear();
+			do{
+				Barrio mBarrio = null;
+				mBarrio = BarrioHelper.crearBarrio(cursorBarrios);
+				mBarrios.add(mBarrio);
+			} while (cursorBarrios.moveToNext());
+		}
+		if (!cursorBarrios.isClosed()) cursorBarrios.close();
+		return mBarrios;
+	}
+	
+	
+	/**
+	 * Metodos para casas en la base de datos
+	 * 
+	 * @param casa
+	 *            Objeto Casa que contiene la informacion
+	 *
+	 */
+	//Crear nuevo Casa en la base de datos
+	public void crearCasa(Casa casa) {
+		ContentValues cv = CasaHelper.crearCasaContentValues(casa);
+		mDb.insert(MainDBConstants.CASA_TABLE, null, cv);
+	}
+	//Editar Casa existente en la base de datos
+	public boolean editarCasa(Casa casa) {
+		ContentValues cv = CasaHelper.crearCasaContentValues(casa);
+		return mDb.update(MainDBConstants.CASA_TABLE , cv, MainDBConstants.codigo + "=" 
+				+ casa.getCodigo(), null) > 0;
+	}
+	//Limpiar la tabla de casas de la base de datos
+	public boolean borrarCasas() {
+		return mDb.delete(MainDBConstants.CASA_TABLE, null, null) > 0;
+	}
+	//Obtener un casa de la base de datos
+	public Casa getCasa(String filtro, String orden) throws SQLException {
+		Casa mCasa = null;
+		Cursor cursorCasa = crearCursor(MainDBConstants.CASA_TABLE , filtro, null, orden);
+		if (cursorCasa != null && cursorCasa.getCount() > 0) {
+			cursorCasa.moveToFirst();
+			mCasa=CasaHelper.crearCasa(cursorCasa);
+			Cursor cursorBarrio = crearCursor(MainDBConstants.BARRIO_TABLE , MainDBConstants.codigo + "=" +cursorCasa.getInt(cursorCasa.getColumnIndex(MainDBConstants.barrio)), null, orden);
+			if (cursorBarrio != null && cursorBarrio.getCount() > 0) {
+				mCasa.setBarrio(BarrioHelper.crearBarrio(cursorBarrio));
+			}
+			if (!cursorBarrio.isClosed()) cursorBarrio.close();
+		}
+		if (!cursorCasa.isClosed()) cursorCasa.close();
+		return mCasa;
+	}
+	//Obtener una lista de casas de la base de datos
+	public List<Casa> getCasas(String filtro, String orden) throws SQLException {
+		List<Casa> mCasas = new ArrayList<Casa>();
+		Cursor cursorCasas = crearCursor(MainDBConstants.CASA_TABLE, filtro, null, orden);
+		if (cursorCasas != null && cursorCasas.getCount() > 0) {
+			cursorCasas.moveToFirst();
+			mCasas.clear();
+			do{
+				Casa mCasa = null;
+				mCasa = CasaHelper.crearCasa(cursorCasas);
+				Cursor cursorBarrio = crearCursor(MainDBConstants.BARRIO_TABLE , MainDBConstants.codigo + "=" +cursorCasas.getInt(cursorCasas.getColumnIndex(MainDBConstants.barrio)), null, orden);
+				if (cursorBarrio != null && cursorBarrio.getCount() > 0) {
+					mCasa.setBarrio(BarrioHelper.crearBarrio(cursorBarrio));
+				}
+				mCasas.add(mCasa);
+			} while (cursorCasas.moveToNext());
+		}
+		if (!cursorCasas.isClosed()) cursorCasas.close();
+		return mCasas;
 	}
 
 }

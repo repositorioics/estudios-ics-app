@@ -116,4 +116,235 @@ public class MainDBConstants {
 			+ deviceId + " text, "
 			+ "primary key (" + codigo + "));";
 
+    //Tabla Carta consentimiento
+    public static final String CARTA_CONSENTIMIENTO_TABLE = "cartas_consentimientos";
+    //Campos cartas_consentimientos
+    public static final String fechaFirma = "fechaFirma";
+    public static final String tamizaje = "tamizaje";
+    public static final String estudio = "estudio";
+    public static final String participadoCohortePediatrica = "participadoCohortePediatrica";
+    public static final String cohortePediatrica = "cohortePediatrica"; //Dengue, Influenza, Ambas (dengue/influenza)
+    public static final String codigoReactivado = "codigoReactivado";
+    public static final String emancipado = "emancipado";
+    public static final String asentimientoVerbal = "asentimientoVerbal"; //Para Niños de 6 a 17 años
+    public static final String nombre1Tutor = "nombre1Tutor";
+    public static final String nombre2Tutor = "nombre2Tutor";
+    public static final String apellido1Tutor = "apellido1Tutor";
+    public static final String apellido2Tutor = "apellido2Tutor";
+    public static final String relacionFamiliarTutor = "relacionFamiliarTutor";
+    public static final String participanteOTutorAlfabeto = "participanteOTutorAlfabeto";
+    public static final String testigoPresente = "testigoPresente";
+    public static final String nombre1Testigo = "nombre1Testigo";
+    public static final String nombre2Testigo = "nombre2Testigo";
+    public static final String apellido1Testigo = "apellido1Testigo";
+    public static final String apellido2Testigo = "apellido2Testigo";
+    public static final String aceptaParteA = "aceptaParteA";
+    public static final String motivoRechazoParteA = "motivoRechazoParteA";
+    public static final String aceptaContactoFuturo = "aceptaContactoFuturo";
+    public static final String aceptaParteB = "aceptaParteB"; //Consentimiento para almacenamiento y uso de muestras en estudios futuros
+    public static final String aceptaParteC = "aceptaParteC"; //Consentimiento adicional para estudios genéticos
+
+    //crear tabla cartas_consentimientos
+    public static final String CREATE_CARTACONSENTIMIENTO_TABLE = "create table if not exists "
+            + CARTA_CONSENTIMIENTO_TABLE + " ("
+            + codigo + " integer not null, "
+            + fechaFirma + " date not null, "
+            + tamizaje + " text not null, "
+            + estudio + " integer not null, "
+            + participadoCohortePediatrica + " text, "
+            + cohortePediatrica + " text, "
+            + codigoReactivado + " text, "
+            + emancipado + " text, "
+            + asentimientoVerbal + " text, "
+            + nombre1Tutor + " text, "
+            + nombre2Tutor + " text, "
+            + apellido1Tutor + " text, "
+            + apellido2Tutor + " text, "
+            + relacionFamiliarTutor + " text, "
+            + participanteOTutorAlfabeto + " text, "
+            + testigoPresente + " text, "
+            + nombre1Testigo + " text, "
+            + nombre2Testigo + " text, "
+            + apellido1Testigo + " text, "
+            + apellido2Testigo + " text, "
+            + aceptaParteA + " text, "
+            + motivoRechazoParteA + " text, "
+            + aceptaContactoFuturo + " text, "
+            + aceptaParteB + " text, "
+            + aceptaParteC + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + "primary key (" + codigo + "));";
+
+    //Tabla Participantes
+    public static final String PARTICIPANTE_TABLE = "participantes";
+
+    // Campos Participantes
+    public static final String nombre1 = "nombre1";
+    public static final String nombre2 = "nombre2";
+    public static final String apellido1 = "apellido1";
+    public static final String apellido2 = "apellido2";
+    public static final String sexo = "sexo";
+    public static final String fechaNac = "fechaNac";
+    public static final String nombre1Padre = "nombre1Padre";
+    public static final String nombre2Padre = "nombre2Padre";
+    public static final String apellido1Padre = "apellido1Padre";
+    public static final String apellido2Padre = "apellido2Padre";
+    public static final String nombre1Madre = "nombre1Madre";
+    public static final String nombre2Madre = "nombre2Madre";
+    public static final String apellido1Madre = "apellido1Madre";
+    public static final String apellido2Madre = "apellido2Madre";
+    public static final String casa = "casa";
+
+    //Crear tabla participantes
+    public static final String CREATE_PARTICIPANTE_TALBE = "create table if not exists "
+            + PARTICIPANTE_TABLE + " ("
+            + codigo + " integer not null, "
+            + nombre1 + " text not null, "
+            + nombre2 + " text, "
+            + apellido1 + " text not null, "
+            + apellido2 + " text, "
+            + sexo + " text, "
+            + fechaNac + " text, "
+            + nombre1Padre + " text not null, "
+            + nombre2Padre + " text, "
+            + apellido1Padre + " text not null, "
+            + apellido2Padre + " text, "
+            + nombre1Madre + " text not null, "
+            + nombre2Madre + " text, "
+            + apellido1Madre + " text not null, "
+            + apellido2Madre + " text, "
+            + casa + " integer not null, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + "primary key (" + codigo + "));";
+
+
+    //Tabla Pretamizaje
+    public static final String PRETAMIZAJE_TABLE = "pre_tamizajes";
+
+    //Campos tabla Pretamizajes
+    public static final String aceptaTamizaje = "aceptaTamizaje";
+    public static final String razonNoParticipa = "razonNoParticipa";
+
+    //crear tabla Pretamizajes
+    public static final String CREATE_PRETAMIZAJE_TABLE = "create table if not exists "
+            + PRETAMIZAJE_TABLE + " ("
+            + codigo + " text not null, "
+            + aceptaTamizaje + " text not null, "
+            + razonNoParticipa + " text, "
+            + casa + " integer not null, "
+            + estudio + " integer not null, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + "primary key (" + codigo + "));";
+
+    // Tabla Tamizaje
+    public static final String TAMIZAJE_TABLE = "";
+
+    //Campos tabla tamizaje
+    public static final String participante= "";
+    public static final String areaCovertura= "";
+    public static final String ninoMenor12Anios= "";
+    public static final String intencionPermanecerArea= "";
+    public static final String tieneTarjetaVacunaOIdentificacion= "";
+    public static final String enfermedadAgudaCronica= "";
+    public static final String elegible= "";
+    public static final String aceptaSeroprevalenciaZik= "";
+    public static final String dondeAsisteProblemasSalud= "";
+    public static final String asisteCSSF= "";
+    public static final String otroCentroSalud= "";
+    public static final String puestoSalud= "";
+    public static final String siEnfermaSoloAsistirCSSF= "";
+    public static final String tomaPuntoGPSCasa= "";
+    public static final String razonNoGeoreferenciacion= "";
+    public static final String otraRazonNoGeoreferenciacion= "";
+
+    //crear tabla tamizaje
+    public static final String CREATE_TAMIZAJE_TABLE = "create table if not exists "
+            + TAMIZAJE_TABLE + " ("
+            + codigo + " text not null, "
+            + participante + " integer not null, "
+            + aceptaTamizaje + " text not null, "
+            + razonNoParticipa + " text, "
+            + areaCovertura + " text, "
+            + ninoMenor12Anios + " text, "
+            + intencionPermanecerArea + " text, "
+            + tieneTarjetaVacunaOIdentificacion + " text, "
+            + enfermedadAgudaCronica + " text, "
+            + elegible + " text, "
+            + aceptaSeroprevalenciaZik + " text, "
+            + dondeAsisteProblemasSalud + " text, "
+            + asisteCSSF + " text, "
+            + otroCentroSalud + " text, "
+            + puestoSalud + " text, "
+            + siEnfermaSoloAsistirCSSF + " text, "
+            + tomaPuntoGPSCasa + " text, "
+            + razonNoGeoreferenciacion + " text, "
+            + otraRazonNoGeoreferenciacion + " text, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + "primary key (" + codigo + "));";
+
+    //Tabla TelefonoContacto
+    public static final String TELEFONO_CONTACTO_TABLE = "telefonos_contacto";
+
+    //Campos tabla telefonocontacto
+    public static final String id = "id";
+    public static final String numero = "numero";
+    public static final String operadora = "operadora";
+
+    //crear tabla telefonocontacto
+    public static final String CREATE_TELEFONO_CONTACTO_TABLE = "create table if not exists "
+            + TELEFONO_CONTACTO_TABLE + " ("
+            + id + " integer not null, "
+            + numero + " text not null, "
+            + operadora + " integer not null, "
+            + casa + " integer not null, "
+            + participante + " integer not null, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + "primary key (" + id + "));";
+
+    //Tabla Area Ambiente
+    public static final String AREA_AMBIENTE_TABLE = "";
+
+    //Campos tabla area ambiente
+    public static final String largo = "largo";
+    public static final String ancho = "ancho";
+    public static final String totalM2 = "totalM2";
+    public static final String numVentanas = "numVentanas";
+    public static final String tipo = "tipo";
+    public static final String habitacion = "habitacion";
+    public static final String conVentana = "conVentana";
+    public static final String cantidadCamas = "cantidadCamas";
+    public static final String areaAmbiente = "areaAmbiente";
+    public static final String alto = "alto";
+    public static final String abierta = "abierta";
+
+    //crear tabla telefonocontacto
+    public static final String CREATE_AREA_AMBIENTE_TABLE = "create table if not exists "
+            + AREA_AMBIENTE_TABLE + " ("
+            + codigo + " text not null, "
+            + largo + " Double, "
+            + ancho + " double, "
+            + totalM2 + " double, "
+            + numVentanas + " integer not null, "
+            + tipo + " text, "
+            + habitacion + " text, "
+            + recordUser + " text, "
+            + recordUser + " text, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + "primary key (" + codigo + "));";
+
+
 }

@@ -19,6 +19,7 @@ public class AreaAmbiente extends BaseMetaData {
     private Double totalM2;
     private Integer numVentanas;
     private Casa casa;
+    private String tipo;
 
     public String getCodigo() {
         return codigo;
@@ -66,5 +67,13 @@ public class AreaAmbiente extends BaseMetaData {
 
     public void setCasa(Casa casa) {
         this.casa = casa;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

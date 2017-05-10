@@ -1,14 +1,11 @@
 package ni.org.ics.estudios.appmovil.domain;
 
-
-
-
 /**
  * Objeto que representa un número telefónico asociado a una casa o participante
  * Created by Miguel Salinas on 4/28/2017.
  * V1.0
  */
-public class Telefono extends BaseMetaData {
+public class TelefonoContacto extends BaseMetaData {
 
     /**
 	 * 
@@ -68,11 +65,11 @@ public class Telefono extends BaseMetaData {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Telefono)) return false;
+        if (!(o instanceof TelefonoContacto)) return false;
 
-        Telefono telefono = (Telefono) o;
+        TelefonoContacto telefonoContacto = (TelefonoContacto) o;
 
-        return  (!id.equals(telefono.id));
+        return  (!id.equals(telefonoContacto.id));
     }
 
     @Override

@@ -19,19 +19,21 @@ public class TelefonoContactoHelper {
         cv.put(MainDBConstants.operadora, telefonoContacto.getOperadora());
         if (telefonoContacto.getCasa() != null) cv.put(MainDBConstants.casa, telefonoContacto.getCasa().getCodigo());
         if (telefonoContacto.getParticipante() != null) cv.put(MainDBConstants.participante, telefonoContacto.getParticipante().getCodigo());
+        cv.put(MainDBConstants.estado, String.valueOf(telefonoContacto.getEstado()));
 
         return cv;
     }
 
     public static TelefonoContacto crearTelefonoContacto(Cursor cursor){
-        TelefonoContacto telefonoContacto = new TelefonoContacto();
+        TelefonoContacto mTelefonoContacto = new TelefonoContacto();
 
-        telefonoContacto.setId(cursor.getInt(cursor.getColumnIndex(MainDBConstants.id)));
-        telefonoContacto.setNumero(cursor.getString(cursor.getColumnIndex(MainDBConstants.numero)));
-        telefonoContacto.setOperadora(null);
-        telefonoContacto.setCasa(null);
-        telefonoContacto.setParticipante(null);
+        mTelefonoContacto.setId(cursor.getInt(cursor.getColumnIndex(MainDBConstants.id)));
+        mTelefonoContacto.setNumero(cursor.getString(cursor.getColumnIndex(MainDBConstants.numero)));
+        mTelefonoContacto.setOperadora(null);
+        mTelefonoContacto.setCasa(null);
+        mTelefonoContacto.setParticipante(null);
+        mTelefonoContacto.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
 
-        return telefonoContacto;
+        return mTelefonoContacto;
     }
 }

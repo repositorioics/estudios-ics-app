@@ -114,6 +114,7 @@ public class MainDBConstants {
 			+ recordUser + " text, "
 			+ pasive + " text, "
 			+ deviceId + " text, "
+            + estado + " text not null, "
 			+ "primary key (" + codigo + "));";
 
     //Tabla Carta consentimiento
@@ -176,6 +177,7 @@ public class MainDBConstants {
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "
+            + estado + " text not null, "
             + "primary key (" + codigo + "));";
 
     //Tabla Participantes
@@ -221,6 +223,7 @@ public class MainDBConstants {
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "
+            + estado + " text not null, "
             + "primary key (" + codigo + "));";
 
 
@@ -242,6 +245,7 @@ public class MainDBConstants {
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "
+            + estado + " text not null, "
             + "primary key (" + codigo + "));";
 
     // Tabla Tamizaje
@@ -290,6 +294,7 @@ public class MainDBConstants {
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "
+            + estado + " text not null, "
             + "primary key (" + codigo + "));";
 
     //Tabla TelefonoContacto
@@ -311,6 +316,7 @@ public class MainDBConstants {
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "
+            + estado + " text not null, "
             + "primary key (" + id + "));";
 
     //Tabla Area Ambiente
@@ -347,7 +353,43 @@ public class MainDBConstants {
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "
+            + estado + " text not null, "
             + "primary key (" + codigo + "));";
 
+    //tabla Camas
+    public static final String CAMA_TABLE = "camas";
 
+    //campos tabla Camas
+    public static final String codigoCama = "codigoCama";
+
+    // crear tabla Camas
+    public static final String CREATE_CAMA_TABLE = "create table if not exists "
+            + CAMA_TABLE + " ("
+            + codigoCama + " text not null, "
+            + habitacion + " text, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigoCama + "));";
+
+    //tabla PersonaCama
+    public static final String PERSONACAMA_TABLE = "persona_cama";
+
+    //Campos tabla persona cama
+    public static final String codigoPersona = "codigoPersona";
+    public static final String estaEnEstudio = "estaEnEstudio"; //0 No, 1 Si
+    public static final String edad = "edad";   //si no participa
+    public static final String cama = "cama";
+
+    //crear tabla peronsa cama
+    public static final String CREATE_PERSONACAMA_TABLE = "create table if not exists "
+            + PERSONACAMA_TABLE + " ("
+            + codigoCama + " text not null, "
+            + habitacion + " text, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigoCama + "));";
 }

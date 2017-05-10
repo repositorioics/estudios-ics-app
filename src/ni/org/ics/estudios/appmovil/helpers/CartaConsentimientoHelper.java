@@ -41,6 +41,7 @@ public class CartaConsentimientoHelper {
         cv.put(MainDBConstants.aceptaContactoFuturo, String.valueOf(carta.getAceptaContactoFuturo()));
         cv.put(MainDBConstants.aceptaParteB, String.valueOf(carta.getAceptaParteB()));
         cv.put(MainDBConstants.aceptaParteC, String.valueOf(carta.getAceptaParteC()));
+        cv.put(MainDBConstants.estado, String.valueOf(carta.getEstado()));
 
         return cv;
     }
@@ -73,6 +74,7 @@ public class CartaConsentimientoHelper {
         mCarta.setAceptaContactoFuturo(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaContactoFuturo)).charAt(0));
         mCarta.setAceptaParteB(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParteB)).charAt(0));
         mCarta.setAceptaParteC(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParteC)).charAt(0));
+        mCarta.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
 
         return mCarta;
     }

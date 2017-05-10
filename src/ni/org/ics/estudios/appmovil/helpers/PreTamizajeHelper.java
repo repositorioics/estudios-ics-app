@@ -19,6 +19,7 @@ public class PreTamizajeHelper {
         cv.put(MainDBConstants.razonNoParticipa, preTamizaje.getRazonNoParticipa());
         cv.put(MainDBConstants.casa, preTamizaje.getCasa().getCodigo());
         cv.put(MainDBConstants.estudio, preTamizaje.getEstudio().getCodigo());
+        cv.put(MainDBConstants.estado, String.valueOf(preTamizaje.getEstado()));
 
         return cv;
     }
@@ -31,6 +32,7 @@ public class PreTamizajeHelper {
         mPreTamizaje.setRazonNoParticipa(null);
         mPreTamizaje.setCasa(null);
         mPreTamizaje.setEstudio(null);
+        mPreTamizaje.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
 
         return mPreTamizaje;
     }

@@ -10,7 +10,7 @@ public class Ventana extends AreaAmbiente {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private AreaAmbiente areaAmbiente;
+	private AreaAmbiente areaAmbiente; //area a la que pertenece la ventana.. puede ser bano, sala, habitación, cocina o comedor
     private Double alto;
     private char abierta;
 

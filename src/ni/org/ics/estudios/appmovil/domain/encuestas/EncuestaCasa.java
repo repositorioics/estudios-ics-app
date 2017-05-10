@@ -85,7 +85,7 @@ public class EncuestaCasa extends BaseMetaData {
     private char madreFuma;
     private char padreFuma;
     private char otrosFuman;
-    private char cantidadOtrosFuman;
+    private Integer cantidadOtrosFuman;
     private Integer cantidadCigarrilosMadre; // diarios
     private Integer cantidadCigarrillosPadre; // diarios
     private Integer cantidadCigarrillosOtros; // diarios
@@ -650,11 +650,11 @@ public class EncuestaCasa extends BaseMetaData {
         this.otrosFuman = otrosFuman;
     }
 
-    public char getCantidadOtrosFuman() {
+    public Integer getCantidadOtrosFuman() {
         return cantidadOtrosFuman;
     }
 
-    public void setCantidadOtrosFuman(char cantidadOtrosFuman) {
+    public void setCantidadOtrosFuman(Integer cantidadOtrosFuman) {
         this.cantidadOtrosFuman = cantidadOtrosFuman;
     }
 

@@ -32,6 +32,8 @@ public class TamizajeHelper {
         cv.put(MainDBConstants.tomaPuntoGPSCasa, String.valueOf(tamizaje.getTomaPuntoGPSCasa()));
         cv.put(MainDBConstants.razonNoGeoreferenciacion, tamizaje.getRazonNoGeoreferenciacion());
         cv.put(MainDBConstants.otraRazonNoGeoreferenciacion, tamizaje.getOtraRazonNoGeoreferenciacion());
+        cv.put(MainDBConstants.estado, String.valueOf(tamizaje.getEstado()));
+
         return cv;
     }
 
@@ -57,6 +59,7 @@ public class TamizajeHelper {
         mTamizaje.setTomaPuntoGPSCasa(cursor.getString(cursor.getColumnIndex(MainDBConstants.tomaPuntoGPSCasa)).charAt(0));
         mTamizaje.setRazonNoGeoreferenciacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonNoGeoreferenciacion)));
         mTamizaje.setOtraRazonNoGeoreferenciacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraRazonNoGeoreferenciacion)));
+        mTamizaje.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
 
         return mTamizaje;
     }

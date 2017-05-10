@@ -33,6 +33,7 @@ public class ParticipanteHelper {
         cv.put(MainDBConstants.apellido1Madre, participante.getApellido1Madre());
         cv.put(MainDBConstants.apellido2Madre, participante.getApellido2Madre());
         if (participante.getCasa() != null) cv.put(MainDBConstants.casa, participante.getCasa().getCodigo());
+        cv.put(MainDBConstants.estado, String.valueOf(participante.getEstado()));
 
         return cv;
     }
@@ -56,7 +57,7 @@ public class ParticipanteHelper {
         mParticipante.setApellido1Madre(cursor.getString(cursor.getColumnIndex(MainDBConstants.apellido1Madre)));
         mParticipante.setApellido2Madre(cursor.getString(cursor.getColumnIndex(MainDBConstants.apellido2Madre)));
         mParticipante.setCasa(null);
-
+        mParticipante.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
 
         return mParticipante;
     }

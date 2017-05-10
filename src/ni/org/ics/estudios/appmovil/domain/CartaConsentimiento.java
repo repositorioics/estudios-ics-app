@@ -1,7 +1,6 @@
 package ni.org.ics.estudios.appmovil.domain;
 
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
-import ni.org.ics.estudios.appmovil.catalogs.RelacionFamiliar;
 
 import java.util.Date;
 
@@ -28,7 +27,7 @@ public class CartaConsentimiento extends BaseMetaData {
     private String nombre2Tutor;
     private String apellido1Tutor;
     private String apellido2Tutor;
-    private RelacionFamiliar relacionFamiliarTutor;
+    private String relacionFamiliarTutor;
     private char participanteOTutorAlfabeto;
     private char testigoPresente;
     private String nombre1Testigo;
@@ -233,11 +232,11 @@ public class CartaConsentimiento extends BaseMetaData {
         this.estudio = estudio;
     }
 
-    public RelacionFamiliar getRelacionFamiliarTutor() {
+    public String getRelacionFamiliarTutor() {
         return relacionFamiliarTutor;
     }
 
-    public void setRelacionFamiliarTutor(RelacionFamiliar relacionFamiliar) {
+    public void setRelacionFamiliarTutor(String relacionFamiliar) {
         this.relacionFamiliarTutor = relacionFamiliar;
     }
 

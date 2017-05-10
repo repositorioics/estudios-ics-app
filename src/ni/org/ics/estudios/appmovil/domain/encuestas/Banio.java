@@ -7,7 +7,11 @@ package ni.org.ics.estudios.appmovil.domain.encuestas;
 
 public class Banio extends  AreaAmbiente {
 
-    private Habitacion habitacion;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Habitacion habitacion;
     private char conVentana;
 
     public Habitacion getHabitacion() {

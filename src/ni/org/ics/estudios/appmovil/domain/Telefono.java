@@ -1,7 +1,7 @@
 package ni.org.ics.estudios.appmovil.domain;
 
 
-import ni.org.ics.estudios.appmovil.catalogs.Operadora;
+
 
 /**
  * Objeto que representa un número telefónico asociado a una casa o participante
@@ -16,7 +16,7 @@ public class Telefono extends BaseMetaData {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
     private String numero;
-    private Operadora operadora;
+    private String operadora;
     private Casa casa;
     private Participante participante;
 
@@ -52,11 +52,11 @@ public class Telefono extends BaseMetaData {
         this.participante = participante;
     }
 
-    public Operadora getOperadora() {
+    public String getOperadora() {
         return operadora;
     }
 
-    public void setOperadora(Operadora operadora) {
+    public void setOperadora(String operadora) {
         this.operadora = operadora;
     }
 

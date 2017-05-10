@@ -9,7 +9,11 @@ import ni.org.ics.estudios.appmovil.domain.Casa;
  */
 public class AreaAmbiente extends BaseMetaData {
 
-    private String codigo;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String codigo;
     private Double largo;
     private Double ancho;
     private Double totalM2;

@@ -9,7 +9,11 @@ import ni.org.ics.estudios.appmovil.domain.Participante;
  */
 public class PersonaCama extends BaseMetaData {
 
-    private String codigoPersona;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String codigoPersona;
     private char estaEnEstudio; //0 No, 1 Si
     private Participante participante; //si es participante
     private String sexo;  //si no participa

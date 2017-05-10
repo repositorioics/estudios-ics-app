@@ -17,6 +17,10 @@ public class EncuestaDatosPartoBB extends BaseMetaData {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
     private Participante participante;
 	private String tipoParto;
 	private String tiempoEmb_sndr;

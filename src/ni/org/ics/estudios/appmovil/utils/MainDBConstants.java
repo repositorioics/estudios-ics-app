@@ -112,7 +112,7 @@ public class MainDBConstants {
 	public static final String apellido1JefeFamilia = "apellido1JefeFamilia";
 	public static final String apellido2JefeFamilia = "apellido2JefeFamilia";
 	
-	//Crear tabla barrios
+	//Crear tabla casas
 	public static final String CREATE_CASA_TABLE = "create table if not exists "
 			+ CASA_TABLE + " ("
 			+ codigo + " integer not null, "
@@ -130,5 +130,29 @@ public class MainDBConstants {
 			+ pasive + " text, "
 			+ deviceId + " text, "
 			+ "primary key (" + codigo + "));";
+
+	//Tabla mensajes
+	public static final String MESSAGES_TABLE = "mensajes";
+	//Campos mensajes
+	public static final String messageKey = "messageKey";
+	public static final String catRoot = "catRoot";
+	public static final String catKey = "catKey";
+	public static final String isCat = "isCat";
+	public static final String order = "order";
+	public static final String spanish = "spanish";
+	public static final String english = "english";
+	
+	//Crear tabla mensajes
+	public static final String CREATE_MESSAGES_TABLE = "create table if not exists "
+			+ MESSAGES_TABLE + " ("
+			+ messageKey + " text not null, "
+			+ catRoot + " text , "
+			+ catKey + " text, "
+			+ isCat + " text , "
+			+ order + " integer , "
+			+ spanish + " text not null, "
+			+ english + " text , "
+			+ pasive + " text, "
+			+ "primary key (" + messageKey + "));";	
 
 }

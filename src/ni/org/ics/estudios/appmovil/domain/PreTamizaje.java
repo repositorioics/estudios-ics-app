@@ -2,7 +2,6 @@ package ni.org.ics.estudios.appmovil.domain;
 
 
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
-import ni.org.ics.estudios.appmovil.catalogs.RazonNoParticipa;
 
 /**
  * Created by FIRSTICT on 4/28/2017.
@@ -16,7 +15,7 @@ public class PreTamizaje extends BaseMetaData {
 	private static final long serialVersionUID = 1L;
 	private String codigo;
     private char aceptaTamizaje;
-    private RazonNoParticipa razonNoParticipa;
+    private String razonNoParticipa;
     private Casa casa;
     private Estudio estudio;
 
@@ -36,11 +35,11 @@ public class PreTamizaje extends BaseMetaData {
         this.aceptaTamizaje = aceptaTamizaje;
     }
 
-    public RazonNoParticipa getRazonNoParticipa() {
+    public String getRazonNoParticipa() {
         return razonNoParticipa;
     }
 
-    public void setRazonNoParticipa(RazonNoParticipa razonNoParticipa) {
+    public void setRazonNoParticipa(String razonNoParticipa) {
         this.razonNoParticipa = razonNoParticipa;
     }
 

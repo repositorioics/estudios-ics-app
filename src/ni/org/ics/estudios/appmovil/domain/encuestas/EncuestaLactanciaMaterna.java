@@ -14,6 +14,10 @@ public class EncuestaLactanciaMaterna extends BaseMetaData {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 
     private Participante participante;
     private Integer edad;

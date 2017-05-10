@@ -6,7 +6,11 @@ package ni.org.ics.estudios.appmovil.domain.encuestas;
  */
 public class Habitacion extends AreaAmbiente {
 
-    private int cantidadCamas;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int cantidadCamas;
 
     public int getCantidadCamas() {
         return cantidadCamas;

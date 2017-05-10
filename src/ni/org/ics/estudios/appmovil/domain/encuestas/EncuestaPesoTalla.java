@@ -15,6 +15,10 @@ public class EncuestaPesoTalla extends BaseMetaData {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	
 	private Participante participante;
 	private Double peso1;

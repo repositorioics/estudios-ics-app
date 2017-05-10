@@ -6,7 +6,11 @@ package ni.org.ics.estudios.appmovil.domain.encuestas;
  */
 public class Ventana extends AreaAmbiente {
 
-    private AreaAmbiente areaAmbiente;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private AreaAmbiente areaAmbiente;
     private Double alto;
     private char abierta;
 

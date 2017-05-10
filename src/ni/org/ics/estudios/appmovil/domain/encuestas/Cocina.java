@@ -6,4 +6,9 @@ package ni.org.ics.estudios.appmovil.domain.encuestas;
  */
 public class Cocina extends AreaAmbiente {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 }

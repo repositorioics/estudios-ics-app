@@ -16,6 +16,10 @@ public class EncuestaVacuna extends BaseMetaData {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
     private Participante participante;
 	private Integer vacuna;
 	private Date fechaVac;

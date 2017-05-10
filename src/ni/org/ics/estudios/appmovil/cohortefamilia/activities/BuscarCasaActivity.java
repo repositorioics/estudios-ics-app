@@ -8,7 +8,6 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.adapters.CasaAdapter;
-import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -273,15 +272,6 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 			filtro = values[0];
 			try {
 				estudiosAdapter.open();
-				Barrio barrio = new Barrio(2,"Cuba");
-				estudiosAdapter.crearBarrio(barrio);
-				Casa casa = new Casa();
-				casa.setCodigo(2);
-				casa.setNombre1JefeFamilia("Pedro");
-				casa.setApellido1JefeFamilia("Perez");
-				casa.setDireccion("fff");
-				casa.setBarrio(barrio);
-				estudiosAdapter.crearCasa(casa);
 				mCasas = estudiosAdapter.getCasas(filtro, MainDBConstants.codigo);
 				estudiosAdapter.close();
 			} catch (Exception e) {

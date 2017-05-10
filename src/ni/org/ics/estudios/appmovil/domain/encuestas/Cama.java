@@ -9,7 +9,11 @@ import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
  */
 public class Cama extends BaseMetaData {
 
-    private String codigoCama;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String codigoCama;
     private Habitacion habitacion;
 
     public String getCodigoCama() {

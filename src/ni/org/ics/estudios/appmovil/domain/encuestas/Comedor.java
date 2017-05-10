@@ -6,5 +6,10 @@ package ni.org.ics.estudios.appmovil.domain.encuestas;
  */
 public class Comedor extends AreaAmbiente {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 }

@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="main_1">Estudio Cohorte Familia</string>
+    <string name="barrio">Barrio</string>
+    <string name="manzana">Manzana</string>
+    <string name="casa_search">Buscar Casa</string>
+    <string name="casa_id">Código Casa</string>
+    <string name="casa_jefe_familia_nombre">Nombre jefe de familia</string>
+    <string name="casa_jefe_familia_apellido">Apellido jefe de familia</string>
+    
 </resources>

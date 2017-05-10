@@ -9,6 +9,10 @@ import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
  **/
 public class Estudio extends BaseMetaData {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer codigo;
 	private String nombre;
 

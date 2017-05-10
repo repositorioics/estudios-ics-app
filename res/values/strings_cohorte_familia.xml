@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="barrio">Barrio</string>
+    
     <string name="new_screen">Nuevo Tamizaje</string>
-    <string name="casa_search">Buscar Casa</string>
-    <string name="casa_id">Código Casa</string>
-    <string name="casa_jefe_familia_nombre">Nombre jefe de familia</string>
-    <string name="casa_jefe_familia_apellido">Apellido jefe de familia</string>
+    
+    <string name="aceptaTamizaje">Acepta realizar tamizaje?</string>
+    <string name="aceptaTamizajeHint">Pregunte si el jefe de familia permite realizar tamizaje a los miembros de este hogar.</string>
+    
 </resources>

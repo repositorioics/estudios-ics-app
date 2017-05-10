@@ -9,7 +9,11 @@ import ni.org.ics.estudios.appmovil.domain.Participante;
  */
 public class EncuestaParticipante extends BaseMetaData {
 
-    private Participante participante;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Participante participante;
     //Adulto   (Mayores o igual a 18 años; Mujeres menores de 18 años con niños o embarazadas)
     private char enmancipado;
     private String motivoEnmacipacion;

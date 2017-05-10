@@ -31,17 +31,17 @@ public class CasaAdapter extends ArrayAdapter<Casa> {
 		Casa p = getItem(position);
 		if (p != null) {
 
-			TextView textView = (TextView) v.findViewById(R.id.name_text);
+			TextView textView = (TextView) v.findViewById(R.id.identifier_text);
 			if (textView != null) {
 				textView.setText(this.getContext().getString(R.string.code) + ": " + p.getCodigo());
 			}
 			
 			textView = (TextView) v.findViewById(R.id.der_text);
 			if (textView != null) {
-				textView.setText(this.getContext().getString(R.string.barrio) + ": " + p.getBarrio().getNombre());
+				textView.setText(this.getContext().getString(R.string.barrio) + ": " + p.getBarrio().getNombre() + " " + this.getContext().getString(R.string.manzana) + ": " + p.getManzana());
 			}
 
-			textView = (TextView) v.findViewById(R.id.identifier_text);
+			textView = (TextView) v.findViewById(R.id.name_text);
 			if (textView != null) {
 				textView.setText(p.getNombre1JefeFamilia() + " " +p.getApellido1JefeFamilia());
 			}

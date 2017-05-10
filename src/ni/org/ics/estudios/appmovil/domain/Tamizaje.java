@@ -1,6 +1,6 @@
 package ni.org.ics.estudios.appmovil.domain;
 
-import ni.org.ics.estudios.appmovil.catalogs.RazonNoParticipa;
+
 
 /**
  * Created by FIRSTICT on 4/28/2017.
@@ -15,7 +15,7 @@ public class Tamizaje extends BaseMetaData {
 	private String codigo;
     private Participante participante;
     private char aceptaTamizaje;
-    private RazonNoParticipa razonNoParticipa;
+    private String razonNoParticipa;
     private char areaCovertura;
     private char ninoMenor12Anios;
     private char intencionPermanecerArea;
@@ -57,11 +57,11 @@ public class Tamizaje extends BaseMetaData {
         this.aceptaTamizaje = aceptaTamizaje;
     }
 
-    public RazonNoParticipa getRazonNoParticipa() {
+    public String getRazonNoParticipa() {
         return razonNoParticipa;
     }
 
-    public void setRazonNoParticipa(RazonNoParticipa razonNoParticipa) {
+    public void setRazonNoParticipa(String razonNoParticipa) {
         this.razonNoParticipa = razonNoParticipa;
     }
 

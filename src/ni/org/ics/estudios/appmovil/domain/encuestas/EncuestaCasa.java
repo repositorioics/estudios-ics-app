@@ -11,7 +11,11 @@ import java.util.Date;
  */
 public class EncuestaCasa extends BaseMetaData {
 
-    private Casa casa;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Casa casa;
     private int cantidadCuartos;
     private int cantidadCuartosDormir;
     private Date fechaEncuestas;

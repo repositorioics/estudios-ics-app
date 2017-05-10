@@ -83,25 +83,10 @@ public class MainDBConstants {
 			+ role + " text not null, "
 			+ "primary key (" + username + "," + role + "));";
 	
-	//Tabla barrios
-	public static final String BARRIO_TABLE = "barrios";
-	//Campos barrios
-	public static final String codigo = "codigo";
-	public static final String nombre = "nombre";
-	//Crear tabla barrios
-	public static final String CREATE_BARRIO_TABLE = "create table if not exists "
-			+ BARRIO_TABLE + " ("
-			+ codigo + " integer not null, "  
-			+ nombre + " text not null, "
-			+ recordDate + " date, " 
-			+ recordUser + " text, "
-			+ pasive + " text, "
-			+ deviceId + " text, "
-			+ "primary key (" + codigo + "));";
-	
 	//Tabla casas
 	public static final String CASA_TABLE = "casas";
 	//Campos casas
+	public static final String codigo = "codigo";
 	public static final String barrio = "barrio";
 	public static final String direccion = "direccion";
 	public static final String manzana = "manzana";
@@ -130,29 +115,5 @@ public class MainDBConstants {
 			+ pasive + " text, "
 			+ deviceId + " text, "
 			+ "primary key (" + codigo + "));";
-
-	//Tabla mensajes
-	public static final String MESSAGES_TABLE = "mensajes";
-	//Campos mensajes
-	public static final String messageKey = "messageKey";
-	public static final String catRoot = "catRoot";
-	public static final String catKey = "catKey";
-	public static final String isCat = "isCat";
-	public static final String order = "order";
-	public static final String spanish = "spanish";
-	public static final String english = "english";
-	
-	//Crear tabla mensajes
-	public static final String CREATE_MESSAGES_TABLE = "create table if not exists "
-			+ MESSAGES_TABLE + " ("
-			+ messageKey + " text not null, "
-			+ catRoot + " text , "
-			+ catKey + " text, "
-			+ isCat + " text , "
-			+ order + " integer , "
-			+ spanish + " text not null, "
-			+ english + " text , "
-			+ pasive + " text, "
-			+ "primary key (" + messageKey + "));";	
 
 }

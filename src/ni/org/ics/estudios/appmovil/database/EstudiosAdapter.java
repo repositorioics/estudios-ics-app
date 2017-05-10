@@ -53,8 +53,9 @@ public class EstudiosAdapter {
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(MainDBConstants.CREATE_USER_TABLE);
 			db.execSQL(MainDBConstants.CREATE_ROLE_TABLE);
-			db.execSQL(MainDBConstants.CREATE_MESSAGES_TABLE);
-			db.execSQL(MainDBConstants.CREATE_BARRIO_TABLE);
+			db.execSQL(CatalogosDBConstants.CREATE_MESSAGES_TABLE);
+			db.execSQL(CatalogosDBConstants.CREATE_BARRIO_TABLE);
+			db.execSQL(CatalogosDBConstants.CREATE_ESTUDIO_TABLE);
 			db.execSQL(MainDBConstants.CREATE_CASA_TABLE);
 		}
 
@@ -178,22 +179,22 @@ public class EstudiosAdapter {
 	//Crear nuevo barrio en la base de datos
 	public void crearBarrio(Barrio barrio) {
 		ContentValues cv = BarrioHelper.crearBarrioContentValues(barrio);
-		mDb.insert(MainDBConstants.BARRIO_TABLE, null, cv);
+		mDb.insert(CatalogosDBConstants.BARRIO_TABLE, null, cv);
 	}
 	//Editar barrio existente en la base de datos
 	public boolean editarBarrio(Barrio barrio) {
 		ContentValues cv = BarrioHelper.crearBarrioContentValues(barrio);
-		return mDb.update(MainDBConstants.BARRIO_TABLE , cv, MainDBConstants.codigo + "=" 
+		return mDb.update(CatalogosDBConstants.BARRIO_TABLE , cv, MainDBConstants.codigo + "=" 
 				+ barrio.getCodigo(), null) > 0;
 	}
 	//Limpiar la tabla de barrios de la base de datos
 	public boolean borrarBarrios() {
-		return mDb.delete(MainDBConstants.BARRIO_TABLE, null, null) > 0;
+		return mDb.delete(CatalogosDBConstants.BARRIO_TABLE, null, null) > 0;
 	}
 	//Obtener un barrio de la base de datos
 	public Barrio getBarrio(String filtro, String orden) throws SQLException {
 		Barrio mBarrio = null;
-		Cursor cursorBarrio = crearCursor(MainDBConstants.BARRIO_TABLE , filtro, null, orden);
+		Cursor cursorBarrio = crearCursor(CatalogosDBConstants.BARRIO_TABLE , filtro, null, orden);
 		if (cursorBarrio != null && cursorBarrio.getCount() > 0) {
 			cursorBarrio.moveToFirst();
 			mBarrio=BarrioHelper.crearBarrio(cursorBarrio);
@@ -204,7 +205,7 @@ public class EstudiosAdapter {
 	//Obtener una lista de barrios de la base de datos
 	public List<Barrio> getBarrios(String filtro, String orden) throws SQLException {
 		List<Barrio> mBarrios = new ArrayList<Barrio>();
-		Cursor cursorBarrios = crearCursor(MainDBConstants.BARRIO_TABLE, filtro, null, orden);
+		Cursor cursorBarrios = crearCursor(CatalogosDBConstants.BARRIO_TABLE, filtro, null, orden);
 		if (cursorBarrios != null && cursorBarrios.getCount() > 0) {
 			cursorBarrios.moveToFirst();
 			mBarrios.clear();
@@ -248,7 +249,7 @@ public class EstudiosAdapter {
 		if (cursorCasa != null && cursorCasa.getCount() > 0) {
 			cursorCasa.moveToFirst();
 			mCasa=CasaHelper.crearCasa(cursorCasa);
-			Cursor cursorBarrio = crearCursor(MainDBConstants.BARRIO_TABLE , MainDBConstants.codigo + "=" +cursorCasa.getInt(cursorCasa.getColumnIndex(MainDBConstants.barrio)), null, orden);
+			Cursor cursorBarrio = crearCursor(CatalogosDBConstants.BARRIO_TABLE , MainDBConstants.codigo + "=" +cursorCasa.getInt(cursorCasa.getColumnIndex(MainDBConstants.barrio)), null, orden);
 			cursorBarrio.moveToFirst();
 			if (cursorBarrio != null && cursorBarrio.getCount() > 0) {
 				mCasa.setBarrio(BarrioHelper.crearBarrio(cursorBarrio));
@@ -268,7 +269,7 @@ public class EstudiosAdapter {
 			do{
 				Casa mCasa = null;
 				mCasa = CasaHelper.crearCasa(cursorCasas);
-				Cursor cursorBarrio = crearCursor(MainDBConstants.BARRIO_TABLE , MainDBConstants.codigo + "=" +cursorCasas.getInt(cursorCasas.getColumnIndex(MainDBConstants.barrio)), null, orden);
+				Cursor cursorBarrio = crearCursor(CatalogosDBConstants.BARRIO_TABLE , MainDBConstants.codigo + "=" +cursorCasas.getInt(cursorCasas.getColumnIndex(MainDBConstants.barrio)), null, orden);
 				cursorBarrio.moveToFirst();
 				if (cursorBarrio != null && cursorBarrio.getCount() > 0) {
 					mCasa.setBarrio(BarrioHelper.crearBarrio(cursorBarrio));

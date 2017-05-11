@@ -2,7 +2,6 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.provider.Telephony;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 

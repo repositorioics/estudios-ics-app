@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ni.org.ics.estudios.appmovil.catalogs.Barrio;
+import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
@@ -224,6 +225,57 @@ public class EstudiosAdapter {
 		if (!cursorBarrios.isClosed()) cursorBarrios.close();
 		return mBarrios;
 	}
+	
+	
+	/**
+	 * Metodos para estudios en la base de datos
+	 * 
+	 * @param estudio
+	 *            Objeto Estudio que contiene la informacion
+	 *
+	 */
+	//Crear nuevo estudio en la base de datos
+	public void crearEstudio(Estudio estudio) {
+		ContentValues cv = EstudiosHelper.crearEstudioContentValues(estudio);
+		mDb.insert(CatalogosDBConstants.ESTUDIO_TABLE, null, cv);
+	}
+	//Editar estudio existente en la base de datos
+	public boolean editarEstudio(Estudio estudio) {
+		ContentValues cv = EstudiosHelper.crearEstudioContentValues(estudio);
+		return mDb.update(CatalogosDBConstants.ESTUDIO_TABLE , cv, MainDBConstants.codigo + "=" 
+				+ estudio.getCodigo(), null) > 0;
+	}
+	//Limpiar la tabla de estudios de la base de datos
+	public boolean borrarEstudios() {
+		return mDb.delete(CatalogosDBConstants.ESTUDIO_TABLE, null, null) > 0;
+	}
+	//Obtener un estudio de la base de datos
+	public Estudio getEstudio(String filtro, String orden) throws SQLException {
+		Estudio mEstudio = null;
+		Cursor cursorEstudio = crearCursor(CatalogosDBConstants.ESTUDIO_TABLE , filtro, null, orden);
+		if (cursorEstudio != null && cursorEstudio.getCount() > 0) {
+			cursorEstudio.moveToFirst();
+			mEstudio=EstudiosHelper.crearEstudio(cursorEstudio);
+		}
+		if (!cursorEstudio.isClosed()) cursorEstudio.close();
+		return mEstudio;
+	}
+	//Obtener una lista de estudios de la base de datos
+	public List<Estudio> getEstudios(String filtro, String orden) throws SQLException {
+		List<Estudio> mEstudios = new ArrayList<Estudio>();
+		Cursor cursorEstudios = crearCursor(CatalogosDBConstants.ESTUDIO_TABLE, filtro, null, orden);
+		if (cursorEstudios != null && cursorEstudios.getCount() > 0) {
+			cursorEstudios.moveToFirst();
+			mEstudios.clear();
+			do{
+				Estudio mEstudio = null;
+				mEstudio = EstudiosHelper.crearEstudio(cursorEstudios);
+				mEstudios.add(mEstudio);
+			} while (cursorEstudios.moveToNext());
+		}
+		if (!cursorEstudios.isClosed()) cursorEstudios.close();
+		return mEstudios;
+	}	
 	
 	
 	/**

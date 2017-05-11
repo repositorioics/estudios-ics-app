@@ -7,6 +7,9 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
+import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
+import ni.org.ics.estudios.appmovil.wizard.model.BranchPage;
+import ni.org.ics.estudios.appmovil.wizard.model.LabelPage;
 import ni.org.ics.estudios.appmovil.wizard.model.PageList;
 import ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage;
 import android.content.Context;
@@ -15,6 +18,7 @@ public class PreTamizajeForm extends AbstractWizardModel {
 	
 	int index = 0;
 	private String[] catSiNo;
+	private String[] catRazonNoParticipa;
 	private PreTamizajeFormLabels labels;
 	public static final String nombreForm = Constants.FORM_NUEVO_TAMIZAJE_CASA;
 	private EstudiosAdapter estudiosAdapter;
@@ -35,11 +39,25 @@ public class PreTamizajeForm extends AbstractWizardModel {
 			catSiNo[index] = message.getSpanish();
 			index++;
 		}
+		List<MessageResource> mCatRazonNoParticipa = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CAT_RAZON_NP'", CatalogosDBConstants.order);
+		catRazonNoParticipa = new String[mCatRazonNoParticipa.size()];
+		index = 0;
+		for (MessageResource message: mCatRazonNoParticipa){
+			catRazonNoParticipa[index] = message.getSpanish();
+			index++;
+		}
 		estudiosAdapter.close();
         return new PageList(
-        		new SingleFixedChoicePage(this,labels.getAceptaTamizaje(),labels.getAceptaTamizajeHint(),Constants.WIZARD)
-                .setChoices(catSiNo)
-                .setRequired(true)
+        		new BranchPage(this, labels.getAceptaTamizaje(), labels.getAceptaTamizajeHint(), Constants.WIZARD)
+                .addBranch(catSiNo[0],
+                		new BarcodePage(this,"codigo casa","nuevo codigo de casa",Constants.WIZARD)
+			                .setRequired(true))
+                .addBranch(catSiNo[1],
+		        		new SingleFixedChoicePage(this,labels.getRazonNoParticipa(),labels.getRazonNoParticipaHint(),Constants.WIZARD)
+		                	.setChoices(catRazonNoParticipa)
+		                	.setRequired(true),
+		                new LabelPage(this,"No acepta entrar, finaliza el formulario","",Constants.ROJO)
+                			.setRequired(false))
         );
     }
 

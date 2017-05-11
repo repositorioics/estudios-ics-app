@@ -14,12 +14,16 @@ public class PreTamizajeFormLabels {
 	
 	protected String aceptaTamizaje;
 	protected String aceptaTamizajeHint;
+	protected String razonNoParticipa;
+	protected String razonNoParticipaHint;
 	
 	
 	public PreTamizajeFormLabels(){
 		Resources res = MyIcsApplication.getContext().getResources();
 		aceptaTamizaje = res.getString(R.string.aceptaTamizaje);
 		aceptaTamizajeHint = res.getString(R.string.aceptaTamizajeHint);
+		razonNoParticipa = res.getString(R.string.razonNoParticipa);
+		razonNoParticipaHint = res.getString(R.string.razonNoParticipaHint);
 		
 	}
 
@@ -42,6 +46,28 @@ public class PreTamizajeFormLabels {
 	public void setAceptaTamizajeHint(String aceptaTamizajeHint) {
 		this.aceptaTamizajeHint = aceptaTamizajeHint;
 	}
+
+
+	public String getRazonNoParticipa() {
+		return razonNoParticipa;
+	}
+
+
+	public void setRazonNoParticipa(String razonNoParticipa) {
+		this.razonNoParticipa = razonNoParticipa;
+	}
+
+
+	public String getRazonNoParticipaHint() {
+		return razonNoParticipaHint;
+	}
+
+
+	public void setRazonNoParticipaHint(String razonNoParticipaHint) {
+		this.razonNoParticipaHint = razonNoParticipaHint;
+	}
+	
+	
 
 	
 }

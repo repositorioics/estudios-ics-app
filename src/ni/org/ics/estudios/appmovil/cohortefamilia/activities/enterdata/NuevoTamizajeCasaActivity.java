@@ -1,21 +1,30 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata;
 
+import java.util.Date;
+
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.activities.DataEnterActivity;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
+import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Casa;
-import ni.org.ics.estudios.appmovil.domain.PreTamizaje;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
+import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
 import ni.org.ics.estudios.appmovil.utils.FileUtils;
 import ni.org.ics.estudios.appmovil.utils.GPSTracker;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +44,8 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 	DeviceInfo infoMovil;
 	private static Casa casa = new Casa();
 	private EstudiosAdapter estudiosAdapter;
+	private String username;
+	private SharedPreferences settings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +55,11 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 			toast.show();
 			finish();
 		}
+		settings =
+				PreferenceManager.getDefaultSharedPreferences(this);
+		username =
+				settings.getString(PreferencesActivity.KEY_USERNAME,
+						null);
 		gps = new GPSTracker(NuevoTamizajeCasaActivity.this);
 		infoMovil = new DeviceInfo(NuevoTamizajeCasaActivity.this);
 		casa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
@@ -118,18 +134,33 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 
 		if(requestCode == ADD_PRETAMIZAJE) {
 	        if(resultCode == RESULT_OK) {
+	        	//Datos que vienen de DataEnterActivity
+	        	
+	    		Bundle bundle = intent.getExtras();
+	    		String acepta = bundle.getString(this.getString(R.string.aceptaTamizaje));
+	    		String razonNP = bundle.getString(acepta+":"+this.getString(R.string.razonNoParticipa));
+	    		String codigoCasa = bundle.getString(acepta+":"+"codigo casa");
 	        	String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 	    		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 	    		estudiosAdapter.open();
-	    		Estudio estudio = new Estudio();
-	    		estudio.setCodigo(1);
-	    		estudio.setNombre("Cohorte Influenza");
+	    		//Recupera los catalogos de la base de datos
+	    		Estudio estudio = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=1", null);
+	    		MessageResource aceptaTamizaje = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + acepta + "' and " + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+	    		MessageResource razonNoParticipa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNP + "' and " + CatalogosDBConstants.catRoot + "='CAT_RAZON_NP'", null);
+	    		//Crea un Nuevo Registro
 	        	PreTamizaje preTamizaje =  new PreTamizaje();
-	        	String acepta = intent.getExtras().getString(this.getString(R.string.aceptaTamizaje));
-	        	preTamizaje.setAceptaTamizaje(acepta.charAt(0));
+	        	preTamizaje.setCodigo(infoMovil.getId());
+	        	preTamizaje.setAceptaTamizaje(aceptaTamizaje.getCatKey().charAt(0));
+	        	if (razonNoParticipa!=null) preTamizaje.setRazonNoParticipa(razonNoParticipa.getCatKey());
 	        	preTamizaje.setCasa(casa);
 	        	preTamizaje.setEstudio(estudio);
-	        	//estudiosAdapter.crearPreTamizaje(preTamizaje);
+	        	preTamizaje.setRecordDate(new Date());
+	        	preTamizaje.setRecordUser(username);
+	        	preTamizaje.setDeviceid(infoMovil.getDeviceId());
+	        	preTamizaje.setEstado('0');
+	        	preTamizaje.setPasive('0');
+	        	//Inserta un Nuevo Registro
+	        	estudiosAdapter.crearPreTamizaje(preTamizaje);
 	        	estudiosAdapter.close();
 	        }
 	        else{
@@ -149,14 +180,42 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 	 */
 	private void addPretamizaje() {
 		try{
-			Intent i = new Intent(getApplicationContext(),
-					DataEnterActivity.class);
-			i.putExtra(Constants.FORM_NAME, Constants.FORM_NUEVO_TAMIZAJE_CASA);
-			startActivityForResult(i , ADD_PRETAMIZAJE);
+			new OpenDataEnterActivityTask().execute();
 		}
 		catch(Exception e){
 			Log.e(TAG, e.getMessage(), e);
 		}
+	}
+	
+	// ***************************************
+	// Private classes
+	// ***************************************
+	private class OpenDataEnterActivityTask extends AsyncTask<String, Void, String> {
+		@Override
+		protected void onPreExecute() {
+			// before the request begins, show a progress indicator
+			showLoadingProgressDialog();
+		}
+
+		@Override
+		protected String doInBackground(String... values) {
+			try {
+				Intent i = new Intent(getApplicationContext(),
+						DataEnterActivity.class);
+				i.putExtra(Constants.FORM_NAME, Constants.FORM_NUEVO_TAMIZAJE_CASA);
+				startActivityForResult(i , ADD_PRETAMIZAJE);
+			} catch (Exception e) {
+				Log.e(TAG, e.getLocalizedMessage(), e);
+				return "error";
+			}
+			return "exito";
+		}
+
+		protected void onPostExecute(String resultado) {
+			// after the request completes, hide the progress indicator
+			dismissProgressDialog();
+		}
+
 	}
 
 }

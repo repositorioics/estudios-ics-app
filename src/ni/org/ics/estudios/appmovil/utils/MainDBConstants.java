@@ -243,6 +243,7 @@ public class MainDBConstants {
             + razonNoParticipa + " text, "
             + casa + " integer not null, "
             + estudio + " integer not null, "
+            + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "

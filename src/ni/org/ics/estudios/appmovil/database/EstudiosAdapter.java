@@ -13,6 +13,7 @@ import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.domain.Casa;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.helpers.*;
@@ -59,11 +60,14 @@ public class EstudiosAdapter {
 			db.execSQL(CatalogosDBConstants.CREATE_BARRIO_TABLE);
 			db.execSQL(CatalogosDBConstants.CREATE_ESTUDIO_TABLE);
 			db.execSQL(MainDBConstants.CREATE_CASA_TABLE); 
+			db.execSQL(MainDBConstants.CREATE_PRETAMIZAJE_TABLE);
 			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
 			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");
 			db.execSQL("INSERT INTO `casas` (`CODIGO`, `IDENTIFICADOR_EQUIPO`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `apellido1JefeFamilia`, `apellido2JefeFamilia`, `DIRECCION`, `MANZANA`, `nombre1JefeFamilia`, `nombre2JefeFamilia`, `barrio`) VALUES (1, 'server', '1', '0', '2017-05-10 11:22:29', 'admin', 'Lopez', 'Martinez', 'sfgsgsgsd', '3', 'Pedro', 'Ramon', 1)");
 			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('no', '0', 'CAT_SINO', NULL, '0', 2, '0', 'No');");
 			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('yes', '1', 'CAT_SINO', NULL, '0', 1, '0', 'Si');");
+			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('noquiere', 'NQ', 'CAT_RAZON_NP', NULL, '0', 2, '0', 'No quiere participar');");
+			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('nomuestra', 'NM', 'CAT_RAZON_NP', NULL, '0', 1, '0', 'No quiere que le tomen muestras');");
 		}
 
 		@Override
@@ -390,5 +394,79 @@ public class EstudiosAdapter {
 		if (!cursorMessageResources.isClosed()) cursorMessageResources.close();
 		return mMessageResources;
 	}
+	
+	/**
+	 * Metodos para pretamizajes en la base de datos
+	 * 
+	 * @param preTamizaje
+	 *            Objeto PreTamizaje que contiene la informacion
+	 *
+	 */
+	//Crear nuevo PreTamizaje en la base de datos
+	public void crearPreTamizaje(PreTamizaje preTamizaje) {
+		ContentValues cv = PreTamizajeHelper.crearPreTamizajeContentValues(preTamizaje);
+		mDb.insert(MainDBConstants.PRETAMIZAJE_TABLE, null, cv);
+	}
+	//Editar PreTamizaje existente en la base de datos
+	public boolean editarPreTamizaje(PreTamizaje preTamizaje) {
+		ContentValues cv = PreTamizajeHelper.crearPreTamizajeContentValues(preTamizaje);
+		return mDb.update(MainDBConstants.PRETAMIZAJE_TABLE , cv, MainDBConstants.codigo + "='" 
+				+ preTamizaje.getCodigo()+ "'", null) > 0;
+	}
+	//Limpiar la tabla de PreTamizaje de la base de datos
+	public boolean borrarPreTamizajes() {
+		return mDb.delete(MainDBConstants.PRETAMIZAJE_TABLE, null, null) > 0;
+	}
+	//Obtener un PreTamizaje de la base de datos
+	public PreTamizaje getPreTamizaje(String filtro, String orden) throws SQLException {
+		PreTamizaje mPreTamizaje = null;
+		Cursor cursorPreTamizaje = crearCursor(MainDBConstants.PRETAMIZAJE_TABLE , filtro, null, orden);
+		if (cursorPreTamizaje != null && cursorPreTamizaje.getCount() > 0) {
+			cursorPreTamizaje.moveToFirst();
+			mPreTamizaje=PreTamizajeHelper.crearPreTamizaje(cursorPreTamizaje);
+			Cursor cursorCasa = crearCursor(MainDBConstants.CASA_TABLE , MainDBConstants.codigo + "=" +cursorPreTamizaje.getInt(cursorPreTamizaje.getColumnIndex(MainDBConstants.casa)), null, orden);
+			cursorCasa.moveToFirst();
+			if (cursorCasa != null && cursorCasa.getCount() > 0) {
+				mPreTamizaje.setCasa(CasaHelper.crearCasa(cursorCasa));
+			}
+			if (!cursorCasa.isClosed()) cursorCasa.close();
+			Cursor cursorEstudio = crearCursor(CatalogosDBConstants.ESTUDIO_TABLE , MainDBConstants.codigo + "=" +cursorPreTamizaje.getInt(cursorPreTamizaje.getColumnIndex(MainDBConstants.estudio)), null, orden);
+			cursorEstudio.moveToFirst();
+			if (cursorEstudio != null && cursorEstudio.getCount() > 0) {
+				mPreTamizaje.setEstudio(EstudiosHelper.crearEstudio(cursorEstudio));
+			}
+			if (!cursorEstudio.isClosed()) cursorEstudio.close();
+		}
+		if (!cursorPreTamizaje.isClosed()) cursorPreTamizaje.close();
+		return mPreTamizaje;
+	}
+	//Obtener una lista de PreTamizaje de la base de datos
+	public List<PreTamizaje> getPreTamizajes(String filtro, String orden) throws SQLException {
+		List<PreTamizaje> mPreTamizajes = new ArrayList<PreTamizaje>();
+		Cursor cursorPreTamizajes = crearCursor(MainDBConstants.PRETAMIZAJE_TABLE, filtro, null, orden);
+		if (cursorPreTamizajes != null && cursorPreTamizajes.getCount() > 0) {
+			cursorPreTamizajes.moveToFirst();
+			mPreTamizajes.clear();
+			do{
+				PreTamizaje mPreTamizaje = null;
+				mPreTamizaje = PreTamizajeHelper.crearPreTamizaje(cursorPreTamizajes);
+				Cursor cursorCasa = crearCursor(MainDBConstants.CASA_TABLE , MainDBConstants.codigo + "=" +cursorPreTamizajes.getInt(cursorPreTamizajes.getColumnIndex(MainDBConstants.casa)), null, orden);
+				cursorCasa.moveToFirst();
+				if (cursorCasa != null && cursorCasa.getCount() > 0) {
+					mPreTamizaje.setCasa(CasaHelper.crearCasa(cursorCasa));
+				}
+				if (!cursorCasa.isClosed()) cursorCasa.close();
+				Cursor cursorEstudio = crearCursor(CatalogosDBConstants.ESTUDIO_TABLE , MainDBConstants.codigo + "=" +cursorPreTamizajes.getInt(cursorPreTamizajes.getColumnIndex(MainDBConstants.estudio)), null, orden);
+				cursorEstudio.moveToFirst();
+				if (cursorEstudio != null && cursorEstudio.getCount() > 0) {
+					mPreTamizaje.setEstudio(EstudiosHelper.crearEstudio(cursorEstudio));
+				}
+				if (!cursorEstudio.isClosed()) cursorEstudio.close();
+				mPreTamizajes.add(mPreTamizaje);
+			} while (cursorPreTamizajes.moveToNext());
+		}
+		if (!cursorPreTamizajes.isClosed()) cursorPreTamizajes.close();
+		return mPreTamizajes;
+	}	
 
 }

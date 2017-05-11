@@ -1,5 +1,7 @@
 package ni.org.ics.estudios.appmovil.helpers;
 
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
@@ -19,21 +21,27 @@ public class PreTamizajeHelper {
         cv.put(MainDBConstants.razonNoParticipa, preTamizaje.getRazonNoParticipa());
         cv.put(MainDBConstants.casa, preTamizaje.getCasa().getCodigo());
         cv.put(MainDBConstants.estudio, preTamizaje.getEstudio().getCodigo());
-        cv.put(MainDBConstants.estado, String.valueOf(preTamizaje.getEstado()));
+        if (preTamizaje.getRecordDate() != null) cv.put(MainDBConstants.recordDate, preTamizaje.getRecordDate().getTime());
+		cv.put(MainDBConstants.recordUser, preTamizaje.getRecordUser());
+		cv.put(MainDBConstants.pasive, String.valueOf(preTamizaje.getPasive()));
+		cv.put(MainDBConstants.estado, String.valueOf(preTamizaje.getEstado()));
+		cv.put(MainDBConstants.deviceId, preTamizaje.getDeviceid());
 
         return cv;
     }
 
-    public static PreTamizaje crearPretamizaje(Cursor cursor){
+    public static PreTamizaje crearPreTamizaje(Cursor cursor){
         PreTamizaje mPreTamizaje = new PreTamizaje();
-
         mPreTamizaje.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         mPreTamizaje.setAceptaTamizaje(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaTamizaje)).charAt(0));
-        mPreTamizaje.setRazonNoParticipa(null);
+        mPreTamizaje.setRazonNoParticipa(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonNoParticipa)));
         mPreTamizaje.setCasa(null);
         mPreTamizaje.setEstudio(null);
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mPreTamizaje.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        mPreTamizaje.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        mPreTamizaje.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
         mPreTamizaje.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
-
+        mPreTamizaje.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mPreTamizaje;
     }
 }

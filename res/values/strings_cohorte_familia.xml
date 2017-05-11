@@ -5,5 +5,6 @@
     
     <string name="aceptaTamizaje">Acepta realizar tamizaje?</string>
     <string name="aceptaTamizajeHint">Pregunte si el jefe de familia permite realizar tamizaje a los miembros de este hogar.</string>
-    
+    <string name="razonNoParticipa">Porque razón no desea participar?</string>
+    <string name="razonNoParticipaHint">Pregunte cual es la razón por la que no desea que su casa participe en el estudio.</string>
 </resources>

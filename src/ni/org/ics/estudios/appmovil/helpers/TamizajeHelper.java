@@ -5,6 +5,8 @@ import android.database.Cursor;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
+import java.util.Date;
+
 /**
  * Created by Miguel Salinas on 5/9/2017.
  * V1.0
@@ -15,6 +17,8 @@ public class TamizajeHelper {
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigo, tamizaje.getCodigo());
         cv.put(MainDBConstants.estudio, tamizaje.getEstudio().getCodigo());
+        cv.put(MainDBConstants.sexo, tamizaje.getSexo());
+        if (tamizaje.getFechaNacimiento()!=null) cv.put(MainDBConstants.fechaNacimiento, tamizaje.getFechaNacimiento().getTime());
         cv.put(MainDBConstants.aceptaTamizaje, String.valueOf(tamizaje.getAceptaTamizaje()));
         cv.put(MainDBConstants.razonNoParticipa, tamizaje.getRazonNoParticipa());
         cv.put(MainDBConstants.areaCobertura, String.valueOf(tamizaje.getAreaCobertura()));
@@ -41,6 +45,8 @@ public class TamizajeHelper {
 
         mTamizaje.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         mTamizaje.setEstudio(null);
+        mTamizaje.setSexo(cursor.getString(cursor.getColumnIndex(MainDBConstants.sexo)));
+        if (cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaNacimiento)) > 0) mTamizaje.setFechaNacimiento(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaNacimiento))));
         mTamizaje.setAceptaTamizaje(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaTamizaje)).charAt(0));
         mTamizaje.setRazonNoParticipa(null);
         mTamizaje.setAreaCobertura(cursor.getString(cursor.getColumnIndex(MainDBConstants.areaCobertura)).charAt(0));

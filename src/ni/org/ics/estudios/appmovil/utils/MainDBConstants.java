@@ -209,7 +209,7 @@ public class MainDBConstants {
             + apellido1 + " text not null, "
             + apellido2 + " text, "
             + sexo + " text, "
-            + fechaNac + " text, "
+            + fechaNac + " date, "
             + nombre1Padre + " text not null, "
             + nombre2Padre + " text, "
             + apellido1Padre + " text not null, "
@@ -253,6 +253,7 @@ public class MainDBConstants {
     public static final String TAMIZAJE_TABLE = "";
 
     //Campos tabla tamizaje
+    public static final String fechaNacimiento = "fechaNacimiento";
     public static final String areaCobertura = "areaCobertura";
     public static final String ninoMenor12Anios = "ninoMenor12Anios";
     public static final String intencionPermanecerArea = "intencionPermanecerArea";
@@ -273,6 +274,8 @@ public class MainDBConstants {
             + TAMIZAJE_TABLE + " ("
             + codigo + " text not null, "
             + estudio + " integer not null, "
+            + sexo + " text, "
+            + fechaNacimiento + " date, "
             + aceptaTamizaje + " text not null, "
             + razonNoParticipa + " text, "
             + areaCobertura + " text, "

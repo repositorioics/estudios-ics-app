@@ -3,6 +3,8 @@ package ni.org.ics.estudios.appmovil.domain;
 
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 
+import java.util.Date;
+
 /**
  * Created by FIRSTICT on 4/28/2017.
  * V1.0
@@ -15,6 +17,8 @@ public class Tamizaje extends BaseMetaData {
 	private static final long serialVersionUID = 1L;
 	private String codigo;
     private Estudio estudio;
+    private String sexo;
+    private Date fechaNacimiento;
     private char aceptaTamizaje;
     private String razonNoParticipa;
     private char areaCobertura;
@@ -47,6 +51,22 @@ public class Tamizaje extends BaseMetaData {
 
     public void setEstudio(Estudio estudio) {
         this.estudio = estudio;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public char getAceptaTamizaje() {

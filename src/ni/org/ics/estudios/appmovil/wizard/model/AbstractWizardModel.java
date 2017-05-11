@@ -32,12 +32,14 @@ import java.util.Map;
  */
 public abstract class AbstractWizardModel implements ModelCallbacks {
     protected Context mContext;
+    protected String mPass;
 
     private List<ModelCallbacks> mListeners = new ArrayList<ModelCallbacks>();
     private PageList mRootPageList;
 
-    public AbstractWizardModel(Context context) {
+    public AbstractWizardModel(Context context, String pass) {
         mContext = context;
+        mPass = pass;
         mRootPageList = onNewRootPageList();
     }
 

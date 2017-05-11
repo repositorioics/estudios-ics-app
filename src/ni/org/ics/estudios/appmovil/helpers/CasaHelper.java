@@ -1,5 +1,7 @@
 package ni.org.ics.estudios.appmovil.helpers;
 
+import java.util.Date;
+
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
@@ -20,6 +22,11 @@ public class CasaHelper {
 		cv.put(MainDBConstants.nombre2JefeFamilia, casa.getNombre2JefeFamilia());
 		cv.put(MainDBConstants.apellido1JefeFamilia, casa.getApellido1JefeFamilia());
 		cv.put(MainDBConstants.apellido2JefeFamilia, casa.getApellido2JefeFamilia());
+		if (casa.getRecordDate() != null) cv.put(MainDBConstants.recordDate, casa.getRecordDate().getTime());
+		cv.put(MainDBConstants.recordUser, casa.getRecordUser());
+		cv.put(MainDBConstants.pasive, String.valueOf(casa.getPasive()));
+		cv.put(MainDBConstants.estado, String.valueOf(casa.getEstado()));
+		cv.put(MainDBConstants.deviceId, casa.getDeviceid());
 		return cv; 
 	}	
 	
@@ -36,6 +43,11 @@ public class CasaHelper {
 		mCasa.setNombre2JefeFamilia(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.nombre2JefeFamilia)));
 		mCasa.setApellido1JefeFamilia(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.apellido1JefeFamilia)));
 		mCasa.setApellido2JefeFamilia(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.apellido2JefeFamilia)));
+		if(cursorCasa.getLong(cursorCasa.getColumnIndex(MainDBConstants.recordDate))>0) mCasa.setRecordDate(new Date(cursorCasa.getLong(cursorCasa.getColumnIndex(MainDBConstants.recordDate))));
+		mCasa.setRecordUser(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.recordUser)));
+		mCasa.setPasive(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.pasive)).charAt(0));
+		mCasa.setEstado(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.estado)).charAt(0));
+		mCasa.setDeviceid(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.deviceId)));
 		return mCasa;
 	}
 	

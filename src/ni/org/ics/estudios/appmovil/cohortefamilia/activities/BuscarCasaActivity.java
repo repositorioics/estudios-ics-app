@@ -8,6 +8,7 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.adapters.CasaAdapter;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajeCasaActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -177,9 +178,9 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 
     private void cargarMenu(Casa mCasa){
         Bundle arguments = new Bundle();
-        if (mCasa!=null) arguments.putSerializable(Constants.FORM_NAME , mCasa);
+        if (mCasa!=null) arguments.putSerializable(Constants.CASA , mCasa);
         Intent i = new Intent(getApplicationContext(),
-                MenuCohorteFamiliaActivity.class);
+        		NuevoTamizajeCasaActivity.class);
         i.putExtras(arguments);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);

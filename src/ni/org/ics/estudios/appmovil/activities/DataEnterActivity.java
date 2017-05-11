@@ -19,7 +19,9 @@ import android.content.Intent;
 import java.util.List;
 import java.util.Map;
 
+import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PreTamizajeForm;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.ModelCallbacks;
@@ -57,9 +59,10 @@ public class DataEnterActivity extends FragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_enter);
+        String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         formName = getIntent().getStringExtra(Constants.FORM_NAME);
-        if(formName.matches(Constants.FORM_NAME)){
-        	//mWizardModel = new ViviendaForm(this);
+        if(formName.matches(Constants.FORM_NUEVO_TAMIZAJE_CASA)){
+        	mWizardModel = new PreTamizajeForm(this,mPass);
         }
         else if(formName.matches(Constants.FORM_NAME)){
         	//mWizardModel = new ViviendaForm(this);

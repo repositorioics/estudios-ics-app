@@ -2,14 +2,17 @@ package ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata;
 
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
+import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.activities.DataEnterActivity;
+import ni.org.ics.estudios.appmovil.catalogs.Estudio;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.Casa;
+import ni.org.ics.estudios.appmovil.domain.PreTamizaje;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
 import ni.org.ics.estudios.appmovil.utils.FileUtils;
 import ni.org.ics.estudios.appmovil.utils.GPSTracker;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,12 +29,12 @@ import android.widget.Toast;
 public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 
 	protected static final String TAG = NuevoTamizajeCasaActivity.class.getSimpleName();
-	public static final int ADD_VIVIENDA = 1;
+	public static final int ADD_PRETAMIZAJE = 1;
 	Dialog dialogInit;
 	GPSTracker gps;
 	DeviceInfo infoMovil;
-	String codComunidad;
-	String codUser;
+	private static Casa casa = new Casa();
+	private EstudiosAdapter estudiosAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 		}
 		gps = new GPSTracker(NuevoTamizajeCasaActivity.this);
 		infoMovil = new DeviceInfo(NuevoTamizajeCasaActivity.this);
-		codComunidad = getIntent().getStringExtra(MainDBConstants.codigo);
+		casa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
 		createInitDialog();
 	}
 
@@ -58,7 +61,7 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 
 		//to set the message
 		TextView message =(TextView) dialogInit.findViewById(R.id.yesnotext);
-		message.setText(getString(R.string.add)+ " " + getString(R.string.casa_id));
+		message.setText(getString(R.string.add)+ " " + getString(R.string.new_screen));
 
 		//add some action to the buttons
 
@@ -67,7 +70,7 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 
 			public void onClick(View v) {
 				dialogInit.dismiss();
-				addVivienda();
+				addPretamizaje();
 			}
 		});
 
@@ -113,28 +116,21 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 
-		if(requestCode == ADD_VIVIENDA) {
+		if(requestCode == ADD_PRETAMIZAJE) {
 	        if(resultCode == RESULT_OK) {
-	        	/*Vivienda vivienda = new Vivienda();
-	        	vivienda.setNumVivienda(Integer.parseInt(intent.getExtras().getString(this.getString(R.string.numVivienda))));
-	        	vivienda.setNomResp(intent.getExtras().getString(this.getString(R.string.nomResp)));
-	        	vivienda.setApeResp(intent.getExtras().getString(this.getString(R.string.apeResp)));
-	        	vivienda.setDireccion(intent.getExtras().getString(this.getString(R.string.direccion)));
-	        	vivienda.setTelefonoContacto(intent.getExtras().getString(this.getString(R.string.telefonoContacto)));
-	        	if(gps.canGetLocation()){
-	                vivienda.setLatitud(BigDecimal.valueOf(gps.getLatitude()));
-	                vivienda.setLongitud(BigDecimal.valueOf(gps.getLongitude()));
-	        	}
-	        	MovilInfo mi = new MovilInfo('0', infoMovil.getDeviceId());
-	        	vivienda.setMovilinfo(mi);
-	        	VigentoAdapter va = new VigentoAdapter();
-	        	va.open();
-	        	String filtro = ConstantsDB.COM_CODIGO + "='" + codComunidad + "'";
-	        	Comunidades comunidad = va.getComunidad(filtro, null);
-	        	vivienda.setComunidad(comunidad);
-	        	vivienda.setIdVivienda(infoMovil.getId());
-	        	va.crearVivienda(vivienda);
-	        	va.close();*/
+	        	String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+	    		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+	    		estudiosAdapter.open();
+	    		Estudio estudio = new Estudio();
+	    		estudio.setCodigo(1);
+	    		estudio.setNombre("Cohorte Influenza");
+	        	PreTamizaje preTamizaje =  new PreTamizaje();
+	        	String acepta = intent.getExtras().getString(this.getString(R.string.aceptaTamizaje));
+	        	preTamizaje.setAceptaTamizaje(acepta.charAt(0));
+	        	preTamizaje.setCasa(casa);
+	        	preTamizaje.setEstudio(estudio);
+	        	//estudiosAdapter.crearPreTamizaje(preTamizaje);
+	        	estudiosAdapter.close();
 	        }
 	        else{
 	        	
@@ -151,12 +147,12 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 	/**
 	 * 
 	 */
-	private void addVivienda() {
+	private void addPretamizaje() {
 		try{
 			Intent i = new Intent(getApplicationContext(),
 					DataEnterActivity.class);
 			i.putExtra(Constants.FORM_NAME, Constants.FORM_NUEVO_TAMIZAJE_CASA);
-			startActivityForResult(i , ADD_VIVIENDA);
+			startActivityForResult(i , ADD_PRETAMIZAJE);
 		}
 		catch(Exception e){
 			Log.e(TAG, e.getMessage(), e);

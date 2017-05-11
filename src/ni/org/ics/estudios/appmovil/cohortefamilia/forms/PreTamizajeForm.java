@@ -1,25 +1,45 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.forms;
 
+import java.util.List;
+
+import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.PageList;
-import ni.org.ics.estudios.appmovil.wizard.model.TextPage;
+import ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage;
 import android.content.Context;
 
 public class PreTamizajeForm extends AbstractWizardModel {
+	
 	int index = 0;
+	private String[] catSiNo;
 	private PreTamizajeFormLabels labels;
 	public static final String nombreForm = Constants.FORM_NUEVO_TAMIZAJE_CASA;
-    public PreTamizajeForm(Context context) {    	
-        super(context);
+	private EstudiosAdapter estudiosAdapter;
+	
+    public PreTamizajeForm(Context context, String pass) {    	
+        super(context,pass);
     }
 
     @Override
     protected PageList onNewRootPageList() {
-    	labels = new PreTamizajeFormLabels();	
+    	labels = new PreTamizajeFormLabels();
+    	this.estudiosAdapter = new EstudiosAdapter(mContext,mPass,false,false);
+    	estudiosAdapter.open();
+		List<MessageResource> mCatSiNo = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CAT_SINO'", CatalogosDBConstants.order);
+		catSiNo = new String[mCatSiNo.size()];
+		index = 0;
+		for (MessageResource message: mCatSiNo){
+			catSiNo[index] = message.getSpanish();
+			index++;
+		}
+		estudiosAdapter.close();
         return new PageList(
-        		new TextPage(this, labels.getAceptaTamizaje(), labels.getAceptaTamizajeHint(),Constants.WIZARD)
-        			.setPatternValidation(true, ".{2,50}").setRequired(false)
+        		new SingleFixedChoicePage(this,labels.getAceptaTamizaje(),labels.getAceptaTamizajeHint(),Constants.WIZARD)
+                .setChoices(catSiNo)
+                .setRequired(true)
         );
     }
 

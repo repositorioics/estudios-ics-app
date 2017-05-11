@@ -37,6 +37,7 @@ public class CatalogosDBConstants {
 			+ MainDBConstants.recordDate + " date, " 
 			+ MainDBConstants.recordUser + " text, "
 			+ MainDBConstants.pasive + " text, "
+			+ MainDBConstants.estado + " text, "
 			+ MainDBConstants.deviceId + " text, "
 			+ "primary key (" + codigo + "));";
 	
@@ -51,6 +52,7 @@ public class CatalogosDBConstants {
 			+ MainDBConstants.recordDate + " date, " 
 			+ MainDBConstants.recordUser + " text, "
 			+ MainDBConstants.pasive + " text, "
+			+ MainDBConstants.estado + " text, "
 			+ MainDBConstants.deviceId + " text, "
 			+ "primary key (" + codigo + "));";	
 	
@@ -61,7 +63,7 @@ public class CatalogosDBConstants {
 	public static final String catRoot = "catRoot";
 	public static final String catKey = "catKey";
 	public static final String isCat = "isCat";
-	public static final String order = "order";
+	public static final String order = "orden";
 	public static final String spanish = "spanish";
 	public static final String english = "english";
 	

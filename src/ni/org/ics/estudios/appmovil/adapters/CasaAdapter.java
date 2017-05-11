@@ -38,7 +38,7 @@ public class CasaAdapter extends ArrayAdapter<Casa> {
 			
 			textView = (TextView) v.findViewById(R.id.der_text);
 			if (textView != null) {
-				textView.setText(this.getContext().getString(R.string.barrio) + ": " + p.getBarrio().getNombre() + " " + this.getContext().getString(R.string.manzana) + ": " + p.getManzana());
+				textView.setText(this.getContext().getString(R.string.barrio) + ": " + p.getBarrio().getNombre() + " , " + this.getContext().getString(R.string.manzana) + ": " + p.getManzana());
 			}
 
 			textView = (TextView) v.findViewById(R.id.name_text);

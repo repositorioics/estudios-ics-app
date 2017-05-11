@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ni.org.ics.estudios.appmovil.catalogs.Barrio;
+import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
@@ -56,7 +57,12 @@ public class EstudiosAdapter {
 			db.execSQL(CatalogosDBConstants.CREATE_MESSAGES_TABLE);
 			db.execSQL(CatalogosDBConstants.CREATE_BARRIO_TABLE);
 			db.execSQL(CatalogosDBConstants.CREATE_ESTUDIO_TABLE);
-			db.execSQL(MainDBConstants.CREATE_CASA_TABLE);
+			db.execSQL(MainDBConstants.CREATE_CASA_TABLE); 
+			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
+			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");
+			db.execSQL("INSERT INTO `casas` (`CODIGO`, `IDENTIFICADOR_EQUIPO`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `apellido1JefeFamilia`, `apellido2JefeFamilia`, `DIRECCION`, `MANZANA`, `nombre1JefeFamilia`, `nombre2JefeFamilia`, `barrio`) VALUES (1, 'server', '1', '0', '2017-05-10 11:22:29', 'admin', 'Lopez', 'Martinez', 'sfgsgsgsd', '3', 'Pedro', 'Ramon', 1)");
+			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('no', '0', 'CAT_SINO', NULL, '0', 2, '0', 'No');");
+			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('yes', '1', 'CAT_SINO', NULL, '0', 1, '0', 'Si');");
 		}
 
 		@Override
@@ -280,6 +286,57 @@ public class EstudiosAdapter {
 		}
 		if (!cursorCasas.isClosed()) cursorCasas.close();
 		return mCasas;
+	}
+	
+	
+	/**
+	 * Metodos para mensajes en la base de datos
+	 * 
+	 * @param MessageResource
+	 *            Objeto MessageResource que contiene la informacion
+	 *
+	 */
+	//Crear nuevo MessageResource en la base de datos
+	public void crearMessageResource(MessageResource mensaje) {
+		ContentValues cv = MessageResourceHelper.crearMessageResourceValues(mensaje);
+		mDb.insert(CatalogosDBConstants.MESSAGES_TABLE, null, cv);
+	}
+	//Editar MessageResource existente en la base de datos
+	public boolean editarMessageResource(MessageResource mensaje) {
+		ContentValues cv = MessageResourceHelper.crearMessageResourceValues(mensaje);
+		return mDb.update(CatalogosDBConstants.MESSAGES_TABLE , cv, CatalogosDBConstants.messageKey + "='" 
+				+ mensaje.getMessageKey() + "'", null) > 0;
+	}
+	//Limpiar la tabla de MessageResource de la base de datos
+	public boolean borrarMessageResource() {
+		return mDb.delete(CatalogosDBConstants.MESSAGES_TABLE, null, null) > 0;
+	}
+	//Obtener un MessageResource de la base de datos
+	public MessageResource getMessageResource(String filtro, String orden) throws SQLException {
+		MessageResource mMessageResource = null;
+		Cursor cursorMessageResource = crearCursor(CatalogosDBConstants.MESSAGES_TABLE , filtro, null, orden);
+		if (cursorMessageResource != null && cursorMessageResource.getCount() > 0) {
+			cursorMessageResource.moveToFirst();
+			mMessageResource=MessageResourceHelper.crearMessageResource(cursorMessageResource);
+		}
+		if (!cursorMessageResource.isClosed()) cursorMessageResource.close();
+		return mMessageResource;
+	}
+	//Obtener una lista de MessageResource de la base de datos
+	public List<MessageResource> getMessageResources(String filtro, String orden) throws SQLException {
+		List<MessageResource> mMessageResources = new ArrayList<MessageResource>();
+		Cursor cursorMessageResources = crearCursor(CatalogosDBConstants.MESSAGES_TABLE, filtro, null, orden);
+		if (cursorMessageResources != null && cursorMessageResources.getCount() > 0) {
+			cursorMessageResources.moveToFirst();
+			mMessageResources.clear();
+			do{
+				MessageResource mMessageResource = null;
+				mMessageResource = MessageResourceHelper.crearMessageResource(cursorMessageResources);
+				mMessageResources.add(mMessageResource);
+			} while (cursorMessageResources.moveToNext());
+		}
+		if (!cursorMessageResources.isClosed()) cursorMessageResources.close();
+		return mMessageResources;
 	}
 
 }

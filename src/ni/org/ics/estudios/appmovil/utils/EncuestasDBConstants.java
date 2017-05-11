@@ -284,8 +284,8 @@ public class EncuestasDBConstants {
     public static final String ENCUESTA_PARTICIPANTE_TABLE = "encuestas_participante";
 
     //campos tabla EncuestaParticipante
-    public static final String enmancipado = "enmancipado";
-    public static final String motivoEnmacipacion = "motivoEnmacipacion";
+    public static final String emancipado = "emancipado";
+    public static final String motivoEmacipacion = "motivoEmacipacion";
     public static final String otroMotivoEmancipacion = "otroMotivoEmancipacion";
     public static final String estaEmbarazada = "estaEmbarazada";
     public static final String semanasEmbarazo = "semanasEmbarazo";
@@ -353,8 +353,8 @@ public class EncuestasDBConstants {
     public static final String CREATE_ENCUESTA_PARTICIPANTE_TABLE = "create table if not exists "
             + ENCUESTA_PARTICIPANTE_TABLE + " ("
             + participante + " integer not null, "
-            + enmancipado  + " text, "
-            + motivoEnmacipacion  + " text, "
+            + emancipado  + " text, "
+            + motivoEmacipacion  + " text, "
             + otroMotivoEmancipacion  + " text, "
             + estaEmbarazada  + " text, "
             + semanasEmbarazo  + " integer, "

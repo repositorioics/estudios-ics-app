@@ -15,8 +15,8 @@ public class EncuestaParticipante extends BaseMetaData {
 	private static final long serialVersionUID = 1L;
 	private Participante participante;
     //Adulto   (Mayores o igual a 18 años; Mujeres menores de 18 años con niños o embarazadas)
-    private char enmancipado;
-    private String motivoEnmacipacion;
+    private char emancipado;
+    private String motivoEmacipacion;
     private String otroMotivoEmancipacion;
     private char estaEmbarazada;
     private Integer semanasEmbarazo;
@@ -88,20 +88,20 @@ public class EncuestaParticipante extends BaseMetaData {
         this.participante = participante;
     }
 
-    public char getEnmancipado() {
-        return enmancipado;
+    public char getEmancipado() {
+        return emancipado;
     }
 
-    public void setEnmancipado(char enmancipado) {
-        this.enmancipado = enmancipado;
+    public void setEmancipado(char emancipado) {
+        this.emancipado = emancipado;
     }
 
-    public String getMotivoEnmacipacion() {
-        return motivoEnmacipacion;
+    public String getMotivoEmacipacion() {
+        return motivoEmacipacion;
     }
 
-    public void setMotivoEnmacipacion(String motivoEnmacipacion) {
-        this.motivoEnmacipacion = motivoEnmacipacion;
+    public void setMotivoEmacipacion(String motivoEmacipacion) {
+        this.motivoEmacipacion = motivoEmacipacion;
     }
 
     public String getOtroMotivoEmancipacion() {

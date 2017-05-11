@@ -9,5 +9,10 @@
         <item>@string/new_screen</item>
         <item>@string/casa_search</item>
     </string-array>
+
+    <string-array name="menu_casa">
+        <item>@string/new_screen_per</item>
+        <item>@string/new_survey_1</item>
+    </string-array>
     
 </resources>

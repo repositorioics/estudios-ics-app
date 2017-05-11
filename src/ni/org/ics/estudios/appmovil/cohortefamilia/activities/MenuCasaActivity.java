@@ -1,17 +1,11 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
-import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
-import ni.org.ics.estudios.appmovil.MainActivity;
-
-import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCohorteFamiliaAdapter;
-
-import android.os.Build;
-import android.os.Bundle;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,12 +13,17 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
+import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
+import ni.org.ics.estudios.appmovil.MainActivity;
+import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajePersonaActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCasaAdapter;
 
-public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
+public class MenuCasaActivity extends AbstractAsyncActivity {
 
 	private GridView gridView;
 	private TextView textView;
-	private String[] menu_cohorte_familia;
+	private String[] menu_casa;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -39,11 +38,11 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 		}
 		textView = (TextView) findViewById(R.id.label);
 		gridView = (GridView) findViewById(R.id.gridView1);
-		menu_cohorte_familia = getResources().getStringArray(R.array.menu_cohorte_familia);
+		menu_casa = getResources().getStringArray(R.array.menu_casa);
 		textView.setText("");
 		textView.setTextColor(Color.BLACK);
-		textView.setText(getString(R.string.main_1));
-		gridView.setAdapter(new MenuCohorteFamiliaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_cohorte_familia));
+		textView.setText(getString(R.string.main_1) + " / " + getString(R.string.casa));
+		gridView.setAdapter(new MenuCasaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_casa));
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
@@ -52,16 +51,10 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 				switch (position){
 				case 0:
 					i = new Intent(getApplicationContext(),
-							BuscarCasaActivity.class);
+							NuevoTamizajePersonaActivity.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);
 		        	break;
-                    case 1:
-                        i = new Intent(getApplicationContext(),
-                                BuscarCasaCHFActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
-                        break;
 				
 				default:
 					

@@ -7,4 +7,8 @@
     <string name="aceptaTamizajeHint">Pregunte si el jefe de familia permite realizar tamizaje a los miembros de este hogar.</string>
     <string name="razonNoParticipa">Porque razón no desea participar?</string>
     <string name="razonNoParticipaHint">Pregunte cual es la razón por la que no desea que su casa participe en el estudio.</string>
+
+    <string name="new_screen_per">Nuevo Tamizaje Persona</string>
+    <string name="new_survey_1">Nueva Encuesta Participante</string>
+    
 </resources>

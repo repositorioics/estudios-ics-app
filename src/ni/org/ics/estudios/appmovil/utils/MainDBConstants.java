@@ -421,5 +421,5 @@ public class MainDBConstants {
             + pasive + " text, "
             + deviceId + " text, "
             + estado + " text not null, "
-            + "primary key (" + codigoCama + "));";
+            + "primary key (" + codigoCHF + "));";
 }

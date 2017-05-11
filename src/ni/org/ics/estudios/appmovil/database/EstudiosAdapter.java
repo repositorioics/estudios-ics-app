@@ -13,6 +13,7 @@ import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.domain.Casa;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
@@ -61,6 +62,7 @@ public class EstudiosAdapter {
 			db.execSQL(CatalogosDBConstants.CREATE_ESTUDIO_TABLE);
 			db.execSQL(MainDBConstants.CREATE_CASA_TABLE); 
 			db.execSQL(MainDBConstants.CREATE_PRETAMIZAJE_TABLE);
+            db.execSQL(MainDBConstants.CREATE_CASA_CHF_TABLE);
 			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
 			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");
 			db.execSQL("INSERT INTO `casas` (`CODIGO`, `IDENTIFICADOR_EQUIPO`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `apellido1JefeFamilia`, `apellido2JefeFamilia`, `DIRECCION`, `MANZANA`, `nombre1JefeFamilia`, `nombre2JefeFamilia`, `barrio`) VALUES (1, 'server', '1', '0', '2017-05-10 11:22:29', 'admin', 'Lopez', 'Martinez', 'sfgsgsgsd', '3', 'Pedro', 'Ramon', 1)");
@@ -68,6 +70,7 @@ public class EstudiosAdapter {
 			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('yes', '1', 'CAT_SINO', NULL, '0', 1, '0', 'Si');");
 			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('noquiere', 'NQ', 'CAT_RAZON_NP', NULL, '0', 2, '0', 'No quiere participar');");
 			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('nomuestra', 'NM', 'CAT_RAZON_NP', NULL, '0', 1, '0', 'No quiere que le tomen muestras');");
+            db.execSQL("INSERT INTO `chf_casas_cohorte_familia` (`codigoCHF`, `IDENTIFICADOR_EQUIPO`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `apellido1JefeFamilia`, `apellido2JefeFamilia`, `nombre1JefeFamilia`, `nombre2JefeFamilia`, `casa`) VALUES ('1', 'server', '1', '0', '2017-05-10 11:22:29', 'admin', 'Lopez', 'Martinez', 'Pedro', 'Ramon', 1)");
 		}
 
 		@Override
@@ -348,7 +351,7 @@ public class EstudiosAdapter {
 	/**
 	 * Metodos para mensajes en la base de datos
 	 * 
-	 * @param MessageResource
+	 * @param mensaje
 	 *            Objeto MessageResource que contiene la informacion
 	 *
 	 */
@@ -467,6 +470,41 @@ public class EstudiosAdapter {
 		}
 		if (!cursorPreTamizajes.isClosed()) cursorPreTamizajes.close();
 		return mPreTamizajes;
-	}	
+	}
+
+    /**
+     * Metodos para pretamizajes en la base de datos
+     *
+     */
+    //Obtener una lista de casas en la cohorte familiar de la base de datos
+    public List<CasaCohorteFamilia> getCasasCHF(String filtro, String orden) throws SQLException {
+        List<CasaCohorteFamilia> mCasas = new ArrayList<CasaCohorteFamilia>();
+        Cursor cursorCasas = crearCursor(MainDBConstants.CASA_CHF_TABLE, filtro, null, orden);
+        if (cursorCasas != null && cursorCasas.getCount() > 0) {
+            cursorCasas.moveToFirst();
+            mCasas.clear();
+            do{
+                CasaCohorteFamilia mCasaCHF = null;
+                mCasaCHF = CasaCohorteFamiliaHelper.crearCasaCHF(cursorCasas);
+                Cursor cursorCasa = crearCursor(MainDBConstants.CASA_TABLE , MainDBConstants.codigo + "=" +cursorCasas.getInt(cursorCasas.getColumnIndex(MainDBConstants.casa)), null, null);
+                cursorCasa.moveToFirst();
+                if (cursorCasa != null && cursorCasa.getCount() > 0) {
+                    mCasaCHF.setCasa(CasaHelper.crearCasa(cursorCasa));
+                    /*Cursor cursorBarrio = crearCursor(CatalogosDBConstants.BARRIO_TABLE , MainDBConstants.codigo + "=" +cursorCasas.getInt(cursorCasas.getColumnIndex(MainDBConstants.barrio)), null, null);
+                    cursorBarrio.moveToFirst();
+                    if (cursorBarrio != null && cursorBarrio.getCount() > 0) {
+                        mCasaCHF.getCasa().setBarrio(BarrioHelper.crearBarrio(cursorBarrio));
+                    }
+                    if (!cursorBarrio.isClosed()) cursorBarrio.close();
+                    */
+
+                }
+                if (!cursorCasa.isClosed()) cursorCasa.close();
+                mCasas.add(mCasaCHF);
+            } while (cursorCasas.moveToNext());
+        }
+        if (!cursorCasas.isClosed()) cursorCasas.close();
+        return mCasas;
+    }
 
 }

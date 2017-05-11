@@ -32,7 +32,11 @@ public class ParticipanteHelper {
         cv.put(MainDBConstants.apellido1Madre, participante.getApellido1Madre());
         cv.put(MainDBConstants.apellido2Madre, participante.getApellido2Madre());
         if (participante.getCasa() != null) cv.put(MainDBConstants.casa, participante.getCasa().getCodigo());
+        if (participante.getRecordDate() != null) cv.put(MainDBConstants.recordDate, participante.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, participante.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(participante.getPasive()));
         cv.put(MainDBConstants.estado, String.valueOf(participante.getEstado()));
+        cv.put(MainDBConstants.deviceId, participante.getDeviceid());
 
         return cv;
     }
@@ -56,7 +60,11 @@ public class ParticipanteHelper {
         mParticipante.setApellido1Madre(cursor.getString(cursor.getColumnIndex(MainDBConstants.apellido1Madre)));
         mParticipante.setApellido2Madre(cursor.getString(cursor.getColumnIndex(MainDBConstants.apellido2Madre)));
         mParticipante.setCasa(null);
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mParticipante.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        mParticipante.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        mParticipante.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
         mParticipante.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mParticipante.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 
         return mParticipante;
     }

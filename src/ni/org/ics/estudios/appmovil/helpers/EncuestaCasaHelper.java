@@ -90,90 +90,98 @@ public class EncuestaCasaHelper {
         cv.put(EncuestasDBConstants.cantidadCigarrilosMadre, encuesta.getCantidadCigarrilosMadre()); // diarios
         cv.put(EncuestasDBConstants.cantidadCigarrillosPadre, encuesta.getCantidadCigarrillosPadre()); // diarios
         cv.put(EncuestasDBConstants.cantidadCigarrillosOtros, encuesta.getCantidadCigarrillosOtros()); // diarios
+        if (encuesta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, encuesta.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, encuesta.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(encuesta.getPasive()));
         cv.put(MainDBConstants.estado, String.valueOf(encuesta.getEstado()));
+        cv.put(MainDBConstants.deviceId, encuesta.getDeviceid());
 
         return cv;
     }
 
     public static EncuestaCasa crearEncuestaCasa(Cursor cursor){
-        EncuestaCasa encuesta = new EncuestaCasa();
+        EncuestaCasa mEncuesta = new EncuestaCasa();
 
-        encuesta.setCasa(null);
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartos)) > 0) encuesta.setCantidadCuartos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartos)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartosDormir)) > 0) encuesta.setCantidadCuartosDormir(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartosDormir)));
-        if (cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaEncuestas))>0) encuesta.setFechaEncuestas(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaEncuestas))));
-        encuesta.setEncuestador(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.encuestador)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.hrsSinServicioAgua)) > 0) encuesta.setHrsSinServicioAgua(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.hrsSinServicioAgua)));
-        encuesta.setUbicacionLlaveAgua(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ubicacionLlaveAgua)));
-        encuesta.setLlaveCompartida(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.llaveCompartida)).charAt(0));
-        encuesta.setAlmacenaAgua(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaAgua)).charAt(0));
-        encuesta.setAlmacenaEnBarriles(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaEnBarriles)).charAt(0));
-        encuesta.setAlmacenaEnTanques(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaEnTanques)).charAt(0));
-        encuesta.setAlmacenaEnPilas(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaEnPilas)).charAt(0));
-        encuesta.setAlmacenaOtrosRecipientes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaOtrosRecipientes)).charAt(0));
-        encuesta.setOtrosRecipientes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrosRecipientes)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numBarriles)) > 0) encuesta.setNumBarriles(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numBarriles)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numTanques)) > 0) encuesta.setNumTanques(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numTanques)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numPilas)) > 0) encuesta.setNumPilas(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numPilas)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numOtrosRecipientes)) > 0) encuesta.setNumOtrosRecipientes(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numOtrosRecipientes)));
-        encuesta.setBarrilesTapados(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.barrilesTapados)).charAt(0));
-        encuesta.setTanquesTapados(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tanquesTapados)).charAt(0));
-        encuesta.setPilasTapadas(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pilasTapadas)).charAt(0));
-        encuesta.setOtrosRecipientesTapados(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrosRecipientesTapados)).charAt(0));
-        encuesta.setBarrilesConAbate(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.barrilesConAbate)).charAt(0));
-        encuesta.setTanquesConAbate(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tanquesConAbate)).charAt(0));
-        encuesta.setPilasConAbate(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pilasConAbate)).charAt(0));
-        encuesta.setOtrosRecipientesConAbate(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrosRecipientesConAbate)).charAt(0));
-        encuesta.setUbicacionLavandero(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ubicacionLavandero)));
-        encuesta.setMaterialParedes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.materialParedes)));
-        encuesta.setMaterialPiso(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.materialPiso)));
-        encuesta.setMaterialTecho(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.materialTecho)));
-        encuesta.setOtroMaterialParedes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroMaterialParedes)));
-        encuesta.setOtroMaterialPiso(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroMaterialPiso)));
-        encuesta.setOtroMaterialTecho(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroMaterialTecho)));
-        encuesta.setCasaPropia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.casaPropia)).charAt(0));
-        encuesta.setTieneAbanico(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneAbanico)).charAt(0));
-        encuesta.setTieneTelevisor(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneTelevisor)).charAt(0));
-        encuesta.setTieneRefrigerador(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneRefrigerador)).charAt(0));
-        encuesta.setTienAireAcondicionado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tienAireAcondicionado)).charAt(0));
-        encuesta.setAireAcondicionadoFuncionando(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.aireAcondicionadoFuncionando)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numAbanicos)) > 0) encuesta.setNumAbanicos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numAbanicos)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numTelevisores)) > 0) encuesta.setNumTelevisores(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numTelevisores)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numRefrigeradores)) > 0) encuesta.setNumRefrigeradores(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numRefrigeradores)));
-        encuesta.setTieneMoto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneMoto)).charAt(0));
-        encuesta.setTieneCarro(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneCarro)).charAt(0));
-        encuesta.setTienMicrobus(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tienMicrobus)).charAt(0));
-        encuesta.setTieneCamioneta(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneCamioneta)).charAt(0));
-        encuesta.setTieneCamion(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneCamion)).charAt(0));
-        encuesta.setTieneOtroMedioTransAuto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneOtroMedioTransAuto)).charAt(0));
-        encuesta.setOtroMedioTransAuto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroMedioTransAuto)));
-        encuesta.setCocinaConLenia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.cocinaConLenia)).charAt(0));
-        encuesta.setUbicacionCocinaLenia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ubicacionCocinaLenia)));
-        encuesta.setPeriodicidadCocinaLenia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.periodicidadCocinaLenia)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numDiarioCocinaLenia)) > 0) encuesta.setNumDiarioCocinaLenia(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numDiarioCocinaLenia)));   //# de veces que cocina
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numSemanalCocinaLenia)) > 0) encuesta.setNumSemanalCocinaLenia(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numSemanalCocinaLenia)));  //# de veces que cocina semanalmente
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numQuincenalCocinaLenia)) > 0) encuesta.setNumQuincenalCocinaLenia(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numQuincenalCocinaLenia)));    //# de veces que cocina quincenalmente
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numMensualCocinaLenia)) > 0) encuesta.setNumMensualCocinaLenia(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numMensualCocinaLenia)));  //# de veces que cocina al mes
-        encuesta.setTieneAnimales(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneAnimales)).charAt(0));
-        encuesta.setTieneGallinas(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneGallinas)).charAt(0));
-        encuesta.setTienePatos(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tienePatos)).charAt(0));
-        encuesta.setTieneCerdos(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneCerdos)).charAt(0));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadGallinas)) > 0) encuesta.setCantidadGallinas(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadGallinas)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadPatos)) > 0) encuesta.setCantidadPatos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadPatos)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCerdos)) > 0) encuesta.setCantidadCerdos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCerdos)));
-        encuesta.setGallinasDentroCasa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.gallinasDentroCasa)).charAt(0));
-        encuesta.setPatosDentroCasa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.patosDentroCasa)).charAt(0));
-        encuesta.setCerdosDentroCasa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.cerdosDentroCasa)).charAt(0));
-        encuesta.setPersonaFumaDentroCasa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.personaFumaDentroCasa)).charAt(0));  //Alguna persona que no pertenece al estudio fuma dentro de la casa
-        encuesta.setMadreFuma(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.madreFuma)).charAt(0));
-        encuesta.setPadreFuma(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.padreFuma)).charAt(0));
-        encuesta.setOtrosFuman(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrosFuman)).charAt(0));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadOtrosFuman)) > 0) encuesta.setCantidadOtrosFuman(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadOtrosFuman)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrilosMadre)) > 0) encuesta.setCantidadCigarrilosMadre(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrilosMadre))); // diarios
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrillosPadre)) > 0) encuesta.setCantidadCigarrillosPadre(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrillosPadre))); // diarios
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrillosOtros)) > 0) encuesta.setCantidadCigarrillosOtros(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrillosOtros))); // diarios
-        encuesta.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mEncuesta.setCasa(null);
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartos)) > 0) mEncuesta.setCantidadCuartos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartos)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartosDormir)) > 0) mEncuesta.setCantidadCuartosDormir(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartosDormir)));
+        if (cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaEncuestas))>0) mEncuesta.setFechaEncuestas(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaEncuestas))));
+        mEncuesta.setEncuestador(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.encuestador)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.hrsSinServicioAgua)) > 0) mEncuesta.setHrsSinServicioAgua(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.hrsSinServicioAgua)));
+        mEncuesta.setUbicacionLlaveAgua(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ubicacionLlaveAgua)));
+        mEncuesta.setLlaveCompartida(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.llaveCompartida)).charAt(0));
+        mEncuesta.setAlmacenaAgua(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaAgua)).charAt(0));
+        mEncuesta.setAlmacenaEnBarriles(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaEnBarriles)).charAt(0));
+        mEncuesta.setAlmacenaEnTanques(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaEnTanques)).charAt(0));
+        mEncuesta.setAlmacenaEnPilas(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaEnPilas)).charAt(0));
+        mEncuesta.setAlmacenaOtrosRecipientes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaOtrosRecipientes)).charAt(0));
+        mEncuesta.setOtrosRecipientes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrosRecipientes)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numBarriles)) > 0) mEncuesta.setNumBarriles(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numBarriles)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numTanques)) > 0) mEncuesta.setNumTanques(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numTanques)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numPilas)) > 0) mEncuesta.setNumPilas(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numPilas)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numOtrosRecipientes)) > 0) mEncuesta.setNumOtrosRecipientes(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numOtrosRecipientes)));
+        mEncuesta.setBarrilesTapados(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.barrilesTapados)).charAt(0));
+        mEncuesta.setTanquesTapados(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tanquesTapados)).charAt(0));
+        mEncuesta.setPilasTapadas(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pilasTapadas)).charAt(0));
+        mEncuesta.setOtrosRecipientesTapados(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrosRecipientesTapados)).charAt(0));
+        mEncuesta.setBarrilesConAbate(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.barrilesConAbate)).charAt(0));
+        mEncuesta.setTanquesConAbate(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tanquesConAbate)).charAt(0));
+        mEncuesta.setPilasConAbate(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pilasConAbate)).charAt(0));
+        mEncuesta.setOtrosRecipientesConAbate(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrosRecipientesConAbate)).charAt(0));
+        mEncuesta.setUbicacionLavandero(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ubicacionLavandero)));
+        mEncuesta.setMaterialParedes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.materialParedes)));
+        mEncuesta.setMaterialPiso(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.materialPiso)));
+        mEncuesta.setMaterialTecho(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.materialTecho)));
+        mEncuesta.setOtroMaterialParedes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroMaterialParedes)));
+        mEncuesta.setOtroMaterialPiso(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroMaterialPiso)));
+        mEncuesta.setOtroMaterialTecho(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroMaterialTecho)));
+        mEncuesta.setCasaPropia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.casaPropia)).charAt(0));
+        mEncuesta.setTieneAbanico(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneAbanico)).charAt(0));
+        mEncuesta.setTieneTelevisor(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneTelevisor)).charAt(0));
+        mEncuesta.setTieneRefrigerador(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneRefrigerador)).charAt(0));
+        mEncuesta.setTienAireAcondicionado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tienAireAcondicionado)).charAt(0));
+        mEncuesta.setAireAcondicionadoFuncionando(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.aireAcondicionadoFuncionando)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numAbanicos)) > 0) mEncuesta.setNumAbanicos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numAbanicos)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numTelevisores)) > 0) mEncuesta.setNumTelevisores(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numTelevisores)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numRefrigeradores)) > 0) mEncuesta.setNumRefrigeradores(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numRefrigeradores)));
+        mEncuesta.setTieneMoto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneMoto)).charAt(0));
+        mEncuesta.setTieneCarro(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneCarro)).charAt(0));
+        mEncuesta.setTienMicrobus(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tienMicrobus)).charAt(0));
+        mEncuesta.setTieneCamioneta(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneCamioneta)).charAt(0));
+        mEncuesta.setTieneCamion(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneCamion)).charAt(0));
+        mEncuesta.setTieneOtroMedioTransAuto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneOtroMedioTransAuto)).charAt(0));
+        mEncuesta.setOtroMedioTransAuto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroMedioTransAuto)));
+        mEncuesta.setCocinaConLenia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.cocinaConLenia)).charAt(0));
+        mEncuesta.setUbicacionCocinaLenia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ubicacionCocinaLenia)));
+        mEncuesta.setPeriodicidadCocinaLenia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.periodicidadCocinaLenia)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numDiarioCocinaLenia)) > 0) mEncuesta.setNumDiarioCocinaLenia(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numDiarioCocinaLenia)));   //# de veces que cocina
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numSemanalCocinaLenia)) > 0) mEncuesta.setNumSemanalCocinaLenia(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numSemanalCocinaLenia)));  //# de veces que cocina semanalmente
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numQuincenalCocinaLenia)) > 0) mEncuesta.setNumQuincenalCocinaLenia(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numQuincenalCocinaLenia)));    //# de veces que cocina quincenalmente
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numMensualCocinaLenia)) > 0) mEncuesta.setNumMensualCocinaLenia(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numMensualCocinaLenia)));  //# de veces que cocina al mes
+        mEncuesta.setTieneAnimales(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneAnimales)).charAt(0));
+        mEncuesta.setTieneGallinas(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneGallinas)).charAt(0));
+        mEncuesta.setTienePatos(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tienePatos)).charAt(0));
+        mEncuesta.setTieneCerdos(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneCerdos)).charAt(0));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadGallinas)) > 0) mEncuesta.setCantidadGallinas(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadGallinas)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadPatos)) > 0) mEncuesta.setCantidadPatos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadPatos)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCerdos)) > 0) mEncuesta.setCantidadCerdos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCerdos)));
+        mEncuesta.setGallinasDentroCasa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.gallinasDentroCasa)).charAt(0));
+        mEncuesta.setPatosDentroCasa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.patosDentroCasa)).charAt(0));
+        mEncuesta.setCerdosDentroCasa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.cerdosDentroCasa)).charAt(0));
+        mEncuesta.setPersonaFumaDentroCasa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.personaFumaDentroCasa)).charAt(0));  //Alguna persona que no pertenece al estudio fuma dentro de la casa
+        mEncuesta.setMadreFuma(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.madreFuma)).charAt(0));
+        mEncuesta.setPadreFuma(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.padreFuma)).charAt(0));
+        mEncuesta.setOtrosFuman(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrosFuman)).charAt(0));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadOtrosFuman)) > 0) mEncuesta.setCantidadOtrosFuman(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadOtrosFuman)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrilosMadre)) > 0) mEncuesta.setCantidadCigarrilosMadre(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrilosMadre))); // diarios
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrillosPadre)) > 0) mEncuesta.setCantidadCigarrillosPadre(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrillosPadre))); // diarios
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrillosOtros)) > 0) mEncuesta.setCantidadCigarrillosOtros(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrillosOtros))); // diarios
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mEncuesta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        mEncuesta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        mEncuesta.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
+        mEncuesta.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mEncuesta.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 
-        return encuesta;
+        return mEncuesta;
     }
 }

@@ -7,7 +7,7 @@ package ni.org.ics.estudios.appmovil.utils;
 public class EncuestasDBConstants {
 
     //tabla EncuestaCasa
-    public static final String ENCUESTA_CASA_TABLE = "encuestas_casa";
+    public static final String ENCUESTA_CASA_TABLE = "chf_encuestas_casa";
 
     //campos tabla EncuestaCasa
     public static final String casa = "codigo_casa";
@@ -170,7 +170,7 @@ public class EncuestasDBConstants {
             + "primary key (" + casa + "));";
 
     //tabla EncuestaDatosPartoBB
-    public static final String ENCUESTA_PARTOBB_TABLE = "encuestas_partobb";
+    public static final String ENCUESTA_PARTOBB_TABLE = "chf_encuestas_partobb";
 
     //campos tabla EncuestaDatosPartoBB
     public static final String participante = "codigo_participante";
@@ -231,7 +231,7 @@ public class EncuestasDBConstants {
             + "primary key (" + participante + "));";
 
     //tabla EncuestaLactanciaMaterna
-    public static final String ENCUESTA_LACTANCIAMAT_TABLE = "encuestas_lactancia_materna";
+    public static final String ENCUESTA_LACTANCIAMAT_TABLE = "chf_encuestas_lactancia_materna";
 
     //campos tabla EncuestaLactanciaMaterna
     public static final String edad = "edad";
@@ -281,7 +281,7 @@ public class EncuestasDBConstants {
             + "primary key (" + participante + "));";
 
     //tabla EncuestaParticipante
-    public static final String ENCUESTA_PARTICIPANTE_TABLE = "encuestas_participante";
+    public static final String ENCUESTA_PARTICIPANTE_TABLE = "chf_encuestas_participante";
 
     //campos tabla EncuestaParticipante
     public static final String emancipado = "emancipado";
@@ -422,7 +422,7 @@ public class EncuestasDBConstants {
             + "primary key (" + participante + "));";
 
     //tabla EncuestaPesoTalla
-    public static final String ENCUESTA_PESOTALLA_TABLE = "encuestas_pesotalla";
+    public static final String ENCUESTA_PESOTALLA_TABLE = "chf_encuestas_pesotalla";
 
     //campos tabla EncuestaPesoTalla
     public static final String peso1 = "peso1";
@@ -462,7 +462,7 @@ public class EncuestasDBConstants {
             + "primary key (" + participante + "));";
 
     //tabla EncuestaVacuna
-    public static final String ENCUESTA_VACUNA_TABLE = "encuestas_vacuna";
+    public static final String ENCUESTA_VACUNA_TABLE = "chf_encuestas_vacuna";
 
     //campos tabla EncuestaVacuna
     public static final String vacuna = "vacuna";

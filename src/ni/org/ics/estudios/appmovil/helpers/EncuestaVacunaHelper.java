@@ -34,33 +34,41 @@ public class EncuestaVacunaHelper {
         if (encuesta.getFechaInf9() != null ) cv.put(EncuestasDBConstants.fechaInf9, encuesta.getFechaInf9().getTime());
         if (encuesta.getFechaInf10() != null ) cv.put(EncuestasDBConstants.fechaInf10, encuesta.getFechaInf10().getTime());
         cv.put(EncuestasDBConstants.otrorecurso1, encuesta.getOtrorecurso1());
+        if (encuesta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, encuesta.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, encuesta.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(encuesta.getPasive()));
         cv.put(MainDBConstants.estado, String.valueOf(encuesta.getEstado()));
+        cv.put(MainDBConstants.deviceId, encuesta.getDeviceid());
 
         return cv;
     }
 
     public static EncuestaVacuna crearEncuestaVacuna(Cursor cursor){
-        EncuestaVacuna encuesta = new EncuestaVacuna();
+        EncuestaVacuna mEncuesta = new EncuestaVacuna();
 
-        encuesta.setParticipante(null);
-        if ( cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.vacuna)) > 0) encuesta.setVacuna(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.vacuna)));
-        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaVac)) > 0) encuesta.setFechaVac(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaVac))));
-        encuesta.setTipovacuna(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tipovacuna)));
-        if ( cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.tarjetaSN)) > 0) encuesta.setTarjetaSN(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.tarjetaSN)));
-        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.ndosis)) > 0) encuesta.setNdosis(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.ndosis)));
-        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf1)) > 0) encuesta.setFechaInf1(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf1))));
-        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf2)) > 0) encuesta.setFechaInf2(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf2))));
-        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf3)) > 0) encuesta.setFechaInf3(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf3))));
-        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf4)) > 0) encuesta.setFechaInf4(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf4))));
-        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf5)) > 0) encuesta.setFechaInf5(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf5))));
-        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf6)) > 0) encuesta.setFechaInf6(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf6))));
-        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf7)) > 0) encuesta.setFechaInf7(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf7))));
-        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf8)) > 0) encuesta.setFechaInf8(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf8))));
-        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf9)) > 0) encuesta.setFechaInf9(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf9))));
-        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf10)) > 0) encuesta.setFechaInf10(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf10))));
-        if ( cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)) > 0) encuesta.setOtrorecurso1(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)));
-        encuesta.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mEncuesta.setParticipante(null);
+        if ( cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.vacuna)) > 0) mEncuesta.setVacuna(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.vacuna)));
+        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaVac)) > 0) mEncuesta.setFechaVac(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaVac))));
+        mEncuesta.setTipovacuna(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tipovacuna)));
+        if ( cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.tarjetaSN)) > 0) mEncuesta.setTarjetaSN(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.tarjetaSN)));
+        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.ndosis)) > 0) mEncuesta.setNdosis(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.ndosis)));
+        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf1)) > 0) mEncuesta.setFechaInf1(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf1))));
+        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf2)) > 0) mEncuesta.setFechaInf2(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf2))));
+        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf3)) > 0) mEncuesta.setFechaInf3(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf3))));
+        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf4)) > 0) mEncuesta.setFechaInf4(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf4))));
+        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf5)) > 0) mEncuesta.setFechaInf5(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf5))));
+        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf6)) > 0) mEncuesta.setFechaInf6(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf6))));
+        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf7)) > 0) mEncuesta.setFechaInf7(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf7))));
+        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf8)) > 0) mEncuesta.setFechaInf8(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf8))));
+        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf9)) > 0) mEncuesta.setFechaInf9(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf9))));
+        if ( cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf10)) > 0) mEncuesta.setFechaInf10(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fechaInf10))));
+        if ( cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)) > 0) mEncuesta.setOtrorecurso1(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)));
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mEncuesta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        mEncuesta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        mEncuesta.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
+        mEncuesta.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mEncuesta.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 
-        return encuesta;
+        return mEncuesta;
     }
 }

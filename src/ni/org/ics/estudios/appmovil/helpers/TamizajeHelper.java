@@ -35,7 +35,11 @@ public class TamizajeHelper {
         cv.put(MainDBConstants.tomaPuntoGPSCasa, String.valueOf(tamizaje.getTomaPuntoGPSCasa()));
         cv.put(MainDBConstants.razonNoGeoreferenciacion, tamizaje.getRazonNoGeoreferenciacion());
         cv.put(MainDBConstants.otraRazonNoGeoreferenciacion, tamizaje.getOtraRazonNoGeoreferenciacion());
+        if (tamizaje.getRecordDate() != null) cv.put(MainDBConstants.recordDate, tamizaje.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, tamizaje.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(tamizaje.getPasive()));
         cv.put(MainDBConstants.estado, String.valueOf(tamizaje.getEstado()));
+        cv.put(MainDBConstants.deviceId, tamizaje.getDeviceid());
 
         return cv;
     }
@@ -63,7 +67,11 @@ public class TamizajeHelper {
         mTamizaje.setTomaPuntoGPSCasa(cursor.getString(cursor.getColumnIndex(MainDBConstants.tomaPuntoGPSCasa)).charAt(0));
         mTamizaje.setRazonNoGeoreferenciacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonNoGeoreferenciacion)));
         mTamizaje.setOtraRazonNoGeoreferenciacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraRazonNoGeoreferenciacion)));
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mTamizaje.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        mTamizaje.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        mTamizaje.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
         mTamizaje.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mTamizaje.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 
         return mTamizaje;
     }

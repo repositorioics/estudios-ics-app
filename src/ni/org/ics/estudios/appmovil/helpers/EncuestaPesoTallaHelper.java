@@ -7,6 +7,8 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaPeso
 import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
+import java.util.Date;
+
 /**
  * Created by Miguel Salinas on 5/10/2017.
  * V1.0
@@ -30,30 +32,38 @@ public class EncuestaPesoTallaHelper {
         cv.put(EncuestasDBConstants.difTalla, encuesta.getDifTalla());
         cv.put(EncuestasDBConstants.otrorecurso1, encuesta.getOtrorecurso1());
         cv.put(EncuestasDBConstants.otrorecurso2, encuesta.getOtrorecurso2());
+        if (encuesta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, encuesta.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, encuesta.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(encuesta.getPasive()));
         cv.put(MainDBConstants.estado, String.valueOf(encuesta.getEstado()));
+        cv.put(MainDBConstants.deviceId, encuesta.getDeviceid());
 
         return cv;
     }
 
     public static EncuestaPesoTalla crearEncuestaPesoTalla(Cursor cursor){
-        EncuestaPesoTalla encuesta = new EncuestaPesoTalla();
+        EncuestaPesoTalla mEencuesta = new EncuestaPesoTalla();
 
-        encuesta.setParticipante(null);
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.peso1)) > 0) encuesta.setPeso1(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.peso1)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.peso2)) > 0) encuesta.setPeso2(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.peso2)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.peso3)) > 0) encuesta.setPeso3(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.peso3)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.talla1)) > 0) encuesta.setTalla1(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.talla1)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.talla2)) > 0) encuesta.setTalla2(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.talla2)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.talla3)) > 0) encuesta.setTalla3(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.talla3)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc1)) > 0) encuesta.setImc1(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc1)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc2)) > 0) encuesta.setImc2(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc2)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc3)) > 0) encuesta.setImc3(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc3)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difPeso)) > 0) encuesta.setDifPeso(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difPeso)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difTalla)) > 0) encuesta.setDifTalla(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difTalla)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)) > 0) encuesta.setOtrorecurso1(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso2)) > 0) encuesta.setOtrorecurso2(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso2)));
-        encuesta.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mEencuesta.setParticipante(null);
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.peso1)) > 0) mEencuesta.setPeso1(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.peso1)));
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.peso2)) > 0) mEencuesta.setPeso2(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.peso2)));
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.peso3)) > 0) mEencuesta.setPeso3(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.peso3)));
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.talla1)) > 0) mEencuesta.setTalla1(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.talla1)));
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.talla2)) > 0) mEencuesta.setTalla2(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.talla2)));
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.talla3)) > 0) mEencuesta.setTalla3(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.talla3)));
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc1)) > 0) mEencuesta.setImc1(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc1)));
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc2)) > 0) mEencuesta.setImc2(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc2)));
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc3)) > 0) mEencuesta.setImc3(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc3)));
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difPeso)) > 0) mEencuesta.setDifPeso(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difPeso)));
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difTalla)) > 0) mEencuesta.setDifTalla(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difTalla)));
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)) > 0) mEencuesta.setOtrorecurso1(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)));
+        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso2)) > 0) mEencuesta.setOtrorecurso2(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso2)));
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mEencuesta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        mEencuesta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        mEencuesta.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
+        mEencuesta.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mEencuesta.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 
-        return encuesta;
+        return mEencuesta;
     }
 }

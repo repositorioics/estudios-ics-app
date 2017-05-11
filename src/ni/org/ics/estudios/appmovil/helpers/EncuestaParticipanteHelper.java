@@ -7,6 +7,8 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaPart
 import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
+import java.util.Date;
+
 /**
  * Created by Miguel Salinas on 5/10/2017.
  * V1.0
@@ -77,78 +79,86 @@ public class EncuestaParticipanteHelper {
         cv.put(EncuestasDBConstants.descOtrasEnfermedades, encuesta.getDescOtrasEnfermedades());
         cv.put(EncuestasDBConstants.vacunaInfluenza, String.valueOf(encuesta.getVacunaInfluenza()));
         cv.put(EncuestasDBConstants.anioVacunaInfluenza, encuesta.getAnioVacunaInfluenza());
+        if (encuesta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, encuesta.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, encuesta.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(encuesta.getPasive()));
         cv.put(MainDBConstants.estado, String.valueOf(encuesta.getEstado()));
+        cv.put(MainDBConstants.deviceId, encuesta.getDeviceid());
 
         return cv;
     }
 
     public static EncuestaParticipante crearEncuestaParticipante(Cursor cursor){
-        EncuestaParticipante encuesta = new EncuestaParticipante();
+        EncuestaParticipante mEncuesta = new EncuestaParticipante();
 
-        encuesta.setParticipante(null);
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.emancipado))!=null) encuesta.setEmancipado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.emancipado)).charAt(0));
-        encuesta.setMotivoEmacipacion(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.motivoEmacipacion)));
-        encuesta.setOtroMotivoEmancipacion(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroMotivoEmancipacion)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.estaEmbarazada))!=null) encuesta.setEstaEmbarazada(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.estaEmbarazada)).charAt(0));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.semanasEmbarazo))>0) encuesta.setSemanasEmbarazo(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.semanasEmbarazo)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.esAlfabeto))!=null) encuesta.setEsAlfabeto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.esAlfabeto)).charAt(0));
-        encuesta.setNivelEducacion(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.nivelEducacion)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.trabaja))!=null) encuesta.setTrabaja(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.trabaja)).charAt(0));
-        encuesta.setTipoTrabajo(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tipoTrabajo)));
-        encuesta.setOcupacionActual(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ocupacionActual)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.vaNinoEscuela))!=null) encuesta.setVaNinoEscuela(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.vaNinoEscuela)).charAt(0));
-        encuesta.setGradoCursa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.gradoCursa)));
-        encuesta.setTurno(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.turno)));
-        encuesta.setNombreCentroEstudio(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.nombreCentroEstudio)));
-        encuesta.setDondeCuidanNino(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.dondeCuidanNino)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ninoTrabaja))!=null) encuesta.setNinoTrabaja(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ninoTrabaja)).charAt(0));
-        encuesta.setOcupacionActualNino(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ocupacionActualNino)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantNinosLugarCuidan))>0) encuesta.setCantNinosLugarCuidan(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantNinosLugarCuidan)));
-        encuesta.setConQuienViveNino(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.conQuienViveNino)));
-        encuesta.setDescOtroViveNino(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.descOtroViveNino)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.padreEnEstudio))!=null) encuesta.setPadreEnEstudio(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.padreEnEstudio)).charAt(0));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.codigoPadreEstudio))>0) encuesta.setCodigoPadreEstudio(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.codigoPadreEstudio)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.padreAlfabeto))!=null) encuesta.setPadreAlfabeto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.padreAlfabeto)).charAt(0));
-        encuesta.setNivelEducacionPadre(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.nivelEducacionPadre)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.trabajaPadre))!=null) encuesta.setTrabajaPadre(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.trabajaPadre)).charAt(0));
-        encuesta.setTipoTrabajoPadre(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tipoTrabajoPadre)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.madreEnEstudio))!=null) encuesta.setMadreEnEstudio(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.madreEnEstudio)).charAt(0));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.codigoMadreEstudio))>0) encuesta.setCodigoMadreEstudio(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.codigoMadreEstudio)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.madreAlfabeto))!=null) encuesta.setMadreAlfabeto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.madreAlfabeto)).charAt(0));
-        encuesta.setNivelEducacionMadre(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.nivelEducacionMadre)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.trabajaMadre))!=null) encuesta.setTrabajaMadre(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.trabajaMadre)).charAt(0));
-        encuesta.setTipoTrabajoMadre(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tipoTrabajoMadre)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fuma))!=null) encuesta.setFuma(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fuma)).charAt(0));
-        encuesta.setPeriodicidadFuma(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.periodicidadFuma)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrillos))>0) encuesta.setCantidadCigarrillos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrillos)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fumaDentroCasa))!=null) encuesta.setFumaDentroCasa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fumaDentroCasa)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tuberculosisPulmonarActual))!=null) encuesta.setTuberculosisPulmonarActual(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tuberculosisPulmonarActual)).charAt(0));
-        encuesta.setFechaDiagnosticoTubPulActual(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fechaDiagnosticoTubPulActual)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tomaTratamientoTubPulActual))!=null) encuesta.setTomaTratamientoTubPulActual(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tomaTratamientoTubPulActual)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.completoTratamientoTubPulActual))!=null) encuesta.setCompletoTratamientoTubPulActual(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.completoTratamientoTubPulActual)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tuberculosisPulmonarPasado))!=null) encuesta.setTuberculosisPulmonarPasado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tuberculosisPulmonarPasado)).charAt(0));
-        encuesta.setFechaDiagnosticoTubPulPasado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fechaDiagnosticoTubPulPasado)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tomaTratamientoTubPulPasado))!=null) encuesta.setTomaTratamientoTubPulPasado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tomaTratamientoTubPulPasado)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.completoTratamientoTubPulPasado))!=null) encuesta.setCompletoTratamientoTubPulPasado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.completoTratamientoTubPulPasado)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.alergiaRespiratoria))!=null) encuesta.setAlergiaRespiratoria(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.alergiaRespiratoria)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.cardiopatia))!=null) encuesta.setCardiopatia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.cardiopatia)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.enfermedadPulmonarOC))!=null) encuesta.setEnfermedadPulmonarOC(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.enfermedadPulmonarOC)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.diabetes))!=null) encuesta.setDiabetes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.diabetes)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.presionAlta))!=null) encuesta.setPresionAlta(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.presionAlta)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.asma))!=null) encuesta.setAsma(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.asma)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.silvidoRespirarPechoApretado))!=null) encuesta.setSilvidoRespirarPechoApretado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.silvidoRespirarPechoApretado)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tosSinFiebreResfriado))!=null) encuesta.setTosSinFiebreResfriado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tosSinFiebreResfriado)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.usaInhaladoresSpray))!=null) encuesta.setUsaInhaladoresSpray(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.usaInhaladoresSpray)).charAt(0));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.crisisAsma))!=null) encuesta.setCrisisAsma(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.crisisAsma)).charAt(0));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCrisisAsma))>0) encuesta.setCantidadCrisisAsma(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCrisisAsma)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.vecesEnfermoEnfermedadesRes))>0) encuesta.setVecesEnfermoEnfermedadesRes(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.vecesEnfermoEnfermedadesRes)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrasEnfermedades))!=null) encuesta.setOtrasEnfermedades(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrasEnfermedades)).charAt(0));
-        encuesta.setDescOtrasEnfermedades(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.descOtrasEnfermedades)));
-        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.vacunaInfluenza))!=null) encuesta.setVacunaInfluenza(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.vacunaInfluenza)).charAt(0));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.anioVacunaInfluenza))>0) encuesta.setAnioVacunaInfluenza(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.anioVacunaInfluenza)));
+        mEncuesta.setParticipante(null);
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.emancipado))!=null) mEncuesta.setEmancipado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.emancipado)).charAt(0));
+        mEncuesta.setMotivoEmacipacion(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.motivoEmacipacion)));
+        mEncuesta.setOtroMotivoEmancipacion(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroMotivoEmancipacion)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.estaEmbarazada))!=null) mEncuesta.setEstaEmbarazada(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.estaEmbarazada)).charAt(0));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.semanasEmbarazo))>0) mEncuesta.setSemanasEmbarazo(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.semanasEmbarazo)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.esAlfabeto))!=null) mEncuesta.setEsAlfabeto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.esAlfabeto)).charAt(0));
+        mEncuesta.setNivelEducacion(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.nivelEducacion)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.trabaja))!=null) mEncuesta.setTrabaja(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.trabaja)).charAt(0));
+        mEncuesta.setTipoTrabajo(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tipoTrabajo)));
+        mEncuesta.setOcupacionActual(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ocupacionActual)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.vaNinoEscuela))!=null) mEncuesta.setVaNinoEscuela(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.vaNinoEscuela)).charAt(0));
+        mEncuesta.setGradoCursa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.gradoCursa)));
+        mEncuesta.setTurno(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.turno)));
+        mEncuesta.setNombreCentroEstudio(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.nombreCentroEstudio)));
+        mEncuesta.setDondeCuidanNino(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.dondeCuidanNino)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ninoTrabaja))!=null) mEncuesta.setNinoTrabaja(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ninoTrabaja)).charAt(0));
+        mEncuesta.setOcupacionActualNino(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ocupacionActualNino)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantNinosLugarCuidan))>0) mEncuesta.setCantNinosLugarCuidan(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantNinosLugarCuidan)));
+        mEncuesta.setConQuienViveNino(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.conQuienViveNino)));
+        mEncuesta.setDescOtroViveNino(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.descOtroViveNino)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.padreEnEstudio))!=null) mEncuesta.setPadreEnEstudio(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.padreEnEstudio)).charAt(0));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.codigoPadreEstudio))>0) mEncuesta.setCodigoPadreEstudio(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.codigoPadreEstudio)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.padreAlfabeto))!=null) mEncuesta.setPadreAlfabeto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.padreAlfabeto)).charAt(0));
+        mEncuesta.setNivelEducacionPadre(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.nivelEducacionPadre)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.trabajaPadre))!=null) mEncuesta.setTrabajaPadre(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.trabajaPadre)).charAt(0));
+        mEncuesta.setTipoTrabajoPadre(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tipoTrabajoPadre)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.madreEnEstudio))!=null) mEncuesta.setMadreEnEstudio(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.madreEnEstudio)).charAt(0));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.codigoMadreEstudio))>0) mEncuesta.setCodigoMadreEstudio(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.codigoMadreEstudio)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.madreAlfabeto))!=null) mEncuesta.setMadreAlfabeto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.madreAlfabeto)).charAt(0));
+        mEncuesta.setNivelEducacionMadre(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.nivelEducacionMadre)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.trabajaMadre))!=null) mEncuesta.setTrabajaMadre(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.trabajaMadre)).charAt(0));
+        mEncuesta.setTipoTrabajoMadre(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tipoTrabajoMadre)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fuma))!=null) mEncuesta.setFuma(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fuma)).charAt(0));
+        mEncuesta.setPeriodicidadFuma(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.periodicidadFuma)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrillos))>0) mEncuesta.setCantidadCigarrillos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCigarrillos)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fumaDentroCasa))!=null) mEncuesta.setFumaDentroCasa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fumaDentroCasa)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tuberculosisPulmonarActual))!=null) mEncuesta.setTuberculosisPulmonarActual(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tuberculosisPulmonarActual)).charAt(0));
+        mEncuesta.setFechaDiagnosticoTubPulActual(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fechaDiagnosticoTubPulActual)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tomaTratamientoTubPulActual))!=null) mEncuesta.setTomaTratamientoTubPulActual(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tomaTratamientoTubPulActual)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.completoTratamientoTubPulActual))!=null) mEncuesta.setCompletoTratamientoTubPulActual(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.completoTratamientoTubPulActual)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tuberculosisPulmonarPasado))!=null) mEncuesta.setTuberculosisPulmonarPasado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tuberculosisPulmonarPasado)).charAt(0));
+        mEncuesta.setFechaDiagnosticoTubPulPasado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fechaDiagnosticoTubPulPasado)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tomaTratamientoTubPulPasado))!=null) mEncuesta.setTomaTratamientoTubPulPasado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tomaTratamientoTubPulPasado)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.completoTratamientoTubPulPasado))!=null) mEncuesta.setCompletoTratamientoTubPulPasado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.completoTratamientoTubPulPasado)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.alergiaRespiratoria))!=null) mEncuesta.setAlergiaRespiratoria(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.alergiaRespiratoria)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.cardiopatia))!=null) mEncuesta.setCardiopatia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.cardiopatia)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.enfermedadPulmonarOC))!=null) mEncuesta.setEnfermedadPulmonarOC(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.enfermedadPulmonarOC)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.diabetes))!=null) mEncuesta.setDiabetes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.diabetes)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.presionAlta))!=null) mEncuesta.setPresionAlta(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.presionAlta)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.asma))!=null) mEncuesta.setAsma(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.asma)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.silvidoRespirarPechoApretado))!=null) mEncuesta.setSilvidoRespirarPechoApretado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.silvidoRespirarPechoApretado)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tosSinFiebreResfriado))!=null) mEncuesta.setTosSinFiebreResfriado(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tosSinFiebreResfriado)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.usaInhaladoresSpray))!=null) mEncuesta.setUsaInhaladoresSpray(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.usaInhaladoresSpray)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.crisisAsma))!=null) mEncuesta.setCrisisAsma(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.crisisAsma)).charAt(0));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCrisisAsma))>0) mEncuesta.setCantidadCrisisAsma(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCrisisAsma)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.vecesEnfermoEnfermedadesRes))>0) mEncuesta.setVecesEnfermoEnfermedadesRes(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.vecesEnfermoEnfermedadesRes)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrasEnfermedades))!=null) mEncuesta.setOtrasEnfermedades(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrasEnfermedades)).charAt(0));
+        mEncuesta.setDescOtrasEnfermedades(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.descOtrasEnfermedades)));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.vacunaInfluenza))!=null) mEncuesta.setVacunaInfluenza(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.vacunaInfluenza)).charAt(0));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.anioVacunaInfluenza))>0) mEncuesta.setAnioVacunaInfluenza(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.anioVacunaInfluenza)));
 
-        encuesta.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mEncuesta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        mEncuesta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        mEncuesta.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
+        mEncuesta.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mEncuesta.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 
-        return encuesta;
+        return mEncuesta;
     }
 }

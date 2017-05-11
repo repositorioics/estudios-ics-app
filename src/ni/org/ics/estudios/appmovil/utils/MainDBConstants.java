@@ -228,7 +228,7 @@ public class MainDBConstants {
 
 
     //Tabla Pretamizaje
-    public static final String PRETAMIZAJE_TABLE = "pre_tamizajes";
+    public static final String PRETAMIZAJE_TABLE = "chf_pre_tamizajes";
 
     //Campos tabla Pretamizajes
     public static final String estudio = "estudio";
@@ -293,6 +293,7 @@ public class MainDBConstants {
             + tomaPuntoGPSCasa + " text, "
             + razonNoGeoreferenciacion + " text, "
             + otraRazonNoGeoreferenciacion + " text, "
+            + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "
@@ -315,6 +316,7 @@ public class MainDBConstants {
             + operadora + " integer not null, "
             + casa + " integer not null, "
             + participante + " integer not null, "
+            + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "
@@ -322,7 +324,7 @@ public class MainDBConstants {
             + "primary key (" + id + "));";
 
     //Tabla Area Ambiente
-    public static final String AREA_AMBIENTE_TABLE = "";
+    public static final String AREA_AMBIENTE_TABLE = "chf_areas_ambiente";
 
     //Campos tabla area ambiente
     public static final String largo = "largo";
@@ -341,6 +343,7 @@ public class MainDBConstants {
     public static final String CREATE_AREA_AMBIENTE_TABLE = "create table if not exists "
             + AREA_AMBIENTE_TABLE + " ("
             + codigo + " text not null, "
+            + casa + " integer not null, "
             + largo + " real, "
             + ancho + " real, "
             + totalM2 + " real, "
@@ -352,6 +355,7 @@ public class MainDBConstants {
             + areaAmbiente + " text, "
             + alto + " real, "
             + abierta + " text, "
+            + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "
@@ -359,7 +363,7 @@ public class MainDBConstants {
             + "primary key (" + codigo + "));";
 
     //tabla Camas
-    public static final String CAMA_TABLE = "camas";
+    public static final String CAMA_TABLE = "chf_camas_habitacion";
 
     //campos tabla Camas
     public static final String codigoCama = "codigoCama";
@@ -369,6 +373,7 @@ public class MainDBConstants {
             + CAMA_TABLE + " ("
             + codigoCama + " text not null, "
             + habitacion + " text, "
+            + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "
@@ -376,7 +381,7 @@ public class MainDBConstants {
             + "primary key (" + codigoCama + "));";
 
     //tabla PersonaCama
-    public static final String PERSONACAMA_TABLE = "persona_cama";
+    public static final String PERSONACAMA_TABLE = "chf_persona_cama";
 
     //Campos tabla persona cama
     public static final String codigoPersona = "codigoPersona";
@@ -389,6 +394,29 @@ public class MainDBConstants {
             + PERSONACAMA_TABLE + " ("
             + codigoCama + " text not null, "
             + habitacion + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigoCama + "));";
+
+    //tabla CasaCohorteFamiliar
+    public static final String CASA_CHF_TABLE = "chf_casas_cohorte_familia";
+
+    //Campos tabla CasaCohorteFamiliar
+    public static final String codigoCHF = "codigoCHF";
+
+    //Crear tabla CasaCohorteFamiliar
+    public static final String CREATE_CASA_CHF_TABLE = "create table if not exists "
+            + CASA_CHF_TABLE + " ("
+            + codigoCHF + " text not null, "
+            + casa + " integer not null, "
+            + nombre1JefeFamilia + " text not null, "
+            + nombre2JefeFamilia + " text , "
+            + apellido1JefeFamilia + " text not null, "
+            + apellido2JefeFamilia + " text , "
+            + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "

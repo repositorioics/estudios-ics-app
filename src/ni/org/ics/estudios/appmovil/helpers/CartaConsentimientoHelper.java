@@ -41,7 +41,11 @@ public class CartaConsentimientoHelper {
         cv.put(MainDBConstants.aceptaContactoFuturo, String.valueOf(carta.getAceptaContactoFuturo()));
         cv.put(MainDBConstants.aceptaParteB, String.valueOf(carta.getAceptaParteB()));
         cv.put(MainDBConstants.aceptaParteC, String.valueOf(carta.getAceptaParteC()));
+        if (carta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, carta.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, carta.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(carta.getPasive()));
         cv.put(MainDBConstants.estado, String.valueOf(carta.getEstado()));
+        cv.put(MainDBConstants.deviceId, carta.getDeviceid());
 
         return cv;
     }
@@ -74,7 +78,11 @@ public class CartaConsentimientoHelper {
         mCarta.setAceptaContactoFuturo(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaContactoFuturo)).charAt(0));
         mCarta.setAceptaParteB(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParteB)).charAt(0));
         mCarta.setAceptaParteC(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParteC)).charAt(0));
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mCarta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        mCarta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        mCarta.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
         mCarta.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mCarta.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 
         return mCarta;
     }

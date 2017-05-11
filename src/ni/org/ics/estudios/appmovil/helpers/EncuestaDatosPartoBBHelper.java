@@ -40,39 +40,47 @@ public class EncuestaDatosPartoBBHelper {
         cv.put(EncuestasDBConstants.otroDocMedPesoBB, encuesta.getOtroDocMedPesoBB());
         cv.put(EncuestasDBConstants.otrorecurso1, encuesta.getOtrorecurso1());
         cv.put(EncuestasDBConstants.otrorecurso2, encuesta.getOtrorecurso2());
+        if (encuesta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, encuesta.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, encuesta.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(encuesta.getPasive()));
         cv.put(MainDBConstants.estado, String.valueOf(encuesta.getEstado()));
+        cv.put(MainDBConstants.deviceId, encuesta.getDeviceid());
 
         return cv;
     }
 
     public static EncuestaDatosPartoBB crearEncuestaDatosPartoBB(Cursor cursor){
-        EncuestaDatosPartoBB encuesta = new EncuestaDatosPartoBB();
+        EncuestaDatosPartoBB mEncuesta = new EncuestaDatosPartoBB();
 
-        encuesta.setParticipante(null);
-        encuesta.setTipoParto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tipoParto)));
-        encuesta.setTiempoEmb_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tiempoEmb_sndr)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.tiempoEmbSemana)) > 0) encuesta.setTiempoEmbSemana(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.tiempoEmbSemana)));
-        encuesta.setDocMedTiempoEmb_sn(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedTiempoEmb_sn)));
-        encuesta.setDocMedTiempoEmb(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedTiempoEmb)));
-        encuesta.setOtroDocMedTiempoEmb(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroDocMedTiempoEmb)));
-        if (cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fum)) > 0) encuesta.setFum(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fum))));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.sg)) > 0) encuesta.setSg(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.sg)));
-        encuesta.setFumFueraRango_sn(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fumFueraRango_sn)));
-        encuesta.setFumFueraRango_razon(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fumFueraRango_razon)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadGest)) > 0) encuesta.setEdadGest(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadGest)));
-        encuesta.setDocMedEdadGest_sn(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedEdadGest_sn)));
-        encuesta.setDocMedEdadGest(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedEdadGest)));
-        encuesta.setOtroDocMedEdadGest(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.OtroDocMedEdadGest)));
-        encuesta.setPrematuro_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.prematuro_sndr)));
-        encuesta.setPesoBB_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pesoBB_sndr)));
-        encuesta.setPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pesoBB)));
-        encuesta.setPesoBB_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedPesoBB_sn)));
-        encuesta.setDocMedPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedPesoBB)));
-        encuesta.setOtroDocMedPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroDocMedPesoBB)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)) > 0) encuesta.setOtrorecurso1(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso2)) > 0)encuesta.setOtrorecurso2(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso2)));
-        encuesta.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mEncuesta.setParticipante(null);
+        mEncuesta.setTipoParto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tipoParto)));
+        mEncuesta.setTiempoEmb_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tiempoEmb_sndr)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.tiempoEmbSemana)) > 0) mEncuesta.setTiempoEmbSemana(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.tiempoEmbSemana)));
+        mEncuesta.setDocMedTiempoEmb_sn(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedTiempoEmb_sn)));
+        mEncuesta.setDocMedTiempoEmb(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedTiempoEmb)));
+        mEncuesta.setOtroDocMedTiempoEmb(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroDocMedTiempoEmb)));
+        if (cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fum)) > 0) mEncuesta.setFum(new Date(cursor.getLong(cursor.getColumnIndex(EncuestasDBConstants.fum))));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.sg)) > 0) mEncuesta.setSg(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.sg)));
+        mEncuesta.setFumFueraRango_sn(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fumFueraRango_sn)));
+        mEncuesta.setFumFueraRango_razon(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.fumFueraRango_razon)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadGest)) > 0) mEncuesta.setEdadGest(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadGest)));
+        mEncuesta.setDocMedEdadGest_sn(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedEdadGest_sn)));
+        mEncuesta.setDocMedEdadGest(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedEdadGest)));
+        mEncuesta.setOtroDocMedEdadGest(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.OtroDocMedEdadGest)));
+        mEncuesta.setPrematuro_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.prematuro_sndr)));
+        mEncuesta.setPesoBB_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pesoBB_sndr)));
+        mEncuesta.setPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pesoBB)));
+        mEncuesta.setPesoBB_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedPesoBB_sn)));
+        mEncuesta.setDocMedPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedPesoBB)));
+        mEncuesta.setOtroDocMedPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroDocMedPesoBB)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)) > 0) mEncuesta.setOtrorecurso1(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso2)) > 0)mEncuesta.setOtrorecurso2(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso2)));
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mEncuesta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        mEncuesta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        mEncuesta.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
+        mEncuesta.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mEncuesta.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 
-        return encuesta;
+        return mEncuesta;
     }
 }

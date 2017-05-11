@@ -2,8 +2,8 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import ni.org.ics.estudios.appmovil.domain.encuestas.EncuestaDatosPartoBB;
-import ni.org.ics.estudios.appmovil.domain.encuestas.EncuestaLactanciaMaterna;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaDatosPartoBB;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaLactanciaMaterna;
 import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 

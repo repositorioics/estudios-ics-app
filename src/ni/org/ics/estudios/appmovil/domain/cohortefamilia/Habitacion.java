@@ -1,4 +1,4 @@
-package ni.org.ics.estudios.appmovil.domain.encuestas;
+package ni.org.ics.estudios.appmovil.domain.cohortefamilia;
 
 /**
  * Created by Miguel Salinas on 5/3/2017.

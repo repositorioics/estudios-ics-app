@@ -2,7 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import ni.org.ics.estudios.appmovil.domain.encuestas.*;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
 /**
@@ -17,7 +17,7 @@ public class AreaAmbienteHelper {
         cv.put(MainDBConstants.ancho, areaAmbiente.getAncho());
         cv.put(MainDBConstants.largo, areaAmbiente.getLargo());
         cv.put(MainDBConstants.totalM2, areaAmbiente.getTotalM2());
-        cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigo());
+        cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigoCHF());
         cv.put(MainDBConstants.habitacion, areaAmbiente.getHabitacion().getCodigo());
         cv.put(MainDBConstants.conVentana, String.valueOf(areaAmbiente.getConVentana()));
         cv.put(MainDBConstants.estado, String.valueOf(areaAmbiente.getEstado()));
@@ -45,7 +45,7 @@ public class AreaAmbienteHelper {
         cv.put(MainDBConstants.ancho, areaAmbiente.getAncho());
         cv.put(MainDBConstants.largo, areaAmbiente.getLargo());
         cv.put(MainDBConstants.totalM2, areaAmbiente.getTotalM2());
-        cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigo());
+        cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigoCHF());
         cv.put(MainDBConstants.numVentanas, areaAmbiente.getNumVentanas());
         cv.put(MainDBConstants.estado, String.valueOf(areaAmbiente.getEstado()));
 
@@ -71,7 +71,7 @@ public class AreaAmbienteHelper {
         cv.put(MainDBConstants.ancho, areaAmbiente.getAncho());
         cv.put(MainDBConstants.largo, areaAmbiente.getLargo());
         cv.put(MainDBConstants.totalM2, areaAmbiente.getTotalM2());
-        cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigo());
+        cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigoCHF());
         cv.put(MainDBConstants.numVentanas, areaAmbiente.getNumVentanas());
         cv.put(MainDBConstants.estado, String.valueOf(areaAmbiente.getEstado()));
 
@@ -97,7 +97,7 @@ public class AreaAmbienteHelper {
         cv.put(MainDBConstants.ancho, areaAmbiente.getAncho());
         cv.put(MainDBConstants.largo, areaAmbiente.getLargo());
         cv.put(MainDBConstants.totalM2, areaAmbiente.getTotalM2());
-        cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigo());
+        cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigoCHF());
         cv.put(MainDBConstants.numVentanas, areaAmbiente.getNumVentanas());
         cv.put(MainDBConstants.estado, String.valueOf(areaAmbiente.getEstado()));
 
@@ -123,7 +123,7 @@ public class AreaAmbienteHelper {
         cv.put(MainDBConstants.ancho, areaAmbiente.getAncho());
         cv.put(MainDBConstants.largo, areaAmbiente.getLargo());
         cv.put(MainDBConstants.totalM2, areaAmbiente.getTotalM2());
-        cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigo());
+        cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigoCHF());
         cv.put(MainDBConstants.numVentanas, areaAmbiente.getNumVentanas());
         cv.put(MainDBConstants.estado, String.valueOf(areaAmbiente.getEstado()));
 
@@ -149,7 +149,7 @@ public class AreaAmbienteHelper {
         cv.put(MainDBConstants.ancho, areaAmbiente.getAncho());
         cv.put(MainDBConstants.alto, areaAmbiente.getLargo());
         cv.put(MainDBConstants.totalM2, areaAmbiente.getTotalM2());
-        cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigo());
+        cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigoCHF());
         cv.put(MainDBConstants.abierta, String.valueOf(areaAmbiente.getAbierta()));
         cv.put(MainDBConstants.areaAmbiente, areaAmbiente.getAreaAmbiente().getCodigo());
         cv.put(MainDBConstants.estado, String.valueOf(areaAmbiente.getEstado()));

@@ -2,8 +2,8 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import ni.org.ics.estudios.appmovil.domain.encuestas.Cama;
-import ni.org.ics.estudios.appmovil.domain.encuestas.PersonaCama;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cama;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PersonaCama;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
 /**

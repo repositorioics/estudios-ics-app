@@ -2,7 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import ni.org.ics.estudios.appmovil.domain.encuestas.EncuestaCasa;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
@@ -17,7 +17,7 @@ public class EncuestaCasaHelper {
     public static ContentValues crearEncuestaCasaContentValues(EncuestaCasa encuesta){
         ContentValues cv = new ContentValues();
 
-        cv.put(EncuestasDBConstants.casa, encuesta.getCasa().getCodigo());
+        cv.put(EncuestasDBConstants.casa, encuesta.getCasa().getCodigoCHF());
         cv.put(EncuestasDBConstants.cantidadCuartos, encuesta.getCantidadCuartos());
         cv.put(EncuestasDBConstants.cantidadCuartosDormir, encuesta.getCantidadCuartosDormir());
         if (encuesta.getFechaEncuestas() !=null) cv.put(EncuestasDBConstants.fechaEncuestas, encuesta.getFechaEncuestas().getTime());

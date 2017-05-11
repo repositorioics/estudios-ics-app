@@ -1,7 +1,6 @@
-package ni.org.ics.estudios.appmovil.domain.encuestas;
+package ni.org.ics.estudios.appmovil.domain.cohortefamilia;
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
-import ni.org.ics.estudios.appmovil.domain.Casa;
 
 /**
  * Created by Miguel Salinas on 5/3/2017.
@@ -18,7 +17,7 @@ public class AreaAmbiente extends BaseMetaData {
     private Double ancho;
     private Double totalM2;
     private Integer numVentanas;
-    private Casa casa;
+    private CasaCohorteFamilia casa;
     private String tipo;
 
     public String getCodigo() {
@@ -61,11 +60,11 @@ public class AreaAmbiente extends BaseMetaData {
         this.numVentanas = numVentanas;
     }
 
-    public Casa getCasa() {
+    public CasaCohorteFamilia getCasa() {
         return casa;
     }
 
-    public void setCasa(Casa casa) {
+    public void setCasa(CasaCohorteFamilia casa) {
         this.casa = casa;
     }
 

@@ -1,7 +1,9 @@
-package ni.org.ics.estudios.appmovil.domain;
+package ni.org.ics.estudios.appmovil.domain.cohortefamilia;
 
 
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
+import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
+import ni.org.ics.estudios.appmovil.domain.Casa;
 
 /**
  * Created by FIRSTICT on 4/28/2017.

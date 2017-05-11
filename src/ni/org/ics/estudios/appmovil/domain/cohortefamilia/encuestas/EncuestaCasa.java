@@ -1,7 +1,7 @@
-package ni.org.ics.estudios.appmovil.domain.encuestas;
+package ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas;
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
-import ni.org.ics.estudios.appmovil.domain.Casa;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 
 import java.util.Date;
 
@@ -15,7 +15,7 @@ public class EncuestaCasa extends BaseMetaData {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Casa casa;
+	private CasaCohorteFamilia casa;
     private int cantidadCuartos;
     private int cantidadCuartosDormir;
     private Date fechaEncuestas;
@@ -90,11 +90,11 @@ public class EncuestaCasa extends BaseMetaData {
     private Integer cantidadCigarrillosPadre; // diarios
     private Integer cantidadCigarrillosOtros; // diarios
 
-    public Casa getCasa() {
+    public CasaCohorteFamilia getCasa() {
         return casa;
     }
 
-    public void setCasa(Casa casa) {
+    public void setCasa(CasaCohorteFamilia casa) {
         this.casa = casa;
     }
 
@@ -684,7 +684,7 @@ public class EncuestaCasa extends BaseMetaData {
 
     @Override
     public String toString() {
-        return "EncuestaCasa{" + casa.getCodigo() +
+        return "EncuestaCasa{" + casa.getCodigoCHF() +
                 '}';
     }
 

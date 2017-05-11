@@ -1,4 +1,4 @@
-package ni.org.ics.estudios.appmovil.domain.encuestas;
+package ni.org.ics.estudios.appmovil.domain.cohortefamilia;
 
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;

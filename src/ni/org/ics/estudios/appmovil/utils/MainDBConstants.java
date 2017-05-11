@@ -122,7 +122,7 @@ public class MainDBConstants {
     //Campos cartas_consentimientos
     public static final String fechaFirma = "fechaFirma";
     public static final String tamizaje = "tamizaje";
-    public static final String estudio = "estudio";
+    public static final String participante= "participante";
     public static final String participadoCohortePediatrica = "participadoCohortePediatrica";
     public static final String cohortePediatrica = "cohortePediatrica"; //Dengue, Influenza, Ambas (dengue/influenza)
     public static final String codigoReactivado = "codigoReactivado";
@@ -151,7 +151,7 @@ public class MainDBConstants {
             + codigo + " integer not null, "
             + fechaFirma + " date not null, "
             + tamizaje + " text not null, "
-            + estudio + " integer not null, "
+            + participante + " integer not null, "
             + participadoCohortePediatrica + " text, "
             + cohortePediatrica + " text, "
             + codigoReactivado + " text, "
@@ -231,6 +231,7 @@ public class MainDBConstants {
     public static final String PRETAMIZAJE_TABLE = "pre_tamizajes";
 
     //Campos tabla Pretamizajes
+    public static final String estudio = "estudio";
     public static final String aceptaTamizaje = "aceptaTamizaje";
     public static final String razonNoParticipa = "razonNoParticipa";
 
@@ -252,37 +253,34 @@ public class MainDBConstants {
     public static final String TAMIZAJE_TABLE = "";
 
     //Campos tabla tamizaje
-    public static final String participante= "";
-    public static final String areaCovertura= "";
-    public static final String ninoMenor12Anios= "";
-    public static final String intencionPermanecerArea= "";
-    public static final String tieneTarjetaVacunaOIdentificacion= "";
-    public static final String enfermedadAgudaCronica= "";
-    public static final String elegible= "";
-    public static final String aceptaSeroprevalenciaZik= "";
-    public static final String dondeAsisteProblemasSalud= "";
-    public static final String asisteCSSF= "";
-    public static final String otroCentroSalud= "";
-    public static final String puestoSalud= "";
-    public static final String siEnfermaSoloAsistirCSSF= "";
-    public static final String tomaPuntoGPSCasa= "";
-    public static final String razonNoGeoreferenciacion= "";
-    public static final String otraRazonNoGeoreferenciacion= "";
+    public static final String areaCobertura = "areaCobertura";
+    public static final String ninoMenor12Anios = "ninoMenor12Anios";
+    public static final String intencionPermanecerArea = "intencionPermanecerArea";
+    public static final String tieneTarjetaVacunaOIdentificacion = "tieneTarjetaVacunaOIdentificacion";
+    public static final String enfermedadAgudaCronica = "enfermedadAgudaCronica";
+    public static final String elegible = "elegible";
+    public static final String dondeAsisteProblemasSalud = "dondeAsisteProblemasSalud";
+    public static final String asisteCSSF = "asisteCSSF";
+    public static final String otroCentroSalud = "otroCentroSalud";
+    public static final String puestoSalud = "puestoSalud";
+    public static final String siEnfermaSoloAsistirCSSF = "siEnfermaSoloAsistirCSSF";
+    public static final String tomaPuntoGPSCasa = "tomaPuntoGPSCasa";
+    public static final String razonNoGeoreferenciacion = "razonNoGeoreferenciacion";
+    public static final String otraRazonNoGeoreferenciacion = "otraRazonNoGeoreferenciacion";
 
     //crear tabla tamizaje
     public static final String CREATE_TAMIZAJE_TABLE = "create table if not exists "
             + TAMIZAJE_TABLE + " ("
             + codigo + " text not null, "
-            + participante + " integer not null, "
+            + estudio + " integer not null, "
             + aceptaTamizaje + " text not null, "
             + razonNoParticipa + " text, "
-            + areaCovertura + " text, "
+            + areaCobertura + " text, "
             + ninoMenor12Anios + " text, "
             + intencionPermanecerArea + " text, "
             + tieneTarjetaVacunaOIdentificacion + " text, "
             + enfermedadAgudaCronica + " text, "
             + elegible + " text, "
-            + aceptaSeroprevalenciaZik + " text, "
             + dondeAsisteProblemasSalud + " text, "
             + asisteCSSF + " text, "
             + otroCentroSalud + " text, "

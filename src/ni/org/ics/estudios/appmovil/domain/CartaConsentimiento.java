@@ -17,7 +17,7 @@ public class CartaConsentimiento extends BaseMetaData {
 	private String codigo;
     private Date fechaFirma;
     private Tamizaje tamizaje;
-    private Estudio estudio;
+    private Participante participante;
     private char participadoCohortePediatrica;
     private String cohortePediatrica; //Dengue, Influenza, Ambas (dengue/influenza)
     private char codigoReactivado;
@@ -224,12 +224,12 @@ public class CartaConsentimiento extends BaseMetaData {
         this.tamizaje = tamizaje;
     }
 
-    public Estudio getEstudio() {
-        return estudio;
+    public Participante getParticipante() {
+        return participante;
     }
 
-    public void setEstudio(Estudio estudio) {
-        this.estudio = estudio;
+    public void setParticipante(Participante participante) {
+        this.participante = participante;
     }
 
     public String getRelacionFamiliarTutor() {

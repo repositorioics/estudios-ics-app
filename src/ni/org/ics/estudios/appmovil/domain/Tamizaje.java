@@ -1,6 +1,7 @@
 package ni.org.ics.estudios.appmovil.domain;
 
 
+import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 
 /**
  * Created by FIRSTICT on 4/28/2017.
@@ -13,16 +14,15 @@ public class Tamizaje extends BaseMetaData {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String codigo;
-    private Participante participante;
+    private Estudio estudio;
     private char aceptaTamizaje;
     private String razonNoParticipa;
-    private char areaCovertura;
+    private char areaCobertura;
     private char ninoMenor12Anios;
     private char intencionPermanecerArea;
     private char tieneTarjetaVacunaOIdentificacion;
     private char enfermedadAgudaCronica;
     private char elegible;
-    private char aceptaSeroprevalenciaZik;
     private String dondeAsisteProblemasSalud;
     private char asisteCSSF;
     private String otroCentroSalud;
@@ -41,12 +41,12 @@ public class Tamizaje extends BaseMetaData {
         this.codigo = codigo;
     }
 
-    public Participante getParticipante() {
-        return participante;
+    public Estudio getEstudio() {
+        return estudio;
     }
 
-    public void setParticipante(Participante participante) {
-        this.participante = participante;
+    public void setEstudio(Estudio estudio) {
+        this.estudio = estudio;
     }
 
     public char getAceptaTamizaje() {
@@ -65,12 +65,12 @@ public class Tamizaje extends BaseMetaData {
         this.razonNoParticipa = razonNoParticipa;
     }
 
-    public char getAreaCovertura() {
-        return areaCovertura;
+    public char getAreaCobertura() {
+        return areaCobertura;
     }
 
-    public void setAreaCovertura(char areaCovertura) {
-        this.areaCovertura = areaCovertura;
+    public void setAreaCobertura(char areaCobertura) {
+        this.areaCobertura = areaCobertura;
     }
 
     public char getNinoMenor12Anios() {
@@ -111,14 +111,6 @@ public class Tamizaje extends BaseMetaData {
 
     public void setElegible(char elegible) {
         this.elegible = elegible;
-    }
-
-    public char getAceptaSeroprevalenciaZik() {
-        return aceptaSeroprevalenciaZik;
-    }
-
-    public void setAceptaSeroprevalenciaZik(char aceptaSeroprevalenciaZik) {
-        this.aceptaSeroprevalenciaZik = aceptaSeroprevalenciaZik;
     }
 
     public String getDondeAsisteProblemasSalud() {

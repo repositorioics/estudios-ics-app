@@ -19,7 +19,7 @@ public class CartaConsentimientoHelper {
         if (carta.getFechaFirma() != null)
             cv.put(MainDBConstants.fechaFirma, carta.getFechaFirma().getTime());
         cv.put(MainDBConstants.tamizaje, carta.getTamizaje().getCodigo());
-        cv.put(MainDBConstants.estado, carta.getEstudio().getCodigo());
+        if (carta.getParticipante() != null) cv.put(MainDBConstants.participante, carta.getParticipante().getCodigo());
         cv.put(MainDBConstants.participadoCohortePediatrica, String.valueOf(carta.getParticipadoCohortePediatrica()));
         cv.put(MainDBConstants.cohortePediatrica, carta.getCohortePediatrica());
         cv.put(MainDBConstants.codigoReactivado, String.valueOf(carta.getCodigoReactivado()));
@@ -52,7 +52,7 @@ public class CartaConsentimientoHelper {
         mCarta.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         mCarta.setFechaFirma(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaFirma))));
         mCarta.setTamizaje(null);
-        mCarta.setEstudio(null);
+        mCarta.setParticipante(null);
         mCarta.setParticipadoCohortePediatrica(cursor.getString(cursor.getColumnIndex(MainDBConstants.participadoCohortePediatrica)).charAt(0));
         mCarta.setCohortePediatrica(cursor.getString(cursor.getColumnIndex(MainDBConstants.cohortePediatrica)));
         mCarta.setCodigoReactivado(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigoReactivado)).charAt(0));

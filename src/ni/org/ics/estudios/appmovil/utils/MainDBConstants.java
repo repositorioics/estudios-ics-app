@@ -225,6 +225,48 @@ public class MainDBConstants {
             + deviceId + " text, "
             + estado + " text not null, "
             + "primary key (" + codigo + "));";
+    
+    //tabla CasaCohorteFamiliar
+    public static final String CASA_CHF_TABLE = "chf_casas_cohorte_familia";
+
+    //Campos tabla CasaCohorteFamiliar
+    public static final String codigoCHF = "codigoCHF";
+
+    //Crear tabla CasaCohorteFamiliar
+    public static final String CREATE_CASA_CHF_TABLE = "create table if not exists "
+            + CASA_CHF_TABLE + " ("
+            + codigoCHF + " text not null, "
+            + casa + " integer not null, "
+            + nombre1JefeFamilia + " text not null, "
+            + nombre2JefeFamilia + " text , "
+            + apellido1JefeFamilia + " text not null, "
+            + apellido2JefeFamilia + " text , "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigoCHF + "));";    
+ 
+    //Tabla Participantes cohorte familia
+    public static final String PARTICIPANTE_CHF_TABLE = "chf_participantes";
+
+    // Campos Participantes cohorte familia
+    public static final String participanteCHF = "participanteCHF";
+    public static final String casaCHF = "casaCHF";
+    
+    //Crear tabla participantes cohorte familia
+    public static final String CREATE_PARTICIPANTE_CHF_TABLE = "create table if not exists "
+            + PARTICIPANTE_CHF_TABLE + " ("
+            + participanteCHF + " text not null, "
+            + participante + " integer not null, "
+            + casaCHF + " integer not null, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + participante + "));";    
 
 
     //Tabla Pretamizaje
@@ -401,25 +443,5 @@ public class MainDBConstants {
             + estado + " text not null, "
             + "primary key (" + codigoCama + "));";
 
-    //tabla CasaCohorteFamiliar
-    public static final String CASA_CHF_TABLE = "chf_casas_cohorte_familia";
 
-    //Campos tabla CasaCohorteFamiliar
-    public static final String codigoCHF = "codigoCHF";
-
-    //Crear tabla CasaCohorteFamiliar
-    public static final String CREATE_CASA_CHF_TABLE = "create table if not exists "
-            + CASA_CHF_TABLE + " ("
-            + codigoCHF + " text not null, "
-            + casa + " integer not null, "
-            + nombre1JefeFamilia + " text not null, "
-            + nombre2JefeFamilia + " text , "
-            + apellido1JefeFamilia + " text not null, "
-            + apellido2JefeFamilia + " text , "
-            + recordDate + " date, "
-            + recordUser + " text, "
-            + pasive + " text, "
-            + deviceId + " text, "
-            + estado + " text not null, "
-            + "primary key (" + codigoCHF + "));";
 }

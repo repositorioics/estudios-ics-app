@@ -16,7 +16,6 @@ import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajePersonaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCasaAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -55,7 +54,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 				switch (position){
 				case 0:
 					i = new Intent(getApplicationContext(),
-							NuevoTamizajePersonaActivity.class);
+							ListaParticipantesActivity.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);
 		        	break;

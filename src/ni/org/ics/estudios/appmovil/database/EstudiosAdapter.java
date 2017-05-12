@@ -13,7 +13,9 @@ import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.domain.Casa;
+import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
@@ -63,6 +65,9 @@ public class EstudiosAdapter {
 			db.execSQL(MainDBConstants.CREATE_CASA_TABLE); 
 			db.execSQL(MainDBConstants.CREATE_PRETAMIZAJE_TABLE);
             db.execSQL(MainDBConstants.CREATE_CASA_CHF_TABLE);
+            db.execSQL(MainDBConstants.CREATE_PARTICIPANTE_TALBE);
+            db.execSQL(MainDBConstants.CREATE_PARTICIPANTE_CHF_TABLE);
+            
 			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
 			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");
 			db.execSQL("INSERT INTO `casas` (`CODIGO`, `IDENTIFICADOR_EQUIPO`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `apellido1JefeFamilia`, `apellido2JefeFamilia`, `DIRECCION`, `MANZANA`, `nombre1JefeFamilia`, `nombre2JefeFamilia`, `barrio`) VALUES (1, 'server', '1', '0', '2017-05-10 11:22:29', 'admin', 'Lopez', 'Martinez', 'sfgsgsgsd', '3', 'Pedro', 'Ramon', 1)");
@@ -314,12 +319,8 @@ public class EstudiosAdapter {
 		if (cursorCasa != null && cursorCasa.getCount() > 0) {
 			cursorCasa.moveToFirst();
 			mCasa=CasaHelper.crearCasa(cursorCasa);
-			Cursor cursorBarrio = crearCursor(CatalogosDBConstants.BARRIO_TABLE , MainDBConstants.codigo + "=" +cursorCasa.getInt(cursorCasa.getColumnIndex(MainDBConstants.barrio)), null, MainDBConstants.codigo);
-			cursorBarrio.moveToFirst();
-			if (cursorBarrio != null && cursorBarrio.getCount() > 0) {
-				mCasa.setBarrio(BarrioHelper.crearBarrio(cursorBarrio));
-			}
-			if (!cursorBarrio.isClosed()) cursorBarrio.close();
+			Barrio barrio = this.getBarrio(MainDBConstants.codigo + "=" +cursorCasa.getInt(cursorCasa.getColumnIndex(MainDBConstants.barrio)), orden);
+			mCasa.setBarrio(barrio);
 		}
 		if (!cursorCasa.isClosed()) cursorCasa.close();
 		return mCasa;
@@ -334,12 +335,8 @@ public class EstudiosAdapter {
 			do{
 				Casa mCasa = null;
 				mCasa = CasaHelper.crearCasa(cursorCasas);
-				Cursor cursorBarrio = crearCursor(CatalogosDBConstants.BARRIO_TABLE , MainDBConstants.codigo + "=" +cursorCasas.getInt(cursorCasas.getColumnIndex(MainDBConstants.barrio)), null, MainDBConstants.codigo);
-				cursorBarrio.moveToFirst();
-				if (cursorBarrio != null && cursorBarrio.getCount() > 0) {
-					mCasa.setBarrio(BarrioHelper.crearBarrio(cursorBarrio));
-				}
-				if (!cursorBarrio.isClosed()) cursorBarrio.close();
+				Barrio barrio = this.getBarrio(MainDBConstants.codigo + "=" +cursorCasas.getInt(cursorCasas.getColumnIndex(MainDBConstants.barrio)), orden);
+				mCasa.setBarrio(barrio);
 				mCasas.add(mCasa);
 			} while (cursorCasas.moveToNext());
 		}
@@ -427,18 +424,10 @@ public class EstudiosAdapter {
 		if (cursorPreTamizaje != null && cursorPreTamizaje.getCount() > 0) {
 			cursorPreTamizaje.moveToFirst();
 			mPreTamizaje=PreTamizajeHelper.crearPreTamizaje(cursorPreTamizaje);
-			Cursor cursorCasa = crearCursor(MainDBConstants.CASA_TABLE , MainDBConstants.codigo + "=" +cursorPreTamizaje.getInt(cursorPreTamizaje.getColumnIndex(MainDBConstants.casa)), null, MainDBConstants.codigo);
-			cursorCasa.moveToFirst();
-			if (cursorCasa != null && cursorCasa.getCount() > 0) {
-				mPreTamizaje.setCasa(CasaHelper.crearCasa(cursorCasa));
-			}
-			if (!cursorCasa.isClosed()) cursorCasa.close();
-			Cursor cursorEstudio = crearCursor(CatalogosDBConstants.ESTUDIO_TABLE , MainDBConstants.codigo + "=" +cursorPreTamizaje.getInt(cursorPreTamizaje.getColumnIndex(MainDBConstants.estudio)), null, MainDBConstants.codigo);
-			cursorEstudio.moveToFirst();
-			if (cursorEstudio != null && cursorEstudio.getCount() > 0) {
-				mPreTamizaje.setEstudio(EstudiosHelper.crearEstudio(cursorEstudio));
-			}
-			if (!cursorEstudio.isClosed()) cursorEstudio.close();
+			Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorPreTamizaje.getInt(cursorPreTamizaje.getColumnIndex(MainDBConstants.casa)), null);
+			mPreTamizaje.setCasa(casa);
+			Estudio estudio = this.getEstudio(MainDBConstants.codigo + "=" +cursorPreTamizaje.getInt(cursorPreTamizaje.getColumnIndex(MainDBConstants.estudio)), null);
+			mPreTamizaje.setEstudio(estudio);
 		}
 		if (!cursorPreTamizaje.isClosed()) cursorPreTamizaje.close();
 		return mPreTamizaje;
@@ -453,18 +442,10 @@ public class EstudiosAdapter {
 			do{
 				PreTamizaje mPreTamizaje = null;
 				mPreTamizaje = PreTamizajeHelper.crearPreTamizaje(cursorPreTamizajes);
-				Cursor cursorCasa = crearCursor(MainDBConstants.CASA_TABLE , MainDBConstants.codigo + "=" +cursorPreTamizajes.getInt(cursorPreTamizajes.getColumnIndex(MainDBConstants.casa)), null, MainDBConstants.codigo);
-				cursorCasa.moveToFirst();
-				if (cursorCasa != null && cursorCasa.getCount() > 0) {
-					mPreTamizaje.setCasa(CasaHelper.crearCasa(cursorCasa));
-				}
-				if (!cursorCasa.isClosed()) cursorCasa.close();
-				Cursor cursorEstudio = crearCursor(CatalogosDBConstants.ESTUDIO_TABLE , MainDBConstants.codigo + "=" +cursorPreTamizajes.getInt(cursorPreTamizajes.getColumnIndex(MainDBConstants.estudio)), null, MainDBConstants.codigo);
-				cursorEstudio.moveToFirst();
-				if (cursorEstudio != null && cursorEstudio.getCount() > 0) {
-					mPreTamizaje.setEstudio(EstudiosHelper.crearEstudio(cursorEstudio));
-				}
-				if (!cursorEstudio.isClosed()) cursorEstudio.close();
+				Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorPreTamizajes.getInt(cursorPreTamizajes.getColumnIndex(MainDBConstants.casa)), null);
+				mPreTamizaje.setCasa(casa);
+				Estudio estudio = this.getEstudio(MainDBConstants.codigo + "=" +cursorPreTamizajes.getInt(cursorPreTamizajes.getColumnIndex(MainDBConstants.estudio)), null);
+				mPreTamizaje.setEstudio(estudio);
 				mPreTamizajes.add(mPreTamizaje);
 			} while (cursorPreTamizajes.moveToNext());
 		}
@@ -473,10 +454,10 @@ public class EstudiosAdapter {
 	}
 
 	/**
-	 * Metodos para pretamizajes en la base de datos
+	 * Metodos para CasaCohorteFamilia en la base de datos
 	 * 
 	 * @param casaCHF
-	 *            Objeto PreTamizaje que contiene la informacion
+	 *            Objeto CasaCohorteFamilia que contiene la informacion
 	 *
 	 */
 	//Crear nuevo CasaCohorteFamilia en la base de datos
@@ -487,7 +468,7 @@ public class EstudiosAdapter {
 	//Editar CasaCohorteFamilia existente en la base de datos
 	public boolean editarCasaCohorteFamilia(CasaCohorteFamilia casaCHF) {
 		ContentValues cv = CasaCohorteFamiliaHelper.crearCasaCHFontentValues(casaCHF);
-		return mDb.update(MainDBConstants.CASA_CHF_TABLE , cv, MainDBConstants.codigo + "='" 
+		return mDb.update(MainDBConstants.CASA_CHF_TABLE , cv, MainDBConstants.codigoCHF + "='" 
 				+ casaCHF.getCodigoCHF()+ "'", null) > 0;
 	}
 	//Limpiar la tabla de CasaCohorteFamilia de la base de datos
@@ -501,12 +482,8 @@ public class EstudiosAdapter {
 		if (cursorCasaCohorteFamilia != null && cursorCasaCohorteFamilia.getCount() > 0) {
 			cursorCasaCohorteFamilia.moveToFirst();
 			mCasaCohorteFamilia=CasaCohorteFamiliaHelper.crearCasaCHF(cursorCasaCohorteFamilia);
-			Cursor cursorCasa = crearCursor(MainDBConstants.CASA_TABLE , MainDBConstants.codigo + "=" +cursorCasaCohorteFamilia.getInt(cursorCasaCohorteFamilia.getColumnIndex(MainDBConstants.casa)), null, MainDBConstants.codigo);
-			cursorCasa.moveToFirst();
-			if (cursorCasa != null && cursorCasa.getCount() > 0) {
-				mCasaCohorteFamilia.setCasa(CasaHelper.crearCasa(cursorCasa));
-			}
-			if (!cursorCasa.isClosed()) cursorCasa.close();
+			Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorCasaCohorteFamilia.getInt(cursorCasaCohorteFamilia.getColumnIndex(MainDBConstants.casa)), null);
+			mCasaCohorteFamilia.setCasa(casa);
 		}
 		if (!cursorCasaCohorteFamilia.isClosed()) cursorCasaCohorteFamilia.close();
 		return mCasaCohorteFamilia;
@@ -521,17 +498,127 @@ public class EstudiosAdapter {
 			do{
 				CasaCohorteFamilia mCasaCohorteFamilia = null;
 				mCasaCohorteFamilia = CasaCohorteFamiliaHelper.crearCasaCHF(cursorCasaCohorteFamilia);
-				Cursor cursorCasa = crearCursor(MainDBConstants.CASA_TABLE , MainDBConstants.codigo + "=" +cursorCasaCohorteFamilia.getInt(cursorCasaCohorteFamilia.getColumnIndex(MainDBConstants.casa)), null, MainDBConstants.codigo);
-				cursorCasa.moveToFirst();
-				if (cursorCasa != null && cursorCasa.getCount() > 0) {
-					mCasaCohorteFamilia.setCasa(CasaHelper.crearCasa(cursorCasa));
-				}
-				if (!cursorCasa.isClosed()) cursorCasa.close();
+				Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorCasaCohorteFamilia.getInt(cursorCasaCohorteFamilia.getColumnIndex(MainDBConstants.casa)), null);
+				mCasaCohorteFamilia.setCasa(casa);
 				mCasaCohorteFamilias.add(mCasaCohorteFamilia);
 			} while (cursorCasaCohorteFamilia.moveToNext());
 		}
 		if (!cursorCasaCohorteFamilia.isClosed()) cursorCasaCohorteFamilia.close();
 		return mCasaCohorteFamilias;
 	}
+	
+	/**
+	 * Metodos para participantes en la base de datos
+	 * 
+	 * @param participante
+	 *            Objeto Participante que contiene la informacion
+	 *
+	 */
+	//Crear nuevo Participante en la base de datos
+	public void crearParticipante(Participante participante) {
+		ContentValues cv = ParticipanteHelper.crearParticipanteContentValues(participante);
+		mDb.insert(MainDBConstants.PARTICIPANTE_TABLE, null, cv);
+	}
+	//Editar Participante existente en la base de datos
+	public boolean editarParticipante(Participante participante) {
+		ContentValues cv = ParticipanteHelper.crearParticipanteContentValues(participante);
+		return mDb.update(MainDBConstants.PARTICIPANTE_TABLE , cv, MainDBConstants.codigo + "=" 
+				+ participante.getCodigo(), null) > 0;
+	}
+	//Limpiar la tabla de Participante de la base de datos
+	public boolean borrarParticipantes() {
+		return mDb.delete(MainDBConstants.PARTICIPANTE_TABLE, null, null) > 0;
+	}
+	//Obtener una Participante de la base de datos
+	public Participante getParticipante(String filtro, String orden) throws SQLException {
+		Participante mParticipante = null;
+		Cursor cursorParticipante = crearCursor(MainDBConstants.PARTICIPANTE_TABLE , filtro, null, orden);
+		if (cursorParticipante != null && cursorParticipante.getCount() > 0) {
+			cursorParticipante.moveToFirst();
+			mParticipante=ParticipanteHelper.crearParticipante(cursorParticipante);
+			Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.casa)), null);
+			mParticipante.setCasa(casa);
+		}
+		if (!cursorParticipante.isClosed()) cursorParticipante.close();
+		return mParticipante;
+	}
+	//Obtener una lista de Participante de la base de datos
+	public List<Participante> getParticipantes(String filtro, String orden) throws SQLException {
+		List<Participante> mParticipantes = new ArrayList<Participante>();
+		Cursor cursorParticipante = crearCursor(MainDBConstants.PARTICIPANTE_TABLE, filtro, null, orden);
+		if (cursorParticipante != null && cursorParticipante.getCount() > 0) {
+			cursorParticipante.moveToFirst();
+			mParticipantes.clear();
+			do{
+				Participante mParticipante = null;
+				mParticipante = ParticipanteHelper.crearParticipante(cursorParticipante);
+				Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.casa)), null);
+				mParticipante.setCasa(casa);
+				mParticipantes.add(mParticipante);
+			} while (cursorParticipante.moveToNext());
+		}
+		if (!cursorParticipante.isClosed()) cursorParticipante.close();
+		return mParticipantes;
+	}
+	
+	/**
+	 * Metodos para ParticipanteCohorteFamilia en la base de datos
+	 * 
+	 * @param participanteCohorteFamilia
+	 *            Objeto ParticipanteCohorteFamilia que contiene la informacion
+	 *
+	 */
+	//Crear nuevo ParticipanteCohorteFamilia en la base de datos
+	public void crearParticipanteCohorteFamilia(ParticipanteCohorteFamilia participanteCohorteFamilia) {
+		ContentValues cv = ParticipanteCohorteFamiliaHelper.crearParticipanteCohorteFamiliaContentValues(participanteCohorteFamilia);
+		mDb.insert(MainDBConstants.PARTICIPANTE_CHF_TABLE, null, cv);
+	}
+	//Editar ParticipanteCohorteFamilia existente en la base de datos
+	public boolean editarParticipanteCohorteFamilia(ParticipanteCohorteFamilia participanteCohorteFamilia) {
+		ContentValues cv = ParticipanteCohorteFamiliaHelper.crearParticipanteCohorteFamiliaContentValues(participanteCohorteFamilia);
+		return mDb.update(MainDBConstants.PARTICIPANTE_CHF_TABLE , cv, MainDBConstants.participanteCHF + "='" 
+				+ participanteCohorteFamilia.getParticipanteCHF()+"'", null) > 0;
+	}
+	//Limpiar la tabla de ParticipanteCohorteFamilia de la base de datos
+	public boolean borrarParticipanteCohorteFamilias() {
+		return mDb.delete(MainDBConstants.PARTICIPANTE_CHF_TABLE, null, null) > 0;
+	}
+	//Obtener una ParticipanteCohorteFamilia de la base de datos
+	public ParticipanteCohorteFamilia getParticipanteCohorteFamilia(String filtro, String orden) throws SQLException {
+		ParticipanteCohorteFamilia mParticipanteCohorteFamilia = null;
+		Cursor cursorParticipanteCohorteFamilia = crearCursor(MainDBConstants.PARTICIPANTE_CHF_TABLE , filtro, null, orden);
+		if (cursorParticipanteCohorteFamilia != null && cursorParticipanteCohorteFamilia.getCount() > 0) {
+			cursorParticipanteCohorteFamilia.moveToFirst();
+			mParticipanteCohorteFamilia=ParticipanteCohorteFamiliaHelper.crearParticipanteCohorteFamilia(cursorParticipanteCohorteFamilia);
+			CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" +cursorParticipanteCohorteFamilia.getInt(cursorParticipanteCohorteFamilia.getColumnIndex(MainDBConstants.casaCHF)), null);
+			mParticipanteCohorteFamilia.setCasaCHF(cchf);
+			Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorParticipanteCohorteFamilia.getInt(cursorParticipanteCohorteFamilia.getColumnIndex(MainDBConstants.participante)), null);
+			mParticipanteCohorteFamilia.setParticipante(participante);
+		}
+		if (!cursorParticipanteCohorteFamilia.isClosed()) cursorParticipanteCohorteFamilia.close();
+		return mParticipanteCohorteFamilia;
+	}
+	//Obtener una lista de ParticipanteCohorteFamilia de la base de datos
+	public List<ParticipanteCohorteFamilia> getParticipanteCohorteFamilias(String filtro, String orden) throws SQLException {
+		List<ParticipanteCohorteFamilia> mParticipanteCohorteFamilias = new ArrayList<ParticipanteCohorteFamilia>();
+		Cursor cursorParticipanteCohorteFamilia = crearCursor(MainDBConstants.PARTICIPANTE_CHF_TABLE, filtro, null, orden);
+		if (cursorParticipanteCohorteFamilia != null && cursorParticipanteCohorteFamilia.getCount() > 0) {
+			cursorParticipanteCohorteFamilia.moveToFirst();
+			mParticipanteCohorteFamilias.clear();
+			do{
+				ParticipanteCohorteFamilia mParticipanteCohorteFamilia = null;
+				mParticipanteCohorteFamilia = ParticipanteCohorteFamiliaHelper.crearParticipanteCohorteFamilia(cursorParticipanteCohorteFamilia);
+				Cursor cursorCasaCHF = crearCursor(MainDBConstants.CASA_CHF_TABLE , MainDBConstants.codigoCHF + "=" +cursorParticipanteCohorteFamilia.getInt(cursorParticipanteCohorteFamilia.getColumnIndex(MainDBConstants.casaCHF)), null, MainDBConstants.codigoCHF);
+				cursorCasaCHF.moveToFirst();
+				if (cursorCasaCHF != null && cursorCasaCHF.getCount() > 0) {
+					mParticipanteCohorteFamilia.setCasaCHF(CasaCohorteFamiliaHelper.crearCasaCHF(cursorCasaCHF));
+				}
+				if (!cursorCasaCHF.isClosed()) cursorCasaCHF.close();
+				mParticipanteCohorteFamilias.add(mParticipanteCohorteFamilia);
+			} while (cursorParticipanteCohorteFamilia.moveToNext());
+		}
+		if (!cursorParticipanteCohorteFamilia.isClosed()) cursorParticipanteCohorteFamilia.close();
+		return mParticipanteCohorteFamilias;
+	}	
 
 }

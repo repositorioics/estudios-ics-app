@@ -51,6 +51,8 @@
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCasaActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaParticipantesActivity"
+                  android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajePersonaActivity"
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.activities.DataEnterActivity" 

@@ -1,27 +1,33 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
 
+import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.adapters.MainActivityAdapter;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCohorteFamiliaActivity;
 import android.os.Bundle;
-import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class ListaParticipantesActivity extends ListActivity {
+public class ListaParticipantesActivity extends AbstractAsyncListActivity {
+	
+	private TextView textView;
+	private Drawable img = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		String[] menu_main = getResources().getStringArray(R.array.menu_casa);
-		setListAdapter(new MainActivityAdapter(this, R.layout.menu_item, menu_main));
+		textView = (TextView) findViewById(R.id.label_logo);
+		textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.participants)+"\n"+ getString(R.string.casa_id )+": 1");
+		img=getResources().getDrawable( R.drawable.ic_family);
+		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 	}
 
 	@Override

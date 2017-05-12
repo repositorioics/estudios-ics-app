@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class AreaAmbienteHelper {
 
-    private ContentValues crearBanioContentValues(Banio areaAmbiente){
+	public static ContentValues crearBanioContentValues(Banio areaAmbiente){
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigo, areaAmbiente.getCodigo());
         cv.put(MainDBConstants.ancho, areaAmbiente.getAncho());
@@ -31,7 +31,7 @@ public class AreaAmbienteHelper {
         return cv;
     }
 
-    public Banio crearBanio(Cursor cursor){
+	public static Banio crearBanio(Cursor cursor){
         Banio mAreaAmbiente = new Banio();
         mAreaAmbiente.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho))>0) mAreaAmbiente.setAncho(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho)));
@@ -49,7 +49,7 @@ public class AreaAmbienteHelper {
         return mAreaAmbiente;
     }
 
-    private ContentValues crearCocinaContentValues(Cocina areaAmbiente){
+	public static ContentValues crearCocinaContentValues(Cocina areaAmbiente){
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigo, areaAmbiente.getCodigo());
         cv.put(MainDBConstants.ancho, areaAmbiente.getAncho());
@@ -66,7 +66,7 @@ public class AreaAmbienteHelper {
         return cv;
     }
 
-    public Cocina crearCocina(Cursor cursor){
+	public static Cocina crearCocina(Cursor cursor){
         Cocina mAreaAmbiente = new Cocina();
         mAreaAmbiente.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho)) > 0) mAreaAmbiente.setAncho(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho)));
@@ -83,7 +83,7 @@ public class AreaAmbienteHelper {
         return mAreaAmbiente;
     }
 
-    private ContentValues crearComedorContentValues(Comedor areaAmbiente){
+	public static ContentValues crearComedorContentValues(Comedor areaAmbiente){
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigo, areaAmbiente.getCodigo());
         cv.put(MainDBConstants.ancho, areaAmbiente.getAncho());
@@ -100,7 +100,7 @@ public class AreaAmbienteHelper {
         return cv;
     }
 
-    public Comedor crearComedor(Cursor cursor){
+	public static Comedor crearComedor(Cursor cursor){
         Comedor mAreaAmbiente = new Comedor();
         mAreaAmbiente.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho))>0) mAreaAmbiente.setAncho(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho)));
@@ -117,7 +117,7 @@ public class AreaAmbienteHelper {
         return mAreaAmbiente;
     }
 
-    private ContentValues crearHabitacionContentValues(Habitacion areaAmbiente){
+	public static ContentValues crearHabitacionContentValues(Habitacion areaAmbiente){
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigo, areaAmbiente.getCodigo());
         cv.put(MainDBConstants.ancho, areaAmbiente.getAncho());
@@ -134,7 +134,7 @@ public class AreaAmbienteHelper {
         return cv;
     }
 
-    public Habitacion crearHabitacion(Cursor cursor){
+	public static Habitacion crearHabitacion(Cursor cursor){
         Habitacion mAreaAmbiente = new Habitacion();
         mAreaAmbiente.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho))>0) mAreaAmbiente.setAncho(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho)));
@@ -151,7 +151,7 @@ public class AreaAmbienteHelper {
         return mAreaAmbiente;
     }
 
-    private ContentValues crearSalaContentValues(Sala areaAmbiente){
+	public static ContentValues crearSalaContentValues(Sala areaAmbiente){
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigo, areaAmbiente.getCodigo());
         cv.put(MainDBConstants.ancho, areaAmbiente.getAncho());
@@ -168,7 +168,7 @@ public class AreaAmbienteHelper {
         return cv;
     }
 
-    public Sala crearSala(Cursor cursor){
+	public static Sala crearSala(Cursor cursor){
         Sala mAreaAmbiente = new Sala();
         mAreaAmbiente.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho))>0) mAreaAmbiente.setAncho(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho)));
@@ -185,7 +185,7 @@ public class AreaAmbienteHelper {
         return mAreaAmbiente;
     }
 
-    private ContentValues crearVentanaContentValues(Ventana areaAmbiente){
+	public static ContentValues crearVentanaContentValues(Ventana areaAmbiente){
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigo, areaAmbiente.getCodigo());
         cv.put(MainDBConstants.ancho, areaAmbiente.getAncho());
@@ -203,7 +203,7 @@ public class AreaAmbienteHelper {
         return cv;
     }
 
-    public Ventana crearVentana(Cursor cursor){
+	public static Ventana crearVentana(Cursor cursor){
         Ventana mAreaAmbiente = new Ventana();
         mAreaAmbiente.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho))>0) mAreaAmbiente.setAncho(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho)));

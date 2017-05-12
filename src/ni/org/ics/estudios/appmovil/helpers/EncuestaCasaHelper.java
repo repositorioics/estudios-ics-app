@@ -24,7 +24,7 @@ public class EncuestaCasaHelper {
         cv.put(EncuestasDBConstants.encuestador, encuesta.getEncuestador());
         cv.put(EncuestasDBConstants.hrsSinServicioAgua, encuesta.getHrsSinServicioAgua());
         cv.put(EncuestasDBConstants.ubicacionLlaveAgua, encuesta.getUbicacionLlaveAgua());
-        cv.put(EncuestasDBConstants.llaveCompartida, String.valueOf(encuesta.getLlaveCompartida()));
+        cv.put(EncuestasDBConstants.llaveCompartida, encuesta.getLlaveCompartida());
         cv.put(EncuestasDBConstants.almacenaAgua, String.valueOf(encuesta.getAlmacenaAgua()));
         cv.put(EncuestasDBConstants.almacenaEnBarriles, String.valueOf(encuesta.getAlmacenaEnBarriles()));
         cv.put(EncuestasDBConstants.almacenaEnTanques, String.valueOf(encuesta.getAlmacenaEnTanques()));
@@ -109,7 +109,7 @@ public class EncuestaCasaHelper {
         mEncuesta.setEncuestador(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.encuestador)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.hrsSinServicioAgua)) > 0) mEncuesta.setHrsSinServicioAgua(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.hrsSinServicioAgua)));
         mEncuesta.setUbicacionLlaveAgua(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ubicacionLlaveAgua)));
-        mEncuesta.setLlaveCompartida(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.llaveCompartida)).charAt(0));
+        mEncuesta.setLlaveCompartida(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.llaveCompartida)));
         mEncuesta.setAlmacenaAgua(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaAgua)).charAt(0));
         mEncuesta.setAlmacenaEnBarriles(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaEnBarriles)).charAt(0));
         mEncuesta.setAlmacenaEnTanques(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaEnTanques)).charAt(0));

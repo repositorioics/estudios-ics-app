@@ -16,7 +16,8 @@
     <string name="noAcepta">No acepta entrar, finaliza el formulario.</string>
     
     <string name="participants">Lista Participantes</string>
-    <string name="new_survey_1">Nueva Encuesta Participante</string>
     <string name="new_screen_per">Nuevo Tamizaje Persona</string>
+    <string name="new_survey_1">Encuesta Casa</string>
+    <string name="new_survey_2">Encuesta Participante</string>
     
 </resources>

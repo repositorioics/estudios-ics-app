@@ -80,12 +80,35 @@ public class EstudiosAdapter {
             		"VALUES (123, 'Jose', 'Perez', 'Juan', 'Perez', 'Mirna', 'Lopez','1','1', '2013-09-12 13:36:45', 'M','0')");
             db.execSQL("INSERT INTO `chf_participantes` (`participanteCHF`, `participante`, `casaCHF`, `estado`, `PASIVE`) " +
             		"VALUES (00-43883, '123', '5678','1','0')");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('outside', '0', 'CAT_DENTROFUERA', NULL, '0', 1, '0', 'Fuera');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('inside', '1', 'CAT_DENTROFUERA', NULL, '0', 2, '0', 'Dentro');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('in-outside', '0', 'CAT_DENTROFUERA', NULL, '0', 3, '0', 'Dentro y Fuera');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('shared', '1', 'CAT_COMPARTIDO', NULL, '0', 1, '0', 'Compartido');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('not_shared', '0', 'CAT_COMPARTIDO', NULL, '0', 2, '0', 'No compartido');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('madera', '1', 'CAT_MAT_PARED', NULL, '0', 1, '0', 'Madera');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('concretopared', '0', 'CAT_MAT_PARED', NULL, '0', 2, '0', 'Concreto');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('plasticopared', '1', 'CAT_MAT_PARED', NULL, '0', 3, '0', 'Plástico');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('carton', '0', 'CAT_MAT_PARED', NULL, '0', 4, '0', 'Cartón');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('adobe', '1', 'CAT_MAT_PARED', NULL, '0', 5, '0', 'Adobe');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('zincpared', '0', 'CAT_MAT_PARED', NULL, '0', 6, '0', 'Zinc');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('otro', '0', 'CAT_MAT_PARED', NULL, '0', 7, '0', 'Otro');");
             db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('concretopiso', '1', 'CAT_MAT_PISO', NULL, '0', 1, '0', 'Concreto');");
             db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('ladrillos', '0', 'CAT_MAT_PISO', NULL, '0', 2, '0', 'Ladrillos');");
             db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('tierra', '1', 'CAT_MAT_PISO', NULL, '0', 3, '0', 'Piso de tierra');");
             db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('ceramica', '0', 'CAT_MAT_PISO', NULL, '0', 4, '0', 'Cerámica');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('otropiso', '0', 'CAT_MAT_PISO', NULL, '0', 7, '0', 'Otro');");
-		}
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('otropiso', '0', 'CAT_MAT_PISO', NULL, '0', 5, '0', 'Otro');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('zinctecho', '1', 'CAT_MAT_TECHO', NULL, '0', 1, '0', 'Zinc');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('plasticotecho', '0', 'CAT_MAT_TECHO', NULL, '0', 2, '0', 'Plástico');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('teja', '1', 'CAT_MAT_TECHO', NULL, '0', 3, '0', 'Tejas');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('otrotecho', '0', 'CAT_MAT_TECHO', NULL, '0', 4, '0', 'Otro');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('dia', '1', 'CAT_FUN_ABANICO', NULL, '0', 1, '0', 'Día');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('noche', '0', 'CAT_FUN_ABANICO', NULL, '0', 2, '0', 'Noche');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('diario', '1', 'CAT_PERIOD_COCINA', NULL, '0', 1, '0', 'Diario');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('semanal', '0', 'CAT_PERIOD_COCINA', NULL, '0', 2, '0', 'Semanal');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('quincenal', '1', 'CAT_PERIOD_COCINA', NULL, '0', 3, '0', 'Quincenal');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('mensual', '0', 'CAT_PERIOD_COCINA', NULL, '0', 4, '0', 'Mensual');");
+
+        }
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -607,25 +630,25 @@ public class EstudiosAdapter {
 		if (!cursorParticipanteCohorteFamilia.isClosed()) cursorParticipanteCohorteFamilia.close();
 		return mParticipanteCohorteFamilia;
 	}
-	//Obtener una lista de ParticipanteCohorteFamilia de la base de datos
-	public ArrayList<ParticipanteCohorteFamilia> getParticipanteCohorteFamilias(String filtro, String orden) throws SQLException {
-		ArrayList<ParticipanteCohorteFamilia> mParticipanteCohorteFamilias = new ArrayList<ParticipanteCohorteFamilia>();
-		Cursor cursorParticipanteCohorteFamilia = crearCursor(MainDBConstants.PARTICIPANTE_CHF_TABLE, filtro, null, orden);
-		if (cursorParticipanteCohorteFamilia != null && cursorParticipanteCohorteFamilia.getCount() > 0) {
-			cursorParticipanteCohorteFamilia.moveToFirst();
-			mParticipanteCohorteFamilias.clear();
-			do{
-				ParticipanteCohorteFamilia mParticipanteCohorteFamilia = null;
-				mParticipanteCohorteFamilia = ParticipanteCohorteFamiliaHelper.crearParticipanteCohorteFamilia(cursorParticipanteCohorteFamilia);
-				CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" +cursorParticipanteCohorteFamilia.getInt(cursorParticipanteCohorteFamilia.getColumnIndex(MainDBConstants.casaCHF)), null);
-				mParticipanteCohorteFamilia.setCasaCHF(cchf);
-				Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorParticipanteCohorteFamilia.getInt(cursorParticipanteCohorteFamilia.getColumnIndex(MainDBConstants.participante)), null);
-				mParticipanteCohorteFamilia.setParticipante(participante);
-				mParticipanteCohorteFamilias.add(mParticipanteCohorteFamilia);
-			} while (cursorParticipanteCohorteFamilia.moveToNext());
-		}
-		if (!cursorParticipanteCohorteFamilia.isClosed()) cursorParticipanteCohorteFamilia.close();
-		return mParticipanteCohorteFamilias;
-	}	
+    //Obtener una lista de ParticipanteCohorteFamilia de la base de datos
+    public ArrayList<ParticipanteCohorteFamilia> getParticipanteCohorteFamilias(String filtro, String orden) throws SQLException {
+        ArrayList<ParticipanteCohorteFamilia> mParticipanteCohorteFamilias = new ArrayList<ParticipanteCohorteFamilia>();
+        Cursor cursorParticipanteCohorteFamilia = crearCursor(MainDBConstants.PARTICIPANTE_CHF_TABLE, filtro, null, orden);
+        if (cursorParticipanteCohorteFamilia != null && cursorParticipanteCohorteFamilia.getCount() > 0) {
+            cursorParticipanteCohorteFamilia.moveToFirst();
+            mParticipanteCohorteFamilias.clear();
+            do{
+                ParticipanteCohorteFamilia mParticipanteCohorteFamilia = null;
+                mParticipanteCohorteFamilia = ParticipanteCohorteFamiliaHelper.crearParticipanteCohorteFamilia(cursorParticipanteCohorteFamilia);
+                CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" +cursorParticipanteCohorteFamilia.getInt(cursorParticipanteCohorteFamilia.getColumnIndex(MainDBConstants.casaCHF)), null);
+                mParticipanteCohorteFamilia.setCasaCHF(cchf);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorParticipanteCohorteFamilia.getInt(cursorParticipanteCohorteFamilia.getColumnIndex(MainDBConstants.participante)), null);
+                mParticipanteCohorteFamilia.setParticipante(participante);
+                mParticipanteCohorteFamilias.add(mParticipanteCohorteFamilia);
+            } while (cursorParticipanteCohorteFamilia.moveToNext());
+        }
+        if (!cursorParticipanteCohorteFamilia.isClosed()) cursorParticipanteCohorteFamilia.close();
+        return mParticipanteCohorteFamilias;
+    }
 
 }

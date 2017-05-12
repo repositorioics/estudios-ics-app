@@ -20,6 +20,8 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaCasaActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajePersonaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCasaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
@@ -73,9 +75,15 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 					i.putExtras(arguments);
 					startActivity(i);
 		        	break;
-				default:
-					
-					break;
+                    case 1:
+                        i = new Intent(getApplicationContext(),
+                                NuevaEncuestaCasaActivity.class);
+                        i.putExtras(arguments);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        break;
+				    default:
+                        break;
 		        }
 			}
 		});

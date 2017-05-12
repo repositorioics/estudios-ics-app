@@ -54,11 +54,7 @@ public abstract class EstudiosSQLiteOpenHelper {
             	throw new IllegalStateException(mContext.getString(R.string.errordb));
             }
             else {
-                try {
-                    db = SQLiteDatabase.openOrCreateDatabase(databaseFile, mPassword, null);
-                }catch (Exception ex){
-                    success = false;
-                }
+                db = SQLiteDatabase.openOrCreateDatabase(databaseFile, mPassword, null);
             }
 
             int version = db.getVersion();

@@ -21,6 +21,8 @@ import java.util.Map;
 
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.EncuestaCasaForm;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.EncuestaCasaFormLabels;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PreTamizajeForm;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
@@ -43,6 +45,7 @@ public class DataEnterActivity extends FragmentActivity implements
     private boolean mEditingAfterReview;
 
     private AbstractWizardModel mWizardModel;
+    private EncuestaCasaFormLabels labelsEC = new EncuestaCasaFormLabels();
     //private PreTamizajeFormLabels labels = new PreTamizajeFormLabels();
 
     private boolean mConsumePageSelectedEvent;
@@ -63,6 +66,9 @@ public class DataEnterActivity extends FragmentActivity implements
         formName = getIntent().getStringExtra(Constants.FORM_NAME);
         if(formName.matches(Constants.FORM_NUEVO_TAMIZAJE_CASA)){
         	mWizardModel = new PreTamizajeForm(this,mPass);
+        }
+        else if(formName.matches(Constants.FORM_NUEVA_ENCUESTA_CASA)){
+            mWizardModel = new EncuestaCasaForm(this,mPass);
         }
         else if(formName.matches(Constants.FORM_NUEVO_TAMIZAJE_PERS)){
             //mWizardModel = new TamizajeForm(this,mPass);
@@ -286,6 +292,15 @@ public class DataEnterActivity extends FragmentActivity implements
             	Page page2 = mWizardModel.findByKey(labels.getCodigoCHF());
             	np.setmLowerOrEqualsThan(Integer.parseInt(page2.getData().getString(NumberPage.SIMPLE_DATA_KEY)));
             	mWizardModel.getCurrentPageSequence().remove(page2);
+            }
+            if(page.getTitle().equals( labelsEC.getCuantoCuartos())){
+                NumberPage np = (NumberPage) page;
+                Page page2 = mWizardModel.findByKey(labelsEC.getCuartosDormir());
+                String valor = page2.getData().getString(NumberPage.SIMPLE_DATA_KEY);
+                if (valor != null && !valor.isEmpty()) {
+                    np.setmLowerOrEqualsThan(Integer.parseInt(valor));
+                    mWizardModel.getCurrentPageSequence().remove(page2);
+                }
             }
         }*/
     }

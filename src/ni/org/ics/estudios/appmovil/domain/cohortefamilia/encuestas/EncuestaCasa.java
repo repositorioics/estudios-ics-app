@@ -22,7 +22,7 @@ public class EncuestaCasa extends BaseMetaData {
     private String encuestador;
     private int hrsSinServicioAgua;
     private String ubicacionLlaveAgua;
-    private char llaveCompartida;
+    private String llaveCompartida;
     private char almacenaAgua;
     private char almacenaEnBarriles;
     private char almacenaEnTanques;
@@ -146,11 +146,11 @@ public class EncuestaCasa extends BaseMetaData {
         this.ubicacionLlaveAgua = ubicacionLlaveAgua;
     }
 
-    public char getLlaveCompartida() {
+    public String getLlaveCompartida() {
         return llaveCompartida;
     }
 
-    public void setLlaveCompartida(char llaveCompartida) {
+    public void setLlaveCompartida(String llaveCompartida) {
         this.llaveCompartida = llaveCompartida;
     }
 

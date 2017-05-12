@@ -23,6 +23,7 @@ public class Constants {
     public static final String FORM_NAME = "form";
 	public static final String FORM_NUEVO_TAMIZAJE_CASA = "tamizaje_casa";
     public static final String FORM_NUEVO_TAMIZAJE_PERS = "tamizaje_persona";
+    public static final String FORM_NUEVA_ENCUESTA_CASA = "encuesta_casa";
 	public static final String ROJO = "#db0000";
 	public static final String WIZARD = "#ff0099cc";
 

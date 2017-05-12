@@ -57,6 +57,7 @@ public class BuscarCasaCHFActivity extends AbstractAsyncListActivity {
 		mMetodoView = (Spinner) findViewById(R.id.metodo_busqueda);
 		List<String> list = new ArrayList<String>();
 		list.add(getString(R.string.desc_barcode));
+		list.add(getString(R.string.enter)+" "+getString(R.string.codigoCHF));
 		list.add(getString(R.string.enter)+" "+getString(R.string.casa_id));
 		list.add(getString(R.string.enter)+" "+getString(R.string.casa_jefe_familia_nombre));
 		list.add(getString(R.string.enter)+" "+getString(R.string.casa_jefe_familia_apellido));
@@ -82,13 +83,17 @@ public class BuscarCasaCHFActivity extends AbstractAsyncListActivity {
 					mParametroView.requestFocus();
 					if (position==1){
 						mParametroView.setInputType(InputType.TYPE_CLASS_NUMBER);
-						mParametroView.setHint(getString(R.string.casa_id));
+						mParametroView.setHint(getString(R.string.codigoCHF));
 					}
 					else if (position==2){
+						mParametroView.setInputType(InputType.TYPE_CLASS_NUMBER);
+						mParametroView.setHint(getString(R.string.casa_id));
+					}
+					else if (position==3){
 						mParametroView.setInputType(InputType.TYPE_CLASS_TEXT);
 						mParametroView.setHint(getString(R.string.casa_jefe_familia_nombre));
 					}
-					else if (position==3){
+					else if (position==4){
 						mParametroView.setInputType(InputType.TYPE_CLASS_TEXT);
 						mParametroView.setHint(getString(R.string.casa_jefe_familia_apellido));
 					}
@@ -232,11 +237,14 @@ public class BuscarCasaCHFActivity extends AbstractAsyncListActivity {
 			break;
 		case 1:
 			filtro = MainDBConstants.codigoCHF + "=" + parametro;
-			break;	
+			break;
 		case 2:
+			filtro = MainDBConstants.casa + "=" + parametro;
+			break;	
+		case 3:
 			filtro = MainDBConstants.nombre1JefeFamilia + " like '%" + parametro + "%' or " + MainDBConstants.nombre2JefeFamilia + " like '%" + parametro + "%'";
 			break;
-		case 3:
+		case 4:
 			filtro = MainDBConstants.apellido1JefeFamilia + " like '%" + parametro + "%' or " + MainDBConstants.apellido1JefeFamilia + " like '%" + parametro + "%'";
 			break;			
 		}

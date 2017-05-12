@@ -18,12 +18,15 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajePersonaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCasaAdapter;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.utils.Constants;
 
 public class MenuCasaActivity extends AbstractAsyncActivity {
 
 	private GridView gridView;
 	private TextView textView;
 	private String[] menu_casa;
+	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -39,9 +42,10 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 		textView = (TextView) findViewById(R.id.label);
 		gridView = (GridView) findViewById(R.id.gridView1);
 		menu_casa = getResources().getStringArray(R.array.menu_casa);
+		casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
 		textView.setText("");
 		textView.setTextColor(Color.BLACK);
-		textView.setText(getString(R.string.main_1) + " / " + getString(R.string.casa));
+		textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.header_casa)+"\n"+ getString(R.string.code)+": "+casaCHF.getCodigoCHF());
 		gridView.setAdapter(new MenuCasaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_casa));
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override

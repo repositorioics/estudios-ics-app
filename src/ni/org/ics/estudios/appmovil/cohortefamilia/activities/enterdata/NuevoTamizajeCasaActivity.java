@@ -9,6 +9,7 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.activities.DataEnterActivity;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCasaActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
@@ -178,9 +179,20 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 		        	cchf.setPasive('0');
 		        	//Inserta una nueva casa CHF
 		        	estudiosAdapter.crearCasaCohorteFamilia(cchf);
+		        	Bundle arguments = new Bundle();
+		            if (cchf!=null) arguments.putSerializable(Constants.CASA , cchf);
+		            Intent i = new Intent(getApplicationContext(),
+		            		MenuCasaActivity.class);
+		            i.putExtras(arguments);
+		            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		            startActivity(i);
 	        	}
 	        	else{
-	        		
+	        		Intent i = new Intent(getApplicationContext(),
+	        				MainActivity.class);
+	        		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        		startActivity(i);
+	        		finish();
 	        	}
 	        	estudiosAdapter.close();
 	        }
@@ -190,11 +202,6 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 				finish();
 	        }
 	    }
-		Intent i = new Intent(getApplicationContext(),
-				MainActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(i);
-		finish();
 		super.onActivityResult(requestCode, resultCode, intent);
 	}
 

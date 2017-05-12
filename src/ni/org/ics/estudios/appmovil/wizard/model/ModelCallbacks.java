@@ -18,7 +18,7 @@ package ni.org.ics.estudios.appmovil.wizard.model;
 
 /**
  * Callback interface connecting {@link Page}, {@link AbstractWizardModel}, and model container
- * objects (e.g. {@link com.DataEnterActivity.android.wizardpager.MainActivity}.
+ * objects (e.g. {@link com.ListaParticipantesActivity.android.wizardpager.MainActivity}.
  */
 public interface ModelCallbacks {
     void onPageDataChanged(Page page);

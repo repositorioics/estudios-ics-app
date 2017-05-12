@@ -42,7 +42,7 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 		menu_cohorte_familia = getResources().getStringArray(R.array.menu_cohorte_familia);
 		textView.setText("");
 		textView.setTextColor(Color.BLACK);
-		textView.setText(getString(R.string.main_1));
+		textView.setText(getString(R.string.main_1)+"\n"+getString(R.string.header_main));
 		gridView.setAdapter(new MenuCohorteFamiliaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_cohorte_familia));
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override

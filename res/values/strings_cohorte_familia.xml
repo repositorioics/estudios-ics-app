@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
+    <string name="header_main">Página principal</string>
+    <string name="header_casa">Datos Familia</string>
+    <string name="header_participante">Datos Participante</string>
+    
     <string name="new_screen">Nuevo Tamizaje</string>
     
     <string name="aceptaTamizaje">Acepta realizar tamizaje?</string>
@@ -11,7 +15,8 @@
     <string name="codigoCHFHint">Escanee el código de esta familia.</string>
     <string name="noAcepta">No acepta entrar, finaliza el formulario.</string>
     
-    <string name="new_screen_per">Nuevo Tamizaje Persona</string>
+    <string name="participants">Lista Participantes</string>
     <string name="new_survey_1">Nueva Encuesta Participante</string>
+    <string name="new_screen_per">Nuevo Tamizaje Persona</string>
     
 </resources>

@@ -11,6 +11,7 @@ import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Casa;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
@@ -135,11 +136,10 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 		if(requestCode == ADD_PRETAMIZAJE) {
 	        if(resultCode == RESULT_OK) {
 	        	//Datos que vienen de DataEnterActivity
-	        	
 	    		Bundle bundle = intent.getExtras();
 	    		String acepta = bundle.getString(this.getString(R.string.aceptaTamizaje));
 	    		String razonNP = bundle.getString(acepta+":"+this.getString(R.string.razonNoParticipa));
-	    		String codigoCasa = bundle.getString(acepta+":"+"codigo casa");
+	    		String codigoCasa = bundle.getString(acepta+":"+this.getString(R.string.codigoCHF));
 	        	String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 	    		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 	    		estudiosAdapter.open();
@@ -147,7 +147,7 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 	    		Estudio estudio = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=1", null);
 	    		MessageResource aceptaTamizaje = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + acepta + "' and " + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
 	    		MessageResource razonNoParticipa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNP + "' and " + CatalogosDBConstants.catRoot + "='CAT_RAZON_NP'", null);
-	    		//Crea un Nuevo Registro
+	    		//Crea un Nuevo Registro de pretamizaje
 	        	PreTamizaje preTamizaje =  new PreTamizaje();
 	        	preTamizaje.setCodigo(infoMovil.getId());
 	        	preTamizaje.setAceptaTamizaje(aceptaTamizaje.getCatKey().charAt(0));
@@ -159,12 +159,35 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 	        	preTamizaje.setDeviceid(infoMovil.getDeviceId());
 	        	preTamizaje.setEstado('0');
 	        	preTamizaje.setPasive('0');
-	        	//Inserta un Nuevo Registro
+	        	//Inserta un Nuevo Registro de Pretamizaje
 	        	estudiosAdapter.crearPreTamizaje(preTamizaje);
+	        	//Pregunta si acepta el tamizaje
+	        	if (preTamizaje.getAceptaTamizaje()=='1') {
+		        	//Si la respuesta es si crea un nuevo registro de casa CHF
+		        	CasaCohorteFamilia cchf = new CasaCohorteFamilia();
+		        	cchf.setCasa(casa);
+		        	cchf.setCodigoCHF(codigoCasa);
+		        	cchf.setNombre1JefeFamilia(casa.getNombre1JefeFamilia());
+		        	cchf.setNombre2JefeFamilia(casa.getNombre2JefeFamilia());
+		        	cchf.setApellido1JefeFamilia(casa.getApellido1JefeFamilia());
+		        	cchf.setApellido2JefeFamilia(casa.getApellido2JefeFamilia());
+		        	cchf.setRecordDate(new Date());
+		        	cchf.setRecordUser(username);
+		        	cchf.setDeviceid(infoMovil.getDeviceId());
+		        	cchf.setEstado('0');
+		        	cchf.setPasive('0');
+		        	//Inserta una nueva casa CHF
+		        	estudiosAdapter.crearCasaCohorteFamilia(cchf);
+	        	}
+	        	else{
+	        		
+	        	}
 	        	estudiosAdapter.close();
 	        }
 	        else{
-	        	
+	        	Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error, R.string.err_not_completed),Toast.LENGTH_LONG);
+				toast.show();
+				finish();
 	        }
 	    }
 		Intent i = new Intent(getApplicationContext(),

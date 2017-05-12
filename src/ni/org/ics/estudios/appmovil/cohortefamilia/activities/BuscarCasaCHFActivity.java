@@ -16,11 +16,8 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.adapters.CasaAdapter;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajeCasaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.CasaCHFAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -263,7 +260,7 @@ public class BuscarCasaCHFActivity extends AbstractAsyncListActivity {
 			filtro = values[0];
 			try {
 				estudiosAdapter.open();
-				mCasasCHF = estudiosAdapter.getCasasCHF(filtro, MainDBConstants.codigoCHF);
+				mCasasCHF = estudiosAdapter.getCasaCohorteFamilias(filtro, MainDBConstants.codigoCHF);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

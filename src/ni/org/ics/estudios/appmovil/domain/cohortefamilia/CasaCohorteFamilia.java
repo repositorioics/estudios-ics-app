@@ -10,7 +10,11 @@ import ni.org.ics.estudios.appmovil.domain.Casa;
  */
 public class CasaCohorteFamilia extends BaseMetaData {
 
-    private String codigoCHF;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String codigoCHF;
     private Casa casa;
     private String nombre1JefeFamilia;
     private String nombre2JefeFamilia;

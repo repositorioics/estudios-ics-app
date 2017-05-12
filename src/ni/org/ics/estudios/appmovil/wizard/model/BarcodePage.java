@@ -10,6 +10,9 @@ public class BarcodePage extends Page {
 	
 	protected boolean mValPattern = false;
 	protected String mPattern="";
+	protected int mGreaterOrEqualsThan = 0;
+	protected int mLowerOrEqualsThan = 0;
+	protected boolean mValRange = false;
 
 	public BarcodePage(ModelCallbacks callbacks, String title, String hintText, String textColor) {
 		super(callbacks, title, hintText, textColor);
@@ -47,6 +50,37 @@ public class BarcodePage extends Page {
 
 	public void setmPattern(String mPattern) {
 		this.mPattern = mPattern;
+	}
+	
+	public Page setRangeValidation(boolean valRange, int minimo, int maximo) {
+		mGreaterOrEqualsThan = minimo;
+		mLowerOrEqualsThan = maximo;
+		mValRange = valRange;
+        return this;
+    }
+
+	public int getmGreaterOrEqualsThan() {
+		return mGreaterOrEqualsThan;
+	}
+
+	public void setmGreaterOrEqualsThan(int mGreaterOrEqualsThan) {
+		this.mGreaterOrEqualsThan = mGreaterOrEqualsThan;
+	}
+
+	public int getmLowerOrEqualsThan() {
+		return mLowerOrEqualsThan;
+	}
+
+	public void setmLowerOrEqualsThan(int mLowerOrEqualsThan) {
+		this.mLowerOrEqualsThan = mLowerOrEqualsThan;
+	}
+
+	public boolean ismValRange() {
+		return mValRange;
+	}
+
+	public void setmValRange(boolean mValRange) {
+		this.mValRange = mValRange;
 	}
 
 	@Override

@@ -16,7 +16,9 @@ public class PreTamizajeFormLabels {
 	protected String aceptaTamizajeHint;
 	protected String razonNoParticipa;
 	protected String razonNoParticipaHint;
-	
+	protected String codigoCHF;
+	protected String codigoCHFHint;
+	protected String noAcepta;
 	
 	public PreTamizajeFormLabels(){
 		Resources res = MyIcsApplication.getContext().getResources();
@@ -24,7 +26,9 @@ public class PreTamizajeFormLabels {
 		aceptaTamizajeHint = res.getString(R.string.aceptaTamizajeHint);
 		razonNoParticipa = res.getString(R.string.razonNoParticipa);
 		razonNoParticipaHint = res.getString(R.string.razonNoParticipaHint);
-		
+		codigoCHF = res.getString(R.string.codigoCHF);
+		codigoCHFHint = res.getString(R.string.codigoCHFHint);
+		noAcepta = res.getString(R.string.noAcepta);
 	}
 
 
@@ -66,8 +70,36 @@ public class PreTamizajeFormLabels {
 	public void setRazonNoParticipaHint(String razonNoParticipaHint) {
 		this.razonNoParticipaHint = razonNoParticipaHint;
 	}
-	
-	
+
+
+	public String getCodigoCHF() {
+		return codigoCHF;
+	}
+
+
+	public void setCodigoCHF(String codigoCHF) {
+		this.codigoCHF = codigoCHF;
+	}
+
+
+	public String getCodigoCHFHint() {
+		return codigoCHFHint;
+	}
+
+
+	public void setCodigoCHFHint(String codigoCHFHint) {
+		this.codigoCHFHint = codigoCHFHint;
+	}
+
+
+	public String getNoAcepta() {
+		return noAcepta;
+	}
+
+
+	public void setNoAcepta(String noAcepta) {
+		this.noAcepta = noAcepta;
+	}
 
 	
 }

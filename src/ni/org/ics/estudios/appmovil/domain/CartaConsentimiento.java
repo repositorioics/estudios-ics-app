@@ -1,7 +1,5 @@
 package ni.org.ics.estudios.appmovil.domain;
 
-import ni.org.ics.estudios.appmovil.catalogs.Estudio;
-
 import java.util.Date;
 
 /**

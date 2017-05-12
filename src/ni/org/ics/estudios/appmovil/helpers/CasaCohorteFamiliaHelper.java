@@ -2,7 +2,6 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 

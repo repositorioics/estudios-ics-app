@@ -50,13 +50,13 @@ public class PreTamizajeForm extends AbstractWizardModel {
         return new PageList(
         		new BranchPage(this, labels.getAceptaTamizaje(), labels.getAceptaTamizajeHint(), Constants.WIZARD)
                 .addBranch(catSiNo[0],
-                		new BarcodePage(this,"codigo casa","nuevo codigo de casa",Constants.WIZARD)
+                		new BarcodePage(this,labels.getCodigoCHF(),labels.getCodigoCHFHint(),Constants.WIZARD)
 			                .setRequired(true))
                 .addBranch(catSiNo[1],
 		        		new SingleFixedChoicePage(this,labels.getRazonNoParticipa(),labels.getRazonNoParticipaHint(),Constants.WIZARD)
 		                	.setChoices(catRazonNoParticipa)
 		                	.setRequired(true),
-		                new LabelPage(this,"No acepta entrar, finaliza el formulario","",Constants.ROJO)
+		                new LabelPage(this,labels.getNoAcepta(),"",Constants.ROJO)
                 			.setRequired(false))
         );
     }

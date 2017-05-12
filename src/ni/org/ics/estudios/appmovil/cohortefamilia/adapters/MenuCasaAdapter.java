@@ -15,10 +15,12 @@ import ni.org.ics.estudios.appmovil.R;
 public class MenuCasaAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
+	private final int numPart;
 	public MenuCasaAdapter(Context context, int textViewResourceId,
-                           String[] values) {
+                           String[] values, int numPart) {
 		super(context, textViewResourceId, values);
 		this.values = values;
+		this.numPart=numPart;
 	}
 
 	@Override
@@ -30,7 +32,6 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
 			v = vi.inflate(R.layout.menu_item_2, null);
 		}
 		TextView textView = (TextView) v.findViewById(R.id.label);
-		textView.setTypeface(null, Typeface.BOLD);
 		textView.setText(values[position]);
 		textView.setTextColor(Color.BLACK);
 
@@ -38,8 +39,13 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
 		Drawable img = null;
 		switch (position){
 		case 0: 
+			textView.setText(values[position] + "(" + numPart + ")");
 			img=getContext().getResources().getDrawable(R.drawable.ic_menu_allfriends);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			if (numPart < 1){
+				textView.setTextColor(Color.RED);
+				textView.setTypeface(null, Typeface.BOLD);
+			}
 			break;
 		case 1: 
 			img=getContext().getResources().getDrawable(R.drawable.ic_menu_search);

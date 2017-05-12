@@ -192,16 +192,15 @@ public class NuevoTamizajeCasaActivity extends AbstractAsyncActivity {
 	        				MainActivity.class);
 	        		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	        		startActivity(i);
-	        		finish();
 	        	}
 	        	estudiosAdapter.close();
 	        }
 	        else{
 	        	Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error, R.string.err_not_completed),Toast.LENGTH_LONG);
 				toast.show();
-				finish();
 	        }
 	    }
+		finish();
 		super.onActivityResult(requestCode, resultCode, intent);
 	}
 

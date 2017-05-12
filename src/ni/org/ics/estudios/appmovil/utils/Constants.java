@@ -17,6 +17,7 @@ public class Constants {
 	//nombres de objetos
 	public static final String TITLE = "titulo";
 	public static final String CASA = "casa";
+	public static final String PARTICIPANTES = "participantes";
     
     //Form wizard
     public static final String FORM_NAME = "form";

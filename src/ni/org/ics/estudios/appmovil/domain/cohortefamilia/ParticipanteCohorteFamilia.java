@@ -1,5 +1,7 @@
 package ni.org.ics.estudios.appmovil.domain.cohortefamilia;
 
+import java.io.Serializable;
+
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 
@@ -9,7 +11,7 @@ import ni.org.ics.estudios.appmovil.domain.Participante;
  * @author William Aviles
  **/
 
-public class ParticipanteCohorteFamilia extends BaseMetaData{
+public class ParticipanteCohorteFamilia extends BaseMetaData implements Serializable{
 
 	/**
 	 * 

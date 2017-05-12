@@ -1,5 +1,6 @@
 package ni.org.ics.estudios.appmovil.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  * @author William Aviles
  **/
 
-public class Participante extends BaseMetaData{
+public class Participante extends BaseMetaData implements Serializable{
 
 	/**
 	 * 

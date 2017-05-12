@@ -5,7 +5,7 @@
     <string name="header_casa">Datos Familia</string>
     <string name="header_participante">Datos Participante</string>
     
-    <string name="new_screen">Nuevo Tamizaje</string>
+    <string name="new_screen">Agregar Casa</string>
     
     <string name="aceptaTamizaje">Acepta realizar tamizaje?</string>
     <string name="aceptaTamizajeHint">Pregunte si el jefe de familia permite realizar tamizaje a los miembros de este hogar.</string>

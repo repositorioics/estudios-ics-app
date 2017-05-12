@@ -22,7 +22,6 @@ import java.util.Map;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PreTamizajeForm;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PreTamizajeFormLabels;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.ModelCallbacks;
@@ -44,7 +43,7 @@ public class DataEnterActivity extends FragmentActivity implements
     private boolean mEditingAfterReview;
 
     private AbstractWizardModel mWizardModel;
-    private PreTamizajeFormLabels labels = new PreTamizajeFormLabels();
+    //private PreTamizajeFormLabels labels = new PreTamizajeFormLabels();
 
     private boolean mConsumePageSelectedEvent;
 
@@ -243,8 +242,8 @@ public class DataEnterActivity extends FragmentActivity implements
                 break;
             }            
             if ((!page.isRequired() && !page.getData().isEmpty()) || (page.isRequired() && page.isCompleted())) {
-            	if (!page.getData().getString(NumberPage.SIMPLE_DATA_KEY).matches("")){
-		            if(clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")){ 
+	            if(clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")){ 
+	            	if (!page.getData().getString(NumberPage.SIMPLE_DATA_KEY).matches("")){
 		            	NumberPage np = (NumberPage) page;
 		            	if ((np.ismValRange() || np.ismValPattern())) {
 		            		String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
@@ -254,8 +253,10 @@ public class DataEnterActivity extends FragmentActivity implements
 		            			break;
 		            		}
 		            	}
-		            }
-		            else if(clase.equals("ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
+	            	}
+	            }
+	            else if(clase.equals("ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
+	            	if (!page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("")){
 		            	TextPage tp = (TextPage) page;
 		            	if (tp.ismValPattern()) {
 		            		String valor = tp.getData().getString(TextPage.SIMPLE_DATA_KEY);
@@ -264,8 +265,8 @@ public class DataEnterActivity extends FragmentActivity implements
 		            			break;
 		            		}
 		            	}
-		            }
-            	}
+	            	}
+	            }
             }
         }
 
@@ -278,15 +279,15 @@ public class DataEnterActivity extends FragmentActivity implements
     }
     
     public void updateConstrains(){
-        for (int i = 0; i < mCurrentPageSequence.size(); i++) {
+        /*for (int i = 0; i < mCurrentPageSequence.size(); i++) {
             Page page = mCurrentPageSequence.get(i);
             if(page.getTitle().equals( labels.getAceptaTamizaje())){
-            	//NumberPage np = (NumberPage) page;
+            	NumberPage np = (NumberPage) page;
             	Page page2 = mWizardModel.findByKey(labels.getCodigoCHF());
-            	//np.setmLowerOrEqualsThan(Integer.parseInt(page2.getData().getString(NumberPage.SIMPLE_DATA_KEY)));
+            	np.setmLowerOrEqualsThan(Integer.parseInt(page2.getData().getString(NumberPage.SIMPLE_DATA_KEY)));
             	mWizardModel.getCurrentPageSequence().remove(page2);
             }
-        }
+        }*/
     }
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {

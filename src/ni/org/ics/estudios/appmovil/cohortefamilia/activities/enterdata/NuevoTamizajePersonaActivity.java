@@ -18,7 +18,6 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.activities.DataEnterActivity;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
@@ -33,7 +32,7 @@ public class NuevoTamizajePersonaActivity extends AbstractAsyncActivity {
 	Dialog dialogInit;
 	GPSTracker gps;
 	DeviceInfo infoMovil;
-	private static Casa casa = new Casa();
+	//private static Casa casa = new Casa();
 	private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -46,7 +45,7 @@ public class NuevoTamizajePersonaActivity extends AbstractAsyncActivity {
 		}
 		gps = new GPSTracker(NuevoTamizajePersonaActivity.this);
 		infoMovil = new DeviceInfo(NuevoTamizajePersonaActivity.this);
-		casa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
+		//casa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
 		createInitDialog();
 	}
 

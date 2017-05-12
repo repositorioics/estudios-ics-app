@@ -176,6 +176,7 @@ public class BuscarCasaCHFActivity extends AbstractAsyncListActivity {
         i.putExtras(arguments);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
+        finish();
     }
     
 	@Override

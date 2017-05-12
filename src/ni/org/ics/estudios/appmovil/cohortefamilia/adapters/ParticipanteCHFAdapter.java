@@ -8,15 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 
 import java.util.List;
 
-public class CasaCHFAdapter extends ArrayAdapter<CasaCohorteFamilia> {
+public class ParticipanteCHFAdapter extends ArrayAdapter<ParticipanteCohorteFamilia> {
 
 
-	public CasaCHFAdapter(Context context, int textViewResourceId,
-                          List<CasaCohorteFamilia> items) {
+	public ParticipanteCHFAdapter(Context context, int textViewResourceId,
+                          List<ParticipanteCohorteFamilia> items) {
 		super(context, textViewResourceId, items);
 	}
 
@@ -28,22 +28,22 @@ public class CasaCHFAdapter extends ArrayAdapter<CasaCohorteFamilia> {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.complex_list_item, null);
 		}
-		CasaCohorteFamilia p = getItem(position);
+		ParticipanteCohorteFamilia p = getItem(position);
 		if (p != null) {
 
 			TextView textView = (TextView) v.findViewById(R.id.identifier_text);
 			if (textView != null) {
-				textView.setText(this.getContext().getString(R.string.code) + ": " + p.getCodigoCHF());
+				textView.setText(this.getContext().getString(R.string.code) + ": " + p.getParticipante().getCodigo());
 			}
 			
 			textView = (TextView) v.findViewById(R.id.der_text);
 			if (textView != null) {
-				textView.setText(this.getContext().getString(R.string.barrio) + ": " + p.getCasa().getBarrio().getNombre() + " , " + this.getContext().getString(R.string.manzana) + ": " + p.getCasa().getManzana());
+				textView.setText(this.getContext().getString(R.string.barrio) + ": " );
 			}
 
 			textView = (TextView) v.findViewById(R.id.name_text);
 			if (textView != null) {
-				textView.setText(p.getNombre1JefeFamilia() + " " +p.getApellido1JefeFamilia());
+				textView.setText(p.getParticipante().getNombre1() + " " +p.getParticipante().getNombre2());
 			}
 			
 			ImageView imageView = (ImageView) v.findViewById(R.id.image);

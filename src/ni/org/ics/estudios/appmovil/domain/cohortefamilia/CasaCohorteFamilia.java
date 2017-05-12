@@ -1,6 +1,8 @@
 package ni.org.ics.estudios.appmovil.domain.cohortefamilia;
 
 
+import java.io.Serializable;
+
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 
@@ -8,7 +10,7 @@ import ni.org.ics.estudios.appmovil.domain.Casa;
  * Created by Miguel Salinas on 5/11/2017.
  * V1.0
  */
-public class CasaCohorteFamilia extends BaseMetaData {
+public class CasaCohorteFamilia extends BaseMetaData implements Serializable{
 
     /**
 	 * 

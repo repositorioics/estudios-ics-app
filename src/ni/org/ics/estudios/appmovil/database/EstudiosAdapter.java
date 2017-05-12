@@ -75,7 +75,16 @@ public class EstudiosAdapter {
 			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('yes', '1', 'CAT_SINO', NULL, '0', 1, '0', 'Si');");
 			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('noquiere', 'NQ', 'CAT_RAZON_NP', NULL, '0', 2, '0', 'No quiere participar');");
 			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('nomuestra', 'NM', 'CAT_RAZON_NP', NULL, '0', 1, '0', 'No quiere que le tomen muestras');");
-            db.execSQL("INSERT INTO `chf_casas_cohorte_familia` (`codigoCHF`, `IDENTIFICADOR_EQUIPO`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `apellido1JefeFamilia`, `apellido2JefeFamilia`, `nombre1JefeFamilia`, `nombre2JefeFamilia`, `casa`) VALUES ('1', 'server', '1', '0', '2017-05-10 11:22:29', 'admin', 'Lopez', 'Martinez', 'Pedro', 'Ramon', 1)");
+            db.execSQL("INSERT INTO `chf_casas_cohorte_familia` (`codigoCHF`, `IDENTIFICADOR_EQUIPO`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `apellido1JefeFamilia`, `apellido2JefeFamilia`, `nombre1JefeFamilia`, `nombre2JefeFamilia`, `casa`) VALUES ('5678', 'server', '1', '0', '2017-05-10 11:22:29', 'admin', 'Lopez', 'Martinez', 'Pedro', 'Ramon', 1)");
+            db.execSQL("INSERT INTO `participantes` (`codigo`, `nombre1`, `apellido1`, `nombre1Padre`, `apellido1Padre`, `nombre1Madre`, `apellido1Madre`, `casa`, `estado`, `fechaNac`, `sexo`, `PASIVE`) " +
+            		"VALUES (123, 'Jose', 'Perez', 'Juan', 'Perez', 'Mirna', 'Lopez','1','1', '2013-09-12 13:36:45', 'M','0')");
+            db.execSQL("INSERT INTO `chf_participantes` (`participanteCHF`, `participante`, `casaCHF`, `estado`, `PASIVE`) " +
+            		"VALUES (00-43883, '123', '5678','1','0')");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('concretopiso', '1', 'CAT_MAT_PISO', NULL, '0', 1, '0', 'Concreto');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('ladrillos', '0', 'CAT_MAT_PISO', NULL, '0', 2, '0', 'Ladrillos');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('tierra', '1', 'CAT_MAT_PISO', NULL, '0', 3, '0', 'Piso de tierra');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('ceramica', '0', 'CAT_MAT_PISO', NULL, '0', 4, '0', 'Cerámica');");
+            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('otropiso', '0', 'CAT_MAT_PISO', NULL, '0', 7, '0', 'Otro');");
 		}
 
 		@Override
@@ -599,8 +608,8 @@ public class EstudiosAdapter {
 		return mParticipanteCohorteFamilia;
 	}
 	//Obtener una lista de ParticipanteCohorteFamilia de la base de datos
-	public List<ParticipanteCohorteFamilia> getParticipanteCohorteFamilias(String filtro, String orden) throws SQLException {
-		List<ParticipanteCohorteFamilia> mParticipanteCohorteFamilias = new ArrayList<ParticipanteCohorteFamilia>();
+	public ArrayList<ParticipanteCohorteFamilia> getParticipanteCohorteFamilias(String filtro, String orden) throws SQLException {
+		ArrayList<ParticipanteCohorteFamilia> mParticipanteCohorteFamilias = new ArrayList<ParticipanteCohorteFamilia>();
 		Cursor cursorParticipanteCohorteFamilia = crearCursor(MainDBConstants.PARTICIPANTE_CHF_TABLE, filtro, null, orden);
 		if (cursorParticipanteCohorteFamilia != null && cursorParticipanteCohorteFamilia.getCount() > 0) {
 			cursorParticipanteCohorteFamilia.moveToFirst();
@@ -608,12 +617,10 @@ public class EstudiosAdapter {
 			do{
 				ParticipanteCohorteFamilia mParticipanteCohorteFamilia = null;
 				mParticipanteCohorteFamilia = ParticipanteCohorteFamiliaHelper.crearParticipanteCohorteFamilia(cursorParticipanteCohorteFamilia);
-				Cursor cursorCasaCHF = crearCursor(MainDBConstants.CASA_CHF_TABLE , MainDBConstants.codigoCHF + "=" +cursorParticipanteCohorteFamilia.getInt(cursorParticipanteCohorteFamilia.getColumnIndex(MainDBConstants.casaCHF)), null, MainDBConstants.codigoCHF);
-				cursorCasaCHF.moveToFirst();
-				if (cursorCasaCHF != null && cursorCasaCHF.getCount() > 0) {
-					mParticipanteCohorteFamilia.setCasaCHF(CasaCohorteFamiliaHelper.crearCasaCHF(cursorCasaCHF));
-				}
-				if (!cursorCasaCHF.isClosed()) cursorCasaCHF.close();
+				CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" +cursorParticipanteCohorteFamilia.getInt(cursorParticipanteCohorteFamilia.getColumnIndex(MainDBConstants.casaCHF)), null);
+				mParticipanteCohorteFamilia.setCasaCHF(cchf);
+				Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorParticipanteCohorteFamilia.getInt(cursorParticipanteCohorteFamilia.getColumnIndex(MainDBConstants.participante)), null);
+				mParticipanteCohorteFamilia.setParticipante(participante);
 				mParticipanteCohorteFamilias.add(mParticipanteCohorteFamilia);
 			} while (cursorParticipanteCohorteFamilia.moveToNext());
 		}

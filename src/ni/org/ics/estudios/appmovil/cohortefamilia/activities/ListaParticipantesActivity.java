@@ -1,16 +1,23 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
 
+import java.util.ArrayList;
+
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCohorteFamiliaActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.ParticipanteCHFAdapter;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.utils.Constants;
 import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,15 +26,27 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 	
 	private TextView textView;
 	private Drawable img = null;
+	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
+	private ArrayAdapter<ParticipanteCohorteFamilia> mParticipanteCohorteFamiliaAdapter;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		textView = (TextView) findViewById(R.id.label_logo);
-		textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.participants)+"\n"+ getString(R.string.casa_id )+": 1");
-		img=getResources().getDrawable( R.drawable.ic_family);
+		setContentView(R.layout.list_add);
+		
+		casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+		textView = (TextView) findViewById(R.id.label);
+		textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.participants)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
+		img=getResources().getDrawable(R.drawable.ic_menu_allfriends);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+		
+		mParticipanteCohorteFamiliaAdapter = new ParticipanteCHFAdapter(this, R.layout.complex_list_item,
+				(ArrayList<ParticipanteCohorteFamilia>) getIntent().getExtras().getSerializable(Constants.PARTICIPANTES));
+		setListAdapter(mParticipanteCohorteFamiliaAdapter);
+		
+		
+		
 	}
 
 	@Override

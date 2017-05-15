@@ -26,6 +26,6 @@ public class Constants {
     public static final String FORM_NUEVA_ENCUESTA_CASA = "encuesta_casa";
 	public static final String ROJO = "#db0000";
 	public static final String WIZARD = "#ff0099cc";
-
+	public static final String HINT_TEXT = "#66000000";
 
 }

@@ -39,15 +39,17 @@ public abstract class Page implements PageTreeNode {
     protected String mTitle;
     protected String mHint;
     protected String mTextColor;
+    protected String mHintTextColor;
     protected boolean mRequired = false;
     protected String mParentKey;
     protected boolean mVisible = false;
 
-    protected Page(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean visible) {
+    protected Page(ModelCallbacks callbacks, String title, String hintText, String textColor, String hintTextColor, boolean visible) {
         mCallbacks = callbacks;
         mTitle = title;
         mHint= hintText;
         mTextColor=textColor;
+        mHintTextColor=hintTextColor;
         mVisible = visible;
     }
 
@@ -126,6 +128,12 @@ public abstract class Page implements PageTreeNode {
 	public void setmVisible(boolean mVisible) {
 		this.mVisible = mVisible;
 	}
-	
-	
+
+	public String getmHintTextColor() {
+		return mHintTextColor;
+	}
+
+	public void setmHintTextColor(String mHintTextColor) {
+		this.mHintTextColor = mHintTextColor;
+	}
 }

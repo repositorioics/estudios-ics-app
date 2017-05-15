@@ -53,10 +53,10 @@ public class PreTamizajeForm extends AbstractWizardModel {
 			index++;
 		}
 		estudiosAdapter.close();
-		scAceptaTamizaje = new SingleFixedChoicePage(this,labels.getAceptaTamizaje(), labels.getAceptaTamizajeHint(), Constants.WIZARD,true).setChoices(catSiNo).setRequired(true);
-		bcCodigoChf = new BarcodePage(this,labels.getCodigoCHF(),labels.getCodigoCHFHint(),Constants.WIZARD,false).setRequired(true);
-		scRazonNoParticipa = new SingleFixedChoicePage(this,labels.getRazonNoParticipa(),labels.getRazonNoParticipaHint(),Constants.WIZARD,false).setChoices(catRazonNoParticipa).setRequired(true);
-		lpNoAcepta = new LabelPage(this,labels.getNoAcepta(),"",Constants.ROJO,false).setRequired(false);
+		scAceptaTamizaje = new SingleFixedChoicePage(this,labels.getAceptaTamizaje(), labels.getAceptaTamizajeHint(), Constants.WIZARD, Constants.HINT_TEXT, true).setChoices(catSiNo).setRequired(true);
+		bcCodigoChf = new BarcodePage(this,labels.getCodigoCHF(),labels.getCodigoCHFHint(),Constants.WIZARD, Constants.HINT_TEXT, false).setRequired(true);
+		scRazonNoParticipa = new SingleFixedChoicePage(this,labels.getRazonNoParticipa(),labels.getRazonNoParticipaHint(),Constants.WIZARD, Constants.HINT_TEXT, false).setChoices(catRazonNoParticipa).setRequired(true);
+		lpNoAcepta = new LabelPage(this,labels.getNoAcepta(),"",Constants.ROJO, Constants.HINT_TEXT, false).setRequired(false);
         return new PageList(scAceptaTamizaje,bcCodigoChf,scRazonNoParticipa,lpNoAcepta);
     }
 

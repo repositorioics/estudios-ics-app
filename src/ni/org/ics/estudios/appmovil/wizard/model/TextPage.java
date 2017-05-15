@@ -13,8 +13,8 @@ public class TextPage extends Page {
 	protected boolean mValPattern = false;
 	protected String mPattern="";
 
-	public TextPage(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean isVisible) {
-		super(callbacks, title, hintText, textColor,isVisible);
+	public TextPage(ModelCallbacks callbacks, String title, String hintText, String textColor, String hintTextColor, boolean isVisible) {
+		super(callbacks, title, hintText, textColor, hintTextColor,isVisible);
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import org.joda.time.DateMidnight;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -30,6 +31,8 @@ public class DateFragment extends Fragment {
 	private static boolean mValRange;
 
 	protected DatePicker mDatePickerInput;
+	protected TextView mTitleTextInput;
+	protected TextView mHintTextInput;
 
 	public static DateFragment create(String key, boolean valRange, DateMidnight minimo, DateMidnight maximo) {
 		Bundle args = new Bundle();
@@ -56,10 +59,14 @@ public class DateFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_page_date,
 				container, false);
-		((TextView) rootView.findViewById(android.R.id.title)).setText(mPage
-				.getTitle());
-		((TextView) rootView.findViewById(R.id.label_hint)).setText(mPage
-				.getHint());
+
+		mTitleTextInput = (TextView) rootView.findViewById(android.R.id.title);
+		mTitleTextInput.setText(mPage.getTitle());
+		mTitleTextInput.setTextColor(Color.parseColor(mPage.getTextColor()));
+		
+		mHintTextInput = (TextView) rootView.findViewById(R.id.label_hint);
+		mHintTextInput.setText(mPage.getHint());
+		mHintTextInput.setTextColor(Color.parseColor(mPage.getmHintTextColor()));
 
 		mDatePickerInput = (DatePicker) rootView.findViewById(R.id.datePickerInput);
 		if(mValRange){

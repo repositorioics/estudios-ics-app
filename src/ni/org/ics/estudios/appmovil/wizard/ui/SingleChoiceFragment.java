@@ -18,6 +18,7 @@ package ni.org.ics.estudios.appmovil.wizard.ui;
 
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
@@ -43,6 +44,9 @@ public class SingleChoiceFragment extends ListFragment {
     private List<String> mChoices;
     private String mKey;
     private Page mPage;
+    
+    protected TextView mTitleTextInput;
+	protected TextView mHintTextInput;
 
     public static SingleChoiceFragment create(String key) {
         Bundle args = new Bundle();
@@ -75,8 +79,14 @@ public class SingleChoiceFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_page, container, false);
-        ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
-        ((TextView) rootView.findViewById(R.id.label_hint)).setText(mPage.getHint());
+        
+		mTitleTextInput = (TextView) rootView.findViewById(android.R.id.title);
+		mTitleTextInput.setText(mPage.getTitle());
+		mTitleTextInput.setTextColor(Color.parseColor(mPage.getTextColor()));
+		
+		mHintTextInput = (TextView) rootView.findViewById(R.id.label_hint);
+		mHintTextInput.setText(mPage.getHint());
+		mHintTextInput.setTextColor(Color.parseColor(mPage.getmHintTextColor()));
 
         final ListView listView = (ListView) rootView.findViewById(android.R.id.list);
         setListAdapter(new ArrayAdapter<String>(getActivity(),

@@ -17,6 +17,7 @@
 package ni.org.ics.estudios.appmovil.wizard.ui;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
@@ -43,6 +44,8 @@ public class MultipleChoiceFragment extends ListFragment {
 
     private PageFragmentCallbacks mCallbacks;
     private String mKey;
+    protected TextView mTitleTextInput;
+	protected TextView mHintTextInput;
     private List<String> mChoices;
     private Page mPage;
 
@@ -77,9 +80,14 @@ public class MultipleChoiceFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_page, container, false);
-        ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
-        ((TextView) rootView.findViewById(R.id.label_hint)).setText(mPage
-				.getHint());
+        
+		mTitleTextInput = (TextView) rootView.findViewById(android.R.id.title);
+		mTitleTextInput.setText(mPage.getTitle());
+		mTitleTextInput.setTextColor(Color.parseColor(mPage.getTextColor()));
+		
+		mHintTextInput = (TextView) rootView.findViewById(R.id.label_hint);
+		mHintTextInput.setText(mPage.getHint());
+		mHintTextInput.setTextColor(Color.parseColor(mPage.getmHintTextColor()));
 
         final ListView listView = (ListView) rootView.findViewById(android.R.id.list);
         setListAdapter(new ArrayAdapter<String>(getActivity(),

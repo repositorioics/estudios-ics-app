@@ -10,11 +10,13 @@ import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ParticipanteCHFAdapter extends ArrayAdapter<ParticipanteCohorteFamilia> {
 
-
+	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+	
 	public ParticipanteCHFAdapter(Context context, int textViewResourceId,
                           List<ParticipanteCohorteFamilia> items) {
 		super(context, textViewResourceId, items);
@@ -38,17 +40,25 @@ public class ParticipanteCHFAdapter extends ArrayAdapter<ParticipanteCohorteFami
 			
 			textView = (TextView) v.findViewById(R.id.der_text);
 			if (textView != null) {
-				textView.setText(this.getContext().getString(R.string.barrio) + ": " );
+				textView.setText(mDateFormat.format(p.getParticipante().getFechaNac()));
 			}
 
 			textView = (TextView) v.findViewById(R.id.name_text);
+			String nameCompleto = p.getParticipante().getNombre1();
+			if (p.getParticipante().getNombre2()!=null) nameCompleto = nameCompleto + " "+  p.getParticipante().getNombre2();
+			nameCompleto = nameCompleto +" "+ p.getParticipante().getApellido1();
+			if (p.getParticipante().getApellido2()!=null) nameCompleto = nameCompleto + " "+  p.getParticipante().getApellido2();
 			if (textView != null) {
-				textView.setText(p.getParticipante().getNombre1() + " " +p.getParticipante().getNombre2());
+				textView.setText(nameCompleto);
 			}
 			
 			ImageView imageView = (ImageView) v.findViewById(R.id.image);
 			if (imageView != null) {
-				imageView.setImageResource(R.drawable.proposed_house);
+				if (p.getParticipante().getSexo().equals("M")) {
+					imageView.setImageResource(R.drawable.male);
+				} else if (p.getParticipante().getSexo().equals("F")) {
+					imageView.setImageResource(R.drawable.female);
+				}
 			}
 		}
 		return v;

@@ -7,6 +7,7 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCohorteFamiliaActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajePersonaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.ParticipanteCHFAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 	
 	private TextView textView;
 	private Drawable img = null;
+	private Button mAddButton;
 	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
 	private ArrayAdapter<ParticipanteCohorteFamilia> mParticipanteCohorteFamiliaAdapter;
 
@@ -45,7 +48,18 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 				(ArrayList<ParticipanteCohorteFamilia>) getIntent().getExtras().getSerializable(Constants.PARTICIPANTES));
 		setListAdapter(mParticipanteCohorteFamiliaAdapter);
 		
-		
+		mAddButton = (Button) findViewById(R.id.add_button);
+		mAddButton.setText(getString(R.string.new_screen_per));
+
+		mAddButton.setOnClickListener(new View.OnClickListener()  {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(),
+						NuevoTamizajePersonaActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+			}
+		});
 		
 	}
 

@@ -59,6 +59,8 @@
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.activities.DataEnterActivity" 
             android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.preferences.PreferencesActivity" 
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

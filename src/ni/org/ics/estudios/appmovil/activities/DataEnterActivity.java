@@ -22,7 +22,6 @@ import java.util.Map;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.EncuestaCasaForm;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.EncuestaCasaFormLabels;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PreTamizajeForm;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
@@ -45,7 +44,7 @@ public class DataEnterActivity extends FragmentActivity implements
     private boolean mEditingAfterReview;
 
     private AbstractWizardModel mWizardModel;
-    private EncuestaCasaFormLabels labelsEC = new EncuestaCasaFormLabels();
+    //private EncuestaCasaFormLabels labelsEC = new EncuestaCasaFormLabels();
     //private PreTamizajeFormLabels labels = new PreTamizajeFormLabels();
 
     private boolean mConsumePageSelectedEvent;

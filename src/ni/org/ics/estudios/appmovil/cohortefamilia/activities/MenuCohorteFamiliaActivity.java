@@ -56,12 +56,12 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);
 		        	break;
-                    case 1:
-                        i = new Intent(getApplicationContext(),
-                                BuscarCasaCHFActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
-                        break;
+                case 1:
+                    i = new Intent(getApplicationContext(),
+                            BuscarCasaCHFActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                    break;
 				
 				default:
 					

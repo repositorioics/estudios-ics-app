@@ -5,5 +5,6 @@
     </issue>
     <issue id="SimpleDateFormat">
         <ignore path="src/ni/org/ics/estudios/appmovil/adapters/ScreeningAdapter.java" />
+        <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/ParticipanteCHFAdapter.java" />
     </issue>
 </lint>

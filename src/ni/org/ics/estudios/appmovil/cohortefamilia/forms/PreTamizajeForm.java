@@ -8,8 +8,8 @@ import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
-import ni.org.ics.estudios.appmovil.wizard.model.BranchPage;
 import ni.org.ics.estudios.appmovil.wizard.model.LabelPage;
+import ni.org.ics.estudios.appmovil.wizard.model.Page;
 import ni.org.ics.estudios.appmovil.wizard.model.PageList;
 import ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage;
 import android.content.Context;
@@ -47,18 +47,13 @@ public class PreTamizajeForm extends AbstractWizardModel {
 			index++;
 		}
 		estudiosAdapter.close();
-        return new PageList(
-        		new BranchPage(this, labels.getAceptaTamizaje(), labels.getAceptaTamizajeHint(), Constants.WIZARD)
-                .addBranch(catSiNo[0],
-                		new BarcodePage(this,labels.getCodigoCHF(),labels.getCodigoCHFHint(),Constants.WIZARD)
-			                .setRequired(true))
-                .addBranch(catSiNo[1],
-		        		new SingleFixedChoicePage(this,labels.getRazonNoParticipa(),labels.getRazonNoParticipaHint(),Constants.WIZARD)
-		                	.setChoices(catRazonNoParticipa)
-		                	.setRequired(true),
-		                new LabelPage(this,labels.getNoAcepta(),"",Constants.ROJO)
-                			.setRequired(false))
-        );
+		
+		Page scAceptaTamizaje = new SingleFixedChoicePage(this,labels.getAceptaTamizaje(), labels.getAceptaTamizajeHint(), Constants.WIZARD).setChoices(catSiNo).setRequired(true);
+		Page bcCodigoChf = new BarcodePage(this,labels.getCodigoCHF(),labels.getCodigoCHFHint(),Constants.WIZARD).setRequired(true);
+		Page scRazonNoParticipa = new SingleFixedChoicePage(this,labels.getRazonNoParticipa(),labels.getRazonNoParticipaHint(),Constants.WIZARD).setChoices(catRazonNoParticipa).setRequired(true);
+		Page lpNoAcepta = new LabelPage(this,labels.getNoAcepta(),"",Constants.ROJO).setRequired(false);
+		
+        return new PageList(scAceptaTamizaje,bcCodigoChf,scRazonNoParticipa,lpNoAcepta);
     }
 
 	public PreTamizajeFormLabels getLabels() {

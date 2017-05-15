@@ -35,7 +35,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 public class BuscarCasaActivity extends AbstractAsyncListActivity {
@@ -50,7 +52,10 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 	private int opcion;
 
 	private EstudiosAdapter estudiosAdapter;
+	private Casa mCasa = new Casa();
 	private List<Casa> mCasas = new ArrayList<Casa>();
+	private static final int HACER_TAMIZAJE = 1;
+	private AlertDialog alertDialog;
 	
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -153,6 +158,33 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 
 	}
 	
+	private void createDialog(int dialog) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		switch(dialog){
+		case HACER_TAMIZAJE:
+			builder.setTitle(this.getString(R.string.confirm));
+			builder.setMessage(getString(R.string.new_screen)+"?");
+			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+					crearTamizajeCasa();
+				}
+			});
+			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do nothing
+					dialog.dismiss();
+				}
+			});
+			break;		
+		default:
+			break;
+		}
+		alertDialog = builder.create();
+		alertDialog.show();
+	}
+	
 	private void showToast(String mensaje){
 		LayoutInflater inflater = getLayoutInflater();
 
@@ -172,18 +204,12 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
-		Casa mCasa = (Casa) getListAdapter().getItem(position);
-		cargarMenu(mCasa);
+		mCasa = (Casa) getListAdapter().getItem(position);
+		createDialog(HACER_TAMIZAJE);
 	}
 
-    private void cargarMenu(Casa mCasa){
-        Bundle arguments = new Bundle();
-        if (mCasa!=null) arguments.putSerializable(Constants.CASA , mCasa);
-        Intent i = new Intent(getApplicationContext(),
-        		NuevoTamizajeCasaActivity.class);
-        i.putExtras(arguments);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
+    private void crearTamizajeCasa(){
+    	new OpenDataEnterActivityTask().execute();
         finish();
     }
     
@@ -290,6 +316,41 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 		}
 
 	}
+	
+	// ***************************************
+		// Private classes
+		// ***************************************
+		private class OpenDataEnterActivityTask extends AsyncTask<String, Void, String> {
+			@Override
+			protected void onPreExecute() {
+				// before the request begins, show a progress indicator
+				showLoadingProgressDialog();
+			}
+
+			@Override
+			protected String doInBackground(String... values) {
+				try {
+					Bundle arguments = new Bundle();
+			        if (mCasa!=null) arguments.putSerializable(Constants.CASA , mCasa);
+			        Intent i = new Intent(getApplicationContext(),
+			        		NuevoTamizajeCasaActivity.class);
+			        i.putExtras(arguments);
+			        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			        startActivity(i);
+			        finish();
+				} catch (Exception e) {
+					Log.e(TAG, e.getLocalizedMessage(), e);
+					return "error";
+				}
+				return "exito";
+			}
+
+			protected void onPostExecute(String resultado) {
+				// after the request completes, hide the progress indicator
+				dismissProgressDialog();
+			}
+
+		}
 
 	// ***************************************
 	// Private methods

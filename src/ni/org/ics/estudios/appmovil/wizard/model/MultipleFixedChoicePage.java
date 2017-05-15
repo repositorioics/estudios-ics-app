@@ -29,8 +29,8 @@ import ni.org.ics.estudios.appmovil.wizard.ui.MultipleChoiceFragment;
  * A page offering the user a number of non-mutually exclusive choices.
  */
 public class MultipleFixedChoicePage extends SingleFixedChoicePage {
-    public MultipleFixedChoicePage(ModelCallbacks callbacks, String title, String hintText, String textColor) {
-        super(callbacks, title, hintText, textColor);
+    public MultipleFixedChoicePage(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean isVisible) {
+        super(callbacks, title, hintText, textColor,isVisible);
     }
 
     @Override

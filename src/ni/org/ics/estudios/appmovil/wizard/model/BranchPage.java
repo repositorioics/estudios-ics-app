@@ -32,8 +32,8 @@ import ni.org.ics.estudios.appmovil.wizard.ui.SingleChoiceFragment;
 public class BranchPage extends SingleFixedChoicePage {
     private List<Branch> mBranches = new ArrayList<Branch>();
 
-    public BranchPage(ModelCallbacks callbacks, String title, String hintText, String textColor) {
-        super(callbacks, title, hintText, textColor);
+    public BranchPage(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean isVisible) {
+        super(callbacks, title, hintText, textColor,isVisible);
     }
 
     @Override

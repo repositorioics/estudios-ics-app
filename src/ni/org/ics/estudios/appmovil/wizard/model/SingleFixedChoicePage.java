@@ -31,8 +31,8 @@ import ni.org.ics.estudios.appmovil.wizard.ui.SingleChoiceFragment;
 public class SingleFixedChoicePage extends Page {
     protected ArrayList<String> mChoices = new ArrayList<String>();
 
-    public SingleFixedChoicePage(ModelCallbacks callbacks, String title, String hintText, String textColor) {
-        super(callbacks, title, hintText, textColor);
+    public SingleFixedChoicePage(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean isVisible) {
+        super(callbacks, title, hintText, textColor, isVisible);
     }
 
     @Override

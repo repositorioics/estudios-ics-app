@@ -12,8 +12,8 @@ public class NumberPage extends TextPage {
 	protected int mLowerOrEqualsThan = 0;
 	protected boolean mValRange = false;
 
-	public NumberPage(ModelCallbacks callbacks, String title, String hintText, String textColor) {
-		super(callbacks, title, hintText, textColor);
+	public NumberPage(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean isVisible) {
+		super(callbacks, title, hintText, textColor,isVisible);
 	}
 
 	@Override

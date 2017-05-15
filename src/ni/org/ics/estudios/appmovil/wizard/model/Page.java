@@ -41,12 +41,14 @@ public abstract class Page implements PageTreeNode {
     protected String mTextColor;
     protected boolean mRequired = false;
     protected String mParentKey;
+    protected boolean mVisible = false;
 
-    protected Page(ModelCallbacks callbacks, String title, String hintText, String textColor) {
+    protected Page(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean visible) {
         mCallbacks = callbacks;
         mTitle = title;
         mHint= hintText;
         mTextColor=textColor;
+        mVisible = visible;
     }
 
     public Bundle getData() {
@@ -116,4 +118,14 @@ public abstract class Page implements PageTreeNode {
 	public void setTextColor(String mTextColor) {
 		this.mTextColor = mTextColor;
 	}
+
+	public boolean ismVisible() {
+		return mVisible;
+	}
+
+	public void setmVisible(boolean mVisible) {
+		this.mVisible = mVisible;
+	}
+	
+	
 }

@@ -23,6 +23,12 @@ public class PreTamizajeForm extends AbstractWizardModel {
 	public static final String nombreForm = Constants.FORM_NUEVO_TAMIZAJE_CASA;
 	private EstudiosAdapter estudiosAdapter;
 	
+	private Page scAceptaTamizaje;
+	private Page bcCodigoChf;
+	private Page scRazonNoParticipa;
+	private Page lpNoAcepta;
+
+	
     public PreTamizajeForm(Context context, String pass) {    	
         super(context,pass);
     }
@@ -47,12 +53,10 @@ public class PreTamizajeForm extends AbstractWizardModel {
 			index++;
 		}
 		estudiosAdapter.close();
-		
-		Page scAceptaTamizaje = new SingleFixedChoicePage(this,labels.getAceptaTamizaje(), labels.getAceptaTamizajeHint(), Constants.WIZARD).setChoices(catSiNo).setRequired(true);
-		Page bcCodigoChf = new BarcodePage(this,labels.getCodigoCHF(),labels.getCodigoCHFHint(),Constants.WIZARD).setRequired(true);
-		Page scRazonNoParticipa = new SingleFixedChoicePage(this,labels.getRazonNoParticipa(),labels.getRazonNoParticipaHint(),Constants.WIZARD).setChoices(catRazonNoParticipa).setRequired(true);
-		Page lpNoAcepta = new LabelPage(this,labels.getNoAcepta(),"",Constants.ROJO).setRequired(false);
-		
+		scAceptaTamizaje = new SingleFixedChoicePage(this,labels.getAceptaTamizaje(), labels.getAceptaTamizajeHint(), Constants.WIZARD,true).setChoices(catSiNo).setRequired(true);
+		bcCodigoChf = new BarcodePage(this,labels.getCodigoCHF(),labels.getCodigoCHFHint(),Constants.WIZARD,false).setRequired(true);
+		scRazonNoParticipa = new SingleFixedChoicePage(this,labels.getRazonNoParticipa(),labels.getRazonNoParticipaHint(),Constants.WIZARD,false).setChoices(catRazonNoParticipa).setRequired(true);
+		lpNoAcepta = new LabelPage(this,labels.getNoAcepta(),"",Constants.ROJO,false).setRequired(false);
         return new PageList(scAceptaTamizaje,bcCodigoChf,scRazonNoParticipa,lpNoAcepta);
     }
 
@@ -63,6 +67,5 @@ public class PreTamizajeForm extends AbstractWizardModel {
 	public void setLabels(PreTamizajeFormLabels labels) {
 		this.labels = labels;
 	}
-    
     
 }

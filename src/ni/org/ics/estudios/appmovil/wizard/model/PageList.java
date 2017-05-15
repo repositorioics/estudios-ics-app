@@ -48,7 +48,9 @@ public class PageList extends ArrayList<Page> implements PageTreeNode {
     @Override
     public void flattenCurrentPageSequence(ArrayList<Page> dest) {
         for (Page childPage : this) {
-            childPage.flattenCurrentPageSequence(dest);
+        	if(childPage.ismVisible()){
+        		childPage.flattenCurrentPageSequence(dest);
+        	}
         }
     }
 }

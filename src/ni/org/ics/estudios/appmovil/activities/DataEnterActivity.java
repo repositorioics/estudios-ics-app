@@ -21,7 +21,6 @@ import java.util.Map;
 
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.EncuestaCasaForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PreTamizajeForm;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
@@ -67,7 +66,7 @@ public class DataEnterActivity extends FragmentActivity implements
         	mWizardModel = new PreTamizajeForm(this,mPass);
         }
         else if(formName.matches(Constants.FORM_NUEVA_ENCUESTA_CASA)){
-            mWizardModel = new EncuestaCasaForm(this,mPass);
+            //mWizardModel = new EncuestaCasaForm(this,mPass);
         }
         else if(formName.matches(Constants.FORM_NUEVO_TAMIZAJE_PERS)){
             //mWizardModel = new TamizajeForm(this,mPass);
@@ -167,7 +166,7 @@ public class DataEnterActivity extends FragmentActivity implements
 
     @Override
     public void onPageTreeChanged() {
-        mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
+        //mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
         mStepPagerStrip.setPageCount(mCurrentPageSequence.size() + 1); // + 1 = review step
         mPagerAdapter.notifyDataSetChanged();
         updateBottomBar();

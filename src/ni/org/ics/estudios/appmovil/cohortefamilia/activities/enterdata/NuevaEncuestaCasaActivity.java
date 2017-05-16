@@ -15,14 +15,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCasaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.EncuestaCasaForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.EncuestaCasaFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
+import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
 import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
@@ -58,6 +59,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
     private SharedPreferences settings;
     private static final int EXIT = 1;
     private AlertDialog alertDialog;
+    private boolean notificarCambios = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -251,9 +253,10 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
         updateModel(page);
         updateConstrains();
         if (recalculateCutOffPage()) {
-            mPagerAdapter.notifyDataSetChanged();
+            if (notificarCambios) mPagerAdapter.notifyDataSetChanged();
             updateBottomBar();
         }
+        notificarCambios = true;
     }
 
     @Override
@@ -330,13 +333,15 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getLlaveAgua())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Fuera");
                 changeStatus(mWizardModel.findByKey(labels.getLlaveCompartida()), visible);
-                //onPageTreeChanged();
+                notificarCambios = false;
+                onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAlmacenaAgua())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAlmacenaEnBarriles()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getAlmacenaEnPilas()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getAlmacenaEnTanques()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
 
@@ -345,6 +350,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getNumBarriles()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getBarrilesTapados()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getBarrilesConAbate()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
 
@@ -353,6 +359,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getNumTanques()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTanquesTapados()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTanquesConAbate()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
 
@@ -361,6 +368,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getNumPilas()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getPilasTapadas()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getPilasConAbate()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
 
@@ -370,59 +378,69 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getNumOtrosRecipientes()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtrosRecipientesTapados()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtrosRecipientesConAbate()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
 
             if (page.getTitle().equals(labels.getMaterialParedes())) {
                 visible = page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroMaterialParedes()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
 
             if (page.getTitle().equals(labels.getMaterialPiso())) {
                 visible = page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroMaterialPiso()), visible);
-                //onPageTreeChanged();
+                notificarCambios = false;
+                onPageTreeChanged();
             }
 
             if (page.getTitle().equals(labels.getMaterialTecho())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroMaterialTecho()), visible);
-                //onPageTreeChanged();
+                notificarCambios = false;
+                onPageTreeChanged();
             }
 
             if (page.getTitle().equals(labels.getTieneAbanico())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumAbanicos()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTieneTelevisor())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumTelevisores()), visible);
-                //onPageTreeChanged();
+                notificarCambios = false;
+                onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTieneRefrigerador())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumRefrigeradores()), visible);
-                //onPageTreeChanged();
+                notificarCambios = false;
+                onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTienAireAcondicionado())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAireAcondicionadoFuncionando()), visible);
-                //onPageTreeChanged();
+                notificarCambios = false;
+                onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCocinaConLenia())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getUbicacionCocinaLenia()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getPeriodicidadCocinaLenia()), visible);
-                //onPageTreeChanged();
+                notificarCambios = false;
+                onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getPeriodicidadCocinaLenia())) {
                 //visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Diario");
-                changeStatus(mWizardModel.findByKey(labels.getUbicacionCocinaLenia()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Diario"));
-                changeStatus(mWizardModel.findByKey(labels.getUbicacionCocinaLenia()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Semanal"));
-                changeStatus(mWizardModel.findByKey(labels.getUbicacionCocinaLenia()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Quincenal"));
-                changeStatus(mWizardModel.findByKey(labels.getUbicacionCocinaLenia()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Mensual"));
+                changeStatus(mWizardModel.findByKey(labels.getNumDiarioCocinaLenia()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Diario"));
+                changeStatus(mWizardModel.findByKey(labels.getNumSemanalCocinaLenia()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Semanal"));
+                changeStatus(mWizardModel.findByKey(labels.getNumQuincenalCocinaLenia()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Quincenal"));
+                changeStatus(mWizardModel.findByKey(labels.getNumMensualCocinaLenia()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Mensual"));
+                notificarCambios = false;
                 onPageTreeChanged();
             }
 
@@ -431,13 +449,30 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getTieneGallinas()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTienePatos()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTieneCerdos()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getTieneGallinas())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCantidadGallinas()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getCantidadPatos()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getCantidadCerdos()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getGallinasDentroCasa()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getPatosDentroCasa()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getCerdosDentroCasa()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
 
+            if (page.getTitle().equals(labels.getTienePatos())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getCantidadPatos()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getPatosDentroCasa()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+
+            if (page.getTitle().equals(labels.getTieneCerdos())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getCantidadCerdos()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getCerdosDentroCasa()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
 
@@ -446,12 +481,35 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getMadreFuma()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtrosFuman()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getPadreFuma()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getCantidadOtrosFuman()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrilosMadre()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrillosPadre()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrillosOtros()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
+            if (page.getTitle().equals(labels.getMadreFuma())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrilosMadre()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getPadreFuma())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrillosPadre()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getOtrosFuman())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getCantidadOtrosFuman()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrillosOtros()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getTieneOtroMedioTransAuto())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getOtroMedioTransAuto()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -480,70 +538,402 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
         }
     }
 
+    private boolean tieneValor(String entrada){
+        return (entrada != null && !entrada.isEmpty());
+    }
+
     public void saveData(){
-        Map<String, String> mapa = mWizardModel.getAnswers();
-        Bundle datos = new Bundle();
-        for (Map.Entry<String, String> entry : mapa.entrySet()){
-            datos.putString(entry.getKey(), entry.getValue());
-        }
-        /*String acepta = datos.getString(this.getString(R.string.aceptaTamizaje));
-        String razonNP = datos.getString(this.getString(R.string.razonNoParticipa));
-        String codigoCasa = datos.getString(getString(R.string.codigoCHF));
-        String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-        estudiosAdapter.open();
-        //Recupera los catalogos de la base de datos
-        Estudio estudio = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=1", null);
-        MessageResource aceptaTamizaje = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + acepta + "' and " + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
-        MessageResource razonNoParticipa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNP + "' and " + CatalogosDBConstants.catRoot + "='CAT_RAZON_NP'", null);
-        //Crea un Nuevo Registro de pretamizaje
-        PreTamizaje preTamizaje =  new PreTamizaje();
-        preTamizaje.setCodigo(infoMovil.getId());
-        preTamizaje.setAceptaTamizaje(aceptaTamizaje.getCatKey().charAt(0));
-        if (razonNoParticipa!=null) preTamizaje.setRazonNoParticipa(razonNoParticipa.getCatKey());
-        preTamizaje.setCasa(casa);
-        preTamizaje.setEstudio(estudio);
-        preTamizaje.setRecordDate(new Date());
-        preTamizaje.setRecordUser(username);
-        preTamizaje.setDeviceid(infoMovil.getDeviceId());
-        preTamizaje.setEstado('0');
-        preTamizaje.setPasive('0');
-        //Inserta un Nuevo Registro de Pretamizaje
-        estudiosAdapter.crearPreTamizaje(preTamizaje);
-        //Pregunta si acepta el tamizaje
-        if (preTamizaje.getAceptaTamizaje()=='1') {
-            //Si la respuesta es si crea un nuevo registro de casa CHF
-            CasaCohorteFamilia cchf = new CasaCohorteFamilia();
-            cchf.setCasa(casa);
-            cchf.setCodigoCHF(codigoCasa);
-            cchf.setNombre1JefeFamilia(casa.getNombre1JefeFamilia());
-            cchf.setNombre2JefeFamilia(casa.getNombre2JefeFamilia());
-            cchf.setApellido1JefeFamilia(casa.getApellido1JefeFamilia());
-            cchf.setApellido2JefeFamilia(casa.getApellido2JefeFamilia());
-            cchf.setRecordDate(new Date());
-            cchf.setRecordUser(username);
-            cchf.setDeviceid(infoMovil.getDeviceId());
-            cchf.setEstado('0');
-            cchf.setPasive('0');
-            //Inserta una nueva casa CHF
-            estudiosAdapter.crearCasaCohorteFamilia(cchf);
+        try {
+            Map<String, String> mapa = mWizardModel.getAnswers();
+            Bundle datos = new Bundle();
+            for (Map.Entry<String, String> entry : mapa.entrySet()) {
+                datos.putString(entry.getKey(), entry.getValue());
+            }
+            //catálogos
+            String scLlaveAgua = datos.getString(this.getString(R.string.llaveAgua));
+            String scLlaveCompartida = datos.getString(this.getString(R.string.llaveCompartida));
+            String scAlmacenaAgua = datos.getString(this.getString(R.string.almacenaAgua));
+            String scEnBarriles = datos.getString(this.getString(R.string.almacenaEnBarriles));
+            String scBarrilesTapados = datos.getString(this.getString(R.string.barrilesTapados));
+            String scBarrilesAbate = datos.getString(this.getString(R.string.barrilesConAbate));
+            String scEnTanques = datos.getString(this.getString(R.string.almacenaEnTanques));
+            String scTanquesTapados = datos.getString(this.getString(R.string.tanquesTapados));
+            String scTanquesAbate = datos.getString(this.getString(R.string.tanquesConAbate));
+            String scEnPilas = datos.getString(this.getString(R.string.almacenaEnPilas));
+            String scPilasTapadas = datos.getString(this.getString(R.string.pilasTapadas));
+            String scPilasAbate = datos.getString(this.getString(R.string.pilasConAbate));
+            String scEnOtrosRec = datos.getString(this.getString(R.string.almacenaOtrosRecipientes));
+            String scOtrosRecTapados = datos.getString(this.getString(R.string.otrosRecipientesTapados));
+            String scOtrosRecAbate = datos.getString(this.getString(R.string.otrosRecipientesConAbate));
+            String mcParedes = datos.getString(this.getString(R.string.materialParedes));
+            String mcPiso = datos.getString(this.getString(R.string.materialPiso));
+            String scLavandero = datos.getString(this.getString(R.string.ubicacionLavandero));
+            String scTecho = datos.getString(this.getString(R.string.materialTecho));
+            String scCasaPropia = datos.getString(this.getString(R.string.casaPropia));
+            String scTelevisor = datos.getString(this.getString(R.string.tieneTelevisor));
+            String scAbanico = datos.getString(this.getString(R.string.tieneAbanico));
+            String scRefrigerador = datos.getString(this.getString(R.string.tieneRefrigerador));
+            String scAireAcondicionado = datos.getString(this.getString(R.string.tienAireAcondicionado));
+            String scAireAcondicionadoFun = datos.getString(this.getString(R.string.aireAcondicionadoFuncionando));
+            String scMoto = datos.getString(this.getString(R.string.tieneMoto));
+            String scMTCarro = datos.getString(this.getString(R.string.tieneCarro));
+            String scMTMicrobus = datos.getString(this.getString(R.string.tienMicrobus));
+            String scMTCamioneta = datos.getString(this.getString(R.string.tieneCamioneta));
+            String scMTCamion = datos.getString(this.getString(R.string.tieneCamion));
+            String scMTOtro = datos.getString(this.getString(R.string.tieneOtroMedioTransAuto));
+            String scCocina = datos.getString(this.getString(R.string.cocinaConLenia));
+            String scCocinaUbicacion = datos.getString(this.getString(R.string.ubicacionCocinaLenia));
+            String scCocinaPeriodicidad = datos.getString(this.getString(R.string.periodicidadCocinaLenia));
+            String scAnimales = datos.getString(this.getString(R.string.tieneAnimales));
+            String scAnimalesGallinas = datos.getString(this.getString(R.string.tieneGallinas));
+            String scGallinasDC = datos.getString(this.getString(R.string.gallinasDentroCasa));
+            String scAnimalesPatos = datos.getString(this.getString(R.string.tienePatos));
+            String scPatosDC = datos.getString(this.getString(R.string.patosDentroCasa));
+            String scAnimalesCerdos = datos.getString(this.getString(R.string.tieneCerdos));
+            String scCerdosDC = datos.getString(this.getString(R.string.cerdosDentroCasa));
+            String scFuman = datos.getString(this.getString(R.string.personaFumaDentroCasa));
+            String scMadreFuma = datos.getString(this.getString(R.string.madreFuma));
+            String scPafreFuma = datos.getString(this.getString(R.string.padreFuma));
+            String scOtrosFuma = datos.getString(this.getString(R.string.otrosFuman));
+
+            //textos
+            String tpDescOtrosRec = datos.getString(this.getString(R.string.otrosRecipientes));
+            String tpParedesOtroDesc = datos.getString(this.getString(R.string.otroMaterialParedes));
+            String tpPisoOtroDesc = datos.getString(this.getString(R.string.otroMaterialPiso));
+            String tpTechoOtroDesc = datos.getString(this.getString(R.string.otroMaterialTecho));
+            String tpMTOtroDesc = datos.getString(this.getString(R.string.otroMedioTransAuto));
+
+            //numéricos
+            String npCuartos = datos.getString(this.getString(R.string.cuantoCuartos));
+            String npCuartosDormir = datos.getString(this.getString(R.string.cuartosDormir));
+            String npHorasSinAgua = datos.getString(this.getString(R.string.horasSinAgua));
+            String npNumBarriles = datos.getString(this.getString(R.string.numBarriles));
+            String npNumTanques = datos.getString(this.getString(R.string.numTanques));
+            String npNumPilas = datos.getString(this.getString(R.string.numPilas));
+            String npNumOtrosRec = datos.getString(this.getString(R.string.numOtrosRecipientes));
+            String npNumTelevisor = datos.getString(this.getString(R.string.numTelevisores));
+            String npAbanico = datos.getString(this.getString(R.string.numAbanicos));
+            String npNumRefrigerador = datos.getString(this.getString(R.string.numRefrigeradores));
+            String npNumCocinaD = datos.getString(this.getString(R.string.numDiarioCocinaLenia));
+            String npNumCocinaS = datos.getString(this.getString(R.string.numSemanalCocinaLenia));
+            String npNumCocinaQ = datos.getString(this.getString(R.string.numQuincenalCocinaLenia));
+            String npNumCocinaM = datos.getString(this.getString(R.string.numMensualCocinaLenia));
+            String npCantGallinas = datos.getString(this.getString(R.string.cantidadGallinas));
+            String npCantPatos = datos.getString(this.getString(R.string.cantidadPatos));
+            String npCantCerdos = datos.getString(this.getString(R.string.cantidadCerdos));
+            String npCantCigarMadre = datos.getString(this.getString(R.string.cantidadCigarrilosMadre));
+            String npCantCigarPadre = datos.getString(this.getString(R.string.cantidadCigarrillosPadre));
+            String npCantOtrosFuma = datos.getString(this.getString(R.string.cantidadOtrosFuman));
+            String npCantCigarOtrosF = datos.getString(this.getString(R.string.cantidadCigarrillosOtros));
+
+            String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+            estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
+            estudiosAdapter.open();
+
+
+            EncuestaCasa encuestaCasa = new EncuestaCasa();
+            encuestaCasa.setCasa(casaCHF);
+            if (tieneValor(scLlaveAgua)) {
+                MessageResource msLlaveAgua = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scLlaveAgua + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_DENTROFUERA'", null);
+                if (msLlaveAgua != null) encuestaCasa.setUbicacionLlaveAgua(msLlaveAgua.getCatKey());
+            }
+            if (tieneValor(scLlaveCompartida)) {
+                MessageResource msLLaveCompartida = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scLlaveCompartida + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_COMPARTIDO'", null);
+                if (msLLaveCompartida != null) encuestaCasa.setLlaveCompartida(msLLaveCompartida.getCatKey());
+            }
+            if (tieneValor(scAlmacenaAgua)) {
+                MessageResource msAlmacenaAgua = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAlmacenaAgua + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msAlmacenaAgua != null) encuestaCasa.setAlmacenaAgua(msAlmacenaAgua.getCatKey().charAt(0));
+            }
+            if (tieneValor(scEnBarriles)) {
+                MessageResource msEnBarriles = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scEnBarriles + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msEnBarriles != null) encuestaCasa.setAlmacenaEnBarriles(msEnBarriles.getCatKey().charAt(0));
+            }
+            if (tieneValor(scBarrilesTapados)) {
+                MessageResource msBarrilesTapados = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scBarrilesTapados + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msBarrilesTapados != null) encuestaCasa.setBarrilesTapados(msBarrilesTapados.getCatKey().charAt(0));
+            }
+            if (tieneValor(scBarrilesAbate)) {
+                MessageResource msBarrilesAbate = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scBarrilesAbate + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msBarrilesAbate != null) encuestaCasa.setBarrilesConAbate(msBarrilesAbate.getCatKey().charAt(0));
+            }
+            if (tieneValor(scEnTanques)) {
+                MessageResource msEnTanques = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scEnTanques + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msEnTanques != null) encuestaCasa.setAlmacenaEnTanques(msEnTanques.getCatKey().charAt(0));
+            }
+            if (tieneValor(scTanquesTapados)) {
+                MessageResource msTanquesTapados = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scTanquesTapados + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msTanquesTapados != null) encuestaCasa.setTanquesTapados(msTanquesTapados.getCatKey().charAt(0));
+            }
+            if (tieneValor(scTanquesAbate)) {
+                MessageResource msTanquesAbate = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scTanquesAbate + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msTanquesAbate != null) encuestaCasa.setTanquesConAbate(msTanquesAbate.getCatKey().charAt(0));
+            }
+            if (tieneValor(scEnPilas)) {
+                MessageResource msEnPilas = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scEnPilas + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msEnPilas != null) encuestaCasa.setAlmacenaEnPilas(msEnPilas.getCatKey().charAt(0));
+            }
+            if (tieneValor(scPilasTapadas)) {
+                MessageResource msPilasTapadas = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scPilasTapadas + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msPilasTapadas != null) encuestaCasa.setPilasTapadas(msPilasTapadas.getCatKey().charAt(0));
+            }
+            if (tieneValor(scPilasAbate)) {
+                MessageResource msPilasAbate = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scPilasAbate + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msPilasAbate != null) encuestaCasa.setPilasConAbate(msPilasAbate.getCatKey().charAt(0));
+            }
+            if (tieneValor(scEnOtrosRec)) {
+                MessageResource msEnOtrosRec = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scEnOtrosRec + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msEnOtrosRec != null) encuestaCasa.setAlmacenaOtrosRecipientes(msEnOtrosRec.getCatKey().charAt(0));
+            }
+            if (tieneValor(scOtrosRecTapados)) {
+                MessageResource msOtrosRecTapados = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scOtrosRecTapados + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msOtrosRecTapados != null)
+                    encuestaCasa.setOtrosRecipientesTapados(msOtrosRecTapados.getCatKey().charAt(0));
+            }
+            if (tieneValor(scOtrosRecAbate)) {
+                MessageResource msOtrosRecAbate = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scOtrosRecAbate + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msOtrosRecAbate != null)
+                    encuestaCasa.setOtrosRecipientesConAbate(msOtrosRecAbate.getCatKey().charAt(0));
+            }
+            if (tieneValor(mcParedes)) {
+                String keysMaterial = "";
+                mcParedes = mcParedes.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
+                List<MessageResource> msParedes = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + mcParedes + "') and "
+                        + CatalogosDBConstants.catRoot + "='CAT_MAT_PARED'", null);
+                for(MessageResource ms : msParedes) {
+                    keysMaterial += ms.getCatKey() + ",";
+                }
+                if (!keysMaterial.isEmpty())
+                    keysMaterial = keysMaterial.substring(0, keysMaterial.length() - 1);
+                encuestaCasa.setMaterialParedes(keysMaterial);
+            }
+            if (tieneValor(mcPiso)) {
+                String keysMaterial = "";
+                mcPiso = mcPiso.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
+                List<MessageResource> msPiso = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + mcPiso + "') and "
+                        + CatalogosDBConstants.catRoot + "='CAT_MAT_PISO'", null);
+                for(MessageResource ms : msPiso) {
+                    keysMaterial += ms.getCatKey() + ",";
+                }
+                if (!keysMaterial.isEmpty())
+                    keysMaterial = keysMaterial.substring(0, keysMaterial.length() - 1);
+                encuestaCasa.setMaterialPiso(keysMaterial);
+            }
+            if (tieneValor(scTecho)) {
+                MessageResource msTecho = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scTecho + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_MAT_TECHO'", null);
+                if (msTecho != null) encuestaCasa.setMaterialTecho(msTecho.getCatKey());
+            }
+            if (tieneValor(scLavandero)) {
+                MessageResource msLavandero = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scLavandero + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_DENTROFUERA'", null);
+                if (msLavandero != null) encuestaCasa.setUbicacionLavandero(msLavandero.getCatKey());
+            }
+            if (tieneValor(scCasaPropia)) {
+                MessageResource msCasaPropia = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scCasaPropia + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msCasaPropia != null) encuestaCasa.setCasaPropia(msCasaPropia.getCatKey().charAt(0));
+            }
+            if (tieneValor(scTelevisor)) {
+                MessageResource msTelevisor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scTelevisor + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msTelevisor != null) encuestaCasa.setTieneTelevisor(msTelevisor.getCatKey().charAt(0));
+            }
+            if (tieneValor(scAbanico)) {
+                MessageResource msAbanico = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAbanico + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msAbanico != null) encuestaCasa.setTieneAbanico(msAbanico.getCatKey().charAt(0));
+            }
+            if (tieneValor(scRefrigerador)) {
+                MessageResource msRefrigerador = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scRefrigerador + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msRefrigerador != null) encuestaCasa.setTieneRefrigerador(msRefrigerador.getCatKey().charAt(0));
+            }
+            if (tieneValor(scAireAcondicionado)) {
+                MessageResource msAireAcondicionado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAireAcondicionado + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msAireAcondicionado != null)
+                    encuestaCasa.setTienAireAcondicionado(msAireAcondicionado.getCatKey().charAt(0));
+            }
+            if (tieneValor(scAireAcondicionadoFun)) {
+                MessageResource msAireAcondicionadoFun = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAireAcondicionadoFun + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_FUN_ABANICO'", null);
+                if (msAireAcondicionadoFun != null)
+                    encuestaCasa.setAireAcondicionadoFuncionando(msAireAcondicionadoFun.getCatKey());
+
+            }
+            if (tieneValor(scMoto)) {
+                MessageResource msMTMoto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMoto + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msMTMoto != null) encuestaCasa.setTieneMoto(msMTMoto.getCatKey().charAt(0));
+            }
+            if (tieneValor(scMTCarro)) {
+                MessageResource msMTCarro = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMTCarro + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msMTCarro != null) encuestaCasa.setTieneCarro(msMTCarro.getCatKey().charAt(0));
+            }
+            if (tieneValor(scMTMicrobus)) {
+                MessageResource msMTMicrobus = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMTMicrobus + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msMTMicrobus != null) encuestaCasa.setTienMicrobus(msMTMicrobus.getCatKey().charAt(0));
+            }
+            if (tieneValor(scMTCamioneta)) {
+                MessageResource msMTCamioneta = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMTCamioneta + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msMTCamioneta != null) encuestaCasa.setTieneCamioneta(msMTCamioneta.getCatKey().charAt(0));
+            }
+            if (tieneValor(scMTCamion)) {
+                MessageResource msMTCamion = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMTCamion + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msMTCamion != null) encuestaCasa.setTieneCamion(msMTCamion.getCatKey().charAt(0));
+            }
+            if (tieneValor(scMTOtro)) {
+                MessageResource msMTOtro = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMTOtro + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msMTOtro != null) encuestaCasa.setTieneOtroMedioTransAuto(msMTOtro.getCatKey().charAt(0));
+            }
+            if (tieneValor(scCocina)) {
+                MessageResource msCocina = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scCocina + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msCocina != null) encuestaCasa.setCocinaConLenia(msCocina.getCatKey().charAt(0));
+            }
+            if (tieneValor(scCocinaUbicacion)) {
+                MessageResource msCocinaUbicacion = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scCocinaUbicacion + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_DENTROFUERA'", null);
+                if (msCocinaUbicacion != null) encuestaCasa.setUbicacionCocinaLenia(msCocinaUbicacion.getCatKey());
+            }
+            if (tieneValor(scCocinaPeriodicidad)) {
+                MessageResource msCocinaPeriodicidad = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scCocinaPeriodicidad + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_PERIOD_COCINA'", null);
+                if (msCocinaPeriodicidad != null)
+                    encuestaCasa.setPeriodicidadCocinaLenia(msCocinaPeriodicidad.getCatKey());
+            }
+            if (tieneValor(scAnimales)) {
+                MessageResource msAnimales = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAnimales + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msAnimales != null) encuestaCasa.setTieneAnimales(msAnimales.getCatKey().charAt(0));
+            }
+            if (tieneValor(scAnimalesGallinas)) {
+                MessageResource msAnimalesGallinas = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAnimalesGallinas + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msAnimalesGallinas != null) encuestaCasa.setTieneGallinas(msAnimalesGallinas.getCatKey().charAt(0));
+            }
+            if (tieneValor(scGallinasDC)) {
+                MessageResource msGallinasDC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scGallinasDC + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msGallinasDC != null) encuestaCasa.setGallinasDentroCasa(msGallinasDC.getCatKey().charAt(0));
+            }
+            if (tieneValor(scAnimalesPatos)) {
+                MessageResource msAnimalesPatos = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAnimalesPatos + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msAnimalesPatos != null) encuestaCasa.setTienePatos(msAnimalesPatos.getCatKey().charAt(0));
+            }
+            if (tieneValor(scPatosDC)) {
+                MessageResource msPatosDC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scPatosDC + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msPatosDC != null) encuestaCasa.setPatosDentroCasa(msPatosDC.getCatKey().charAt(0));
+            }
+            if (tieneValor(scAnimalesCerdos)) {
+                MessageResource msAnimalesCerdos = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAnimalesCerdos + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msAnimalesCerdos != null) encuestaCasa.setTieneCerdos(msAnimalesCerdos.getCatKey().charAt(0));
+            }
+            if (tieneValor(scCerdosDC)) {
+                MessageResource msCerdosDC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scCerdosDC + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msCerdosDC != null) encuestaCasa.setCerdosDentroCasa(msCerdosDC.getCatKey().charAt(0));
+            }
+            if (tieneValor(scFuman)) {
+                MessageResource msFuman = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scFuman + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msFuman != null) encuestaCasa.setPersonaFumaDentroCasa(msFuman.getCatKey().charAt(0));
+            }
+            if (tieneValor(scMadreFuma)) {
+                MessageResource msMadreFuma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMadreFuma + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msMadreFuma != null) encuestaCasa.setMadreFuma(msMadreFuma.getCatKey().charAt(0));
+            }
+            if (tieneValor(scPafreFuma)) {
+                MessageResource msPafreFuma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scPafreFuma + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msPafreFuma != null) encuestaCasa.setPadreFuma(msPafreFuma.getCatKey().charAt(0));
+            }
+            if (tieneValor(scOtrosFuma)) {
+                MessageResource msOtrosFuma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scOtrosFuma + "' and "
+                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msOtrosFuma != null) encuestaCasa.setOtrosFuman(msOtrosFuma.getCatKey().charAt(0));
+            }
+
+            encuestaCasa.setOtrosRecipientes(tpDescOtrosRec);
+            encuestaCasa.setOtroMaterialParedes(tpParedesOtroDesc);
+            encuestaCasa.setOtroMaterialPiso(tpPisoOtroDesc);
+            encuestaCasa.setOtroMaterialTecho(tpTechoOtroDesc);
+            encuestaCasa.setOtroMedioTransAuto(tpMTOtroDesc);
+
+            if (tieneValor(npCuartos)) encuestaCasa.setCantidadCuartos(Integer.valueOf(npCuartos));
+            if (tieneValor(npCuartosDormir)) encuestaCasa.setCantidadCuartosDormir(Integer.valueOf(npCuartosDormir));
+            if (tieneValor(npHorasSinAgua)) encuestaCasa.setHrsSinServicioAgua(Integer.valueOf(npHorasSinAgua));
+            if (tieneValor(npNumBarriles)) encuestaCasa.setNumBarriles(Integer.valueOf(npNumBarriles));
+            if (tieneValor(npNumTanques)) encuestaCasa.setNumTanques(Integer.valueOf(npNumTanques));
+            if (tieneValor(npNumPilas)) encuestaCasa.setNumPilas(Integer.valueOf(npNumPilas));
+            if (tieneValor(npNumOtrosRec)) encuestaCasa.setNumOtrosRecipientes(Integer.valueOf(npNumOtrosRec));
+            if (tieneValor(npNumTelevisor)) encuestaCasa.setNumTelevisores(Integer.valueOf(npNumTelevisor));
+            if (tieneValor(npAbanico)) encuestaCasa.setNumAbanicos(Integer.valueOf(npAbanico));
+            if (tieneValor(npNumRefrigerador)) encuestaCasa.setNumRefrigeradores(Integer.valueOf(npNumRefrigerador));
+            if (tieneValor(npNumCocinaD)) encuestaCasa.setNumDiarioCocinaLenia(Integer.valueOf(npNumCocinaD));
+            if (tieneValor(npNumCocinaS)) encuestaCasa.setNumSemanalCocinaLenia(Integer.valueOf(npNumCocinaS));
+            if (tieneValor(npNumCocinaQ)) encuestaCasa.setNumQuincenalCocinaLenia(Integer.valueOf(npNumCocinaQ));
+            if (tieneValor(npNumCocinaM)) encuestaCasa.setNumMensualCocinaLenia(Integer.valueOf(npNumCocinaM));
+            if (tieneValor(npCantGallinas)) encuestaCasa.setCantidadGallinas(Integer.valueOf(npCantGallinas));
+            if (tieneValor(npCantPatos)) encuestaCasa.setCantidadPatos(Integer.valueOf(npCantPatos));
+            if (tieneValor(npCantCerdos)) encuestaCasa.setCantidadCerdos(Integer.valueOf(npCantCerdos));
+            if (tieneValor(npCantCigarMadre))
+                encuestaCasa.setCantidadCigarrilosMadre(Integer.valueOf(npCantCigarMadre));
+            if (tieneValor(npCantCigarPadre))
+                encuestaCasa.setCantidadCigarrillosPadre(Integer.valueOf(npCantCigarPadre));
+            if (tieneValor(npCantOtrosFuma)) encuestaCasa.setCantidadOtrosFuman(Integer.valueOf(npCantOtrosFuma));
+            if (tieneValor(npCantCigarOtrosF))
+                encuestaCasa.setCantidadCigarrillosOtros(Integer.valueOf(npCantCigarOtrosF));
+
+            encuestaCasa.setFechaEncuestas(new Date());
+            //Metadata
+            encuestaCasa.setRecordDate(new Date());
+            encuestaCasa.setRecordUser(username);
+            encuestaCasa.setDeviceid(infoMovil.getDeviceId());
+            encuestaCasa.setEstado('0');
+            encuestaCasa.setPasive('0');
+            boolean actualizada = false;
+            EncuestaCasa encuestaExiste = estudiosAdapter.getEncuestaCasa(EncuestasDBConstants.casa_chf + "=" + casaCHF.getCodigoCHF(), EncuestasDBConstants.casa_chf);
+            if (encuestaExiste != null && encuestaExiste.getCasa() != null && encuestaExiste.getCasa().getCodigoCHF() != null)
+                actualizada = estudiosAdapter.editarEncuestaCasa(encuestaCasa);
+            else estudiosAdapter.crearEncuestaCasa(encuestaCasa);
+
             Bundle arguments = new Bundle();
-            if (cchf!=null) arguments.putSerializable(Constants.CASA , cchf);
+            arguments.putSerializable(Constants.CASA, casaCHF);
             Intent i = new Intent(getApplicationContext(),
                     MenuCasaActivity.class);
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
-        }*/
-
-        Bundle arguments = new Bundle();
-        arguments.putSerializable(Constants.CASA , casaCHF);
-        Intent i = new Intent(getApplicationContext(),
-                MenuCasaActivity.class);
-        i.putExtras(arguments);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        finish();
+            finish();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
 

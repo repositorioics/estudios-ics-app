@@ -102,7 +102,7 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         Page scMTCamioneta = new SingleFixedChoicePage(this, labels.getTieneCamioneta(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scMTCamion = new SingleFixedChoicePage(this, labels.getTieneCamion(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scMTOtro = new SingleFixedChoicePage(this, labels.getTieneOtroMedioTransAuto(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-        Page scMTOtroDesc =  new TextPage(this, labels.getOtroMedioTransAuto(), "", Constants.WIZARD, false).setRequired(true);
+        Page tpMTOtroDesc =  new TextPage(this, labels.getOtroMedioTransAuto(), "", Constants.WIZARD, false).setRequired(true);
         Page scCocina = new SingleFixedChoicePage(this, labels.getCocinaConLenia(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scCocinaUbicacion = new SingleFixedChoicePage(this, labels.getUbicacionCocinaLenia(), labels.getUbicacionCocinaLeniaHint(), Constants.WIZARD, false).setChoices(catDentroFuera[0],catDentroFuera[1]).setRequired(true);
         Page scCocinaPeriodicidad = new SingleFixedChoicePage(this, labels.getPeriodicidadCocinaLenia(), "", Constants.WIZARD, false).setChoices(catPeriodoCocina).setRequired(true);
@@ -134,7 +134,7 @@ public class EncuestaCasaForm extends AbstractWizardModel {
                 scEnTanques, npNumTanques, scTanquesTapados, scTanquesAbate, scEnPilas, npNumPilas, scPilasTapadas, scPilasAbate, scEnOtrosRec, tpDescOtrosRec, npNumOtrosRec,
                 scOtrosRecTapados, scOtrosRecAbate, scLavandero, mcParedes, tpParedesOtroDesc, mcPiso, tpPisoOtroDesc, scTecho, tpTechoOtroDesc, scCasaPropia, scAbanico, npAbanico,
                 scTelevisor, npNumTelevisor, scRefrigerador, npNumRefrigerador, scAireAcondicionado, scAireAcondicionadoFun, scMoto, scMTCarro, scMTMicrobus, scMTCamioneta,
-                scMTCamion, scMTOtro, scMTOtroDesc, scCocina, scCocinaUbicacion, scCocinaPeriodicidad, npNumCocinaD, npNumCocinaS, npNumCocinaQ, npNumCocinaM, scAnimales,
+                scMTCamion, scMTOtro, tpMTOtroDesc, scCocina, scCocinaUbicacion, scCocinaPeriodicidad, npNumCocinaD, npNumCocinaS, npNumCocinaQ, npNumCocinaM, scAnimales,
                 scAnimalesGallinas, npCantGallinas, scGallinasDC, scAnimalesPatos, npCantPatos, scPatosDC, scAnimalesCerdos, npCantCerdos, scCerdosDC, scFuman, scMadreFuma,
                 npCantCigarMadre, scPafreFuma, npCantCigarPadre, scOtrosFuma, npCantOtrosFuma, npCantCigarOtrosF
                         );

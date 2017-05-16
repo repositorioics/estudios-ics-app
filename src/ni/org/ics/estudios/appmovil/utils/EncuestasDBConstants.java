@@ -10,7 +10,7 @@ public class EncuestasDBConstants {
     public static final String ENCUESTA_CASA_TABLE = "chf_encuestas_casa";
 
     //campos tabla EncuestaCasa
-    public static final String casa = "codigo_casa";
+    public static final String casa_chf = "codigo_casachf";
     public static final String cantidadCuartos = "cantidadCuartos";
     public static final String cantidadCuartosDormir = "cantidadCuartosDormir";
     public static final String fechaEncuestas = "fechaEncuestas";
@@ -88,7 +88,7 @@ public class EncuestasDBConstants {
     //crear tabla EncuestaCasa
     public static final String CREATE_ENCUESTA_CASA_TABLE = "create table if not exists "
             + ENCUESTA_CASA_TABLE + " ("
-            + casa + " integer not null, "
+            + casa_chf + " text not null, "
             + cantidadCuartos  + " integer, "
             + cantidadCuartosDormir  + " integer, "
             + fechaEncuestas  + " date not null, "
@@ -167,7 +167,7 @@ public class EncuestasDBConstants {
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
-            + "primary key (" + casa + "));";
+            + "primary key (" + casa_chf + "));";
 
     //tabla EncuestaDatosPartoBB
     public static final String ENCUESTA_PARTOBB_TABLE = "chf_encuestas_partobb";

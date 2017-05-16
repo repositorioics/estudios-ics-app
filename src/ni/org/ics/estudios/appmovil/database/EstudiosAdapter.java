@@ -14,6 +14,7 @@ import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
@@ -73,6 +74,8 @@ public class EstudiosAdapter {
 			db.execSQL("INSERT INTO `casas` (`CODIGO`, `IDENTIFICADOR_EQUIPO`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `apellido1JefeFamilia`, `apellido2JefeFamilia`, `DIRECCION`, `MANZANA`, `nombre1JefeFamilia`, `nombre2JefeFamilia`, `barrio`) VALUES (1, 'server', '1', '0', '2017-05-10 11:22:29', 'admin', 'Lopez', 'Martinez', 'sfgsgsgsd', '3', 'Pedro', 'Ramon', 1)");
 			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('no', '0', 'CAT_SINO', NULL, '0', 2, '0', 'No');");
 			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('yes', '1', 'CAT_SINO', NULL, '0', 1, '0', 'Si');");
+			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('male', 'M', 'CAT_SEXO', NULL, '0', 1, '0', 'Masculino');");
+			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('female', 'F', 'CAT_SEXO', NULL, '0', 2, '0', 'Femenino');");
 			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('noquiere', 'NQ', 'CAT_RAZON_NP', NULL, '0', 2, '0', 'No quiere participar');");
 			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('nomuestra', 'NM', 'CAT_RAZON_NP', NULL, '0', 1, '0', 'No quiere que le tomen muestras');");
             db.execSQL("INSERT INTO `chf_casas_cohorte_familia` (`codigoCHF`, `IDENTIFICADOR_EQUIPO`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `apellido1JefeFamilia`, `apellido2JefeFamilia`, `nombre1JefeFamilia`, `nombre2JefeFamilia`, `casa`) VALUES ('5678', 'server', '1', '0', '2017-05-10 11:22:29', 'admin', 'Lopez', 'Martinez', 'Pedro', 'Ramon', 1)");
@@ -650,5 +653,59 @@ public class EstudiosAdapter {
         if (!cursorParticipanteCohorteFamilia.isClosed()) cursorParticipanteCohorteFamilia.close();
         return mParticipanteCohorteFamilias;
     }
+    
+	/**
+	 * Metodos para tamizajes en la base de datos
+	 * 
+	 * @param Tamizaje
+	 *            Objeto Tamizaje que contiene la informacion
+	 *
+	 */
+	//Crear nuevo Tamizaje en la base de datos
+	public void crearTamizaje(Tamizaje tamizaje) {
+		ContentValues cv = TamizajeHelper.crearTamizajeContentValues(tamizaje);
+		mDb.insert(MainDBConstants.TAMIZAJE_TABLE, null, cv);
+	}
+	//Editar Tamizaje existente en la base de datos
+	public boolean editarTamizaje(Tamizaje tamizaje) {
+		ContentValues cv = TamizajeHelper.crearTamizajeContentValues(tamizaje);
+		return mDb.update(MainDBConstants.TAMIZAJE_TABLE , cv, MainDBConstants.codigo + "='" 
+				+ tamizaje.getCodigo()+ "'", null) > 0;
+	}
+	//Limpiar la tabla de Tamizaje de la base de datos
+	public boolean borrarTamizajes() {
+		return mDb.delete(MainDBConstants.TAMIZAJE_TABLE, null, null) > 0;
+	}
+	//Obtener un Tamizaje de la base de datos
+	public Tamizaje getTamizaje(String filtro, String orden) throws SQLException {
+		Tamizaje mTamizaje = null;
+		Cursor cursorTamizaje = crearCursor(MainDBConstants.TAMIZAJE_TABLE , filtro, null, orden);
+		if (cursorTamizaje != null && cursorTamizaje.getCount() > 0) {
+			cursorTamizaje.moveToFirst();
+			mTamizaje=TamizajeHelper.crearTamizaje(cursorTamizaje);
+			Estudio estudio = this.getEstudio(MainDBConstants.codigo + "=" +cursorTamizaje.getInt(cursorTamizaje.getColumnIndex(MainDBConstants.estudio)), null);
+			mTamizaje.setEstudio(estudio);
+		}
+		if (!cursorTamizaje.isClosed()) cursorTamizaje.close();
+		return mTamizaje;
+	}
+	//Obtener una lista de Tamizaje de la base de datos
+	public List<Tamizaje> getTamizajes(String filtro, String orden) throws SQLException {
+		List<Tamizaje> mTamizajes = new ArrayList<Tamizaje>();
+		Cursor cursorTamizajes = crearCursor(MainDBConstants.TAMIZAJE_TABLE, filtro, null, orden);
+		if (cursorTamizajes != null && cursorTamizajes.getCount() > 0) {
+			cursorTamizajes.moveToFirst();
+			mTamizajes.clear();
+			do{
+				Tamizaje mTamizaje = null;
+				mTamizaje = TamizajeHelper.crearTamizaje(cursorTamizajes);
+				Estudio estudio = this.getEstudio(MainDBConstants.codigo + "=" +cursorTamizajes.getInt(cursorTamizajes.getColumnIndex(MainDBConstants.estudio)), null);
+				mTamizaje.setEstudio(estudio);
+				mTamizajes.add(mTamizaje);
+			} while (cursorTamizajes.moveToNext());
+		}
+		if (!cursorTamizajes.isClosed()) cursorTamizajes.close();
+		return mTamizajes;
+	}    
 
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="banio">Baño</string>
+    <string name="cocina">Cocina</string>
+    <string name="comedor">Comedor</string>
+    <string name="habitacion">Habitación</string>
+    <string name="sala">Sala</string>
+    <string name="ventana">Ventana</string>
+    <string name="largo">Largo</string>
+    <string name="ancho">Ancho</string>
+    <string name="alto">Alto</string>
+    <string name="total">Total</string>
+    <string name="numVentanas">Número de ventanas</string>
+    <string name="ventAbierta">Abierta o cerrada</string>
+    <string name="conVentana">Con ventana</string>
+
+</resources>

@@ -19,5 +19,6 @@
     <string name="new_screen_per">Agregar Persona</string>
     <string name="new_survey_1">Encuesta Casa</string>
     <string name="new_survey_2">Encuesta Participante</string>
+    <string name="environments">Areas de Ambiente</string>
     
 </resources>

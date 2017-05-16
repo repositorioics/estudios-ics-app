@@ -75,6 +75,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 					startActivity(i);
 		        	break;
                     case 1:
+                        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaCasaActivity.class);
                         i.putExtras(arguments);

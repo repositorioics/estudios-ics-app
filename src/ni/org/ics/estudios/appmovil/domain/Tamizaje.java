@@ -21,20 +21,13 @@ public class Tamizaje extends BaseMetaData {
     private Date fechaNacimiento;
     private char aceptaTamizaje;
     private String razonNoParticipa;
-    private char areaCobertura;
-    private char ninoMenor12Anios;
-    private char intencionPermanecerArea;
-    private char tieneTarjetaVacunaOIdentificacion;
-    private char enfermedadAgudaCronica;
-    private char elegible;
+    private String criteriosInclusion;
     private String dondeAsisteProblemasSalud;
     private char asisteCSSF;
     private String otroCentroSalud;
     private String puestoSalud;
     private char siEnfermaSoloAsistirCSSF;
-    private char tomaPuntoGPSCasa;
-    private String razonNoGeoreferenciacion;
-    private String otraRazonNoGeoreferenciacion;
+    private char elegible;
 
 
     public String getCodigo() {
@@ -85,47 +78,15 @@ public class Tamizaje extends BaseMetaData {
         this.razonNoParticipa = razonNoParticipa;
     }
 
-    public char getAreaCobertura() {
-        return areaCobertura;
-    }
+    public String getCriteriosInclusion() {
+		return criteriosInclusion;
+	}
 
-    public void setAreaCobertura(char areaCobertura) {
-        this.areaCobertura = areaCobertura;
-    }
+	public void setCriteriosInclusion(String criteriosInclusion) {
+		this.criteriosInclusion = criteriosInclusion;
+	}
 
-    public char getNinoMenor12Anios() {
-        return ninoMenor12Anios;
-    }
-
-    public void setNinoMenor12Anios(char ninoMenor12Anios) {
-        this.ninoMenor12Anios = ninoMenor12Anios;
-    }
-
-    public char getIntencionPermanecerArea() {
-        return intencionPermanecerArea;
-    }
-
-    public void setIntencionPermanecerArea(char intencionPermanecerArea) {
-        this.intencionPermanecerArea = intencionPermanecerArea;
-    }
-
-    public char getTieneTarjetaVacunaOIdentificacion() {
-        return tieneTarjetaVacunaOIdentificacion;
-    }
-
-    public void setTieneTarjetaVacunaOIdentificacion(char tieneTarjetaVacunaOIdentificacion) {
-        this.tieneTarjetaVacunaOIdentificacion = tieneTarjetaVacunaOIdentificacion;
-    }
-
-    public char getEnfermedadAgudaCronica() {
-        return enfermedadAgudaCronica;
-    }
-
-    public void setEnfermedadAgudaCronica(char enfermedadAgudaCronica) {
-        this.enfermedadAgudaCronica = enfermedadAgudaCronica;
-    }
-
-    public char getElegible() {
+	public char getElegible() {
         return elegible;
     }
 
@@ -171,30 +132,6 @@ public class Tamizaje extends BaseMetaData {
 
     public void setSiEnfermaSoloAsistirCSSF(char siEnfermaSoloAsistirCSSF) {
         this.siEnfermaSoloAsistirCSSF = siEnfermaSoloAsistirCSSF;
-    }
-
-    public char getTomaPuntoGPSCasa() {
-        return tomaPuntoGPSCasa;
-    }
-
-    public void setTomaPuntoGPSCasa(char tomaPuntoGPSCasa) {
-        this.tomaPuntoGPSCasa = tomaPuntoGPSCasa;
-    }
-
-    public String getRazonNoGeoreferenciacion() {
-        return razonNoGeoreferenciacion;
-    }
-
-    public void setRazonNoGeoreferenciacion(String razonNoGeoreferenciacion) {
-        this.razonNoGeoreferenciacion = razonNoGeoreferenciacion;
-    }
-
-    public String getOtraRazonNoGeoreferenciacion() {
-        return otraRazonNoGeoreferenciacion;
-    }
-
-    public void setOtraRazonNoGeoreferenciacion(String otraRazonNoGeoreferenciacion) {
-        this.otraRazonNoGeoreferenciacion = otraRazonNoGeoreferenciacion;
     }
 
     @Override

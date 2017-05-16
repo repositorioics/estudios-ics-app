@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +38,8 @@ import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
+import ni.org.ics.estudios.appmovil.utils.FileUtils;
+import ni.org.ics.estudios.appmovil.utils.GPSTracker;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
@@ -68,6 +71,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     private PreTamizajeFormLabels labels = new PreTamizajeFormLabels();
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
+    private GPSTracker gps;
     private static Casa casa = new Casa();
 	private String username;
 	private SharedPreferences settings;
@@ -77,6 +81,11 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!FileUtils.storageReady()) {
+			Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error, R.string.storage_error),Toast.LENGTH_LONG);
+			toast.show();
+			finish();
+		}
         setContentView(R.layout.activity_data_enter);
         settings =
 				PreferenceManager.getDefaultSharedPreferences(this);
@@ -84,6 +93,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 		infoMovil = new DeviceInfo(NuevoTamizajeCasaActivity.this);
+		gps = new GPSTracker(NuevoTamizajeCasaActivity.this);
 		casa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new PreTamizajeForm(this,mPass);
@@ -358,21 +368,21 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
 		for (Map.Entry<String, String> entry : mapa.entrySet()){
 			datos.putString(entry.getKey(), entry.getValue());
 		}
-		String acepta = datos.getString(this.getString(R.string.aceptaTamizaje));
-		String razonNP = datos.getString(this.getString(R.string.razonNoParticipa));
-		String codigoCasa = datos.getString(getString(R.string.codigoCHF));
+		String aceptaTamizaje = datos.getString(this.getString(R.string.aceptaTamizajeCasa));
+		String razonNoParticipa = datos.getString(this.getString(R.string.razonNoParticipa));
+		String codigoCHF = datos.getString(getString(R.string.codigoCHF));
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		estudiosAdapter.open();
 		//Recupera los catalogos de la base de datos
 		Estudio estudio = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=1", null);
-		MessageResource aceptaTamizaje = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + acepta + "' and " + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
-		MessageResource razonNoParticipa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNP + "' and " + CatalogosDBConstants.catRoot + "='CAT_RAZON_NP'", null);
+		MessageResource aceptaTamizajeCat = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaTamizaje + "' and " + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+		MessageResource razonNoParticipaCat = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoParticipa + "' and " + CatalogosDBConstants.catRoot + "='CAT_RAZON_NP'", null);
 		//Crea un Nuevo Registro de pretamizaje
     	PreTamizaje preTamizaje =  new PreTamizaje();
     	preTamizaje.setCodigo(infoMovil.getId());
-    	preTamizaje.setAceptaTamizaje(aceptaTamizaje.getCatKey().charAt(0));
-    	if (razonNoParticipa!=null) preTamizaje.setRazonNoParticipa(razonNoParticipa.getCatKey());
+    	preTamizaje.setAceptaTamizaje(aceptaTamizajeCat.getCatKey().charAt(0));
+    	if (razonNoParticipa!=null) preTamizaje.setRazonNoParticipa(razonNoParticipaCat.getCatKey());
     	preTamizaje.setCasa(casa);
     	preTamizaje.setEstudio(estudio);
     	preTamizaje.setRecordDate(new Date());
@@ -387,11 +397,15 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
         	//Si la respuesta es si crea un nuevo registro de casa CHF
         	CasaCohorteFamilia cchf = new CasaCohorteFamilia();
         	cchf.setCasa(casa);
-        	cchf.setCodigoCHF(codigoCasa);
+        	cchf.setCodigoCHF(codigoCHF);
         	cchf.setNombre1JefeFamilia(casa.getNombre1JefeFamilia());
         	cchf.setNombre2JefeFamilia(casa.getNombre2JefeFamilia());
         	cchf.setApellido1JefeFamilia(casa.getApellido1JefeFamilia());
         	cchf.setApellido2JefeFamilia(casa.getApellido2JefeFamilia());
+        	if(gps.canGetLocation()){
+        		cchf.setLatitud(gps.getLatitude());
+        		cchf.setLongitud(gps.getLongitude());
+        	}
         	cchf.setRecordDate(new Date());
         	cchf.setRecordUser(username);
         	cchf.setDeviceid(infoMovil.getDeviceId());
@@ -407,6 +421,8 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
     	}
+    	Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
+		toast.show();
 		finish();
     }
 

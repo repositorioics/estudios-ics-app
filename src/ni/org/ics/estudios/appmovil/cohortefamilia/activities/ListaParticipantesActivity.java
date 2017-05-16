@@ -54,10 +54,14 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 		mAddButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
+				Bundle arguments = new Bundle();
+		        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
 				Intent i = new Intent(getApplicationContext(),
 						NuevoTamizajePersonaActivity.class);
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				i.putExtras(arguments);
+		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
+				finish();
 			}
 		});
 		

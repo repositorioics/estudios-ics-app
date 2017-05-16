@@ -5,7 +5,7 @@ import android.content.res.Resources;
 
 
 /**
- * Constantes usadas en formulario de vivienda
+ * Constantes usadas en formulario de pre tamizaje
  * 
  * @author William Aviles
  * 
@@ -22,8 +22,8 @@ public class PreTamizajeFormLabels {
 	
 	public PreTamizajeFormLabels(){
 		Resources res = MyIcsApplication.getContext().getResources();
-		aceptaTamizaje = res.getString(R.string.aceptaTamizaje);
-		aceptaTamizajeHint = res.getString(R.string.aceptaTamizajeHint);
+		aceptaTamizaje = res.getString(R.string.aceptaTamizajeCasa);
+		aceptaTamizajeHint = res.getString(R.string.aceptaTamizajeCasaHint);
 		razonNoParticipa = res.getString(R.string.razonNoParticipa);
 		razonNoParticipaHint = res.getString(R.string.razonNoParticipaHint);
 		codigoCHF = res.getString(R.string.codigoCHF);

@@ -241,6 +241,8 @@ public class MainDBConstants {
             + nombre2JefeFamilia + " text , "
             + apellido1JefeFamilia + " text not null, "
             + apellido2JefeFamilia + " text , "
+            + latitud + " real, "
+			+ longitud + " real, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -297,21 +299,14 @@ public class MainDBConstants {
 
     //Campos tabla tamizaje
     public static final String fechaNacimiento = "fechaNacimiento";
-    public static final String areaCobertura = "areaCobertura";
-    public static final String ninoMenor12Anios = "ninoMenor12Anios";
-    public static final String intencionPermanecerArea = "intencionPermanecerArea";
-    public static final String tieneTarjetaVacunaOIdentificacion = "tieneTarjetaVacunaOIdentificacion";
-    public static final String enfermedadAgudaCronica = "enfermedadAgudaCronica";
+    public static final String criteriosInclusion = "criteriosInclusion";
     public static final String elegible = "elegible";
     public static final String dondeAsisteProblemasSalud = "dondeAsisteProblemasSalud";
     public static final String asisteCSSF = "asisteCSSF";
     public static final String otroCentroSalud = "otroCentroSalud";
     public static final String puestoSalud = "puestoSalud";
     public static final String siEnfermaSoloAsistirCSSF = "siEnfermaSoloAsistirCSSF";
-    public static final String tomaPuntoGPSCasa = "tomaPuntoGPSCasa";
-    public static final String razonNoGeoreferenciacion = "razonNoGeoreferenciacion";
-    public static final String otraRazonNoGeoreferenciacion = "otraRazonNoGeoreferenciacion";
-
+    
     //crear tabla tamizaje
     public static final String CREATE_TAMIZAJE_TABLE = "create table if not exists "
             + TAMIZAJE_TABLE + " ("
@@ -319,22 +314,15 @@ public class MainDBConstants {
             + estudio + " integer not null, "
             + sexo + " text, "
             + fechaNacimiento + " date, "
-            + aceptaTamizaje + " text not null, "
+            + aceptaTamizaje + " text, "
             + razonNoParticipa + " text, "
-            + areaCobertura + " text, "
-            + ninoMenor12Anios + " text, "
-            + intencionPermanecerArea + " text, "
-            + tieneTarjetaVacunaOIdentificacion + " text, "
-            + enfermedadAgudaCronica + " text, "
-            + elegible + " text, "
+            + criteriosInclusion + " text, "
             + dondeAsisteProblemasSalud + " text, "
             + asisteCSSF + " text, "
             + otroCentroSalud + " text, "
             + puestoSalud + " text, "
             + siEnfermaSoloAsistirCSSF + " text, "
-            + tomaPuntoGPSCasa + " text, "
-            + razonNoGeoreferenciacion + " text, "
-            + otraRazonNoGeoreferenciacion + " text, "
+            + elegible + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "

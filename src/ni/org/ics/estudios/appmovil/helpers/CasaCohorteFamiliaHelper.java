@@ -17,6 +17,8 @@ public class CasaCohorteFamiliaHelper {
 		cv.put(MainDBConstants.nombre2JefeFamilia, casaCHF.getNombre2JefeFamilia());
 		cv.put(MainDBConstants.apellido1JefeFamilia, casaCHF.getApellido1JefeFamilia());
 		cv.put(MainDBConstants.apellido2JefeFamilia, casaCHF.getApellido2JefeFamilia());
+		if (casaCHF.getLatitud() != null) cv.put(MainDBConstants.latitud, casaCHF.getLatitud());
+		if (casaCHF.getLongitud() != null) cv.put(MainDBConstants.longitud, casaCHF.getLongitud());
 		if (casaCHF.getRecordDate() != null) cv.put(MainDBConstants.recordDate, casaCHF.getRecordDate().getTime());
 		cv.put(MainDBConstants.recordUser, casaCHF.getRecordUser());
 		cv.put(MainDBConstants.pasive, String.valueOf(casaCHF.getPasive()));
@@ -34,6 +36,8 @@ public class CasaCohorteFamiliaHelper {
 		mCasaCHF.setNombre2JefeFamilia(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.nombre2JefeFamilia)));
 		mCasaCHF.setApellido1JefeFamilia(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.apellido1JefeFamilia)));
 		mCasaCHF.setApellido2JefeFamilia(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.apellido2JefeFamilia)));
+		if (cursorCasa.getDouble(cursorCasa.getColumnIndex(MainDBConstants.latitud))!= 0) mCasaCHF.setLatitud(cursorCasa.getDouble(cursorCasa.getColumnIndex(MainDBConstants.latitud)));
+		if (cursorCasa.getDouble(cursorCasa.getColumnIndex(MainDBConstants.longitud))!= 0) mCasaCHF.setLongitud(cursorCasa.getDouble(cursorCasa.getColumnIndex(MainDBConstants.longitud)));
 		if(cursorCasa.getLong(cursorCasa.getColumnIndex(MainDBConstants.recordDate))>0) mCasaCHF.setRecordDate(new Date(cursorCasa.getLong(cursorCasa.getColumnIndex(MainDBConstants.recordDate))));
 		mCasaCHF.setRecordUser(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.recordUser)));
 		mCasaCHF.setPasive(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.pasive)).charAt(0));

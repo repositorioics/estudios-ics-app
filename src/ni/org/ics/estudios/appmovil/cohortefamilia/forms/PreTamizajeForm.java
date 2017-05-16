@@ -20,7 +20,6 @@ public class PreTamizajeForm extends AbstractWizardModel {
 	private String[] catSiNo;
 	private String[] catRazonNoParticipa;
 	private PreTamizajeFormLabels labels;
-	public static final String nombreForm = Constants.FORM_NUEVO_TAMIZAJE_CASA;
 	private EstudiosAdapter estudiosAdapter;
 	
 	private Page scAceptaTamizaje;

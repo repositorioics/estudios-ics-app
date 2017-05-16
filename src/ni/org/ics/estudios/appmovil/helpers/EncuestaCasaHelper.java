@@ -17,7 +17,7 @@ public class EncuestaCasaHelper {
     public static ContentValues crearEncuestaCasaContentValues(EncuestaCasa encuesta){
         ContentValues cv = new ContentValues();
 
-        cv.put(EncuestasDBConstants.casa, encuesta.getCasa().getCodigoCHF());
+        cv.put(EncuestasDBConstants.casa_chf, encuesta.getCasa().getCodigoCHF());
         cv.put(EncuestasDBConstants.cantidadCuartos, encuesta.getCantidadCuartos());
         cv.put(EncuestasDBConstants.cantidadCuartosDormir, encuesta.getCantidadCuartosDormir());
         if (encuesta.getFechaEncuestas() !=null) cv.put(EncuestasDBConstants.fechaEncuestas, encuesta.getFechaEncuestas().getTime());
@@ -64,6 +64,7 @@ public class EncuestaCasaHelper {
         cv.put(EncuestasDBConstants.tienMicrobus, String.valueOf(encuesta.getTienMicrobus()));
         cv.put(EncuestasDBConstants.tieneCamioneta, String.valueOf(encuesta.getTieneCamioneta()));
         cv.put(EncuestasDBConstants.tieneCamion, String.valueOf(encuesta.getTieneCamion()));
+        cv.put(EncuestasDBConstants.tieneOtroMedioTransAuto, String.valueOf(encuesta.getTieneOtroMedioTransAuto()));
         cv.put(EncuestasDBConstants.otroMedioTransAuto, encuesta.getOtroMedioTransAuto());
         cv.put(EncuestasDBConstants.cocinaConLenia, String.valueOf(encuesta.getCocinaConLenia()));
         cv.put(EncuestasDBConstants.ubicacionCocinaLenia, encuesta.getUbicacionCocinaLenia());
@@ -149,7 +150,7 @@ public class EncuestaCasaHelper {
         mEncuesta.setTienMicrobus(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tienMicrobus)).charAt(0));
         mEncuesta.setTieneCamioneta(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneCamioneta)).charAt(0));
         mEncuesta.setTieneCamion(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneCamion)).charAt(0));
-        mEncuesta.setTieneOtroMedioTransAuto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneOtroMedioTransAuto)).charAt(0));
+        if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneOtroMedioTransAuto)) != null) mEncuesta.setTieneOtroMedioTransAuto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneOtroMedioTransAuto)).charAt(0));
         mEncuesta.setOtroMedioTransAuto(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroMedioTransAuto)));
         mEncuesta.setCocinaConLenia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.cocinaConLenia)).charAt(0));
         mEncuesta.setUbicacionCocinaLenia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ubicacionCocinaLenia)));

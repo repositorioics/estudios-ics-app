@@ -77,6 +77,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	private SharedPreferences settings;
 	private static final int EXIT = 1;
 	private AlertDialog alertDialog;
+	private boolean notificarCambios = true;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -271,12 +272,13 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 
     @Override
     public void onPageDataChanged(Page page) {
-    	updateModel(page);
+        updateModel(page);
     	updateConstrains();
         if (recalculateCutOffPage()) {
-            mPagerAdapter.notifyDataSetChanged();
-            updateBottomBar();
+        	if (notificarCambios) mPagerAdapter.notifyDataSetChanged();
+        	updateBottomBar();
         }
+        notificarCambios = true;
     }
 
     @Override
@@ -290,7 +292,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
         for (int i = 0; i < mCurrentPageSequence.size(); i++) {
             Page page = mCurrentPageSequence.get(i);
             String clase = page.getClass().toString();
-            if (page.isRequired() && !page.isCompleted()||(!page.isRequired() && !page.getData().isEmpty())) {
+            if (page.isRequired() && !page.isCompleted()) {
                 cutOffPage = i;
                 break;
             }     
@@ -332,7 +334,9 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     	boolean visible = false;
     	if (page.getTitle().equals(labels.getAceptaTamizajePersona())){
     		if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si")) visible = true;
+    		changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
     		changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), !visible);
+    		notificarCambios = false;
     		onPageTreeChanged();
     	}
     }

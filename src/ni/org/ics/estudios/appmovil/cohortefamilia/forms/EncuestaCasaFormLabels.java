@@ -113,6 +113,7 @@ public class EncuestaCasaFormLabels {
     protected String cantidadCigarrilosMadreHint;
     protected String cantidadCigarrillosPadreHint;
     protected String cantidadCigarrillosOtrosHint;
+    protected String cantidadOtrosFumanHint;
 
     public EncuestaCasaFormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
@@ -218,6 +219,7 @@ public class EncuestaCasaFormLabels {
         otrosFumanHint = res.getString(R.string.otrosFumanHint);
         cantidadCigarrilosMadreHint = res.getString(R.string.cantidadCigarrilosMadreHint);
         cantidadCigarrillosPadreHint = res.getString(R.string.cantidadCigarrillosPadreHint);
+        cantidadOtrosFumanHint = res.getString(R.string.cantidadOtrosFumanHint);
         cantidadCigarrillosOtrosHint = res.getString(R.string.cantidadCigarrillosOtrosHint);
     }
 
@@ -1036,5 +1038,13 @@ public class EncuestaCasaFormLabels {
 
     public void setHorasSinAguaHint(String horasSinAguaHint) {
         this.horasSinAguaHint = horasSinAguaHint;
+    }
+
+    public String getCantidadOtrosFumanHint() {
+        return cantidadOtrosFumanHint;
+    }
+
+    public void setCantidadOtrosFumanHint(String cantidadOtrosFumanHint) {
+        this.cantidadOtrosFumanHint = cantidadOtrosFumanHint;
     }
 }

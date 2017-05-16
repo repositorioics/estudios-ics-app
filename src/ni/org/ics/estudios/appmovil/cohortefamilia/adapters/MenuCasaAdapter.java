@@ -38,23 +38,28 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
 		// Change icon based on position
 		Drawable img = null;
 		switch (position){
-		case 0: 
-			textView.setText(values[position] + "(" + numPart + ")");
-			img=getContext().getResources().getDrawable(R.drawable.ic_menu_allfriends);
-			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-			if (numPart < 1){
-				textView.setTextColor(Color.RED);
-				textView.setTypeface(null, Typeface.BOLD);
-			}
-			break;
-		case 1: 
-			img=getContext().getResources().getDrawable(R.drawable.ic_menu_search);
-			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-			break;
-		default:
-			img=getContext().getResources().getDrawable(R.drawable.ic_menu_help);
-			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-			break;
+            case 0:
+                textView.setText(values[position] + "(" + numPart + ")");
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_allfriends);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                if (numPart < 1){
+                    textView.setTextColor(Color.RED);
+                    textView.setTypeface(null, Typeface.BOLD);
+                }
+                break;
+            case 1:
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_archive);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			    break;
+            case 2:
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_info_details);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+
+            default:
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_help);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
 		}
 		return v;
 	}

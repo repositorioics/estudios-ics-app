@@ -28,4 +28,7 @@ public class Constants {
 	public static final String WIZARD = "#ff0099cc";
 	public static final String HINT_TEXT = "#66000000";
 
+    public static final String YES = "Si";
+    public static final String OTRO = "Otro";
+
 }

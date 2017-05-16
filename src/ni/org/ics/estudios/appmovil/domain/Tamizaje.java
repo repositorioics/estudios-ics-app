@@ -20,7 +20,7 @@ public class Tamizaje extends BaseMetaData {
     private String sexo;
     private Date fechaNacimiento;
     private char aceptaTamizaje;
-    private String razonNoParticipa;
+    private String razonNoAceptaTamizaje;
     private String criteriosInclusion;
     private String dondeAsisteProblemasSalud;
     private char asisteCSSF;
@@ -70,12 +70,12 @@ public class Tamizaje extends BaseMetaData {
         this.aceptaTamizaje = aceptaTamizaje;
     }
 
-    public String getRazonNoParticipa() {
-        return razonNoParticipa;
+    public String getRazonNoAceptaTamizaje() {
+        return razonNoAceptaTamizaje;
     }
 
-    public void setRazonNoParticipa(String razonNoParticipa) {
-        this.razonNoParticipa = razonNoParticipa;
+    public void setRazonNoAceptaTamizaje(String razonNoAceptaTamizaje) {
+        this.razonNoAceptaTamizaje = razonNoAceptaTamizaje;
     }
 
     public String getCriteriosInclusion() {

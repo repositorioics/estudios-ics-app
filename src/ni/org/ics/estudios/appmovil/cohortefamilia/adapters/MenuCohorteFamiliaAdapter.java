@@ -45,6 +45,22 @@ public class MenuCohorteFamiliaAdapter extends ArrayAdapter<String> {
 			img=getContext().getResources().getDrawable(R.drawable.ic_menu_search);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
+		case 2: 
+			img=getContext().getResources().getDrawable(R.drawable.ic_menu_download);
+			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			break;
+		case 3: 
+			img=getContext().getResources().getDrawable(R.drawable.ic_menu_upload);
+			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			break;
+		case 4: 
+			img=getContext().getResources().getDrawable(R.drawable.ic_menu_manage);
+			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			break;
+		case 5: 
+			img=getContext().getResources().getDrawable(R.drawable.ic_menu_revert);
+			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			break;			
 		default:
 			img=getContext().getResources().getDrawable(R.drawable.ic_menu_help);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);

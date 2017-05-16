@@ -4,6 +4,7 @@
     <string name="back">Regresar</string>
     <string name="exit">Salir</string>
     
-    <string name="download">Descargar</string>
-    <string name="upload">Subir</string>
+    <string name="download">Descargar Datos</string>
+    <string name="upload">Subir Datos</string>
+    <string name="catalog">Catálogos</string>
 </resources>

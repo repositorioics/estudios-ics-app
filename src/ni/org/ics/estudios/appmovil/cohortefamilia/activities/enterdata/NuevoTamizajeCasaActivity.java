@@ -77,6 +77,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
 	private SharedPreferences settings;
 	private static final int EXIT = 1;
 	private AlertDialog alertDialog;
+	private boolean notificarCambios = true;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -275,9 +276,10 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     	updateModel(page);
     	updateConstrains();
         if (recalculateCutOffPage()) {
-            mPagerAdapter.notifyDataSetChanged();
+        	if (notificarCambios) mPagerAdapter.notifyDataSetChanged();
             updateBottomBar();
         }
+        notificarCambios = true;
     }
 
     @Override
@@ -291,7 +293,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
         for (int i = 0; i < mCurrentPageSequence.size(); i++) {
             Page page = mCurrentPageSequence.get(i);
             String clase = page.getClass().toString();
-            if (page.isRequired() && !page.isCompleted()||(!page.isRequired() && !page.getData().isEmpty())) {
+            if (page.isRequired() && !page.isCompleted()) {
                 cutOffPage = i;
                 break;
             }     
@@ -336,6 +338,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     		changeStatus(mWizardModel.findByKey(labels.getCodigoCHF()), visible);
     		changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipa()), !visible);
     		changeStatus(mWizardModel.findByKey(labels.getNoAcepta()), !visible);
+    		notificarCambios = false;
     		onPageTreeChanged();
     	}
     }

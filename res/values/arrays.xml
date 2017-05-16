@@ -8,6 +8,10 @@
     <string-array name="menu_cohorte_familia">
         <item>@string/new_screen</item>
         <item>@string/casa_search</item>
+        <item>@string/download</item>
+        <item>@string/upload</item>
+        <item>@string/catalog</item>
+        <item>@string/exit</item>
     </string-array>
 
     <string-array name="menu_casa">

@@ -62,9 +62,9 @@ public class TamizajeForm extends AbstractWizardModel {
     	labels = new TamizajeFormLabels();
     	this.estudiosAdapter = new EstudiosAdapter(mContext,mPass,false,false);
     	estudiosAdapter.open();
-    	catSiNo = fillCatalog("CAT_SINO");
-    	catSexo = fillCatalog("CAT_SEXO");
-    	catRazonNoParticipa = fillCatalog("CAT_RAZON_NP");
+    	catSiNo = fillCatalog("CHF_CAT_SINO");
+    	catSexo = fillCatalog("CHF_CAT_SEXO");
+    	catRazonNoParticipa = fillCatalog("CHF_CAT_NP");
 		estudiosAdapter.close();
 		scSexo = new SingleFixedChoicePage(this,labels.getSexo(), labels.getSexoHint(), Constants.WIZARD, true).setChoices(catSexo).setRequired(true);
 		DateMidnight dmDesde = DateMidnight.parse("01/01/1900", DateTimeFormat.forPattern("dd/MM/yyyy"));

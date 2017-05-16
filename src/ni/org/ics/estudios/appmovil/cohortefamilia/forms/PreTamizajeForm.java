@@ -27,6 +27,17 @@ public class PreTamizajeForm extends AbstractWizardModel {
 	private Page scRazonNoParticipa;
 	private Page lpNoAcepta;
 
+	private String[] fillCatalog(String codigoCatalogo){
+        String[] catalogo;
+        List<MessageResource> mCatalogo = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='"+codigoCatalogo+"'", CatalogosDBConstants.order);
+        catalogo = new String[mCatalogo.size()];
+        index = 0;
+        for (MessageResource message: mCatalogo){
+            catalogo[index] = message.getSpanish();
+            index++;
+        }
+        return catalogo;
+    }
 	
     public PreTamizajeForm(Context context, String pass) {    	
         super(context,pass);
@@ -37,20 +48,8 @@ public class PreTamizajeForm extends AbstractWizardModel {
     	labels = new PreTamizajeFormLabels();
     	this.estudiosAdapter = new EstudiosAdapter(mContext,mPass,false,false);
     	estudiosAdapter.open();
-		List<MessageResource> mCatSiNo = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CAT_SINO'", CatalogosDBConstants.order);
-		catSiNo = new String[mCatSiNo.size()];
-		index = 0;
-		for (MessageResource message: mCatSiNo){
-			catSiNo[index] = message.getSpanish();
-			index++;
-		}
-		List<MessageResource> mCatRazonNoParticipa = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CAT_RAZON_NP'", CatalogosDBConstants.order);
-		catRazonNoParticipa = new String[mCatRazonNoParticipa.size()];
-		index = 0;
-		for (MessageResource message: mCatRazonNoParticipa){
-			catRazonNoParticipa[index] = message.getSpanish();
-			index++;
-		}
+    	catSiNo = fillCatalog("CHF_CAT_SINO");
+    	catRazonNoParticipa = fillCatalog("CHF_CAT_NP");
 		estudiosAdapter.close();
 		scAceptaTamizaje = new SingleFixedChoicePage(this,labels.getAceptaTamizaje(), labels.getAceptaTamizajeHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 		bcCodigoChf = new BarcodePage(this,labels.getCodigoCHF(),labels.getCodigoCHFHint(),Constants.WIZARD, false).setRequired(true);

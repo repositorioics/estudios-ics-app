@@ -20,7 +20,7 @@ public class TamizajeHelper {
         cv.put(MainDBConstants.sexo, tamizaje.getSexo());
         if (tamizaje.getFechaNacimiento()!=null) cv.put(MainDBConstants.fechaNacimiento, tamizaje.getFechaNacimiento().getTime());
         cv.put(MainDBConstants.aceptaTamizaje, String.valueOf(tamizaje.getAceptaTamizaje()));
-        cv.put(MainDBConstants.razonNoParticipa, tamizaje.getRazonNoParticipa());
+        cv.put(MainDBConstants.razonNoParticipa, tamizaje.getRazonNoAceptaTamizaje());
         cv.put(MainDBConstants.dondeAsisteProblemasSalud, tamizaje.getDondeAsisteProblemasSalud());
         cv.put(MainDBConstants.asisteCSSF, String.valueOf(tamizaje.getAsisteCSSF()));
         cv.put(MainDBConstants.otroCentroSalud, tamizaje.getOtroCentroSalud());
@@ -44,7 +44,7 @@ public class TamizajeHelper {
         mTamizaje.setSexo(cursor.getString(cursor.getColumnIndex(MainDBConstants.sexo)));
         if (cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaNacimiento)) > 0) mTamizaje.setFechaNacimiento(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaNacimiento))));
         mTamizaje.setAceptaTamizaje(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaTamizaje)).charAt(0));
-        mTamizaje.setRazonNoParticipa(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonNoParticipa)));
+        mTamizaje.setRazonNoAceptaTamizaje(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonNoParticipa)));
         mTamizaje.setDondeAsisteProblemasSalud(cursor.getString(cursor.getColumnIndex(MainDBConstants.dondeAsisteProblemasSalud)));
         mTamizaje.setAsisteCSSF(cursor.getString(cursor.getColumnIndex(MainDBConstants.asisteCSSF)).charAt(0));
         mTamizaje.setOtroCentroSalud(cursor.getString(cursor.getColumnIndex(MainDBConstants.otroCentroSalud)));

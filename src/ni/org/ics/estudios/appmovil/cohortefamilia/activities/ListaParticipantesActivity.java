@@ -9,6 +9,7 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCohorteFamiliaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajePersonaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.ParticipanteCHFAdapter;
+import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -30,6 +31,7 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 	private Drawable img = null;
 	private Button mAddButton;
 	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
+    private ParticipanteCohorteFamilia participanteCHF = new ParticipanteCohorteFamilia();
 	private ArrayAdapter<ParticipanteCohorteFamilia> mParticipanteCohorteFamiliaAdapter;
 
 	@SuppressWarnings("unchecked")
@@ -99,13 +101,17 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
-		// Opcion de menu seleccionada
+        participanteCHF = (ParticipanteCohorteFamilia)this.getListAdapter().getItem(position);
+        // Opcion de menu seleccionada
+        Bundle arguments = new Bundle();
 		Intent i;
 		switch(position){
-		case 0: 
+		case 0:
+            arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
 			i = new Intent(getApplicationContext(),
-					MenuCohorteFamiliaActivity.class);
+					MenuParticipanteActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtras(arguments);
 			startActivity(i);
 			break;
 		default: 

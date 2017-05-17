@@ -20,5 +20,10 @@
     <string name="new_survey_1">Encuesta Casa</string>
     <string name="new_survey_2">Encuesta Participante</string>
     <string name="environments">Areas de Ambiente</string>
-    
+    <string name="participant">Participante</string>
+
+    <string name="new_survey_3">Datos Parto BB</string>
+    <string name="new_survey_4">Peso y Talla</string>
+    <string name="new_survey_5">Lactancia Materna</string>
+
 </resources>

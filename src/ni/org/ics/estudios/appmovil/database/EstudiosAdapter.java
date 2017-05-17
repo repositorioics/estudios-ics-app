@@ -84,7 +84,7 @@ public class EstudiosAdapter {
             db.execSQL("INSERT INTO `participantes` (`codigo`, `nombre1`, `apellido1`, `nombre1Padre`, `apellido1Padre`, `nombre1Madre`, `apellido1Madre`, `casa`, `estado`, `fechaNac`, `sexo`, `PASIVE`) " +
             		"VALUES (123, 'Jose', 'Perez', 'Juan', 'Perez', 'Mirna', 'Lopez','1','1', '2013-09-12 13:36:45', 'M','0')");
             db.execSQL("INSERT INTO `chf_participantes` (`participanteCHF`, `participante`, `casaCHF`, `estado`, `PASIVE`) " +
-            		"VALUES (00-43883, '123', '5678','1','0')");
+            		"VALUES ('00-43883', '123', '5678','1','0')");
             db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('dentro', 'DENTRO', 'CAT_DENTROFUERA', NULL, '0', 1, '0', 'Fuera');");
             db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('fuera', 'FUERA', 'CAT_DENTROFUERA', NULL, '0', 2, '0', 'Dentro');");
             db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('dentrofuera', 'DEFU', 'CAT_DENTROFUERA', NULL, '0', 3, '0', 'Dentro y Fuera');");

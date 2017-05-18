@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
 import java.text.DateFormat;
@@ -30,15 +29,11 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCasaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.TamizajeForm;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.TamizajeFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
-import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
 import ni.org.ics.estudios.appmovil.utils.FileUtils;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -69,10 +64,10 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     private Button mPrevButton;
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
-    private TamizajeFormLabels labels = new TamizajeFormLabels();
+    //private TamizajeFormLabels labels = new TamizajeFormLabels();
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
-    private static CasaCohorteFamilia casa = new CasaCohorteFamilia();
+    //private static CasaCohorteFamilia casa = new CasaCohorteFamilia();
 	private String username;
 	private SharedPreferences settings;
 	private static final int EXIT = 1;
@@ -94,7 +89,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 		infoMovil = new DeviceInfo(NuevoTamizajePersonaActivity.this);
-		casa = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+		//casa = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new TamizajeForm(this,mPass);
         if (savedInstanceState != null) {
@@ -331,14 +326,8 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     }
     
     public void updateModel(Page page){
-    	boolean visible = false;
-    	if (page.getTitle().equals(labels.getAceptaTamizajePersona())){
-    		if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si")) visible = true;
-    		changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
-    		changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), !visible);
-    		notificarCambios = false;
-    		onPageTreeChanged();
-    	}
+    	//boolean visible = false;
+    	
     }
     
     public void changeStatus(Page page, boolean visible){
@@ -393,7 +382,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     	tamizaje.setSexo(sexoCat.getCatKey());
     	tamizaje.setFechaNacimiento(fechaNacimiento);
     	tamizaje.setEstudio(estudio);
-    	tamizaje.setElegible('1');
+    	//tamizaje.setElegible('1');
     	tamizaje.setRecordDate(new Date());
     	tamizaje.setRecordUser(username);
     	tamizaje.setDeviceid(infoMovil.getDeviceId());
@@ -402,7 +391,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     	//Inserta un Nuevo Registro de Tamizaje
     	estudiosAdapter.crearTamizaje(tamizaje);
     	//Pregunta si es elegible
-    	if (tamizaje.getElegible()=='1') {
+    	/*if (tamizaje.getElegible()=='1') {
         	//Si la respuesta es si crea un nuevo registro de consentimiento
         	
         	//Inserta un nuevo consentimiento
@@ -414,7 +403,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
-    	}
+    	}*/
     	Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
 		toast.show();
 		finish();

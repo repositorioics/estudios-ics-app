@@ -19,66 +19,68 @@ public class Tamizaje extends BaseMetaData {
     private Estudio estudio;
     private String sexo;
     private Date fechaNacimiento;
-    private char aceptaTamizaje;
-    private String razonNoAceptaTamizaje;
+    private char aceptaTamizajePersona;
+    private String razonNoAceptaTamizajePersona;
     private String criteriosInclusion;
+    private String enfermedad;
     private String dondeAsisteProblemasSalud;
-    private char asisteCSSF;
     private String otroCentroSalud;
     private String puestoSalud;
-    private char siEnfermaSoloAsistirCSSF;
-    private char elegible;
-
-
+    private char aceptaAtenderCentro;
+    private char esElegible;
+    private char aceptaParticipar;
+    private char razonNoAceptaParticipar;
+    private char asentimientoVerbal;
+ 
     public String getCodigo() {
-        return codigo;
-    }
+		return codigo;
+	}
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 
-    public Estudio getEstudio() {
-        return estudio;
-    }
+	public Estudio getEstudio() {
+		return estudio;
+	}
 
-    public void setEstudio(Estudio estudio) {
-        this.estudio = estudio;
-    }
+	public void setEstudio(Estudio estudio) {
+		this.estudio = estudio;
+	}
 
-    public String getSexo() {
-        return sexo;
-    }
+	public String getSexo() {
+		return sexo;
+	}
 
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
 
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
 
-    public char getAceptaTamizaje() {
-        return aceptaTamizaje;
-    }
+	public char getAceptaTamizajePersona() {
+		return aceptaTamizajePersona;
+	}
 
-    public void setAceptaTamizaje(char aceptaTamizaje) {
-        this.aceptaTamizaje = aceptaTamizaje;
-    }
+	public void setAceptaTamizajePersona(char aceptaTamizajePersona) {
+		this.aceptaTamizajePersona = aceptaTamizajePersona;
+	}
 
-    public String getRazonNoAceptaTamizaje() {
-        return razonNoAceptaTamizaje;
-    }
+	public String getRazonNoAceptaTamizajePersona() {
+		return razonNoAceptaTamizajePersona;
+	}
 
-    public void setRazonNoAceptaTamizaje(String razonNoAceptaTamizaje) {
-        this.razonNoAceptaTamizaje = razonNoAceptaTamizaje;
-    }
+	public void setRazonNoAceptaTamizajePersona(String razonNoAceptaTamizajePersona) {
+		this.razonNoAceptaTamizajePersona = razonNoAceptaTamizajePersona;
+	}
 
-    public String getCriteriosInclusion() {
+	public String getCriteriosInclusion() {
 		return criteriosInclusion;
 	}
 
@@ -86,55 +88,71 @@ public class Tamizaje extends BaseMetaData {
 		this.criteriosInclusion = criteriosInclusion;
 	}
 
-	public char getElegible() {
-        return elegible;
-    }
+	public String getEnfermedad() {
+		return enfermedad;
+	}
 
-    public void setElegible(char elegible) {
-        this.elegible = elegible;
-    }
+	public void setEnfermedad(String enfermedad) {
+		this.enfermedad = enfermedad;
+	}
 
-    public String getDondeAsisteProblemasSalud() {
-        return dondeAsisteProblemasSalud;
-    }
+	public String getDondeAsisteProblemasSalud() {
+		return dondeAsisteProblemasSalud;
+	}
 
-    public void setDondeAsisteProblemasSalud(String dondeAsisteProblemasSalud) {
-        this.dondeAsisteProblemasSalud = dondeAsisteProblemasSalud;
-    }
+	public void setDondeAsisteProblemasSalud(String dondeAsisteProblemasSalud) {
+		this.dondeAsisteProblemasSalud = dondeAsisteProblemasSalud;
+	}
 
-    public char getAsisteCSSF() {
-        return asisteCSSF;
-    }
+	public String getOtroCentroSalud() {
+		return otroCentroSalud;
+	}
 
-    public void setAsisteCSSF(char asisteCSSF) {
-        this.asisteCSSF = asisteCSSF;
-    }
+	public void setOtroCentroSalud(String otroCentroSalud) {
+		this.otroCentroSalud = otroCentroSalud;
+	}
 
-    public String getOtroCentroSalud() {
-        return otroCentroSalud;
-    }
+	public String getPuestoSalud() {
+		return puestoSalud;
+	}
 
-    public void setOtroCentroSalud(String otroCentroSalud) {
-        this.otroCentroSalud = otroCentroSalud;
-    }
+	public void setPuestoSalud(String puestoSalud) {
+		this.puestoSalud = puestoSalud;
+	}
 
-    public String getPuestoSalud() {
-        return puestoSalud;
-    }
+	public char getAceptaAtenderCentro() {
+		return aceptaAtenderCentro;
+	}
 
-    public void setPuestoSalud(String puestoSalud) {
-        this.puestoSalud = puestoSalud;
-    }
+	public void setAceptaAtenderCentro(char aceptaAtenderCentro) {
+		this.aceptaAtenderCentro = aceptaAtenderCentro;
+	}
 
-    public char getSiEnfermaSoloAsistirCSSF() {
-        return siEnfermaSoloAsistirCSSF;
-    }
+	public char getEsElegible() {
+		return esElegible;
+	}
 
-    public void setSiEnfermaSoloAsistirCSSF(char siEnfermaSoloAsistirCSSF) {
-        this.siEnfermaSoloAsistirCSSF = siEnfermaSoloAsistirCSSF;
-    }
+	public void setEsElegible(char esElegible) {
+		this.esElegible = esElegible;
+	}
 
-    @Override
+	public char getAceptaParticipar() {
+		return aceptaParticipar;
+	}
+
+	public void setAceptaParticipar(char aceptaParticipar) {
+		this.aceptaParticipar = aceptaParticipar;
+	}
+
+	public char getRazonNoAceptaParticipar() {
+		return razonNoAceptaParticipar;
+	}
+
+	public void setRazonNoAceptaParticipar(char razonNoAceptaParticipar) {
+		this.razonNoAceptaParticipar = razonNoAceptaParticipar;
+	}
+
+	@Override
     public String toString() {
         return "'" + codigo + "'";
     }
@@ -153,4 +171,12 @@ public class Tamizaje extends BaseMetaData {
     public int hashCode() {
         return codigo.hashCode();
     }
+
+	public char getAsentimientoVerbal() {
+		return asentimientoVerbal;
+	}
+
+	public void setAsentimientoVerbal(char asentimientoVerbal) {
+		this.asentimientoVerbal = asentimientoVerbal;
+	}
 }

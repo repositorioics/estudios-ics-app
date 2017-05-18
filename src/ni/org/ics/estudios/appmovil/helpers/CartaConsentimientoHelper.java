@@ -20,11 +20,11 @@ public class CartaConsentimientoHelper {
             cv.put(MainDBConstants.fechaFirma, carta.getFechaFirma().getTime());
         cv.put(MainDBConstants.tamizaje, carta.getTamizaje().getCodigo());
         if (carta.getParticipante() != null) cv.put(MainDBConstants.participante, carta.getParticipante().getCodigo());
-        cv.put(MainDBConstants.participadoCohortePediatrica, String.valueOf(carta.getParticipadoCohortePediatrica()));
+        /*cv.put(MainDBConstants.participadoCohortePediatrica, String.valueOf(carta.getParticipadoCohortePediatrica()));
         cv.put(MainDBConstants.cohortePediatrica, carta.getCohortePediatrica());
         cv.put(MainDBConstants.codigoReactivado, String.valueOf(carta.getCodigoReactivado()));
         cv.put(MainDBConstants.emancipado, String.valueOf(carta.getEmancipado()));
-        cv.put(MainDBConstants.asentimientoVerbal, String.valueOf(carta.getAsentimientoVerbal()));
+        cv.put(MainDBConstants.asentimientoVerbal, String.valueOf(carta.getAsentimientoVerbal()));*/
         cv.put(MainDBConstants.nombre1Tutor, carta.getNombre1Tutor());
         cv.put(MainDBConstants.nombre2Tutor, carta.getNombre2Tutor());
         cv.put(MainDBConstants.apellido1Tutor, carta.getApellido1Tutor());
@@ -57,11 +57,11 @@ public class CartaConsentimientoHelper {
         mCarta.setFechaFirma(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaFirma))));
         mCarta.setTamizaje(null);
         mCarta.setParticipante(null);
-        mCarta.setParticipadoCohortePediatrica(cursor.getString(cursor.getColumnIndex(MainDBConstants.participadoCohortePediatrica)).charAt(0));
+        /*mCarta.setParticipadoCohortePediatrica(cursor.getString(cursor.getColumnIndex(MainDBConstants.participadoCohortePediatrica)).charAt(0));
         mCarta.setCohortePediatrica(cursor.getString(cursor.getColumnIndex(MainDBConstants.cohortePediatrica)));
         mCarta.setCodigoReactivado(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigoReactivado)).charAt(0));
         mCarta.setEmancipado(cursor.getString(cursor.getColumnIndex(MainDBConstants.emancipado)).charAt(0));
-        mCarta.setAsentimientoVerbal(cursor.getString(cursor.getColumnIndex(MainDBConstants.asentimientoVerbal)).charAt(0));
+        mCarta.setAsentimientoVerbal(cursor.getString(cursor.getColumnIndex(MainDBConstants.asentimientoVerbal)).charAt(0));*/
         mCarta.setNombre1Tutor(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre1Tutor)));
         mCarta.setNombre2Tutor(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre2Tutor)));
         mCarta.setApellido1Tutor(cursor.getString(cursor.getColumnIndex(MainDBConstants.apellido1Tutor)));

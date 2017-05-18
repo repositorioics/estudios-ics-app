@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="addVisita">Desea agregar información a esta casa?</string>
+    <!-- Visita -->
+    <string name="fechaVisita">Fecha visita</string>
+    <string name="fechaVisitaHint"></string>
+    <string name="visitaExitosa">Visita exitosa?</string>
+    <string name="visitaExitosaHint"></string>
+    <string name="razonVisitaNoExitosa">Razon visita no exitosa</string>
+    <string name="razonVisitaNoExitosaHint">Seleccione porque razón no logró realizar una visita exitosa</string>
+    
+    <string name="aceptaTamizajeCasa">Acepta realizar tamizaje?</string>
+    <string name="aceptaTamizajeCasaHint">Pregunte si el jefe de familia permite realizar tamizaje a los miembros de este hogar.</string>
+    <string name="razonNoAceptaTamizajeCasa">Porque no acepta?</string>
+    <string name="razonNoAceptaTamizajeCasaHint">Pregunte cual es la razón por la que no desea que su casa participe en el estudio.</string>
+    <string name="razonNoAceptaTamizajeCasaLabel">No acepta realizar tamizaje. Finaliza el formulario</string>
+    
+    <string name="mismoJefe">Es el mismo jefe de familia que en la casa cohorte?</string>
+    <string name="mismoJefeHint">Si selecciona si se guarda la información del jefe de famila, si no, se pide los nombres y apellidos del jefe de esta familia</string>
+    
+    <string name="codigoCHF">Código Casa Cohorte Familia</string>
+    <string name="codigoCHFHint">Escanee el código de esta familia</string>
+    
+    <string name="nombre1JefeFamilia">Primer nombre</string>
+    <string name="nombre2JefeFamilia">Segundo nombre</string>
+    <string name="apellido1JefeFamilia">Primer apellido</string>
+    <string name="apellido2JefeFamilia">Segundo apellido</string>
+    <string name="jefeFamiliaCHFHint">Nombres y apellidos del jefe de la casa de cohorte de familia</string>
+    
+    <string name="finTamizajeLabel">Finaliza el formulario. Revise sus respuestas y haga clic en guardar en la próxima página</string>
+    
+</resources>

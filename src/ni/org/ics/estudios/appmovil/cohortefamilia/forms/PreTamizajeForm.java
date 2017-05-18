@@ -12,20 +12,30 @@ import ni.org.ics.estudios.appmovil.wizard.model.LabelPage;
 import ni.org.ics.estudios.appmovil.wizard.model.Page;
 import ni.org.ics.estudios.appmovil.wizard.model.PageList;
 import ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage;
+import ni.org.ics.estudios.appmovil.wizard.model.TextPage;
 import android.content.Context;
 
 public class PreTamizajeForm extends AbstractWizardModel {
 	
 	int index = 0;
 	private String[] catSiNo;
-	private String[] catRazonNoParticipa;
+	private String[] catRazonVisitaNoExitosa;
+	private String[] catRazonNoAceptaTamizajeCasa;
 	private PreTamizajeFormLabels labels;
 	private EstudiosAdapter estudiosAdapter;
 	
-	private Page scAceptaTamizaje;
-	private Page bcCodigoChf;
-	private Page scRazonNoParticipa;
-	private Page lpNoAcepta;
+	private Page visitaExitosa;
+	private Page razonVisitaNoExitosa;
+	private Page aceptaTamizajeCasa;
+	private Page razonNoAceptaTamizajeCasa;
+	private Page razonNoAceptaTamizajeCasaLabel;
+	private Page codigoCHF;
+	private Page mismoJefe;
+	private Page nombre1JefeFamilia;
+	private Page nombre2JefeFamilia;
+	private Page apellido1JefeFamilia;
+	private Page apellido2JefeFamilia;
+	private Page finTamizajeLabel;
 
 	private String[] fillCatalog(String codigoCatalogo){
         String[] catalogo;
@@ -49,13 +59,26 @@ public class PreTamizajeForm extends AbstractWizardModel {
     	this.estudiosAdapter = new EstudiosAdapter(mContext,mPass,false,false);
     	estudiosAdapter.open();
     	catSiNo = fillCatalog("CHF_CAT_SINO");
-    	catRazonNoParticipa = fillCatalog("CHF_CAT_NP");
+    	catRazonVisitaNoExitosa = fillCatalog("CHF_CAT_NV");
+    	catRazonNoAceptaTamizajeCasa = fillCatalog("CHF_CAT_NPT");
 		estudiosAdapter.close();
-		scAceptaTamizaje = new SingleFixedChoicePage(this,labels.getAceptaTamizaje(), labels.getAceptaTamizajeHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-		bcCodigoChf = new BarcodePage(this,labels.getCodigoCHF(),labels.getCodigoCHFHint(),Constants.WIZARD, false).setRequired(true);
-		scRazonNoParticipa = new SingleFixedChoicePage(this,labels.getRazonNoParticipa(),labels.getRazonNoParticipaHint(),Constants.WIZARD, false).setChoices(catRazonNoParticipa).setRequired(true);
-		lpNoAcepta = new LabelPage(this,labels.getNoAcepta(),"",Constants.ROJO, false).setRequired(false);
-        return new PageList(scAceptaTamizaje,bcCodigoChf,scRazonNoParticipa,lpNoAcepta);
+		
+		visitaExitosa = new SingleFixedChoicePage(this,labels.getVisitaExitosa(),labels.getVisitaExitosaHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+		razonVisitaNoExitosa = new SingleFixedChoicePage(this,labels.getRazonVisitaNoExitosa(),labels.getRazonVisitaNoExitosaHint(), Constants.WIZARD, true).setChoices(catRazonVisitaNoExitosa).setRequired(true);
+		aceptaTamizajeCasa = new SingleFixedChoicePage(this,labels.getAceptaTamizajeCasa(),labels.getAceptaTamizajeCasaHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+		razonNoAceptaTamizajeCasa = new SingleFixedChoicePage(this,labels.getRazonNoAceptaTamizajeCasa(),labels.getRazonNoAceptaTamizajeCasaHint(), Constants.WIZARD, false).setChoices(catRazonNoAceptaTamizajeCasa).setRequired(true);
+		razonNoAceptaTamizajeCasaLabel = new LabelPage(this,labels.getRazonNoAceptaTamizajeCasaLabel(),"", Constants.ROJO, true).setRequired(false);
+		
+		codigoCHF = new BarcodePage(this,labels.getCodigoCHF(),labels.getMismoJefeHint(), Constants.WIZARD, true).setRequired(true);
+		mismoJefe = new SingleFixedChoicePage(this,labels.getMismoJefe(),labels.getMismoJefeHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+		nombre1JefeFamilia = new TextPage(this,labels.getNombre1JefeFamilia(),labels.getJefeFamiliaCHFHint(), Constants.WIZARD, true).setRequired(true);
+		nombre2JefeFamilia = new TextPage(this,labels.getNombre2JefeFamilia(),labels.getJefeFamiliaCHFHint(), Constants.WIZARD, true).setRequired(false);
+		apellido1JefeFamilia = new TextPage(this,labels.getApellido1JefeFamilia(),labels.getJefeFamiliaCHFHint(), Constants.WIZARD, true).setRequired(true);
+		apellido2JefeFamilia = new TextPage(this,labels.getApellido2JefeFamilia(),labels.getJefeFamiliaCHFHint(), Constants.WIZARD, true).setRequired(false);
+		finTamizajeLabel = new LabelPage(this,labels.getFinTamizajeLabel(),"", Constants.WIZARD, true).setRequired(false);
+		
+        return new PageList(visitaExitosa,razonVisitaNoExitosa,aceptaTamizajeCasa,razonNoAceptaTamizajeCasa,razonNoAceptaTamizajeCasaLabel,
+        		codigoCHF,mismoJefe,nombre1JefeFamilia,nombre2JefeFamilia,apellido1JefeFamilia,apellido2JefeFamilia,finTamizajeLabel);
     }
 
 	public PreTamizajeFormLabels getLabels() {

@@ -15,6 +15,7 @@ import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
+import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
@@ -66,6 +67,7 @@ public class EstudiosAdapter {
 			db.execSQL(CatalogosDBConstants.CREATE_BARRIO_TABLE);
 			db.execSQL(CatalogosDBConstants.CREATE_ESTUDIO_TABLE);
 			db.execSQL(MainDBConstants.CREATE_CASA_TABLE); 
+			db.execSQL(MainDBConstants.CREATE_VISITA_TABLE);
 			db.execSQL(MainDBConstants.CREATE_PRETAMIZAJE_TABLE);
             db.execSQL(MainDBConstants.CREATE_CASA_CHF_TABLE);
             db.execSQL(MainDBConstants.CREATE_PARTICIPANTE_TALBE);
@@ -433,6 +435,60 @@ public class EstudiosAdapter {
 		if (!cursorMessageResources.isClosed()) cursorMessageResources.close();
 		return mMessageResources;
 	}
+	
+	/**
+	 * Metodos para visitas en la base de datos
+	 * 
+	 * @param visitaTerreno
+	 *            Objeto VisitaTereno que contiene la informacion
+	 *
+	 */
+	//Crear nuevo VisitaTerreno en la base de datos
+	public void crearVisitaTereno(VisitaTerreno visitaTerreno) {
+		ContentValues cv = VisitaTerrenoHelper.crearVisitaTerrenoContentValues(visitaTerreno);
+		mDb.insert(MainDBConstants.VISITA_TABLE, null, cv);
+	}
+	//Editar VisitaTerreno existente en la base de datos
+	public boolean editarVisitaTerreno(VisitaTerreno visitaTerreno) {
+		ContentValues cv = VisitaTerrenoHelper.crearVisitaTerrenoContentValues(visitaTerreno);
+		return mDb.update(MainDBConstants.VISITA_TABLE , cv, MainDBConstants.codigoVisita + "='" 
+				+ visitaTerreno.getCodigoVisita()+ "'", null) > 0;
+	}
+	//Limpiar la tabla de VisitaTerreno de la base de datos
+	public boolean borrarVisitasTerreno() {
+		return mDb.delete(MainDBConstants.VISITA_TABLE, null, null) > 0;
+	}
+	//Obtener un VisitaTerreno de la base de datos
+	public VisitaTerreno getVisitaTerreno(String filtro, String orden) throws SQLException {
+		VisitaTerreno mVisitaTerreno = null;
+		Cursor cursorVisitaTerreno = crearCursor(MainDBConstants.VISITA_TABLE , filtro, null, orden);
+		if (cursorVisitaTerreno != null && cursorVisitaTerreno.getCount() > 0) {
+			cursorVisitaTerreno.moveToFirst();
+			mVisitaTerreno=VisitaTerrenoHelper.crearVisitaTerreno(cursorVisitaTerreno);
+			Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorVisitaTerreno.getInt(cursorVisitaTerreno.getColumnIndex(MainDBConstants.casa)), null);
+			mVisitaTerreno.setCasa(casa);
+		}
+		if (!cursorVisitaTerreno.isClosed()) cursorVisitaTerreno.close();
+		return mVisitaTerreno;
+	}
+	//Obtener una lista de VisitaTerreno de la base de datos
+	public List<VisitaTerreno> getVisitasTerreno(String filtro, String orden) throws SQLException {
+		List<VisitaTerreno> mVisitasTerreno = new ArrayList<VisitaTerreno>();
+		Cursor cursorVisitasTerreno = crearCursor(MainDBConstants.VISITA_TABLE, filtro, null, orden);
+		if (cursorVisitasTerreno != null && cursorVisitasTerreno.getCount() > 0) {
+			cursorVisitasTerreno.moveToFirst();
+			mVisitasTerreno.clear();
+			do{
+				VisitaTerreno mVisitaTerreno = null;
+				mVisitaTerreno = VisitaTerrenoHelper.crearVisitaTerreno(cursorVisitasTerreno);
+				Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorVisitasTerreno.getInt(cursorVisitasTerreno.getColumnIndex(MainDBConstants.casa)), null);
+				mVisitaTerreno.setCasa(casa);
+				mVisitasTerreno.add(mVisitaTerreno);
+			} while (cursorVisitasTerreno.moveToNext());
+		}
+		if (!cursorVisitasTerreno.isClosed()) cursorVisitasTerreno.close();
+		return mVisitasTerreno;
+	}	
 	
 	/**
 	 * Metodos para pretamizajes en la base de datos

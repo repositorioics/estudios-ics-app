@@ -23,7 +23,6 @@ public class EncuestaCasaForm extends AbstractWizardModel {
     private String[] catMaterialTecho;
     private String[] catDiaNoche;
     private String[] catPeriodoCocina;
-    public static final String nombreForm = Constants.FORM_NUEVA_ENCUESTA_CASA;
     private EstudiosAdapter estudiosAdapter;
     private EncuestaCasaFormLabels labels;
 

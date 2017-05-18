@@ -213,6 +213,15 @@ public class Participante extends BaseMetaData implements Serializable{
         }
     }
 
+    public String getNombreCompleto(){
+        String nombreCompleto = this.getNombre1();
+        if (this.getNombre2()!=null) nombreCompleto = nombreCompleto + " "+  this.getNombre2();
+        nombreCompleto = nombreCompleto +" "+ this.getApellido1();
+        if (this.getApellido2()!=null) nombreCompleto = nombreCompleto + " "+  this.getApellido2();
+
+        return nombreCompleto;
+    }
+
     @Override
     public String toString() {
         return "'" + codigo + "'";

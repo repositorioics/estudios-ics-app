@@ -16,6 +16,7 @@ public class EncuestaDatosPartoBBFormLabels {
     protected String docMedTiempoEmbSn;
     protected String docMedTiempoEmb;
     protected String otroDocMedTiempoEmb;
+    protected String otroDocMedTiempoEmbHint;
     protected String fum;
     protected String fumFueraRangoSn;
     protected String fumFueraRangoSnHint;
@@ -34,6 +35,8 @@ public class EncuestaDatosPartoBBFormLabels {
     protected String docMedPesoBBSn;
     protected String docMedPesoBB;
     protected String otroDocMedPesoBB;
+    protected String otroDocMedPesoBBHint;
+    protected String reingresarFUM;
 
     public EncuestaDatosPartoBBFormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
@@ -43,6 +46,7 @@ public class EncuestaDatosPartoBBFormLabels {
         docMedTiempoEmbSn = res.getString(R.string.docMedTiempoEmb_sn);
         docMedTiempoEmb = res.getString(R.string.docMedTiempoEmb);
         otroDocMedTiempoEmb = res.getString(R.string.otroDocMedTiempoEmb);
+        otroDocMedTiempoEmbHint = res.getString(R.string.otroDocMedTiempoEmbHint);
         fum = res.getString(R.string.fum);
         fumFueraRangoSn = res.getString(R.string.fumFueraRango_sn);
         fumFueraRangoSnHint = res.getString(R.string.fumFueraRango_snHint);
@@ -53,7 +57,7 @@ public class EncuestaDatosPartoBBFormLabels {
         edadGestHint = res.getString(R.string.edadGestHint);
         docMedEdadGest = res.getString(R.string.docMedEdadGest);
         docMedEdadGestHint = res.getString(R.string.docMedEdadGestHint);
-        OtroDocMedEdadGest = res.getString(R.string.OtroDocMedEdadGest);
+        OtroDocMedEdadGest = res.getString(R.string.otroDocMedEdadGest);
         OtroDocMedEdadGestHint = res.getString(R.string.OtroDocMedEdadGestHint);
         prematuroSndr = res.getString(R.string.prematuro_sndr);
         pesoBBSndr = res.getString(R.string.pesoBB_sndr);
@@ -61,7 +65,8 @@ public class EncuestaDatosPartoBBFormLabels {
         docMedPesoBBSn = res.getString(R.string.docMedPesoBB_sn);
         docMedPesoBB = res.getString(R.string.docMedPesoBB);
         otroDocMedPesoBB = res.getString(R.string.otroDocMedPesoBB);
-
+        otroDocMedPesoBBHint = res.getString(R.string.otroDocMedPesoBBHint);
+        reingresarFUM = res.getString(R.string.reingresarFUM);
     }
 
     public String getTipoParto() {
@@ -254,5 +259,29 @@ public class EncuestaDatosPartoBBFormLabels {
 
     public void setOtroDocMedPesoBB(String otroDocMedPesoBB) {
         this.otroDocMedPesoBB = otroDocMedPesoBB;
+    }
+
+    public String getReingresarFUM() {
+        return reingresarFUM;
+    }
+
+    public void setReingresarFUM(String reingresarFUM) {
+        this.reingresarFUM = reingresarFUM;
+    }
+
+    public String getOtroDocMedTiempoEmbHint() {
+        return otroDocMedTiempoEmbHint;
+    }
+
+    public void setOtroDocMedTiempoEmbHint(String otroDocMedTiempoEmbHint) {
+        this.otroDocMedTiempoEmbHint = otroDocMedTiempoEmbHint;
+    }
+
+    public String getOtroDocMedPesoBBHint() {
+        return otroDocMedPesoBBHint;
+    }
+
+    public void setOtroDocMedPesoBBHint(String otroDocMedPesoBBHint) {
+        this.otroDocMedPesoBBHint = otroDocMedPesoBBHint;
     }
 }

@@ -60,7 +60,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
 				Bundle arguments = new Bundle();
 				Intent i;
 				switch (position){
-				case 0:
+				case 1:
 					if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
 					i = new Intent(getApplicationContext(),
 							NuevaEncuestaDatosPartoBBActivity.class);
@@ -154,14 +154,11 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
 			// after the request completes, hide the progress indicator
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_1) + "\n" + getString(R.string.header_casa) + "\n" + getString(R.string.code) + " " + getString(R.string.casa) + ": " + participanteCHF.getCasaCHF().getCodigoCHF());
-            textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.code)+ " "+ getString(R.string.participant)+ ": "+participanteCHF.getParticipanteCHF());
-            String nameCompleto = participanteCHF.getParticipante().getNombre1();
-            if (participanteCHF.getParticipante().getNombre2()!=null) nameCompleto = nameCompleto + " "+  participanteCHF.getParticipante().getNombre2();
-            nameCompleto = nameCompleto +" "+ participanteCHF.getParticipante().getApellido1();
-            if (participanteCHF.getParticipante().getApellido2()!=null) nameCompleto = nameCompleto + " "+  participanteCHF.getParticipante().getApellido2();
+			textView.setText(getString(R.string.main_1) + "\n" + getString(R.string.code) + " " + getString(R.string.casa) + ": " + participanteCHF.getCasaCHF().getCodigoCHF()+ "\n"
+                    + getString(R.string.code)+ " "+ getString(R.string.participant)+ ": "+participanteCHF.getParticipanteCHF()+ "\n"
+                    + getString(R.string.participant)+ ": "+ participanteCHF.getParticipante().getNombreCompleto() +"\n"
+                    + getString(R.string.edad) + ": " + participanteCHF.getParticipante().getEdad() + " - " + getString(R.string.sexo) + ": " +participanteCHF.getParticipante().getSexo());
 
-            textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.participant)+ ": "+ nameCompleto +"\n"+ getString(R.string.edad) + ": " + participanteCHF.getParticipante().getEdad() + " - " + getString(R.string.sexo) + ": " +participanteCHF.getParticipante().getSexo());
 			gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante));
 			dismissProgressDialog();
 		}

@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas;
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
 import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 
 import java.util.Date;
 
@@ -21,7 +22,7 @@ public class EncuestaDatosPartoBB extends BaseMetaData {
 	/**
 	 * 
 	 */
-    private Participante participante;
+    private ParticipanteCohorteFamilia participante;
 	private String tipoParto;
 	private String tiempoEmb_sndr;
 	private Integer tiempoEmbSemana;
@@ -38,18 +39,18 @@ public class EncuestaDatosPartoBB extends BaseMetaData {
 	private String OtroDocMedEdadGest;
 	private String prematuro_sndr;
 	private String pesoBB_sndr;
-	private String pesoBB;
+	private Integer pesoBB;
 	private String docMedPesoBB_sn;
 	private String docMedPesoBB;
 	private String otroDocMedPesoBB;
 	private Integer otrorecurso1;
 	private Integer otrorecurso2;
 
-    public Participante getParticipante() {
+    public ParticipanteCohorteFamilia getParticipante() {
         return participante;
     }
 
-    public void setParticipante(Participante participante) {
+    public void setParticipante(ParticipanteCohorteFamilia participante) {
         this.participante = participante;
     }
 
@@ -181,11 +182,11 @@ public class EncuestaDatosPartoBB extends BaseMetaData {
         this.pesoBB_sndr = pesoBB_sndr;
     }
 
-    public String getPesoBB() {
+    public Integer getPesoBB() {
         return pesoBB;
     }
 
-    public void setPesoBB(String pesoBB) {
+    public void setPesoBB(Integer pesoBB) {
         this.pesoBB = pesoBB;
     }
 
@@ -231,7 +232,7 @@ public class EncuestaDatosPartoBB extends BaseMetaData {
 
     @Override
     public String toString() {
-        return "EncuestaDatosPartoBB{" + participante.getCodigo() +
+        return "EncuestaDatosPartoBB{" + participante.getParticipanteCHF() +
                 '}';
     }
 

@@ -17,7 +17,7 @@ public class EncuestaParticipanteHelper {
     public static ContentValues crearEncuestaParticipanteContentValues(EncuestaParticipante encuesta){
         ContentValues cv = new ContentValues();
 
-        cv.put(EncuestasDBConstants.participante, encuesta.getParticipante().getCodigo());
+        cv.put(EncuestasDBConstants.participante_chf, encuesta.getParticipante().getCodigo());
         cv.put(EncuestasDBConstants.emancipado, String.valueOf(encuesta.getEmancipado()));
         cv.put(EncuestasDBConstants.motivoEmacipacion, encuesta.getMotivoEmacipacion());
         cv.put(EncuestasDBConstants.otroMotivoEmancipacion, encuesta.getOtroMotivoEmancipacion());

@@ -173,7 +173,7 @@ public class EncuestasDBConstants {
     public static final String ENCUESTA_PARTOBB_TABLE = "chf_encuestas_partobb";
 
     //campos tabla EncuestaDatosPartoBB
-    public static final String participante = "codigo_participante";
+    public static final String participante_chf = "participanteCHF";
     public static final String tipoParto = "tipoParto";
     public static final String tiempoEmb_sndr = "tiempoEmb_sndr";
     public static final String tiempoEmbSemana = "tiempoEmbSemana";
@@ -200,7 +200,7 @@ public class EncuestasDBConstants {
     //crear tabla EncuestaDatosPartoBB
     public static final String CREATE_ENCUESTA_PARTOBB_TABLE = "create table if not exists "
             + ENCUESTA_PARTOBB_TABLE + " ("
-            + participante + " integer not null, "
+            + participante_chf + " text not null, "
             + tipoParto  + " text, "
             + tiempoEmb_sndr  + " text, "
             + tiempoEmbSemana  + " integer, "
@@ -228,7 +228,7 @@ public class EncuestasDBConstants {
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
-            + "primary key (" + participante + "));";
+            + "primary key (" + participante_chf + "));";
 
     //tabla EncuestaLactanciaMaterna
     public static final String ENCUESTA_LACTANCIAMAT_TABLE = "chf_encuestas_lactancia_materna";
@@ -254,7 +254,7 @@ public class EncuestasDBConstants {
     //crar tabla EncuestaLactanciaMaterna
     public static final String CREATE_ENCUESTA_LACTANCIAMAT_TABLE = "create table if not exists "
             + ENCUESTA_LACTANCIAMAT_TABLE + " ("
-            + participante + " integer not null, "
+            + participante_chf + " text not null, "
             + edad  + " integer, "
             + dioPecho  + " integer, "
             + tiemPecho  + " integer, "
@@ -278,7 +278,7 @@ public class EncuestasDBConstants {
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
-            + "primary key (" + participante + "));";
+            + "primary key (" + participante_chf + "));";
 
     //tabla EncuestaParticipante
     public static final String ENCUESTA_PARTICIPANTE_TABLE = "chf_encuestas_participante";
@@ -352,7 +352,7 @@ public class EncuestasDBConstants {
     //crear tabla EncuestaParticipante
     public static final String CREATE_ENCUESTA_PARTICIPANTE_TABLE = "create table if not exists "
             + ENCUESTA_PARTICIPANTE_TABLE + " ("
-            + participante + " integer not null, "
+            + participante_chf + " text not null, "
             + emancipado  + " text, "
             + motivoEmacipacion  + " text, "
             + otroMotivoEmancipacion  + " text, "
@@ -419,7 +419,7 @@ public class EncuestasDBConstants {
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
-            + "primary key (" + participante + "));";
+            + "primary key (" + participante_chf + "));";
 
     //tabla EncuestaPesoTalla
     public static final String ENCUESTA_PESOTALLA_TABLE = "chf_encuestas_pesotalla";
@@ -440,7 +440,7 @@ public class EncuestasDBConstants {
     //crear tabla EncuestaPesoTalla
     public static final String CREATE_ENCUESTA_PESOTALLA_TABLE = "create table if not exists "
             + ENCUESTA_PESOTALLA_TABLE + " ("
-            + participante + " integer not null, "
+            + participante_chf + " text not null, "
             + peso1 + " real, "
             + peso2 + " real, "
             + peso3 + " real, "
@@ -459,7 +459,7 @@ public class EncuestasDBConstants {
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
-            + "primary key (" + participante + "));";
+            + "primary key (" + participante_chf + "));";
 
     //tabla EncuestaVacuna
     public static final String ENCUESTA_VACUNA_TABLE = "chf_encuestas_vacuna";
@@ -484,7 +484,7 @@ public class EncuestasDBConstants {
     //creat tabla EncuestaVacuna
     public static final String CREATE_ENCUESTA_VACUNA_TABLE = "create table if not exists "
             + ENCUESTA_VACUNA_TABLE + " ("
-            + participante + " integer not null, "
+            + participante_chf + " text not null, "
             + vacuna + " integer, "
             + fechaVac + " date, "
             + tipovacuna + " text, "
@@ -506,6 +506,6 @@ public class EncuestasDBConstants {
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
-            + "primary key (" + participante + "));";
+            + "primary key (" + participante_chf + "));";
 
 }

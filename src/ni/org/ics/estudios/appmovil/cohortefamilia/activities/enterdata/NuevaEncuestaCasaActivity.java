@@ -635,78 +635,78 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             encuestaCasa.setCasa(casaCHF);
             if (tieneValor(scLlaveAgua)) {
                 MessageResource msLlaveAgua = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scLlaveAgua + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_DENTROFUERA'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_DF'", null);
                 if (msLlaveAgua != null) encuestaCasa.setUbicacionLlaveAgua(msLlaveAgua.getCatKey());
             }
             if (tieneValor(scLlaveCompartida)) {
                 MessageResource msLLaveCompartida = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scLlaveCompartida + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_COMPARTIDO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_COMPARTIDO'", null);
                 if (msLLaveCompartida != null) encuestaCasa.setLlaveCompartida(msLLaveCompartida.getCatKey());
             }
             if (tieneValor(scAlmacenaAgua)) {
                 MessageResource msAlmacenaAgua = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAlmacenaAgua + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msAlmacenaAgua != null) encuestaCasa.setAlmacenaAgua(msAlmacenaAgua.getCatKey().charAt(0));
             }
             if (tieneValor(scEnBarriles)) {
                 MessageResource msEnBarriles = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scEnBarriles + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msEnBarriles != null) encuestaCasa.setAlmacenaEnBarriles(msEnBarriles.getCatKey().charAt(0));
             }
             if (tieneValor(scBarrilesTapados)) {
                 MessageResource msBarrilesTapados = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scBarrilesTapados + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msBarrilesTapados != null) encuestaCasa.setBarrilesTapados(msBarrilesTapados.getCatKey().charAt(0));
             }
             if (tieneValor(scBarrilesAbate)) {
                 MessageResource msBarrilesAbate = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scBarrilesAbate + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msBarrilesAbate != null) encuestaCasa.setBarrilesConAbate(msBarrilesAbate.getCatKey().charAt(0));
             }
             if (tieneValor(scEnTanques)) {
                 MessageResource msEnTanques = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scEnTanques + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msEnTanques != null) encuestaCasa.setAlmacenaEnTanques(msEnTanques.getCatKey().charAt(0));
             }
             if (tieneValor(scTanquesTapados)) {
                 MessageResource msTanquesTapados = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scTanquesTapados + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msTanquesTapados != null) encuestaCasa.setTanquesTapados(msTanquesTapados.getCatKey().charAt(0));
             }
             if (tieneValor(scTanquesAbate)) {
                 MessageResource msTanquesAbate = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scTanquesAbate + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msTanquesAbate != null) encuestaCasa.setTanquesConAbate(msTanquesAbate.getCatKey().charAt(0));
             }
             if (tieneValor(scEnPilas)) {
                 MessageResource msEnPilas = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scEnPilas + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msEnPilas != null) encuestaCasa.setAlmacenaEnPilas(msEnPilas.getCatKey().charAt(0));
             }
             if (tieneValor(scPilasTapadas)) {
                 MessageResource msPilasTapadas = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scPilasTapadas + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msPilasTapadas != null) encuestaCasa.setPilasTapadas(msPilasTapadas.getCatKey().charAt(0));
             }
             if (tieneValor(scPilasAbate)) {
                 MessageResource msPilasAbate = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scPilasAbate + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msPilasAbate != null) encuestaCasa.setPilasConAbate(msPilasAbate.getCatKey().charAt(0));
             }
             if (tieneValor(scEnOtrosRec)) {
                 MessageResource msEnOtrosRec = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scEnOtrosRec + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msEnOtrosRec != null) encuestaCasa.setAlmacenaOtrosRecipientes(msEnOtrosRec.getCatKey().charAt(0));
             }
             if (tieneValor(scOtrosRecTapados)) {
                 MessageResource msOtrosRecTapados = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scOtrosRecTapados + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msOtrosRecTapados != null)
                     encuestaCasa.setOtrosRecipientesTapados(msOtrosRecTapados.getCatKey().charAt(0));
             }
             if (tieneValor(scOtrosRecAbate)) {
                 MessageResource msOtrosRecAbate = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scOtrosRecAbate + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msOtrosRecAbate != null)
                     encuestaCasa.setOtrosRecipientesConAbate(msOtrosRecAbate.getCatKey().charAt(0));
             }
@@ -714,7 +714,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
                 String keysMaterial = "";
                 mcParedes = mcParedes.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
                 List<MessageResource> msParedes = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + mcParedes + "') and "
-                        + CatalogosDBConstants.catRoot + "='CAT_MAT_PARED'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_MAT_PARED'", null);
                 for(MessageResource ms : msParedes) {
                     keysMaterial += ms.getCatKey() + ",";
                 }
@@ -726,7 +726,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
                 String keysMaterial = "";
                 mcPiso = mcPiso.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
                 List<MessageResource> msPiso = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + mcPiso + "') and "
-                        + CatalogosDBConstants.catRoot + "='CAT_MAT_PISO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_MAT_PISO'", null);
                 for(MessageResource ms : msPiso) {
                     keysMaterial += ms.getCatKey() + ",";
                 }
@@ -736,146 +736,146 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             }
             if (tieneValor(scTecho)) {
                 MessageResource msTecho = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scTecho + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_MAT_TECHO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_MAT_TECHO'", null);
                 if (msTecho != null) encuestaCasa.setMaterialTecho(msTecho.getCatKey());
             }
             if (tieneValor(scLavandero)) {
                 MessageResource msLavandero = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scLavandero + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_DENTROFUERA'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_DF'", null);
                 if (msLavandero != null) encuestaCasa.setUbicacionLavandero(msLavandero.getCatKey());
             }
             if (tieneValor(scCasaPropia)) {
                 MessageResource msCasaPropia = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scCasaPropia + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msCasaPropia != null) encuestaCasa.setCasaPropia(msCasaPropia.getCatKey().charAt(0));
             }
             if (tieneValor(scTelevisor)) {
                 MessageResource msTelevisor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scTelevisor + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msTelevisor != null) encuestaCasa.setTieneTelevisor(msTelevisor.getCatKey().charAt(0));
             }
             if (tieneValor(scAbanico)) {
                 MessageResource msAbanico = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAbanico + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msAbanico != null) encuestaCasa.setTieneAbanico(msAbanico.getCatKey().charAt(0));
             }
             if (tieneValor(scRefrigerador)) {
                 MessageResource msRefrigerador = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scRefrigerador + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msRefrigerador != null) encuestaCasa.setTieneRefrigerador(msRefrigerador.getCatKey().charAt(0));
             }
             if (tieneValor(scAireAcondicionado)) {
                 MessageResource msAireAcondicionado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAireAcondicionado + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msAireAcondicionado != null)
                     encuestaCasa.setTienAireAcondicionado(msAireAcondicionado.getCatKey().charAt(0));
             }
             if (tieneValor(scAireAcondicionadoFun)) {
                 MessageResource msAireAcondicionadoFun = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAireAcondicionadoFun + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_FUN_ABANICO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_FUN_ABANICO'", null);
                 if (msAireAcondicionadoFun != null)
                     encuestaCasa.setAireAcondicionadoFuncionando(msAireAcondicionadoFun.getCatKey());
 
             }
             if (tieneValor(scMoto)) {
                 MessageResource msMTMoto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMoto + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msMTMoto != null) encuestaCasa.setTieneMoto(msMTMoto.getCatKey().charAt(0));
             }
             if (tieneValor(scMTCarro)) {
                 MessageResource msMTCarro = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMTCarro + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msMTCarro != null) encuestaCasa.setTieneCarro(msMTCarro.getCatKey().charAt(0));
             }
             if (tieneValor(scMTMicrobus)) {
                 MessageResource msMTMicrobus = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMTMicrobus + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msMTMicrobus != null) encuestaCasa.setTienMicrobus(msMTMicrobus.getCatKey().charAt(0));
             }
             if (tieneValor(scMTCamioneta)) {
                 MessageResource msMTCamioneta = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMTCamioneta + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msMTCamioneta != null) encuestaCasa.setTieneCamioneta(msMTCamioneta.getCatKey().charAt(0));
             }
             if (tieneValor(scMTCamion)) {
                 MessageResource msMTCamion = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMTCamion + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msMTCamion != null) encuestaCasa.setTieneCamion(msMTCamion.getCatKey().charAt(0));
             }
             if (tieneValor(scMTOtro)) {
                 MessageResource msMTOtro = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMTOtro + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msMTOtro != null) encuestaCasa.setTieneOtroMedioTransAuto(msMTOtro.getCatKey().charAt(0));
             }
             if (tieneValor(scCocina)) {
                 MessageResource msCocina = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scCocina + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msCocina != null) encuestaCasa.setCocinaConLenia(msCocina.getCatKey().charAt(0));
             }
             if (tieneValor(scCocinaUbicacion)) {
                 MessageResource msCocinaUbicacion = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scCocinaUbicacion + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_DENTROFUERA'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_DF'", null);
                 if (msCocinaUbicacion != null) encuestaCasa.setUbicacionCocinaLenia(msCocinaUbicacion.getCatKey());
             }
             if (tieneValor(scCocinaPeriodicidad)) {
                 MessageResource msCocinaPeriodicidad = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scCocinaPeriodicidad + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_PERIOD_COCINA'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_FREC_COCINA'", null);
                 if (msCocinaPeriodicidad != null)
                     encuestaCasa.setPeriodicidadCocinaLenia(msCocinaPeriodicidad.getCatKey());
             }
             if (tieneValor(scAnimales)) {
                 MessageResource msAnimales = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAnimales + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msAnimales != null) encuestaCasa.setTieneAnimales(msAnimales.getCatKey().charAt(0));
             }
             if (tieneValor(scAnimalesGallinas)) {
                 MessageResource msAnimalesGallinas = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAnimalesGallinas + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msAnimalesGallinas != null) encuestaCasa.setTieneGallinas(msAnimalesGallinas.getCatKey().charAt(0));
             }
             if (tieneValor(scGallinasDC)) {
                 MessageResource msGallinasDC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scGallinasDC + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msGallinasDC != null) encuestaCasa.setGallinasDentroCasa(msGallinasDC.getCatKey().charAt(0));
             }
             if (tieneValor(scAnimalesPatos)) {
                 MessageResource msAnimalesPatos = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAnimalesPatos + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msAnimalesPatos != null) encuestaCasa.setTienePatos(msAnimalesPatos.getCatKey().charAt(0));
             }
             if (tieneValor(scPatosDC)) {
                 MessageResource msPatosDC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scPatosDC + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msPatosDC != null) encuestaCasa.setPatosDentroCasa(msPatosDC.getCatKey().charAt(0));
             }
             if (tieneValor(scAnimalesCerdos)) {
                 MessageResource msAnimalesCerdos = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scAnimalesCerdos + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msAnimalesCerdos != null) encuestaCasa.setTieneCerdos(msAnimalesCerdos.getCatKey().charAt(0));
             }
             if (tieneValor(scCerdosDC)) {
                 MessageResource msCerdosDC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scCerdosDC + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msCerdosDC != null) encuestaCasa.setCerdosDentroCasa(msCerdosDC.getCatKey().charAt(0));
             }
             if (tieneValor(scFuman)) {
                 MessageResource msFuman = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scFuman + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msFuman != null) encuestaCasa.setPersonaFumaDentroCasa(msFuman.getCatKey().charAt(0));
             }
             if (tieneValor(scMadreFuma)) {
                 MessageResource msMadreFuma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scMadreFuma + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msMadreFuma != null) encuestaCasa.setMadreFuma(msMadreFuma.getCatKey().charAt(0));
             }
             if (tieneValor(scPafreFuma)) {
                 MessageResource msPafreFuma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scPafreFuma + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msPafreFuma != null) encuestaCasa.setPadreFuma(msPafreFuma.getCatKey().charAt(0));
             }
             if (tieneValor(scOtrosFuma)) {
                 MessageResource msOtrosFuma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + scOtrosFuma + "' and "
-                        + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msOtrosFuma != null) encuestaCasa.setOtrosFuman(msOtrosFuma.getCatKey().charAt(0));
             }
 

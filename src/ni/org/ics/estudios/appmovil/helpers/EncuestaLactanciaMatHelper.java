@@ -16,7 +16,7 @@ public class EncuestaLactanciaMatHelper {
 
     public static ContentValues crearEncuestaLactanciaMaternaContentValues(EncuestaLactanciaMaterna encuesta){
         ContentValues cv = new ContentValues();
-        cv.put(EncuestasDBConstants.participante, encuesta.getParticipante().getCodigo());
+        cv.put(EncuestasDBConstants.participante_chf, encuesta.getParticipante().getCodigo());
         cv.put(EncuestasDBConstants.edad, encuesta.getEdad());
         cv.put(EncuestasDBConstants.dioPecho, encuesta.getDioPecho());
         cv.put(EncuestasDBConstants.tiemPecho, encuesta.getTiemPecho());

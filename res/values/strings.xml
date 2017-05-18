@@ -63,5 +63,7 @@
     
     <string name="gpstitle">Configuración GPS</string>
     <string name="gpsquestion">El GPS no está habilitado. Quiere ir al menú de configuración y activarlo?</string>
+
+    <string name="edad">Edad</string>
     
 </resources>

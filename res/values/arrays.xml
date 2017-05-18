@@ -19,5 +19,12 @@
         <item>@string/new_survey_1</item>
         <item>@string/environments</item>
     </string-array>
-    
+
+    <string-array name="menu_participante">
+        <item>@string/new_survey_2</item>
+        <item>@string/new_survey_3</item>
+        <item>@string/new_survey_4</item>
+        <item>@string/new_survey_5</item>
+    </string-array>
+
 </resources>

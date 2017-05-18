@@ -16,7 +16,7 @@ public class EncuestaDatosPartoBBHelper {
 
     public static ContentValues crearEncuestaDatosPartoBBContentValues(EncuestaDatosPartoBB encuesta){
         ContentValues cv = new ContentValues();
-        cv.put(EncuestasDBConstants.participante, encuesta.getParticipante().getCodigo());
+        cv.put(EncuestasDBConstants.participante_chf, encuesta.getParticipante().getParticipanteCHF());
         cv.put(EncuestasDBConstants.tipoParto, encuesta.getTipoParto());
         cv.put(EncuestasDBConstants.tiempoEmb_sndr, encuesta.getTiempoEmb_sndr());
         cv.put(EncuestasDBConstants.tiempoEmbSemana, encuesta.getTiempoEmbSemana());
@@ -68,7 +68,7 @@ public class EncuestaDatosPartoBBHelper {
         mEncuesta.setOtroDocMedEdadGest(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.OtroDocMedEdadGest)));
         mEncuesta.setPrematuro_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.prematuro_sndr)));
         mEncuesta.setPesoBB_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pesoBB_sndr)));
-        mEncuesta.setPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pesoBB)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.pesoBB)) > 0) mEncuesta.setPesoBB(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.pesoBB)));
         mEncuesta.setPesoBB_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedPesoBB_sn)));
         mEncuesta.setDocMedPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedPesoBB)));
         mEncuesta.setOtroDocMedPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroDocMedPesoBB)));

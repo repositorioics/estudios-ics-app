@@ -23,7 +23,6 @@ public class EncuestaCasaForm extends AbstractWizardModel {
     private String[] catMaterialTecho;
     private String[] catDiaNoche;
     private String[] catPeriodoCocina;
-    public static final String nombreForm = Constants.FORM_NUEVA_ENCUESTA_CASA;
     private EstudiosAdapter estudiosAdapter;
     private EncuestaCasaFormLabels labels;
 
@@ -46,14 +45,14 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         labels = new EncuestaCasaFormLabels();
         this.estudiosAdapter = new EstudiosAdapter(mContext,mPass,false,false);
         estudiosAdapter.open();
-        catSiNo = fillCatalog("CAT_SINO");
-        catDentroFuera = fillCatalog("CAT_DENTROFUERA");
-        catCompartido = fillCatalog("CAT_COMPARTIDO");
-        catMaterialParedes = fillCatalog("CAT_MAT_PARED");
-        catMaterialPiso = fillCatalog("CAT_MAT_PISO");
-        catMaterialTecho = fillCatalog("CAT_MAT_TECHO");
-        catDiaNoche = fillCatalog("CAT_FUN_ABANICO");
-        catPeriodoCocina = fillCatalog("CAT_PERIOD_COCINA");
+        catSiNo = fillCatalog("CHF_CAT_SINO");
+        catDentroFuera = fillCatalog("CHF_CAT_DF");
+        catCompartido = fillCatalog("CHF_CAT_COMPARTIDO");
+        catMaterialParedes = fillCatalog("CHF_CAT_MAT_PARED");
+        catMaterialPiso = fillCatalog("CHF_CAT_MAT_PISO");
+        catMaterialTecho = fillCatalog("CHF_CAT_MAT_TECHO");
+        catDiaNoche = fillCatalog("CHF_CAT_FUN_ABANICO");
+        catPeriodoCocina = fillCatalog("CHF_CAT_FREC_COCINA");
 
         estudiosAdapter.close();
 

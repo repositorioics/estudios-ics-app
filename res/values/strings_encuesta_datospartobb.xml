@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="new_birthdata_survey">Encuesta Datos Parto BB</string>
+    <string name="tipoParto">¿Qué tipo de parto tuvo?</string>
+    <string name="tiempoEmb_sndr">¿Usted sabe cuánto tiempo duró su embarazo?</string>
+    <string name="tiempoEmbSemana">Digite el tiempo que duró el embarazo en semanas</string>
+    <string name="docMedTiempoEmb_sn">¿Madre presenta Documento médico para Verificar el tiempo que duró el embarazo?</string>
+    <string name="docMedTiempoEmb">Seleccione el Documento médico con el que Usted verificó el tiempo que duró el embarazo</string>
+    <string name="otroDocMedTiempoEmb">Otro documento médico tiempo que duró el embarazo</string>
+    <string name="otroDocMedTiempoEmbHint">Indique el nombre del Otro Documento Médico con el que verificó el tiempo que duró el embarazo</string>
+    <string name="fum">Ingrese la FUM</string>
+    <string name="fumFueraRango_sn">¿Es correcta la FUM del documento médico?</string>
+    <string name="fumFueraRango_snHint">Verifique la FUM - La Semana de gestacion está fuera de rango</string>
+    <string name="fumFueraRango_razon">Razón FUM fuera de rango</string>
+    <string name="fumFueraRango_razonHint">Indique la razón por la cual deja fuera de rango el dato de la FUM</string>
+    <string name="docMedEdadGest_sn">¿Madre presenta Documento médico para Verificar la edad Gestacional del niño?</string>
+    <string name="edadGest">Edad gestacional del Niño</string>
+    <string name="edadGestHint">Digite la edad gestacional (en semanas) del Niño, que aparece en el Documento Médico</string>
+    <string name="docMedEdadGest">Documento médico edad Gestacional del niño</string>
+    <string name="docMedEdadGestHint">Seleccione el Documento médico con el que Usted verificó la edad Gestacional del niño</string>
+    <string name="otroDocMedEdadGest">Otro documento médico edad gestacional</string>
+    <string name="OtroDocMedEdadGestHint">Indique el nombre del Otro Documento Médico con el que verificó la edad gestacional del niño</string>
+    <string name="prematuro_sndr">¿Cuándo nació el bebé, el Médico u otro personal de salud le dijo que era prematuro?</string>
+    <string name="pesoBB_sndr">¿Sabe cuánto pesó su bebé al nacer?</string>
+    <string name="pesoBB">Digite el peso del bebé al nacer en gr</string>
+    <string name="docMedPesoBB_sn">¿Madre presenta Documento médico para Verificar el peso al nacimiento del participante?</string>
+    <string name="docMedPesoBB">¿Con qué Documento médico Usted verificó el peso al nacimiento del participante?</string>
+    <string name="otroDocMedPesoBB">Otro documento médico peso al nacimiento</string>
+    <string name="otroDocMedPesoBBHint">Indique el nombre del Otro Documento Médico con el que verificó el peso al nacimiento</string>
+    <string name="reingresarFUM">Regrese al campo donde ingresará de nuevo la FUM</string>
+</resources>

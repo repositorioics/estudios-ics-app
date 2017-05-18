@@ -3,7 +3,6 @@ package ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,31 +15,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.catalogs.Estudio;
-import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCasaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PreTamizajeForm;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PreTamizajeFormLabels;
-import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.Casa;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
-import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
-import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
 import ni.org.ics.estudios.appmovil.utils.FileUtils;
-import ni.org.ics.estudios.appmovil.utils.GPSTracker;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
 import ni.org.ics.estudios.appmovil.wizard.model.LabelPage;
@@ -68,13 +49,13 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     private Button mPrevButton;
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
-    private PreTamizajeFormLabels labels = new PreTamizajeFormLabels();
-    private EstudiosAdapter estudiosAdapter;
-    private DeviceInfo infoMovil;
-    private GPSTracker gps;
-    private static Casa casa = new Casa();
-	private String username;
-	private SharedPreferences settings;
+    //private PreTamizajeFormLabels labels = new PreTamizajeFormLabels();
+    //private EstudiosAdapter estudiosAdapter;
+    //private DeviceInfo infoMovil;
+    //private GPSTracker gps;
+    //private static Casa casa = new Casa();
+	//private String username;
+	//private SharedPreferences settings;
 	private static final int EXIT = 1;
 	private AlertDialog alertDialog;
 	private boolean notificarCambios = true;
@@ -88,14 +69,14 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
 			finish();
 		}
         setContentView(R.layout.activity_data_enter);
-        settings =
+        /*settings =
 				PreferenceManager.getDefaultSharedPreferences(this);
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 		infoMovil = new DeviceInfo(NuevoTamizajeCasaActivity.this);
 		gps = new GPSTracker(NuevoTamizajeCasaActivity.this);
-		casa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
+		casa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);*/
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new PreTamizajeForm(this,mPass);
         if (savedInstanceState != null) {
@@ -176,9 +157,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
-
-        onPageTreeChanged();
-        updateBottomBar();
+        onPageTreeChanged(); 
     }
     
 	@Override
@@ -332,15 +311,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     }
     
     public void updateModel(Page page){
-    	boolean visible = false;
-    	if (page.getTitle().equals(labels.getAceptaTamizaje())){
-    		if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si")) visible = true;
-    		changeStatus(mWizardModel.findByKey(labels.getCodigoCHF()), visible);
-    		changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipa()), !visible);
-    		changeStatus(mWizardModel.findByKey(labels.getNoAcepta()), !visible);
-    		notificarCambios = false;
-    		onPageTreeChanged();
-    	}
+    	//boolean visible = false;
     }
     
     public void changeStatus(Page page, boolean visible){
@@ -371,7 +342,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
 		for (Map.Entry<String, String> entry : mapa.entrySet()){
 			datos.putString(entry.getKey(), entry.getValue());
 		}
-		String aceptaTamizaje = datos.getString(this.getString(R.string.aceptaTamizajeCasa));
+		/*String aceptaTamizaje = datos.getString(this.getString(R.string.aceptaTamizajeCasa));
 		String razonNoParticipa = datos.getString(this.getString(R.string.razonNoParticipa));
 		String codigoCHF = datos.getString(getString(R.string.codigoCHF));
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
@@ -423,7 +394,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
-    	}
+    	}*/
     	Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
 		toast.show();
 		finish();

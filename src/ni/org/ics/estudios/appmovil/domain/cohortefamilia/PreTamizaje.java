@@ -16,8 +16,8 @@ public class PreTamizaje extends BaseMetaData {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String codigo;
-    private char aceptaTamizaje;
-    private String razonNoParticipa;
+    private char aceptaTamizajeCasa;
+    private String razonNoAceptaTamizajeCasa;
     private Casa casa;
     private Estudio estudio;
 
@@ -29,20 +29,20 @@ public class PreTamizaje extends BaseMetaData {
         this.codigo = codigo;
     }
 
-    public char getAceptaTamizaje() {
-        return aceptaTamizaje;
+    public char getAceptaTamizajeCasa() {
+        return aceptaTamizajeCasa;
     }
 
-    public void setAceptaTamizaje(char aceptaTamizaje) {
-        this.aceptaTamizaje = aceptaTamizaje;
+    public void setAceptaTamizajeCasa(char aceptaTamizajeCasa) {
+        this.aceptaTamizajeCasa = aceptaTamizajeCasa;
     }
 
-    public String getRazonNoParticipa() {
-        return razonNoParticipa;
+    public String getRazonNoAceptaTamizajeCasa() {
+        return razonNoAceptaTamizajeCasa;
     }
 
-    public void setRazonNoParticipa(String razonNoParticipa) {
-        this.razonNoParticipa = razonNoParticipa;
+    public void setRazonNoAceptaTamizajeCasa(String razonNoAceptaTamizajeCasa) {
+        this.razonNoAceptaTamizajeCasa = razonNoAceptaTamizajeCasa;
     }
 
     public Casa getCasa() {

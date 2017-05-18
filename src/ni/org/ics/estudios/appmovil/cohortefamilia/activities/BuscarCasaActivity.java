@@ -163,7 +163,7 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 		switch(dialog){
 		case HACER_TAMIZAJE:
 			builder.setTitle(this.getString(R.string.confirm));
-			builder.setMessage(getString(R.string.new_screen)+"?");
+			builder.setMessage(getString(R.string.addVisita)+"\n"+getString(R.string.code)+": " + mCasa.getCodigo() + " " + mCasa.getNombre1JefeFamilia() + " " + mCasa.getApellido1JefeFamilia());
 			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();

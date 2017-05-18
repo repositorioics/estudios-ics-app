@@ -16,11 +16,7 @@ public class CartaConsentimiento extends BaseMetaData {
     private Date fechaFirma;
     private Tamizaje tamizaje;
     private Participante participante;
-    private char participadoCohortePediatrica;
-    private String cohortePediatrica; //Dengue, Influenza, Ambas (dengue/influenza)
-    private char codigoReactivado;
     private char emancipado;
-    private char asentimientoVerbal; //Para Niños de 6 a 17 años
     private String nombre1Tutor;
     private String nombre2Tutor;
     private String apellido1Tutor;
@@ -38,207 +34,177 @@ public class CartaConsentimiento extends BaseMetaData {
     private char aceptaParteB; //Consentimiento para almacenamiento y uso de muestras en estudios futuros
     private char aceptaParteC; //Consentimiento adicional para estudios genéticos
 
+    
+
     public String getCodigo() {
-        return codigo;
-    }
+		return codigo;
+	}
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 
-    public Date getFechaFirma() {
-        return fechaFirma;
-    }
+	public Date getFechaFirma() {
+		return fechaFirma;
+	}
 
-    public void setFechaFirma(Date fechaFirma) {
-        this.fechaFirma = fechaFirma;
-    }
+	public void setFechaFirma(Date fechaFirma) {
+		this.fechaFirma = fechaFirma;
+	}
 
-    public char getParticipadoCohortePediatrica() {
-        return participadoCohortePediatrica;
-    }
+	public Tamizaje getTamizaje() {
+		return tamizaje;
+	}
 
-    public void setParticipadoCohortePediatrica(char participadoCohortePediatrica) {
-        this.participadoCohortePediatrica = participadoCohortePediatrica;
-    }
+	public void setTamizaje(Tamizaje tamizaje) {
+		this.tamizaje = tamizaje;
+	}
 
-    public String getCohortePediatrica() {
-        return cohortePediatrica;
-    }
+	public Participante getParticipante() {
+		return participante;
+	}
 
-    public void setCohortePediatrica(String cohortePediatrica) {
-        this.cohortePediatrica = cohortePediatrica;
-    }
+	public void setParticipante(Participante participante) {
+		this.participante = participante;
+	}
 
-    public char getCodigoReactivado() {
-        return codigoReactivado;
-    }
+	public char getEmancipado() {
+		return emancipado;
+	}
 
-    public void setCodigoReactivado(char codigoReactivado) {
-        this.codigoReactivado = codigoReactivado;
-    }
+	public void setEmancipado(char emancipado) {
+		this.emancipado = emancipado;
+	}
 
-    public char getEmancipado() {
-        return emancipado;
-    }
+	public String getNombre1Tutor() {
+		return nombre1Tutor;
+	}
 
-    public void setEmancipado(char emancipado) {
-        this.emancipado = emancipado;
-    }
+	public void setNombre1Tutor(String nombre1Tutor) {
+		this.nombre1Tutor = nombre1Tutor;
+	}
 
-    public char getAsentimientoVerbal() {
-        return asentimientoVerbal;
-    }
+	public String getNombre2Tutor() {
+		return nombre2Tutor;
+	}
 
-    public void setAsentimientoVerbal(char asentimientoVerbal) {
-        this.asentimientoVerbal = asentimientoVerbal;
-    }
+	public void setNombre2Tutor(String nombre2Tutor) {
+		this.nombre2Tutor = nombre2Tutor;
+	}
 
-    public String getNombre1Tutor() {
-        return nombre1Tutor;
-    }
+	public String getApellido1Tutor() {
+		return apellido1Tutor;
+	}
 
-    public void setNombre1Tutor(String nombre1Tutor) {
-        this.nombre1Tutor = nombre1Tutor;
-    }
+	public void setApellido1Tutor(String apellido1Tutor) {
+		this.apellido1Tutor = apellido1Tutor;
+	}
 
-    public String getNombre2Tutor() {
-        return nombre2Tutor;
-    }
+	public String getApellido2Tutor() {
+		return apellido2Tutor;
+	}
 
-    public void setNombre2Tutor(String nombre2Tutor) {
-        this.nombre2Tutor = nombre2Tutor;
-    }
+	public void setApellido2Tutor(String apellido2Tutor) {
+		this.apellido2Tutor = apellido2Tutor;
+	}
 
-    public String getApellido1Tutor() {
-        return apellido1Tutor;
-    }
+	public String getRelacionFamiliarTutor() {
+		return relacionFamiliarTutor;
+	}
 
-    public void setApellido1Tutor(String apellido1Tutor) {
-        this.apellido1Tutor = apellido1Tutor;
-    }
+	public void setRelacionFamiliarTutor(String relacionFamiliarTutor) {
+		this.relacionFamiliarTutor = relacionFamiliarTutor;
+	}
 
-    public String getApellido2Tutor() {
-        return apellido2Tutor;
-    }
+	public char getParticipanteOTutorAlfabeto() {
+		return participanteOTutorAlfabeto;
+	}
 
-    public void setApellido2Tutor(String apellido2Tutor) {
-        this.apellido2Tutor = apellido2Tutor;
-    }
+	public void setParticipanteOTutorAlfabeto(char participanteOTutorAlfabeto) {
+		this.participanteOTutorAlfabeto = participanteOTutorAlfabeto;
+	}
 
-    public char getParticipanteOTutorAlfabeto() {
-        return participanteOTutorAlfabeto;
-    }
+	public char getTestigoPresente() {
+		return testigoPresente;
+	}
 
-    public void setParticipanteOTutorAlfabeto(char participanteOTutorAlfabeto) {
-        this.participanteOTutorAlfabeto = participanteOTutorAlfabeto;
-    }
+	public void setTestigoPresente(char testigoPresente) {
+		this.testigoPresente = testigoPresente;
+	}
 
-    public char getTestigoPresente() {
-        return testigoPresente;
-    }
+	public String getNombre1Testigo() {
+		return nombre1Testigo;
+	}
 
-    public void setTestigoPresente(char testigoPresente) {
-        this.testigoPresente = testigoPresente;
-    }
+	public void setNombre1Testigo(String nombre1Testigo) {
+		this.nombre1Testigo = nombre1Testigo;
+	}
 
-    public String getNombre1Testigo() {
-        return nombre1Testigo;
-    }
+	public String getNombre2Testigo() {
+		return nombre2Testigo;
+	}
 
-    public void setNombre1Testigo(String nombre1Testigo) {
-        this.nombre1Testigo = nombre1Testigo;
-    }
+	public void setNombre2Testigo(String nombre2Testigo) {
+		this.nombre2Testigo = nombre2Testigo;
+	}
 
-    public String getNombre2Testigo() {
-        return nombre2Testigo;
-    }
+	public String getApellido1Testigo() {
+		return apellido1Testigo;
+	}
 
-    public void setNombre2Testigo(String nombre2Testigo) {
-        this.nombre2Testigo = nombre2Testigo;
-    }
+	public void setApellido1Testigo(String apellido1Testigo) {
+		this.apellido1Testigo = apellido1Testigo;
+	}
 
-    public String getApellido1Testigo() {
-        return apellido1Testigo;
-    }
+	public String getApellido2Testigo() {
+		return apellido2Testigo;
+	}
 
-    public void setApellido1Testigo(String apellido1Testigo) {
-        this.apellido1Testigo = apellido1Testigo;
-    }
+	public void setApellido2Testigo(String apellido2Testigo) {
+		this.apellido2Testigo = apellido2Testigo;
+	}
 
-    public String getApellido2Testigo() {
-        return apellido2Testigo;
-    }
+	public char getAceptaParteA() {
+		return aceptaParteA;
+	}
 
-    public void setApellido2Testigo(String apellido2Testigo) {
-        this.apellido2Testigo = apellido2Testigo;
-    }
+	public void setAceptaParteA(char aceptaParteA) {
+		this.aceptaParteA = aceptaParteA;
+	}
 
-    public char getAceptaParteA() {
-        return aceptaParteA;
-    }
+	public String getMotivoRechazoParteA() {
+		return motivoRechazoParteA;
+	}
 
-    public void setAceptaParteA(char aceptaParteA) {
-        this.aceptaParteA = aceptaParteA;
-    }
+	public void setMotivoRechazoParteA(String motivoRechazoParteA) {
+		this.motivoRechazoParteA = motivoRechazoParteA;
+	}
 
-    public String getMotivoRechazoParteA() {
-        return motivoRechazoParteA;
-    }
+	public char getAceptaContactoFuturo() {
+		return aceptaContactoFuturo;
+	}
 
-    public void setMotivoRechazoParteA(String motivoRechazoParteA) {
-        this.motivoRechazoParteA = motivoRechazoParteA;
-    }
+	public void setAceptaContactoFuturo(char aceptaContactoFuturo) {
+		this.aceptaContactoFuturo = aceptaContactoFuturo;
+	}
 
-    public char getAceptaContactoFuturo() {
-        return aceptaContactoFuturo;
-    }
+	public char getAceptaParteB() {
+		return aceptaParteB;
+	}
 
-    public void setAceptaContactoFuturo(char aceptaContactoFuturo) {
-        this.aceptaContactoFuturo = aceptaContactoFuturo;
-    }
+	public void setAceptaParteB(char aceptaParteB) {
+		this.aceptaParteB = aceptaParteB;
+	}
 
-    public char getAceptaParteB() {
-        return aceptaParteB;
-    }
+	public char getAceptaParteC() {
+		return aceptaParteC;
+	}
 
-    public void setAceptaParteB(char aceptaParteB) {
-        this.aceptaParteB = aceptaParteB;
-    }
+	public void setAceptaParteC(char aceptaParteC) {
+		this.aceptaParteC = aceptaParteC;
+	}
 
-    public char getAceptaParteC() {
-        return aceptaParteC;
-    }
-
-    public void setAceptaParteC(char aceptaParteC) {
-        this.aceptaParteC = aceptaParteC;
-    }
-
-    public Tamizaje getTamizaje() {
-        return tamizaje;
-    }
-
-    public void setTamizaje(Tamizaje tamizaje) {
-        this.tamizaje = tamizaje;
-    }
-
-    public Participante getParticipante() {
-        return participante;
-    }
-
-    public void setParticipante(Participante participante) {
-        this.participante = participante;
-    }
-
-    public String getRelacionFamiliarTutor() {
-        return relacionFamiliarTutor;
-    }
-
-    public void setRelacionFamiliarTutor(String relacionFamiliar) {
-        this.relacionFamiliarTutor = relacionFamiliar;
-    }
-
-    @Override
+	@Override
     public String toString() {
         return this.codigo;
     }

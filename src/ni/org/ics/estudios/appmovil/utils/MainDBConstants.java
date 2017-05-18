@@ -117,12 +117,152 @@ public class MainDBConstants {
             + estado + " text not null, "
 			+ "primary key (" + codigo + "));";
 
-    //Tabla Carta consentimiento
+    
+	
+	//Tabla Participantes
+    public static final String PARTICIPANTE_TABLE = "participantes";
+
+    // Campos Participantes
+    public static final String nombre1 = "nombre1";
+    public static final String nombre2 = "nombre2";
+    public static final String apellido1 = "apellido1";
+    public static final String apellido2 = "apellido2";
+    public static final String sexo = "sexo";
+    public static final String fechaNac = "fechaNac";
+    public static final String nombre1Padre = "nombre1Padre";
+    public static final String nombre2Padre = "nombre2Padre";
+    public static final String apellido1Padre = "apellido1Padre";
+    public static final String apellido2Padre = "apellido2Padre";
+    public static final String nombre1Madre = "nombre1Madre";
+    public static final String nombre2Madre = "nombre2Madre";
+    public static final String apellido1Madre = "apellido1Madre";
+    public static final String apellido2Madre = "apellido2Madre";
+    public static final String casa = "casa";
+
+    //Crear tabla participantes
+    public static final String CREATE_PARTICIPANTE_TALBE = "create table if not exists "
+            + PARTICIPANTE_TABLE + " ("
+            + codigo + " integer not null, "
+            + nombre1 + " text not null, "
+            + nombre2 + " text, "
+            + apellido1 + " text not null, "
+            + apellido2 + " text, "
+            + sexo + " text, "
+            + fechaNac + " date, "
+            + nombre1Padre + " text not null, "
+            + nombre2Padre + " text, "
+            + apellido1Padre + " text not null, "
+            + apellido2Padre + " text, "
+            + nombre1Madre + " text not null, "
+            + nombre2Madre + " text, "
+            + apellido1Madre + " text not null, "
+            + apellido2Madre + " text, "
+            + casa + " integer not null, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigo + "));";
+	
+	
+    //tabla CasaCohorteFamiliar
+    public static final String CASA_CHF_TABLE = "chf_casas_cohorte_familia";
+
+    //Campos tabla CasaCohorteFamiliar
+    public static final String codigoCHF = "codigoCHF";
+
+    //Crear tabla CasaCohorteFamiliar
+    public static final String CREATE_CASA_CHF_TABLE = "create table if not exists "
+            + CASA_CHF_TABLE + " ("
+            + codigoCHF + " text not null, "
+            + casa + " integer not null, "
+            + nombre1JefeFamilia + " text not null, "
+            + nombre2JefeFamilia + " text , "
+            + apellido1JefeFamilia + " text not null, "
+            + apellido2JefeFamilia + " text , "
+            + latitud + " real, "
+			+ longitud + " real, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigoCHF + "));"; 
+	
+    //Tabla Participantes cohorte familia
+    public static final String PARTICIPANTE_CHF_TABLE = "chf_participantes";
+
+    // Campos Participantes cohorte familia
+    public static final String participanteCHF = "participanteCHF";
+    public static final String casaCHF = "casaCHF";
+    public static final String participante= "participante";
+    
+    //Crear tabla participantes cohorte familia
+    public static final String CREATE_PARTICIPANTE_CHF_TABLE = "create table if not exists "
+            + PARTICIPANTE_CHF_TABLE + " ("
+            + participanteCHF + " text not null, "
+            + participante + " integer not null, "
+            + casaCHF + " integer not null, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + participante + "));";
+    
+    //Tabla Visitas
+    public static final String VISITA_TABLE = "visitas";
+
+    //Campos tabla Visitas
+    public static final String codigoVisita = "codigoVisita";
+    public static final String fechaVisita = "fechaVisita";
+    public static final String visitaExitosa = "visitaExitosa";
+    public static final String razonVisitaNoExitosa = "razonVisitaNoExitosa";
+
+    //crear tabla Visitas
+    public static final String CREATE_VISITA_TABLE = "create table if not exists "
+            + VISITA_TABLE + " ("
+            + codigoVisita + " text not null, "
+            + fechaVisita + " date not null, "
+            + visitaExitosa + " text, "
+            + casa + " integer not null, "
+            + razonVisitaNoExitosa + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigoVisita + "));";    
+    
+    //Tabla Pretamizaje
+    public static final String PRETAMIZAJE_TABLE = "chf_pre_tamizajes";
+
+    //Campos tabla Pretamizajes
+    public static final String estudio = "estudio";
+    public static final String aceptaTamizajeCasa = "aceptaTamizajeCasa";
+    public static final String razonNoAceptaTamizajeCasa = "razonNoAceptaTamizajeCasa";
+
+    //crear tabla Pretamizajes
+    public static final String CREATE_PRETAMIZAJE_TABLE = "create table if not exists "
+            + PRETAMIZAJE_TABLE + " ("
+            + codigo + " text not null, "
+            + aceptaTamizajeCasa + " text not null, "
+            + razonNoAceptaTamizajeCasa + " text, "
+            + casa + " integer not null, "
+            + estudio + " integer not null, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigo + "));";    
+	
+	//Tabla Carta consentimiento
     public static final String CARTA_CONSENTIMIENTO_TABLE = "cartas_consentimientos";
     //Campos cartas_consentimientos
     public static final String fechaFirma = "fechaFirma";
     public static final String tamizaje = "tamizaje";
-    public static final String participante= "participante";
     public static final String participadoCohortePediatrica = "participadoCohortePediatrica";
     public static final String cohortePediatrica = "cohortePediatrica"; //Dengue, Influenza, Ambas (dengue/influenza)
     public static final String codigoReactivado = "codigoReactivado";
@@ -180,125 +320,22 @@ public class MainDBConstants {
             + estado + " text not null, "
             + "primary key (" + codigo + "));";
 
-    //Tabla Participantes
-    public static final String PARTICIPANTE_TABLE = "participantes";
-
-    // Campos Participantes
-    public static final String nombre1 = "nombre1";
-    public static final String nombre2 = "nombre2";
-    public static final String apellido1 = "apellido1";
-    public static final String apellido2 = "apellido2";
-    public static final String sexo = "sexo";
-    public static final String fechaNac = "fechaNac";
-    public static final String nombre1Padre = "nombre1Padre";
-    public static final String nombre2Padre = "nombre2Padre";
-    public static final String apellido1Padre = "apellido1Padre";
-    public static final String apellido2Padre = "apellido2Padre";
-    public static final String nombre1Madre = "nombre1Madre";
-    public static final String nombre2Madre = "nombre2Madre";
-    public static final String apellido1Madre = "apellido1Madre";
-    public static final String apellido2Madre = "apellido2Madre";
-    public static final String casa = "casa";
-
-    //Crear tabla participantes
-    public static final String CREATE_PARTICIPANTE_TALBE = "create table if not exists "
-            + PARTICIPANTE_TABLE + " ("
-            + codigo + " integer not null, "
-            + nombre1 + " text not null, "
-            + nombre2 + " text, "
-            + apellido1 + " text not null, "
-            + apellido2 + " text, "
-            + sexo + " text, "
-            + fechaNac + " date, "
-            + nombre1Padre + " text not null, "
-            + nombre2Padre + " text, "
-            + apellido1Padre + " text not null, "
-            + apellido2Padre + " text, "
-            + nombre1Madre + " text not null, "
-            + nombre2Madre + " text, "
-            + apellido1Madre + " text not null, "
-            + apellido2Madre + " text, "
-            + casa + " integer not null, "
-            + recordDate + " date, "
-            + recordUser + " text, "
-            + pasive + " text, "
-            + deviceId + " text, "
-            + estado + " text not null, "
-            + "primary key (" + codigo + "));";
     
-    //tabla CasaCohorteFamiliar
-    public static final String CASA_CHF_TABLE = "chf_casas_cohorte_familia";
-
-    //Campos tabla CasaCohorteFamiliar
-    public static final String codigoCHF = "codigoCHF";
-
-    //Crear tabla CasaCohorteFamiliar
-    public static final String CREATE_CASA_CHF_TABLE = "create table if not exists "
-            + CASA_CHF_TABLE + " ("
-            + codigoCHF + " text not null, "
-            + casa + " integer not null, "
-            + nombre1JefeFamilia + " text not null, "
-            + nombre2JefeFamilia + " text , "
-            + apellido1JefeFamilia + " text not null, "
-            + apellido2JefeFamilia + " text , "
-            + latitud + " real, "
-			+ longitud + " real, "
-            + recordDate + " date, "
-            + recordUser + " text, "
-            + pasive + " text, "
-            + deviceId + " text, "
-            + estado + " text not null, "
-            + "primary key (" + codigoCHF + "));";    
+    
+       
  
-    //Tabla Participantes cohorte familia
-    public static final String PARTICIPANTE_CHF_TABLE = "chf_participantes";
-
-    // Campos Participantes cohorte familia
-    public static final String participanteCHF = "participanteCHF";
-    public static final String casaCHF = "casaCHF";
-    
-    //Crear tabla participantes cohorte familia
-    public static final String CREATE_PARTICIPANTE_CHF_TABLE = "create table if not exists "
-            + PARTICIPANTE_CHF_TABLE + " ("
-            + participanteCHF + " text not null, "
-            + participante + " integer not null, "
-            + casaCHF + " integer not null, "
-            + recordDate + " date, "
-            + recordUser + " text, "
-            + pasive + " text, "
-            + deviceId + " text, "
-            + estado + " text not null, "
-            + "primary key (" + participante + "));";    
+        
 
 
-    //Tabla Pretamizaje
-    public static final String PRETAMIZAJE_TABLE = "chf_pre_tamizajes";
-
-    //Campos tabla Pretamizajes
-    public static final String estudio = "estudio";
-    public static final String aceptaTamizaje = "aceptaTamizaje";
-    public static final String razonNoParticipa = "razonNoParticipa";
-
-    //crear tabla Pretamizajes
-    public static final String CREATE_PRETAMIZAJE_TABLE = "create table if not exists "
-            + PRETAMIZAJE_TABLE + " ("
-            + codigo + " text not null, "
-            + aceptaTamizaje + " text not null, "
-            + razonNoParticipa + " text, "
-            + casa + " integer not null, "
-            + estudio + " integer not null, "
-            + recordDate + " date, "
-            + recordUser + " text, "
-            + pasive + " text, "
-            + deviceId + " text, "
-            + estado + " text not null, "
-            + "primary key (" + codigo + "));";
+   
 
     // Tabla Tamizaje
     public static final String TAMIZAJE_TABLE = "";
 
     //Campos tabla tamizaje
     public static final String fechaNacimiento = "fechaNacimiento";
+    public static final String aceptaTamizajePersona = "aceptaTamizajePersona";
+    public static final String razonNoAceptaTamizajePersona = "razonNoAceptaTamizajePersona";
     public static final String criteriosInclusion = "criteriosInclusion";
     public static final String elegible = "elegible";
     public static final String dondeAsisteProblemasSalud = "dondeAsisteProblemasSalud";
@@ -314,8 +351,8 @@ public class MainDBConstants {
             + estudio + " integer not null, "
             + sexo + " text, "
             + fechaNacimiento + " date, "
-            + aceptaTamizaje + " text, "
-            + razonNoParticipa + " text, "
+            + aceptaTamizajePersona + " text, "
+            + razonNoAceptaTamizajePersona + " text, "
             + criteriosInclusion + " text, "
             + dondeAsisteProblemasSalud + " text, "
             + asisteCSSF + " text, "

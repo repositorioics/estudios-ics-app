@@ -11,30 +11,61 @@
     <string name="razonNoParticipaPersonaHint">Pregunte porque no está de acuerdo en realizar el tamizaje.</string>
     <string name="criteriosInclusion">Criterios de Inclusión</string>
     <string name="criteriosInclusionHint">Verifique cada uno de los Criterios de Inclusión</string>
+    <string name="enfermedad">El participante está enfermo actualmente?</string>
+    <string name="enfermedadHint">(enfermedad aguda y/o crónica)</string>
     <string name="dondeAsisteProblemasSalud">En que lugar se atiende el participante?</string>
     <string name="dondeAsisteProblemasSaludHint">¿Dónde asiste cuando tiene problemas de salud el participante?</string>
-    <string name="asisteCSSF">Cual centro de salud?</string>
-    <string name="asisteCSSFHint">Pregunte si va al CSSFV o algún otro.</string>
     <string name="otroCentroSalud">Indique que otro centro de salud</string>
     <string name="otroCentroSaludHint">.</string>
     <string name="puestoSalud">Puesto de salud</string>
     <string name="puestoSaludHint">.</string>
-    <string name="siEnfermaSoloAsistirCSSF">¿Está dispuesto a ir solamente al C/S Socrates Flores si el participante se enferma?</string>
-    <string name="siEnfermaSoloAsistirCSSFHint">.</string>
-    <string name="elegible">Fue determinada la elegibilidad para participar en el estudio.</string>
-    <string name="elegibleHint">Pregunte porque no está de acuerdo en realizar el tamizaje.</string>
+    <string name="aceptaAtenderCentro">¿Está dispuesto a ir solamente al C/S Socrates Flores si enferma?</string>
+    <string name="aceptaAtenderCentroHint">.</string>
+    <string name="esElegible">Fue determinada la elegibilidad para participar en el estudio.</string>
+    <string name="esElegibleHint">.</string>
+    <string name="aceptaParticipar">Acepta participar en el estudio?</string>
+    <string name="aceptaParticiparHint"></string>
+    <string name="razonNoAceptaParticipar">Porque no acepta participar en el estudio?</string>
+    <string name="razonNoAceptaParticiparHint"></string>
+    <string name="asentimientoVerbal">Dió el niño Asentimiento verbal</string>
+    <string name="asentimientoVerbalHint">(Para Niños de 6 a 17 años)</string>
+    
     
     <string name="participadoCohortePediatrica">Usted o su hijo han participado en la cohorte pediatrica?</string>
     <string name="participadoCohortePediatricaHint"></string>
-    <string name="cohortePediatrica">¿A cual Cohorte Pediátrica pertenece?</string>
-    <string name="cohortePediatricaHint"></string>
-    <string name="codigoReactivado">Reactivo el Codigo?</string>
-    <string name="codigoReactivadoHint"></string>
-    <string name="codigoEscaneado">Escanee el Código de Cohorte:</string>
+
+    <string name="codigoCohorte">Escanee el Código de Cohorte:</string>  
+    <string name="codigoNuevoParticipante">Escanee el Código para el nuevo Participante:</string>
+    
+    <string name="nombre1">1er Nombre</string>
+    <string name="nombre1Hint">Nombre completo del participante</string>
+    <string name="nombre2">2do Nombre</string>
+    <string name="nombre2Hint">Nombre completo del participante</string>
+    <string name="apellido1">1er Apellido</string>
+    <string name="apellido1Hint">Nombre completo del participante</string>
+    <string name="apellido2">2do Apellido</string>
+    <string name="apellido2Hint">Nombre completo del participante</string>
+    
+    <string name="nombre1Padre">1er Nombre Padre</string>
+    <string name="nombre1PadreHint">Nombre completo del padre</string>
+    <string name="nombre2Padre">2do Nombre Padre</string>
+    <string name="nombre2PadreHint">Nombre completo del Padre</string>
+    <string name="apellido1Padre">1er Apellido Padre</string>
+    <string name="apellido1PadreHint">Nombre completo del Padre</string>
+    <string name="apellido2Padre">2do Apellido Padre</string>
+    <string name="apellido2PadreHint">Nombre completo del Padre</string>
+    
+    <string name="nombre1Madre">1er Nombre Madre</string>
+    <string name="nombre1MadreHint">Nombre completo de la madre</string>
+    <string name="nombre2Madre">2do Nombre Madre</string>
+    <string name="nombre2MadreHint">Nombre completo de la madre</string>
+    <string name="apellido1Madre">1er Apellido Madre</string>
+    <string name="apellido1MadreHint">Nombre completo de la madre</string>
+    <string name="apellido2Madre">2do Apellido Madre</string>
+    <string name="apellido2MadreHint">Nombre completo de la madre</string>
+    
     <string name="emancipado">¿Participante Enmancipado/a?</string>
     <string name="emancipadoHint"></string>
-    <string name="asentimientoVerbal">Dió el niño Asentimiento verbal (Para Niños de 6 a 17 años)</string>
-    <string name="asentimientoVerbalHint"></string>
     <string name="nombre1Tutor">1er Nombre JF</string>
     <string name="nombre1TutorHint">Nombre completo del Jefe de Familia</string>
     <string name="nombre2Tutor">2do Nombre JF</string>
@@ -68,31 +99,6 @@
     <string name="aceptaParteC">¿Acepta Parte C Estudios Geneticos?</string>
     <string name="aceptaParteCHint"></string>
     
-    <string name="nombre1">1er Nombre</string>
-    <string name="nombre1Hint">Nombre completo del participante</string>
-    <string name="nombre2">2do Nombre</string>
-    <string name="nombre2Hint">Nombre completo del participante</string>
-    <string name="apellido1">1er Apellido</string>
-    <string name="apellido1Hint">Nombre completo del participante</string>
-    <string name="apellido2">2do Apellido</string>
-    <string name="apellido2Hint">Nombre completo del participante</string>
-    
-    <string name="nombre1Padre">1er Nombre Padre</string>
-    <string name="nombre1PadreHint">Nombre completo del padre</string>
-    <string name="nombre2Padre">2do Nombre Padre</string>
-    <string name="nombre2PadreHint">Nombre completo del Padre</string>
-    <string name="apellido1Padre">1er Apellido Padre</string>
-    <string name="apellido1PadreHint">Nombre completo del Padre</string>
-    <string name="apellido2Padre">2do Apellido Padre</string>
-    <string name="apellido2PadreHint">Nombre completo del Padre</string>
-    
-    <string name="nombre1Madre">1er Nombre Madre</string>
-    <string name="nombre1MadreHint">Nombre completo de la madre</string>
-    <string name="nombre2Madre">2do Nombre Madre</string>
-    <string name="nombre2MadreHint">Nombre completo de la madre</string>
-    <string name="apellido1Madre">1er Apellido Madre</string>
-    <string name="apellido1MadreHint">Nombre completo de la madre</string>
-    <string name="apellido2Madre">2do Apellido Madre</string>
-    <string name="apellido2MadreHint">Nombre completo de la madre</string>
+
     
 </resources>

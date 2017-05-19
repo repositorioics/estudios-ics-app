@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas;
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
 import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 
 /**
  * Simple objeto de dominio que representa los datos de peso y talla de los
@@ -20,7 +21,7 @@ public class EncuestaPesoTalla extends BaseMetaData {
 	 * 
 	 */
 	
-	private Participante participante;
+	private ParticipanteCohorteFamilia participante;
 	private Double peso1;
 	private Double peso2;
 	private Double peso3;
@@ -35,11 +36,11 @@ public class EncuestaPesoTalla extends BaseMetaData {
 	private String recurso1;
 	private String otrorecurso1;
 
-    public Participante getParticipante() {
+    public ParticipanteCohorteFamilia getParticipante() {
         return participante;
     }
 
-    public void setParticipante(Participante participante) {
+    public void setParticipante(ParticipanteCohorteFamilia participante) {
         this.participante = participante;
     }
 
@@ -149,7 +150,7 @@ public class EncuestaPesoTalla extends BaseMetaData {
 
     @Override
     public String toString() {
-        return "EncuestaPesoTalla{" + participante.getCodigo() +
+        return "EncuestaPesoTalla{" + participante.getParticipanteCHF() +
                 '}';
     }
 

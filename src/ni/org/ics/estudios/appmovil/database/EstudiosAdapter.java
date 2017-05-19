@@ -22,6 +22,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaDatosPartoBB;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaPesoTalla;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.helpers.*;
@@ -76,6 +77,7 @@ public class EstudiosAdapter {
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_CASA_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PARTOBB_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PARTICIPANTE_TABLE);
+            db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PESOTALLA_TABLE);
             
 			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
 			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");
@@ -923,6 +925,60 @@ public class EstudiosAdapter {
             do{
                 EncuestaParticipante mEncuesta = null;
                 mEncuesta = EncuestaParticipanteHelper.crearEncuestaParticipante(cursor);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)), null);
+                if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
+                mEncuestas.add(mEncuesta);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mEncuestas;
+    }
+
+    /**
+     * Metodos para EncuestaPesoTalla en la base de datos
+     *
+     * @param encuestaPesoTalla
+     *            Objeto EncuestasPesoTalla que contiene la informacion
+     *
+     */
+    //Crear nuevo EncuestasPesoTalla en la base de datos
+    public void crearEncuestasPesoTalla(EncuestaPesoTalla encuestaPesoTalla) {
+        ContentValues cv = EncuestaPesoTallaHelper.crearEncuestaPesoTallaContentValues(encuestaPesoTalla);
+        mDb.insert(EncuestasDBConstants.ENCUESTA_PESOTALLA_TABLE, null, cv);
+    }
+    //Editar EncuestasPesoTalla existente en la base de datos
+    public boolean editarEncuestasPesoTalla(EncuestaPesoTalla encuestaPesoTalla) {
+        ContentValues cv = EncuestaPesoTallaHelper.crearEncuestaPesoTallaContentValues(encuestaPesoTalla);
+        return mDb.update(EncuestasDBConstants.ENCUESTA_PESOTALLA_TABLE, cv, EncuestasDBConstants.participante_chf + "='"
+                + encuestaPesoTalla.getParticipante().getParticipanteCHF() + "'", null) > 0;
+    }
+    //Limpiar la tabla de EncuestasPesoTalla de la base de datos
+    public boolean borrarEncuestasPesoTallas() {
+        return mDb.delete(EncuestasDBConstants.ENCUESTA_PESOTALLA_TABLE, null, null) > 0;
+    }
+    //Obtener una EncuestaPesoTalla de la base de datos
+    public EncuestaPesoTalla getEncuestasPesoTalla(String filtro, String orden) throws SQLException {
+        EncuestaPesoTalla mEncuestasPesoTalla = null;
+        Cursor cursor = crearCursor(EncuestasDBConstants.ENCUESTA_PESOTALLA_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mEncuestasPesoTalla=EncuestaPesoTallaHelper.crearEncuestaPesoTalla(cursor);
+            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)) + "'", null);
+            if (participanteCohorteFamilia != null) mEncuestasPesoTalla.setParticipante(participanteCohorteFamilia);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mEncuestasPesoTalla;
+    }
+    //Obtener una lista de EncuestasPesoTalla de la base de datos
+    public List<EncuestaPesoTalla> getEncuestasPesoTallas(String filtro, String orden) throws SQLException {
+        List<EncuestaPesoTalla> mEncuestas = new ArrayList<EncuestaPesoTalla>();
+        Cursor cursor = crearCursor(EncuestasDBConstants.ENCUESTA_PESOTALLA_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mEncuestas.clear();
+            do{
+                EncuestaPesoTalla mEncuesta = null;
+                mEncuesta = EncuestaPesoTallaHelper.crearEncuestaPesoTalla(cursor);
                 ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)), null);
                 if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
                 mEncuestas.add(mEncuesta);

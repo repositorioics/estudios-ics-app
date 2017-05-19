@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="new_Weighheight_survey">Encuesta Peso y Talla</string>
+    <string name="pesoHint">(Kg)</string>
+    <string name="peso1">Digite Peso 1</string>
+    <string name="peso2">Digite Peso 2</string>
+    <string name="peso3">Digite Peso 3</string>
+    <string name="tallaHint">(cm)</string>
+    <string name="talla1">Digite Talla 1</string>
+    <string name="talla2">Digite Talla 2</string>
+    <string name="talla3">Digite Talla 3</string>
+    <string name="imc1">IMC1</string>
+    <string name="imc2">IMC2</string>
+    <string name="imc3">IMC3</string>
+    <string name="difPeso">La diferencia entre las mediciones de peso 1 y peso 2 es de 5% o más</string>
+    <string name="difTalla">La diferencia entre las mediciones de talla 1 y talla 2 es de 5% o más</string>
+    <string name="difMediciones">La diferencia entre las mediciones de talla1 y talla2; o del peso 1 y peso2 es de 5 % o mas se tomará peso 3 y talla 3</string>
+</resources>

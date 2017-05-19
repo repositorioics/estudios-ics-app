@@ -53,6 +53,7 @@ public class LabelFragment extends Fragment {
 		
 		mHintTextInput = (TextView) rootView.findViewById(R.id.label_hint);
 		mHintTextInput.setText(mPage.getHint());
+        mHintTextInput.setTextSize(40);
 		mHintTextInput.setTextColor(Color.parseColor(mPage.getmHintTextColor()));
 		
 		return rootView;

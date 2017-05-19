@@ -52,7 +52,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         this.estudiosAdapter = new EstudiosAdapter(mContext,mPass,false,false);
         estudiosAdapter.open();
 
-            catSiNo = fillCatalog("CHF_CAT_SINO");
+        catSiNo = fillCatalog("CHF_CAT_SINO");
         catNivelEdu = fillCatalog("CHF_CAT_NIV_EDU");
         catTipoTrab = fillCatalog("CHF_CAT_TIP_TRABAJO");
         catGrado = fillCatalog("CHF_CAT_GRD_EDU");

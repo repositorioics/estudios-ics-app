@@ -75,6 +75,7 @@ public class EstudiosAdapter {
             db.execSQL(MainDBConstants.CREATE_PARTICIPANTE_CHF_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_CASA_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PARTOBB_TABLE);
+            db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PARTICIPANTE_TABLE);
             
 			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
 			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");

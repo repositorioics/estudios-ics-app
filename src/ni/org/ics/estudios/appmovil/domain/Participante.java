@@ -207,7 +207,7 @@ public class Participante extends BaseMetaData implements Serializable{
                 iedadEnDias = 0;
             }
 
-            return iedadEnAnios.toString() + " años " + iedadEnMeses.toString() + " meses " + iedadEnDias.toString() + " dias";
+            return iedadEnAnios.toString() + "/" + iedadEnMeses.toString() + "/" + iedadEnDias.toString();
         }else{
             return "ND";
         }

@@ -20,6 +20,7 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaDatosPartoBBActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaParticipanteActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuParticipanteAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
@@ -60,15 +61,23 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
 				Bundle arguments = new Bundle();
 				Intent i;
 				switch (position){
-				case 1:
-					if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
-					i = new Intent(getApplicationContext(),
-							NuevaEncuestaDatosPartoBBActivity.class);
-					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					i.putExtras(arguments);
-					startActivity(i);
-		        	break;
-				    default:
+                    case 0:
+                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
+                        i = new Intent(getApplicationContext(),
+                                NuevaEncuestaParticipanteActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
+                    case 1:
+                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
+                        i = new Intent(getApplicationContext(),
+                                NuevaEncuestaDatosPartoBBActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
+                    default:
                         break;
 		        }
 			}

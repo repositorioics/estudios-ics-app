@@ -1,7 +1,7 @@
 package ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas;
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
-import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 
 /**
  * Created by Miguel Salinas on 5/3/2017.
@@ -13,11 +13,11 @@ public class EncuestaParticipante extends BaseMetaData {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Participante participante;
+	private ParticipanteCohorteFamilia participante;
     //Adulto   (Mayores o igual a 18 años; Mujeres menores de 18 años con niños o embarazadas)
-    private char emancipado;
-    private String motivoEmacipacion;
-    private String otroMotivoEmancipacion;
+    //private char emancipado;
+    //private String motivoEmacipacion;
+    //private String otroMotivoEmancipacion;
     private char estaEmbarazada;
     private Integer semanasEmbarazo;
     private char esAlfabeto;
@@ -38,13 +38,13 @@ public class EncuestaParticipante extends BaseMetaData {
     private String conQuienViveNino;
     private String descOtroViveNino;
     private char padreEnEstudio;
-    private Integer codigoPadreEstudio;
+    private String codigoPadreEstudio;
     private char padreAlfabeto;
     private String nivelEducacionPadre;
     private char trabajaPadre;
     private String tipoTrabajoPadre;
     private char madreEnEstudio;
-    private Integer codigoMadreEstudio;
+    private String codigoMadreEstudio;
     private char madreAlfabeto;
     private String nivelEducacionMadre;
     private char trabajaMadre;
@@ -61,6 +61,7 @@ public class EncuestaParticipante extends BaseMetaData {
     private char completoTratamientoTubPulActual;
     private char tuberculosisPulmonarPasado;
     private String fechaDiagnosticoTubPulPasado;
+    private char fechaDiagnosticoTubPulPasadoDes;//fecha de diagnóstico desconocida
     private char tomaTratamientoTubPulPasado;
     private char completoTratamientoTubPulPasado;
     private char alergiaRespiratoria;
@@ -69,7 +70,7 @@ public class EncuestaParticipante extends BaseMetaData {
     private char diabetes;
     private char presionAlta;
     private char asma;
-    private char silvidoRespirarPechoApretado;
+    private char silbidoRespirarPechoApretado;
     private char tosSinFiebreResfriado;
     private char usaInhaladoresSpray;
     private char crisisAsma;
@@ -79,15 +80,17 @@ public class EncuestaParticipante extends BaseMetaData {
     private String descOtrasEnfermedades;
     private char vacunaInfluenza;
     private Integer anioVacunaInfluenza;
+    private String recurso1;
+    private String otrorecurso1;
 
-    public Participante getParticipante() {
+    public ParticipanteCohorteFamilia getParticipante() {
         return participante;
     }
 
-    public void setParticipante(Participante participante) {
+    public void setParticipante(ParticipanteCohorteFamilia participante) {
         this.participante = participante;
     }
-
+/*
     public char getEmancipado() {
         return emancipado;
     }
@@ -111,7 +114,7 @@ public class EncuestaParticipante extends BaseMetaData {
     public void setOtroMotivoEmancipacion(String otroMotivoEmancipacion) {
         this.otroMotivoEmancipacion = otroMotivoEmancipacion;
     }
-
+*/
     public char getEstaEmbarazada() {
         return estaEmbarazada;
     }
@@ -256,11 +259,11 @@ public class EncuestaParticipante extends BaseMetaData {
         this.padreEnEstudio = padreEnEstudio;
     }
 
-    public Integer getCodigoPadreEstudio() {
+    public String getCodigoPadreEstudio() {
         return codigoPadreEstudio;
     }
 
-    public void setCodigoPadreEstudio(Integer codigoPadreEstudio) {
+    public void setCodigoPadreEstudio(String codigoPadreEstudio) {
         this.codigoPadreEstudio = codigoPadreEstudio;
     }
 
@@ -304,11 +307,11 @@ public class EncuestaParticipante extends BaseMetaData {
         this.madreEnEstudio = madreEnEstudio;
     }
 
-    public Integer getCodigoMadreEstudio() {
+    public String getCodigoMadreEstudio() {
         return codigoMadreEstudio;
     }
 
-    public void setCodigoMadreEstudio(Integer codigoMadreEstudio) {
+    public void setCodigoMadreEstudio(String codigoMadreEstudio) {
         this.codigoMadreEstudio = codigoMadreEstudio;
     }
 
@@ -424,6 +427,14 @@ public class EncuestaParticipante extends BaseMetaData {
         this.fechaDiagnosticoTubPulPasado = fechaDiagnosticoTubPulPasado;
     }
 
+    public char getFechaDiagnosticoTubPulPasadoDes() {
+        return fechaDiagnosticoTubPulPasadoDes;
+    }
+
+    public void setFechaDiagnosticoTubPulPasadoDes(char fechaDiagnosticoTubPulPasadoDes) {
+        this.fechaDiagnosticoTubPulPasadoDes = fechaDiagnosticoTubPulPasadoDes;
+    }
+
     public char getTomaTratamientoTubPulPasado() {
         return tomaTratamientoTubPulPasado;
     }
@@ -488,12 +499,12 @@ public class EncuestaParticipante extends BaseMetaData {
         this.asma = asma;
     }
 
-    public char getSilvidoRespirarPechoApretado() {
-        return silvidoRespirarPechoApretado;
+    public char getSilbidoRespirarPechoApretado() {
+        return silbidoRespirarPechoApretado;
     }
 
-    public void setSilvidoRespirarPechoApretado(char silvidoRespirarPechoApretado) {
-        this.silvidoRespirarPechoApretado = silvidoRespirarPechoApretado;
+    public void setSilbidoRespirarPechoApretado(char silbidoRespirarPechoApretado) {
+        this.silbidoRespirarPechoApretado = silbidoRespirarPechoApretado;
     }
 
     public char getTosSinFiebreResfriado() {
@@ -568,9 +579,25 @@ public class EncuestaParticipante extends BaseMetaData {
         this.anioVacunaInfluenza = anioVacunaInfluenza;
     }
 
+    public String getRecurso1() {
+        return recurso1;
+    }
+
+    public void setRecurso1(String recurso1) {
+        this.recurso1 = recurso1;
+    }
+
+    public String getOtrorecurso1() {
+        return otrorecurso1;
+    }
+
+    public void setOtrorecurso1(String otrorecurso1) {
+        this.otrorecurso1 = otrorecurso1;
+    }
+
     @Override
     public String toString() {
-        return "EncuestaParticipante{" + participante.getCodigo() +
+        return "EncuestaParticipante{" + participante.getParticipanteCHF() +
                 '}';
     }
 

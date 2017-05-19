@@ -37,8 +37,8 @@ public class EncuestaDatosPartoBBHelper {
         cv.put(EncuestasDBConstants.docMedPesoBB_sn, encuesta.getDocMedPesoBB_sn());
         cv.put(EncuestasDBConstants.docMedPesoBB, encuesta.getDocMedPesoBB());
         cv.put(EncuestasDBConstants.otroDocMedPesoBB, encuesta.getOtroDocMedPesoBB());
+        cv.put(EncuestasDBConstants.recurso1, encuesta.getRecurso1());
         cv.put(EncuestasDBConstants.otrorecurso1, encuesta.getOtrorecurso1());
-        cv.put(EncuestasDBConstants.otrorecurso2, encuesta.getOtrorecurso2());
         if (encuesta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, encuesta.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, encuesta.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(encuesta.getPasive()));
@@ -72,8 +72,8 @@ public class EncuestaDatosPartoBBHelper {
         mEncuesta.setPesoBB_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedPesoBB_sn)));
         mEncuesta.setDocMedPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedPesoBB)));
         mEncuesta.setOtroDocMedPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroDocMedPesoBB)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)) > 0) mEncuesta.setOtrorecurso1(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso2)) > 0)mEncuesta.setOtrorecurso2(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso2)));
+        mEncuesta.setRecurso1(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.recurso1)));
+        mEncuesta.setOtrorecurso1(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mEncuesta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mEncuesta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         mEncuesta.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));

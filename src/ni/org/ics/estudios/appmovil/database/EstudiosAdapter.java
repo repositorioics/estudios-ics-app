@@ -21,6 +21,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFam
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaDatosPartoBB;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.helpers.*;
@@ -876,4 +877,57 @@ public class EstudiosAdapter {
         return mEncuestas;
     }
 
+    /**
+     * Metodos para EncuestaParticipante en la base de datos
+     *
+     * @param encuestaParticipante
+     *            Objeto EncuestasParticipante que contiene la informacion
+     *
+     */
+    //Crear nuevo EncuestasParticipante en la base de datos
+    public void crearEncuestasParticipante(EncuestaParticipante encuestaParticipante) {
+        ContentValues cv = EncuestaParticipanteHelper.crearEncuestaParticipanteContentValues(encuestaParticipante);
+        mDb.insert(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, null, cv);
+    }
+    //Editar EncuestasParticipante existente en la base de datos
+    public boolean editarEncuestasParticipante(EncuestaParticipante encuestaParticipante) {
+        ContentValues cv = EncuestaParticipanteHelper.crearEncuestaParticipanteContentValues(encuestaParticipante);
+        return mDb.update(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, cv, EncuestasDBConstants.participante_chf + "='"
+                + encuestaParticipante.getParticipante().getParticipanteCHF() + "'", null) > 0;
+    }
+    //Limpiar la tabla de EncuestasParticipante de la base de datos
+    public boolean borrarEncuestasParticipantes() {
+        return mDb.delete(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, null, null) > 0;
+    }
+    //Obtener una EncuestaParticipante de la base de datos
+    public EncuestaParticipante getEncuestasParticipante(String filtro, String orden) throws SQLException {
+        EncuestaParticipante mEncuestasParticipante = null;
+        Cursor cursor = crearCursor(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mEncuestasParticipante=EncuestaParticipanteHelper.crearEncuestaParticipante(cursor);
+            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)) + "'", null);
+            if (participanteCohorteFamilia != null) mEncuestasParticipante.setParticipante(participanteCohorteFamilia);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mEncuestasParticipante;
+    }
+    //Obtener una lista de EncuestasParticipante de la base de datos
+    public List<EncuestaParticipante> getEncuestasParticipantes(String filtro, String orden) throws SQLException {
+        List<EncuestaParticipante> mEncuestas = new ArrayList<EncuestaParticipante>();
+        Cursor cursor = crearCursor(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mEncuestas.clear();
+            do{
+                EncuestaParticipante mEncuesta = null;
+                mEncuesta = EncuestaParticipanteHelper.crearEncuestaParticipante(cursor);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)), null);
+                if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
+                mEncuestas.add(mEncuesta);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mEncuestas;
+    }
 }

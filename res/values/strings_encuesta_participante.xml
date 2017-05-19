@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="new_participant_survey">Encuesta Participante</string>
+    <!--
+    <string name="emancipado">¿Participante Enmancipad@?</string>
+    <string name="motivoEmacipacion">Seleccione motivo de enmancipacion</string>
+    <string name="otroMotivoEmancipacion">Otro motivo emancipación</string>
+    -->
+    <string name="estaEmbarazada">¿Esta embarazada?</string>
+    <string name="semanasEmbarazo">Semanas de Embarazada</string>
+    <string name="esAlfabeto">¿Usted es alfabeto? </string>
+    <string name="nivelEducacion">¿Cuál es su nivel de educación?</string>
+    <string name="trabaja">¿Trabaja?</string>
+    <string name="tipoTrabajo">Que tipo  de trabajo</string>
+    <string name="ocupacionActual">Ocupación actual</string>
+    <string name="vaNinoEscuela">¿Va el niño a la escuela?</string>
+    <string name="gradoCursa">¿En qué grado está?</string>
+    <string name="turno">Turno</string>
+    <string name="nombreCentroEstudio">Nombre de la escuela (Universidad)</string>
+    <string name="dondeCuidanNino">Si el niño No va a la escuela, donde lo cuidan?</string>
+    <string name="ninoTrabaja">¿Niño Trabaja?</string>
+    <string name="ocupacionActualNino">Ocupación Actual para mayores de 14 años</string>
+    <string name="cantNinosLugarCuidan">¿Cuántos niños aproximadamente hay en el lugar que cuidan al niño?</string>
+    <string name="conQuienViveNino">¿Con quién vive el niño?</string>
+    <string name="descOtroViveNino">Indicar con que otra persona vive el niño</string>
+    <string name="padreEnEstudio">¿El padre está en el estudio?</string>
+    <string name="codigoPadreEstudio">Código del estudio del padre</string>
+    <string name="padreAlfabeto">¿El padre es alfabeto?</string>
+    <string name="nivelEducacionPadre">¿Cuál es el nivel de educación del padre?</string>
+    <string name="trabajaPadre">¿Trabaja el padre?</string>
+    <string name="tipoTrabajoPadre">¿Que tipo  de trabajo tiene el padre?</string>
+    <string name="madreEnEstudio">¿La madre está en el estudio?</string>
+    <string name="codigoMadreEstudio">Código del estudio de la madre</string>
+    <string name="madreAlfabeto">¿La madre es alfabeta?</string>
+    <string name="nivelEducacionMadre">¿Cuál es el nivel de educación de la madre?</string>
+    <string name="trabajaMadre">¿Trabaja la madre?</string>
+    <string name="tipoTrabajoMadre">¿Que tipo de trabajo tiene la madre?</string>
+    <string name="fuma">¿Usted fuma?</string>
+    <string name="periodicidadFuma">Con que frecuencia fuma</string>
+    <string name="cantidadCigarrillos">¿Cuantos cigarrillos fuma?</string>
+    <string name="fumaDentroCasa">¿Usted fuma adentro de la casa?</string>
+    <string name="tuberculosisPulmonarActual">¿Padece actualmente de tuberculosis pulmonar?</string>
+    <string name="fechaDiagnosticoTubPulActual">Fecha de diagnóstico (mes/año)</string>
+    <string name="anioFechaDiagnosticoTubPulActual">Año Fecha de diagnóstico tuberculosis pulmonar</string>
+    <string name="mesFechaDiagnosticoTubPulActual">Mes Fecha de diagnóstico tuberculosis pulmonar</string>
+    <string name="tomaTratamientoTubPulActual">¿Toma tratamiento para tuberculosis?</string>
+    <string name="completoTratamientoTubPulActual">¿Completó su tratamiento para tuberculosis?</string>
+    <string name="tuberculosisPulmonarPasado">¿Le han diagnosticado tuberculosis pulmonar en el pasado?</string>
+    <string name="fechaDiagnosticoTubPulPasadoSn">¿Conoce la fecha de diagnóstico tuberculosis pulmonar en el pasado?</string>
+    <string name="fechaDiagnosticoTubPulPasado">Fecha de diagnóstico (mes/año) o desconocido</string>
+    <string name="anioFechaDiagnosticoTubPulPasado">Año Fecha de diagnóstico tuberculosis pulmonar en el pasdo</string>
+    <string name="mesFechaDiagnosticoTubPulPasado">Mes Fecha de diagnóstico tuberculosis pulmonar en el pasado</string>
+    <string name="tomaTratamientoTubPulPasado">¿Tomó tratamiento para tuberculosis en ese momento?</string>
+    <string name="completoTratamientoTubPulPasado">¿Completó su tratamiento para tuberculosis en el pasado?</string>
+    <string name="alergiaRespiratoria">¿Le han diagnosticado algún tipo de alergia respiratoria?</string>
+    <string name="cardiopatia">¿Le han diagnosticado Cardiopatía?</string>
+    <string name="enfermedadPulmonarOC">¿Le han diagnosticado enfermedad pulmonar obstructiva crónica?</string>
+    <string name="diabetes">¿Le han diagnosticado Diabetes?</string>
+    <string name="presionAlta">¿Le han diagnosticado Presión alta?</string>
+    <string name="asma">¿Le  han diagnosticado asma?</string>
+    <string name="silbidoRespirarPechoApretado">En los últimos 12 meses, ¿usted/su niño ha tenido silbido al respirar, o sensación de pecho apretado?</string>
+    <string name="tosSinFiebreResfriado">En los últimos 12 meses, ¿usted/su niño ha tenido, durante el día, una tos que permaneció por 3 o más días, cuando no estaba con fiebre o resfriado?</string>
+    <string name="usaInhaladoresSpray">En los últimos 12 meses, ¿usted/su niño ha tomado medicamentos por silbido de pecho o dificultad al respirar, como inhaladores o “puffers”, spray?</string>
+    <string name="crisisAsma">En el último año ha tenido usted/su niño crisis de Asma?</string>
+    <string name="cantidadCrisisAsma">¿Cuántas veces?</string>
+    <string name="vecesEnfermoEnfermedadesRes">¿Cuántas veces enfermo en el último año por cuadros o enfermedades respiratorias?</string>
+    <string name="otrasEnfermedades">¿Le han diagnosticado otras enfermedades?</string>
+    <string name="descOtrasEnfermedades">Especifique</string>
+    <string name="vacunaInfluenza">¿Usted fue vacunado contra Influenza?</string>
+    <string name="anioVacunaInfluenza">Indicar Año de vacunación</string>
+</resources>

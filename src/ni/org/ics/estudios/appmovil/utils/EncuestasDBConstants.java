@@ -194,8 +194,8 @@ public class EncuestasDBConstants {
     public static final String docMedPesoBB_sn = "docMedPesoBB_sn";
     public static final String docMedPesoBB = "docMedPesoBB";
     public static final String otroDocMedPesoBB = "otroDocMedPesoBB";
+    public static final String recurso1 = "recurso1";
     public static final String otrorecurso1 = "otrorecurso1";
-    public static final String otrorecurso2 = "otrorecurso2";
 
     //crear tabla EncuestaDatosPartoBB
     public static final String CREATE_ENCUESTA_PARTOBB_TABLE = "create table if not exists "
@@ -221,8 +221,8 @@ public class EncuestasDBConstants {
             + docMedPesoBB_sn  + " text, "
             + docMedPesoBB  + " text, "
             + otroDocMedPesoBB  + " text, "
-            + otrorecurso1  + " integer, "
-            + otrorecurso2  + " integer, "
+            + recurso1 + " text, "
+            + otrorecurso1 + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "
@@ -271,8 +271,8 @@ public class EncuestasDBConstants {
             + mesDioLiqDisLeche  + " integer, "
             + edAlimSolidos  + " integer, "
             + mesDioAlimSol  + " integer, "
-            + otrorecurso1  + " integer, "
-            + otrorecurso2  + " integer, "
+            + recurso1 + " text, "
+            + otrorecurso1 + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "
@@ -330,6 +330,7 @@ public class EncuestasDBConstants {
     public static final String completoTratamientoTubPulActual = "completoTratamientoTubPulActual";
     public static final String tuberculosisPulmonarPasado = "tuberculosisPulmonarPasado";
     public static final String fechaDiagnosticoTubPulPasado = "fechaDiagnosticoTubPulPasado";
+    public static final String fechaDiagnosticoTubPulPasadoDes = "fechaDiagnosticoTubPulPasadoDes";
     public static final String tomaTratamientoTubPulPasado = "tomaTratamientoTubPulPasado";
     public static final String completoTratamientoTubPulPasado = "completoTratamientoTubPulPasado";
     public static final String alergiaRespiratoria = "alergiaRespiratoria";
@@ -338,7 +339,7 @@ public class EncuestasDBConstants {
     public static final String diabetes = "diabetes";
     public static final String presionAlta = "presionAlta";
     public static final String asma = "asma";
-    public static final String silvidoRespirarPechoApretado = "silvidoRespirarPechoApretado";
+    public static final String silvidoRespirarPechoApretado = "silbidoRespirarPechoApretado";
     public static final String tosSinFiebreResfriado = "tosSinFiebreResfriado";
     public static final String usaInhaladoresSpray = "usaInhaladoresSpray";
     public static final String crisisAsma = "crisisAsma";
@@ -396,6 +397,7 @@ public class EncuestasDBConstants {
             + completoTratamientoTubPulActual  + " text, "
             + tuberculosisPulmonarPasado  + " text, "
             + fechaDiagnosticoTubPulPasado  + " text, "
+            + fechaDiagnosticoTubPulPasadoDes  + " text, "
             + tomaTratamientoTubPulPasado  + " text, "
             + completoTratamientoTubPulPasado  + " text, "
             + alergiaRespiratoria  + " text, "
@@ -452,8 +454,8 @@ public class EncuestasDBConstants {
             + imc3 + " real, "
             + difPeso + " real, "
             + difTalla + " real, "
-            + otrorecurso1 + " integer, "
-            + otrorecurso2 + " integer, "
+            + recurso1 + " text, "
+            + otrorecurso1 + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "
@@ -500,7 +502,7 @@ public class EncuestasDBConstants {
             + fechaInf8 + " date, "
             + fechaInf9 + " date, "
             + fechaInf10 + " date, "
-            + otrorecurso1 + " integer, "
+            + recurso1 + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

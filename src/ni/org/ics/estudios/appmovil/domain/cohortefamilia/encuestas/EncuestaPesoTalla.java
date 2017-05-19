@@ -32,8 +32,8 @@ public class EncuestaPesoTalla extends BaseMetaData {
 	private Double imc3;
 	private Double difPeso;
 	private Double difTalla;
-	private Integer otrorecurso1;
-	private Integer otrorecurso2;
+	private String recurso1;
+	private String otrorecurso1;
 
     public Participante getParticipante() {
         return participante;
@@ -131,20 +131,20 @@ public class EncuestaPesoTalla extends BaseMetaData {
 		this.difTalla = difTalla;
 	}
 
-	public Integer getOtrorecurso1() {
+	public String getRecurso1() {
+		return recurso1;
+	}
+
+	public void setRecurso1(String recurso1) {
+		this.recurso1 = recurso1;
+	}
+
+	public String getOtrorecurso1() {
 		return otrorecurso1;
 	}
 
-	public void setOtrorecurso1(Integer otrorecurso1) {
+	public void setOtrorecurso1(String otrorecurso1) {
 		this.otrorecurso1 = otrorecurso1;
-	}
-
-	public Integer getOtrorecurso2() {
-		return otrorecurso2;
-	}
-
-	public void setOtrorecurso2(Integer otrorecurso2) {
-		this.otrorecurso2 = otrorecurso2;
 	}
 
     @Override

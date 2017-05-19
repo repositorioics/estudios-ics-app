@@ -546,7 +546,7 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
             encuesta.setFumFueraRango_razon(tpFumFueraRangoRazon);
             encuesta.setOtroDocMedEdadGest(tpOtroDocMedEdadGest);
             encuesta.setOtroDocMedPesoBB(tpOtroDocMedPesoBB);
-
+            encuesta.setRecurso1(username);
             //Metadata
             encuesta.setRecordDate(new Date());
             encuesta.setRecordUser(username);

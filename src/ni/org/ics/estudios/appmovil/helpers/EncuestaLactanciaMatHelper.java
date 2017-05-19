@@ -33,8 +33,8 @@ public class EncuestaLactanciaMatHelper {
         cv.put(EncuestasDBConstants.mesDioLiqDisLeche, encuesta.getMesDioLiqDisLeche());
         cv.put(EncuestasDBConstants.edAlimSolidos, encuesta.getEdAlimSolidos());
         cv.put(EncuestasDBConstants.mesDioAlimSol, encuesta.getMesDioAlimSol());
+        cv.put(EncuestasDBConstants.recurso1, encuesta.getRecurso1());
         cv.put(EncuestasDBConstants.otrorecurso1, encuesta.getOtrorecurso1());
-        cv.put(EncuestasDBConstants.otrorecurso2, encuesta.getOtrorecurso2());
 
         if (encuesta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, encuesta.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, encuesta.getRecordUser());
@@ -65,8 +65,8 @@ public class EncuestaLactanciaMatHelper {
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mesDioLiqDisLeche)) > 0) mEncuesta.setMesDioLiqDisLeche(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mesDioLiqDisLeche)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edAlimSolidos)) > 0) mEncuesta.setEdAlimSolidos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edAlimSolidos)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mesDioAlimSol)) > 0) mEncuesta.setMesDioAlimSol(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mesDioAlimSol)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)) > 0) mEncuesta.setOtrorecurso1(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso2)) > 0) mEncuesta.setOtrorecurso2(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso2)));
+        mEncuesta.setRecurso1(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.recurso1)));
+        mEncuesta.setOtrorecurso1(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mEncuesta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mEncuesta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         mEncuesta.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));

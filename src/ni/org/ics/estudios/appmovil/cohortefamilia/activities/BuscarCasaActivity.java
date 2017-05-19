@@ -210,7 +210,6 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 
     private void crearTamizajeCasa(){
     	new OpenDataEnterActivityTask().execute();
-        finish();
     }
     
 	@Override

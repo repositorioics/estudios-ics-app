@@ -12,6 +12,7 @@ import java.util.List;
 import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
+import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
@@ -78,6 +79,7 @@ public class EstudiosAdapter {
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PARTOBB_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PARTICIPANTE_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PESOTALLA_TABLE);
+            db.execSQL(MainDBConstants.CREATE_CARTACONSENTIMIENTO_TABLE);
             
 			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
 			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");
@@ -770,6 +772,19 @@ public class EstudiosAdapter {
 		}
 		if (!cursorTamizajes.isClosed()) cursorTamizajes.close();
 		return mTamizajes;
+	}
+	
+	/**
+	 * Metodos para carta de consentimiento en la base de datos
+	 * 
+	 * @param cartaConsentimiento
+	 *            Objeto CartaConsentimiento que contiene la informacion
+	 *
+	 */
+	//Crear nuevo CartaConsentimiento en la base de datos
+	public void crearCartaConsentimiento(CartaConsentimiento cartaConsentimiento) {
+		ContentValues cv = CartaConsentimientoHelper.crearCartaConsentimientoContentValues(cartaConsentimiento);
+		mDb.insert(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE, null, cv);
 	}
 
     /**

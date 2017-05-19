@@ -3,6 +3,7 @@ package ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,13 +16,32 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.catalogs.Estudio;
+import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCasaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PreTamizajeForm;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PreTamizajeFormLabels;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.Casa;
+import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
+import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
+import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
 import ni.org.ics.estudios.appmovil.utils.FileUtils;
+import ni.org.ics.estudios.appmovil.utils.GPSTracker;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
 import ni.org.ics.estudios.appmovil.wizard.model.LabelPage;
@@ -49,13 +69,13 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     private Button mPrevButton;
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
-    //private PreTamizajeFormLabels labels = new PreTamizajeFormLabels();
-    //private EstudiosAdapter estudiosAdapter;
-    //private DeviceInfo infoMovil;
-    //private GPSTracker gps;
-    //private static Casa casa = new Casa();
-	//private String username;
-	//private SharedPreferences settings;
+    private PreTamizajeFormLabels labels = new PreTamizajeFormLabels();
+    private EstudiosAdapter estudiosAdapter;
+    private DeviceInfo infoMovil;
+    private GPSTracker gps;
+    private static Casa casa = new Casa();
+	private String username;
+	private SharedPreferences settings;
 	private static final int EXIT = 1;
 	private AlertDialog alertDialog;
 	private boolean notificarCambios = true;
@@ -69,14 +89,14 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
 			finish();
 		}
         setContentView(R.layout.activity_data_enter);
-        /*settings =
+        settings =
 				PreferenceManager.getDefaultSharedPreferences(this);
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 		infoMovil = new DeviceInfo(NuevoTamizajeCasaActivity.this);
 		gps = new GPSTracker(NuevoTamizajeCasaActivity.this);
-		casa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);*/
+		casa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new PreTamizajeForm(this,mPass);
         if (savedInstanceState != null) {
@@ -311,7 +331,38 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     }
     
     public void updateModel(Page page){
-    	//boolean visible = false;
+    	try{
+    		boolean visible = false;
+    		if (page.getTitle().equals(labels.getVisitaExitosa())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+                changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajeCasa()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getRazonVisitaNoExitosa()), !visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+    		if (page.getTitle().equals(labels.getAceptaTamizajeCasa())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+                changeStatus(mWizardModel.findByKey(labels.getCodigoCHF()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getMismoJefe()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getFinTamizajeLabel()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaTamizajeCasa()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaTamizajeCasaLabel()), !visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+    		if (page.getTitle().equals(labels.getMismoJefe())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("No");
+                changeStatus(mWizardModel.findByKey(labels.getNombre1JefeFamilia()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getNombre2JefeFamilia()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getApellido1JefeFamilia()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getApellido2JefeFamilia()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+    		
+    	}catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
     
     public void changeStatus(Page page, boolean visible){
@@ -336,68 +387,140 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     	}
     }
     
+    private boolean tieneValor(String entrada){
+        return (entrada != null && !entrada.isEmpty());
+    }
+    
     public void saveData(){
 		Map<String, String> mapa = mWizardModel.getAnswers();
+		//Guarda las respuestas en un bundle
 		Bundle datos = new Bundle();
 		for (Map.Entry<String, String> entry : mapa.entrySet()){
 			datos.putString(entry.getKey(), entry.getValue());
 		}
-		/*String aceptaTamizaje = datos.getString(this.getString(R.string.aceptaTamizajeCasa));
-		String razonNoParticipa = datos.getString(this.getString(R.string.razonNoParticipa));
-		String codigoCHF = datos.getString(getString(R.string.codigoCHF));
+		
+		//Abre la base de datos
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		estudiosAdapter.open();
-		//Recupera los catalogos de la base de datos
-		Estudio estudio = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=1", null);
-		MessageResource aceptaTamizajeCat = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaTamizaje + "' and " + CatalogosDBConstants.catRoot + "='CAT_SINO'", null);
-		MessageResource razonNoParticipaCat = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoParticipa + "' and " + CatalogosDBConstants.catRoot + "='CAT_RAZON_NP'", null);
-		//Crea un Nuevo Registro de pretamizaje
-    	PreTamizaje preTamizaje =  new PreTamizaje();
-    	preTamizaje.setCodigo(infoMovil.getId());
-    	preTamizaje.setAceptaTamizaje(aceptaTamizajeCat.getCatKey().charAt(0));
-    	if (razonNoParticipa!=null) preTamizaje.setRazonNoParticipa(razonNoParticipaCat.getCatKey());
-    	preTamizaje.setCasa(casa);
-    	preTamizaje.setEstudio(estudio);
-    	preTamizaje.setRecordDate(new Date());
-    	preTamizaje.setRecordUser(username);
-    	preTamizaje.setDeviceid(infoMovil.getDeviceId());
-    	preTamizaje.setEstado('0');
-    	preTamizaje.setPasive('0');
-    	//Inserta un Nuevo Registro de Pretamizaje
-    	estudiosAdapter.crearPreTamizaje(preTamizaje);
-    	//Pregunta si acepta el tamizaje
-    	if (preTamizaje.getAceptaTamizaje()=='1') {
-        	//Si la respuesta es si crea un nuevo registro de casa CHF
-        	CasaCohorteFamilia cchf = new CasaCohorteFamilia();
-        	cchf.setCasa(casa);
-        	cchf.setCodigoCHF(codigoCHF);
-        	cchf.setNombre1JefeFamilia(casa.getNombre1JefeFamilia());
-        	cchf.setNombre2JefeFamilia(casa.getNombre2JefeFamilia());
-        	cchf.setApellido1JefeFamilia(casa.getApellido1JefeFamilia());
-        	cchf.setApellido2JefeFamilia(casa.getApellido2JefeFamilia());
-        	if(gps.canGetLocation()){
-        		cchf.setLatitud(gps.getLatitude());
-        		cchf.setLongitud(gps.getLongitude());
-        	}
-        	cchf.setRecordDate(new Date());
-        	cchf.setRecordUser(username);
-        	cchf.setDeviceid(infoMovil.getDeviceId());
-        	cchf.setEstado('0');
-        	cchf.setPasive('0');
-        	//Inserta una nueva casa CHF
-        	estudiosAdapter.crearCasaCohorteFamilia(cchf);
-        	Bundle arguments = new Bundle();
-            if (cchf!=null) arguments.putSerializable(Constants.CASA , cchf);
-            Intent i = new Intent(getApplicationContext(),
-            		MenuCasaActivity.class);
-            i.putExtras(arguments);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
-    	}*/
-    	Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
-		toast.show();
-		finish();
+		
+		//Obtener datos del bundle para la visita de terreno
+		String id = infoMovil.getId();
+		String visitaExitosa = datos.getString(this.getString(R.string.visitaExitosa));
+		String razonVisitaNoExitosa = datos.getString(this.getString(R.string.razonVisitaNoExitosa));
+		
+		//Crea una nueva visita de terreno
+		VisitaTerreno vt = new VisitaTerreno();
+		vt.setCodigoVisita(id);
+		vt.setCasa(casa);
+		vt.setFechaVisita(new Date());
+		if (tieneValor(visitaExitosa)) {
+			MessageResource catVisitaExitosa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + visitaExitosa + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+			if (catVisitaExitosa!=null) vt.setVisitaExitosa(catVisitaExitosa.getCatKey());
+		}
+		if (tieneValor(razonVisitaNoExitosa)) {
+			MessageResource catRazonVisitaNoExitosa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonVisitaNoExitosa + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NV'", null);
+			if (catRazonVisitaNoExitosa!=null) vt.setRazonVisitaNoExitosa(catRazonVisitaNoExitosa.getCatKey());
+		}
+		vt.setRecordDate(new Date());
+		vt.setRecordUser(username);
+		vt.setDeviceid(infoMovil.getDeviceId());
+		vt.setEstado('0');
+		vt.setPasive('0');
+		
+		//Guarda la visita de terreno
+		estudiosAdapter.crearVisitaTereno(vt);
+		
+		if (vt.getVisitaExitosa().equals("S")){
+			//Obtener datos del bundle para el pretamizaje
+			String aceptaTamizajeCasa = datos.getString(this.getString(R.string.aceptaTamizajeCasa));
+			String razonNoAceptaTamizajeCasa = datos.getString(this.getString(R.string.razonNoAceptaTamizajeCasa));
+			//Recupera el estudio de la base de datos para el pretamizaje
+			Estudio estudio = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=1", null);
+			//Crea un Nuevo Registro de pretamizaje
+	    	PreTamizaje pt =  new PreTamizaje();
+	    	pt.setCodigo(id);
+	    	if (tieneValor(aceptaTamizajeCasa)) {
+				MessageResource catAceptaTamizajeCasa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaTamizajeCasa + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+				if (catAceptaTamizajeCasa!=null) pt.setAceptaTamizajeCasa(catAceptaTamizajeCasa.getCatKey().charAt(0));
+			}
+	    	if (tieneValor(razonNoAceptaTamizajeCasa)) {
+				MessageResource catRazonNoAceptaTamizajeCasa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaTamizajeCasa + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NPT'", null);
+				if (catRazonNoAceptaTamizajeCasa!=null) pt.setRazonNoAceptaTamizajeCasa(catRazonNoAceptaTamizajeCasa.getCatKey());
+			}
+	    	pt.setCasa(casa);
+	    	pt.setEstudio(estudio);
+	    	pt.setRecordDate(new Date());
+	    	pt.setRecordUser(username);
+	    	pt.setDeviceid(infoMovil.getDeviceId());
+	    	pt.setEstado('0');
+	    	pt.setPasive('0');
+	    	//Inserta un Nuevo Registro de Pretamizaje
+	    	estudiosAdapter.crearPreTamizaje(pt);
+	    	//Pregunta si acepta el tamizaje
+	    	if (pt.getAceptaTamizajeCasa()=='S') {
+	    		//Si la respuesta es si crea un nuevo registro de casa CHF
+	    		//Obtener datos del bundle para la nueva casa
+	    		String codigoCHF = datos.getString(this.getString(R.string.codigoCHF));
+	    		String mismoJefe = datos.getString(this.getString(R.string.mismoJefe));
+	    		//Crea nueva casa
+	        	CasaCohorteFamilia cchf = new CasaCohorteFamilia();
+	        	cchf.setCodigoCHF(codigoCHF);
+	        	cchf.setCasa(casa);
+	        	//Pregunta si es el mismo jefe de familia que la casa de cohorte
+	        	if (tieneValor(mismoJefe)) {
+					MessageResource catMismoJefe = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + mismoJefe + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+					if(catMismoJefe.getCatKey().matches("S")){
+		        		cchf.setNombre1JefeFamilia(casa.getNombre1JefeFamilia());
+		        		cchf.setNombre2JefeFamilia(casa.getNombre2JefeFamilia());
+		        		cchf.setApellido1JefeFamilia(casa.getApellido1JefeFamilia());
+		        		cchf.setApellido2JefeFamilia(casa.getApellido2JefeFamilia());
+		        	}
+		        	else{
+		        		String nombre1JefeFamilia = datos.getString(this.getString(R.string.nombre1JefeFamilia));
+		        		String nombre2JefeFamilia = datos.getString(this.getString(R.string.nombre2JefeFamilia));
+		        		String apellido1JefeFamilia = datos.getString(this.getString(R.string.apellido1JefeFamilia));
+		        		String apellido2JefeFamilia = datos.getString(this.getString(R.string.apellido2JefeFamilia));
+		        		if(tieneValor(nombre1JefeFamilia)) cchf.setNombre1JefeFamilia(nombre1JefeFamilia);
+		        		if(tieneValor(nombre2JefeFamilia)) cchf.setNombre2JefeFamilia(nombre2JefeFamilia);
+		        		if(tieneValor(apellido1JefeFamilia)) cchf.setApellido1JefeFamilia(apellido1JefeFamilia);
+		        		if(tieneValor(apellido2JefeFamilia)) cchf.setApellido2JefeFamilia(apellido2JefeFamilia);
+		        	}
+				}
+	        	if(gps.canGetLocation()){
+	        		cchf.setLatitud(gps.getLatitude());
+	        		cchf.setLongitud(gps.getLongitude());
+	        	}
+	        	cchf.setRecordDate(new Date());
+	        	cchf.setRecordUser(username);
+	        	cchf.setDeviceid(infoMovil.getDeviceId());
+	        	cchf.setEstado('0');
+	        	cchf.setPasive('0');
+	        	//Inserta una nueva casa CHF
+	        	estudiosAdapter.crearCasaCohorteFamilia(cchf);
+	        	
+	        	Bundle arguments = new Bundle();
+	            if (cchf!=null) arguments.putSerializable(Constants.CASA , cchf);
+	            Intent i = new Intent(getApplicationContext(),
+	            		MenuCasaActivity.class);
+	            i.putExtras(arguments);
+	            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	            startActivity(i);
+	        	Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
+	    		toast.show();
+	    		finish();
+	    	}
+	    	else{
+	    		Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.noAceptaTamizajeCasa)+ " " + pt.getRazonNoAceptaTamizajeCasa(),Toast.LENGTH_LONG);
+				toast.show();
+				finish();
+	    	}
+		}
+		else{
+	    	Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.visitaNoExitosa)+ " " + vt.getRazonVisitaNoExitosa(),Toast.LENGTH_LONG);
+			toast.show();
+			finish();
+		}
     }
 
 

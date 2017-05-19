@@ -29,4 +29,7 @@
     
     <string name="finTamizajeLabel">Finaliza el formulario. Revise sus respuestas y haga clic en guardar en la próxima página</string>
     
+    <string name="visitaNoExitosa">Visita registrada. Se guardó en la base de datos una visita fallida por </string>
+    <string name="noAceptaTamizajeCasa">Tamizaje registrado. Se guardó en la base de datos un tamizaje no aceptado por </string>
+    
 </resources>

@@ -24,8 +24,6 @@ import android.content.Context;
 public class TamizajeForm extends AbstractWizardModel {
 	
 	int index = 0;
-	private String[] catSexo;
-	private String[] catSiNo;
 	//private String[] catRazonNoParticipaPersona;
 	private TamizajeFormLabels labels;
 	private EstudiosAdapter estudiosAdapter;
@@ -53,9 +51,13 @@ public class TamizajeForm extends AbstractWizardModel {
     	this.estudiosAdapter = new EstudiosAdapter(mContext,mPass,false,false);
     	
     	estudiosAdapter.open();
-    	catSiNo = fillCatalog("CHF_CAT_SINO");
-    	catSexo = fillCatalog("CHF_CAT_SEXO");
-    	//catRazonNoParticipaPersona = fillCatalog("CHF_CAT_NP");
+    	String[] catSiNo = fillCatalog("CHF_CAT_SINO");
+    	String[] catSexo = fillCatalog("CHF_CAT_SEXO");
+    	String[] catRazonNoParticipaPersona = fillCatalog("CHF_CAT_NPP");
+    	String[] catCriteriosInclusion = fillCatalog("CHF_CAT_CI");
+    	String[] catDondeAsisteProblemasSalud = fillCatalog("CHF_CAT_DONDEASISTE");
+    	String[] catPuestoSalud = fillCatalog("CHF_CAT_PUESTO");
+    	String[] catRelacionFamiliarTutor = fillCatalog("CHF_CAT_RFTUTOR");
 		estudiosAdapter.close();
 		
 		Page sexo = new SingleFixedChoicePage(this,labels.getSexo(), labels.getSexoHint(), Constants.WIZARD, true).setChoices(catSexo).setRequired(true);
@@ -63,15 +65,15 @@ public class TamizajeForm extends AbstractWizardModel {
 		DateMidnight dmHasta = new DateMidnight(new Date().getTime());
 		Page fechaNacimiento = new DatePage(this,labels.getFechaNacimiento(), labels.getFechaNacimientoHint(), Constants.WIZARD, true).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
 		Page aceptaTamizajePersona = new SingleFixedChoicePage(this,labels.getAceptaTamizajePersona(), labels.getAceptaTamizajePersonaHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-		Page razonNoParticipaPersona = new SingleFixedChoicePage(this,labels.getRazonNoParticipaPersona(), labels.getRazonNoParticipaPersonaHint(), Constants.WIZARD, true).setChoices("Pendiente").setRequired(true);
-		Page criteriosInclusion = new MultipleFixedChoicePage(this,labels.getCriteriosInclusion(), labels.getCriteriosInclusionHint(), Constants.WIZARD, true).setChoices("Pendiente").setRequired(false);
-		Page dondeAsisteProblemasSalud = new SingleFixedChoicePage(this,labels.getDondeAsisteProblemasSalud(), labels.getDondeAsisteProblemasSaludHint(), Constants.WIZARD, true).setChoices("Pendiente").setRequired(true);
+		Page razonNoParticipaPersona = new SingleFixedChoicePage(this,labels.getRazonNoParticipaPersona(), labels.getRazonNoParticipaPersonaHint(), Constants.WIZARD, true).setChoices(catRazonNoParticipaPersona).setRequired(true);
+		Page criteriosInclusion = new MultipleFixedChoicePage(this,labels.getCriteriosInclusion(), labels.getCriteriosInclusionHint(), Constants.WIZARD, true).setChoices(catCriteriosInclusion).setRequired(false);
+		Page dondeAsisteProblemasSalud = new SingleFixedChoicePage(this,labels.getDondeAsisteProblemasSalud(), labels.getDondeAsisteProblemasSaludHint(), Constants.WIZARD, true).setChoices(catDondeAsisteProblemasSalud).setRequired(true);
 		Page otroCentroSalud = new TextPage(this,labels.getOtroCentroSalud(),labels.getOtroCentroSaludHint(),Constants.WIZARD,true).setRequired(true);
-		Page puestoSalud = new SingleFixedChoicePage(this,labels.getPuestoSalud(), labels.getPuestoSaludHint(), Constants.WIZARD, true).setChoices("Pendiente").setRequired(true);
+		Page puestoSalud = new SingleFixedChoicePage(this,labels.getPuestoSalud(), labels.getPuestoSaludHint(), Constants.WIZARD, true).setChoices(catPuestoSalud).setRequired(true);
 		Page aceptaAtenderCentro = new SingleFixedChoicePage(this,labels.getAceptaAtenderCentro(), labels.getAceptaAtenderCentroHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 		Page esElegible = new SingleFixedChoicePage(this,labels.getEsElegible(), labels.getEsElegibleHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 		Page aceptaParticipar = new SingleFixedChoicePage(this,labels.getAceptaParticipar(), labels.getAceptaParticiparHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-		Page razonNoAceptaParticipar = new SingleFixedChoicePage(this,labels.getRazonNoAceptaParticipar(), labels.getRazonNoAceptaParticiparHint(), Constants.WIZARD, true).setChoices("Pendiente").setRequired(true);
+		Page razonNoAceptaParticipar = new SingleFixedChoicePage(this,labels.getRazonNoAceptaParticipar(), labels.getRazonNoAceptaParticiparHint(), Constants.WIZARD, true).setChoices(catRazonNoParticipaPersona).setRequired(true);
 		Page asentimientoVerbal = new SingleFixedChoicePage(this,labels.getAsentimientoVerbal(), labels.getAsentimientoVerbalHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 		Page participadoCohortePediatrica = new SingleFixedChoicePage(this,labels.getParticipadoCohortePediatrica(), labels.getParticipadoCohortePediatricaHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 		Page codigoCohorte = new BarcodePage(this,labels.getCodigoCohorte(),"",Constants.WIZARD,true).setRequired(true);
@@ -94,7 +96,7 @@ public class TamizajeForm extends AbstractWizardModel {
 		Page nombre2Tutor = new TextPage(this,labels.getNombre2Tutor(),labels.getNombre2TutorHint(),Constants.WIZARD,true).setRequired(false);
 		Page apellido1Tutor = new TextPage(this,labels.getApellido1Tutor(),labels.getApellido1TutorHint(),Constants.WIZARD,true).setRequired(true);
 		Page apellido2Tutor = new TextPage(this,labels.getApellido2Tutor(),labels.getApellido2TutorHint(),Constants.WIZARD,true).setRequired(false);
-		Page relacionFamiliarTutor = new SingleFixedChoicePage(this,labels.getRelacionFamiliarTutor(), labels.getRelacionFamiliarTutorHint(), Constants.WIZARD, true).setChoices("Pendiente").setRequired(true);
+		Page relacionFamiliarTutor = new SingleFixedChoicePage(this,labels.getRelacionFamiliarTutor(), labels.getRelacionFamiliarTutorHint(), Constants.WIZARD, true).setChoices(catRelacionFamiliarTutor).setRequired(true);
 		Page participanteOTutorAlfabeto = new SingleFixedChoicePage(this,labels.getParticipanteOTutorAlfabeto(), labels.getParticipanteOTutorAlfabetoHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);	
 		Page testigoPresente = new SingleFixedChoicePage(this,labels.getTestigoPresente(), labels.getTestigoPresenteHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);	
 		Page nombre1Testigo = new TextPage(this,labels.getNombre1Testigo(),labels.getNombre1TestigoHint(),Constants.WIZARD,true).setRequired(true);
@@ -103,7 +105,7 @@ public class TamizajeForm extends AbstractWizardModel {
 		Page apellido2Testigo = new TextPage(this,labels.getApellido2Testigo(),labels.getApellido2Testigo(),Constants.WIZARD,true).setRequired(false);
 		
 		Page aceptaParteA = new SingleFixedChoicePage(this,labels.getAceptaParteA(), labels.getAceptaParteAHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-		Page motivoRechazoParteA = new SingleFixedChoicePage(this,labels.getMotivoRechazoParteA(), labels.getMotivoRechazoParteAHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+		Page motivoRechazoParteA = new SingleFixedChoicePage(this,labels.getMotivoRechazoParteA(), labels.getMotivoRechazoParteAHint(), Constants.WIZARD, true).setChoices(catRazonNoParticipaPersona).setRequired(true);
 		Page aceptaContactoFuturo = new SingleFixedChoicePage(this,labels.getAceptaContactoFuturo(), labels.getAceptaContactoFuturoHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 		Page aceptaParteB = new SingleFixedChoicePage(this,labels.getAceptaParteB(), labels.getAceptaParteBHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 		Page aceptaParteC = new SingleFixedChoicePage(this,labels.getAceptaParteC(), labels.getAceptaParteCHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);

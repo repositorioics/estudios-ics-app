@@ -20,6 +20,7 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaDatosPartoBBActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaLactanciaMatActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaParticipanteActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaPesoTallaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuParticipanteAdapter;
@@ -82,6 +83,14 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaPesoTallaActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
+                    case 3:
+                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
+                        i = new Intent(getApplicationContext(),
+                                NuevaEncuestaLactanciaMatActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);

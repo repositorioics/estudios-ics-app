@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas;
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
 import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 
 /**
  * Simple objeto de dominio que representa los datos de la lactancia materna
@@ -19,55 +20,46 @@ public class EncuestaLactanciaMaterna extends BaseMetaData {
 	 * 
 	 */
 
-    private Participante participante;
-    private Integer edad;
-	private Integer dioPecho;
-	private Integer tiemPecho;
+    private ParticipanteCohorteFamilia participante;
+	private String dioPecho;
+	private String tiemPecho;
 	private Integer mesDioPecho;
-	private Integer pechoExc;
-	private Integer pechoExcAntes;
-	private Integer tiempPechoExcAntes;
+	private String pechoExc;
+    private String formAlim;
+    private String pechoExcAntes;
+	private String tiempPechoExcAntes;
 	private Integer mestPechoExc;
-	private Integer formAlim;
-	private String otraAlim;
-	private Integer edadLiqDistPecho;
+    private String otraAlim;
+    private String edadLiqDistPecho;
 	private Integer mesDioLiqDisPecho;
-	private Integer edadLiqDistLeche;
+	private String edadLiqDistLeche;
 	private Integer mesDioLiqDisLeche;
-	private Integer edAlimSolidos;
+	private String edAlimSolidos;
 	private Integer mesDioAlimSol;
 	private String recurso1;
 	private String otrorecurso1;
 
-    public Participante getParticipante() {
+    public ParticipanteCohorteFamilia getParticipante() {
         return participante;
     }
 
-    public void setParticipante(Participante participante) {
+    public void setParticipante(ParticipanteCohorteFamilia participante) {
         this.participante = participante;
     }
 
-    public Integer getEdad() {
-        return edad;
-    }
-
-    public void setEdad(Integer edad) {
-        this.edad = edad;
-    }
-
-    public Integer getDioPecho() {
+    public String getDioPecho() {
         return dioPecho;
     }
 
-    public void setDioPecho(Integer dioPecho) {
+    public void setDioPecho(String dioPecho) {
         this.dioPecho = dioPecho;
     }
 
-    public Integer getTiemPecho() {
+    public String getTiemPecho() {
         return tiemPecho;
     }
 
-    public void setTiemPecho(Integer tiemPecho) {
+    public void setTiemPecho(String tiemPecho) {
         this.tiemPecho = tiemPecho;
     }
 
@@ -79,27 +71,27 @@ public class EncuestaLactanciaMaterna extends BaseMetaData {
         this.mesDioPecho = mesDioPecho;
     }
 
-    public Integer getPechoExc() {
+    public String getPechoExc() {
         return pechoExc;
     }
 
-    public void setPechoExc(Integer pechoExc) {
+    public void setPechoExc(String pechoExc) {
         this.pechoExc = pechoExc;
     }
 
-    public Integer getPechoExcAntes() {
+    public String getPechoExcAntes() {
         return pechoExcAntes;
     }
 
-    public void setPechoExcAntes(Integer pechoExcAntes) {
+    public void setPechoExcAntes(String pechoExcAntes) {
         this.pechoExcAntes = pechoExcAntes;
     }
 
-    public Integer getTiempPechoExcAntes() {
+    public String getTiempPechoExcAntes() {
         return tiempPechoExcAntes;
     }
 
-    public void setTiempPechoExcAntes(Integer tiempPechoExcAntes) {
+    public void setTiempPechoExcAntes(String tiempPechoExcAntes) {
         this.tiempPechoExcAntes = tiempPechoExcAntes;
     }
 
@@ -111,11 +103,11 @@ public class EncuestaLactanciaMaterna extends BaseMetaData {
         this.mestPechoExc = mestPechoExc;
     }
 
-    public Integer getFormAlim() {
+    public String getFormAlim() {
         return formAlim;
     }
 
-    public void setFormAlim(Integer formAlim) {
+    public void setFormAlim(String formAlim) {
         this.formAlim = formAlim;
     }
 
@@ -127,11 +119,11 @@ public class EncuestaLactanciaMaterna extends BaseMetaData {
         this.otraAlim = otraAlim;
     }
 
-    public Integer getEdadLiqDistPecho() {
+    public String getEdadLiqDistPecho() {
         return edadLiqDistPecho;
     }
 
-    public void setEdadLiqDistPecho(Integer edadLiqDistPecho) {
+    public void setEdadLiqDistPecho(String edadLiqDistPecho) {
         this.edadLiqDistPecho = edadLiqDistPecho;
     }
 
@@ -143,11 +135,11 @@ public class EncuestaLactanciaMaterna extends BaseMetaData {
         this.mesDioLiqDisPecho = mesDioLiqDisPecho;
     }
 
-    public Integer getEdadLiqDistLeche() {
+    public String getEdadLiqDistLeche() {
         return edadLiqDistLeche;
     }
 
-    public void setEdadLiqDistLeche(Integer edadLiqDistLeche) {
+    public void setEdadLiqDistLeche(String edadLiqDistLeche) {
         this.edadLiqDistLeche = edadLiqDistLeche;
     }
 
@@ -159,11 +151,11 @@ public class EncuestaLactanciaMaterna extends BaseMetaData {
         this.mesDioLiqDisLeche = mesDioLiqDisLeche;
     }
 
-    public Integer getEdAlimSolidos() {
+    public String getEdAlimSolidos() {
         return edAlimSolidos;
     }
 
-    public void setEdAlimSolidos(Integer edAlimSolidos) {
+    public void setEdAlimSolidos(String edAlimSolidos) {
         this.edAlimSolidos = edAlimSolidos;
     }
 
@@ -193,7 +185,7 @@ public class EncuestaLactanciaMaterna extends BaseMetaData {
 
     @Override
     public String toString() {
-        return "EncuestaLactanciaMaterna{" + participante.getCodigo() +
+        return "EncuestaLactanciaMaterna{" + participante.getParticipanteCHF() +
                 '}';
     }
 

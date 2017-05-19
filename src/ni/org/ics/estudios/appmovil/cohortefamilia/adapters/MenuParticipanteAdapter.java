@@ -37,22 +37,34 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
 		// Change icon based on position
 		Drawable img = null;
 		switch (position){
-		case 0: 
-			img=getContext().getResources().getDrawable(R.drawable.male);
-			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-			break;
-		case 1: 
-			img=getContext().getResources().getDrawable(R.drawable.ic_baby);
-			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-			break;
-		case 2: 
-			img=getContext().getResources().getDrawable(R.drawable.ic_weight);
-			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-			break;
-		case 3: 
+            case 0:
+                img=getContext().getResources().getDrawable(R.drawable.male);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+            case 1:
+                img=getContext().getResources().getDrawable(R.drawable.ic_baby);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+            case 2:
+                img=getContext().getResources().getDrawable(R.drawable.ic_weight);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+            case 3:
 			img=getContext().getResources().getDrawable(R.drawable.ic_breastfeeding);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
+            case 4:
+                img=getContext().getResources().getDrawable(R.drawable.bhctubes);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+            case 5:
+                img=getContext().getResources().getDrawable(R.drawable.redtubes);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+            case 6:
+                img=getContext().getResources().getDrawable(R.drawable.ic_greentube);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
 		default:
 			img=getContext().getResources().getDrawable(R.drawable.ic_menu_help);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);

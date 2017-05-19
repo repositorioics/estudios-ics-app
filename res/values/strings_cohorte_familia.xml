@@ -18,5 +18,8 @@
     <string name="new_survey_3">Datos Parto BB</string>
     <string name="new_survey_4">Peso y Talla</string>
     <string name="new_survey_5">Lactancia Materna</string>
+    <string name="new_mx_bhc">BHC</string>
+    <string name="new_mx_rojo">ROJO</string>
+    <string name="new_mx_pax">PaxGene</string>
 
 </resources>

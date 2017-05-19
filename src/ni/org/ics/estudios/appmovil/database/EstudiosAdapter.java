@@ -20,10 +20,7 @@ import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaDatosPartoBB;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaPesoTalla;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.helpers.*;
@@ -80,6 +77,7 @@ public class EstudiosAdapter {
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PARTICIPANTE_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PESOTALLA_TABLE);
             db.execSQL(MainDBConstants.CREATE_CARTACONSENTIMIENTO_TABLE);
+            db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_LACTANCIAMAT_TABLE);
             
 			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
 			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");
@@ -994,6 +992,60 @@ public class EstudiosAdapter {
             do{
                 EncuestaPesoTalla mEncuesta = null;
                 mEncuesta = EncuestaPesoTallaHelper.crearEncuestaPesoTalla(cursor);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)), null);
+                if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
+                mEncuestas.add(mEncuesta);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mEncuestas;
+    }
+
+    /**
+     * Metodos para EncuestaLactanciaMaterna en la base de datos
+     *
+     * @param encuestaLactanciaMaterna
+     *            Objeto EncuestasLactanciaMaterna que contiene la informacion
+     *
+     */
+    //Crear nuevo EncuestasLactanciaMaterna en la base de datos
+    public void crearEncuestasLactanciaMaterna(EncuestaLactanciaMaterna encuestaLactanciaMaterna) {
+        ContentValues cv = EncuestaLactanciaMatHelper.crearEncuestaLactanciaMaternaContentValues(encuestaLactanciaMaterna);
+        mDb.insert(EncuestasDBConstants.ENCUESTA_LACTANCIAMAT_TABLE, null, cv);
+    }
+    //Editar EncuestasLactanciaMaterna existente en la base de datos
+    public boolean editarEncuestasLactanciaMaterna(EncuestaLactanciaMaterna encuestaLactanciaMaterna) {
+        ContentValues cv = EncuestaLactanciaMatHelper.crearEncuestaLactanciaMaternaContentValues(encuestaLactanciaMaterna);
+        return mDb.update(EncuestasDBConstants.ENCUESTA_LACTANCIAMAT_TABLE, cv, EncuestasDBConstants.participante_chf + "='"
+                + encuestaLactanciaMaterna.getParticipante().getParticipanteCHF() + "'", null) > 0;
+    }
+    //Limpiar la tabla de EncuestasLactanciaMaterna de la base de datos
+    public boolean borrarEncuestasLactanciaMaternas() {
+        return mDb.delete(EncuestasDBConstants.ENCUESTA_LACTANCIAMAT_TABLE, null, null) > 0;
+    }
+    //Obtener una EncuestaLactanciaMaterna de la base de datos
+    public EncuestaLactanciaMaterna getEncuestasLactanciaMaterna(String filtro, String orden) throws SQLException {
+        EncuestaLactanciaMaterna mEncuestasLactanciaMaterna = null;
+        Cursor cursor = crearCursor(EncuestasDBConstants.ENCUESTA_LACTANCIAMAT_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mEncuestasLactanciaMaterna=EncuestaLactanciaMatHelper.crearEncuestaLactanciaMaterna(cursor);
+            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)) + "'", null);
+            if (participanteCohorteFamilia != null) mEncuestasLactanciaMaterna.setParticipante(participanteCohorteFamilia);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mEncuestasLactanciaMaterna;
+    }
+    //Obtener una lista de EncuestasLactanciaMaterna de la base de datos
+    public List<EncuestaLactanciaMaterna> getEncuestasLactanciaMaternas(String filtro, String orden) throws SQLException {
+        List<EncuestaLactanciaMaterna> mEncuestas = new ArrayList<EncuestaLactanciaMaterna>();
+        Cursor cursor = crearCursor(EncuestasDBConstants.ENCUESTA_LACTANCIAMAT_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mEncuestas.clear();
+            do{
+                EncuestaLactanciaMaterna mEncuesta = null;
+                mEncuesta = EncuestaLactanciaMatHelper.crearEncuestaLactanciaMaterna(cursor);
                 ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)), null);
                 if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
                 mEncuestas.add(mEncuesta);

@@ -16,8 +16,7 @@ public class EncuestaLactanciaMatHelper {
 
     public static ContentValues crearEncuestaLactanciaMaternaContentValues(EncuestaLactanciaMaterna encuesta){
         ContentValues cv = new ContentValues();
-        cv.put(EncuestasDBConstants.participante_chf, encuesta.getParticipante().getCodigo());
-        cv.put(EncuestasDBConstants.edad, encuesta.getEdad());
+        cv.put(EncuestasDBConstants.participante_chf, encuesta.getParticipante().getParticipanteCHF());
         cv.put(EncuestasDBConstants.dioPecho, encuesta.getDioPecho());
         cv.put(EncuestasDBConstants.tiemPecho, encuesta.getTiemPecho());
         cv.put(EncuestasDBConstants.mesDioPecho, encuesta.getMesDioPecho());
@@ -49,21 +48,20 @@ public class EncuestaLactanciaMatHelper {
         EncuestaLactanciaMaterna mEncuesta = new EncuestaLactanciaMaterna();
 
         mEncuesta.setParticipante(null);
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edad)) > 0) mEncuesta.setEdad(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edad)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.dioPecho)) > 0) mEncuesta.setDioPecho(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.dioPecho)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.tiemPecho)) > 0) mEncuesta.setTiemPecho(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.tiemPecho)));
+        mEncuesta.setDioPecho(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.dioPecho)));
+        mEncuesta.setTiemPecho(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tiemPecho)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mesDioPecho)) > 0) mEncuesta.setMesDioPecho(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mesDioPecho)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.pechoExc)) > 0) mEncuesta.setPechoExc(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.pechoExc)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.pechoExcAntes)) > 0) mEncuesta.setPechoExcAntes(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.pechoExcAntes)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.tiempPechoExcAntes)) > 0) mEncuesta.setTiempPechoExcAntes(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.tiempPechoExcAntes)));
+        mEncuesta.setPechoExc(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pechoExc)));
+        mEncuesta.setPechoExcAntes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pechoExcAntes)));
+        mEncuesta.setTiempPechoExcAntes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tiempPechoExcAntes)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mestPechoExc)) > 0) mEncuesta.setMestPechoExc(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mestPechoExc)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.formAlim)) > 0) mEncuesta.setFormAlim(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.formAlim)));
+        mEncuesta.setFormAlim(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.formAlim)));
         mEncuesta.setOtraAlim(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otraAlim)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadLiqDistPecho)) > 0) mEncuesta.setEdadLiqDistPecho(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadLiqDistPecho)));
+        mEncuesta.setEdadLiqDistPecho(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadLiqDistPecho)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mesDioLiqDisPecho)) > 0) mEncuesta.setMesDioLiqDisPecho(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mesDioLiqDisPecho)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadLiqDistLeche)) > 0) mEncuesta.setEdadLiqDistLeche(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadLiqDistLeche)));
+        mEncuesta.setEdadLiqDistLeche(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadLiqDistLeche)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mesDioLiqDisLeche)) > 0) mEncuesta.setMesDioLiqDisLeche(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mesDioLiqDisLeche)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edAlimSolidos)) > 0) mEncuesta.setEdAlimSolidos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edAlimSolidos)));
+        mEncuesta.setEdAlimSolidos(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edAlimSolidos)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mesDioAlimSol)) > 0) mEncuesta.setMesDioAlimSol(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.mesDioAlimSol)));
         mEncuesta.setRecurso1(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.recurso1)));
         mEncuesta.setOtrorecurso1(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)));

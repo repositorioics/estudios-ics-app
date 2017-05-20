@@ -75,12 +75,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 					startActivity(i);
 		        	break;
                     case 1:
-                        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
-                        i = new Intent(getApplicationContext(),
-                                NuevaEncuestaCasaActivity.class);
-                        i.putExtras(arguments);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
+                        new OpenDataEnterActivityTask().execute(String.valueOf(position));
                         break;
 				    default:
                         break;
@@ -142,7 +137,43 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 	// ***************************************
 	// Private classes
 	// ***************************************
-	private class FetchDataCasaTask extends AsyncTask<String, Void, String> {
+    private class OpenDataEnterActivityTask extends AsyncTask<String, Void, String> {
+        private int position = 0;
+        @Override
+        protected void onPreExecute() {
+            // before the request begins, show a progress indicator
+            showLoadingProgressDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... values) {
+            position = Integer.valueOf(values[0]);
+            Bundle arguments = new Bundle();
+            Intent i;
+            try {
+                  if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+                        i = new Intent(getApplicationContext(),
+                                NuevaEncuestaCasaActivity.class);
+                        i.putExtras(arguments);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        finish();
+
+            } catch (Exception e) {
+                Log.e(TAG, e.getLocalizedMessage(), e);
+                return "error";
+            }
+            return "exito";
+        }
+
+        protected void onPostExecute(String resultado) {
+            // after the request completes, hide the progress indicator
+            dismissProgressDialog();
+        }
+
+    }
+
+    private class FetchDataCasaTask extends AsyncTask<String, Void, String> {
 		private String codigoCasaCHF = null;
 		@Override
 		protected void onPreExecute() {

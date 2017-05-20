@@ -172,6 +172,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 changeStatus(mWizardModel.findByKey(labels.getNivelEducacion()), true);
                 changeStatus(mWizardModel.findByKey(labels.getTrabaja()), true);
             }
+            anios = 15;
             if (anios < 18){
                 changeStatus(mWizardModel.findByKey(labels.getVaNinoEscuela()), true);
                 changeStatus(mWizardModel.findByKey(labels.getNinoTrabaja()), true);
@@ -369,6 +370,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getPadreEnEstudio())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoPadreEstudio()), visible);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getPadreAlfabeto()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getNivelEducacionPadre()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTrabajaPadre()), visible);
@@ -384,6 +386,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getMadreEnEstudio())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoMadreEstudio()), visible);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getMadreAlfabeto()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getNivelEducacionMadre()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTrabajaMadre()), visible);

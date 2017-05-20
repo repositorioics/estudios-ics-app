@@ -22,10 +22,13 @@ public class EncuestaLactanciaMatFormLabels {
     protected String otraAlim;
     protected String otraAlimHint;
     protected String edadLiqDistPecho;
+    protected String edadLiqDistPechoHint;
     protected String mesDioLiqDisPecho;
     protected String edadLiqDistLeche;
+    protected String edadLiqDistLecheHint;
     protected String mesDioLiqDisLeche;
     protected String edAlimSolidos;
+    protected String edAlimSolidosHint;
     protected String mesDioAlimSol;
 
     public EncuestaLactanciaMatFormLabels(){
@@ -43,10 +46,13 @@ public class EncuestaLactanciaMatFormLabels {
         otraAlim = res.getString(R.string.otraAlim);
         otraAlimHint = res.getString(R.string.otraAlimHint);
         edadLiqDistPecho = res.getString(R.string.edadLiqDistPecho);
+        edadLiqDistPechoHint = res.getString(R.string.edadLiqDistPechoHint);
         mesDioLiqDisPecho = res.getString(R.string.mesDioLiqDisPecho);
         edadLiqDistLeche = res.getString(R.string.edadLiqDistLeche);
+        edadLiqDistLecheHint = res.getString(R.string.edadLiqDistLecheHint);
         mesDioLiqDisLeche = res.getString(R.string.mesDioLiqDisLeche);
         edAlimSolidos = res.getString(R.string.edAlimSolidos);
+        edAlimSolidosHint = res.getString(R.string.edAlimSolidosHint);
         mesDioAlimSol = res.getString(R.string.mesDioAlimSol);
 
     }
@@ -185,5 +191,29 @@ public class EncuestaLactanciaMatFormLabels {
 
     public void setMesDioAlimSol(String mesDioAlimSol) {
         this.mesDioAlimSol = mesDioAlimSol;
+    }
+
+    public String getEdadLiqDistPechoHint() {
+        return edadLiqDistPechoHint;
+    }
+
+    public void setEdadLiqDistPechoHint(String edadLiqDistPechoHint) {
+        this.edadLiqDistPechoHint = edadLiqDistPechoHint;
+    }
+
+    public String getEdadLiqDistLecheHint() {
+        return edadLiqDistLecheHint;
+    }
+
+    public void setEdadLiqDistLecheHint(String edadLiqDistLecheHint) {
+        this.edadLiqDistLecheHint = edadLiqDistLecheHint;
+    }
+
+    public String getEdAlimSolidosHint() {
+        return edAlimSolidosHint;
+    }
+
+    public void setEdAlimSolidosHint(String edAlimSolidosHint) {
+        this.edAlimSolidosHint = edAlimSolidosHint;
     }
 }

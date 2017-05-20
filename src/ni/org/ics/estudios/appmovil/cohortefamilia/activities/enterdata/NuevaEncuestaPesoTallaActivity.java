@@ -507,7 +507,7 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
             if (encuestaExiste != null && encuestaExiste.getParticipante() != null && encuestaExiste.getParticipante().getParticipanteCHF() != null)
                 actualizada = estudiosAdapter.editarEncuestasPesoTalla(encuesta);
             else estudiosAdapter.crearEncuestasPesoTalla(encuesta);
-
+            estudiosAdapter.close();
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
             Intent i = new Intent(getApplicationContext(),

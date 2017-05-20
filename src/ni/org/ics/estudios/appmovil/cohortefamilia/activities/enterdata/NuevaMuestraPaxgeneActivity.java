@@ -23,6 +23,7 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestrasFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Paxgene;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -67,6 +68,7 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
     private static final int EXIT = 1;
     private AlertDialog alertDialog;
     private boolean notificarCambios = true;
+    private String horaTomaMx;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -311,14 +313,14 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
     }
 
     public void updateConstrains(){
-
+/*
         for (int i = 0; i < mCurrentPageSequence.size(); i++) {
             Page page = mCurrentPageSequence.get(i);
             if (page.getTitle().equals(labels.getHora())) {
                 TextPage np = (TextPage) page;
                 np.setPatternValidation(true, "([01]?[0-9]|2[0-3]):[0-5][0-9]");
             }
-        }
+        }*/
     }
 
     /**
@@ -341,7 +343,7 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getTomaMxSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoMx()), visible, null);
-                changeStatus(mWizardModel.findByKey(labels.getHora()), visible, null);
+                //changeStatus(mWizardModel.findByKey(labels.getHora()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getNumPinchazos()), visible, null);
@@ -352,6 +354,12 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoToma()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraRazonNoToma()), visible, null);
+                if (visible) horaTomaMx = null;
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getCodigoMx())) {
+                horaTomaMx = DateToString(new Date(), "HH:mm");
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -428,9 +436,9 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
 
             String tomaMxSn = datos.getString(this.getString(R.string.tomaMxSn));
             String codigoMx = datos.getString(this.getString(R.string.codigoMx));
-            String hora = datos.getString(this.getString(R.string.hora));
-            String horaInicioPax = datos.getString(this.getString(R.string.horaInicioPax));
-            String horaFinPax = datos.getString(this.getString(R.string.horaFinPax));
+            //String hora = datos.getString(this.getString(R.string.hora));
+            //String horaInicioPax = datos.getString(this.getString(R.string.horaInicioPax));
+            //String horaFinPax = datos.getString(this.getString(R.string.horaFinPax));
             String volumen = datos.getString(this.getString(R.string.volumen));
             String observacion = datos.getString(this.getString(R.string.observacion));
             String descOtraObservacion = datos.getString(this.getString(R.string.descOtraObservacion));
@@ -448,12 +456,15 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
             muestra.setTipoMuestra("1"); //Sangre
             muestra.setTubo("3"); //Paxgene
             muestra.setProposito("1");//Muestreo anual
-            muestra.setRealizaPaxgene("S");
+            muestra.setRealizaPaxgene("N");
             //listas
             if (tieneValor(tomaMxSn)){
                 MessageResource mstomaMxSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaMxSn + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (mstomaMxSn != null) muestra.setTomaMxSn(mstomaMxSn.getCatKey());
+                if (mstomaMxSn != null) {
+                    muestra.setTomaMxSn(mstomaMxSn.getCatKey());
+                    if (mstomaMxSn.getMessageKey().matches("CHF_CAT_SINO_SI")) muestra.setRealizaPaxgene("S");
+                }
             }
             if (tieneValor(observacion)){
                 MessageResource msobservacion = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + observacion + "' and "
@@ -473,7 +484,7 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
             //Numericos
             if (tieneValor(volumen)) muestra.setVolumen(Double.valueOf(volumen));
             //textos
-            muestra.setHora(hora);
+            muestra.setHora(horaTomaMx);
             muestra.setCodigoMx(codigoMx);
             muestra.setDescOtraRazonNoToma(descOtraRazonNoToma);
             muestra.setDescOtraObservacion(descOtraObservacion);
@@ -483,12 +494,24 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
             muestra.setDeviceid(infoMovil.getDeviceId());
             muestra.setEstado('0');
             muestra.setPasive('0');
-            boolean actualizada = false;
-            Muestra muestraExiste = estudiosAdapter.getMuestra(MuestrasDBConstants.codigoMx + "='" + muestra.getCodigoMx() + "'", MuestrasDBConstants.codigoMx);
-            if (muestraExiste != null && muestraExiste.getCodigo() != null)
-                actualizada = estudiosAdapter.editarMuestras(muestra);
-            else estudiosAdapter.crearMuestras(muestra);
-
+            estudiosAdapter.crearMuestras(muestra);
+            if (muestra.getRealizaPaxgene().equalsIgnoreCase("S")) {
+                Paxgene paxgene = new Paxgene();
+                paxgene.setMuestra(muestra);
+                Page horapax = mWizardModel.findByKey(labels.getHoraInicioPax());
+                String valor = horapax.getHint();
+                if (valor != null && !valor.isEmpty()) {
+                    paxgene.setHoraInicio(valor);
+                    paxgene.setHoraFin(DateToString(new Date(), "HH:mm"));
+                }
+                paxgene.setRecordDate(new Date());
+                paxgene.setRecordUser(username);
+                paxgene.setDeviceid(infoMovil.getDeviceId());
+                paxgene.setEstado('0');
+                paxgene.setPasive('0');
+                estudiosAdapter.crearPaxgenes(paxgene);
+            }
+            estudiosAdapter.close();
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
             Intent i = new Intent(getApplicationContext(),

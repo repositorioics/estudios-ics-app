@@ -83,7 +83,7 @@ public class MuestraHelper {
         return cv;
     }
 
-    public static Paxgene creaPaxgene(Cursor cursor){
+    public static Paxgene crearPaxgene(Cursor cursor){
         Paxgene mPaxgene = new Paxgene();
         mPaxgene.setMuestra(null);
         mPaxgene.setHoraInicio(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.horaInicio)));

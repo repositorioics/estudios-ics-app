@@ -33,6 +33,7 @@ import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
 import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,7 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
     private static final int EXIT = 1;
     private AlertDialog alertDialog;
     private boolean notificarCambios = true;
+    private String horaTomaMx;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -310,22 +312,23 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
     }
 
     public void updateConstrains(){
-
+/*
         for (int i = 0; i < mCurrentPageSequence.size(); i++) {
             Page page = mCurrentPageSequence.get(i);
             if (page.getTitle().equals(labels.getHora())) {
                 TextPage np = (TextPage) page;
                 np.setPatternValidation(true, "([01]?[0-9]|2[0-3]):[0-5][0-9]");
             }
-        }
+        }*/
     }
+
     public void updateModel(Page page){
         try {
             boolean visible = false;
             if (page.getTitle().equals(labels.getTomaMxSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoMx()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getHora()), visible);
+                //changeStatus(mWizardModel.findByKey(labels.getHora()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getNumPinchazos()), visible);
@@ -333,6 +336,12 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoToma()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraRazonNoToma()), visible);
+                if (visible) horaTomaMx = null;
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getCodigoMx())) {
+                horaTomaMx = DateToString(new Date(), "HH:mm");
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -382,6 +391,19 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
         return (entrada != null && !entrada.isEmpty());
     }
 
+    /**
+     * Convierte una Date a String, según el formato indicado
+     * @param dtFecha Fecha a convertir
+     * @param format formato solicitado
+     * @return String
+     */
+    public static String DateToString(Date dtFecha, String format)  {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        if(dtFecha!=null)
+            return simpleDateFormat.format(dtFecha);
+        else
+            return null;
+    }
 
     public void saveData() {
         try {
@@ -393,7 +415,7 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
 
             String tomaMxSn = datos.getString(this.getString(R.string.tomaMxSn));
             String codigoMx = datos.getString(this.getString(R.string.codigoMx));
-            String hora = datos.getString(this.getString(R.string.hora));
+            //String hora = datos.getString(this.getString(R.string.hora));
             String volumen = datos.getString(this.getString(R.string.volumen));
             String observacion = datos.getString(this.getString(R.string.observacion));
             String descOtraObservacion = datos.getString(this.getString(R.string.descOtraObservacion));
@@ -416,7 +438,10 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
             if (tieneValor(tomaMxSn)){
                 MessageResource mstomaMxSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaMxSn + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (mstomaMxSn != null) muestra.setTomaMxSn(mstomaMxSn.getCatKey());
+                if (mstomaMxSn != null) {
+                    muestra.setTomaMxSn(mstomaMxSn.getCatKey());
+                    if (mstomaMxSn.getMessageKey().matches("CHF_CAT_SINO_NO")) muestra.setRealizaPaxgene(null);
+                }
             }
             if (tieneValor(observacion)){
                 MessageResource msobservacion = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + observacion + "' and "
@@ -436,7 +461,7 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
             //Numericos
             if (tieneValor(volumen)) muestra.setVolumen(Double.valueOf(volumen));
             //textos
-            muestra.setHora(hora);
+            muestra.setHora(horaTomaMx);
             muestra.setCodigoMx(codigoMx);
             muestra.setDescOtraRazonNoToma(descOtraRazonNoToma);
             muestra.setDescOtraObservacion(descOtraObservacion);
@@ -446,12 +471,8 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
             muestra.setDeviceid(infoMovil.getDeviceId());
             muestra.setEstado('0');
             muestra.setPasive('0');
-            boolean actualizada = false;
-            Muestra muestraExiste = estudiosAdapter.getMuestra(MuestrasDBConstants.codigoMx + "='" + muestra.getCodigoMx() + "'", MuestrasDBConstants.codigoMx);
-            if (muestraExiste != null && muestraExiste.getCodigo() != null)
-                actualizada = estudiosAdapter.editarMuestras(muestra);
-            else estudiosAdapter.crearMuestras(muestra);
-
+            estudiosAdapter.crearMuestras(muestra);
+            estudiosAdapter.close();
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
             Intent i = new Intent(getApplicationContext(),

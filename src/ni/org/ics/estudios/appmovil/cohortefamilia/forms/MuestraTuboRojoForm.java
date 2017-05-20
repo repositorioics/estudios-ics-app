@@ -57,12 +57,12 @@ public class MuestraTuboRojoForm extends AbstractWizardModel {
         Page scRazonNoToma = new SingleFixedChoicePage(this, labels.getRazonNoToma(), "", Constants.WIZARD, false).setChoices(catRazon).setRequired(true);
         Page tpDescOtraRazonNoToma = new TextPage(this, labels.getDescOtraRazonNoToma(), "", Constants.WIZARD, false).setRequired(false);
         Page bcCodigoMx = new BarcodePage(this, labels.getCodigoMx(), "", Constants.WIZARD, false).setRequired(true);
-        Page tpHora = new TextPage(this, labels.getHora(), labels.getHoraHint(), Constants.WIZARD, false).setRequired(true);
+        //Page tpHora = new TextPage(this, labels.getHora(), labels.getHoraHint(), Constants.WIZARD, false).setRequired(true);
         Page npVolumen = new NumberPage(this, labels.getVolumen(), "", Constants.WIZARD, false).setRequired(true);
         Page scObservacion = new SingleFixedChoicePage(this, labels.getObservacion(), "", Constants.WIZARD, false).setChoices(catObservacion).setRequired(true);
         Page tpDescOtraObservacion = new TextPage(this, labels.getDescOtraObservacion(), "", Constants.WIZARD, false).setRequired(true);
         Page scNumPinchazos = new SingleFixedChoicePage(this, labels.getNumPinchazos(), "", Constants.WIZARD, false).setChoices(catPinchazos).setRequired(true);
 
-        return new PageList(scTomaMxSn,scRazonNoToma,tpDescOtraRazonNoToma, bcCodigoMx, tpHora, npVolumen, scObservacion, tpDescOtraObservacion, scNumPinchazos);
+        return new PageList(scTomaMxSn,scRazonNoToma,tpDescOtraRazonNoToma, bcCodigoMx, npVolumen, scObservacion, tpDescOtraObservacion, scNumPinchazos);
     }
 }

@@ -548,7 +548,7 @@ public class NuevaEncuestaLactanciaMatActivity extends FragmentActivity implemen
             if (encuestaExiste != null && encuestaExiste.getParticipante() != null && encuestaExiste.getParticipante().getParticipanteCHF() != null)
                 actualizada = estudiosAdapter.editarEncuestasLactanciaMaterna(encuesta);
             else estudiosAdapter.crearEncuestasLactanciaMaterna(encuesta);
-
+            estudiosAdapter.close();
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
             Intent i = new Intent(getApplicationContext(),

@@ -17,10 +17,7 @@ import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
@@ -1077,7 +1074,7 @@ public class EstudiosAdapter {
                 + muestra.getCodigo() + "'", null) > 0;
     }
     //Limpiar la tabla de Muestras de la base de datos
-    public boolean borrarMuestrass() {
+    public boolean borrarMuestras() {
         return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, null, null) > 0;
     }
     //Obtener una Muestra de la base de datos
@@ -1101,14 +1098,68 @@ public class EstudiosAdapter {
             cursor.moveToFirst();
             mMuestras.clear();
             do{
-                Muestra mEncuesta = null;
-                mEncuesta = MuestraHelper.crearMuestra(cursor);
+                Muestra mMuestra = null;
+                mMuestra = MuestraHelper.crearMuestra(cursor);
                 ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteCHF)), null);
-                if (participanteCohorteFamilia != null) mEncuesta.setParticipanteCHF(participanteCohorteFamilia);
-                mMuestras.add(mEncuesta);
+                if (participanteCohorteFamilia != null) mMuestra.setParticipanteCHF(participanteCohorteFamilia);
+                mMuestras.add(mMuestra);
             } while (cursor.moveToNext());
         }
         if (!cursor.isClosed()) cursor.close();
         return mMuestras;
+    }
+
+    /**
+     * Metodos para Paxgene en la base de datos
+     *
+     * @param paxgene
+     *            Objeto Paxgenes que contiene la informacion
+     *
+     */
+    //Crear nuevo Paxgenes en la base de datos
+    public void crearPaxgenes(Paxgene paxgene) {
+        ContentValues cv = MuestraHelper.crearPaxgeneContentValues(paxgene);
+        mDb.insert(MuestrasDBConstants.PAXGENE_TABLE, null, cv);
+    }
+    //Editar Paxgenes existente en la base de datos
+    public boolean editarPaxgenes(Paxgene paxgene) {
+        ContentValues cv = MuestraHelper.crearPaxgeneContentValues(paxgene);
+        return mDb.update(MuestrasDBConstants.PAXGENE_TABLE, cv, MuestrasDBConstants.codigoMx + "='"
+                + paxgene.getMuestra().getCodigoMx() + "'", null) > 0;
+    }
+    //Limpiar la tabla de Paxgenes de la base de datos
+    public boolean borrarPaxgeness() {
+        return mDb.delete(MuestrasDBConstants.PAXGENE_TABLE, null, null) > 0;
+    }
+    //Obtener una Paxgene de la base de datos
+    public Paxgene getPaxgene(String filtro, String orden) throws SQLException {
+        Paxgene mPaxgene = null;
+        Cursor cursor = crearCursor(MuestrasDBConstants.PAXGENE_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mPaxgene=MuestraHelper.crearPaxgene(cursor);
+            Muestra muestra = this.getMuestra(MuestrasDBConstants.codigoMx + "='" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.codigoMx)) + "'", null);
+            if (muestra != null) mPaxgene.setMuestra(muestra);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mPaxgene;
+    }
+    //Obtener una lista de Paxgenes de la base de datos
+    public List<Paxgene> getPaxgenes(String filtro, String orden) throws SQLException {
+        List<Paxgene> mPaxgenes = new ArrayList<Paxgene>();
+        Cursor cursor = crearCursor(MuestrasDBConstants.PAXGENE_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mPaxgenes.clear();
+            do{
+                Paxgene mPaxgene = null;
+                mPaxgene = MuestraHelper.crearPaxgene(cursor);
+                Muestra muestra = this.getMuestra(MuestrasDBConstants.codigoMx + "='" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.codigoMx)) + "'", null);
+                if (muestra != null) mPaxgene.setMuestra(muestra);
+                mPaxgenes.add(mPaxgene);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mPaxgenes;
     }
 }

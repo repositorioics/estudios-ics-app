@@ -2,6 +2,9 @@
 <resources>
 
     <string name="new_sample">Muestra</string>
+    <string name="new_sample_bhc">Muestra BCH</string>
+    <string name="new_sample_rojo">Muestra de tubo Rojo</string>
+    <string name="new_sample_paxgene">Muestra PaxGene</string>
     <string name="tomaMxSn">Se tomó muestra?</string>
     <string name="codigoMx">Escanee código de muestra</string>
     <string name="hora">Hora de toma</string>

@@ -60,9 +60,6 @@ public class EncuestaLactanciaMatForm extends AbstractWizardModel {
         catAlimDisPecho = fillCatalog("CHF_CAT_ALIM_DLP");
         catAlimDisLeche = fillCatalog("CHF_CAT_ALIM_DL");
         catAlimSolido = fillCatalog("CHF_CAT_ALIM_SOL");
-
-
-
         estudiosAdapter.close();
 
         Page dioPecho = new SingleFixedChoicePage(this,labels.getDioPecho(), "",Constants.WIZARD, true).setChoices(catSiNoDes).setRequired(true);
@@ -74,11 +71,11 @@ public class EncuestaLactanciaMatForm extends AbstractWizardModel {
         Page tiempPechoExcAntes = new SingleFixedChoicePage(this,labels.getTiempPechoExcAntes(), "",Constants.WIZARD, false).setChoices(catAlimExclu).setRequired(true);
         Page mestPechoExc = new NumberPage(this, labels.getMestPechoExc(), "", Constants.WIZARD, false).setRequired(true);
         Page otraAlim = new MultipleFixedChoicePage(this,labels.getOtraAlim(), labels.getOtraAlimHint(), Constants.WIZARD, true).setChoices(catOtroAlim).setRequired(true);
-        Page edadLiqDistPecho = new SingleFixedChoicePage(this,labels.getEdadLiqDistPecho(), "",Constants.WIZARD, true).setChoices(catAlimDisPecho).setRequired(true);
+        Page edadLiqDistPecho = new SingleFixedChoicePage(this,labels.getEdadLiqDistPecho(), labels.getEdadLiqDistPechoHint(),Constants.WIZARD, true).setChoices(catAlimDisPecho).setRequired(true);
         Page mesDioLiqDisPecho = new NumberPage(this, labels.getMesDioLiqDisPecho(), "", Constants.WIZARD, false).setRequired(true);
-        Page edadLiqDistLeche = new SingleFixedChoicePage(this,labels.getEdadLiqDistLeche(), "",Constants.WIZARD, true).setChoices(catAlimDisLeche).setRequired(true);
+        Page edadLiqDistLeche = new SingleFixedChoicePage(this,labels.getEdadLiqDistLeche(), labels.getEdadLiqDistLecheHint(),Constants.WIZARD, true).setChoices(catAlimDisLeche).setRequired(true);
         Page mesDioLiqDisLeche = new NumberPage(this, labels.getMesDioLiqDisLeche(), "", Constants.WIZARD, false).setRequired(true);
-        Page edAlimSolidos = new SingleFixedChoicePage(this,labels.getEdAlimSolidos(), "",Constants.WIZARD, true).setChoices(catAlimSolido).setRequired(true);
+        Page edAlimSolidos = new SingleFixedChoicePage(this,labels.getEdAlimSolidos(), labels.getEdAlimSolidosHint(),Constants.WIZARD, true).setChoices(catAlimSolido).setRequired(true);
         Page mesDioAlimSol = new NumberPage(this, labels.getMesDioAlimSol(), "", Constants.WIZARD, false).setRequired(true);
 
         return new PageList(dioPecho,tiemPecho,mesDioPecho,pechoExc,formAlim, pechoExcAntes, tiempPechoExcAntes,

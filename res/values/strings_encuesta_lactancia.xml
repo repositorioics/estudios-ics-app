@@ -13,10 +13,13 @@
     <string name="mestPechoExc">Escriba el numero de meses que le dio el pecho para alimentar exclusivamente</string>
     <string name="otraAlim">¿Que otro tipo de alimentación le da o le dio a su bebe?</string>
     <string name="otraAlimHint">Puede seleccionar más de uno</string>
-    <string name="edadLiqDistPecho">¿Qué edad tenía o tiene  su niño (a) cuando comenzó a darle líquidos distintos a la leche de pecho (incluyendo formula, leche líquida, leche en polvo).  Regularmente (i.e., por lo menos 3 veces por semana)?</string>
+    <string name="edadLiqDistPecho">¿Cuando comenzó a darle líquidos distintos a la leche de pecho?</string>
+    <string name="edadLiqDistPechoHint">¿Qué edad tenía o tiene  su niño (a) cuando comenzó a darle líquidos distintos a la leche de pecho (incluyendo formula, leche líquida, leche en polvo).  Regularmente (i.e., por lo menos 3 veces por semana)?</string>
     <string name="mesDioLiqDisPecho">Escriba el numero de meses que tenia cuando comenzó a darle líquidos  distintos a la leche de pecho</string>
-    <string name="edadLiqDistLeche">¿Qué edad tenía o tiene  su niño(a) cuando comenzó a darle líquidos distintos a la leche (agua simple, té, jugos, caldos el puro caldo, refrescos, café etc.) regularmente (i.e., por lo menos 3 veces por semana)?</string>
+    <string name="edadLiqDistLeche">¿Cuando comenzó a darle líquidos distintos a la leche?</string>
+    <string name="edadLiqDistLecheHint">¿Qué edad tenía o tiene  su niño(a) cuando comenzó a darle líquidos distintos a la leche (agua simple, té, jugos, caldos el puro caldo, refrescos, café etc.) regularmente (i.e., por lo menos 3 veces por semana)?</string>
     <string name="mesDioLiqDisLeche">Escriba el numero de meses que tenia cuando comenzó a darle líquidos distintos a la leche</string>
-    <string name="edAlimSolidos">¿Qué edad tenía o tiene su niño(a) cuando comenzó a darle alimentos sólidos (atoles, purés, cereales, caldos con frijoles, arroz, sopa o verduras o cualquier otro alimento) regularmente (i.e., por lo menos 3 veces por semana)?</string>
+    <string name="edAlimSolidos">¿Cuando comenzó a darle alimentos sólidos?</string>
+    <string name="edAlimSolidosHint">¿Qué edad tenía o tiene su niño(a) cuando comenzó a darle alimentos sólidos (atoles, purés, cereales, caldos con frijoles, arroz, sopa o verduras o cualquier otro alimento) regularmente (i.e., por lo menos 3 veces por semana)?</string>
     <string name="mesDioAlimSol">Escriba el numero de meses que tenia cuando comenzó a darle alimentos sólidos</string>
 </resources>

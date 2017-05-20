@@ -922,7 +922,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             if (encuestaExiste != null && encuestaExiste.getCasa() != null && encuestaExiste.getCasa().getCodigoCHF() != null)
                 actualizada = estudiosAdapter.editarEncuestaCasa(encuestaCasa);
             else estudiosAdapter.crearEncuestaCasa(encuestaCasa);
-
+            estudiosAdapter.close();
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.CASA, casaCHF);
             Intent i = new Intent(getApplicationContext(),

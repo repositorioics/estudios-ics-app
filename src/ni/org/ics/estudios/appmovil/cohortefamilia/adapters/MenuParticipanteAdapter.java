@@ -15,11 +15,33 @@ import ni.org.ics.estudios.appmovil.R;
 public class MenuParticipanteAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
+    private final boolean habilitarLactancia;
+    private final Context context;
 	public MenuParticipanteAdapter(Context context, int textViewResourceId,
-                                   String[] values) {
+                                   String[] values, boolean habilitarLactancia) {
 		super(context, textViewResourceId, values);
+        this.context = context;
 		this.values = values;
+        this.habilitarLactancia = habilitarLactancia;
 	}
+
+    @Override
+    public boolean isEnabled(int position) {
+        // Disable the first item of GridView
+        boolean habilitado = true;
+        switch (position){
+            case 0:break;
+            case 1:break;
+            case 2:break;
+            case 3 : habilitado = habilitarLactancia;
+                break;
+            case 4 :break;
+            case 5:break;
+            case 6:break;
+            default: break;
+        }
+        return habilitado;
+    }
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -50,8 +72,12 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
             case 3:
-			img=getContext().getResources().getDrawable(R.drawable.ic_breastfeeding);
-			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                if (!habilitarLactancia) {
+                    textView.setTextColor(Color.GRAY);
+                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+                }
+                img = getContext().getResources().getDrawable(R.drawable.ic_breastfeeding);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
             case 4:
                 img=getContext().getResources().getDrawable(R.drawable.bhctubes);

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="add_info_participant">¿Desea agregar %s para el participante ?</string>
+    <string name="exist_survey_participant">Ya existe %s para el participante</string>
     <string name="new_participant_survey">Encuesta Participante</string>
     <!--
     <string name="emancipado">¿Participante Enmancipad@?</string>
@@ -49,7 +51,7 @@
     <string name="tuberculosisPulmonarPasado">¿Le han diagnosticado tuberculosis pulmonar en el pasado?</string>
     <string name="fechaDiagnosticoTubPulPasadoSn">¿Conoce la fecha de diagnóstico tuberculosis pulmonar en el pasado?</string>
     <string name="fechaDiagnosticoTubPulPasado">Fecha de diagnóstico (mes/año) o desconocido</string>
-    <string name="anioFechaDiagnosticoTubPulPasado">Año de diagnóstico tuberculosis pulmonar en el pasdo</string>
+    <string name="anioFechaDiagnosticoTubPulPasado">Año de diagnóstico tuberculosis pulmonar en el pasado</string>
     <string name="mesFechaDiagnosticoTubPulPasado">Mes de diagnóstico tuberculosis pulmonar en el pasado</string>
     <string name="tomaTratamientoTubPulPasado">¿Tomó tratamiento para tuberculosis en ese momento?</string>
     <string name="completoTratamientoTubPulPasado">¿Completó su tratamiento para tuberculosis en el pasado?</string>

@@ -12,7 +12,7 @@ public class MuestrasFormLabels {
 
     protected String tomaMxSn;
     protected String codigoMx;
-    protected String hora;
+    //protected String hora;
     protected String horaInicio;
     protected String horaFin;
     protected String horaHint;
@@ -32,7 +32,7 @@ public class MuestrasFormLabels {
         Resources res = MyIcsApplication.getContext().getResources();
         tomaMxSn = res.getString(R.string.tomaMxSn);
         codigoMx = res.getString(R.string.codigoMx);
-        hora = res.getString(R.string.hora);
+        //hora = res.getString(R.string.hora);
         horaInicio = res.getString(R.string.horaInicio);
         horaFin = res.getString(R.string.horaFin);
         horaHint = res.getString(R.string.horaHint);
@@ -64,7 +64,7 @@ public class MuestrasFormLabels {
     public void setCodigoMx(String codigoMx) {
         this.codigoMx = codigoMx;
     }
-
+/*
     public String getHora() {
         return hora;
     }
@@ -72,7 +72,7 @@ public class MuestrasFormLabels {
     public void setHora(String hora) {
         this.hora = hora;
     }
-
+*/
     public String getHoraInicio() {
         return horaInicio;
     }

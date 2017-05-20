@@ -18,6 +18,7 @@ public class MuestraHelper {
     public static ContentValues crearMuestraContentValues(Muestra muestra){
         ContentValues cv = new ContentValues();
         cv.put(MuestrasDBConstants.codigo, muestra.getCodigo());
+        cv.put(MuestrasDBConstants.tomaMxSn, muestra.getTomaMxSn());
         cv.put(MuestrasDBConstants.codigoMx, muestra.getCodigoMx());
         cv.put(MuestrasDBConstants.hora, muestra.getHora());
         cv.put(MuestrasDBConstants.horaFin, muestra.getHoraFin());
@@ -44,6 +45,7 @@ public class MuestraHelper {
     public static Muestra crearMuestra(Cursor cursor){
         Muestra mMuestra = new Muestra();
         mMuestra.setCodigo(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.codigo)));
+        mMuestra.setTomaMxSn(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.tomaMxSn)));
         mMuestra.setCodigoMx(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.codigoMx)));
         mMuestra.setHora(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.hora)));
         mMuestra.setHoraFin(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.horaFin)));

@@ -19,10 +19,7 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaDatosPartoBBActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaLactanciaMatActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaParticipanteActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaPesoTallaActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.*;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuParticipanteAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
@@ -95,8 +92,33 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.putExtras(arguments);
                         startActivity(i);
                         break;
+                    case 4:
+                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
+                        i = new Intent(getApplicationContext(),
+                                NuevaMuestraBHCActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
+                    case 5:
+                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
+                        i = new Intent(getApplicationContext(),
+                                NuevaMuestraTuboRojoActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
+                    case 6:
+                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
+                        i = new Intent(getApplicationContext(),
+                                NuevaMuestraPaxgeneActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
                     default:
                         break;
+
 		        }
 			}
 		});

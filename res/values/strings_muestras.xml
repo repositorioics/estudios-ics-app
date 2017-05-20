@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="new_sample">Muestra</string>
+    <string name="tomaMxSn">Se tomó muestra?</string>
+    <string name="codigoMx">Escanee código de muestra</string>
+    <string name="hora">Hora de toma</string>
+    <string name="horaInicio">Hora de Inicio</string>
+    <string name="horaFin">Hora de Fin</string>
+    <string name="horaHint">Formato 24 horas (desde 00:00 hasta 23:59)</string>
+    <string name="volumen">Volumen</string>
+    <string name="observacion">Observación de la muestra</string>
+    <string name="descOtraObservacion">Escriba la razón</string>
+    <string name="numPinchazos">¿Número de pinchazos?</string>
+    <string name="razonNoToma">¿Porqué razón no se tomó muestra?</string>
+    <string name="descOtraRazonNoToma">Escriba por que otra razón no se tomó la muestra</string>
+    <string name="tubo">Tipo de tubo</string>
+    <string name="tipoMuestra">Tipo de muestra</string>
+    <string name="proposito">Propósito de la muestra</string>
+    <string name="horaInicioPax">Hora de inicio proceso paxgene</string>
+    <string name="horaFinPax">Hora de fin proceso paxgene</string>
+</resources>

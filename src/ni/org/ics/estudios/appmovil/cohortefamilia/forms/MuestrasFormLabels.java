@@ -1,0 +1,187 @@
+package ni.org.ics.estudios.appmovil.cohortefamilia.forms;
+
+import android.content.res.Resources;
+import ni.org.ics.estudios.appmovil.MyIcsApplication;
+import ni.org.ics.estudios.appmovil.R;
+
+/**
+ * Created by Miguel Salinas on 5/20/2017.
+ * V1.0
+ */
+public class MuestrasFormLabels {
+
+    protected String tomaMxSn;
+    protected String codigoMx;
+    protected String hora;
+    protected String horaInicio;
+    protected String horaFin;
+    protected String horaHint;
+    protected String volumen;
+    protected String observacion;
+    protected String descOtraObservacion;
+    protected String numPinchazos;
+    protected String razonNoToma;
+    protected String descOtraRazonNoToma;
+    protected String tubo;
+    protected String tipoMuestra;
+    protected String proposito;
+    protected String horaInicioPax;
+    protected String horaFinPax;
+
+    public MuestrasFormLabels(){
+        Resources res = MyIcsApplication.getContext().getResources();
+        tomaMxSn = res.getString(R.string.tomaMxSn);
+        codigoMx = res.getString(R.string.codigoMx);
+        hora = res.getString(R.string.hora);
+        horaInicio = res.getString(R.string.horaInicio);
+        horaFin = res.getString(R.string.horaFin);
+        horaHint = res.getString(R.string.horaHint);
+        volumen = res.getString(R.string.volumen);
+        observacion = res.getString(R.string.observacion);
+        descOtraObservacion = res.getString(R.string.descOtraObservacion);
+        numPinchazos = res.getString(R.string.numPinchazos);
+        razonNoToma = res.getString(R.string.razonNoToma);
+        descOtraRazonNoToma = res.getString(R.string.descOtraRazonNoToma);
+        tubo = res.getString(R.string.tubo);
+        tipoMuestra = res.getString(R.string.tipoMuestra);
+        proposito = res.getString(R.string.proposito);
+        horaInicioPax = res.getString(R.string.horaInicioPax);
+        horaFinPax = res.getString(R.string.horaFinPax);
+    }
+
+    public String getTomaMxSn() {
+        return tomaMxSn;
+    }
+
+    public void setTomaMxSn(String tomaMxSn) {
+        this.tomaMxSn = tomaMxSn;
+    }
+
+    public String getCodigoMx() {
+        return codigoMx;
+    }
+
+    public void setCodigoMx(String codigoMx) {
+        this.codigoMx = codigoMx;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public String getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public String getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public String getVolumen() {
+        return volumen;
+    }
+
+    public void setVolumen(String volumen) {
+        this.volumen = volumen;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+    public String getDescOtraObservacion() {
+        return descOtraObservacion;
+    }
+
+    public void setDescOtraObservacion(String descOtraObservacion) {
+        this.descOtraObservacion = descOtraObservacion;
+    }
+
+    public String getNumPinchazos() {
+        return numPinchazos;
+    }
+
+    public void setNumPinchazos(String numPinchazos) {
+        this.numPinchazos = numPinchazos;
+    }
+
+    public String getRazonNoToma() {
+        return razonNoToma;
+    }
+
+    public void setRazonNoToma(String razonNoToma) {
+        this.razonNoToma = razonNoToma;
+    }
+
+    public String getDescOtraRazonNoToma() {
+        return descOtraRazonNoToma;
+    }
+
+    public void setDescOtraRazonNoToma(String descOtraRazonNoToma) {
+        this.descOtraRazonNoToma = descOtraRazonNoToma;
+    }
+
+    public String getTubo() {
+        return tubo;
+    }
+
+    public void setTubo(String tubo) {
+        this.tubo = tubo;
+    }
+
+    public String getTipoMuestra() {
+        return tipoMuestra;
+    }
+
+    public void setTipoMuestra(String tipoMuestra) {
+        this.tipoMuestra = tipoMuestra;
+    }
+
+    public String getProposito() {
+        return proposito;
+    }
+
+    public void setProposito(String proposito) {
+        this.proposito = proposito;
+    }
+
+    public String getHoraHint() {
+        return horaHint;
+    }
+
+    public void setHoraHint(String horaHint) {
+        this.horaHint = horaHint;
+    }
+
+    public String getHoraInicioPax() {
+        return horaInicioPax;
+    }
+
+    public void setHoraInicioPax(String horaInicioPax) {
+        this.horaInicioPax = horaInicioPax;
+    }
+
+    public String getHoraFinPax() {
+        return horaFinPax;
+    }
+
+    public void setHoraFinPax(String horaFinPax) {
+        this.horaFinPax = horaFinPax;
+    }
+}

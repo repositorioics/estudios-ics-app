@@ -13,6 +13,7 @@ public class Muestra extends BaseMetaData implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String codigo;
+    private String tomaMxSn;
     private String codigoMx;
     private String hora;
     private String horaFin;
@@ -34,6 +35,14 @@ public class Muestra extends BaseMetaData implements Serializable {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public String getTomaMxSn() {
+        return tomaMxSn;
+    }
+
+    public void setTomaMxSn(String tomaMxSn) {
+        this.tomaMxSn = tomaMxSn;
     }
 
     public String getCodigoMx() {

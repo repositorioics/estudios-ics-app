@@ -18,6 +18,7 @@ import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PreTamizaje;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
@@ -78,6 +79,8 @@ public class EstudiosAdapter {
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PESOTALLA_TABLE);
             db.execSQL(MainDBConstants.CREATE_CARTACONSENTIMIENTO_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_LACTANCIAMAT_TABLE);
+            db.execSQL(MuestrasDBConstants.CREATE_MUESTRA_TABLE);
+            db.execSQL(MuestrasDBConstants.CREATE_PAXGENE_TABLE);
             
 			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
 			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");
@@ -1053,5 +1056,59 @@ public class EstudiosAdapter {
         }
         if (!cursor.isClosed()) cursor.close();
         return mEncuestas;
+    }
+
+    /**
+     * Metodos para Muestra en la base de datos
+     *
+     * @param muestra
+     *            Objeto Muestras que contiene la informacion
+     *
+     */
+    //Crear nuevo Muestras en la base de datos
+    public void crearMuestras(Muestra muestra) {
+        ContentValues cv = MuestraHelper.crearMuestraContentValues(muestra);
+        mDb.insert(MuestrasDBConstants.MUESTRA_TABLE, null, cv);
+    }
+    //Editar Muestras existente en la base de datos
+    public boolean editarMuestras(Muestra muestra) {
+        ContentValues cv = MuestraHelper.crearMuestraContentValues(muestra);
+        return mDb.update(MuestrasDBConstants.MUESTRA_TABLE, cv, MuestrasDBConstants.codigo + "='"
+                + muestra.getCodigo() + "'", null) > 0;
+    }
+    //Limpiar la tabla de Muestras de la base de datos
+    public boolean borrarMuestrass() {
+        return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, null, null) > 0;
+    }
+    //Obtener una Muestra de la base de datos
+    public Muestra getMuestra(String filtro, String orden) throws SQLException {
+        Muestra mMuestras = null;
+        Cursor cursor = crearCursor(MuestrasDBConstants.MUESTRA_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mMuestras=MuestraHelper.crearMuestra(cursor);
+            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteCHF)) + "'", null);
+            if (participanteCohorteFamilia != null) mMuestras.setParticipanteCHF(participanteCohorteFamilia);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mMuestras;
+    }
+    //Obtener una lista de Muestras de la base de datos
+    public List<Muestra> getMuestras(String filtro, String orden) throws SQLException {
+        List<Muestra> mMuestras = new ArrayList<Muestra>();
+        Cursor cursor = crearCursor(MuestrasDBConstants.MUESTRA_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mMuestras.clear();
+            do{
+                Muestra mEncuesta = null;
+                mEncuesta = MuestraHelper.crearMuestra(cursor);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteCHF)), null);
+                if (participanteCohorteFamilia != null) mEncuesta.setParticipanteCHF(participanteCohorteFamilia);
+                mMuestras.add(mEncuesta);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mMuestras;
     }
 }

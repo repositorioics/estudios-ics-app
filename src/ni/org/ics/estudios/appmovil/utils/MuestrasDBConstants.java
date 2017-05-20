@@ -10,6 +10,7 @@ public class MuestrasDBConstants {
     public static final String MUESTRA_TABLE = "chf_muestras";
     //campos tabla Muestras
     public static final String codigo = "codigo";
+    public static final String tomaMxSn = "tomaMxSn";
     public static final String codigoMx = "codigoMx";
     public static final String hora = "hora";
     public static final String horaFin = "horaFin";
@@ -29,6 +30,7 @@ public class MuestrasDBConstants {
     public static final String CREATE_MUESTRA_TABLE = "create table if not exists "
             + MUESTRA_TABLE + " ("
             + codigo + " text not null, "
+            + tomaMxSn + "text not null, "
             + codigoMx + " text, "
             + hora + " text not null, "
             + horaFin + " text, "

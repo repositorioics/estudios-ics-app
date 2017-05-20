@@ -34,8 +34,8 @@
     <string name="participadoCohortePediatrica">Miembro cohorte</string>
     <string name="participadoCohortePediatricaHint">Usted o su hijo han participado en la cohorte pediatrica?</string>
 
-    <string name="codigoCohorte">Escanee el Código de Cohorte:</string>  
-    <string name="codigoNuevoParticipante">Escanee el Código para el nuevo Participante:</string>
+    <string name="codigoCohorte">Código de Cohorte</string>  
+    <string name="codigoNuevoParticipante">Código para el nuevo Participante</string>
     
     <string name="nombre1">1er Nombre</string>
     <string name="nombre1Hint">Nombre completo del participante</string>
@@ -99,6 +99,10 @@
     <string name="aceptaParteC">Acepta Parte C</string>
     <string name="aceptaParteCHint">¿Acepta Parte C Estudios Geneticos?</string>
     
-
+	<string name="noAceptaTamizajePersona">No acepta tamizaje!</string>
+	<string name="noCumpleCriteriosInclusion">No cumple los criterios de inclusión!</string>
+	<string name="noEsElegible">No es elegible para el estudio!</string>
+	<string name="noAceptaParticipar">No acepta participar el estudio!</string>
+	<string name="noDaAsentimiento">No da asentimiento!</string>
     
 </resources>

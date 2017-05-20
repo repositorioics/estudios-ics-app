@@ -138,6 +138,8 @@ public class BarcodeFragment extends Fragment {
 			Intent intent) {
 		if (requestCode == BARCODE_CAPTURE && intent != null) {
 			mEditTextInput.setText(intent.getStringExtra("SCAN_RESULT"));
+			mPage.getData().putString(Page.SIMPLE_DATA_KEY,intent.getStringExtra("SCAN_RESULT"));
+			mPage.notifyDataChanged();
 		}
 		super.onActivityResult(requestCode, resultCode, intent);
 

@@ -22,6 +22,8 @@ public class TamizajeFormLabels {
 	protected String razonNoParticipaPersonaHint;
 	protected String criteriosInclusion;
 	protected String criteriosInclusionHint;
+	protected String enfermedad;
+	protected String enfermedadHint;
 	protected String dondeAsisteProblemasSalud;
 	protected String dondeAsisteProblemasSaludHint;
 	protected String otroCentroSalud;
@@ -120,6 +122,8 @@ public class TamizajeFormLabels {
 		razonNoParticipaPersonaHint = res.getString(R.string.razonNoParticipaPersonaHint);
 		criteriosInclusion = res.getString(R.string.criteriosInclusion);
 		criteriosInclusionHint = res.getString(R.string.criteriosInclusionHint);
+		enfermedad = res.getString(R.string.enfermedad);
+		enfermedadHint = res.getString(R.string.enfermedadHint);
 		dondeAsisteProblemasSalud = res.getString(R.string.dondeAsisteProblemasSalud);
 		dondeAsisteProblemasSaludHint = res.getString(R.string.dondeAsisteProblemasSaludHint);
 		otroCentroSalud = res.getString(R.string.otroCentroSalud);
@@ -364,6 +368,38 @@ public class TamizajeFormLabels {
 
 	public void setCriteriosInclusionHint(String criteriosInclusionHint) {
 		this.criteriosInclusionHint = criteriosInclusionHint;
+	}
+
+
+
+
+
+	public String getEnfermedad() {
+		return enfermedad;
+	}
+
+
+
+
+
+	public void setEnfermedad(String enfermedad) {
+		this.enfermedad = enfermedad;
+	}
+
+
+
+
+
+	public String getEnfermedadHint() {
+		return enfermedadHint;
+	}
+
+
+
+
+
+	public void setEnfermedadHint(String enfermedadHint) {
+		this.enfermedadHint = enfermedadHint;
 	}
 
 

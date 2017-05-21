@@ -40,6 +40,9 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private String[] menu_participante;
     private static ParticipanteCohorteFamilia participanteCHF = new ParticipanteCohorteFamilia();
     private EstudiosAdapter estudiosAdapter;
+    private boolean habilitarBHC = false;
+    private boolean habilitarRojo = false;
+    private boolean habilitarPaxG = false;
 
     private AlertDialog alertDialog;
 
@@ -61,6 +64,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
         new FetchDataCasaTask().execute(participanteCHF.getParticipanteCHF());
+
 
         gridView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -334,25 +338,10 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         protected void onPostExecute(String resultado) {
             // after the request completes, hide the progress indicator
             String edadFormateada = "";
-            boolean habilitarLactancia = false;
-            int anios = 0;
-            int meses = 0;
-            int dias = 0;
             if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
                 String edad[] = participanteCHF.getParticipante().getEdad().split("/");
                 if (edad.length > 0) {
-                    anios = Integer.valueOf(edad[0]);
-                    meses = Integer.valueOf(edad[1]);
-                    dias = Integer.valueOf(edad[2]);
                     edadFormateada = edad[0] + " años " + edad[1] + " meses " + edad[2] + " dias";
-                    if (anios<3) habilitarLactancia = true;
-                    else if (anios == 3){
-                        if (meses > 0) habilitarLactancia = false;
-                        else{
-                            if (dias > 0) habilitarLactancia = false;
-                            else habilitarLactancia = true;
-                        }
-                    }else habilitarLactancia = false;
                 }
             }
             textView.setText("");
@@ -362,7 +351,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     + getString(R.string.participant)+ ": "+ participanteCHF.getParticipante().getNombreCompleto() +"\n"
                     + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " +participanteCHF.getParticipante().getSexo());
 
-            gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, habilitarLactancia));
+            gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participanteCHF));
             dismissProgressDialog();
         }
 

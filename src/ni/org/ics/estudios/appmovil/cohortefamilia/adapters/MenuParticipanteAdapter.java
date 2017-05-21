@@ -11,19 +11,79 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 
 public class MenuParticipanteAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
-    private final boolean habilitarLactancia;
+    private boolean habilitarLactancia = false;
+    private boolean habilitarBhc = false;
+    private boolean habilitarRojo = false;
+    private boolean habilitarPax = false;
+
     private final Context context;
+    private final ParticipanteCohorteFamilia participanteCHF;
 	public MenuParticipanteAdapter(Context context, int textViewResourceId,
-                                   String[] values, boolean habilitarLactancia) {
+                                   String[] values, ParticipanteCohorteFamilia participanteCHF) {
 		super(context, textViewResourceId, values);
         this.context = context;
 		this.values = values;
-        this.habilitarLactancia = habilitarLactancia;
+        this.participanteCHF = participanteCHF;
+        validarOpcionesMenu();
 	}
+
+
+    private void validarOpcionesMenu(){
+        int anios = 0;
+        int meses = 0;
+        int dias = 0;
+        if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
+            String edad[] = participanteCHF.getParticipante().getEdad().split("/");
+            if (edad.length > 0) {
+                anios = Integer.valueOf(edad[0]);
+                meses = Integer.valueOf(edad[1]);
+                dias = Integer.valueOf(edad[2]);
+                //lactancia materna
+                if (anios<3) habilitarLactancia = true;
+                else if (anios == 3){
+                    if (meses > 0)
+                        habilitarLactancia = false;
+                    else{
+                        habilitarLactancia = (dias <= 0);
+                    }
+                }else habilitarLactancia = false;
+
+                //BHC y Paxgene (2 años a 13 años)
+                if (anios>=2 && anios<13) {
+                    habilitarBhc = true;
+                    habilitarPax = true;
+                }else if (anios == 13){
+                    if (meses > 0) {
+                        habilitarBhc = false;
+                        habilitarPax = false;
+                    }else{
+                        habilitarBhc = (dias <= 0);
+                        habilitarPax = (dias <= 0);
+                    }
+                }else {
+                    habilitarBhc = false;
+                    habilitarPax = false;
+                }
+                //Rojo (6 meses y menos de 2 años y 2 años a 13 años)
+                if (anios>=1 && anios<13) habilitarRojo = true;
+                else if (anios == 13){
+                    if (meses > 0)
+                        habilitarRojo = false;
+                    else{
+                        habilitarRojo = (dias <= 0);
+                    }
+                }else if (anios == 0){
+                    habilitarRojo = meses >= 6;
+                }
+                else habilitarRojo = false;
+            }
+        }
+    }
 
     @Override
     public boolean isEnabled(int position) {
@@ -35,9 +95,12 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
             case 2:break;
             case 3 : habilitado = habilitarLactancia;
                 break;
-            case 4 :break;
-            case 5:break;
-            case 6:break;
+            case 4 : habilitado = habilitarBhc;
+                break;
+            case 5 : habilitado = habilitarRojo;
+                break;
+            case 6 : habilitado = habilitarPax;
+                break;
             default: break;
         }
         return habilitado;
@@ -80,14 +143,26 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
             case 4:
+                if (!habilitarBhc) {
+                    textView.setTextColor(Color.GRAY);
+                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+                }
                 img=getContext().getResources().getDrawable(R.drawable.bhctubes);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
             case 5:
+                if (!habilitarRojo) {
+                    textView.setTextColor(Color.GRAY);
+                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+                }
                 img=getContext().getResources().getDrawable(R.drawable.redtubes);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
             case 6:
+                if (!habilitarPax) {
+                    textView.setTextColor(Color.GRAY);
+                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+                }
                 img=getContext().getResources().getDrawable(R.drawable.ic_greentube);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;

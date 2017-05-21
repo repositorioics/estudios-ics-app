@@ -58,7 +58,7 @@ public class MuestraTuboRojoForm extends AbstractWizardModel {
         Page tpDescOtraRazonNoToma = new TextPage(this, labels.getDescOtraRazonNoToma(), "", Constants.WIZARD, false).setRequired(false);
         Page bcCodigoMx = new BarcodePage(this, labels.getCodigoMx(), "", Constants.WIZARD, false).setRequired(true);
         //Page tpHora = new TextPage(this, labels.getHora(), labels.getHoraHint(), Constants.WIZARD, false).setRequired(true);
-        Page npVolumen = new NumberPage(this, labels.getVolumen(), "", Constants.WIZARD, false).setRequired(true);
+        Page npVolumen = new NumberPage(this, labels.getVolumen(), "", Constants.WIZARD, false).setRangeValidation(true, 0, 12).setRequired(true);
         Page scObservacion = new SingleFixedChoicePage(this, labels.getObservacion(), "", Constants.WIZARD, false).setChoices(catObservacion).setRequired(true);
         Page tpDescOtraObservacion = new TextPage(this, labels.getDescOtraObservacion(), "", Constants.WIZARD, false).setRequired(true);
         Page scNumPinchazos = new SingleFixedChoicePage(this, labels.getNumPinchazos(), "", Constants.WIZARD, false).setChoices(catPinchazos).setRequired(true);

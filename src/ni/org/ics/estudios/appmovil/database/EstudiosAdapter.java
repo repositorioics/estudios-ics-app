@@ -78,6 +78,8 @@ public class EstudiosAdapter {
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_LACTANCIAMAT_TABLE);
             db.execSQL(MuestrasDBConstants.CREATE_MUESTRA_TABLE);
             db.execSQL(MuestrasDBConstants.CREATE_PAXGENE_TABLE);
+            db.execSQL(MainDBConstants.CREATE_AREA_AMBIENTE_TABLE);
+            db.execSQL(MainDBConstants.CREATE_CAMA_TABLE);
             
 			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
 			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");
@@ -1162,4 +1164,112 @@ public class EstudiosAdapter {
         if (!cursor.isClosed()) cursor.close();
         return mPaxgenes;
     }
+    
+	/**
+	 * Metodos para Habitaciones en la base de datos
+	 * 
+	 * @param Habitacion
+	 *            Objeto Habitacion que contiene la informacion
+	 *
+	 */
+	//Crear nuevo Habitacion en la base de datos
+	public void crearHabitacion(Habitacion habitacion) {
+		ContentValues cv = AreaAmbienteHelper.crearHabitacionContentValues(habitacion);
+		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+	}
+	//Editar Habitacion existente en la base de datos
+	public boolean editarHabitacion(Habitacion habitacion) {
+		ContentValues cv = AreaAmbienteHelper.crearHabitacionContentValues(habitacion);
+		return mDb.update(MainDBConstants.AREA_AMBIENTE_TABLE , cv, MainDBConstants.codigo + "='" 
+				+ habitacion.getCodigo()+ "'", null) > 0;
+	}
+	//Limpiar la tabla de AREA_AMBIENTE_TABLE de la base de datos
+	public boolean borrarAreasAmbiente() {
+		return mDb.delete(MainDBConstants.AREA_AMBIENTE_TABLE, null, null) > 0;
+	}
+	//Obtener un Habitacion de la base de datos
+	public Habitacion getHabitacion(String filtro, String orden) throws SQLException {
+		Habitacion mHabitacion = null;
+		Cursor cursorHabitacion = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE , filtro, null, orden);
+		if (cursorHabitacion != null && cursorHabitacion.getCount() > 0) {
+			cursorHabitacion.moveToFirst();
+			mHabitacion=AreaAmbienteHelper.crearHabitacion(cursorHabitacion);
+			CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" +cursorHabitacion.getInt(cursorHabitacion.getColumnIndex(MainDBConstants.casa)), null);
+			mHabitacion.setCasa(casa);
+		}
+		if (!cursorHabitacion.isClosed()) cursorHabitacion.close();
+		return mHabitacion;
+	}
+	//Obtener una lista de Habitacion de la base de datos
+	public List<Habitacion> getHabitaciones(String filtro, String orden) throws SQLException {
+		List<Habitacion> mHabitaciones = new ArrayList<Habitacion>();
+		Cursor cursorHabitaciones = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE, filtro, null, orden);
+		if (cursorHabitaciones != null && cursorHabitaciones.getCount() > 0) {
+			cursorHabitaciones.moveToFirst();
+			mHabitaciones.clear();
+			do{
+				Habitacion mHabitacion = null;
+				mHabitacion = AreaAmbienteHelper.crearHabitacion(cursorHabitaciones);
+				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.casa + "=" +cursorHabitaciones.getInt(cursorHabitaciones.getColumnIndex(MainDBConstants.casa)), null);
+				mHabitacion.setCasa(casa);
+				mHabitaciones.add(mHabitacion);
+			} while (cursorHabitaciones.moveToNext());
+		}
+		if (!cursorHabitaciones.isClosed()) cursorHabitaciones.close();
+		return mHabitaciones;
+	}   
+	
+	/**
+	 * Metodos para Camas en la base de datos
+	 * 
+	 * @param Cama
+	 *            Objeto Cama que contiene la informacion
+	 *
+	 */
+	//Crear nuevo Cama en la base de datos
+	public void crearCama(Cama cama) {
+		ContentValues cv = CamasHelper.crearCamaContentValues(cama);
+		mDb.insert(MainDBConstants.CAMA_TABLE, null, cv);
+	}
+	//Editar Cama existente en la base de datos
+	public boolean editarCama(Cama cama) {
+		ContentValues cv = CamasHelper.crearCamaContentValues(cama);
+		return mDb.update(MainDBConstants.CAMA_TABLE , cv, MainDBConstants.codigoCama + "='" 
+				+ cama.getCodigoCama()+ "'", null) > 0;
+	}
+	//Limpiar la tabla de Camas de la base de datos
+	public boolean borrarCamas() {
+		return mDb.delete(MainDBConstants.CAMA_TABLE, null, null) > 0;
+	}
+	//Obtener un Cama de la base de datos
+	public Cama getCama(String filtro, String orden) throws SQLException {
+		Cama mCama = null;
+		Cursor cursorCama = crearCursor(MainDBConstants.CAMA_TABLE , filtro, null, orden);
+		if (cursorCama != null && cursorCama.getCount() > 0) {
+			cursorCama.moveToFirst();
+			mCama=CamasHelper.crearCama(cursorCama);
+			Habitacion hab = this.getHabitacion(MainDBConstants.codigo + "=" +cursorCama.getInt(cursorCama.getColumnIndex(MainDBConstants.habitacion)), null);
+			mCama.setHabitacion(hab);
+		}
+		if (!cursorCama.isClosed()) cursorCama.close();
+		return mCama;
+	}
+	//Obtener una lista de Cama de la base de datos
+	public List<Cama> getCamas(String filtro, String orden) throws SQLException {
+		List<Cama> mCamas = new ArrayList<Cama>();
+		Cursor cursorCamas = crearCursor(MainDBConstants.CAMA_TABLE, filtro, null, orden);
+		if (cursorCamas != null && cursorCamas.getCount() > 0) {
+			cursorCamas.moveToFirst();
+			mCamas.clear();
+			do{
+				Cama mCama = null;
+				mCama = CamasHelper.crearCama(cursorCamas);
+				Habitacion hab = this.getHabitacion(MainDBConstants.codigo + "=" +cursorCamas.getInt(cursorCamas.getColumnIndex(MainDBConstants.habitacion)), null);
+				mCama.setHabitacion(hab);
+				mCamas.add(mCama);
+			} while (cursorCamas.moveToNext());
+		}
+		if (!cursorCamas.isClosed()) cursorCamas.close();
+		return mCamas;
+	}
 }

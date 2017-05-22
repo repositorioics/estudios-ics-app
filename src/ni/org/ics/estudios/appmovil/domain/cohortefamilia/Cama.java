@@ -14,6 +14,7 @@ public class Cama extends BaseMetaData {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String codigoCama;
+	private String descCama;
     private Habitacion habitacion;
 
     public String getCodigoCama() {
@@ -31,8 +32,18 @@ public class Cama extends BaseMetaData {
     public void setHabitacion(Habitacion habitacion) {
         this.habitacion = habitacion;
     }
+    
+    
 
-    @Override
+    public String getDescCama() {
+		return descCama;
+	}
+
+	public void setDescCama(String descCama) {
+		this.descCama = descCama;
+	}
+
+	@Override
     public String toString() {
         return "Cama{" + codigoCama + '\'' +
                 '}';

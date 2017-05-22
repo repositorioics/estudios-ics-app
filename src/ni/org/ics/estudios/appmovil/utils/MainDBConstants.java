@@ -404,6 +404,8 @@ public class MainDBConstants {
     public static final String areaAmbiente = "areaAmbiente"; // para las ventanas
     public static final String alto = "alto";
     public static final String abierta = "abierta";
+    public static final String codigoHabitacion = "codigoHabitacion";
+    
 
     //crear tabla telefonocontacto
     public static final String CREATE_AREA_AMBIENTE_TABLE = "create table if not exists "
@@ -421,6 +423,7 @@ public class MainDBConstants {
             + areaAmbiente + " text, "
             + alto + " real, "
             + abierta + " text, "
+            + codigoHabitacion + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -433,12 +436,14 @@ public class MainDBConstants {
 
     //campos tabla Camas
     public static final String codigoCama = "codigoCama";
+    public static final String descCama = "descCama";
 
     // crear tabla Camas
     public static final String CREATE_CAMA_TABLE = "create table if not exists "
             + CAMA_TABLE + " ("
             + codigoCama + " text not null, "
-            + habitacion + " text, "
+            + habitacion + " text not null, "
+            + descCama + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "

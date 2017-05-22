@@ -1,5 +1,7 @@
 package ni.org.ics.estudios.appmovil.helpers;
 
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cama;
@@ -16,8 +18,11 @@ public class CamasHelper {
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigoCama, cama.getCodigoCama());
         cv.put(MainDBConstants.habitacion, cama.getHabitacion().getCodigo());
-        cv.put(MainDBConstants.estado, String.valueOf(cama.getEstado()));
-
+        if (cama.getRecordDate() != null) cv.put(MainDBConstants.recordDate, cama.getRecordDate().getTime());
+		cv.put(MainDBConstants.recordUser, cama.getRecordUser());
+		cv.put(MainDBConstants.pasive, String.valueOf(cama.getPasive()));
+		cv.put(MainDBConstants.estado, String.valueOf(cama.getEstado()));
+		cv.put(MainDBConstants.deviceId, cama.getDeviceid());
         return cv;
     }
 
@@ -25,8 +30,11 @@ public class CamasHelper {
         Cama cama = new Cama();
         cama.setCodigoCama(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigoCama)));
         cama.setHabitacion(null);
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) cama.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        cama.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        cama.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
         cama.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
-
+        cama.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return cama;
     }
 

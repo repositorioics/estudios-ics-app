@@ -16,11 +16,13 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
 	private final int numPart;
+	private final int numCuartos;
 	public MenuCasaAdapter(Context context, int textViewResourceId,
-                           String[] values, int numPart) {
+                           String[] values, int numPart, int numCuartos) {
 		super(context, textViewResourceId, values);
 		this.values = values;
 		this.numPart=numPart;
+		this.numCuartos=numCuartos;
 	}
 
 	@Override
@@ -52,7 +54,16 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			    break;
             case 2:
-                img=getContext().getResources().getDrawable(R.drawable.ic_menu_info_details);
+            	textView.setText(values[position] + "(" + numCuartos + ")");
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_share);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                if (numCuartos < 1){
+                    textView.setTextColor(Color.RED);
+                    textView.setTypeface(null, Typeface.BOLD);
+                }
+			    break;			    
+            case 3:
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_selectall_holo_light);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
 

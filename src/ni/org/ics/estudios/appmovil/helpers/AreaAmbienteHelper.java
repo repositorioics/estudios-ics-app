@@ -124,7 +124,10 @@ public class AreaAmbienteHelper {
         cv.put(MainDBConstants.largo, areaAmbiente.getLargo());
         cv.put(MainDBConstants.totalM2, areaAmbiente.getTotalM2());
         cv.put(MainDBConstants.casa, areaAmbiente.getCasa().getCodigoCHF());
+        cv.put(MainDBConstants.codigoHabitacion, areaAmbiente.getCodigoHabitacion());
         cv.put(MainDBConstants.numVentanas, areaAmbiente.getNumVentanas());
+        cv.put(MainDBConstants.cantidadCamas, areaAmbiente.getCantidadCamas());
+        cv.put(MainDBConstants.tipo, areaAmbiente.getTipo());
         if (areaAmbiente.getRecordDate() != null) cv.put(MainDBConstants.recordDate, areaAmbiente.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, areaAmbiente.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(areaAmbiente.getPasive()));
@@ -141,7 +144,10 @@ public class AreaAmbienteHelper {
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.largo)) > 0) mAreaAmbiente.setLargo(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.largo)));
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2))>0) mAreaAmbiente.setTotalM2(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2)));
         mAreaAmbiente.setCasa(null);
+        mAreaAmbiente.setCodigoHabitacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigoHabitacion)));
+        mAreaAmbiente.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
         if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)) > 0) mAreaAmbiente.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
+        if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.cantidadCamas)) > 0) mAreaAmbiente.setCantidadCamas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.cantidadCamas)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mAreaAmbiente.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mAreaAmbiente.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         mAreaAmbiente.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));

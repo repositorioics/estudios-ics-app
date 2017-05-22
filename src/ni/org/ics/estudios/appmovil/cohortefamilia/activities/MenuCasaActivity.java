@@ -1,6 +1,8 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.Intent;
@@ -24,6 +26,7 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEnc
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCasaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Habitacion;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -35,7 +38,8 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 	private TextView textView;
 	private String[] menu_casa;
 	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
-	private ArrayList<ParticipanteCohorteFamilia> mParticipantes = new ArrayList<ParticipanteCohorteFamilia>();
+	private List<ParticipanteCohorteFamilia> mParticipantes = new ArrayList<ParticipanteCohorteFamilia>();
+	private List<Habitacion> mHabitaciones = new ArrayList<Habitacion>();
 	
 	private EstudiosAdapter estudiosAdapter;
 
@@ -76,6 +80,13 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                     case 1:
                         new OpenDataEnterActivityTask().execute();
                         break;
+                    case 2:
+                    	if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+    					i = new Intent(getApplicationContext(),
+    							ListaHabitacionesActivity.class);
+    					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    					i.putExtras(arguments);
+    					startActivity(i);break;
 				    default:
                         break;
 		        }
@@ -184,6 +195,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 			try {
 				estudiosAdapter.open();
 				mParticipantes = estudiosAdapter.getParticipanteCohorteFamilias(MainDBConstants.casaCHF +" = " + codigoCasaCHF, MainDBConstants.participante);
+				mHabitaciones = estudiosAdapter.getHabitaciones(MainDBConstants.casa +" = " + codigoCasaCHF + " and " + MainDBConstants.tipo + " ='habitacion'", MainDBConstants.codigoHabitacion);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -197,7 +209,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
 			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.header_casa)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
-			gridView.setAdapter(new MenuCasaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_casa, mParticipantes.size()));
+			gridView.setAdapter(new MenuCasaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_casa, mParticipantes.size(), mHabitaciones.size()));
 			dismissProgressDialog();
 		}
 

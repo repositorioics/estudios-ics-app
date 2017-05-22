@@ -14,5 +14,7 @@
     <string name="numVentanas">Número de ventanas</string>
     <string name="ventAbierta">Abierta o cerrada</string>
     <string name="conVentana">Con ventana</string>
+    <string name="codigoHabitacion">Codigo Habitacion</string>
+    <string name="cantidadCamas">Numero de camas</string>
 
 </resources>

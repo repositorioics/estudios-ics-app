@@ -10,10 +10,12 @@
     
     <string name="participants">Lista Participantes</string>
     <string name="new_screen_per">Agregar Persona</string>
+    <string name="new_room">Agregar cuarto</string>
     <string name="new_survey_1">Encuesta Casa</string>
     <string name="new_survey_2">Encuesta Participante</string>
-    <string name="environments">Areas de Ambiente</string>
+    <string name="environments">Areas</string>
     <string name="participant">Participante</string>
+    <string name="rooms">Cuartos</string>
 
     <string name="new_survey_3">Datos Parto BB</string>
     <string name="new_survey_4">Peso y Talla</string>

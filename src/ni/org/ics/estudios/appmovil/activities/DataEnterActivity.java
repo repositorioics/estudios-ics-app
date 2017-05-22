@@ -15,18 +15,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import java.util.List;
 import java.util.Map;
 
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PreTamizajeForm;
-import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.TestForm;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.TestFormLabels;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
+import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
+import ni.org.ics.estudios.appmovil.wizard.model.DatePage;
+import ni.org.ics.estudios.appmovil.wizard.model.LabelPage;
 import ni.org.ics.estudios.appmovil.wizard.model.ModelCallbacks;
+import ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage;
+import ni.org.ics.estudios.appmovil.wizard.model.NewDatePage;
 import ni.org.ics.estudios.appmovil.wizard.model.NumberPage;
 import ni.org.ics.estudios.appmovil.wizard.model.Page;
+import ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage;
+import ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage;
 import ni.org.ics.estudios.appmovil.wizard.model.TextPage;
 import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
@@ -43,8 +49,7 @@ public class DataEnterActivity extends FragmentActivity implements
     private boolean mEditingAfterReview;
 
     private AbstractWizardModel mWizardModel;
-    //private EncuestaCasaFormLabels labelsEC = new EncuestaCasaFormLabels();
-    //private PreTamizajeFormLabels labels = new PreTamizajeFormLabels();
+    private TestFormLabels labels = new TestFormLabels();
 
     private boolean mConsumePageSelectedEvent;
 
@@ -53,30 +58,15 @@ public class DataEnterActivity extends FragmentActivity implements
 
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
+    private boolean notificarCambios = true;
     
-    private String formName;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_enter);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        formName = getIntent().getStringExtra(Constants.FORM_NAME);
-        if(formName.matches(Constants.FORM_NUEVO_TAMIZAJE_CASA)){
-        	mWizardModel = new PreTamizajeForm(this,mPass);
-        }
-        else if(formName.matches(Constants.FORM_NUEVA_ENCUESTA_CASA)){
-            //mWizardModel = new EncuestaCasaForm(this,mPass);
-        }
-        else if(formName.matches(Constants.FORM_NUEVO_TAMIZAJE_PERS)){
-            //mWizardModel = new TamizajeForm(this,mPass);
-        }
-        else if(formName.matches(Constants.FORM_NAME)){
-        	//mWizardModel = new ViviendaForm(this);
-        }
-        else{
-        	finish();
-        }
+        mWizardModel = new TestForm(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
@@ -166,7 +156,7 @@ public class DataEnterActivity extends FragmentActivity implements
 
     @Override
     public void onPageTreeChanged() {
-        //mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
+        mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
         mStepPagerStrip.setPageCount(mCurrentPageSequence.size() + 1); // + 1 = review step
         mPagerAdapter.notifyDataSetChanged();
         updateBottomBar();
@@ -223,11 +213,56 @@ public class DataEnterActivity extends FragmentActivity implements
 
     @Override
     public void onPageDataChanged(Page page) {
-    	updateConstrains();
+    	updateModel(page);
         if (recalculateCutOffPage()) {
-            mPagerAdapter.notifyDataSetChanged();
+        	if (notificarCambios) mPagerAdapter.notifyDataSetChanged();
             updateBottomBar();
         }
+        notificarCambios = true;
+    }
+    
+    public void updateModel(Page page){
+		boolean visible = false;
+		if(page.getTitle().equals(labels.getTp2())){
+            visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+            changeStatus(mWizardModel.findByKey(labels.getTp3()), visible);
+            changeStatus(mWizardModel.findByKey(labels.getTp5()), visible);
+            changeStatus(mWizardModel.findByKey(labels.getTp4()), !visible);
+            changeStatus(mWizardModel.findByKey(labels.getTp6()), !visible);
+            notificarCambios = false;
+            onPageTreeChanged();
+        }
+    }
+    
+    public void changeStatus(Page page, boolean visible){
+    	String clase = page.getClass().toString();
+    	if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage")){
+    		SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
+    		BarcodePage modifPage = (BarcodePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);;
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.LabelPage")){
+    		LabelPage modifPage = (LabelPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
+    		TextPage modifPage = (TextPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")){
+    		NumberPage modifPage = (NumberPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")){
+    		MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.DatePage")){
+    		DatePage modifPage = (DatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage")){
+    		SelectParticipantPage modifPage = (SelectParticipantPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NewDatePage")){
+    		NewDatePage modifPage = (NewDatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
     }
 
     @Override
@@ -282,27 +317,6 @@ public class DataEnterActivity extends FragmentActivity implements
         return false;
     }
     
-    public void updateConstrains(){
-        /*for (int i = 0; i < mCurrentPageSequence.size(); i++) {
-            Page page = mCurrentPageSequence.get(i);
-            if(page.getTitle().equals( labels.getAceptaTamizaje())){
-            	NumberPage np = (NumberPage) page;
-            	Page page2 = mWizardModel.findByKey(labels.getCodigoCHF());
-            	np.setmLowerOrEqualsThan(Integer.parseInt(page2.getData().getString(NumberPage.SIMPLE_DATA_KEY)));
-            	mWizardModel.getCurrentPageSequence().remove(page2);
-            }
-            if(page.getTitle().equals( labelsEC.getCuantoCuartos())){
-                NumberPage np = (NumberPage) page;
-                Page page2 = mWizardModel.findByKey(labelsEC.getCuartosDormir());
-                String valor = page2.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                if (valor != null && !valor.isEmpty()) {
-                    np.setmLowerOrEqualsThan(Integer.parseInt(valor));
-                    mWizardModel.getCurrentPageSequence().remove(page2);
-                }
-            }
-        }*/
-    }
-
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
         private int mCutOffPage;
         private Fragment mPrimaryItem;

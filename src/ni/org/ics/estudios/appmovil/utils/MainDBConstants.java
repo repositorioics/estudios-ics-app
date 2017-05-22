@@ -263,11 +263,7 @@ public class MainDBConstants {
     //Campos cartas_consentimientos
     public static final String fechaFirma = "fechaFirma";
     public static final String tamizaje = "tamizaje";
-    public static final String participadoCohortePediatrica = "participadoCohortePediatrica";
-    public static final String cohortePediatrica = "cohortePediatrica"; //Dengue, Influenza, Ambas (dengue/influenza)
-    public static final String codigoReactivado = "codigoReactivado";
     public static final String emancipado = "emancipado";
-    public static final String asentimientoVerbal = "asentimientoVerbal"; //Para Niños de 6 a 17 años
     public static final String nombre1Tutor = "nombre1Tutor";
     public static final String nombre2Tutor = "nombre2Tutor";
     public static final String apellido1Tutor = "apellido1Tutor";
@@ -285,6 +281,7 @@ public class MainDBConstants {
     public static final String aceptaParteB = "aceptaParteB"; //Consentimiento para almacenamiento y uso de muestras en estudios futuros
     public static final String aceptaParteC = "aceptaParteC"; //Consentimiento adicional para estudios genéticos
 
+
     //crear tabla cartas_consentimientos
     public static final String CREATE_CARTACONSENTIMIENTO_TABLE = "create table if not exists "
             + CARTA_CONSENTIMIENTO_TABLE + " ("
@@ -292,11 +289,7 @@ public class MainDBConstants {
             + fechaFirma + " date not null, "
             + tamizaje + " text not null, "
             + participante + " integer not null, "
-            + participadoCohortePediatrica + " text, "
-            + cohortePediatrica + " text, "
-            + codigoReactivado + " text, "
             + emancipado + " text, "
-            + asentimientoVerbal + " text, "
             + nombre1Tutor + " text, "
             + nombre2Tutor + " text, "
             + apellido1Tutor + " text, "
@@ -337,12 +330,15 @@ public class MainDBConstants {
     public static final String aceptaTamizajePersona = "aceptaTamizajePersona";
     public static final String razonNoAceptaTamizajePersona = "razonNoAceptaTamizajePersona";
     public static final String criteriosInclusion = "criteriosInclusion";
-    public static final String elegible = "elegible";
+    public static final String enfermedad = "enfermedad";
+    public static final String esElegible = "esElegible";
     public static final String dondeAsisteProblemasSalud = "dondeAsisteProblemasSalud";
-    public static final String asisteCSSF = "asisteCSSF";
     public static final String otroCentroSalud = "otroCentroSalud";
     public static final String puestoSalud = "puestoSalud";
-    public static final String siEnfermaSoloAsistirCSSF = "siEnfermaSoloAsistirCSSF";
+    public static final String aceptaAtenderCentro = "aceptaAtenderCentro";
+    public static final String aceptaParticipar = "aceptaParticipar";
+    public static final String razonNoAceptaParticipar = "razonNoAceptaParticipar";
+    public static final String asentimientoVerbal = "asentimientoVerbal"; //Para Niños de 6 a 17 años
     
     //crear tabla tamizaje
     public static final String CREATE_TAMIZAJE_TABLE = "create table if not exists "
@@ -354,12 +350,15 @@ public class MainDBConstants {
             + aceptaTamizajePersona + " text, "
             + razonNoAceptaTamizajePersona + " text, "
             + criteriosInclusion + " text, "
+            + enfermedad + " text, "
             + dondeAsisteProblemasSalud + " text, "
-            + asisteCSSF + " text, "
             + otroCentroSalud + " text, "
             + puestoSalud + " text, "
-            + siEnfermaSoloAsistirCSSF + " text, "
-            + elegible + " text, "
+            + aceptaAtenderCentro + " text, "
+            + esElegible + " text, "
+            + aceptaParticipar + " text, "
+            + razonNoAceptaParticipar + " text, "
+            + asentimientoVerbal + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "

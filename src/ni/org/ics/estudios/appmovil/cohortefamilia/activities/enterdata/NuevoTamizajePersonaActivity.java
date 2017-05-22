@@ -39,6 +39,7 @@ import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CalcularEdad;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
@@ -339,204 +340,199 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     }
     
     public void updateModel(Page page){
-    	try{
-    		boolean visible = false;
-    		if (page.getTitle().equals(labels.getFechaNacimiento())) {
-    			DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    			Date fechaNacimiento = null;
-    			try {
-    				fechaNacimiento = mDateFormat.parse(page.getData().getString(DatePage.SIMPLE_DATA_KEY));
-    			} catch (ParseException e) {
-    				// TODO Auto-generated catch block
-    				e.printStackTrace();
-    				Toast toast = Toast.makeText(getApplicationContext(),e.getLocalizedMessage(),Toast.LENGTH_LONG);
-    				toast.show();
-    				finish();
-    			}
-    			String[] edad = new CalcularEdad(fechaNacimiento).getEdad().split("/");
-    			edadAnios = Integer.parseInt(edad[0]);
-    			if(mWizardModel.findByKey(labels.getAceptaParticipar()).getData().getString(TextPage.SIMPLE_DATA_KEY)!=null){
-    				visible = mWizardModel.findByKey(labels.getAceptaParticipar()).getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
-	    			if(edadAnios>5 && edadAnios<18){
-	    				changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible);
-	    				if(!visible) resetForm(97);
-	    			}
-	    			else{
-	    				changeStatus(mWizardModel.findByKey(labels.getParticipadoCohortePediatrica()), visible);
-	    				if(!visible) resetForm(96);
-	    			}
-	                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParticipar()), !visible);
-	                notificarCambios = false;
-	                onPageTreeChanged();
-    			}
-    		}
-    		if(page.getTitle().equals(labels.getAceptaTamizajePersona())){
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
-                changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusion()), visible);
-                if(!visible) {
-                	resetForm(100);
-                	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noAceptaTamizajePersona),Toast.LENGTH_LONG);
-        			toast.show();
-                }
-                notificarCambios = false;
-                onPageTreeChanged();
-            }
-    		if (page.getTitle().equals(labels.getDondeAsisteProblemasSalud())) {
-    			if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Centro de Salud Sócrates Flores")){
-    				changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
-                    changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
-    				changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), false);
-    			}
-    			else if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro centro de salud")){
-                	changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), true);
-                    changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true);
-                }
-                else if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Puesto de Salud")){
-                	changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
-                    changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), true);
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true);
-                }
-                else{
-                	changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
-                    changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true);
-                }
-                notificarCambios = false;
-                onPageTreeChanged();
-            }
-    		if(page.getTitle().equals(labels.getCriteriosInclusion())){
-    			ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
-                visible = test.size()>3;
-                changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getEsElegible()), visible);
-                if(!visible){
-                	resetForm(99);
-                	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noCumpleCriteriosInclusion),Toast.LENGTH_LONG);
-        			toast.show();
-                }
-                notificarCambios = false;
-                onPageTreeChanged();
-            }
-    		if(page.getTitle().equals(labels.getEsElegible())){
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
-                changeStatus(mWizardModel.findByKey(labels.getAceptaParticipar()), visible);
-                if(!visible){
-                	resetForm(98);
-                	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noEsElegible),Toast.LENGTH_LONG);
-        			toast.show();
-                }
-                notificarCambios = false;
-                onPageTreeChanged();
-            }
-    		if (page.getTitle().equals(labels.getAceptaParticipar())) {
-    			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+		boolean visible = false;
+		if (page.getTitle().equals(labels.getFechaNacimiento())) {
+			/*DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			Date fechaNacimiento = null;
+			try {
+				fechaNacimiento = mDateFormat.parse(page.getData().getString(DatePage.SIMPLE_DATA_KEY));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				Toast toast = Toast.makeText(getApplicationContext(),e.getLocalizedMessage(),Toast.LENGTH_LONG);
+				toast.show();
+				finish();
+			}
+			String[] edad = new CalcularEdad(fechaNacimiento).getEdad().split("/");
+			edadAnios = Integer.parseInt(edad[0]);
+			if(mWizardModel.findByKey(labels.getAceptaParticipar()).getData().getString(TextPage.SIMPLE_DATA_KEY)!=null){
+				visible = mWizardModel.findByKey(labels.getAceptaParticipar()).getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
     			if(edadAnios>5 && edadAnios<18){
     				changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible);
+    				if(!visible) resetForm(97);
     			}
     			else{
     				changeStatus(mWizardModel.findByKey(labels.getParticipadoCohortePediatrica()), visible);
+    				if(!visible) resetForm(96);
     			}
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParticipar()), !visible);
-                if(!visible){
-                	resetForm(97);
-                	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noAceptaParticipar),Toast.LENGTH_LONG);
-        			toast.show();
-                }
-                notificarCambios = false;
+                notificarCambios = true;
                 onPageTreeChanged();
+			}*/
+		}
+		if(page.getTitle().equals(labels.getAceptaTamizajePersona())){
+            visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+            changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusion()), visible);
+            changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), !visible);
+            if(!visible) {
+            	resetForm(100);
+            	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noAceptaTamizajePersona),Toast.LENGTH_LONG);
+    			toast.show();
             }
-    		if(page.getTitle().equals(labels.getAsentimientoVerbal())){
-    			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
-    			changeStatus(mWizardModel.findByKey(labels.getParticipadoCohortePediatrica()), visible);
-                if(!visible) {
-                	resetForm(96);
-                	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noDaAsentimiento),Toast.LENGTH_LONG);
-        			toast.show();
-                }
-                notificarCambios = false;
-                onPageTreeChanged();
+            notificarCambios = false;
+            onPageTreeChanged();
+        }
+		if (page.getTitle().equals(labels.getDondeAsisteProblemasSalud())) {
+			if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Centro de Salud Sócrates Flores")){
+				changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
+                changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
+				changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), false);
+			}
+			else if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro centro de salud")){
+            	changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), true);
+                changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true);
             }
-    		if(page.getTitle().equals(labels.getParticipadoCohortePediatrica())){
-    			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
-    			changeStatus(mWizardModel.findByKey(labels.getCodigoCohorte()), visible);
-    			changeStatus(mWizardModel.findByKey(labels.getCodigoNuevoParticipante()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getNombre1()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getNombre2()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getApellido1()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getApellido2()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getNombre1Padre()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getNombre2Padre()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getApellido1Padre()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getApellido2Padre()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getNombre1Madre()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getNombre2Madre()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getApellido1Madre()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getApellido2Madre()), !visible);
-    			if(edadAnios>18){
-    				changeStatus(mWizardModel.findByKey(labels.getEmancipado()), false);
-    				changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), false);
-        			changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), false);
-        			changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), false);
-        			changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), false);
-        			changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), false);
-    			}
-    			else{
-    				changeStatus(mWizardModel.findByKey(labels.getEmancipado()), true);
-    			}
-    			changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), true);
-                notificarCambios = false;
-                onPageTreeChanged();
+            else if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Puesto de Salud")){
+            	changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
+                changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), true);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true);
             }
-    		if(page.getTitle().equals(labels.getParticipanteOTutorAlfabeto())){
-    			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
-    			changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
-    			changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
-    			changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
-    			changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
-    			changeStatus(mWizardModel.findByKey(labels.getTestigoPresente()), !visible);
-                notificarCambios = false;
-                onPageTreeChanged();
+            else{
+            	changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
+                changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true);
             }
-    		if(page.getTitle().equals(labels.getEmancipado())){
-    			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
-    			changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), !visible);
-                notificarCambios = false;
-                onPageTreeChanged();
+            notificarCambios = false;
+            onPageTreeChanged();
+        }
+		if(page.getTitle().equals(labels.getCriteriosInclusion())){
+			ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
+            visible = test.size()>3;
+            changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), visible);
+            changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), visible);
+            changeStatus(mWizardModel.findByKey(labels.getEsElegible()), visible);
+            if(!visible){
+            	resetForm(99);
+            	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noCumpleCriteriosInclusion),Toast.LENGTH_LONG);
+    			toast.show();
             }
-    		if(page.getTitle().equals(labels.getTestigoPresente())){
-    			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
-    			changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), !visible);
-    			changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
-    			changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
-    			changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
-    			changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
-                notificarCambios = false;
-                onPageTreeChanged();
+            notificarCambios = false;
+            onPageTreeChanged();
+        }
+		if(page.getTitle().equals(labels.getEsElegible())){
+            visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+            changeStatus(mWizardModel.findByKey(labels.getAceptaParticipar()), visible);
+            if(!visible){
+            	resetForm(98);
+            	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noEsElegible),Toast.LENGTH_LONG);
+    			toast.show();
             }
-    		if(page.getTitle().equals(labels.getAceptaParteA())){
-    			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
-    			changeStatus(mWizardModel.findByKey(labels.getMotivoRechazoParteA()), !visible);
-                notificarCambios = false;
-                onPageTreeChanged();
+            notificarCambios = false;
+            onPageTreeChanged();
+        }
+		if (page.getTitle().equals(labels.getAceptaParticipar())) {
+			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+			if(edadAnios>5 && edadAnios<18){
+				changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible);
+			}
+			else{
+				changeStatus(mWizardModel.findByKey(labels.getParticipadoCohortePediatrica()), visible);
+			}
+            changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParticipar()), !visible);
+            if(!visible){
+            	resetForm(97);
+            	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noAceptaParticipar),Toast.LENGTH_LONG);
+    			toast.show();
             }
-    		
-    	}catch (Exception ex){
-            ex.printStackTrace();
+            notificarCambios = false;
+            onPageTreeChanged();
+        }
+		if(page.getTitle().equals(labels.getAsentimientoVerbal())){
+			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+			changeStatus(mWizardModel.findByKey(labels.getParticipadoCohortePediatrica()), visible);
+            if(!visible) {
+            	resetForm(96);
+            	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noDaAsentimiento),Toast.LENGTH_LONG);
+    			toast.show();
+            }
+            notificarCambios = false;
+            onPageTreeChanged();
+        }
+		if(page.getTitle().equals(labels.getParticipadoCohortePediatrica())){
+			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+			changeStatus(mWizardModel.findByKey(labels.getCodigoCohorte()), visible);
+			changeStatus(mWizardModel.findByKey(labels.getCodigoNuevoParticipante()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getNombre1()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getNombre2()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getApellido1()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getApellido2()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getNombre1Padre()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getNombre2Padre()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getApellido1Padre()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getApellido2Padre()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getNombre1Madre()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getNombre2Madre()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getApellido1Madre()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getApellido2Madre()), !visible);
+			if(edadAnios>18){
+				changeStatus(mWizardModel.findByKey(labels.getEmancipado()), false);
+				changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), false);
+    			changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), false);
+    			changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), false);
+    			changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), false);
+    			changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), false);
+			}
+			else{
+				changeStatus(mWizardModel.findByKey(labels.getEmancipado()), true);
+			}
+			changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), true);
+            notificarCambios = false;
+            onPageTreeChanged();
+        }
+		if(page.getTitle().equals(labels.getParticipanteOTutorAlfabeto())){
+			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+			changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
+			changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
+			changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
+			changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
+			changeStatus(mWizardModel.findByKey(labels.getTestigoPresente()), !visible);
+            notificarCambios = false;
+            onPageTreeChanged();
+        }
+		if(page.getTitle().equals(labels.getEmancipado())){
+			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+			changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), !visible);
+            notificarCambios = false;
+            onPageTreeChanged();
+        }
+		if(page.getTitle().equals(labels.getTestigoPresente())){
+			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+			changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), !visible);
+			changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
+			changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
+			changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
+			changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
+            notificarCambios = false;
+            onPageTreeChanged();
+        }
+		if(page.getTitle().equals(labels.getAceptaParteA())){
+			visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+			changeStatus(mWizardModel.findByKey(labels.getMotivoRechazoParteA()), !visible);
+            notificarCambios = false;
+            onPageTreeChanged();
         }
     	
     }
     
     public void resetForm(int preg){
-    	if (preg>99) changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusion()), false);
     	if (preg>99) changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), false);
     	if (preg>99) changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), false);
     	if (preg>98) changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
@@ -599,7 +595,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     		NumberPage modifPage = (NumberPage) page; modifPage.setValue("").setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")){
-    		MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+    		MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.setValue(null).setmVisible(visible);
     	}
     }
     
@@ -770,6 +766,11 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     			participante.setSexo(t.getSexo());
     			participante.setFechaNac(t.getFechaNacimiento());
     			participante.setCasa(casaCHF.getCasa());
+    			participante.setRecordDate(new Date());
+    			participante.setRecordUser(username);
+    			participante.setDeviceid(infoMovil.getDeviceId());
+    			participante.setEstado('0');
+    			participante.setPasive('0');
     			//Guarda nuevo participante
     			estudiosAdapter.crearParticipante(participante);
     		}
@@ -845,19 +846,42 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     			MessageResource catAceptaParteC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteC + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
     			if (catAceptaParteC!=null) cc.setAceptaParteC(catAceptaParteC.getCatKey().charAt(0));
     		}
-   	    
+    	    cc.setRecordDate(new Date());
+        	cc.setRecordUser(username);
+        	cc.setDeviceid(infoMovil.getDeviceId());
+        	cc.setEstado('0');
+        	cc.setPasive('0');
+    	    //Ingresa la carta
         	estudiosAdapter.crearCartaConsentimiento(cc);
+        	//Crea un nuevo participantes de chf
+        	ParticipanteCohorteFamilia pchf = new ParticipanteCohorteFamilia();
+        	pchf.setParticipanteCHF(id);
+        	pchf.setParticipante(participante);
+        	pchf.setCasaCHF(casaCHF);
+        	pchf.setRecordDate(new Date());
+        	pchf.setRecordUser(username);
+        	pchf.setDeviceid(infoMovil.getDeviceId());
+        	pchf.setEstado('0');
+        	pchf.setPasive('0');
+        	//Guarda el participante de chf
+        	estudiosAdapter.crearParticipanteCohorteFamilia(pchf);
+        	//Cierra la base de datos
+        	estudiosAdapter.close();
         	
+        	//Abre el menu para este participante
         	Bundle arguments = new Bundle();
-            if (participante!=null) arguments.putSerializable(Constants.PARTICIPANTE , participante);
+            if (pchf!=null) arguments.putSerializable(Constants.PARTICIPANTE , pchf);
             Intent i = new Intent(getApplicationContext(),
             		MenuParticipanteActivity.class);
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
+            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
+    		toast.show();
+            finish();
     	}
     	else{
-    		Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
+    		Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.noAceptaParticipar),Toast.LENGTH_LONG);
     		toast.show();
     		finish();
     	}

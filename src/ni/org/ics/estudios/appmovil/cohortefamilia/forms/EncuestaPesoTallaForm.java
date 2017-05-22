@@ -1,13 +1,8 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.forms;
 
 import android.content.Context;
-import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
-
-import java.util.List;
 
 /**
  * Created by Miguel Salinas on 5/16/2017.

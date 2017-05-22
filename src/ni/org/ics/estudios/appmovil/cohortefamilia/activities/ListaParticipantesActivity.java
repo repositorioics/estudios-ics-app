@@ -11,9 +11,11 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.ParticipanteCHFAdapt
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.utils.Constants;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +23,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 	
@@ -54,14 +55,7 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 		mAddButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
-				Bundle arguments = new Bundle();
-		        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
-				Intent i = new Intent(getApplicationContext(),
-						NuevoTamizajePersonaActivity.class);
-				i.putExtras(arguments);
-		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(i);
-				finish();
+				new OpenDataEnterActivityTask().execute();
 			}
 		});
 		
@@ -103,19 +97,13 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
         // Opcion de menu seleccionada
         Bundle arguments = new Bundle();
 		Intent i;
-		switch(position){
-		case 0:
-            arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
-			i = new Intent(getApplicationContext(),
-					MenuParticipanteActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtras(arguments);
-			startActivity(i);
-			break;
-		default: 
-			String s = (String) getListAdapter().getItem(position);
-			Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-		}
+		arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
+		i = new Intent(getApplicationContext(),
+				MenuParticipanteActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.putExtras(arguments);
+		startActivity(i);
+		finish();
 	}
 
 	@Override
@@ -137,6 +125,42 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+	}
+	
+	
+	// ***************************************
+	// Private classes
+	// ***************************************
+	private class OpenDataEnterActivityTask extends AsyncTask<String, Void, String> {
+		@Override
+		protected void onPreExecute() {
+			// before the request begins, show a progress indicator
+			showLoadingProgressDialog();
+		}
+
+		@Override
+		protected String doInBackground(String... values) {
+			try {
+				Bundle arguments = new Bundle();
+		        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+				Intent i = new Intent(getApplicationContext(),
+						NuevoTamizajePersonaActivity.class);
+				i.putExtras(arguments);
+		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				finish();
+			} catch (Exception e) {
+				Log.e(TAG, e.getLocalizedMessage(), e);
+				return "error";
+			}
+			return "exito";
+		}
+
+		protected void onPostExecute(String resultado) {
+			// after the request completes, hide the progress indicator
+			dismissProgressDialog();
+		}
+
 	}
 
 }

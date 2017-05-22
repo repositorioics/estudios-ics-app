@@ -39,6 +39,7 @@
     <string name="err_not_completed">No ha completado el formulario</string>
     <string name="err_duplicated">Error! Codigo ya existe en la base de datos!</string>
     <string name="err_cancel">Ha cancelado el proceso!</string>
+    <string name="change_date">Seleccionar fecha</string>
     <string name="notelegible">Participante no es elegible para participar en el estudio!</string>
     <string name="code">Código</string>
     <string name="pending">Pendiente</string>
@@ -65,5 +66,15 @@
     <string name="gpsquestion">El GPS no está habilitado. Quiere ir al menú de configuración y activarlo?</string>
 
     <string name="edad">Edad</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="outofrange">Fuera de rango</string>
+    
+    <string name="tp1">Prueba 1</string>
+    <string name="tp2">Prueba 2</string>
+    <string name="tp3">Prueba 3</string>
+    <string name="tp4">Prueba 4</string>
+    <string name="tp5">Prueba 5</string>
+    <string name="tp6">Prueba 6</string>
     
 </resources>

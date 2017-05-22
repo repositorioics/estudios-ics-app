@@ -8,6 +8,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +20,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
-public class BarcodeFragment extends Fragment {
+public class ParticipanteFragment extends Fragment {
 	protected static final String ARG_KEY = "key";
 	protected static final int BARCODE_CAPTURE = 2;
 
@@ -29,11 +33,11 @@ public class BarcodeFragment extends Fragment {
 	protected EditText mEditTextInput;
 	protected ImageButton mButtonBarcode;
 
-	public static BarcodeFragment create(String key) {
+	public static ParticipanteFragment create(String key) {
 		Bundle args = new Bundle();
 		args.putString(ARG_KEY, key);
 
-		BarcodeFragment f = new BarcodeFragment();
+		ParticipanteFragment f = new ParticipanteFragment();
 		f.setArguments(args);
 		return f;
 	}
@@ -96,6 +100,38 @@ public class BarcodeFragment extends Fragment {
 		super.onDetach();
 		mCallbacks = null;
 	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		setInputType();
+		mEditTextInput.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable editable) {
+				mPage.getData().putString(Page.SIMPLE_DATA_KEY,
+						(editable != null) ? editable.toString() : null);
+				mPage.notifyDataChanged();
+
+			}
+
+		});
+	}
+
+	protected void setInputType() {
+		mEditTextInput.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+		mEditTextInput.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+	}	
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode,

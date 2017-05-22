@@ -1,9 +1,9 @@
 package ni.org.ics.estudios.appmovil.wizard.ui;
 
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.BuscarParticipanteActivity;
 import ni.org.ics.estudios.appmovil.wizard.model.Page;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,9 +16,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
-public class BarcodeFragment extends Fragment {
+public class SelectParticipantFragment extends Fragment {
 	protected static final String ARG_KEY = "key";
-	protected static final int BARCODE_CAPTURE = 2;
+	protected static final int PART_CAPTURE = 2;
 
 	private PageFragmentCallbacks mCallbacks;
 	private String mKey;
@@ -29,11 +29,11 @@ public class BarcodeFragment extends Fragment {
 	protected EditText mEditTextInput;
 	protected ImageButton mButtonBarcode;
 
-	public static BarcodeFragment create(String key) {
+	public static SelectParticipantFragment create(String key) {
 		Bundle args = new Bundle();
 		args.putString(ARG_KEY, key);
 
-		BarcodeFragment f = new BarcodeFragment();
+		SelectParticipantFragment f = new SelectParticipantFragment();
 		f.setArguments(args);
 		return f;
 	}
@@ -50,7 +50,7 @@ public class BarcodeFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_page_barcode,
+		View rootView = inflater.inflate(R.layout.fragment_page_selectpart,
 				container, false);
 		
 		mTitleTextInput = (TextView) rootView.findViewById(android.R.id.title);
@@ -64,16 +64,12 @@ public class BarcodeFragment extends Fragment {
 		mEditTextInput = (EditText) rootView.findViewById(R.id.editTextInput);
 		mEditTextInput.setText(mPage.getData().getString(Page.SIMPLE_DATA_KEY));
 		mEditTextInput.setEnabled(false);
-		mButtonBarcode = (ImageButton) rootView.findViewById(R.id.barcode_button);
+		mButtonBarcode = (ImageButton) rootView.findViewById(R.id.select_button);
 		mButtonBarcode.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent("com.google.zxing.client.android.SCAN");
-				try {
-					startActivityForResult(i, BARCODE_CAPTURE);
-				} catch (ActivityNotFoundException e) {
-					
-				}
+				Intent i = new Intent(getActivity().getApplicationContext(),BuscarParticipanteActivity.class);
+				startActivityForResult(i, PART_CAPTURE);
 			}
 		});
 		return rootView;
@@ -100,9 +96,10 @@ public class BarcodeFragment extends Fragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
-		if (requestCode == BARCODE_CAPTURE && intent != null) {
-			mEditTextInput.setText(intent.getStringExtra("SCAN_RESULT"));
-			mPage.getData().putString(Page.SIMPLE_DATA_KEY,intent.getStringExtra("SCAN_RESULT"));
+		if (requestCode == PART_CAPTURE && intent != null) {
+			String codigo = intent.getStringExtra("CODE_RESULT");
+			mEditTextInput.setText(codigo);
+			mPage.getData().putString(Page.SIMPLE_DATA_KEY,codigo);
 			mPage.notifyDataChanged();
 		}
 		super.onActivityResult(requestCode, resultCode, intent);

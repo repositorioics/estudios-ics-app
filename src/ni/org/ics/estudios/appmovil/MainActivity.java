@@ -1,6 +1,7 @@
 package ni.org.ics.estudios.appmovil;
 
 
+import ni.org.ics.estudios.appmovil.activities.DataEnterActivity;
 import ni.org.ics.estudios.appmovil.adapters.MainActivityAdapter;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCohorteFamiliaActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
@@ -74,6 +75,12 @@ public class MainActivity extends ListActivity {
 		case 0: 
 			i = new Intent(getApplicationContext(),
 					MenuCohorteFamiliaActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i);
+			break;
+		case 1: 
+			i = new Intent(getApplicationContext(),
+					DataEnterActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			break;

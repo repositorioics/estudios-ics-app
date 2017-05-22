@@ -498,7 +498,6 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
 	        	cchf.setPasive('0');
 	        	//Inserta una nueva casa CHF
 	        	estudiosAdapter.crearCasaCohorteFamilia(cchf);
-	        	
 	        	Bundle arguments = new Bundle();
 	            if (cchf!=null) arguments.putSerializable(Constants.CASA , cchf);
 	            Intent i = new Intent(getApplicationContext(),

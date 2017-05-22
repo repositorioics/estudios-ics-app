@@ -1,12 +1,8 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.forms;
 
-import android.content.Context;
 import android.content.res.Resources;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaPesoTalla;
-import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
-import ni.org.ics.estudios.appmovil.wizard.model.PageList;
 
 /**
  * Created by Miguel Salinas on 5/19/2017.

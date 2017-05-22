@@ -2,7 +2,6 @@ package ni.org.ics.estudios.appmovil.utils;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 
 /**

@@ -178,15 +178,8 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
-					//zipA.open();
-					//if(zipA.verificarData()){
-					//	createDialog(VERIFY);
-					//}
-					//else{
-						Intent ie = new Intent(getApplicationContext(), DownloadAllActivity.class);
-						startActivityForResult(ie, UPDATE_EQUIPO);
-					//}
-					//zipA.close();
+					Intent ie = new Intent(getApplicationContext(), DownloadAllActivity.class);
+					startActivityForResult(ie, UPDATE_EQUIPO);
 				}
 			});
 			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {

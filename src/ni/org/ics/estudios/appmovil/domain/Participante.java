@@ -3,7 +3,6 @@ package ni.org.ics.estudios.appmovil.domain;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Simple objeto de dominio que representa un participante de los estudios

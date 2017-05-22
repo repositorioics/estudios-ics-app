@@ -2,18 +2,24 @@ package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
+import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajePersonaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.ParticipanteCHFAdapter;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Menu;
@@ -32,8 +38,9 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
     private ParticipanteCohorteFamilia participanteCHF = new ParticipanteCohorteFamilia();
 	private ArrayAdapter<ParticipanteCohorteFamilia> mParticipanteCohorteFamiliaAdapter;
+	private List<ParticipanteCohorteFamilia> mParticipantes = new ArrayList<ParticipanteCohorteFamilia>();
+	private EstudiosAdapter estudiosAdapter;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,13 +48,11 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 		
 		casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
 		textView = (TextView) findViewById(R.id.label);
-		textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.participants)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
 		img=getResources().getDrawable(R.drawable.ic_menu_allfriends);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-		
-		mParticipanteCohorteFamiliaAdapter = new ParticipanteCHFAdapter(this, R.layout.complex_list_item,
-				(ArrayList<ParticipanteCohorteFamilia>) getIntent().getExtras().getSerializable(Constants.PARTICIPANTES));
-		setListAdapter(mParticipanteCohorteFamiliaAdapter);
+		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+		new FetchDataParticipantesTask().execute(casaCHF.getCodigoCHF());
 		
 		mAddButton = (Button) findViewById(R.id.add_button);
 		mAddButton.setText(getString(R.string.new_screen_per));
@@ -102,6 +107,19 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 				MenuParticipanteActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.putExtras(arguments);
+		startActivity(i);
+		finish();
+	}
+	
+	@Override
+	public void onBackPressed (){
+		Bundle arguments = new Bundle();
+		Intent i;
+		if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+		i = new Intent(getApplicationContext(),
+				MenuCasaActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		i.putExtras(arguments);
 		startActivity(i);
 		finish();
 	}
@@ -162,5 +180,39 @@ public class ListaParticipantesActivity extends AbstractAsyncListActivity {
 		}
 
 	}
+	
+	private class FetchDataParticipantesTask extends AsyncTask<String, Void, String> {
+		private String codigoCasaCHF = null;
+		@Override
+		protected void onPreExecute() {
+			// before the request begins, show a progress indicator
+			showLoadingProgressDialog();
+		}
+
+		@Override
+		protected String doInBackground(String... values) {
+			codigoCasaCHF = values[0];
+			try {
+				estudiosAdapter.open();
+				mParticipantes = estudiosAdapter.getParticipanteCohorteFamilias(MainDBConstants.casaCHF +" = " + codigoCasaCHF, MainDBConstants.participante);
+				estudiosAdapter.close();
+			} catch (Exception e) {
+				Log.e(TAG, e.getLocalizedMessage(), e);
+				return "error";
+			}
+			return "exito";
+		}
+
+		protected void onPostExecute(String resultado) {
+			// after the request completes, hide the progress indicator
+			textView.setText("");
+			textView.setTextColor(Color.BLACK);
+			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.participants)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
+			mParticipanteCohorteFamiliaAdapter = new ParticipanteCHFAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mParticipantes);
+			setListAdapter(mParticipanteCohorteFamiliaAdapter);
+			dismissProgressDialog();
+		}
+
+	}	
 
 }

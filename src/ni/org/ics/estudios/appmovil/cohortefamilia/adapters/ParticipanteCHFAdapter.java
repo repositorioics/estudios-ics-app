@@ -1,6 +1,7 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,16 +35,19 @@ public class ParticipanteCHFAdapter extends ArrayAdapter<ParticipanteCohorteFami
 		if (p != null) {
 
 			TextView textView = (TextView) v.findViewById(R.id.identifier_text);
+			textView.setTextColor(Color.BLACK);
 			if (textView != null) {
 				textView.setText(this.getContext().getString(R.string.code) + ": " + p.getParticipante().getCodigo());
 			}
 			
 			textView = (TextView) v.findViewById(R.id.der_text);
+			textView.setTextColor(Color.BLACK);
 			if (textView != null) {
 				textView.setText(mDateFormat.format(p.getParticipante().getFechaNac()));
 			}
 
 			textView = (TextView) v.findViewById(R.id.name_text);
+			textView.setTextColor(Color.BLACK);
 			String nameCompleto = p.getParticipante().getNombre1();
 			if (p.getParticipante().getNombre2()!=null) nameCompleto = nameCompleto + " "+  p.getParticipante().getNombre2();
 			nameCompleto = nameCompleto +" "+ p.getParticipante().getApellido1();

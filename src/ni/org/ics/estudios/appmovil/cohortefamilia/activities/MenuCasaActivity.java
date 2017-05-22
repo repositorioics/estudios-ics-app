@@ -67,7 +67,6 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 				switch (position){
 				case 0:
 					if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
-					if (mParticipantes!=null) arguments.putSerializable(Constants.PARTICIPANTES , mParticipantes);
 					i = new Intent(getApplicationContext(),
 							ListaParticipantesActivity.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -75,7 +74,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 					startActivity(i);
 		        	break;
                     case 1:
-                        new OpenDataEnterActivityTask().execute(String.valueOf(position));
+                        new OpenDataEnterActivityTask().execute();
                         break;
 				    default:
                         break;
@@ -138,7 +137,6 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 	// Private classes
 	// ***************************************
     private class OpenDataEnterActivityTask extends AsyncTask<String, Void, String> {
-        private int position = 0;
         @Override
         protected void onPreExecute() {
             // before the request begins, show a progress indicator
@@ -147,7 +145,6 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 
         @Override
         protected String doInBackground(String... values) {
-            position = Integer.valueOf(values[0]);
             Bundle arguments = new Bundle();
             Intent i;
             try {

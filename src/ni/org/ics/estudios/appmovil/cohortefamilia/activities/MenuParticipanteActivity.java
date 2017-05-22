@@ -24,6 +24,7 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.*;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuParticipanteAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaDatosPartoBB;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaLactanciaMaterna;
@@ -152,6 +153,20 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     protected void onPause() {
         super.onPause();
     }
+    
+	@Override
+	public void onBackPressed (){
+		Bundle arguments = new Bundle();
+		Intent i;
+		CasaCohorteFamilia casaCHF = participanteCHF.getCasaCHF();
+		if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+		i = new Intent(getApplicationContext(),
+				ListaParticipantesActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		i.putExtras(arguments);
+		startActivity(i);
+		finish();
+	}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

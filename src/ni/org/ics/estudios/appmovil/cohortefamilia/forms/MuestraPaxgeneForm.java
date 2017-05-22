@@ -52,18 +52,19 @@ public class MuestraPaxgeneForm extends AbstractWizardModel {
 
         estudiosAdapter.close();
 
+        Page lpInicio = new LabelPage(this, labels.getVolumenPaxgene(), "", Constants.ROJO, true).setRequired(false);
         Page scTomaMxSn = new SingleFixedChoicePage(this, labels.getTomaMxSn(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scRazonNoToma = new SingleFixedChoicePage(this, labels.getRazonNoToma(), "", Constants.WIZARD, false).setChoices(catRazon).setRequired(true);
         Page tpDescOtraRazonNoToma = new TextPage(this, labels.getDescOtraRazonNoToma(), "", Constants.WIZARD, false).setRequired(false);
-        Page bcCodigoMx = new BarcodePage(this, labels.getCodigoMx(), "", Constants.WIZARD, false).setRequired(true);
+        Page bcCodigoMx = new BarcodePage(this, labels.getCodigoMx(), "", Constants.WIZARD, false).setRangeValidation(true,1,15000).setRequired(true);
         //Page tpHora = new TextPage(this, labels.getHora(), labels.getHoraHint(), Constants.WIZARD, false).setRequired(true);
-        Page npVolumen = new NumberPage(this, labels.getVolumen(), "", Constants.WIZARD, false).setRequired(true);
+        Page npVolumen = new NumberPage(this, labels.getVolumen(), labels.getVolumenHint(), Constants.WIZARD, false).setRequired(true);
         Page scObservacion = new SingleFixedChoicePage(this, labels.getObservacion(), "", Constants.WIZARD, false).setChoices(catObservacion).setRequired(true);
         Page tpDescOtraObservacion = new TextPage(this, labels.getDescOtraObservacion(), "", Constants.WIZARD, false).setRequired(true);
         Page scNumPinchazos = new SingleFixedChoicePage(this, labels.getNumPinchazos(), "", Constants.WIZARD, false).setChoices(catPinchazos).setRequired(true);
         Page lpHoraInicioPax = new LabelPage(this, labels.getHoraInicioPax(), "", Constants.WIZARD, false).setRequired(true);
         //Page lpHoraFinPax = new LabelPage(this, labels.getHoraFinPax(), "", Constants.WIZARD, false).setRequired(true);
 
-        return new PageList(scTomaMxSn,scRazonNoToma,tpDescOtraRazonNoToma, bcCodigoMx, npVolumen, scObservacion, tpDescOtraObservacion, scNumPinchazos, lpHoraInicioPax);
+        return new PageList(lpInicio, scTomaMxSn,scRazonNoToma,tpDescOtraRazonNoToma, bcCodigoMx, npVolumen, scObservacion, tpDescOtraObservacion, scNumPinchazos, lpHoraInicioPax);
     }
 }

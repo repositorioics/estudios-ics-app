@@ -6,7 +6,10 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
+import org.joda.time.DateMidnight;
+import org.joda.time.format.DateTimeFormat;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,23 +56,27 @@ public class EncuestaDatosPartoBBForm extends AbstractWizardModel {
 
         estudiosAdapter.close();
 
+        DateMidnight dmDesde = DateMidnight.parse("01/01/1900", DateTimeFormat.forPattern("dd/MM/yyyy"));
+        DateMidnight dmHasta = new DateMidnight(new Date().getTime());
+
+
         Page scTipoParto = new SingleFixedChoicePage(this,labels.getTipoParto(), "",Constants.WIZARD, true).setChoices(catTipoParto).setRequired(true);
         Page scTiempoEmbSndr = new SingleFixedChoicePage(this,labels.getTiempoEmbSndr(), "",Constants.WIZARD, true).setChoices(catSndr).setRequired(true);
-        Page npTiempoEmbSemana = new NumberPage(this, labels.getTiempoEmbSemana(), "", Constants.WIZARD, false).setRequired(true);
+        Page npTiempoEmbSemana = new NumberPage(this, labels.getTiempoEmbSemana(), "", Constants.WIZARD, false).setRangeValidation(true,25,45).setRequired(true);
         Page scDocMedTiempoEmbSn = new SingleFixedChoicePage(this,labels.getDocMedTiempoEmbSn(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scDocMedTiempoEmb = new SingleFixedChoicePage(this,labels.getDocMedTiempoEmb(), "",Constants.WIZARD, false).setChoices(catDocMedico).setRequired(true);
         Page tpOtroDocMedTiempoEmb = new TextPage(this, labels.getOtroDocMedTiempoEmb(), labels.getOtroDocMedTiempoEmbHint(), Constants.WIZARD, false).setRequired(true);
-        Page dpFum = new DatePage(this, labels.getFum(), "", Constants.WIZARD, false).setRequired(true);
+        Page dpFum = new DatePage(this, labels.getFum(), "", Constants.WIZARD, false).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
         Page scFumFueraRangoSn = new SingleFixedChoicePage(this,labels.getFumFueraRangoSn(), labels.getFumFueraRangoSnHint(),Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page tpFumFueraRangoRazon = new TextPage(this, labels.getFumFueraRangoRazon(), labels.getFumFueraRangoRazonHint(), Constants.WIZARD, false).setRequired(true);
         Page lpReingresarFUM = new LabelPage(this, labels.getReingresarFUM(), "", Constants.ROJO, false);
         Page scDocMedEdadGestSn = new SingleFixedChoicePage(this,labels.getDocMedEdadGestSn(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page npEdadGest = new NumberPage(this, labels.getEdadGest(), labels.getEdadGestHint(), Constants.WIZARD, false).setRequired(true);
+        Page npEdadGest = new NumberPage(this, labels.getEdadGest(), labels.getEdadGestHint(), Constants.WIZARD, false).setRangeValidation(true,25,45).setRequired(true);
         Page scDocMedEdadGest = new SingleFixedChoicePage(this,labels.getDocMedEdadGest(), labels.getDocMedEdadGestHint(), Constants.WIZARD, false).setChoices(catDocMedico).setRequired(true);
         Page tpOtroDocMedEdadGest = new TextPage(this, labels.getOtroDocMedEdadGest(), labels.getOtroDocMedEdadGestHint(), Constants.WIZARD, false).setRequired(true);
         Page scPrematuroSndr = new SingleFixedChoicePage(this,labels.getPrematuroSndr(), "",Constants.WIZARD, true).setChoices(catSndr).setRequired(true);
         Page scPesoBBSndr = new SingleFixedChoicePage(this,labels.getPesoBBSndr(), "",Constants.WIZARD, true).setChoices(catSndr).setRequired(true);
-        Page npPesoBB = new NumberPage(this, labels.getPesoBB(), "", Constants.WIZARD, true).setRequired(true);
+        Page npPesoBB = new NumberPage(this, labels.getPesoBB(), "", Constants.WIZARD, true).setRangeValidation(true, 1200, 10000).setRequired(true);
         Page scDocMedPesoBBSn = new SingleFixedChoicePage(this,labels.getDocMedPesoBBSn(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scDocMedPesoBB = new SingleFixedChoicePage(this,labels.getDocMedPesoBB(), "",Constants.WIZARD, false).setChoices(catDocMedico).setRequired(true);
         Page tpOtroDocMedPesoBB = new TextPage(this, labels.getOtroDocMedPesoBB(), labels.getOtroDocMedPesoBBHint(), Constants.WIZARD, false).setRequired(true);

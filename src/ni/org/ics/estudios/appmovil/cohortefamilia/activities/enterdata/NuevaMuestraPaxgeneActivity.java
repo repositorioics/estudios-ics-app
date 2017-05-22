@@ -162,7 +162,7 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
-
+        changeStatus(mWizardModel.findByKey(labels.getVolumenPaxgene()), false, null);
         onPageTreeChanged();
         updateBottomBar();
     }
@@ -268,6 +268,7 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
             TypedValue v = new TypedValue();
             getTheme().resolveAttribute(android.R.attr.textAppearanceMedium, v, true);
             mNextButton.setTextAppearance(this, v.resourceId);
+            // || ( position == 0 && mWizardModel.getCurrentPageSequence().get(0) instanceof LabelPage)
             mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
         }
         mPrevButton.setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);

@@ -58,7 +58,7 @@ public class EncuestaCasaForm extends AbstractWizardModel {
 
         Page npCuartos = new NumberPage(this, labels.getCuantoCuartos(), "", Constants.WIZARD, true).setRequired(true);
         Page npCuartosDormir = new NumberPage(this, labels.getCuartosDormir(), "", Constants.WIZARD, true).setRequired(true);
-        Page npHorasSinAgua = new NumberPage(this, labels.getHorasSinAgua(), labels.getHorasSinAguaHint(), Constants.WIZARD, true).setRequired(true);
+        Page npHorasSinAgua = new NumberPage(this, labels.getHorasSinAgua(), labels.getHorasSinAguaHint(), Constants.WIZARD, true).setRangeValidation(true, 0, 24).setRequired(true);
         Page scLlaveAgua = new SingleFixedChoicePage(this,labels.getLlaveAgua(), "",Constants.WIZARD, true).setChoices(catDentroFuera).setRequired(true);
         Page scLlaveCompartida = new SingleFixedChoicePage(this,labels.getLlaveCompartida(),labels.getLlaveCompartidaHint(),Constants.WIZARD, false).setChoices(catCompartido).setRequired(true);
         Page scAlmacenaAgua = new SingleFixedChoicePage(this, labels.getAlmacenaAgua(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
@@ -88,11 +88,11 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         Page tpTechoOtroDesc = new TextPage(this, labels.getOtroMaterialTecho(), "", Constants.WIZARD, false).setRequired(true);
         Page scCasaPropia = new SingleFixedChoicePage(this,labels.getCasaPropia(),"",Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scTelevisor = new SingleFixedChoicePage(this, labels.getTieneTelevisor(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-        Page npNumTelevisor = new NumberPage(this, labels.getNumTelevisores(), "", Constants.WIZARD, false).setRequired(true);
+        Page npNumTelevisor = new NumberPage(this, labels.getNumTelevisores(), "", Constants.WIZARD, false).setRangeValidation(true,1,9).setRequired(true);
         Page scAbanico = new SingleFixedChoicePage(this, labels.getTieneAbanico(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-        Page npAbanico = new NumberPage(this, labels.getNumAbanicos(), "", Constants.WIZARD, false).setRequired(true);
+        Page npAbanico = new NumberPage(this, labels.getNumAbanicos(), "", Constants.WIZARD, false).setRangeValidation(true,1,9).setRequired(true);
         Page scRefrigerador = new SingleFixedChoicePage(this, labels.getTieneRefrigerador(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-        Page npNumRefrigerador = new NumberPage(this, labels.getNumRefrigeradores(), "", Constants.WIZARD, false).setRequired(true);
+        Page npNumRefrigerador = new NumberPage(this, labels.getNumRefrigeradores(), "", Constants.WIZARD, false).setRangeValidation(true,1,9).setRequired(true);
         Page scAireAcondicionado = new SingleFixedChoicePage(this, labels.getTienAireAcondicionado(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scAireAcondicionadoFun = new SingleFixedChoicePage(this, labels.getAireAcondicionadoFuncionando(), labels.getAireAcondicionadoFuncionandoHint(), Constants.WIZARD, false).setChoices(catDiaNoche).setRequired(true);
         Page scMoto = new SingleFixedChoicePage(this, labels.getTieneMoto(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
@@ -111,13 +111,13 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         Page npNumCocinaM = new NumberPage(this, labels.getNumMensualCocinaLenia(), labels.getNumMensualCocinaLeniaHint(), Constants.WIZARD, false).setRequired(true);
         Page scAnimales = new SingleFixedChoicePage(this, labels.getTieneAnimales(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scAnimalesGallinas = new SingleFixedChoicePage(this, labels.getTieneGallinas(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page npCantGallinas = new NumberPage(this, labels.getCantidadGallinas(), "", Constants.WIZARD, false).setRequired(true);
+        Page npCantGallinas = new NumberPage(this, labels.getCantidadGallinas(), "", Constants.WIZARD, false).setRangeValidation(true,1,20).setRequired(true);
         Page scGallinasDC =  new SingleFixedChoicePage(this, labels.getGallinasDentroCasa(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scAnimalesPatos = new SingleFixedChoicePage(this, labels.getTienePatos(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page npCantPatos = new NumberPage(this, labels.getCantidadPatos(), "", Constants.WIZARD, false).setRequired(true);
+        Page npCantPatos = new NumberPage(this, labels.getCantidadPatos(), "", Constants.WIZARD, false).setRangeValidation(true,1,20).setRequired(true);
         Page scPatosDC = new SingleFixedChoicePage(this, labels.getPatosDentroCasa(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scAnimalesCerdos = new SingleFixedChoicePage(this, labels.getTieneCerdos(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page npCantCerdos = new NumberPage(this, labels.getCantidadCerdos(), "", Constants.WIZARD, false).setRequired(true);
+        Page npCantCerdos = new NumberPage(this, labels.getCantidadCerdos(), "", Constants.WIZARD, false).setRangeValidation(true,1,20).setRequired(true);
         Page scCerdosDC = new SingleFixedChoicePage(this, labels.getCerdosDentroCasa(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scFuman = new SingleFixedChoicePage(this, labels.getPersonaFumaDentroCasa(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scMadreFuma = new SingleFixedChoicePage(this, labels.getMadreFuma(), labels.getMadreFumaHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);

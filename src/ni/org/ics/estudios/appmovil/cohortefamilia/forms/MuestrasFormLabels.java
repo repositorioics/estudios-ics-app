@@ -27,6 +27,11 @@ public class MuestrasFormLabels {
     protected String proposito;
     protected String horaInicioPax;
     protected String horaFinPax;
+    protected String rojo3ml;
+    protected String rojo6ml;
+    protected String bhc2ml;
+    protected String volumenPaxgene;
+    protected String volumenHint;
 
     public MuestrasFormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
@@ -47,6 +52,11 @@ public class MuestrasFormLabels {
         proposito = res.getString(R.string.proposito);
         horaInicioPax = res.getString(R.string.horaInicioPax);
         horaFinPax = res.getString(R.string.horaFinPax);
+        rojo3ml = res.getString(R.string.rojo3ml);
+        rojo6ml = res.getString(R.string.rojo6ml);
+        bhc2ml = res.getString(R.string.bhc2ml);
+        volumenPaxgene = res.getString(R.string.volumenPaxgene);
+        volumenHint = res.getString(R.string.volumenHint);
     }
 
     public String getTomaMxSn() {
@@ -183,5 +193,45 @@ public class MuestrasFormLabels {
 
     public void setHoraFinPax(String horaFinPax) {
         this.horaFinPax = horaFinPax;
+    }
+
+    public String getRojo3ml() {
+        return rojo3ml;
+    }
+
+    public void setRojo3ml(String rojo3ml) {
+        this.rojo3ml = rojo3ml;
+    }
+
+    public String getRojo6ml() {
+        return rojo6ml;
+    }
+
+    public void setRojo6ml(String rojo6ml) {
+        this.rojo6ml = rojo6ml;
+    }
+
+    public String getBhc2ml() {
+        return bhc2ml;
+    }
+
+    public void setBhc2ml(String bhc2ml) {
+        this.bhc2ml = bhc2ml;
+    }
+
+    public String getVolumenPaxgene() {
+        return volumenPaxgene;
+    }
+
+    public void setVolumenPaxgene(String volumenPaxgene) {
+        this.volumenPaxgene = volumenPaxgene;
+    }
+
+    public String getVolumenHint() {
+        return volumenHint;
+    }
+
+    public void setVolumenHint(String volumenHint) {
+        this.volumenHint = volumenHint;
     }
 }

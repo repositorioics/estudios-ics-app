@@ -161,7 +161,7 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
-
+        changeStatus(mWizardModel.findByKey(labels.getBhc2ml()), false);
         onPageTreeChanged();
         updateBottomBar();
     }

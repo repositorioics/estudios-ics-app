@@ -183,9 +183,6 @@ public class Participante extends BaseMetaData implements Serializable{
             Integer mesActual = calendarToday.get(Calendar.MONTH)+1;
             Integer anioActual = calendarToday.get(Calendar.YEAR);
 
-            System.out.println(diaActual);
-            System.out.println(mesActual);
-            System.out.println(anioActual);
             int b = 0;
             Integer dias = 0;
             Integer anios = 0;

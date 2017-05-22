@@ -80,7 +80,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         Page scDondeCuidanNino = new SingleFixedChoicePage(this, labels.getDondeCuidanNino(), "", Constants.WIZARD, false).setChoices(catCuidan).setRequired(true);
         Page scNinoTrabaja = new SingleFixedChoicePage(this, labels.getNinoTrabaja(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page tpOcupacionActualNino = new TextPage(this, labels.getOcupacionActualNino(), "", Constants.WIZARD, false).setRequired(true);
-        Page npCantNinosLugarCuidan = new NumberPage(this, labels.getCantNinosLugarCuidan(), "", Constants.WIZARD, false).setRequired(true);
+        Page npCantNinosLugarCuidan = new NumberPage(this, labels.getCantNinosLugarCuidan(), "", Constants.WIZARD, false).setRangeValidation(true,1,999).setRequired(true);
         Page scConQuienViveNino = new SingleFixedChoicePage(this, labels.getConQuienViveNino(), "", Constants.WIZARD, false).setChoices(catViveNino).setRequired(true);
         Page tpDescOtroViveNino = new TextPage(this, labels.getDescOtroViveNino(), "", Constants.WIZARD, false).setRequired(true);
         Page scPadreEnEstudio = new SingleFixedChoicePage(this, labels.getPadreEnEstudio(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);

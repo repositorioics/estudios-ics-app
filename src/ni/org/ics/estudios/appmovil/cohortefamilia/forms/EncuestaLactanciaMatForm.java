@@ -64,19 +64,19 @@ public class EncuestaLactanciaMatForm extends AbstractWizardModel {
 
         Page dioPecho = new SingleFixedChoicePage(this,labels.getDioPecho(), "",Constants.WIZARD, true).setChoices(catSiNoDes).setRequired(true);
         Page tiemPecho = new SingleFixedChoicePage(this,labels.getTiemPecho(), "",Constants.WIZARD, false).setChoices(catTiemPecho).setRequired(true);
-        Page mesDioPecho = new NumberPage(this, labels.getMesDioPecho(), "", Constants.WIZARD, false).setRequired(true);
+        Page mesDioPecho = new NumberPage(this, labels.getMesDioPecho(), "", Constants.WIZARD, false).setRangeValidation(true,2,36).setRequired(true);
         Page pechoExc = new SingleFixedChoicePage(this,labels.getPechoExc(), labels.getPechoExcHint(),Constants.WIZARD, false).setChoices(catExclusivo).setRequired(true);
         Page formAlim = new SingleFixedChoicePage(this,labels.getFormAlim(), "",Constants.WIZARD, false).setChoices(catFormAlim).setRequired(true);
         Page pechoExcAntes = new SingleFixedChoicePage(this,labels.getPechoExcAntes(), "",Constants.WIZARD, false).setChoices(catExclusivo).setRequired(true);
         Page tiempPechoExcAntes = new SingleFixedChoicePage(this,labels.getTiempPechoExcAntes(), "",Constants.WIZARD, false).setChoices(catAlimExclu).setRequired(true);
-        Page mestPechoExc = new NumberPage(this, labels.getMestPechoExc(), "", Constants.WIZARD, false).setRequired(true);
+        Page mestPechoExc = new NumberPage(this, labels.getMestPechoExc(), "", Constants.WIZARD, false).setRangeValidation(true,2,36).setRequired(true);
         Page otraAlim = new MultipleFixedChoicePage(this,labels.getOtraAlim(), labels.getOtraAlimHint(), Constants.WIZARD, true).setChoices(catOtroAlim).setRequired(true);
         Page edadLiqDistPecho = new SingleFixedChoicePage(this,labels.getEdadLiqDistPecho(), labels.getEdadLiqDistPechoHint(),Constants.WIZARD, true).setChoices(catAlimDisPecho).setRequired(true);
-        Page mesDioLiqDisPecho = new NumberPage(this, labels.getMesDioLiqDisPecho(), "", Constants.WIZARD, false).setRequired(true);
+        Page mesDioLiqDisPecho = new NumberPage(this, labels.getMesDioLiqDisPecho(), "", Constants.WIZARD, false).setRangeValidation(true,0,24).setRequired(true);
         Page edadLiqDistLeche = new SingleFixedChoicePage(this,labels.getEdadLiqDistLeche(), labels.getEdadLiqDistLecheHint(),Constants.WIZARD, true).setChoices(catAlimDisLeche).setRequired(true);
         Page mesDioLiqDisLeche = new NumberPage(this, labels.getMesDioLiqDisLeche(), "", Constants.WIZARD, false).setRequired(true);
         Page edAlimSolidos = new SingleFixedChoicePage(this,labels.getEdAlimSolidos(), labels.getEdAlimSolidosHint(),Constants.WIZARD, true).setChoices(catAlimSolido).setRequired(true);
-        Page mesDioAlimSol = new NumberPage(this, labels.getMesDioAlimSol(), "", Constants.WIZARD, false).setRequired(true);
+        Page mesDioAlimSol = new NumberPage(this, labels.getMesDioAlimSol(), "", Constants.WIZARD, false).setRangeValidation(true,0,36).setRequired(true);
 
         return new PageList(dioPecho,tiemPecho,mesDioPecho,pechoExc,formAlim, pechoExcAntes, tiempPechoExcAntes,
                 mestPechoExc,otraAlim,edadLiqDistPecho,mesDioLiqDisPecho,edadLiqDistLeche, mesDioLiqDisLeche,edAlimSolidos,mesDioAlimSol);

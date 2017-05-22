@@ -32,6 +32,7 @@ import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
 import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -161,6 +162,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
 
         if (participanteCHF.getParticipante()!=null){
             String edad[] = participanteCHF.getParticipante().getEdad().split("/");
+
             int anios = 0;
             if (edad.length > 0)
                 anios = Integer.valueOf(edad[0]);
@@ -181,6 +183,17 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 changeStatus(mWizardModel.findByKey(labels.getPadreEnEstudio()), true);
                 changeStatus(mWizardModel.findByKey(labels.getMadreEnEstudio()), true);
             }
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(participanteCHF.getParticipante().getFechaNac());
+            int anioNac = calendar.get(Calendar.YEAR);
+            calendar.setTime(new Date());
+            int anioActual = calendar.get(Calendar.YEAR);
+            NumberPage p1 = (NumberPage)mWizardModel.findByKey(labels.getAnioVacunaInfluenza());
+            p1.setRangeValidation(true, anioNac, anioActual);
+            NumberPage p2 = (NumberPage)mWizardModel.findByKey(labels.getAnioFechaDiagnosticoTubPulActual());
+            p2.setRangeValidation(true, anioNac, anioActual);
+            NumberPage p3 = (NumberPage)mWizardModel.findByKey(labels.getAnioFechaDiagnosticoTubPulPasado());
+            p3.setRangeValidation(true, anioNac, anioActual);
         }
 
         onPageTreeChanged();
@@ -332,8 +345,56 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
         return false;
     }
 
-    public void updateConstrains(){
 
+    private String[] fillCatalog(String codigoCatalogo, int seleccionado){
+        int index;
+        String[] catalogo;
+        String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+        if (estudiosAdapter == null)
+            estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
+        estudiosAdapter.open();
+        List<MessageResource> mCatalogo = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='"+codigoCatalogo+"'", CatalogosDBConstants.order);
+        estudiosAdapter.close();
+        catalogo = new String[mCatalogo.size()];
+        index = 0;
+        for (MessageResource message: mCatalogo){
+            if (seleccionado>0){
+                if (seleccionado == Integer.valueOf(message.getCatKey()))
+                    break;
+            }
+            catalogo[index] = message.getSpanish();
+            index++;
+        }
+        return catalogo;
+    }
+
+    public void updateConstrains(){
+        /*for (int i = 0; i < mCurrentPageSequence.size(); i++) {
+            Page page = mCurrentPageSequence.get(i);
+            if (page.getTitle().equals(labels.getAnioFechaDiagnosticoTubPulActual())) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date());
+                int anioAct = calendar.get(Calendar.YEAR);
+                NumberPage np = (NumberPage) page;
+                String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
+                if (valor != null && !valor.isEmpty() && valor.length()==4) {
+                    int anioIngresado = Integer.valueOf(valor);
+                    if (anioIngresado == anioAct){
+                        calendar = Calendar.getInstance();
+                        calendar.setTime(participanteCHF.getParticipante().getFechaNac());
+                        int mesNac = calendar.get(Calendar.MONTH)+1;
+                        String[] catMeses = fillCatalog("CHF_CAT_MESES",mesNac);
+                        SingleFixedChoicePage page2 = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getMesFechaDiagnosticoTubPulActual());
+                        try {
+                            page2.setChoices(catMeses);
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+        */
     }
 
     public void updateModel(Page page){
@@ -556,7 +617,8 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             String anioVacunaInfluenza = datos.getString(this.getString(R.string.anioVacunaInfluenza));
 
             String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-            estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
+            if (estudiosAdapter == null)
+                estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
             estudiosAdapter.open();
 
             EncuestaParticipante encuesta = new EncuestaParticipante();

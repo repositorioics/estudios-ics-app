@@ -158,7 +158,7 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
-        if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
+        /*if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
             int anios = 0;
             int meses = 0;
             int dias = 0;
@@ -188,12 +188,12 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
                         if (meses >= 6) visible3ml = true;
                     } else visible3ml = false;
                 }
-            }
+            }*/
             //changeStatus(mWizardModel.findByKey(labels.getRojo3ml()), visible3ml);
             //changeStatus(mWizardModel.findByKey(labels.getRojo6ml()), visible6ml);
             changeStatus(mWizardModel.findByKey(labels.getRojo3ml()), false);
             changeStatus(mWizardModel.findByKey(labels.getRojo6ml()), false);
-        }
+        //}
         onPageTreeChanged();
         updateBottomBar();
     }
@@ -363,10 +363,8 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getNumPinchazos()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), false);
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoToma()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getDescOtraRazonNoToma()), visible);
                 if (visible) horaTomaMx = null;
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -377,13 +375,13 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getObservacion())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra razon");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRazonNoToma())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra razon");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraRazonNoToma()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -396,25 +394,31 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
     public void changeStatus(Page page, boolean visible){
         String clase = page.getClass().toString();
         if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage")){
-            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
-            BarcodePage modifPage = (BarcodePage) page; modifPage.setValue("").setmVisible(visible);
+            BarcodePage modifPage = (BarcodePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.LabelPage")){
             LabelPage modifPage = (LabelPage) page; modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
-            TextPage modifPage = (TextPage) page; modifPage.setValue("").setmVisible(visible);
+            TextPage modifPage = (TextPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")){
-            NumberPage modifPage = (NumberPage) page; modifPage.setValue("").setmVisible(visible);
+            NumberPage modifPage = (NumberPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")){
-            MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+            MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.DatePage")){
-            DatePage modifPage = (DatePage) page; modifPage.setValue("").setmVisible(visible);
+            DatePage modifPage = (DatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+        }
+        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage")){
+            SelectParticipantPage modifPage = (SelectParticipantPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+        }
+        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NewDatePage")){
+            NewDatePage modifPage = (NewDatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
     }
 

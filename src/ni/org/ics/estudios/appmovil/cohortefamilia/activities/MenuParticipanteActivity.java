@@ -73,6 +73,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                                     int position, long id) {
                 boolean existeencuesta = false;
                 String tituloEncuesta = "";
+                String labelMuestra = "";
                 estudiosAdapter.open();
                 switch (position){
                     case 0:
@@ -104,12 +105,49 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         tituloEncuesta = getString(R.string.new_breastfeed_survey);
                         break;
                     case 4:
+                        labelMuestra = getString(R.string.bhc2ml);
                         tituloEncuesta = getString(R.string.new_sample_bhc);
                         break;
                     case 5:
                         tituloEncuesta = getString(R.string.new_sample_rojo);
+                        if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
+                            int anios = 0;
+                            int meses = 0;
+                            int dias = 0;
+                            boolean visible3ml = false;
+                            boolean visible6ml = false;
+                            String edad[] = participanteCHF.getParticipante().getEdad().split("/");
+                            if (edad.length > 0) {
+                                anios = Integer.valueOf(edad[0]);
+                                meses = Integer.valueOf(edad[1]);
+                                dias = Integer.valueOf(edad[2]);
+                                //Rojo (2 años a 13 años)
+                                if (anios >= 2 && anios < 13) {
+                                    visible6ml = true;
+                                } else if (anios == 13) {
+                                    if (meses > 0)
+                                        visible6ml = false;
+                                    else {
+                                        visible6ml = (dias <= 0);
+                                    }
+                                } else {
+                                    visible6ml = false;
+                                }
+                                //Rojo (6 meses y menos de 2 años)
+                                if (!visible6ml) {
+                                    if (anios == 1) visible3ml = true;
+                                    else if (anios == 0) {
+                                        if (meses >= 6) visible3ml = true;
+                                    } else visible3ml = false;
+                                }
+                            }
+                            if (visible3ml) labelMuestra = getString(R.string.rojo3ml);
+                            if (visible6ml) labelMuestra = getString(R.string.rojo6ml);
+                        }
+
                         break;
                     case 6:
+                        labelMuestra = getString(R.string.volumenPaxgene);
                         tituloEncuesta = getString(R.string.new_sample_paxgene);
                         break;
                     default:
@@ -120,8 +158,11 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     createDialogExiste(tituloEncuesta);
                 }
                 else {
-                    createDialog(position, tituloEncuesta);
+                    if(!labelMuestra.isEmpty())
+                        createDialogMuestras(position, labelMuestra);
+                    else createDialog(position, tituloEncuesta);
                 }
+
             }
         });
 
@@ -203,6 +244,20 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         alertDialog.show();
     }
 
+    private void createDialogMuestras(final int opcion, final String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(this.getString(R.string.remember));
+        builder.setMessage(mensaje+"\n"+getString(R.string.code)+": " + participanteCHF.getParticipante().getCodigo() + " - " + participanteCHF.getParticipante().getNombre1() + " " + participanteCHF.getParticipante().getApellido1());
+        builder.setPositiveButton(this.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                crearFomulario(opcion);
+            }
+        });
+        alertDialog = builder.create();
+        alertDialog.show();
+    }
+
     private void createDialog(final int opcion, final String mensaje) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(this.getString(R.string.confirm));
@@ -243,8 +298,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
             Bundle arguments = new Bundle();
             Intent i;
             try {
-
-
                 switch (position){
                     case 0:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);

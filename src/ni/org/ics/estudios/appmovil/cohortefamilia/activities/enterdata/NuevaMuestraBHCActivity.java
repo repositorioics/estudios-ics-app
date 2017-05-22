@@ -186,12 +186,13 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
 
     @Override
     public void onPageDataChanged(Page page) {
-        updateModel(page);
-        updateConstrains();
         if (recalculateCutOffPage()) {
-            if (notificarCambios) mPagerAdapter.notifyDataSetChanged();
+            if (notificarCambios)
+                mPagerAdapter.notifyDataSetChanged();
             updateBottomBar();
         }
+        updateModel(page);
+        updateConstrains();
         notificarCambios = true;
     }
 
@@ -332,10 +333,8 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getNumPinchazos()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), false);
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoToma()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getDescOtraRazonNoToma()), visible);
                 if (visible) horaTomaMx = null;
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -346,13 +345,13 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getObservacion())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra razon");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRazonNoToma())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra razon");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraRazonNoToma()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -365,7 +364,7 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
     public void changeStatus(Page page, boolean visible){
         String clase = page.getClass().toString();
         if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage")){
-            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
             BarcodePage modifPage = (BarcodePage) page; modifPage.setValue("").setmVisible(visible);

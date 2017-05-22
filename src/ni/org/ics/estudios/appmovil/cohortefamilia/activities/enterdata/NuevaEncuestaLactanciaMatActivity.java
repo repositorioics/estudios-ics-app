@@ -343,67 +343,67 @@ public class NuevaEncuestaLactanciaMatActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getDioPecho())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTiemPecho()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getPechoExc()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTiemPecho())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Aun se lo da");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Aun se lo da");
                 changeStatus(mWizardModel.findByKey(labels.getPechoExc()), visible);
-                visible = !page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Desconocido") && !visible;
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && !page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Desconocido") && !visible;
                 changeStatus(mWizardModel.findByKey(labels.getPechoExcAntes()), visible);
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Numero de meses (02- 36)");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Numero de meses (02- 36)");
                 changeStatus(mWizardModel.findByKey(labels.getMesDioPecho()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getPechoExc())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("No Exclusivamente");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("No Exclusivamente");
                 changeStatus(mWizardModel.findByKey(labels.getFormAlim()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getPechoExcAntes()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getTiempPechoExcAntes()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getMestPechoExc()), visible);
+                //changeStatus(mWizardModel.findByKey(labels.getPechoExcAntes()), visible);
+                //changeStatus(mWizardModel.findByKey(labels.getTiempPechoExcAntes()), visible);
+                //changeStatus(mWizardModel.findByKey(labels.getMestPechoExc()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtraAlim()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getEdadLiqDistPecho()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getMesDioLiqDisPecho()), visible);
+                //changeStatus(mWizardModel.findByKey(labels.getMesDioLiqDisPecho()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getEdadLiqDistLeche()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getMesDioLiqDisLeche()), visible);
+                //changeStatus(mWizardModel.findByKey(labels.getMesDioLiqDisLeche()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getEdAlimSolidos()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getMesDioAlimSol()), visible);
+                //changeStatus(mWizardModel.findByKey(labels.getMesDioAlimSol()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getPechoExcAntes())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Exclusivamente");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Exclusivamente");
                 changeStatus(mWizardModel.findByKey(labels.getTiempPechoExcAntes()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getMestPechoExc()), false);
+                //changeStatus(mWizardModel.findByKey(labels.getMestPechoExc()), false);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTiempPechoExcAntes())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Numero de meses (02- 36)");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Numero de meses (02- 36)");
                 changeStatus(mWizardModel.findByKey(labels.getMestPechoExc()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getEdadLiqDistPecho())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Meses (0-24)");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Meses (0-24)");
                 changeStatus(mWizardModel.findByKey(labels.getMesDioLiqDisPecho()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getEdadLiqDistLeche())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Meses (0-36)");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Meses (0-36)");
                 changeStatus(mWizardModel.findByKey(labels.getMesDioLiqDisLeche()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getEdAlimSolidos())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Meses (0-36)");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Meses (0-36)");
                 changeStatus(mWizardModel.findByKey(labels.getMesDioAlimSol()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
-
 
         }catch (Exception ex){
             ex.printStackTrace();

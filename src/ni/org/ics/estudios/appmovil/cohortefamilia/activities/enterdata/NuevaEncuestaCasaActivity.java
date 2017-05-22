@@ -331,13 +331,13 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
         try {
             boolean visible = false;
             if (page.getTitle().equals(labels.getLlaveAgua())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Fuera");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Fuera");
                 changeStatus(mWizardModel.findByKey(labels.getLlaveCompartida()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAlmacenaAgua())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAlmacenaEnBarriles()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getAlmacenaEnPilas()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getAlmacenaEnTanques()), visible);
@@ -346,7 +346,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             }
 
             if (page.getTitle().equals(labels.getAlmacenaEnBarriles())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumBarriles()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getBarrilesTapados()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getBarrilesConAbate()), visible);
@@ -355,7 +355,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             }
 
             if (page.getTitle().equals(labels.getAlmacenaEnTanques())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumTanques()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTanquesTapados()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTanquesConAbate()), visible);
@@ -364,7 +364,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             }
 
             if (page.getTitle().equals(labels.getAlmacenaEnPilas())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumPilas()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getPilasTapadas()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getPilasConAbate()), visible);
@@ -373,7 +373,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             }
 
             if (page.getTitle().equals(labels.getAlmacenaOtrosRecipientes())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getOtrosRecipientes()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getNumOtrosRecipientes()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtrosRecipientesTapados()), visible);
@@ -383,52 +383,52 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             }
 
             if (page.getTitle().equals(labels.getMaterialParedes())) {
-                visible = page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains(Constants.OTRO);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroMaterialParedes()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
 
             if (page.getTitle().equals(labels.getMaterialPiso())) {
-                visible = page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains(Constants.OTRO);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroMaterialPiso()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
 
             if (page.getTitle().equals(labels.getMaterialTecho())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroMaterialTecho()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
 
             if (page.getTitle().equals(labels.getTieneAbanico())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumAbanicos()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTieneTelevisor())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumTelevisores()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTieneRefrigerador())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumRefrigeradores()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTienAireAcondicionado())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAireAcondicionadoFuncionando()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCocinaConLenia())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getUbicacionCocinaLenia()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getPeriodicidadCocinaLenia()), visible);
                 notificarCambios = false;
@@ -436,16 +436,16 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             }
             if (page.getTitle().equals(labels.getPeriodicidadCocinaLenia())) {
                 //visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Diario");
-                changeStatus(mWizardModel.findByKey(labels.getNumDiarioCocinaLenia()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Diario"));
-                changeStatus(mWizardModel.findByKey(labels.getNumSemanalCocinaLenia()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Semanal"));
-                changeStatus(mWizardModel.findByKey(labels.getNumQuincenalCocinaLenia()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Quincenal"));
-                changeStatus(mWizardModel.findByKey(labels.getNumMensualCocinaLenia()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Mensual"));
+                changeStatus(mWizardModel.findByKey(labels.getNumDiarioCocinaLenia()), (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Diario")));
+                changeStatus(mWizardModel.findByKey(labels.getNumSemanalCocinaLenia()), (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Semanal")));
+                changeStatus(mWizardModel.findByKey(labels.getNumQuincenalCocinaLenia()), (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Quincenal")));
+                changeStatus(mWizardModel.findByKey(labels.getNumMensualCocinaLenia()), (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Mensual")));
                 notificarCambios = false;
                 onPageTreeChanged();
             }
 
             if (page.getTitle().equals(labels.getTieneAnimales())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTieneGallinas()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTienePatos()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTieneCerdos()), visible);
@@ -453,7 +453,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTieneGallinas())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCantidadGallinas()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getGallinasDentroCasa()), visible);
                 notificarCambios = false;
@@ -461,7 +461,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             }
 
             if (page.getTitle().equals(labels.getTienePatos())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCantidadPatos()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getPatosDentroCasa()), visible);
                 notificarCambios = false;
@@ -469,7 +469,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             }
 
             if (page.getTitle().equals(labels.getTieneCerdos())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCantidadCerdos()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getCerdosDentroCasa()), visible);
                 notificarCambios = false;
@@ -477,7 +477,7 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
             }
 
             if (page.getTitle().equals(labels.getPersonaFumaDentroCasa())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getMadreFuma()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtrosFuman()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getPadreFuma()), visible);
@@ -485,26 +485,26 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getMadreFuma())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrilosMadre()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getPadreFuma())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrillosPadre()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getOtrosFuman())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCantidadOtrosFuman()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrillosOtros()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTieneOtroMedioTransAuto())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getOtroMedioTransAuto()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -513,28 +513,33 @@ public class NuevaEncuestaCasaActivity extends FragmentActivity implements
         }catch (Exception ex){
             ex.printStackTrace();
         }
-
     }
 
     public void changeStatus(Page page, boolean visible){
         String clase = page.getClass().toString();
         if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage")){
-            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
-            BarcodePage modifPage = (BarcodePage) page; modifPage.setValue("").setmVisible(visible);
+            BarcodePage modifPage = (BarcodePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.LabelPage")){
             LabelPage modifPage = (LabelPage) page; modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
-            TextPage modifPage = (TextPage) page; modifPage.setValue("").setmVisible(visible);
+            TextPage modifPage = (TextPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")){
-            NumberPage modifPage = (NumberPage) page; modifPage.setValue("").setmVisible(visible);
+            NumberPage modifPage = (NumberPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")){
-            MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+            MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+        }
+        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage")){
+            SelectParticipantPage modifPage = (SelectParticipantPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+        }
+        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NewDatePage")){
+            NewDatePage modifPage = (NewDatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
     }
 

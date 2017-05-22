@@ -13,10 +13,12 @@
     <string name="horaHint">Formato 24 horas (desde 00:00 hasta 23:59)</string>
     <string name="volumen">Volumen</string>
     <string name="observacion">Observación de la muestra</string>
-    <string name="descOtraObservacion">Escriba la razón</string>
+    <string name="descOtraObservacion">Otra observacion</string>
+    <string name="descOtraObservacionHint">Escriba la descripcion de otra observación para la muestra</string>
     <string name="numPinchazos">¿Número de pinchazos?</string>
     <string name="razonNoToma">¿Porqué razón no se tomó muestra?</string>
-    <string name="descOtraRazonNoToma">Escriba por que otra razón no se tomó la muestra</string>
+    <string name="descOtraRazonNoToma">Otra razon</string>
+    <string name="descOtraRazonNoTomaHint">Escriba por que otra razón no se tomó la muestra</string>
     <string name="tubo">Tipo de tubo</string>
     <string name="tipoMuestra">Tipo de muestra</string>
     <string name="proposito">Propósito de la muestra</string>

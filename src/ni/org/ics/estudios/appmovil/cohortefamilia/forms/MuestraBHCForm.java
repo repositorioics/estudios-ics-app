@@ -55,12 +55,12 @@ public class MuestraBHCForm extends AbstractWizardModel {
         Page lpBhc2ml = new LabelPage(this, labels.getBhc2ml(), "", Constants.ROJO, true).setRequired(false);
         Page scTomaMxSn = new SingleFixedChoicePage(this, labels.getTomaMxSn(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scRazonNoToma = new SingleFixedChoicePage(this, labels.getRazonNoToma(), "", Constants.WIZARD, false).setChoices(catRazon).setRequired(true);
-        Page tpDescOtraRazonNoToma = new TextPage(this, labels.getDescOtraRazonNoToma(), "", Constants.WIZARD, false).setRequired(false);
+        Page tpDescOtraRazonNoToma = new TextPage(this, labels.getDescOtraRazonNoToma(), labels.getDescOtraRazonNoTomaHint(), Constants.WIZARD, false).setRequired(true);
         Page bcCodigoMx = new BarcodePage(this, labels.getCodigoMx(), "", Constants.WIZARD, false).setRangeValidation(true,1,15000).setRequired(true);
         //Page tpHora = new TextPage(this, labels.getHora(), labels.getHoraHint(), Constants.WIZARD, false).setRequired(true);
         Page npVolumen = new NumberPage(this, labels.getVolumen(), labels.getVolumenHint(), Constants.WIZARD, false).setRangeValidation(true, 0, 2).setRequired(true);
         Page scObservacion = new SingleFixedChoicePage(this, labels.getObservacion(), "", Constants.WIZARD, false).setChoices(catObservacion).setRequired(true);
-        Page tpDescOtraObservacion = new TextPage(this, labels.getDescOtraObservacion(), "", Constants.WIZARD, false).setRequired(true);
+        Page tpDescOtraObservacion = new TextPage(this, labels.getDescOtraObservacion(), labels.getDescOtraObservacionHint(), Constants.WIZARD, false).setRequired(true);
         Page scNumPinchazos = new SingleFixedChoicePage(this, labels.getNumPinchazos(), "", Constants.WIZARD, false).setChoices(catPinchazos).setRequired(true);
 
         return new PageList(lpBhc2ml,scTomaMxSn,scRazonNoToma,tpDescOtraRazonNoToma, bcCodigoMx, npVolumen, scObservacion, tpDescOtraObservacion, scNumPinchazos);

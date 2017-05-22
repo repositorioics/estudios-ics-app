@@ -66,7 +66,7 @@ public class EncuestaDatosPartoBBForm extends AbstractWizardModel {
         Page scDocMedTiempoEmbSn = new SingleFixedChoicePage(this,labels.getDocMedTiempoEmbSn(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scDocMedTiempoEmb = new SingleFixedChoicePage(this,labels.getDocMedTiempoEmb(), "",Constants.WIZARD, false).setChoices(catDocMedico).setRequired(true);
         Page tpOtroDocMedTiempoEmb = new TextPage(this, labels.getOtroDocMedTiempoEmb(), labels.getOtroDocMedTiempoEmbHint(), Constants.WIZARD, false).setRequired(true);
-        Page dpFum = new DatePage(this, labels.getFum(), "", Constants.WIZARD, false).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
+        Page dpFum = new NewDatePage(this, labels.getFum(), "", Constants.WIZARD, false).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
         Page scFumFueraRangoSn = new SingleFixedChoicePage(this,labels.getFumFueraRangoSn(), labels.getFumFueraRangoSnHint(),Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page tpFumFueraRangoRazon = new TextPage(this, labels.getFumFueraRangoRazon(), labels.getFumFueraRangoRazonHint(), Constants.WIZARD, false).setRequired(true);
         Page lpReingresarFUM = new LabelPage(this, labels.getReingresarFUM(), "", Constants.ROJO, false);

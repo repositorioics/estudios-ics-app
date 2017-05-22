@@ -60,7 +60,8 @@
     <string name="review">Revisar</string>
     <string name="is_null">(Nulo)</string>
     <string name="submit_confirm_message">Guardar la informacion en la base de datos?</string>
-    <string name="submit_confirm_button">Guardar</string>    
+    <string name="submit_confirm_button">Guardar</string>
+    <string name="remember">Recordar</string>
     
     <string name="gpstitle">Configuración GPS</string>
     <string name="gpsquestion">El GPS no está habilitado. Quiere ir al menú de configuración y activarlo?</string>

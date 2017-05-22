@@ -374,10 +374,10 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     		SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
-    		BarcodePage modifPage = (BarcodePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);;
+    		BarcodePage modifPage = (BarcodePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.LabelPage")){
-    		LabelPage modifPage = (LabelPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    		LabelPage modifPage = (LabelPage) page; modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
     		TextPage modifPage = (TextPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);

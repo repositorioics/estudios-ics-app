@@ -32,6 +32,8 @@ public class MuestrasFormLabels {
     protected String bhc2ml;
     protected String volumenPaxgene;
     protected String volumenHint;
+    protected String descOtraObservacionHint;
+    protected String descOtraRazonNoTomaHint;
 
     public MuestrasFormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
@@ -57,6 +59,8 @@ public class MuestrasFormLabels {
         bhc2ml = res.getString(R.string.bhc2ml);
         volumenPaxgene = res.getString(R.string.volumenPaxgene);
         volumenHint = res.getString(R.string.volumenHint);
+        descOtraObservacionHint = res.getString(R.string.descOtraObservacionHint);
+        descOtraRazonNoTomaHint = res.getString(R.string.descOtraRazonNoTomaHint);
     }
 
     public String getTomaMxSn() {
@@ -233,5 +237,21 @@ public class MuestrasFormLabels {
 
     public void setVolumenHint(String volumenHint) {
         this.volumenHint = volumenHint;
+    }
+
+    public String getDescOtraObservacionHint() {
+        return descOtraObservacionHint;
+    }
+
+    public void setDescOtraObservacionHint(String descOtraObservacionHint) {
+        this.descOtraObservacionHint = descOtraObservacionHint;
+    }
+
+    public String getDescOtraRazonNoTomaHint() {
+        return descOtraRazonNoTomaHint;
+    }
+
+    public void setDescOtraRazonNoTomaHint(String descOtraRazonNoTomaHint) {
+        this.descOtraRazonNoTomaHint = descOtraRazonNoTomaHint;
     }
 }

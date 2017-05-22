@@ -13,6 +13,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
@@ -344,16 +345,20 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTiempoEmbSemana()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDocMedTiempoEmbSn()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getDocMedEdadGestSn()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDocMedTiempoEmbSn())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
-                changeStatus(mWizardModel.findByKey(labels.getDocMedTiempoEmb()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getFum()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getDocMedEdadGestSn()), visible);
-                notificarCambios = false;
-                onPageTreeChanged();
+                if (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null) {
+                    visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                    changeStatus(mWizardModel.findByKey(labels.getDocMedTiempoEmb()), visible);
+                    changeStatus(mWizardModel.findByKey(labels.getFum()), visible);
+                    changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoSn()), visible);
+                    changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), visible);
+                    notificarCambios = false;
+                    onPageTreeChanged();
+                }
             }
             if (page.getTitle().equals(labels.getDocMedTiempoEmb())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
@@ -367,6 +372,7 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
                 int semanaGest = diferenciaEnSemanas(participanteCHF.getParticipante().getFechaNac(), dFum);
                 if (semanaGest < 25 || semanaGest > 45) visible = true;
                 changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoSn()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -436,6 +442,14 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.DatePage")){
             DatePage modifPage = (DatePage) page; modifPage.setValue("").setmVisible(visible);
+        }
+        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage")){
+            SelectParticipantPage modifPage = (SelectParticipantPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    }
+        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NewDatePage")){
+            NewDatePage modifPage = (NewDatePage) page;
+            modifPage.resetData(new Bundle());
+            modifPage.setmVisible(visible);
         }
     }
 
@@ -536,7 +550,15 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
                 if (msDocMedPesoBB != null) encuesta.setDocMedPesoBB(msDocMedPesoBB.getCatKey());
             }
             //fechas
-            if (tieneValor(dpFum)) encuesta.setFum(StringToDate(dpFum, "dd/MM/yyyy"));
+            try {
+                if (tieneValor(dpFum)) encuesta.setFum(StringToDate(dpFum, "dd/MM/yyyy"));
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                Toast toast = Toast.makeText(getApplicationContext(),e.getLocalizedMessage(),Toast.LENGTH_LONG);
+                toast.show();
+                finish();
+            }
             //Numericos
             if (tieneValor(npTiempoEmbSemana)) encuesta.setTiempoEmbSemana(Integer.valueOf(npTiempoEmbSemana));
             if (tieneValor(npEdadGest)) encuesta.setEdadGest(Integer.valueOf(npEdadGest));

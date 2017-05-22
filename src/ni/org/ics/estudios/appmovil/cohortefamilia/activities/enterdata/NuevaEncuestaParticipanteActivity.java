@@ -401,20 +401,20 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
         try {
             boolean visible = false;
             if (page.getTitle().equals(labels.getEstaEmbarazada())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getSemanasEmbarazo()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTrabaja())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTipoTrabajo()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOcupacionActual()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getVaNinoEscuela())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getGradoCursa()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getNombreCentroEstudio()), visible);
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
@@ -423,13 +423,13 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getNinoTrabaja())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getOcupacionActualNino()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getPadreEnEstudio())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoPadreEstudio()), visible);
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getPadreAlfabeto()), visible);
@@ -439,15 +439,15 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTrabajaPadre())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTipoTrabajoPadre()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getMadreEnEstudio())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoMadreEstudio()), visible);
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getMadreAlfabeto()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getNivelEducacionMadre()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTrabajaMadre()), visible);
@@ -455,13 +455,13 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTrabajaMadre())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTipoTrabajoMadre()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFuma())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getPeriodicidadFuma()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrillos()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getFumaDentroCasa()), visible);
@@ -469,7 +469,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTuberculosisPulmonarActual())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioFechaDiagnosticoTubPulActual()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getMesFechaDiagnosticoTubPulActual()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTomaTratamientoTubPulActual()), visible);
@@ -478,7 +478,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTuberculosisPulmonarPasado())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getFechaDiagnosticoTubPulPasadoSn()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTomaTratamientoTubPulPasado()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getCompletoTratamientoTubPulPasado()), visible);
@@ -486,20 +486,20 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFechaDiagnosticoTubPulPasadoSn())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioFechaDiagnosticoTubPulPasado()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getMesFechaDiagnosticoTubPulPasado()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCrisisAsma())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCantidadCrisisAsma()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getOtrasEnfermedades())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getDescOtrasEnfermedades()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -763,7 +763,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(tomaTratamientoTubPulActual)){
                 MessageResource mstomaTratamientoTubPulActual = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaTratamientoTubPulActual + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mstomaTratamientoTubPulActual != null) encuesta.setPeriodicidadFuma(mstomaTratamientoTubPulActual.getCatKey());
+                if (mstomaTratamientoTubPulActual != null) encuesta.setTomaTratamientoTubPulActual(mstomaTratamientoTubPulActual.getCatKey().charAt(0));
             }
             if (tieneValor(completoTratamientoTubPulActual)){
                 MessageResource mscompletoTratamientoTubPulActual = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + completoTratamientoTubPulActual + "' and "
@@ -875,7 +875,6 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(vecesEnfermoEnfermedadesRes)) encuesta.setVecesEnfermoEnfermedadesRes(Integer.valueOf(vecesEnfermoEnfermedadesRes));
             if (tieneValor(anioVacunaInfluenza)) encuesta.setAnioVacunaInfluenza(Integer.valueOf(anioVacunaInfluenza));
             //textos
-            //encuesta.setOtroDocMedTiempoEmb(tpOtroDocMedTiempoEmb);
             encuesta.setDescOtrasEnfermedades(descOtrasEnfermedades);
             encuesta.setOcupacionActual(ocupacionActual);
             encuesta.setNombreCentroEstudio(nombreCentroEstudio);

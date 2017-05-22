@@ -348,13 +348,10 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getNumPinchazos()), visible, null);
-                changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), false, null);
                 changeStatus(mWizardModel.findByKey(labels.getHoraInicioPax()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getHoraFinPax()), visible, null);
-                changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), false, null);
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoToma()), visible, null);
-                changeStatus(mWizardModel.findByKey(labels.getDescOtraRazonNoToma()), visible, null);
                 if (visible) horaTomaMx = null;
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -365,13 +362,13 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getObservacion())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra razon");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), visible, null);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRazonNoToma())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra razon");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraRazonNoToma()), visible, null);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -397,10 +394,10 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
     public void changeStatus(Page page, boolean visible, String hint){
         String clase = page.getClass().toString();
         if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage")){
-            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
-            BarcodePage modifPage = (BarcodePage) page; modifPage.setValue("").setmVisible(visible);
+            BarcodePage modifPage = (BarcodePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.LabelPage")){
             LabelPage modifPage = (LabelPage) page;
@@ -409,16 +406,22 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
             modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
-            TextPage modifPage = (TextPage) page; modifPage.setValue("").setmVisible(visible);
+            TextPage modifPage = (TextPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")){
-            NumberPage modifPage = (NumberPage) page; modifPage.setValue("").setmVisible(visible);
+            NumberPage modifPage = (NumberPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")){
-            MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+            MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.DatePage")){
-            DatePage modifPage = (DatePage) page; modifPage.setValue("").setmVisible(visible);
+            DatePage modifPage = (DatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+        }
+        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage")){
+            SelectParticipantPage modifPage = (SelectParticipantPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+        }
+        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NewDatePage")){
+            NewDatePage modifPage = (NewDatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
     }
 

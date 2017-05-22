@@ -44,11 +44,14 @@ import ni.org.ics.estudios.appmovil.utils.GPSTracker;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
+import ni.org.ics.estudios.appmovil.wizard.model.DatePage;
 import ni.org.ics.estudios.appmovil.wizard.model.LabelPage;
 import ni.org.ics.estudios.appmovil.wizard.model.ModelCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage;
+import ni.org.ics.estudios.appmovil.wizard.model.NewDatePage;
 import ni.org.ics.estudios.appmovil.wizard.model.NumberPage;
 import ni.org.ics.estudios.appmovil.wizard.model.Page;
+import ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage;
 import ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage;
 import ni.org.ics.estudios.appmovil.wizard.model.TextPage;
 import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
@@ -368,22 +371,31 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     public void changeStatus(Page page, boolean visible){
     	String clase = page.getClass().toString();
     	if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage")){
-    		SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+    		SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
-    		BarcodePage modifPage = (BarcodePage) page; modifPage.setValue("").setmVisible(visible);
+    		BarcodePage modifPage = (BarcodePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);;
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.LabelPage")){
-    		LabelPage modifPage = (LabelPage) page; modifPage.setmVisible(visible);
+    		LabelPage modifPage = (LabelPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
-    		TextPage modifPage = (TextPage) page; modifPage.setValue("").setmVisible(visible);
+    		TextPage modifPage = (TextPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")){
-    		NumberPage modifPage = (NumberPage) page; modifPage.setValue("").setmVisible(visible);
+    		NumberPage modifPage = (NumberPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")){
-    		MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+    		MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.DatePage")){
+    		DatePage modifPage = (DatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage")){
+    		SelectParticipantPage modifPage = (SelectParticipantPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NewDatePage")){
+    		NewDatePage modifPage = (NewDatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
     	}
     }
     

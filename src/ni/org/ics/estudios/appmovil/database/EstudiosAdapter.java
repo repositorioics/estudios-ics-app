@@ -786,7 +786,12 @@ public class EstudiosAdapter {
 		ContentValues cv = CartaConsentimientoHelper.crearCartaConsentimientoContentValues(cartaConsentimiento);
 		mDb.insert(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE, null, cv);
 	}
-
+    //Editar EncuestasCasa existente en la base de datos
+    public boolean editarCartaConsentimiento(CartaConsentimiento cartaConsentimiento) {
+        ContentValues cv = CartaConsentimientoHelper.crearCartaConsentimientoContentValues(cartaConsentimiento);
+        return mDb.update(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE, cv, MainDBConstants.codigo + "='"
+                + cartaConsentimiento.getCodigo() + "'", null) > 0;
+    }
     /**
      * Metodos para EncuestaCasa en la base de datos
      *
@@ -886,7 +891,7 @@ public class EstudiosAdapter {
             do{
                 EncuestaDatosPartoBB mEncuesta = null;
                 mEncuesta = EncuestaDatosPartoBBHelper.crearEncuestaDatosPartoBB(cursor);
-                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)), null);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)) + "'", null);
                 if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
                 mEncuestas.add(mEncuesta);
             } while (cursor.moveToNext());
@@ -940,7 +945,7 @@ public class EstudiosAdapter {
             do{
                 EncuestaParticipante mEncuesta = null;
                 mEncuesta = EncuestaParticipanteHelper.crearEncuestaParticipante(cursor);
-                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)), null);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf))+"'", null);
                 if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
                 mEncuestas.add(mEncuesta);
             } while (cursor.moveToNext());
@@ -994,7 +999,7 @@ public class EstudiosAdapter {
             do{
                 EncuestaPesoTalla mEncuesta = null;
                 mEncuesta = EncuestaPesoTallaHelper.crearEncuestaPesoTalla(cursor);
-                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)), null);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf))+"'", null);
                 if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
                 mEncuestas.add(mEncuesta);
             } while (cursor.moveToNext());
@@ -1048,7 +1053,7 @@ public class EstudiosAdapter {
             do{
                 EncuestaLactanciaMaterna mEncuesta = null;
                 mEncuesta = EncuestaLactanciaMatHelper.crearEncuestaLactanciaMaterna(cursor);
-                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)), null);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)) + "'", null);
                 if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
                 mEncuestas.add(mEncuesta);
             } while (cursor.moveToNext());
@@ -1102,7 +1107,7 @@ public class EstudiosAdapter {
             do{
                 Muestra mMuestra = null;
                 mMuestra = MuestraHelper.crearMuestra(cursor);
-                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteCHF)), null);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteCHF)) + "'", null);
                 if (participanteCohorteFamilia != null) mMuestra.setParticipanteCHF(participanteCohorteFamilia);
                 mMuestras.add(mMuestra);
             } while (cursor.moveToNext());

@@ -463,14 +463,17 @@ public class MainDBConstants {
     //crear tabla peronsa cama
     public static final String CREATE_PERSONACAMA_TABLE = "create table if not exists "
             + PERSONACAMA_TABLE + " ("
-            + codigoCama + " text not null, "
-            + habitacion + " text, "
+            + codigoPersona + " text not null, "
+            + cama + " text not null, "
+            + estaEnEstudio + " text, "
+            + edad + " integer, "
+            + sexo + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
             + deviceId + " text, "
             + estado + " text not null, "
-            + "primary key (" + codigoCama + "));";
+            + "primary key (" + codigoPersona + "));";
 
 
 }

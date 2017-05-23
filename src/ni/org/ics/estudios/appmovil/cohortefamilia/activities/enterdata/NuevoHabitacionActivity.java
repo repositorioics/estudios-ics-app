@@ -186,6 +186,16 @@ public class NuevoHabitacionActivity extends FragmentActivity implements
 			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					// Finish app
+					Bundle arguments = new Bundle();
+					Intent i;
+					if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+					i = new Intent(getApplicationContext(),
+							ListaHabitacionesActivity.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					i.putExtras(arguments);
+					startActivity(i);
+					Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.err_cancel),Toast.LENGTH_LONG);
+					toast.show();
 					dialog.dismiss();
 					finish();
 				}

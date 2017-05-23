@@ -17,4 +17,6 @@
     <string name="codigoHabitacion">Codigo Habitacion</string>
     <string name="cantidadCamas">Numero de camas</string>
 	<string name="descCama">Observación cama</string>
+	<string name="estaEnEstudio">Esta en el estudio?</string>
+	<string name="participante">Escanear Código</string>
 </resources>

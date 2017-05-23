@@ -55,7 +55,7 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 		new FetchDataHabitacionTask().execute(hab.getCodigo());
 		
 		mAddButton = (Button) findViewById(R.id.add_button);
-		mAddButton.setText(getString(R.string.new_room));
+		mAddButton.setText(getString(R.string.new_bed));
 
 		mAddButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
@@ -102,7 +102,7 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
         // Opcion de menu seleccionada
         Bundle arguments = new Bundle();
 		Intent i;
-		arguments.putSerializable(Constants.HABITACION , cama);
+		arguments.putSerializable(Constants.CAMA , cama);
 		i = new Intent(getApplicationContext(),
 				ListaPersonasCamaActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -7,8 +7,10 @@
         <ignore path="src/ni/org/ics/estudios/appmovil/adapters/ParticipanteAdapter.java" />
         <ignore path="src/ni/org/ics/estudios/appmovil/adapters/ScreeningAdapter.java" />
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/activities/enterdata/NuevoTamizajePersonaActivity.java" />
+        <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/CamaAdapter.java" />
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/HabitacionAdapter.java" />
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/ParticipanteCHFAdapter.java" />
+        <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/PersonaCamaAdapter.java" />
     </issue>
     <issue id="ViewHolder">
         <ignore path="src/ni/org/ics/estudios/appmovil/wizard/ui/ReviewFragment.java" />

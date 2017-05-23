@@ -315,7 +315,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
             if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")) {
             	NumberPage np = (NumberPage) page;
             	String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-        		if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Integer.valueOf(valor) || np.getmLowerOrEqualsThan() < Integer.valueOf(valor)))
+        		if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Double.valueOf(valor) || np.getmLowerOrEqualsThan() < Double.valueOf(valor)))
         				|| (np.ismValPattern() && !valor.matches(np.getmPattern()))){
         			cutOffPage = i;
         			break;
@@ -587,7 +587,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), false);
     	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), false);
     	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getTestigoPresente()), false);
-    	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), false);
+    	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), false);
     	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), false);
     	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), false);
     	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), false);
@@ -786,14 +786,26 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     			if (tieneValor(nombre2)) participante.setNombre2(nombre2);
     			if (tieneValor(apellido1)) participante.setApellido1(apellido1);
     			if (tieneValor(apellido2)) participante.setApellido2(apellido2);
-    			if (tieneValor(nombre1Padre)) participante.setNombre1Padre(nombre1Padre);
-    			if (tieneValor(nombre2Padre)) participante.setNombre2Padre(nombre2Padre);
-    			if (tieneValor(apellido1Padre)) participante.setApellido1Padre(apellido1Padre);
-    			if (tieneValor(apellido2Padre)) participante.setApellido2Padre(apellido2Padre);
-    			if (tieneValor(nombre1Madre)) participante.setNombre1Madre(nombre1Madre);
-    			if (tieneValor(nombre2Madre)) participante.setNombre2Madre(nombre2Madre);
-    			if (tieneValor(apellido1Madre)) participante.setApellido1Madre(apellido1Madre);
-    			if (tieneValor(apellido2Madre)) participante.setApellido2Madre(apellido2Madre);
+    			if (tieneValor(nombre1Padre)) {
+    				if (tieneValor(nombre1Padre)) participante.setNombre1Padre(nombre1Padre);
+    				if (tieneValor(nombre2Padre)) participante.setNombre2Padre(nombre2Padre);
+        			if (tieneValor(apellido1Padre)) participante.setApellido1Padre(apellido1Padre);
+        			if (tieneValor(apellido2Padre)) participante.setApellido2Padre(apellido2Padre);
+        			if (tieneValor(nombre1Madre)) participante.setNombre1Madre(nombre1Madre);
+        			if (tieneValor(nombre2Madre)) participante.setNombre2Madre(nombre2Madre);
+        			if (tieneValor(apellido1Madre)) participante.setApellido1Madre(apellido1Madre);
+        			if (tieneValor(apellido2Madre)) participante.setApellido2Madre(apellido2Madre);
+    			}
+    			else{
+    				participante.setNombre1Padre("NA");
+    				participante.setNombre2Padre("NA");
+        			participante.setApellido1Padre("NA");
+        			participante.setApellido2Padre("NA");
+        			participante.setNombre1Madre("NA");
+        			participante.setNombre2Madre("NA");
+        			participante.setApellido1Madre("NA");
+        			participante.setApellido2Madre("NA");
+    			}
     			participante.setSexo(t.getSexo());
     			participante.setFechaNac(t.getFechaNacimiento());
     			participante.setCasa(casaCHF.getCasa());

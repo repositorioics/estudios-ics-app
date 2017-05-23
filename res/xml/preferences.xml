@@ -13,7 +13,7 @@
 		<CheckBoxPreference android:id="@+id/barcode" android:key="barcode" android:defaultValue="true" android:title="@string/desc_barcode" />
 		<Preference android:title="@string/update_app_preferences" >
 		    <intent android:action="android.intent.action.VIEW"
-		            android:data="http://192.168.1.226/estudios-ics/resources/apk/estudios-ics-app.apk" />
+		            android:data="http://192.168.1.98:8080/estudios-ics/resources/apk/estudios-ics-app.apk" />
 		</Preference>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/version_app_preferences"></PreferenceCategory>

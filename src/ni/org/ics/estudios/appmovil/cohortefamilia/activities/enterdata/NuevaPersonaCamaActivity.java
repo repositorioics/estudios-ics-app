@@ -25,15 +25,20 @@ import java.util.Map;
 
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaCamasActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.CamaForm;
+import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaPersonasCamaActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PersonaCamaForm;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PersonaCamaFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cama;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Habitacion;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PersonaCama;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
 import ni.org.ics.estudios.appmovil.utils.FileUtils;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
 import ni.org.ics.estudios.appmovil.wizard.model.DatePage;
@@ -51,7 +56,7 @@ import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
 import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 
 
-public class NuevaCamaActivity extends FragmentActivity implements
+public class NuevaPersonaCamaActivity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -66,12 +71,13 @@ public class NuevaCamaActivity extends FragmentActivity implements
     private StepPagerStrip mStepPagerStrip;
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
-    private static Habitacion hab = new Habitacion();
+    private static Cama cama = new Cama();
 	private String username;
 	private SharedPreferences settings;
 	private static final int EXIT = 1;
 	private AlertDialog alertDialog;
 	private boolean notificarCambios = true;
+	private PersonaCamaFormLabels labels = new PersonaCamaFormLabels();
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,10 +93,10 @@ public class NuevaCamaActivity extends FragmentActivity implements
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
-		infoMovil = new DeviceInfo(NuevaCamaActivity.this);
-		hab = (Habitacion) getIntent().getExtras().getSerializable(Constants.HABITACION);
+		infoMovil = new DeviceInfo(NuevaPersonaCamaActivity.this);
+		cama = (Cama) getIntent().getExtras().getSerializable(Constants.CAMA);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        mWizardModel = new CamaForm(this,mPass);
+        mWizardModel = new PersonaCamaForm(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
@@ -188,15 +194,14 @@ public class NuevaCamaActivity extends FragmentActivity implements
 					// Finish app
 					Bundle arguments = new Bundle();
 					Intent i;
-					if (hab!=null) arguments.putSerializable(Constants.HABITACION , hab);
+					if (cama!=null) arguments.putSerializable(Constants.CAMA , cama);
 					i = new Intent(getApplicationContext(),
-							ListaCamasActivity.class);
+							ListaPersonasCamaActivity.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					i.putExtras(arguments);
 					startActivity(i);
 					Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.err_cancel),Toast.LENGTH_LONG);
 					toast.show();
-					finish();
 					dialog.dismiss();
 					finish();
 				}
@@ -335,7 +340,15 @@ public class NuevaCamaActivity extends FragmentActivity implements
     
     public void updateModel(Page page){
     	try{
-    		
+    		boolean visible = false;
+    		if(page.getTitle().equals(labels.getEstaEnEstudio())){
+				visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+				changeStatus(mWizardModel.findByKey(labels.getParticipante()), visible);
+				changeStatus(mWizardModel.findByKey(labels.getSexo()), !visible);
+				changeStatus(mWizardModel.findByKey(labels.getEdad()), !visible);
+	            notificarCambios = false;
+	            onPageTreeChanged();
+	        }
     		
     	}catch (Exception ex){
             ex.printStackTrace();
@@ -373,9 +386,9 @@ public class NuevaCamaActivity extends FragmentActivity implements
     	}
     }
     
-    //private boolean tieneValor(String entrada){
-    //    return (entrada != null && !entrada.isEmpty());
-    //}
+    private boolean tieneValor(String entrada){
+        return (entrada != null && !entrada.isEmpty());
+    }
     
     public void saveData(){
 		Map<String, String> mapa = mWizardModel.getAnswers();
@@ -392,26 +405,48 @@ public class NuevaCamaActivity extends FragmentActivity implements
 		
 		//Obtener datos del bundle para la habitacion
 		String id = infoMovil.getId();
-		String descCama = datos.getString(this.getString(R.string.descCama));
+		String estaEnEstudio = datos.getString(this.getString(R.string.estaEnEstudio));
+		String participante = datos.getString(this.getString(R.string.participante));
+		String sexo = datos.getString(this.getString(R.string.sexo));
+		String edad = datos.getString(this.getString(R.string.edad));
+		
 		
 		//Crea una nueva cama
-		Cama h = new Cama();
-		h.setCodigoCama(id);		
-		h.setDescCama(descCama);
-		h.setHabitacion(hab);
+		PersonaCama h = new PersonaCama();
+		h.setCodigoPersona(id);
+		h.setCama(cama);
+		if (tieneValor(estaEnEstudio)) {
+			MessageResource catEstaEnEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + estaEnEstudio + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+			if (catEstaEnEstudio!=null) h.setEstaEnEstudio(catEstaEnEstudio.getCatKey().charAt(0));
+		}
+		if (tieneValor(sexo)) {
+			MessageResource catSexo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + sexo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SEXO'", null);
+			if (catSexo!=null) h.setSexo(catSexo.getCatKey());
+		}
+		
+		if(tieneValor(edad)) h.setEdad(Integer.parseInt(edad));
+		
+		Integer codigo = 0;
+		if (tieneValor(participante)) {
+			codigo = Integer.parseInt(participante);
+			Participante part = estudiosAdapter.getParticipante(MainDBConstants.codigo +" = "+ codigo , null);
+			h.setParticipante(part);
+		}
+		
 		h.setRecordDate(new Date());
 		h.setRecordUser(username);
 		h.setDeviceid(infoMovil.getDeviceId());
 		h.setEstado('0');
 		h.setPasive('0');
 		
-		//Guarda la habitacion
-		estudiosAdapter.crearCama(h);
+		//Guarda la persona en la cama
+		//TODO validar que sea de la casa, validar que no sea repetido
+		estudiosAdapter.crearPersonaCama(h);
 		Bundle arguments = new Bundle();
 		Intent i;
-		if (hab!=null) arguments.putSerializable(Constants.HABITACION , hab);
+		if (cama!=null) arguments.putSerializable(Constants.CAMA , cama);
 		i = new Intent(getApplicationContext(),
-				ListaCamasActivity.class);
+				ListaPersonasCamaActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);
 		startActivity(i);

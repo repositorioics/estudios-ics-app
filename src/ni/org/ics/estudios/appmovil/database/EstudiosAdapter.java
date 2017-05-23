@@ -80,6 +80,7 @@ public class EstudiosAdapter {
             db.execSQL(MuestrasDBConstants.CREATE_PAXGENE_TABLE);
             db.execSQL(MainDBConstants.CREATE_AREA_AMBIENTE_TABLE);
             db.execSQL(MainDBConstants.CREATE_CAMA_TABLE);
+            db.execSQL(MainDBConstants.CREATE_PERSONACAMA_TABLE);
             
 			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
 			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");
@@ -1271,5 +1272,60 @@ public class EstudiosAdapter {
 		}
 		if (!cursorCamas.isClosed()) cursorCamas.close();
 		return mCamas;
+	}
+	
+	
+	/**
+	 * Metodos para PersonaCama en la base de datos
+	 * 
+	 * @param PersonaCama
+	 *            Objeto PersonaCama que contiene la informacion
+	 *
+	 */
+	//Crear nuevo PersonaCama en la base de datos
+	public void crearPersonaCama(PersonaCama personacama) {
+		ContentValues cv = CamasHelper.crearPersonaCamaContentValues(personacama);
+		mDb.insert(MainDBConstants.PERSONACAMA_TABLE, null, cv);
+	}
+	//Editar Cama existente en la base de datos
+	public boolean editarPersonaCama(PersonaCama personacama) {
+		ContentValues cv = CamasHelper.crearPersonaCamaContentValues(personacama);
+		return mDb.update(MainDBConstants.PERSONACAMA_TABLE , cv, MainDBConstants.codigoPersona + "='" 
+				+ personacama.getCodigoPersona()+ "'", null) > 0;
+	}
+	//Limpiar la tabla de PersonaCama de la base de datos
+	public boolean borrarPersonasCama() {
+		return mDb.delete(MainDBConstants.PERSONACAMA_TABLE, null, null) > 0;
+	}
+	//Obtener un PersonaCama de la base de datos
+	public PersonaCama getPersonaCama(String filtro, String orden) throws SQLException {
+		PersonaCama mPersonaCama = null;
+		Cursor cursorPersonaCama = crearCursor(MainDBConstants.PERSONACAMA_TABLE , filtro, null, orden);
+		if (cursorPersonaCama != null && cursorPersonaCama.getCount() > 0) {
+			cursorPersonaCama.moveToFirst();
+			mPersonaCama=CamasHelper.crearPersonaCama(cursorPersonaCama);
+			Cama cama = this.getCama(MainDBConstants.codigoCama + "='" +cursorPersonaCama.getString(cursorPersonaCama.getColumnIndex(MainDBConstants.cama))+"'", null);
+			mPersonaCama.setCama(cama);
+		}
+		if (!cursorPersonaCama.isClosed()) cursorPersonaCama.close();
+		return mPersonaCama;
+	}
+	//Obtener una lista de PersonaCama de la base de datos
+	public List<PersonaCama> getPersonasCama(String filtro, String orden) throws SQLException {
+		List<PersonaCama> mPersonasCama = new ArrayList<PersonaCama>();
+		Cursor cursorPersonasCama = crearCursor(MainDBConstants.PERSONACAMA_TABLE, filtro, null, orden);
+		if (cursorPersonasCama != null && cursorPersonasCama.getCount() > 0) {
+			cursorPersonasCama.moveToFirst();
+			mPersonasCama.clear();
+			do{
+				PersonaCama mPersonaCama = null;
+				mPersonaCama = CamasHelper.crearPersonaCama(cursorPersonasCama);
+				Cama cama = this.getCama(MainDBConstants.codigoCama + "='" +cursorPersonasCama.getString(cursorPersonasCama.getColumnIndex(MainDBConstants.cama))+"'", null);
+				mPersonaCama.setCama(cama);
+				mPersonasCama.add(mPersonaCama);
+			} while (cursorPersonasCama.moveToNext());
+		}
+		if (!cursorPersonasCama.isClosed()) cursorPersonasCama.close();
+		return mPersonasCama;
 	}
 }

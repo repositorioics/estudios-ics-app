@@ -81,6 +81,7 @@ public class EstudiosAdapter {
             db.execSQL(MainDBConstants.CREATE_AREA_AMBIENTE_TABLE);
             db.execSQL(MainDBConstants.CREATE_CAMA_TABLE);
             db.execSQL(MainDBConstants.CREATE_PERSONACAMA_TABLE);
+            db.execSQL(MainDBConstants.TAMIZAJE_TABLE);
             
 			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
 			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");

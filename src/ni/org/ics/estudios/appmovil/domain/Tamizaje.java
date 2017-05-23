@@ -19,18 +19,18 @@ public class Tamizaje extends BaseMetaData {
     private Estudio estudio;
     private String sexo;
     private Date fechaNacimiento;
-    private char aceptaTamizajePersona;
+    private String aceptaTamizajePersona;
     private String razonNoAceptaTamizajePersona;
     private String criteriosInclusion;
     private String enfermedad;
     private String dondeAsisteProblemasSalud;
     private String otroCentroSalud;
     private String puestoSalud;
-    private char aceptaAtenderCentro;
-    private char esElegible;
-    private char aceptaParticipar;
-    private char razonNoAceptaParticipar;
-    private char asentimientoVerbal;
+    private String aceptaAtenderCentro;
+    private String esElegible;
+    private String aceptaParticipar;
+    private String razonNoAceptaParticipar;
+    private String asentimientoVerbal;
  
     public String getCodigo() {
 		return codigo;
@@ -64,11 +64,11 @@ public class Tamizaje extends BaseMetaData {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public char getAceptaTamizajePersona() {
+	public String getAceptaTamizajePersona() {
 		return aceptaTamizajePersona;
 	}
 
-	public void setAceptaTamizajePersona(char aceptaTamizajePersona) {
+	public void setAceptaTamizajePersona(String aceptaTamizajePersona) {
 		this.aceptaTamizajePersona = aceptaTamizajePersona;
 	}
 
@@ -120,35 +120,35 @@ public class Tamizaje extends BaseMetaData {
 		this.puestoSalud = puestoSalud;
 	}
 
-	public char getAceptaAtenderCentro() {
+	public String getAceptaAtenderCentro() {
 		return aceptaAtenderCentro;
 	}
 
-	public void setAceptaAtenderCentro(char aceptaAtenderCentro) {
+	public void setAceptaAtenderCentro(String aceptaAtenderCentro) {
 		this.aceptaAtenderCentro = aceptaAtenderCentro;
 	}
 
-	public char getEsElegible() {
+	public String getEsElegible() {
 		return esElegible;
 	}
 
-	public void setEsElegible(char esElegible) {
+	public void setEsElegible(String esElegible) {
 		this.esElegible = esElegible;
 	}
 
-	public char getAceptaParticipar() {
+	public String getAceptaParticipar() {
 		return aceptaParticipar;
 	}
 
-	public void setAceptaParticipar(char aceptaParticipar) {
+	public void setAceptaParticipar(String aceptaParticipar) {
 		this.aceptaParticipar = aceptaParticipar;
 	}
 
-	public char getRazonNoAceptaParticipar() {
+	public String getRazonNoAceptaParticipar() {
 		return razonNoAceptaParticipar;
 	}
 
-	public void setRazonNoAceptaParticipar(char razonNoAceptaParticipar) {
+	public void setRazonNoAceptaParticipar(String razonNoAceptaParticipar) {
 		this.razonNoAceptaParticipar = razonNoAceptaParticipar;
 	}
 
@@ -172,11 +172,11 @@ public class Tamizaje extends BaseMetaData {
         return codigo.hashCode();
     }
 
-	public char getAsentimientoVerbal() {
+	public String getAsentimientoVerbal() {
 		return asentimientoVerbal;
 	}
 
-	public void setAsentimientoVerbal(char asentimientoVerbal) {
+	public void setAsentimientoVerbal(String asentimientoVerbal) {
 		this.asentimientoVerbal = asentimientoVerbal;
 	}
 }

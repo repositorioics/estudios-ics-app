@@ -12,6 +12,7 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoHabitacionActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.HabitacionAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Habitacion;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -36,9 +37,9 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	private Drawable img = null;
 	private Button mAddButton;
 	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
-    private Habitacion area = new Habitacion();
-	private ArrayAdapter<Habitacion> mHabitacionAdapter;
-	private List<Habitacion> mHabitaciones = new ArrayList<Habitacion>();
+    private AreaAmbiente area = new AreaAmbiente();
+	private ArrayAdapter<AreaAmbiente> mAreaAdapter;
+	private List<AreaAmbiente> mAreas = new ArrayList<AreaAmbiente>();
 	private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -48,7 +49,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 		
 		casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
 		textView = (TextView) findViewById(R.id.label);
-		img=getResources().getDrawable(R.drawable.ic_menu_share);
+		img=getResources().getDrawable(R.drawable.ic_menu_selectall_holo_light);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
@@ -190,11 +191,11 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 		}
 
 		@Override
-		protected String doInBackground(String... values) {
+		protected String doInBackground(String... values) {      
 			codigoCasaCHF = values[0];
 			try {
 				estudiosAdapter.open();
-				mHabitaciones = estudiosAdapter.getHabitaciones(MainDBConstants.casa +" = '" + codigoCasaCHF + "' and " + MainDBConstants.tipo + " ='habitacion' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
+				//mAreas = estudiosAdapter.getHabitaciones(MainDBConstants.casa +" = '" + codigoCasaCHF + "' and " + MainDBConstants.tipo + " ='habitacion' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -208,8 +209,8 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
 			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.rooms)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
-			mHabitacionAdapter = new HabitacionAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mHabitaciones);
-			setListAdapter(mHabitacionAdapter);
+			//mAreaAdapter = new HabitacionAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mAreas);
+			setListAdapter(mAreaAdapter);
 			dismissProgressDialog();
 		}
 

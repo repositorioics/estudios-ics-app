@@ -687,7 +687,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     	t.setFechaNacimiento(fechaNacimiento);
     	if (tieneValor(aceptaTamizajePersona)) {
 			MessageResource catAceptaTamizajePersona = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaTamizajePersona + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-			if (catAceptaTamizajePersona!=null) t.setAceptaTamizajePersona(catAceptaTamizajePersona.getCatKey().charAt(0));
+			if (catAceptaTamizajePersona!=null) t.setAceptaTamizajePersona(catAceptaTamizajePersona.getCatKey());
 		}
     	if (tieneValor(razonNoAceptaTamizajePersona)) {
 			MessageResource catRazonNoAceptaTamizajePersona = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaTamizajePersona + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NPP'", null);
@@ -720,23 +720,23 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 		}
         if (tieneValor(aceptaAtenderCentro)) {
 			MessageResource catAceptaAtenderCentro = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaAtenderCentro + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-			if (catAceptaAtenderCentro!=null) t.setAceptaAtenderCentro(catAceptaAtenderCentro.getCatKey().charAt(0));
+			if (catAceptaAtenderCentro!=null) t.setAceptaAtenderCentro(catAceptaAtenderCentro.getCatKey());
 		}
         if (tieneValor(esElegible)) {
 			MessageResource catEsElegible = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + esElegible + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-			if (catEsElegible!=null) t.setEsElegible(catEsElegible.getCatKey().charAt(0));
+			if (catEsElegible!=null) t.setEsElegible(catEsElegible.getCatKey());
 		}
         if (tieneValor(aceptaParticipar)) {
 			MessageResource catAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParticipar + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-			if (catAceptaParticipar!=null) t.setAceptaParticipar(catAceptaParticipar.getCatKey().charAt(0));
+			if (catAceptaParticipar!=null) t.setAceptaParticipar(catAceptaParticipar.getCatKey());
 		}
         if (tieneValor(razonNoAceptaParticipar)) {
 			MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaParticipar + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NPP'", null);
-			if (catRazonNoAceptaParticipar!=null) t.setAceptaParticipar(catRazonNoAceptaParticipar.getCatKey().charAt(0));
+			if (catRazonNoAceptaParticipar!=null) t.setAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
 		}
         if (tieneValor(asentimientoVerbal)) {
 			MessageResource catAsentimientoVerbal = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + asentimientoVerbal + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-			if (catAsentimientoVerbal!=null) t.setAsentimientoVerbal(catAsentimientoVerbal.getCatKey().charAt(0));
+			if (catAsentimientoVerbal!=null) t.setAsentimientoVerbal(catAsentimientoVerbal.getCatKey());
 		}
 	    
     	t.setRecordDate(new Date());
@@ -748,7 +748,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     	estudiosAdapter.crearTamizaje(t);
     	
     	//Pregunta si es elegible
-    	if (t.getAceptaParticipar()=='S') {
+    	if (t.getAceptaParticipar().equals("S")) {
         	//Si la respuesta es si crea o busca un participante
     		//Obtener datos del bundle para el participante
     		

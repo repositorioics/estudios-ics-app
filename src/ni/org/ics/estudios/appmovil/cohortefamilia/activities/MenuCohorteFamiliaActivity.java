@@ -6,7 +6,7 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadAllActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadCatalogosActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.UploadAllActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.UploadTamizajesActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCohorteFamiliaAdapter;
 
 import android.os.Build;
@@ -197,7 +197,7 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
-					Intent ie = new Intent(getApplicationContext(), UploadAllActivity.class);
+					Intent ie = new Intent(getApplicationContext(), UploadTamizajesActivity.class);
 					startActivityForResult(ie, UPDATE_SERVER);
 				}
 			});

@@ -29,4 +29,7 @@
     <string name="bhc2ml">2 años a 13 años. BHC : 2 ml es el volumen requerido</string>
     <string name="volumenPaxgene">2 años a 13 años. BHC : 2 ml es el volumen requerido. Paxgene: 2 viales de 0.4 ml</string>
     <string name="volumenHint">ml</string>
+    <string name="rojo12ml">14 años y mas. Rojo: 12 ml es el volumen requerido</string>
+    <string name="volumenPaxgene14">14 años y mas. BHC : 2 ml es el volumen requerido. Paxgene: 2 viales de 0.4 ml</string>
+    <string name="bhc2ml14">14 años y mas. BHC : 2 ml es el volumen requerido</string>
 </resources>

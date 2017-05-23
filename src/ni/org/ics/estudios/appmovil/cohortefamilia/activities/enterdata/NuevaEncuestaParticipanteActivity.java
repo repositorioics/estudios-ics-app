@@ -174,7 +174,6 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 changeStatus(mWizardModel.findByKey(labels.getNivelEducacion()), true);
                 changeStatus(mWizardModel.findByKey(labels.getTrabaja()), true);
             }
-            anios = 15;
             if (anios < 18){
                 changeStatus(mWizardModel.findByKey(labels.getVaNinoEscuela()), true);
                 changeStatus(mWizardModel.findByKey(labels.getNinoTrabaja()), true);
@@ -480,7 +479,11 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getTuberculosisPulmonarPasado())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getFechaDiagnosticoTubPulPasadoSn()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getTomaTratamientoTubPulPasado()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getTuberculosisPulmonarPasado())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCompletoTratamientoTubPulPasado()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();

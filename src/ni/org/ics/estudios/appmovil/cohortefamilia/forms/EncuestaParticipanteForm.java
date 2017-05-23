@@ -67,7 +67,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
 
         //Page lpInicio = new LabelPage(this, labels.getLabelInicio(), "", Constants.ROJO, true).setRequired(false);
         Page scEstaEmbarazada = new SingleFixedChoicePage(this, labels.getEstaEmbarazada(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page npSemanasEmbarazo = new NumberPage(this, labels.getSemanasEmbarazo(), "", Constants.WIZARD, false).setRequired(true);
+        Page npSemanasEmbarazo = new NumberPage(this, labels.getSemanasEmbarazo(), "", Constants.WIZARD, false).setRangeValidation(true, 1, 44).setRequired(true);
         Page scEsAlfabeto = new SingleFixedChoicePage(this, labels.getEsAlfabeto(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scNivelEducacion = new SingleFixedChoicePage(this, labels.getNivelEducacion(), "", Constants.WIZARD, false).setChoices(catNivelEdu).setRequired(true);
         Page scTrabaja = new SingleFixedChoicePage(this, labels.getTrabaja(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);

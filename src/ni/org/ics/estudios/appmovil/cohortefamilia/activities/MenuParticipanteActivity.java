@@ -74,38 +74,57 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                 boolean existeencuesta = false;
                 String tituloEncuesta = "";
                 String labelMuestra = "";
-                estudiosAdapter.open();
+                //estudiosAdapter.open();
                 switch (position){
                     case 0:
-                        EncuestaParticipante encuesta = estudiosAdapter.getEncuestasParticipante(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-                        if (encuesta!=null) {
-                            existeencuesta = true;
-                        }
+                        //EncuestaParticipante encuesta = estudiosAdapter.getEncuestasParticipante(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+                        //if (encuesta!=null) {
+                            //existeencuesta = true;
+                        //}
                         tituloEncuesta = getString(R.string.new_participant_survey);
                         break;
                     case 1:
-                        EncuestaDatosPartoBB encuestaDatosPartoBB = estudiosAdapter.getEncuestasDatosPartoBB(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-                        if (encuestaDatosPartoBB!=null) {
-                            existeencuesta = true;
-                        }
+                        //EncuestaDatosPartoBB encuestaDatosPartoBB = estudiosAdapter.getEncuestasDatosPartoBB(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+                        //if (encuestaDatosPartoBB!=null) {
+                            //existeencuesta = true;
+                        //}
                         tituloEncuesta = getString(R.string.new_birthdata_survey);
                         break;
                     case 2:
-                        EncuestaPesoTalla encuestaPesoTalla = estudiosAdapter.getEncuestasPesoTalla(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-                        if (encuestaPesoTalla!=null) {
-                            existeencuesta = true;
-                        }
+                        //EncuestaPesoTalla encuestaPesoTalla = estudiosAdapter.getEncuestasPesoTalla(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+                        //if (encuestaPesoTalla!=null) {
+                            //existeencuesta = true;
+                        //}
                         tituloEncuesta = getString(R.string.new_Weighheight_survey);
                         break;
                     case 3:
-                        EncuestaLactanciaMaterna encuestaLactanciaMaterna = estudiosAdapter.getEncuestasLactanciaMaterna(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-                        if (encuestaLactanciaMaterna!=null) {
-                            existeencuesta = true;
-                        }
+                        //EncuestaLactanciaMaterna encuestaLactanciaMaterna = estudiosAdapter.getEncuestasLactanciaMaterna(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+                        //if (encuestaLactanciaMaterna!=null) {
+                            //existeencuesta = true;
+                        //}
                         tituloEncuesta = getString(R.string.new_breastfeed_survey);
                         break;
                     case 4:
-                        labelMuestra = getString(R.string.bhc2ml);
+                        if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
+                            int anios = 0;
+                            int meses = 0;
+                            int dias = 0;
+                            String edad[] = participanteCHF.getParticipante().getEdad().split("/");
+                            if (edad.length > 0) {
+                                anios = Integer.valueOf(edad[0]);
+                                meses = Integer.valueOf(edad[1]);
+                                dias = Integer.valueOf(edad[2]);
+                                if (anios>=14) labelMuestra = getString(R.string.bhc2ml14);
+                                else {
+                                    //BHC y Paxgene (2 años a 13 años)
+                                    if (anios>=2 && anios<13) {
+                                        labelMuestra = getString(R.string.bhc2ml);
+                                    }else if (anios == 13 && meses == 0 && dias == 0){
+                                        labelMuestra = getString(R.string.bhc2ml);
+                                    }
+                                }
+                            }
+                        }
                         tituloEncuesta = getString(R.string.new_sample_bhc);
                         break;
                     case 5:
@@ -116,6 +135,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             int dias = 0;
                             boolean visible3ml = false;
                             boolean visible6ml = false;
+                            boolean visible12ml = false;
                             String edad[] = participanteCHF.getParticipante().getEdad().split("/");
                             if (edad.length > 0) {
                                 anios = Integer.valueOf(edad[0]);
@@ -140,28 +160,50 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                                         if (meses >= 6) visible3ml = true;
                                     } else visible3ml = false;
                                 }
+                                if (anios >= 14){
+                                    visible12ml = true;
+                                }
                             }
                             if (visible3ml) labelMuestra = getString(R.string.rojo3ml);
                             if (visible6ml) labelMuestra = getString(R.string.rojo6ml);
+                            if (visible12ml) labelMuestra = getString(R.string.rojo12ml);
                         }
-
                         break;
                     case 6:
-                        labelMuestra = getString(R.string.volumenPaxgene);
+                        if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
+                            int anios = 0;
+                            int meses = 0;
+                            int dias = 0;
+                            String edad[] = participanteCHF.getParticipante().getEdad().split("/");
+                            if (edad.length > 0) {
+                                anios = Integer.valueOf(edad[0]);
+                                meses = Integer.valueOf(edad[1]);
+                                dias = Integer.valueOf(edad[2]);
+                                if (anios>=14) labelMuestra = getString(R.string.volumenPaxgene14);
+                                else {
+                                    //BHC y Paxgene (2 años a 13 años)
+                                    if (anios>=2 && anios<13) {
+                                        labelMuestra = getString(R.string.volumenPaxgene);
+                                    }else if (anios == 13 && meses == 0 && dias == 0){
+                                        labelMuestra = getString(R.string.volumenPaxgene);
+                                    }
+                                }
+                            }
+                        }
                         tituloEncuesta = getString(R.string.new_sample_paxgene);
                         break;
                     default:
                         break;
                 }
-                estudiosAdapter.close();
-                if (existeencuesta) {
-                    createDialogExiste(tituloEncuesta);
-                }
-                else {
+                //estudiosAdapter.close();
+                //if (existeencuesta) {
+                    //createDialogExiste(tituloEncuesta);
+                //}
+                //else {
                     if(!labelMuestra.isEmpty())
                         createDialogMuestras(position, labelMuestra);
                     else createDialog(position, tituloEncuesta);
-                }
+                //}
 
             }
         });
@@ -306,7 +348,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
-                        finish();
                         break;
                     case 1:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
@@ -315,7 +356,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
-                        finish();
                         break;
                     case 2:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
@@ -324,7 +364,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
-                        finish();
                         break;
                     case 3:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
@@ -333,7 +372,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
-                        finish();
                         break;
                     case 4:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
@@ -342,7 +380,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
-                        finish();
                         break;
                     case 5:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
@@ -351,7 +388,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
-                        finish();
                         break;
                     case 6:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
@@ -360,7 +396,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
-                        finish();
                         break;
                     default:
                         break;
@@ -405,6 +440,31 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
 
         protected void onPostExecute(String resultado) {
             // after the request completes, hide the progress indicator
+            boolean existeencuestaParticip = false;
+            boolean existeencuestaParto = false;
+            boolean existeencuestaPeso = false;
+            boolean existeencuestaLact = false;
+            estudiosAdapter.open();
+            EncuestaParticipante encuesta = estudiosAdapter.getEncuestasParticipante(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+            if (encuesta!=null) {
+                existeencuestaParticip = true;
+            }
+
+            EncuestaDatosPartoBB encuestaDatosPartoBB = estudiosAdapter.getEncuestasDatosPartoBB(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+            if (encuestaDatosPartoBB!=null) {
+                existeencuestaParto = true;
+            }
+
+            EncuestaPesoTalla encuestaPesoTalla = estudiosAdapter.getEncuestasPesoTalla(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+            if (encuestaPesoTalla!=null) {
+                existeencuestaPeso = true;
+            }
+
+            EncuestaLactanciaMaterna encuestaLactanciaMaterna = estudiosAdapter.getEncuestasLactanciaMaterna(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+            if (encuestaLactanciaMaterna!=null) {
+                existeencuestaLact = true;
+            }
+            estudiosAdapter.close();
             String edadFormateada = "";
             if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
                 String edad[] = participanteCHF.getParticipante().getEdad().split("/");
@@ -419,7 +479,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     + getString(R.string.participant)+ ": "+ participanteCHF.getParticipante().getNombreCompleto() +"\n"
                     + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " +participanteCHF.getParticipante().getSexo());
 
-            gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participanteCHF));
+            gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participanteCHF, existeencuestaParticip, existeencuestaParto, existeencuestaPeso, existeencuestaLact));
             dismissProgressDialog();
         }
 

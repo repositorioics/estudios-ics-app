@@ -34,6 +34,9 @@ public class MuestrasFormLabels {
     protected String volumenHint;
     protected String descOtraObservacionHint;
     protected String descOtraRazonNoTomaHint;
+    protected String rojo12ml;
+    protected String volumenPaxgene14;
+    protected String bhc2ml14;
 
     public MuestrasFormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
@@ -61,6 +64,10 @@ public class MuestrasFormLabels {
         volumenHint = res.getString(R.string.volumenHint);
         descOtraObservacionHint = res.getString(R.string.descOtraObservacionHint);
         descOtraRazonNoTomaHint = res.getString(R.string.descOtraRazonNoTomaHint);
+        rojo12ml = res.getString(R.string.rojo12ml);
+        volumenPaxgene14 = res.getString(R.string.volumenPaxgene14);
+        bhc2ml14 = res.getString(R.string.bhc2ml14);
+
     }
 
     public String getTomaMxSn() {
@@ -253,5 +260,29 @@ public class MuestrasFormLabels {
 
     public void setDescOtraRazonNoTomaHint(String descOtraRazonNoTomaHint) {
         this.descOtraRazonNoTomaHint = descOtraRazonNoTomaHint;
+    }
+
+    public String getRojo12ml() {
+        return rojo12ml;
+    }
+
+    public void setRojo12ml(String rojo12ml) {
+        this.rojo12ml = rojo12ml;
+    }
+
+    public String getVolumenPaxgene14() {
+        return volumenPaxgene14;
+    }
+
+    public void setVolumenPaxgene14(String volumenPaxgene14) {
+        this.volumenPaxgene14 = volumenPaxgene14;
+    }
+
+    public String getBhc2ml14() {
+        return bhc2ml14;
+    }
+
+    public void setBhc2ml14(String bhc2ml14) {
+        this.bhc2ml14 = bhc2ml14;
     }
 }

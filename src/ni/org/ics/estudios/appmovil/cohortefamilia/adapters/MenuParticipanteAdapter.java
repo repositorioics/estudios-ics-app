@@ -11,7 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaDatosPartoBB;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaLactanciaMaterna;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaPesoTalla;
+import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
 
 public class MenuParticipanteAdapter extends ArrayAdapter<String> {
 
@@ -20,20 +26,28 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
     private boolean habilitarBhc = false;
     private boolean habilitarRojo = false;
     private boolean habilitarPax = false;
+    private boolean existeencuestaParticip = false;
+    private boolean existeencuestaParto = false;
+    private boolean existeencuestaPeso = false;
+    private boolean existeencuestaLact = false;
 
     private final Context context;
     private final ParticipanteCohorteFamilia participanteCHF;
 	public MenuParticipanteAdapter(Context context, int textViewResourceId,
-                                   String[] values, ParticipanteCohorteFamilia participanteCHF) {
+                                   String[] values, ParticipanteCohorteFamilia participanteCHF, boolean existeencuestaParticip, boolean existeencuestaParto, boolean existeencuestaPeso, boolean existeencuestaLact) {
 		super(context, textViewResourceId, values);
         this.context = context;
 		this.values = values;
         this.participanteCHF = participanteCHF;
+        this.existeencuestaParticip = existeencuestaParticip;
+        this.existeencuestaParto = existeencuestaParto;
+        this.existeencuestaPeso = existeencuestaPeso;
+        this.existeencuestaLact = existeencuestaLact;
         validarOpcionesMenu();
 	}
 
 
-    private void validarOpcionesMenu(){
+    private void validarOpcionesMenu() {
         int anios = 0;
         int meses = 0;
         int dias = 0;
@@ -44,45 +58,24 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 meses = Integer.valueOf(edad[1]);
                 dias = Integer.valueOf(edad[2]);
                 //lactancia materna
-                if (anios<3) habilitarLactancia = true;
-                else if (anios == 3){
+                if (anios < 3) habilitarLactancia = true;
+                else if (anios == 3) {
                     if (meses > 0)
                         habilitarLactancia = false;
-                    else{
+                    else {
                         habilitarLactancia = (dias <= 0);
                     }
-                }else habilitarLactancia = false;
+                } else habilitarLactancia = false;
 
-                //BHC y Paxgene (2 años a 13 años)
-                if (anios>=2 && anios<13) {
-                    habilitarBhc = true;
-                    habilitarPax = true;
-                }else if (anios == 13){
-                    if (meses > 0) {
-                        habilitarBhc = false;
-                        habilitarPax = false;
-                    }else{
-                        habilitarBhc = (dias <= 0);
-                        habilitarPax = (dias <= 0);
-                    }
-                }else {
-                    habilitarBhc = false;
-                    habilitarPax = false;
-                }
-                //Rojo (6 meses y menos de 2 años y 2 años a 13 años)
-                if (anios>=1 && anios<13) habilitarRojo = true;
-                else if (anios == 13){
-                    if (meses > 0)
-                        habilitarRojo = false;
-                    else{
-                        habilitarRojo = (dias <= 0);
-                    }
-                }else if (anios == 0){
-                    habilitarRojo = meses >= 6;
-                }
-                else habilitarRojo = false;
+                //BHC y Paxgene (2 años a 13 años y 14 años y mas)
+                habilitarPax = anios >= 2;
+                habilitarBhc = anios >= 2;
+                //Rojo (6 meses y menos de 2 años y 2 años a 13 años Y 14 años y mas)
+                if (anios == 0) habilitarRojo = meses >= 6;
+                else habilitarRojo = anios >= 1;
             }
         }
+
     }
 
     @Override
@@ -90,10 +83,17 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
         // Disable the first item of GridView
         boolean habilitado = true;
         switch (position){
-            case 0:break;
-            case 1:break;
-            case 2:break;
-            case 3 : habilitado = habilitarLactancia;
+            case 0:
+                habilitado = !existeencuestaParticip;
+                break;
+            case 1:
+                habilitado = !existeencuestaParto;
+                break;
+            case 2:
+                habilitado = !existeencuestaPeso;
+                break;
+            case 3 :
+                habilitado = habilitarLactancia && !existeencuestaLact;
                 break;
             case 4 : habilitado = habilitarBhc;
                 break;

@@ -22,7 +22,7 @@ public class Casa extends BaseMetaData {
 	private Integer codigo;
 	private Barrio barrio;
 	private String direccion;
-	private String manzana;
+    private String manzana;
 	private Double latitud;
 	private Double longitud;
     private String nombre1JefeFamilia;

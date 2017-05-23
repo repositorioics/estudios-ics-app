@@ -48,10 +48,7 @@ public class ParticipanteCHFAdapter extends ArrayAdapter<ParticipanteCohorteFami
 
 			textView = (TextView) v.findViewById(R.id.name_text);
 			textView.setTextColor(Color.BLACK);
-			String nameCompleto = p.getParticipante().getNombre1();
-			if (p.getParticipante().getNombre2()!=null) nameCompleto = nameCompleto + " "+  p.getParticipante().getNombre2();
-			nameCompleto = nameCompleto +" "+ p.getParticipante().getApellido1();
-			if (p.getParticipante().getApellido2()!=null) nameCompleto = nameCompleto + " "+  p.getParticipante().getApellido2();
+			String nameCompleto = p.getParticipante().getNombreCompleto();
 			if (textView != null) {
 				textView.setText(nameCompleto);
 			}

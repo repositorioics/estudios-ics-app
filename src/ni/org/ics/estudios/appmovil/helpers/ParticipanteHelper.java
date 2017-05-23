@@ -15,7 +15,6 @@ public class ParticipanteHelper {
 
     public static ContentValues crearParticipanteContentValues(Participante participante){
         ContentValues cv = new ContentValues();
-
         cv.put(MainDBConstants.codigo, participante.getCodigo());
         cv.put(MainDBConstants.nombre1, participante.getNombre1());
         cv.put(MainDBConstants.nombre2, participante.getNombre2());
@@ -37,13 +36,11 @@ public class ParticipanteHelper {
         cv.put(MainDBConstants.pasive, String.valueOf(participante.getPasive()));
         cv.put(MainDBConstants.estado, String.valueOf(participante.getEstado()));
         cv.put(MainDBConstants.deviceId, participante.getDeviceid());
-
         return cv;
     }
 
     public static Participante crearParticipante(Cursor cursor){
         Participante mParticipante = new Participante();
-
         mParticipante.setCodigo(cursor.getInt(cursor.getColumnIndex(MainDBConstants.codigo)));
         mParticipante.setNombre1(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre1)));
         mParticipante.setNombre2(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre2)));
@@ -52,7 +49,7 @@ public class ParticipanteHelper {
         mParticipante.setSexo(cursor.getString(cursor.getColumnIndex(MainDBConstants.sexo)));
         mParticipante.setFechaNac(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaNac))));
         mParticipante.setNombre1Padre(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre1Padre)));
-        mParticipante.setNombre2(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre2Padre)));
+        mParticipante.setNombre2Padre(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre2Padre)));
         mParticipante.setApellido1Padre(cursor.getString(cursor.getColumnIndex(MainDBConstants.apellido1Padre)));
         mParticipante.setApellido2Padre(cursor.getString(cursor.getColumnIndex(MainDBConstants.apellido2Padre)));
         mParticipante.setNombre1Madre(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre1Madre)));
@@ -65,7 +62,6 @@ public class ParticipanteHelper {
         mParticipante.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
         mParticipante.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mParticipante.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
-
         return mParticipante;
     }
 }

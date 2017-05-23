@@ -323,7 +323,7 @@ public class MainDBConstants {
    
 
     // Tabla Tamizaje
-    public static final String TAMIZAJE_TABLE = "tamizajes";
+    public static final String TAMIZAJE_TABLE = "";
 
     //Campos tabla tamizaje
     public static final String fechaNacimiento = "fechaNacimiento";

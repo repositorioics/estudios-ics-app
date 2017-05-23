@@ -75,6 +75,7 @@ public class EstudiosAdapter {
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PARTICIPANTE_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PESOTALLA_TABLE);
             db.execSQL(MainDBConstants.CREATE_CARTACONSENTIMIENTO_TABLE);
+            db.execSQL(MainDBConstants.CREATE_TAMIZAJE_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_LACTANCIAMAT_TABLE);
             db.execSQL(MuestrasDBConstants.CREATE_MUESTRA_TABLE);
             db.execSQL(MuestrasDBConstants.CREATE_PAXGENE_TABLE);

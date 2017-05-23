@@ -319,7 +319,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")) {
                 NumberPage np = (NumberPage) page;
                 String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Integer.valueOf(valor) || np.getmLowerOrEqualsThan() < Integer.valueOf(valor)))
+                if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Double.valueOf(valor) || np.getmLowerOrEqualsThan() < Double.valueOf(valor)))
                         || (np.ismValPattern() && !valor.matches(np.getmPattern()))){
                     cutOffPage = i;
                     break;

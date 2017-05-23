@@ -588,9 +588,13 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
+            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
+            toast.show();
             finish();
         } catch (Exception ex) {
             ex.printStackTrace();
+            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error),Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 

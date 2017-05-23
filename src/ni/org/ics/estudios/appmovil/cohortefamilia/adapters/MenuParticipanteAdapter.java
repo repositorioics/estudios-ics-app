@@ -123,14 +123,32 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
 		Drawable img = null;
 		switch (position){
             case 0:
+                if (existeencuestaParticip) {
+                    textView.setTextColor(Color.BLUE);
+                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+                }else{
+                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+                }
                 img=getContext().getResources().getDrawable(R.drawable.male);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
             case 1:
+                if (existeencuestaParto) {
+                    textView.setTextColor(Color.BLUE);
+                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+                }else{
+                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+                }
                 img=getContext().getResources().getDrawable(R.drawable.ic_baby);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
             case 2:
+                if (existeencuestaPeso) {
+                    textView.setTextColor(Color.BLUE);
+                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+                }else{
+                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+                }
                 img=getContext().getResources().getDrawable(R.drawable.ic_weight);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
@@ -138,6 +156,13 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 if (!habilitarLactancia) {
                     textView.setTextColor(Color.GRAY);
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+                }else{
+                    if (existeencuestaLact) {
+                        textView.setTextColor(Color.BLUE);
+                        textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+                    }else{
+                        textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+                    }
                 }
                 img = getContext().getResources().getDrawable(R.drawable.ic_breastfeeding);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);

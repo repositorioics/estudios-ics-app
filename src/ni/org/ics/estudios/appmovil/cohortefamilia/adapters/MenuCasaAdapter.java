@@ -17,14 +17,25 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
 	private final String[] values;
 	private final int numPart;
 	private final int numCuartos;
+    private final boolean existeencuestaCasa;
 	public MenuCasaAdapter(Context context, int textViewResourceId,
-                           String[] values, int numPart, int numCuartos) {
+                           String[] values, int numPart, int numCuartos, boolean existeEncuestaCasa) {
 		super(context, textViewResourceId, values);
 		this.values = values;
 		this.numPart=numPart;
 		this.numCuartos=numCuartos;
+        this.existeencuestaCasa = existeEncuestaCasa;
 	}
 
+    @Override
+    public boolean isEnabled(int position) {
+        // Disable the first item of GridView
+        boolean habilitado = true;
+        if (position == 1){
+                habilitado = !existeencuestaCasa;
+         }
+        return habilitado;
+    }
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
@@ -50,6 +61,12 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                 }
                 break;
             case 1:
+                if (existeencuestaCasa) {
+                    textView.setTextColor(Color.BLUE);
+                    textView.setText(textView.getText()+"\n"+ getContext().getResources().getString(R.string.done));
+                }else{
+                    textView.setText(textView.getText()+"\n"+ getContext().getResources().getString(R.string.pending));
+                }
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_archive);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			    break;

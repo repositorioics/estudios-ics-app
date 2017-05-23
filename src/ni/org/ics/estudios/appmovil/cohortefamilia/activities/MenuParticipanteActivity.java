@@ -44,6 +44,10 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private boolean habilitarBHC = false;
     private boolean habilitarRojo = false;
     private boolean habilitarPaxG = false;
+    boolean existeencuestaParticip = false;
+    boolean existeencuestaParto = false;
+    boolean existeencuestaPeso = false;
+    boolean existeencuestaLact = false;
 
     private AlertDialog alertDialog;
 
@@ -74,34 +78,17 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                 boolean existeencuesta = false;
                 String tituloEncuesta = "";
                 String labelMuestra = "";
-                //estudiosAdapter.open();
                 switch (position){
                     case 0:
-                        //EncuestaParticipante encuesta = estudiosAdapter.getEncuestasParticipante(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-                        //if (encuesta!=null) {
-                            //existeencuesta = true;
-                        //}
                         tituloEncuesta = getString(R.string.new_participant_survey);
                         break;
                     case 1:
-                        //EncuestaDatosPartoBB encuestaDatosPartoBB = estudiosAdapter.getEncuestasDatosPartoBB(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-                        //if (encuestaDatosPartoBB!=null) {
-                            //existeencuesta = true;
-                        //}
                         tituloEncuesta = getString(R.string.new_birthdata_survey);
                         break;
                     case 2:
-                        //EncuestaPesoTalla encuestaPesoTalla = estudiosAdapter.getEncuestasPesoTalla(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-                        //if (encuestaPesoTalla!=null) {
-                            //existeencuesta = true;
-                        //}
                         tituloEncuesta = getString(R.string.new_Weighheight_survey);
                         break;
                     case 3:
-                        //EncuestaLactanciaMaterna encuestaLactanciaMaterna = estudiosAdapter.getEncuestasLactanciaMaterna(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-                        //if (encuestaLactanciaMaterna!=null) {
-                            //existeencuesta = true;
-                        //}
                         tituloEncuesta = getString(R.string.new_breastfeed_survey);
                         break;
                     case 4:
@@ -195,15 +182,9 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     default:
                         break;
                 }
-                //estudiosAdapter.close();
-                //if (existeencuesta) {
-                    //createDialogExiste(tituloEncuesta);
-                //}
-                //else {
-                    if(!labelMuestra.isEmpty())
-                        createDialogMuestras(position, labelMuestra);
-                    else createDialog(position, tituloEncuesta);
-                //}
+                if(!labelMuestra.isEmpty())
+                    createDialogMuestras(position, labelMuestra);
+                else createDialog(position, tituloEncuesta);
 
             }
         });
@@ -426,11 +407,28 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
 
         @Override
         protected String doInBackground(String... values) {
-            codigoCasaCHF = values[0];
             try {
-                //estudiosAdapter.open();
-                //mParticipantes = estudiosAdapter.getParticipanteCohorteFamilias(MainDBConstants.casaCHF +" = " + codigoCasaCHF, MainDBConstants.participante);
-                //estudiosAdapter.close();
+                estudiosAdapter.open();
+                EncuestaParticipante encuesta = estudiosAdapter.getEncuestasParticipante(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+                if (encuesta!=null) {
+                    existeencuestaParticip = true;
+                }
+
+                EncuestaDatosPartoBB encuestaDatosPartoBB = estudiosAdapter.getEncuestasDatosPartoBB(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+                if (encuestaDatosPartoBB!=null) {
+                    existeencuestaParto = true;
+                }
+
+                EncuestaPesoTalla encuestaPesoTalla = estudiosAdapter.getEncuestasPesoTalla(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+                if (encuestaPesoTalla!=null) {
+                    existeencuestaPeso = true;
+                }
+
+                EncuestaLactanciaMaterna encuestaLactanciaMaterna = estudiosAdapter.getEncuestasLactanciaMaterna(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+                if (encuestaLactanciaMaterna!=null) {
+                    existeencuestaLact = true;
+                }
+                estudiosAdapter.close();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
                 return "error";
@@ -440,31 +438,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
 
         protected void onPostExecute(String resultado) {
             // after the request completes, hide the progress indicator
-            boolean existeencuestaParticip = false;
-            boolean existeencuestaParto = false;
-            boolean existeencuestaPeso = false;
-            boolean existeencuestaLact = false;
-            estudiosAdapter.open();
-            EncuestaParticipante encuesta = estudiosAdapter.getEncuestasParticipante(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-            if (encuesta!=null) {
-                existeencuestaParticip = true;
-            }
-
-            EncuestaDatosPartoBB encuestaDatosPartoBB = estudiosAdapter.getEncuestasDatosPartoBB(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-            if (encuestaDatosPartoBB!=null) {
-                existeencuestaParto = true;
-            }
-
-            EncuestaPesoTalla encuestaPesoTalla = estudiosAdapter.getEncuestasPesoTalla(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-            if (encuestaPesoTalla!=null) {
-                existeencuestaPeso = true;
-            }
-
-            EncuestaLactanciaMaterna encuestaLactanciaMaterna = estudiosAdapter.getEncuestasLactanciaMaterna(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-            if (encuestaLactanciaMaterna!=null) {
-                existeencuestaLact = true;
-            }
-            estudiosAdapter.close();
             String edadFormateada = "";
             if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
                 String edad[] = participanteCHF.getParticipante().getEdad().split("/");

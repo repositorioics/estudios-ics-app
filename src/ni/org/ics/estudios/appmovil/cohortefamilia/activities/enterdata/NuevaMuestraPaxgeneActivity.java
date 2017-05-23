@@ -13,6 +13,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
@@ -342,14 +343,14 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
         try {
             boolean visible = false;
             if (page.getTitle().equals(labels.getTomaMxSn())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoMx()), visible, null);
                 //changeStatus(mWizardModel.findByKey(labels.getHora()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getNumPinchazos()), visible, null);
-                changeStatus(mWizardModel.findByKey(labels.getHoraInicioPax()), visible, null);
-                changeStatus(mWizardModel.findByKey(labels.getHoraFinPax()), visible, null);
+                //changeStatus(mWizardModel.findByKey(labels.getHoraInicioPax()), visible, null);
+                //changeStatus(mWizardModel.findByKey(labels.getHoraFinPax()), visible, null);
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoToma()), visible, null);
                 if (visible) horaTomaMx = null;
@@ -374,18 +375,21 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getNumPinchazos())) {
-                String hora = DateToString(new Date(), "HH:mm");
-                changeStatus(mWizardModel.findByKey(labels.getHoraInicioPax()), true, hora);
+                if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null) {
+                    String hora = DateToString(new Date(), "HH:mm");
+                    changeStatus(mWizardModel.findByKey(labels.getHoraInicioPax()), true, hora);
+                }else
+                    changeStatus(mWizardModel.findByKey(labels.getHoraInicioPax()), false, null);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
-
+/*
             if (page.getTitle().equals(labels.getHoraInicioPax())) {
                 String hora = DateToString(new Date(), "HH:mm");
                 changeStatus(mWizardModel.findByKey(labels.getHoraFinPax()), true, hora);
                 notificarCambios = false;
                 onPageTreeChanged();
-            }
+            }*/
             }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -397,31 +401,26 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
             SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
-            BarcodePage modifPage = (BarcodePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+            BarcodePage modifPage = (BarcodePage) page; modifPage.setValue("").setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.LabelPage")){
             LabelPage modifPage = (LabelPage) page;
             if (hint!=null)
                 modifPage.setHint(hint);
             modifPage.setmVisible(visible);
+
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
-            TextPage modifPage = (TextPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+            TextPage modifPage = (TextPage) page; modifPage.setValue("").setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")){
-            NumberPage modifPage = (NumberPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+            NumberPage modifPage = (NumberPage) page; modifPage.setValue("").setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")){
-            MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+            MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.DatePage")){
-            DatePage modifPage = (DatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
-        }
-        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage")){
-            SelectParticipantPage modifPage = (SelectParticipantPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
-        }
-        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NewDatePage")){
-            NewDatePage modifPage = (NewDatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+            DatePage modifPage = (DatePage) page; modifPage.setValue("").setmVisible(visible);
         }
     }
 
@@ -523,9 +522,13 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
+            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
+            toast.show();
             finish();
         } catch (Exception ex) {
             ex.printStackTrace();
+            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error),Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 

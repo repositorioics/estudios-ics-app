@@ -13,6 +13,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
@@ -368,32 +369,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
     }
 
     public void updateConstrains(){
-        /*for (int i = 0; i < mCurrentPageSequence.size(); i++) {
-            Page page = mCurrentPageSequence.get(i);
-            if (page.getTitle().equals(labels.getAnioFechaDiagnosticoTubPulActual())) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(new Date());
-                int anioAct = calendar.get(Calendar.YEAR);
-                NumberPage np = (NumberPage) page;
-                String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                if (valor != null && !valor.isEmpty() && valor.length()==4) {
-                    int anioIngresado = Integer.valueOf(valor);
-                    if (anioIngresado == anioAct){
-                        calendar = Calendar.getInstance();
-                        calendar.setTime(participanteCHF.getParticipante().getFechaNac());
-                        int mesNac = calendar.get(Calendar.MONTH)+1;
-                        String[] catMeses = fillCatalog("CHF_CAT_MESES",mesNac);
-                        SingleFixedChoicePage page2 = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getMesFechaDiagnosticoTubPulActual());
-                        try {
-                            page2.setChoices(catMeses);
-                        }catch (Exception ex){
-                            ex.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }
-        */
+
     }
 
     public void updateModel(Page page){
@@ -906,9 +882,13 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
+            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
+            toast.show();
             finish();
         } catch (Exception ex) {
             ex.printStackTrace();
+            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error),Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 

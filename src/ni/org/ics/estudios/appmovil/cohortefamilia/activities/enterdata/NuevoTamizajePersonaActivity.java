@@ -283,6 +283,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 
     @Override
     public void onPageDataChanged(Page page) {
+    	try{
         updateModel(page);
     	updateConstrains();
         if (recalculateCutOffPage()) {
@@ -290,6 +291,10 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
         	updateBottomBar();
         }
         notificarCambios = true;
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    	}
     }
 
     @Override
@@ -470,14 +475,15 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 				changeStatus(mWizardModel.findByKey(labels.getNombre2()), !visible);
 				changeStatus(mWizardModel.findByKey(labels.getApellido1()), !visible);
 				changeStatus(mWizardModel.findByKey(labels.getApellido2()), !visible);
-				changeStatus(mWizardModel.findByKey(labels.getNombre1Padre()), !visible);
-				changeStatus(mWizardModel.findByKey(labels.getNombre2Padre()), !visible);
-				changeStatus(mWizardModel.findByKey(labels.getApellido1Padre()), !visible);
-				changeStatus(mWizardModel.findByKey(labels.getApellido2Padre()), !visible);
-				changeStatus(mWizardModel.findByKey(labels.getNombre1Madre()), !visible);
-				changeStatus(mWizardModel.findByKey(labels.getNombre2Madre()), !visible);
-				changeStatus(mWizardModel.findByKey(labels.getApellido1Madre()), !visible);
-				changeStatus(mWizardModel.findByKey(labels.getApellido2Madre()), !visible);
+				changeStatus(mWizardModel.findByKey(labels.getNombre1Padre()), !visible && edadAnios<18);
+				changeStatus(mWizardModel.findByKey(labels.getNombre2Padre()), !visible && edadAnios<18);
+				changeStatus(mWizardModel.findByKey(labels.getApellido1Padre()), !visible && edadAnios<18);
+				changeStatus(mWizardModel.findByKey(labels.getApellido2Padre()), !visible && edadAnios<18);
+				changeStatus(mWizardModel.findByKey(labels.getNombre1Madre()), !visible && edadAnios<18);
+				changeStatus(mWizardModel.findByKey(labels.getNombre2Madre()), !visible && edadAnios<18);
+				changeStatus(mWizardModel.findByKey(labels.getApellido1Madre()), !visible && edadAnios<18);
+				changeStatus(mWizardModel.findByKey(labels.getApellido2Madre()), !visible && edadAnios<18);
+
 				if(edadAnios>18){
 					changeStatus(mWizardModel.findByKey(labels.getEmancipado()), false);
 					changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), false);
@@ -500,7 +506,16 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 				changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
 				changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
 				changeStatus(mWizardModel.findByKey(labels.getTestigoPresente()), !visible);
+				changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), !visible);
+				changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), !visible);
+				changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), !visible);
+				changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), !visible);
 	            notificarCambios = false;
+	            if(!visible) {
+	            	resetForm(95);
+	            	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noDaAsentimiento),Toast.LENGTH_LONG);
+	    			toast.show();
+	            }
 	            onPageTreeChanged();
 	        }
 			if(page.getTitle().equals(labels.getEmancipado())){
@@ -515,20 +530,21 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	        }
 			if(page.getTitle().equals(labels.getTestigoPresente())){
 				visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
-				changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), !visible);
-				changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), !visible);
-				changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), !visible);
-				changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), !visible);
+				changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), visible);
+				changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), visible);
+				changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), visible);
+				changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), visible);
 				changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
-				changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
-				changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
-				changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
-	            notificarCambios = false;
+				notificarCambios = false;
 	            onPageTreeChanged();
 	        }
 			if(page.getTitle().equals(labels.getAceptaParteA())){
 				visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
 				changeStatus(mWizardModel.findByKey(labels.getMotivoRechazoParteA()), !visible);
+				changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
+				changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
+				changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
+	            
 	            notificarCambios = false;
 	            onPageTreeChanged();
 	        }
@@ -572,45 +588,45 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), false);
     	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getTestigoPresente()), false);
     	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), false);
-    	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), false);
-    	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), false);
-    	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), false);
-    	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), false);
-    	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getMotivoRechazoParteA()), false);
-    	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), false);
-    	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), false);
-    	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), false);
-    	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getFinTamizajeLabel()), false);
+    	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), false);
+    	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), false);
+    	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), false);
+    	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), false);
+    	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getMotivoRechazoParteA()), false);
+    	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), false);
+    	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), false);
+    	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), false);
+    	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getFinTamizajeLabel()), false);
     }
     
     public void changeStatus(Page page, boolean visible){
     	String clase = page.getClass().toString();
     	if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage")){
-    		SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    		SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.setValue(""); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
-    		BarcodePage modifPage = (BarcodePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);;
+    		BarcodePage modifPage = (BarcodePage) page; modifPage.setValue(""); modifPage.setmVisible(visible);;
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.LabelPage")){
     		LabelPage modifPage = (LabelPage) page; modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
-    		TextPage modifPage = (TextPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    		TextPage modifPage = (TextPage) page; modifPage.setValue(""); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")){
-    		NumberPage modifPage = (NumberPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    		NumberPage modifPage = (NumberPage) page; modifPage.setValue(""); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")){
-    		MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    		MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.setValue(""); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.DatePage")){
-    		DatePage modifPage = (DatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    		DatePage modifPage = (DatePage) page; modifPage.setValue(""); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage")){
-    		SelectParticipantPage modifPage = (SelectParticipantPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    		SelectParticipantPage modifPage = (SelectParticipantPage) page; modifPage.setValue(""); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NewDatePage")){
-    		NewDatePage modifPage = (NewDatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    		NewDatePage modifPage = (NewDatePage) page; modifPage.setValue(""); modifPage.setmVisible(visible);
     	}
     }
     

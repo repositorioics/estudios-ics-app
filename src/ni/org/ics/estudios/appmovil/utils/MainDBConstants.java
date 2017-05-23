@@ -411,7 +411,7 @@ public class MainDBConstants {
     public static final String CREATE_AREA_AMBIENTE_TABLE = "create table if not exists "
             + AREA_AMBIENTE_TABLE + " ("
             + codigo + " text not null, "
-            + casa + " integer not null, "
+            + casa + " text not null, "
             + largo + " real, "
             + ancho + " real, "
             + totalM2 + " real, "

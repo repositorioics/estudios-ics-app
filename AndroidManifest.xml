@@ -57,6 +57,10 @@
             android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaHabitacionesActivity"
             android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaCamasActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaPersonasCamaActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajeCasaActivity" 
             android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajePersonaActivity"
@@ -78,6 +82,8 @@
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaMuestraPaxgeneActivity"
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoHabitacionActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaCamaActivity"
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.UploadAllActivity"
             android:screenOrientation="portrait" />

@@ -1194,7 +1194,7 @@ public class EstudiosAdapter {
 		if (cursorHabitacion != null && cursorHabitacion.getCount() > 0) {
 			cursorHabitacion.moveToFirst();
 			mHabitacion=AreaAmbienteHelper.crearHabitacion(cursorHabitacion);
-			CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" +cursorHabitacion.getInt(cursorHabitacion.getColumnIndex(MainDBConstants.casa)), null);
+			CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorHabitacion.getString(cursorHabitacion.getColumnIndex(MainDBConstants.casa))+"'", null);
 			mHabitacion.setCasa(casa);
 		}
 		if (!cursorHabitacion.isClosed()) cursorHabitacion.close();
@@ -1210,7 +1210,7 @@ public class EstudiosAdapter {
 			do{
 				Habitacion mHabitacion = null;
 				mHabitacion = AreaAmbienteHelper.crearHabitacion(cursorHabitaciones);
-				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.casa + "=" +cursorHabitaciones.getInt(cursorHabitaciones.getColumnIndex(MainDBConstants.casa)), null);
+				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorHabitaciones.getString(cursorHabitaciones.getColumnIndex(MainDBConstants.casa))+"'", null);
 				mHabitacion.setCasa(casa);
 				mHabitaciones.add(mHabitacion);
 			} while (cursorHabitaciones.moveToNext());
@@ -1248,7 +1248,7 @@ public class EstudiosAdapter {
 		if (cursorCama != null && cursorCama.getCount() > 0) {
 			cursorCama.moveToFirst();
 			mCama=CamasHelper.crearCama(cursorCama);
-			Habitacion hab = this.getHabitacion(MainDBConstants.codigo + "=" +cursorCama.getInt(cursorCama.getColumnIndex(MainDBConstants.habitacion)), null);
+			Habitacion hab = this.getHabitacion(MainDBConstants.codigo + "='" +cursorCama.getString(cursorCama.getColumnIndex(MainDBConstants.habitacion))+"'", null);
 			mCama.setHabitacion(hab);
 		}
 		if (!cursorCama.isClosed()) cursorCama.close();
@@ -1264,7 +1264,7 @@ public class EstudiosAdapter {
 			do{
 				Cama mCama = null;
 				mCama = CamasHelper.crearCama(cursorCamas);
-				Habitacion hab = this.getHabitacion(MainDBConstants.codigo + "=" +cursorCamas.getInt(cursorCamas.getColumnIndex(MainDBConstants.habitacion)), null);
+				Habitacion hab = this.getHabitacion(MainDBConstants.codigo + "='" +cursorCamas.getString(cursorCamas.getColumnIndex(MainDBConstants.habitacion))+"'", null);
 				mCama.setHabitacion(hab);
 				mCamas.add(mCama);
 			} while (cursorCamas.moveToNext());

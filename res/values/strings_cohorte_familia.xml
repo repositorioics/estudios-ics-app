@@ -16,6 +16,7 @@
     <string name="environments">Areas</string>
     <string name="participant">Participante</string>
     <string name="rooms">Cuartos</string>
+    <string name="beds">Camas</string>
 
     <string name="new_survey_3">Datos Parto BB</string>
     <string name="new_survey_4">Peso y Talla</string>

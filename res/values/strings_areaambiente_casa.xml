@@ -16,5 +16,5 @@
     <string name="conVentana">Con ventana</string>
     <string name="codigoHabitacion">Codigo Habitacion</string>
     <string name="cantidadCamas">Numero de camas</string>
-
+	<string name="descCama">Observación cama</string>
 </resources>

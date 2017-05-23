@@ -9,11 +9,10 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoHabitacionActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.HabitacionAdapter;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaCamaActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.CamaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cama;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Habitacion;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -36,8 +35,8 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 	private TextView textView;
 	private Drawable img = null;
 	private Button mAddButton;
-	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
-    private Cama habitacion = new Cama();
+	private static Habitacion hab = new Habitacion();
+    private Cama cama = new Cama();
 	private ArrayAdapter<Cama> mCamaAdapter;
 	private List<Cama> mCamas = new ArrayList<Cama>();
 	private EstudiosAdapter estudiosAdapter;
@@ -47,13 +46,13 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_add);
 		
-		casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+		hab = (Habitacion) getIntent().getExtras().getSerializable(Constants.HABITACION);
 		textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_menu_share);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		new FetchDataParticipantesTask().execute(casaCHF.getCodigoCHF());
+		new FetchDataHabitacionTask().execute(hab.getCodigo());
 		
 		mAddButton = (Button) findViewById(R.id.add_button);
 		mAddButton.setText(getString(R.string.new_room));
@@ -99,26 +98,26 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
-        /*habitacion = (Habitacion)this.getListAdapter().getItem(position);
+        cama = (Cama)this.getListAdapter().getItem(position);
         // Opcion de menu seleccionada
         Bundle arguments = new Bundle();
 		Intent i;
-		arguments.putSerializable(Constants.HABITACION , habitacion);
+		arguments.putSerializable(Constants.HABITACION , cama);
 		i = new Intent(getApplicationContext(),
-				MenuParticipanteActivity.class);
+				ListaPersonasCamaActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.putExtras(arguments);
 		startActivity(i);
-		finish();*/
+		finish();
 	}
 	
 	@Override
 	public void onBackPressed (){
 		Bundle arguments = new Bundle();
 		Intent i;
-		if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+		if (hab!=null) arguments.putSerializable(Constants.CASA , hab.getCasa());
 		i = new Intent(getApplicationContext(),
-				MenuCasaActivity.class);
+				ListaHabitacionesActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);
 		startActivity(i);
@@ -161,9 +160,9 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {
 			try {
 				Bundle arguments = new Bundle();
-		        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+		        if (hab!=null) arguments.putSerializable(Constants.HABITACION , hab);
 				Intent i = new Intent(getApplicationContext(),
-						NuevoHabitacionActivity.class);
+						NuevaCamaActivity.class);
 				i.putExtras(arguments);
 		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
@@ -182,8 +181,8 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 
 	}
 	
-	private class FetchDataParticipantesTask extends AsyncTask<String, Void, String> {
-		private String codigoCasaCHF = null;
+	private class FetchDataHabitacionTask extends AsyncTask<String, Void, String> {
+		private String codigoHabitacion = null;
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -192,10 +191,10 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 
 		@Override
 		protected String doInBackground(String... values) {
-			codigoCasaCHF = values[0];
+			codigoHabitacion = values[0];
 			try {
 				estudiosAdapter.open();
-				//mCamas = estudiosAdapter.getHabitaciones(MainDBConstants.casa +" = " + codigoCasaCHF + " and " + MainDBConstants.tipo + " ='habitacion'", MainDBConstants.codigoHabitacion);
+				mCamas = estudiosAdapter.getCamas(MainDBConstants.habitacion +" = '" + codigoHabitacion + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoCama);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -208,8 +207,8 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 			// after the request completes, hide the progress indicator
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.rooms)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
-			//mCamaAdapter = new HabitacionAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mCamas);
+			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.beds)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+hab.getCasa().getCodigoCHF()+"\n"+ getString(R.string.codigoHabitacion)+ ": "+hab.getCodigoHabitacion());
+			mCamaAdapter = new CamaAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mCamas);
 			setListAdapter(mCamaAdapter);
 			dismissProgressDialog();
 		}

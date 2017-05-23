@@ -391,6 +391,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getVaNinoEscuela())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getGradoCursa()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getTurno()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getNombreCentroEstudio()), visible);
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getDondeCuidanNino()), visible);

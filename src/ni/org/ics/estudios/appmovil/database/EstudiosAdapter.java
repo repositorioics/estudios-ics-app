@@ -571,7 +571,7 @@ public class EstudiosAdapter {
 	//Editar CasaCohorteFamilia existente en la base de datos
 	public boolean editarCasaCohorteFamilia(CasaCohorteFamilia casaCHF) {
 		ContentValues cv = CasaCohorteFamiliaHelper.crearCasaCHFontentValues(casaCHF);
-		return mDb.update(MainDBConstants.CASA_CHF_TABLE , cv, MainDBConstants.codigoCHF + "='" 
+		return mDb.update(MainDBConstants.CASA_CHF_TABLE , cv, MainDBConstants.codigoCHF + "='"
 				+ casaCHF.getCodigoCHF()+ "'", null) > 0;
 	}
 	//Limpiar la tabla de CasaCohorteFamilia de la base de datos
@@ -794,6 +794,28 @@ public class EstudiosAdapter {
         return mDb.update(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE, cv, MainDBConstants.codigo + "='"
                 + cartaConsentimiento.getCodigo() + "'", null) > 0;
     }
+
+    //Obtener una lista de ParticipanteCohorteFamilia de la base de datos
+    public ArrayList<CartaConsentimiento> getCartasConsentimientos(String filtro, String orden) throws SQLException {
+        ArrayList<CartaConsentimiento> mParticipanteCohorteFamilias = new ArrayList<CartaConsentimiento>();
+        Cursor cursorCarta = crearCursor(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE, filtro, null, orden);
+        if (cursorCarta != null && cursorCarta.getCount() > 0) {
+            cursorCarta.moveToFirst();
+            mParticipanteCohorteFamilias.clear();
+            do{
+                CartaConsentimiento cartaConsentimiento = null;
+                cartaConsentimiento = CartaConsentimientoHelper.crearCartaConsentimiento(cursorCarta);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorCarta.getInt(cursorCarta.getColumnIndex(MainDBConstants.participante)), null);
+                cartaConsentimiento.setParticipante(participante);
+                Tamizaje tamizaje = this.getTamizaje(MainDBConstants.codigo + "='" +cursorCarta.getString(cursorCarta.getColumnIndex(MainDBConstants.tamizaje))+"'", null);
+                cartaConsentimiento.setTamizaje(tamizaje);
+                mParticipanteCohorteFamilias.add(cartaConsentimiento);
+            } while (cursorCarta.moveToNext());
+        }
+        if (!cursorCarta.isClosed()) cursorCarta.close();
+        return mParticipanteCohorteFamilias;
+    }
+
     /**
      * Metodos para EncuestaCasa en la base de datos
      *
@@ -1310,7 +1332,7 @@ public class EstudiosAdapter {
 		if (cursorPersonaCama != null && cursorPersonaCama.getCount() > 0) {
 			cursorPersonaCama.moveToFirst();
 			mPersonaCama=CamasHelper.crearPersonaCama(cursorPersonaCama);
-			Cama cama = this.getCama(MainDBConstants.codigoCama + "='" +cursorPersonaCama.getString(cursorPersonaCama.getColumnIndex(MainDBConstants.cama))+"'", null);
+			Cama cama = this.getCama(MainDBConstants.codigoCama + "='" + cursorPersonaCama.getString(cursorPersonaCama.getColumnIndex(MainDBConstants.cama)) + "'", null);
 			mPersonaCama.setCama(cama);
 		}
 		if (!cursorPersonaCama.isClosed()) cursorPersonaCama.close();
@@ -1326,7 +1348,7 @@ public class EstudiosAdapter {
 			do{
 				PersonaCama mPersonaCama = null;
 				mPersonaCama = CamasHelper.crearPersonaCama(cursorPersonasCama);
-				Cama cama = this.getCama(MainDBConstants.codigoCama + "='" +cursorPersonasCama.getString(cursorPersonasCama.getColumnIndex(MainDBConstants.cama))+"'", null);
+				Cama cama = this.getCama(MainDBConstants.codigoCama + "='" + cursorPersonasCama.getString(cursorPersonasCama.getColumnIndex(MainDBConstants.cama)) + "'", null);
 				mPersonaCama.setCama(cama);
 				mPersonasCama.add(mPersonaCama);
 			} while (cursorPersonasCama.moveToNext());

@@ -285,7 +285,7 @@ public class MainDBConstants {
     //crear tabla cartas_consentimientos
     public static final String CREATE_CARTACONSENTIMIENTO_TABLE = "create table if not exists "
             + CARTA_CONSENTIMIENTO_TABLE + " ("
-            + codigo + " integer not null, "
+            + codigo + " text not null, "
             + fechaFirma + " date not null, "
             + tamizaje + " text not null, "
             + participante + " integer not null, "

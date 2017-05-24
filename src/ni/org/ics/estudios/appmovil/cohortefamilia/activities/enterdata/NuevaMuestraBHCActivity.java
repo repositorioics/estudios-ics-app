@@ -471,8 +471,14 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
             muestra.setDeviceid(infoMovil.getDeviceId());
             muestra.setEstado('0');
             muestra.setPasive('0');
-            estudiosAdapter.crearMuestras(muestra);
-            estudiosAdapter.close();
+            try {
+                estudiosAdapter.crearMuestras(muestra);
+            }catch (Exception ex){
+                ex.printStackTrace();
+                Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error),Toast.LENGTH_LONG);
+                toast.show();
+            }
+             estudiosAdapter.close();
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
             Intent i = new Intent(getApplicationContext(),

@@ -30,7 +30,7 @@ public class MuestrasDBConstants {
     public static final String CREATE_MUESTRA_TABLE = "create table if not exists "
             + MUESTRA_TABLE + " ("
             + codigo + " text not null, "
-            + tomaMxSn + "text not null, "
+            + tomaMxSn + " text not null, "
             + codigoMx + " text, "
             + hora + " text not null, "
             + horaFin + " text, "

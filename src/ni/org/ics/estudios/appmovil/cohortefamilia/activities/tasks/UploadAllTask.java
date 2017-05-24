@@ -106,10 +106,10 @@ public class UploadAllTask extends UploadTask {
 			String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
             mPreTamizajes = estudioAdapter.getPreTamizajes(filtro, MainDBConstants.codigo);
 			mCasasCHF = estudioAdapter.getCasaCohorteFamilias(filtro, MainDBConstants.codigoCHF);
-            //mTamizajes = estudioAdapter.getTamizajes(filtro, MainDBConstants.codigo);
+            mTamizajes = estudioAdapter.getTamizajes(filtro, MainDBConstants.codigo);
             mParticipantes = estudioAdapter.getParticipantes(filtro, MainDBConstants.codigo);
             mParticipantesCHF = estudioAdapter.getParticipanteCohorteFamilias(filtro, null);
-            //mCartasConsent = estudioAdapter.get(filtro, MainDBConstants.codigo);
+            mCartasConsent = estudioAdapter.getCartasConsentimientos(filtro, MainDBConstants.codigo);
             mEncuestasCasas = estudioAdapter.getEncuestaCasas(filtro, null);
             //mCocinas = estudioAdapter.get(filtro, MainDBConstants.codigo);
             //mComedores = estudioAdapter.get(filtro, MainDBConstants.codigo);

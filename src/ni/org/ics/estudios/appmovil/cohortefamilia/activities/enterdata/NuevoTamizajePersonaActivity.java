@@ -732,7 +732,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 		}
         if (tieneValor(razonNoAceptaParticipar)) {
 			MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaParticipar + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NPP'", null);
-			if (catRazonNoAceptaParticipar!=null) t.setAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
+			if (catRazonNoAceptaParticipar!=null) t.setRazonNoAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
 		}
         if (tieneValor(asentimientoVerbal)) {
 			MessageResource catAsentimientoVerbal = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + asentimientoVerbal + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);

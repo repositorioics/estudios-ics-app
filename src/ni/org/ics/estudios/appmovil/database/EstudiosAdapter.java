@@ -794,7 +794,10 @@ public class EstudiosAdapter {
         return mDb.update(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE, cv, MainDBConstants.codigo + "='"
                 + cartaConsentimiento.getCodigo() + "'", null) > 0;
     }
-
+    //Limpiar la tabla de Tamizaje de la base de datos
+    public boolean borrarCartasConsentimiento() {
+        return mDb.delete(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE, null, null) > 0;
+    }
     //Obtener una lista de ParticipanteCohorteFamilia de la base de datos
     public ArrayList<CartaConsentimiento> getCartasConsentimientos(String filtro, String orden) throws SQLException {
         ArrayList<CartaConsentimiento> mParticipanteCohorteFamilias = new ArrayList<CartaConsentimiento>();

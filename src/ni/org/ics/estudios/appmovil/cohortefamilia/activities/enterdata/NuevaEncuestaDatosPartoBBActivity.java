@@ -342,7 +342,7 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
         try {
             boolean visible = false;
             if (page.getTitle().equals(labels.getTiempoEmbSndr())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTiempoEmbSemana()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDocMedTiempoEmbSn()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDocMedEdadGestSn()), visible);
@@ -356,60 +356,64 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
                     changeStatus(mWizardModel.findByKey(labels.getFum()), visible);
                     changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoSn()), visible);
                     changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), visible);
-                    notificarCambios = false;
-                    onPageTreeChanged();
                 }
+                notificarCambios = false;
+                onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDocMedTiempoEmb())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroDocMedTiempoEmb()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFum())) {
-                String fum = page.getData().getString(TextPage.SIMPLE_DATA_KEY);
-                Date dFum = StringToDate(fum, "dd/MM/yyyy");
-                int semanaGest = diferenciaEnSemanas(participanteCHF.getParticipante().getFechaNac(), dFum);
-                if (semanaGest < 25 || semanaGest > 45) visible = true;
-                changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoSn()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), visible);
+                if (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null) {
+                    String fum = page.getData().getString(TextPage.SIMPLE_DATA_KEY);
+                    Date dFum = StringToDate(fum, "dd/MM/yyyy");
+                    int semanaGest = diferenciaEnSemanas(participanteCHF.getParticipante().getFechaNac(), dFum);
+                    if (semanaGest < 25 || semanaGest > 45) visible = true;
+                    changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoSn()), visible);
+                    changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), visible);
+                }
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFumFueraRangoSn())) {
-                changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES));
-                changeStatus(mWizardModel.findByKey(labels.getReingresarFUM()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO));
+                if (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null) {
+                    changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES));
+                    changeStatus(mWizardModel.findByKey(labels.getReingresarFUM()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO));
+                }
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDocMedEdadGestSn())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getEdadGest()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDocMedEdadGest()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDocMedEdadGest())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroDocMedEdadGest()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getPesoBBSndr())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getPesoBB()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDocMedPesoBBSn()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDocMedPesoBBSn())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getDocMedPesoBB()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDocMedPesoBB())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroDocMedPesoBB()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();

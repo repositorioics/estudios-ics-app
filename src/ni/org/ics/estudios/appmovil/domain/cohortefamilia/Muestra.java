@@ -28,6 +28,8 @@ public class Muestra extends BaseMetaData implements Serializable {
     private String proposito;
     private ParticipanteCohorteFamilia participanteCHF;
     private String realizaPaxgene;
+    private String horaInicioPax;
+    private String horaFinPax;
 
     public String getCodigo() {
         return codigo;
@@ -155,6 +157,22 @@ public class Muestra extends BaseMetaData implements Serializable {
 
     public void setRealizaPaxgene(String realizaPaxgene) {
         this.realizaPaxgene = realizaPaxgene;
+    }
+
+    public String getHoraInicioPax() {
+        return horaInicioPax;
+    }
+
+    public void setHoraInicioPax(String horaInicioPax) {
+        this.horaInicioPax = horaInicioPax;
+    }
+
+    public String getHoraFinPax() {
+        return horaFinPax;
+    }
+
+    public void setHoraFinPax(String horaFinPax) {
+        this.horaFinPax = horaFinPax;
     }
 
     @Override

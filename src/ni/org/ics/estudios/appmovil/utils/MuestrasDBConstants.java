@@ -25,6 +25,8 @@ public class MuestrasDBConstants {
     public static final String proposito = "proposito";
     public static final String participanteCHF = "participanteCHF";
     public static final String realizaPaxgene = "realizaPaxgene";
+    public static final String horaInicioPax = "horaInicioPax";
+    public static final String horaFinPax = "horaFinPax";
 
     //crear tabla Muestras
     public static final String CREATE_MUESTRA_TABLE = "create table if not exists "
@@ -32,9 +34,9 @@ public class MuestrasDBConstants {
             + codigo + " text not null, "
             + tomaMxSn + " text not null, "
             + codigoMx + " text, "
-            + hora + " text not null, "
+            + hora + " text null, "
             + horaFin + " text, "
-            + volumen + " real not null, "
+            + volumen + " real null, "
             + observacion + " text, "
             + descOtraObservacion + " text, "
             + numPinchazos + " text, "
@@ -45,6 +47,8 @@ public class MuestrasDBConstants {
             + proposito + " text, "
             + participanteCHF + " text not null, "
             + realizaPaxgene + " text, "
+            + horaInicioPax + " text, "
+            + horaFinPax + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

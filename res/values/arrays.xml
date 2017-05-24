@@ -28,7 +28,6 @@
         <item>@string/new_survey_5</item>
         <item>@string/new_mx_bhc</item>
         <item>@string/new_mx_rojo</item>
-        <item>@string/new_mx_pax</item>
     </string-array>
 
 </resources>

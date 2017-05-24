@@ -32,4 +32,6 @@
     <string name="rojo12ml">14 años y mas. Rojo: 12 ml es el volumen requerido</string>
     <string name="volumenPaxgene14">14 años y mas. BHC : 2 ml es el volumen requerido. Paxgene: 2 viales de 0.4 ml</string>
     <string name="bhc2ml14">14 años y mas. BHC : 2 ml es el volumen requerido</string>
+    <string name="realizaPaxgene">¿Se realiza PaxGene?</string>
+    <string name="realizaPaxgeneHint">Indicar si para esta muestra se realiza proceso de PaxGene.\n Nota:La hora que se guarda el formulario es la hora de fin del proceso</string>
 </resources>

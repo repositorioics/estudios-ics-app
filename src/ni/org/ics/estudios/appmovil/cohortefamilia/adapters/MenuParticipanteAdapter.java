@@ -25,7 +25,6 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
     private boolean habilitarLactancia = false;
     private boolean habilitarBhc = false;
     private boolean habilitarRojo = false;
-    private boolean habilitarPax = false;
     private boolean existeencuestaParticip = false;
     private boolean existeencuestaParto = false;
     private boolean existeencuestaPeso = false;
@@ -68,7 +67,6 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 } else habilitarLactancia = false;
 
                 //BHC y Paxgene (2 años a 13 años y 14 años y mas)
-                habilitarPax = anios >= 2;
                 habilitarBhc = anios >= 2;
                 //Rojo (6 meses y menos de 2 años y 2 años a 13 años Y 14 años y mas)
                 if (anios == 0) habilitarRojo = meses >= 6;
@@ -98,8 +96,6 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
             case 4 : habilitado = habilitarBhc;
                 break;
             case 5 : habilitado = habilitarRojo;
-                break;
-            case 6 : habilitado = habilitarPax;
                 break;
             default: break;
         }
@@ -181,14 +177,6 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
                 }
                 img=getContext().getResources().getDrawable(R.drawable.redtubes);
-                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                break;
-            case 6:
-                if (!habilitarPax) {
-                    textView.setTextColor(Color.GRAY);
-                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
-                }
-                img=getContext().getResources().getDrawable(R.drawable.ic_greentube);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
 		default:

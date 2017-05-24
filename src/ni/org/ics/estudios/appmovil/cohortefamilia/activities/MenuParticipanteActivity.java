@@ -101,18 +101,18 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                                 anios = Integer.valueOf(edad[0]);
                                 meses = Integer.valueOf(edad[1]);
                                 dias = Integer.valueOf(edad[2]);
-                                if (anios>=14) labelMuestra = getString(R.string.bhc2ml14);
+                                if (anios>=14) labelMuestra = getString(R.string.volumenPaxgene14);
                                 else {
                                     //BHC y Paxgene (2 años a 13 años)
                                     if (anios>=2 && anios<13) {
-                                        labelMuestra = getString(R.string.bhc2ml);
+                                        labelMuestra = getString(R.string.volumenPaxgene);
                                     }else if (anios == 13 && meses == 0 && dias == 0){
-                                        labelMuestra = getString(R.string.bhc2ml);
+                                        labelMuestra = getString(R.string.volumenPaxgene);
                                     }
                                 }
                             }
                         }
-                        tituloEncuesta = getString(R.string.new_sample_bhc);
+                        tituloEncuesta = getString(R.string.new_sample_paxgene);
                         break;
                     case 5:
                         tituloEncuesta = getString(R.string.new_sample_rojo);
@@ -155,29 +155,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             if (visible6ml) labelMuestra = getString(R.string.rojo6ml);
                             if (visible12ml) labelMuestra = getString(R.string.rojo12ml);
                         }
-                        break;
-                    case 6:
-                        if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
-                            int anios = 0;
-                            int meses = 0;
-                            int dias = 0;
-                            String edad[] = participanteCHF.getParticipante().getEdad().split("/");
-                            if (edad.length > 0) {
-                                anios = Integer.valueOf(edad[0]);
-                                meses = Integer.valueOf(edad[1]);
-                                dias = Integer.valueOf(edad[2]);
-                                if (anios>=14) labelMuestra = getString(R.string.volumenPaxgene14);
-                                else {
-                                    //BHC y Paxgene (2 años a 13 años)
-                                    if (anios>=2 && anios<13) {
-                                        labelMuestra = getString(R.string.volumenPaxgene);
-                                    }else if (anios == 13 && meses == 0 && dias == 0){
-                                        labelMuestra = getString(R.string.volumenPaxgene);
-                                    }
-                                }
-                            }
-                        }
-                        tituloEncuesta = getString(R.string.new_sample_paxgene);
                         break;
                     default:
                         break;
@@ -357,7 +334,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     case 4:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
                         i = new Intent(getApplicationContext(),
-                                NuevaMuestraBHCActivity.class);
+                                NuevaMuestraBHCPaxgeneActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
@@ -366,14 +343,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
                         i = new Intent(getApplicationContext(),
                                 NuevaMuestraTuboRojoActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtras(arguments);
-                        startActivity(i);
-                        break;
-                    case 6:
-                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
-                        i = new Intent(getApplicationContext(),
-                                NuevaMuestraPaxgeneActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);

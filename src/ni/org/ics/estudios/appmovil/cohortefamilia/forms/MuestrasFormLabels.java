@@ -37,6 +37,8 @@ public class MuestrasFormLabels {
     protected String rojo12ml;
     protected String volumenPaxgene14;
     protected String bhc2ml14;
+    protected String realizaPaxgene;
+    protected String realizaPaxgeneHint;
 
     public MuestrasFormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
@@ -67,7 +69,8 @@ public class MuestrasFormLabels {
         rojo12ml = res.getString(R.string.rojo12ml);
         volumenPaxgene14 = res.getString(R.string.volumenPaxgene14);
         bhc2ml14 = res.getString(R.string.bhc2ml14);
-
+        realizaPaxgene = res.getString(R.string.realizaPaxgene);
+        realizaPaxgeneHint = res.getString(R.string.realizaPaxgeneHint);
     }
 
     public String getTomaMxSn() {
@@ -284,5 +287,21 @@ public class MuestrasFormLabels {
 
     public void setBhc2ml14(String bhc2ml14) {
         this.bhc2ml14 = bhc2ml14;
+    }
+
+    public String getRealizaPaxgene() {
+        return realizaPaxgene;
+    }
+
+    public void setRealizaPaxgene(String realizaPaxgene) {
+        this.realizaPaxgene = realizaPaxgene;
+    }
+
+    public String getRealizaPaxgeneHint() {
+        return realizaPaxgeneHint;
+    }
+
+    public void setRealizaPaxgeneHint(String realizaPaxgeneHint) {
+        this.realizaPaxgeneHint = realizaPaxgeneHint;
     }
 }

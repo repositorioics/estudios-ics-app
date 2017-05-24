@@ -103,14 +103,27 @@ public class UploadAllTask extends UploadTask {
 			publishProgress("Obteniendo registros de la base de datos", "1", "2");
 			estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
 			estudioAdapter.open();
-			String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
-            mPreTamizajes = estudioAdapter.getPreTamizajes(filtro, MainDBConstants.codigo);
+            String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
+            /*mPreTamizajes = estudioAdapter.getPreTamizajes(filtro, MainDBConstants.codigo);
 			mCasasCHF = estudioAdapter.getCasaCohorteFamilias(filtro, MainDBConstants.codigoCHF);
             mTamizajes = estudioAdapter.getTamizajes(filtro, MainDBConstants.codigo);
             mParticipantes = estudioAdapter.getParticipantes(filtro, MainDBConstants.codigo);
             mParticipantesCHF = estudioAdapter.getParticipanteCohorteFamilias(filtro, null);
             mCartasConsent = estudioAdapter.getCartasConsentimientos(filtro, MainDBConstants.codigo);
             mEncuestasCasas = estudioAdapter.getEncuestaCasas(filtro, null);
+            */mPreTamizajes = estudioAdapter.getPreTamizajes(null, MainDBConstants.codigo);
+            mCasasCHF = estudioAdapter.getCasaCohorteFamilias(null, MainDBConstants.codigoCHF);
+            mTamizajes = estudioAdapter.getTamizajes(null, MainDBConstants.codigo);
+            mParticipantes = estudioAdapter.getParticipantes(filtro, MainDBConstants.codigo);
+            mParticipantesCHF = estudioAdapter.getParticipanteCohorteFamilias(null, null);
+            mCartasConsent = estudioAdapter.getCartasConsentimientos(null, MainDBConstants.codigo);
+            mEncuestasCasas = estudioAdapter.getEncuestaCasas(null, null);
+            actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PRETAMIZAJE);
+            actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CASACHF);
+            actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TAMIZAJE);
+            actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTECHF);
+            actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CARTAS_CONSENT);
+            actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_CASACHF);
             //mCocinas = estudioAdapter.get(filtro, MainDBConstants.codigo);
             //mComedores = estudioAdapter.get(filtro, MainDBConstants.codigo);
             //mSalas = estudioAdapter.get(filtro, MainDBConstants.codigo);
@@ -124,7 +137,7 @@ public class UploadAllTask extends UploadTask {
             mEncuestasPesoTalla = estudioAdapter.getEncuestasPesoTallas(filtro, null);
             mEncuestasLacMat = estudioAdapter.getEncuestasLactanciaMaternas(filtro, null);
             mMuestras = estudioAdapter.getMuestras(filtro, null);
-            mPaxgenes = estudioAdapter.getPaxgenes(filtro, null);
+            //mPaxgenes = estudioAdapter.getPaxgenes(filtro, null);
 
 			publishProgress("Datos completos!", "2", "2");
 			actualizarBaseDatos(Constants.STATUS_SUBMITTED, PRETAMIZAJE);
@@ -247,12 +260,13 @@ public class UploadAllTask extends UploadTask {
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
                 return error;
             }
+            /*
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS_PAXGENE);
             error = cargarPaxgene(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS_PAXGENE);
                 return error;
-            }
+            }*/
 		} catch (Exception e1) {
 
 			e1.printStackTrace();

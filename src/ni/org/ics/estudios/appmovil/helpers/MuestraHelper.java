@@ -33,6 +33,8 @@ public class MuestraHelper {
         cv.put(MuestrasDBConstants.proposito, muestra.getProposito());
         cv.put(MuestrasDBConstants.participanteCHF, muestra.getParticipanteCHF().getParticipanteCHF());
         cv.put(MuestrasDBConstants.realizaPaxgene, muestra.getRealizaPaxgene());
+        cv.put(MuestrasDBConstants.horaInicioPax, muestra.getHoraInicioPax());
+        cv.put(MuestrasDBConstants.horaFinPax, muestra.getHoraFinPax());
 
         if (muestra.getRecordDate() != null) cv.put(MainDBConstants.recordDate, muestra.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, muestra.getRecordUser());
@@ -60,6 +62,8 @@ public class MuestraHelper {
         mMuestra.setProposito(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.proposito)));
         mMuestra.setParticipanteCHF(null);
         mMuestra.setRealizaPaxgene(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.realizaPaxgene)));
+        mMuestra.setHoraInicioPax(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.horaInicioPax)));
+        mMuestra.setHoraFinPax(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.horaFinPax)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mMuestra.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mMuestra.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

@@ -345,29 +345,6 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
         return false;
     }
 
-
-    private String[] fillCatalog(String codigoCatalogo, int seleccionado){
-        int index;
-        String[] catalogo;
-        String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        if (estudiosAdapter == null)
-            estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
-        estudiosAdapter.open();
-        List<MessageResource> mCatalogo = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='"+codigoCatalogo+"'", CatalogosDBConstants.order);
-        estudiosAdapter.close();
-        catalogo = new String[mCatalogo.size()];
-        index = 0;
-        for (MessageResource message: mCatalogo){
-            if (seleccionado>0){
-                if (seleccionado == Integer.valueOf(message.getCatKey()))
-                    break;
-            }
-            catalogo[index] = message.getSpanish();
-            index++;
-        }
-        return catalogo;
-    }
-
     public void updateConstrains(){
 
     }

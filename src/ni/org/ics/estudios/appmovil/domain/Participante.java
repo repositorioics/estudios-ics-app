@@ -1,5 +1,7 @@
 package ni.org.ics.estudios.appmovil.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -167,6 +169,7 @@ public class Participante extends BaseMetaData implements Serializable{
     /*
     Calcular edad del participante según su fecha de nacimiento y fecha actual del sistema
      */
+    @JsonIgnore
     public String getEdad() {
         if (this.getFechaNac()!=null) {
             Calendar calendarDOB = Calendar.getInstance();
@@ -221,6 +224,7 @@ public class Participante extends BaseMetaData implements Serializable{
         }
     }
 
+    @JsonIgnore
     public String getNombreCompleto(){
         String nombreCompleto = this.getNombre1();
         if (this.getNombre2()!=null) nombreCompleto = nombreCompleto + " "+  this.getNombre2();

@@ -253,13 +253,14 @@ public class UploadAllTask extends UploadTask {
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS_PAXGENE);
                 return error;
             }
-            estudioAdapter.close();
 		} catch (Exception e1) {
-			estudioAdapter.close();
+
 			e1.printStackTrace();
 			return e1.getLocalizedMessage();
-		}
-		return error;
+		}finally {
+            estudioAdapter.close();
+        }
+        return error;
 	}
 	
 	private void actualizarBaseDatos(String estado, String opcion) {
@@ -511,7 +512,7 @@ public class UploadAllTask extends UploadTask {
     protected String cargarPretamizajes(String url, String username,
                                     String password) throws Exception {
         try {
-            if(mCasasCHF.size()>0){
+            if(mPreTamizajes.size()>0){
                 // La URL de la solicitud POST
                 publishProgress("Enviando pretamizaje de casas cohorte familia!", PRETAMIZAJE, TOTAL_TASK);
                 final String urlRequest = url + "/movil/preTamizajes";
@@ -581,7 +582,7 @@ public class UploadAllTask extends UploadTask {
     protected String cargarTamizajes(String url, String username,
                                         String password) throws Exception {
         try {
-            if(mCasasCHF.size()>0){
+            if(mTamizajes.size()>0){
                 // La URL de la solicitud POST
                 publishProgress("Enviando tamizaje de personas cohorte familia!", TAMIZAJE, TOTAL_TASK);
                 final String urlRequest = url + "/movil/tamizajes";
@@ -651,7 +652,7 @@ public class UploadAllTask extends UploadTask {
     protected String cargarParticipantesCHF(String url, String username,
                                          String password) throws Exception {
         try {
-            if(mParticipantes.size()>0){
+            if(mParticipantesCHF.size()>0){
                 // La URL de la solicitud POST
                 publishProgress("Enviando participantes cohorte familia!", PARTICIPANTECHF, TOTAL_TASK);
                 final String urlRequest = url + "/movil/participantesCHF";

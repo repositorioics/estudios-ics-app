@@ -2,6 +2,8 @@ package ni.org.ics.estudios.appmovil.domain;
 
 import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 
+import java.io.Serializable;
+
 
 /**
  * Simple objeto de dominio que representa los datos demograficos de la casa
@@ -10,7 +12,7 @@ import ni.org.ics.estudios.appmovil.catalogs.Barrio;
  * @author Miguel Salinas
  **/
 
-public class Casa extends BaseMetaData {
+public class Casa extends BaseMetaData implements Serializable {
 
 	/**
 	 * 

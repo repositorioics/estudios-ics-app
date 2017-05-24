@@ -2,11 +2,13 @@ package ni.org.ics.estudios.appmovil.domain.cohortefamilia;
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
 
+import java.io.Serializable;
+
 /**
  * Created by Miguel Salinas on 5/3/2017.
  * V1.0
  */
-public class AreaAmbiente extends BaseMetaData {
+public class AreaAmbiente extends BaseMetaData implements Serializable {
 
     /**
 	 * 

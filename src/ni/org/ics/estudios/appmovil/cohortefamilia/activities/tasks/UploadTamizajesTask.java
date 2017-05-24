@@ -6,6 +6,7 @@ import java.util.List;
 
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -36,8 +37,8 @@ public class UploadTamizajesTask extends UploadTask {
     
 	private EstudiosAdapter estudioAdapter = null;
     
-    //private List<Tamizaje> mTamizajes = new ArrayList<Tamizaje>();
-    private List<Participante> mParticipantes = new ArrayList<Participante>();
+    private List<Tamizaje> mTamizajes = new ArrayList<Tamizaje>();
+    //private List<Participante> mParticipantes = new ArrayList<Participante>();
     
 
 	private String url = null;
@@ -62,7 +63,7 @@ public class UploadTamizajesTask extends UploadTask {
 			estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
 			estudioAdapter.open();
 			String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
-            mParticipantes = estudioAdapter.getParticipantes(filtro, null);
+			mTamizajes = estudioAdapter.getTamizajes(filtro, null);
             /*Tamizaje tam = new Tamizaje();
             tam.setAceptaAtenderCentro("S");
             tam.setAceptaParticipar("S");
@@ -109,12 +110,12 @@ public class UploadTamizajesTask extends UploadTask {
 	private void actualizarBaseDatos(String estado, String opcion) {
 		int c;
         if(opcion.equalsIgnoreCase(TAMIZAJE)){
-            c = mParticipantes.size();
+            c = mTamizajes.size();
             if(c>0){
-                for (Participante participante : mParticipantes) {
-                	participante.setEstado(estado.charAt(0));
-                    estudioAdapter.editarParticipante(participante);
-                    publishProgress("Actualizando participantes en base de datos local", Integer.valueOf(mParticipantes.indexOf(participante)).toString(), Integer
+                for (Tamizaje tamizaje : mTamizajes) {
+                	tamizaje.setEstado(estado.charAt(0));
+                    estudioAdapter.editarTamizaje(tamizaje);
+                    publishProgress("Actualizando tamizajes en base de datos local", Integer.valueOf(mTamizajes.indexOf(tamizaje)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
@@ -128,17 +129,17 @@ public class UploadTamizajesTask extends UploadTask {
     // url, username, password
     protected String cargarTamizajes() throws Exception {
         try {
-            if(mParticipantes.size()>0){
+            if(mTamizajes.size()>0){
                 // La URL de la solicitud POST
                 publishProgress("Enviando tamizaje de personas cohorte familia!", TAMIZAJE, TAMIZAJE);
-                final String urlRequest = url + "/movil/participantes";
-                Participante[] envio = mParticipantes.toArray(new Participante[mParticipantes.size()]);
+                final String urlRequest = url + "/movil/tamizajes";
+                Tamizaje[] envio = mTamizajes.toArray(new Tamizaje[mTamizajes.size()]);
                 HttpHeaders requestHeaders = new HttpHeaders();
                 HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
                 requestHeaders.setContentType(MediaType.APPLICATION_JSON);
                 requestHeaders.setAuthorization(authHeader);
-                HttpEntity<Participante[]> requestEntity =
-                        new HttpEntity<Participante[]>(envio, requestHeaders);
+                HttpEntity<Tamizaje[]> requestEntity =
+                        new HttpEntity<Tamizaje[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

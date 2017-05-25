@@ -25,11 +25,11 @@ import java.util.Map;
 
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaHabitacionesActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.HabitacionForm;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaCuartosActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.CuartoForm;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Habitacion;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
@@ -51,7 +51,7 @@ import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
 import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 
 
-public class NuevoHabitacionActivity extends FragmentActivity implements
+public class NuevoCuartoActivity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -87,10 +87,10 @@ public class NuevoHabitacionActivity extends FragmentActivity implements
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
-		infoMovil = new DeviceInfo(NuevoHabitacionActivity.this);
+		infoMovil = new DeviceInfo(NuevoCuartoActivity.this);
 		casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        mWizardModel = new HabitacionForm(this,mPass);
+        mWizardModel = new CuartoForm(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
@@ -190,7 +190,7 @@ public class NuevoHabitacionActivity extends FragmentActivity implements
 					Intent i;
 					if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
 					i = new Intent(getApplicationContext(),
-							ListaHabitacionesActivity.class);
+							ListaCuartosActivity.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					i.putExtras(arguments);
 					startActivity(i);
@@ -394,26 +394,25 @@ public class NuevoHabitacionActivity extends FragmentActivity implements
 		String codigoHabitacion = datos.getString(this.getString(R.string.codigoHabitacion));
 		String cantidadCamas = datos.getString(this.getString(R.string.cantidadCamas));
 		
-		//Crea una nueva habitacion
-		Habitacion h = new Habitacion();
-		h.setCodigo(id);
-		h.setCasa(casaCHF);
-		h.setCodigoHabitacion(codigoHabitacion);
-		h.setCantidadCamas(Integer.parseInt(cantidadCamas));
-		h.setTipo("habitacion");
-		h.setRecordDate(new Date());
-		h.setRecordUser(username);
-		h.setDeviceid(infoMovil.getDeviceId());
-		h.setEstado('0');
-		h.setPasive('0');
+		//Crea un nuevo cuarto
+		Cuarto c = new Cuarto();
+		c.setCodigo(id);
+		c.setCasa(casaCHF);
+		c.setCodigoHabitacion(codigoHabitacion);
+		c.setCantidadCamas(Integer.parseInt(cantidadCamas));
+		c.setRecordDate(new Date());
+		c.setRecordUser(username);
+		c.setDeviceid(infoMovil.getDeviceId());
+		c.setEstado('0');
+		c.setPasive('0');
 		
-		//Guarda la habitacion
-		estudiosAdapter.crearHabitacion(h);
+		//Guarda el cuarto
+		estudiosAdapter.crearCuarto(c);
 		Bundle arguments = new Bundle();
 		Intent i;
 		if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
 		i = new Intent(getApplicationContext(),
-				ListaHabitacionesActivity.class);
+				ListaCuartosActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);
 		startActivity(i);

@@ -13,6 +13,7 @@
     <string name="new_room">Agregar cuarto</string>
     <string name="new_bed">Agregar cama</string>
     <string name="new_pbed">Agregar persona</string>
+    <string name="new_area">Nuevo ambiente</string>
     <string name="new_survey_1">Encuesta Casa</string>
     <string name="new_survey_2">Encuesta Participante</string>
     <string name="environments">Areas</string>

@@ -54,6 +54,7 @@ public class UploadAllTask extends UploadTask {
     private List<Habitacion> mHabitaciones = new ArrayList<Habitacion>();
     private List<Banio> mBanios = new ArrayList<Banio>();
     private List<Ventana> mVentanas = new ArrayList<Ventana>();
+    private List<Cuarto> mCuartos = new ArrayList<Cuarto>();
     private List<Cama> mCamas = new ArrayList<Cama>();
     private List<PersonaCama> mPersonaCamas = new ArrayList<PersonaCama>();
     private List<EncuestaParticipante> mEncuestasParticipante = new ArrayList<EncuestaParticipante>();
@@ -83,15 +84,16 @@ public class UploadAllTask extends UploadTask {
     public static final String HABITACION = "12";
     public static final String BANIOS = "13";
     public static final String VENTANAS = "14";
-    public static final String CAMAS = "15";
-    public static final String PERSONAS_CAMA = "16";
-    public static final String ENCUESTA_PARTICIPANTECHF = "17";
-    public static final String ENCUESTA_DATOSPBB = "18";
-    public static final String ENCUESTA_PESOTALLA = "19";
-    public static final String ENCUESTA_LACTMAT = "20";
-    public static final String MUESTRAS = "21";
+    public static final String CUARTOS = "15";
+    public static final String CAMAS = "16";
+    public static final String PERSONAS_CAMA = "17";
+    public static final String ENCUESTA_PARTICIPANTECHF = "18";
+    public static final String ENCUESTA_DATOSPBB = "19";
+    public static final String ENCUESTA_PESOTALLA = "20";
+    public static final String ENCUESTA_LACTMAT = "21";
+    public static final String MUESTRAS = "22";
     //public static final String MUESTRAS_PAXGENE = "22";
-	private static final String TOTAL_TASK = "21";
+	private static final String TOTAL_TASK = "22";
 	
 
 	@Override
@@ -116,11 +118,12 @@ public class UploadAllTask extends UploadTask {
             //mCocinas = estudioAdapter.get(filtro, MainDBConstants.codigo);
             //mComedores = estudioAdapter.get(filtro, MainDBConstants.codigo);
             //mSalas = estudioAdapter.get(filtro, MainDBConstants.codigo);
-            mHabitaciones = estudioAdapter.getHabitaciones(filtro, null);
+            //mHabitaciones = estudioAdapter.getHabitaciones(filtro, null);
             //mBanios = estudioAdapter.get(filtro, MainDBConstants.codigo);
             //mVentanas = estudioAdapter.get(filtro, MainDBConstants.codigo);
+            mCuartos = estudioAdapter.getCuartos(filtro, null);
             mCamas = estudioAdapter.getCamas(filtro, null);
-            //mPersonaCamas = estudioAdapter.get(filtro, MainDBConstants.codigo);
+            mPersonaCamas = estudioAdapter.getPersonasCama(filtro, null);
             mEncuestasParticipante = estudioAdapter.getEncuestasParticipantes(filtro, null);
             mEncuestasDatosPartoBB = estudioAdapter.getEncuestasDatosPartoBBs(filtro, null);
             mEncuestasPesoTalla = estudioAdapter.getEncuestasPesoTallas(filtro, null);
@@ -213,6 +216,12 @@ public class UploadAllTask extends UploadTask {
             error = cargarVentanas(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VENTANAS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CUARTOS);
+            error = cargarCuartos(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CUARTOS);
                 return error;
             }
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, CAMAS);
@@ -423,6 +432,17 @@ public class UploadAllTask extends UploadTask {
                 }
             }
         }
+        if(opcion.equalsIgnoreCase(CUARTOS)){
+            c = mCuartos.size();
+            if(c>0){
+                for (Cuarto cuarto : mCuartos) {
+                    cuarto.setEstado(estado.charAt(0));
+                    estudioAdapter.editarCuarto(cuarto);
+                    publishProgress("Actualizando cuartos en base de datos local", Integer.valueOf(mCuartos.indexOf(cuarto)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
         if(opcion.equalsIgnoreCase(CAMAS)){
             c = mCamas.size();
             if(c>0){
@@ -434,13 +454,12 @@ public class UploadAllTask extends UploadTask {
                 }
             }
         }
-        //TODO: ACTUALIZAR ESTADO DEL OBJETO
         if(opcion.equalsIgnoreCase(PERSONAS_CAMA)){
             c = mPersonaCamas.size();
             if(c>0){
                 for (PersonaCama personaCama : mPersonaCamas) {
                     personaCama.setEstado(estado.charAt(0));
-                    //estudioAdapter.editarPersonaCama(personaCama);
+                    estudioAdapter.editarPersonaCama(personaCama);
                     publishProgress("Actualizando personas camas en base de datos local", Integer.valueOf(mPersonaCamas.indexOf(personaCama)).toString(), Integer
                             .valueOf(c).toString());
                 }
@@ -989,6 +1008,42 @@ public class UploadAllTask extends UploadTask {
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<Ventana[]> requestEntity =
                         new HttpEntity<Ventana[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    
+    
+    /***************************************************/
+    /********************* Cuartos ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarCuartos(String url, String username,
+                                    String password) throws Exception {
+        try {
+            if(mCuartos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando cuartos!", CUARTOS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/cuartos";
+                Cuarto[] envio = mCuartos.toArray(new Cuarto[mCuartos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Cuarto[]> requestEntity =
+                        new HttpEntity<Cuarto[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

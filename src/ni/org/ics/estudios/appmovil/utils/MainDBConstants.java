@@ -427,6 +427,27 @@ public class MainDBConstants {
             + deviceId + " text, "
             + estado + " text not null, "
             + "primary key (" + codigo + "));";
+    
+    //Tabla Cuartos
+    public static final String CUARTO_TABLE = "chf_cuartos";
+
+    //Campos tabla Cuartos
+
+    
+
+    //crear tabla telefonocontacto
+    public static final String CREATE_CUARTO_TABLE = "create table if not exists "
+            + CUARTO_TABLE + " ("
+            + codigo + " text not null, "
+            + casa + " text not null, "
+            + cantidadCamas + " integer, "
+            + codigoHabitacion + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigo + "));";    
 
     //tabla Camas
     public static final String CAMA_TABLE = "chf_camas_habitacion";

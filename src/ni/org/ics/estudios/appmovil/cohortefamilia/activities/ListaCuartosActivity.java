@@ -9,11 +9,11 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoHabitacionActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.HabitacionAdapter;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoCuartoActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.CuartoAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Habitacion;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import android.os.AsyncTask;
@@ -30,15 +30,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ListaHabitacionesActivity extends AbstractAsyncListActivity {
+public class ListaCuartosActivity extends AbstractAsyncListActivity {
 	
 	private TextView textView;
 	private Drawable img = null;
 	private Button mAddButton;
 	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
-    private Habitacion habitacion = new Habitacion();
-	private ArrayAdapter<Habitacion> mHabitacionAdapter;
-	private List<Habitacion> mHabitaciones = new ArrayList<Habitacion>();
+    private Cuarto cuarto = new Cuarto();
+	private ArrayAdapter<Cuarto> mCuartoAdapter;
+	private List<Cuarto> mCuartos = new ArrayList<Cuarto>();
 	private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -98,11 +98,11 @@ public class ListaHabitacionesActivity extends AbstractAsyncListActivity {
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
-        habitacion = (Habitacion)this.getListAdapter().getItem(position);
+        cuarto = (Cuarto)this.getListAdapter().getItem(position);
         // Opcion de lista seleccionada
         Bundle arguments = new Bundle();
 		Intent i;
-		arguments.putSerializable(Constants.HABITACION , habitacion);
+		arguments.putSerializable(Constants.CUARTO , cuarto);
 		i = new Intent(getApplicationContext(),
 				ListaCamasActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -162,7 +162,7 @@ public class ListaHabitacionesActivity extends AbstractAsyncListActivity {
 				Bundle arguments = new Bundle();
 		        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
 				Intent i = new Intent(getApplicationContext(),
-						NuevoHabitacionActivity.class);
+						NuevoCuartoActivity.class);
 				i.putExtras(arguments);
 		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
@@ -194,7 +194,7 @@ public class ListaHabitacionesActivity extends AbstractAsyncListActivity {
 			codigoCasaCHF = values[0];
 			try {
 				estudiosAdapter.open();
-				mHabitaciones = estudiosAdapter.getHabitaciones(MainDBConstants.casa +" = '" + codigoCasaCHF + "' and " + MainDBConstants.tipo + " ='habitacion' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
+				mCuartos = estudiosAdapter.getCuartos(MainDBConstants.casa +" = '" + codigoCasaCHF + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -208,8 +208,8 @@ public class ListaHabitacionesActivity extends AbstractAsyncListActivity {
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
 			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.rooms)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
-			mHabitacionAdapter = new HabitacionAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mHabitaciones);
-			setListAdapter(mHabitacionAdapter);
+			mCuartoAdapter = new CuartoAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mCuartos);
+			setListAdapter(mCuartoAdapter);
 			dismissProgressDialog();
 		}
 

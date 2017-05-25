@@ -9,6 +9,7 @@
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/activities/enterdata/NuevaMuestraPaxgeneActivity.java" />
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/activities/enterdata/NuevoTamizajePersonaActivity.java" />
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/CamaAdapter.java" />
+        <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/CuartoAdapter.java" />
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/HabitacionAdapter.java" />
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/ParticipanteCHFAdapter.java" />
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/PersonaCamaAdapter.java" />

@@ -13,7 +13,7 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaCam
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.CamaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cama;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Habitacion;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import android.os.AsyncTask;
@@ -35,7 +35,7 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 	private TextView textView;
 	private Drawable img = null;
 	private Button mAddButton;
-	private static Habitacion hab = new Habitacion();
+	private static Cuarto cuarto = new Cuarto();
     private Cama cama = new Cama();
 	private ArrayAdapter<Cama> mCamaAdapter;
 	private List<Cama> mCamas = new ArrayList<Cama>();
@@ -46,13 +46,13 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_add);
 		
-		hab = (Habitacion) getIntent().getExtras().getSerializable(Constants.HABITACION);
+		cuarto = (Cuarto) getIntent().getExtras().getSerializable(Constants.CUARTO);
 		textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_menu_share);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		new FetchDataHabitacionTask().execute(hab.getCodigo());
+		new FetchDataHabitacionTask().execute(cuarto.getCodigo());
 		
 		mAddButton = (Button) findViewById(R.id.add_button);
 		mAddButton.setText(getString(R.string.new_bed));
@@ -115,9 +115,9 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 	public void onBackPressed (){
 		Bundle arguments = new Bundle();
 		Intent i;
-		if (hab!=null) arguments.putSerializable(Constants.CASA , hab.getCasa());
+		if (cuarto!=null) arguments.putSerializable(Constants.CASA , cuarto.getCasa());
 		i = new Intent(getApplicationContext(),
-				ListaHabitacionesActivity.class);
+				ListaCuartosActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);
 		startActivity(i);
@@ -160,7 +160,7 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {
 			try {
 				Bundle arguments = new Bundle();
-		        if (hab!=null) arguments.putSerializable(Constants.HABITACION , hab);
+		        if (cuarto!=null) arguments.putSerializable(Constants.HABITACION , cuarto);
 				Intent i = new Intent(getApplicationContext(),
 						NuevaCamaActivity.class);
 				i.putExtras(arguments);
@@ -207,7 +207,7 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 			// after the request completes, hide the progress indicator
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.beds)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+hab.getCasa().getCodigoCHF()+"\n"+ getString(R.string.codigoHabitacion)+ ": "+hab.getCodigoHabitacion());
+			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.beds)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+cuarto.getCasa().getCodigoCHF()+"\n"+ getString(R.string.codigoHabitacion)+ ": "+cuarto.getCodigoHabitacion());
 			mCamaAdapter = new CamaAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mCamas);
 			setListAdapter(mCamaAdapter);
 			dismissProgressDialog();

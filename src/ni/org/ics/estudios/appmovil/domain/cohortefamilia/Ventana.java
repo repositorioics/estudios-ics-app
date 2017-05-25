@@ -11,13 +11,13 @@ public class Ventana extends AreaAmbiente {
 	 */
 	private static final long serialVersionUID = 1L;
 	private AreaAmbiente areaAmbiente; //area a la que pertenece la ventana.. puede ser bano, sala, habitación, cocina o comedor
-    private char abierta;
+    private String abierta;
 
-    public char getAbierta() {
+    public String getAbierta() {
         return abierta;
     }
 
-    public void setAbierta(char abierta) {
+    public void setAbierta(String abierta) {
         this.abierta = abierta;
     }
 

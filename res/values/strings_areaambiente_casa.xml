@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	<string name="areas">Areas de los ambientes</string>
     <string name="banio">Baño</string>
     <string name="cocina">Cocina</string>
     <string name="comedor">Comedor</string>

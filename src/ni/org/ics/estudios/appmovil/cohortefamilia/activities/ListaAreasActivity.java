@@ -1,17 +1,23 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoHabitacionActivity;
+
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoCuartoActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.AreaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Habitacion;
 import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.content.Intent;
@@ -34,7 +40,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
     private AreaAmbiente area = new AreaAmbiente();
 	private ArrayAdapter<AreaAmbiente> mAreaAdapter;
-	//private List<AreaAmbiente> mAreas = new ArrayList<AreaAmbiente>();
+	private List<AreaAmbiente> mAreas = new ArrayList<AreaAmbiente>();
 	private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -51,7 +57,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 		new FetchDataCasaTask().execute(casaCHF.getCodigoCHF());
 		
 		mAddButton = (Button) findViewById(R.id.add_button);
-		mAddButton.setText(getString(R.string.new_room));
+		mAddButton.setText(getString(R.string.new_area));
 
 		mAddButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
@@ -158,7 +164,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 				Bundle arguments = new Bundle();
 		        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
 				Intent i = new Intent(getApplicationContext(),
-						NuevoHabitacionActivity.class);
+						NuevoCuartoActivity.class);
 				i.putExtras(arguments);
 		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
@@ -178,7 +184,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	}
 	
 	private class FetchDataCasaTask extends AsyncTask<String, Void, String> {
-		//private String codigoCasaCHF = null;
+		private String codigoCasaCHF = null;
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -187,10 +193,10 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 
 		@Override
 		protected String doInBackground(String... values) {      
-			//codigoCasaCHF = values[0];
+			codigoCasaCHF = values[0];
 			try {
 				estudiosAdapter.open();
-				//mAreas = estudiosAdapter.getHabitaciones(MainDBConstants.casa +" = '" + codigoCasaCHF + "' and " + MainDBConstants.tipo + " ='habitacion' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
+				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + codigoCasaCHF + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -203,8 +209,8 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 			// after the request completes, hide the progress indicator
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.rooms)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
-			//mAreaAdapter = new HabitacionAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mAreas);
+			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.areas)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
+			mAreaAdapter = new AreaAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mAreas);
 			setListAdapter(mAreaAdapter);
 			dismissProgressDialog();
 		}

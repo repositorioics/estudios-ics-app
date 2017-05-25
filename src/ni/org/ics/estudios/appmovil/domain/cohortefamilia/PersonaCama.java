@@ -14,7 +14,7 @@ public class PersonaCama extends BaseMetaData {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String codigoPersona;
-    private char estaEnEstudio; //0 No, 1 Si
+    private String estaEnEstudio; //0 No, 1 Si
     private Participante participante; //si es participante
     private String sexo;  //si no participa
     private Integer edad;   //si no participa
@@ -28,11 +28,11 @@ public class PersonaCama extends BaseMetaData {
         this.codigoPersona = codigoPersona;
     }
 
-    public char getEstaEnEstudio() {
+    public String getEstaEnEstudio() {
         return estaEnEstudio;
     }
 
-    public void setEstaEnEstudio(char estaEnEstudio) {
+    public void setEstaEnEstudio(String estaEnEstudio) {
         this.estaEnEstudio = estaEnEstudio;
     }
 

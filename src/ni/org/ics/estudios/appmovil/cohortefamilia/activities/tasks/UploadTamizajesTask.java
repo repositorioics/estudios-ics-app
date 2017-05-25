@@ -5,7 +5,6 @@ import java.util.List;
 
 
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.utils.Constants;

@@ -104,7 +104,7 @@ public class ListaPersonasCamaActivity extends AbstractAsyncListActivity {
 	public void onBackPressed (){
 		Bundle arguments = new Bundle();
 		Intent i;
-		if (cama!=null) arguments.putSerializable(Constants.HABITACION , cama.getHabitacion());
+		if (cama!=null) arguments.putSerializable(Constants.CUARTO , cama.getCuarto());
 		i = new Intent(getApplicationContext(),
 				ListaCamasActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -196,7 +196,7 @@ public class ListaPersonasCamaActivity extends AbstractAsyncListActivity {
 			// after the request completes, hide the progress indicator
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.pbeds)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+cama.getHabitacion().getCasa().getCodigoCHF()+"\n"+ getString(R.string.codigoHabitacion)+ ": "+cama.getHabitacion().getCodigoHabitacion());
+			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.pbeds)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+cama.getCuarto().getCasa().getCodigoCHF()+"\n"+ getString(R.string.codigoHabitacion)+ ": "+cama.getCuarto().getCodigoHabitacion());
 			mPersonaCamaAdapter = new PersonaCamaAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mPersonasCama);
 			setListAdapter(mPersonaCamaAdapter);
 			dismissProgressDialog();

@@ -10,13 +10,13 @@ import android.content.res.Resources;
  * @author William Aviles
  * 
  */
-public class HabitacionFormLabels {
+public class CuartoFormLabels {
 	
 	protected String codigoHabitacion;
 	protected String cantidadCamas;
 	
 	
-	public HabitacionFormLabels(){
+	public CuartoFormLabels(){
 		Resources res = MyIcsApplication.getContext().getResources();
 		codigoHabitacion = res.getString(R.string.codigoHabitacion);
 		cantidadCamas = res.getString(R.string.cantidadCamas);

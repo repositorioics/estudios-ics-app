@@ -12,7 +12,7 @@ public class Banio extends  AreaAmbiente {
 	 */
 	private static final long serialVersionUID = 1L;
 	private AreaAmbiente areaAmbiente;
-    private char conVentana;
+    private String conVentana;
 
     public AreaAmbiente getAreaAmbiente() {
         return areaAmbiente;
@@ -21,11 +21,11 @@ public class Banio extends  AreaAmbiente {
     public void setAreaAmbiente(AreaAmbiente areaAmbiente) {
         this.areaAmbiente = areaAmbiente;
     }
-    public char getConVentana() {
+    public String getConVentana() {
         return conVentana;
     }
 
-    public void setConVentana(char conVentana) {
+    public void setConVentana(String conVentana) {
         this.conVentana = conVentana;
     }
 }

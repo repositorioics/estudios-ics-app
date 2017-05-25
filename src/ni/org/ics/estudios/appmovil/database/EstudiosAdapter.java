@@ -82,6 +82,7 @@ public class EstudiosAdapter {
             db.execSQL(MainDBConstants.CREATE_CAMA_TABLE);
             db.execSQL(MainDBConstants.CREATE_PERSONACAMA_TABLE);
             db.execSQL(MainDBConstants.CREATE_TAMIZAJE_TABLE);
+            db.execSQL(MainDBConstants.CREATE_CUARTO_TABLE);
         }
 
 		@Override
@@ -1237,8 +1238,8 @@ public class EstudiosAdapter {
 		if (cursorCama != null && cursorCama.getCount() > 0) {
 			cursorCama.moveToFirst();
 			mCama=CamasHelper.crearCama(cursorCama);
-			Habitacion hab = this.getHabitacion(MainDBConstants.codigo + "='" +cursorCama.getString(cursorCama.getColumnIndex(MainDBConstants.habitacion))+"'", null);
-			mCama.setHabitacion(hab);
+			Cuarto cuarto = this.getCuarto(MainDBConstants.codigo + "='" +cursorCama.getString(cursorCama.getColumnIndex(MainDBConstants.habitacion))+"'", null);
+			mCama.setCuarto(cuarto);
 		}
 		if (!cursorCama.isClosed()) cursorCama.close();
 		return mCama;
@@ -1253,8 +1254,8 @@ public class EstudiosAdapter {
 			do{
 				Cama mCama = null;
 				mCama = CamasHelper.crearCama(cursorCamas);
-				Habitacion hab = this.getHabitacion(MainDBConstants.codigo + "='" +cursorCamas.getString(cursorCamas.getColumnIndex(MainDBConstants.habitacion))+"'", null);
-				mCama.setHabitacion(hab);
+				Cuarto cuarto = this.getCuarto(MainDBConstants.codigo + "='" +cursorCamas.getString(cursorCamas.getColumnIndex(MainDBConstants.habitacion))+"'", null);
+				mCama.setCuarto(cuarto);
 				mCamas.add(mCama);
 			} while (cursorCamas.moveToNext());
 		}
@@ -1293,7 +1294,9 @@ public class EstudiosAdapter {
 			cursorPersonaCama.moveToFirst();
 			mPersonaCama=CamasHelper.crearPersonaCama(cursorPersonaCama);
 			Cama cama = this.getCama(MainDBConstants.codigoCama + "='" + cursorPersonaCama.getString(cursorPersonaCama.getColumnIndex(MainDBConstants.cama)) + "'", null);
+			Participante part = this.getParticipante(MainDBConstants.codigo + "=" + cursorPersonaCama.getString(cursorPersonaCama.getColumnIndex(MainDBConstants.participante)), null);
 			mPersonaCama.setCama(cama);
+			if (part!= null) mPersonaCama.setParticipante(part);
 		}
 		if (!cursorPersonaCama.isClosed()) cursorPersonaCama.close();
 		return mPersonaCama;
@@ -1309,6 +1312,8 @@ public class EstudiosAdapter {
 				PersonaCama mPersonaCama = null;
 				mPersonaCama = CamasHelper.crearPersonaCama(cursorPersonasCama);
 				Cama cama = this.getCama(MainDBConstants.codigoCama + "='" + cursorPersonasCama.getString(cursorPersonasCama.getColumnIndex(MainDBConstants.cama)) + "'", null);
+				Participante part = this.getParticipante(MainDBConstants.codigo + "=" + cursorPersonasCama.getString(cursorPersonasCama.getColumnIndex(MainDBConstants.participante)), null);
+				if (part!= null) mPersonaCama.setParticipante(part);
 				mPersonaCama.setCama(cama);
 				mPersonasCama.add(mPersonaCama);
 			} while (cursorPersonasCama.moveToNext());
@@ -1640,4 +1645,59 @@ public class EstudiosAdapter {
 		if (!cursorVentanas.isClosed()) cursorVentanas.close();
 		return mVentanas;
 	}  
+	
+	
+	/**
+	 * Metodos para Cuartos en la base de datos
+	 * 
+	 * @param Cuarto
+	 *            Objeto Cuarto que contiene la informacion
+	 *
+	 */
+	//Crear nuevo Cuarto en la base de datos
+	public void crearCuarto(Cuarto cuarto) {
+		ContentValues cv = CuartoHelper.crearCuartoContentValues(cuarto);
+		mDb.insert(MainDBConstants.CUARTO_TABLE, null, cv);
+	}
+	//Editar Cuarto existente en la base de datos
+	public boolean editarCuarto(Cuarto cuarto) {
+		ContentValues cv = CuartoHelper.crearCuartoContentValues(cuarto);
+		return mDb.update(MainDBConstants.CUARTO_TABLE , cv, MainDBConstants.codigo + "='" 
+				+ cuarto.getCodigo()+ "'", null) > 0;
+	}
+	//Limpiar la tabla de cuartos de la base de datos
+	public boolean borrarCuartos() {
+		return mDb.delete(MainDBConstants.CUARTO_TABLE, null, null) > 0;
+	}
+	//Obtener un Cuarto de la base de datos
+	public Cuarto getCuarto(String filtro, String orden) throws SQLException {
+		Cuarto mCuarto = null;
+		Cursor cursorCuarto = crearCursor(MainDBConstants.CUARTO_TABLE , filtro, null, orden);
+		if (cursorCuarto != null && cursorCuarto.getCount() > 0) {
+			cursorCuarto.moveToFirst();
+			mCuarto=CuartoHelper.crearCuarto(cursorCuarto);
+			CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorCuarto.getString(cursorCuarto.getColumnIndex(MainDBConstants.casa))+"'", null);
+			mCuarto.setCasa(casa);
+		}
+		if (!cursorCuarto.isClosed()) cursorCuarto.close();
+		return mCuarto;
+	}
+	//Obtener una lista de Cuarto de la base de datos
+	public List<Cuarto> getCuartos(String filtro, String orden) throws SQLException {
+		List<Cuarto> mCuartos = new ArrayList<Cuarto>();
+		Cursor cursorCuartos = crearCursor(MainDBConstants.CUARTO_TABLE, filtro, null, orden);
+		if (cursorCuartos != null && cursorCuartos.getCount() > 0) {
+			cursorCuartos.moveToFirst();
+			mCuartos.clear();
+			do{
+				Cuarto mCuarto = null;
+				mCuarto = CuartoHelper.crearCuarto(cursorCuartos);
+				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorCuartos.getString(cursorCuartos.getColumnIndex(MainDBConstants.casa))+"'", null);
+				mCuarto.setCasa(casa);
+				mCuartos.add(mCuarto);
+			} while (cursorCuartos.moveToNext());
+		}
+		if (!cursorCuartos.isClosed()) cursorCuartos.close();
+		return mCuartos;
+	} 
 }

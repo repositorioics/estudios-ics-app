@@ -6,19 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Habitacion;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class HabitacionAdapter extends ArrayAdapter<Habitacion> {
+public class CuartoAdapter extends ArrayAdapter<Cuarto> {
 
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
 	
-	public HabitacionAdapter(Context context, int textViewResourceId,
-                          List<Habitacion> items) {
+	public CuartoAdapter(Context context, int textViewResourceId,
+                          List<Cuarto> items) {
 		super(context, textViewResourceId, items);
 	}
 
@@ -30,7 +29,7 @@ public class HabitacionAdapter extends ArrayAdapter<Habitacion> {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.complex_list_item, null);
 		}
-		Habitacion p = getItem(position);
+		Cuarto p = getItem(position);
 		if (p != null) {
 
 			TextView textView = (TextView) v.findViewById(R.id.identifier_text);
@@ -50,15 +49,7 @@ public class HabitacionAdapter extends ArrayAdapter<Habitacion> {
 			if (textView != null) {
 				textView.setText(this.getContext().getString(R.string.codigoHabitacion) + ": " + p.getCodigoHabitacion());
 			}
-			
-			ImageView imageView = (ImageView) v.findViewById(R.id.image);
-			if (imageView != null) {
-				if (p.getAncho()!=null) {
-					imageView.setImageResource(R.drawable.proposed_house);
-				} else {
-					imageView.setImageResource(R.drawable.no_proposed_house);
-				}
-			}
+		
 		}
 		return v;
 	}

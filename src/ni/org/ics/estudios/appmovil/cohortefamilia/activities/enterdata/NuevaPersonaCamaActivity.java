@@ -417,7 +417,7 @@ public class NuevaPersonaCamaActivity extends FragmentActivity implements
 		h.setCama(cama);
 		if (tieneValor(estaEnEstudio)) {
 			MessageResource catEstaEnEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + estaEnEstudio + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-			if (catEstaEnEstudio!=null) h.setEstaEnEstudio(catEstaEnEstudio.getCatKey().charAt(0));
+			if (catEstaEnEstudio!=null) h.setEstaEnEstudio(catEstaEnEstudio.getCatKey());
 		}
 		if (tieneValor(sexo)) {
 			MessageResource catSexo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + sexo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SEXO'", null);

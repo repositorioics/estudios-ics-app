@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PersonaCama;
@@ -36,7 +37,7 @@ public class PersonaCamaAdapter extends ArrayAdapter<PersonaCama> {
 			TextView textView = (TextView) v.findViewById(R.id.identifier_text);
 			textView.setTextColor(Color.BLACK);
 			if (textView != null) {
-				if (p.getEstaEnEstudio()=='S'){
+				if (p.getParticipante()!=null){
 					textView.setText(this.getContext().getString(R.string.code) + ": " + p.getParticipante().getCodigo());
 				}
 			}
@@ -44,7 +45,7 @@ public class PersonaCamaAdapter extends ArrayAdapter<PersonaCama> {
 			textView = (TextView) v.findViewById(R.id.der_text);
 			textView.setTextColor(Color.BLACK);
 			if (textView != null) {
-				if (p.getEstaEnEstudio()=='S'){
+				if (p.getParticipante()!=null){
 					textView.setText(this.getContext().getString(R.string.fechaNacimiento)+": "+mDateFormat.format(p.getParticipante().getFechaNac()));
 				}
 				else{
@@ -55,11 +56,29 @@ public class PersonaCamaAdapter extends ArrayAdapter<PersonaCama> {
 			textView = (TextView) v.findViewById(R.id.name_text);
 			textView.setTextColor(Color.BLACK);
 			if (textView != null) {
-				if (p.getEstaEnEstudio()=='S'){
+				if (p.getParticipante()!=null){
 					textView.setText(p.getParticipante().getNombre1()+" "+ p.getParticipante().getApellido1());
 				}
 				else {
 					textView.setText(this.getContext().getString(R.string.edad) + ": " + p.getEdad()+" - " +this.getContext().getString(R.string.sexo) + ": " + p.getSexo());
+				}
+			}
+			
+			ImageView imageView = (ImageView) v.findViewById(R.id.image);
+			if (imageView != null) {
+				if (p.getParticipante()!=null){
+					if(p.getParticipante().getSexo().equals("M")) {
+						imageView.setImageResource(R.drawable.male);
+					} else if (p.getParticipante().getSexo().equals("F")) {
+						imageView.setImageResource(R.drawable.female);
+					}
+				}
+				else{
+					if(p.getSexo().equals("M")) {
+						imageView.setImageResource(R.drawable.male);
+					} else if (p.getSexo().equals("F")) {
+						imageView.setImageResource(R.drawable.female);
+					}
 				}
 			}
 		

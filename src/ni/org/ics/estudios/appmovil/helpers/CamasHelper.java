@@ -17,7 +17,7 @@ public class CamasHelper {
     public static ContentValues crearCamaContentValues(Cama cama){
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigoCama, cama.getCodigoCama());
-        cv.put(MainDBConstants.habitacion, cama.getHabitacion().getCodigo());
+        cv.put(MainDBConstants.habitacion, cama.getCuarto().getCodigo());
         cv.put(MainDBConstants.descCama, cama.getDescCama());
         if (cama.getRecordDate() != null) cv.put(MainDBConstants.recordDate, cama.getRecordDate().getTime());
 		cv.put(MainDBConstants.recordUser, cama.getRecordUser());
@@ -30,7 +30,7 @@ public class CamasHelper {
     public static Cama crearCama(Cursor cursor){
         Cama cama = new Cama();
         cama.setCodigoCama(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigoCama)));
-        cama.setHabitacion(null);
+        cama.setCuarto(null);
         cama.setDescCama(cursor.getString(cursor.getColumnIndex(MainDBConstants.descCama)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) cama.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         cama.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
@@ -44,7 +44,7 @@ public class CamasHelper {
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigoPersona, personaCama.getCodigoPersona());
         cv.put(MainDBConstants.cama, personaCama.getCama().getCodigoCama());
-        cv.put(MainDBConstants.estaEnEstudio, String.valueOf(personaCama.getEstaEnEstudio()));
+        cv.put(MainDBConstants.estaEnEstudio, personaCama.getEstaEnEstudio());
         if (personaCama.getEdad() != null) cv.put(MainDBConstants.edad, personaCama.getEdad());
         if (personaCama.getSexo() != null) cv.put(MainDBConstants.sexo, personaCama.getSexo());
         if (personaCama.getParticipante() != null) cv.put(MainDBConstants.participante, personaCama.getParticipante().getCodigo());
@@ -60,7 +60,7 @@ public class CamasHelper {
         PersonaCama personaCama = new PersonaCama();
         personaCama.setCodigoPersona(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigoPersona)));
         personaCama.setCama(null);
-        personaCama.setEstaEnEstudio(cursor.getString(cursor.getColumnIndex(MainDBConstants.estaEnEstudio)).charAt(0));
+        personaCama.setEstaEnEstudio(cursor.getString(cursor.getColumnIndex(MainDBConstants.estaEnEstudio)));
         if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.edad)) > 0) personaCama.setEdad(cursor.getInt(cursor.getColumnIndex(MainDBConstants.edad)));
         personaCama.setSexo(cursor.getString(cursor.getColumnIndex(MainDBConstants.sexo)));
         personaCama.setParticipante(null);

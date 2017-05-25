@@ -746,185 +746,192 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     	t.setPasive('0');
     	//Inserta un Nuevo Registro de Tamizaje
     	estudiosAdapter.crearTamizaje(t);
-    	
-    	//Pregunta si es elegible
-    	if (t.getAceptaParticipar().equals("S")) {
-        	//Si la respuesta es si crea o busca un participante
-    		//Obtener datos del bundle para el participante
-    		
-    		String participadoCohortePediatrica = datos.getString(this.getString(R.string.participadoCohortePediatrica));
-    		String codigoCohorte = datos.getString(this.getString(R.string.codigoCohorte));
-    		String codigoNuevoParticipante = datos.getString(this.getString(R.string.codigoNuevoParticipante));
-    		String nombre1 = datos.getString(this.getString(R.string.nombre1));
-    		String nombre2 = datos.getString(this.getString(R.string.nombre2));
-    		String apellido1 = datos.getString(this.getString(R.string.apellido1));
-    		String apellido2 = datos.getString(this.getString(R.string.apellido2));
-    		String nombre1Padre = datos.getString(this.getString(R.string.nombre1Padre));
-    		String nombre2Padre = datos.getString(this.getString(R.string.nombre2Padre));
-    		String apellido1Padre = datos.getString(this.getString(R.string.apellido1Padre));
-    		String apellido2Padre = datos.getString(this.getString(R.string.apellido2Padre));
-    		String nombre1Madre = datos.getString(this.getString(R.string.nombre1Madre));
-    		String nombre2Madre = datos.getString(this.getString(R.string.nombre2Madre));
-    		String apellido1Madre = datos.getString(this.getString(R.string.apellido1Madre));
-    		String apellido2Madre = datos.getString(this.getString(R.string.apellido2Madre));
-    		
-    		Participante participante;
-    		MessageResource catParticipadoCohortePediatrica = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participadoCohortePediatrica + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    		//Pregunta si es de la cohorte pediatrica
-    		Integer codigo = 0;
-    		if(catParticipadoCohortePediatrica.getCatKey().matches("S")){
-    			//Si la respuesta es si, buscamos al participante
-    			if (tieneValor(codigoCohorte)) codigo = Integer.parseInt(codigoCohorte);
-    			participante = estudiosAdapter.getParticipante(MainDBConstants.codigo +" = "+ codigo , null);
-    		}
-    		else{
-    			//Creamos un nuevo participante
-    			participante = new Participante();
-    			if (tieneValor(codigoNuevoParticipante)) codigo = Integer.parseInt(codigoNuevoParticipante);
-    			participante.setCodigo(codigo);
-    			if (tieneValor(nombre1)) participante.setNombre1(nombre1);
-    			if (tieneValor(nombre2)) participante.setNombre2(nombre2);
-    			if (tieneValor(apellido1)) participante.setApellido1(apellido1);
-    			if (tieneValor(apellido2)) participante.setApellido2(apellido2);
-    			if (tieneValor(nombre1Padre)) {
-    				if (tieneValor(nombre1Padre)) participante.setNombre1Padre(nombre1Padre);
-    				if (tieneValor(nombre2Padre)) participante.setNombre2Padre(nombre2Padre);
-        			if (tieneValor(apellido1Padre)) participante.setApellido1Padre(apellido1Padre);
-        			if (tieneValor(apellido2Padre)) participante.setApellido2Padre(apellido2Padre);
-        			if (tieneValor(nombre1Madre)) participante.setNombre1Madre(nombre1Madre);
-        			if (tieneValor(nombre2Madre)) participante.setNombre2Madre(nombre2Madre);
-        			if (tieneValor(apellido1Madre)) participante.setApellido1Madre(apellido1Madre);
-        			if (tieneValor(apellido2Madre)) participante.setApellido2Madre(apellido2Madre);
-    			}
-    			else{
-    				participante.setNombre1Padre("NA");
-    				participante.setNombre2Padre("NA");
-        			participante.setApellido1Padre("NA");
-        			participante.setApellido2Padre("NA");
-        			participante.setNombre1Madre("NA");
-        			participante.setNombre2Madre("NA");
-        			participante.setApellido1Madre("NA");
-        			participante.setApellido2Madre("NA");
-    			}
-    			participante.setSexo(t.getSexo());
-    			participante.setFechaNac(t.getFechaNacimiento());
-    			participante.setCasa(casaCHF.getCasa());
-    			participante.setRecordDate(new Date());
-    			participante.setRecordUser(username);
-    			participante.setDeviceid(infoMovil.getDeviceId());
-    			participante.setEstado('0');
-    			participante.setPasive('0');
-    			//Guarda nuevo participante
-    			estudiosAdapter.crearParticipante(participante);
-    		}
-    		
-    		//Obtener datos del bundle para el consentimiento
-    		
-    		String emancipado = datos.getString(this.getString(R.string.emancipado));
-    		String nombre1Tutor = datos.getString(this.getString(R.string.nombre1Tutor));
-    		String nombre2Tutor = datos.getString(this.getString(R.string.nombre2Tutor));
-    		String apellido1Tutor = datos.getString(this.getString(R.string.apellido1Tutor));
-    		String apellido2Tutor = datos.getString(this.getString(R.string.apellido2Tutor));
-    		String relacionFamiliarTutor = datos.getString(this.getString(R.string.relacionFamiliarTutor));
-    		String participanteOTutorAlfabeto = datos.getString(this.getString(R.string.participanteOTutorAlfabeto));
-    		String testigoPresente = datos.getString(this.getString(R.string.testigoPresente));
-    		String nombre1Testigo = datos.getString(this.getString(R.string.nombre1Testigo));
-    		String nombre2Testigo = datos.getString(this.getString(R.string.nombre2Testigo));
-    		String apellido1Testigo = datos.getString(this.getString(R.string.apellido1Testigo));
-    		String apellido2Testigo = datos.getString(this.getString(R.string.apellido2Testigo));
-    		String aceptaParteA = datos.getString(this.getString(R.string.aceptaParteA));
-    		String motivoRechazoParteA = datos.getString(this.getString(R.string.motivoRechazoParteA));
-    		String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturo));
-    		String aceptaParteB = datos.getString(this.getString(R.string.aceptaParteB));
-    		String aceptaParteC = datos.getString(this.getString(R.string.aceptaParteC));
-    	    
-        	//Inserta un nuevo consentimiento
-    		CartaConsentimiento cc = new CartaConsentimiento();
-    		cc.setCodigo(id);
-    		cc.setFechaFirma(new Date());
-    		cc.setTamizaje(t);
-    		cc.setParticipante(participante);
-    		if (tieneValor(emancipado)) {
-    			MessageResource catEmancipado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + emancipado + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catEmancipado!=null) cc.setEmancipado(catEmancipado.getCatKey());
-    		}
-    		if (tieneValor(nombre1Tutor)) cc.setNombre1Tutor(nombre1Tutor);
-    		if (tieneValor(nombre2Tutor)) cc.setNombre2Tutor(nombre2Tutor);
-    		if (tieneValor(apellido1Tutor)) cc.setApellido1Tutor(apellido1Tutor);
-    		if (tieneValor(apellido2Tutor)) cc.setApellido2Tutor(apellido2Tutor);
-    		if (tieneValor(relacionFamiliarTutor)) {
-    			MessageResource catRelacionFamiliarTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + relacionFamiliarTutor + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_RFTUTOR'", null);
-    			if (catRelacionFamiliarTutor!=null) cc.setRelacionFamiliarTutor(catRelacionFamiliarTutor.getCatKey());
-    		}
-    		if (tieneValor(participanteOTutorAlfabeto)) {
-    			MessageResource catParticipanteOTutorAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participanteOTutorAlfabeto + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catParticipanteOTutorAlfabeto!=null) cc.setParticipanteOTutorAlfabeto(catParticipanteOTutorAlfabeto.getCatKey());
-    		}
-    		if (tieneValor(testigoPresente)) {
-    			MessageResource catTestigoPresente = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + testigoPresente + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catTestigoPresente!=null) cc.setTestigoPresente(catTestigoPresente.getCatKey());
-    		}
-
-    		if (tieneValor(nombre1Testigo)) cc.setNombre1Testigo(nombre1Testigo);
-    		if (tieneValor(nombre2Testigo)) cc.setNombre2Testigo(nombre2Testigo);
-    		if (tieneValor(apellido1Testigo)) cc.setApellido1Testigo(apellido1Testigo);
-    		if (tieneValor(apellido2Testigo)) cc.setApellido2Testigo(apellido2Testigo);
-    	    if (tieneValor(aceptaParteA)) {
-    			MessageResource catAceptaParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteA + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catAceptaParteA!=null) cc.setAceptaParteA(catAceptaParteA.getCatKey());
-    		}
-    	    if (tieneValor(motivoRechazoParteA)) {
-    			MessageResource catMotivoRechazoParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + motivoRechazoParteA + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catMotivoRechazoParteA!=null) cc.setMotivoRechazoParteA(catMotivoRechazoParteA.getCatKey());
-    		}
-    	    if (tieneValor(aceptaContactoFuturo)) {
-    			MessageResource catAceptaContactoFuturo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaContactoFuturo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catAceptaContactoFuturo!=null) cc.setAceptaContactoFuturo(catAceptaContactoFuturo.getCatKey());
-    		}
-    	    if (tieneValor(aceptaParteB)) {
-    			MessageResource catAceptaParteB = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteB + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catAceptaParteB!=null) cc.setAceptaParteB(catAceptaParteB.getCatKey());
-    		}
-    	    if (tieneValor(aceptaParteC)) {
-    			MessageResource catAceptaParteC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteC + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catAceptaParteC!=null) cc.setAceptaParteC(catAceptaParteC.getCatKey());
-    		}
-    	    cc.setRecordDate(new Date());
-        	cc.setRecordUser(username);
-        	cc.setDeviceid(infoMovil.getDeviceId());
-        	cc.setEstado('0');
-        	cc.setPasive('0');
-    	    //Ingresa la carta
-        	estudiosAdapter.crearCartaConsentimiento(cc);
-        	//Crea un nuevo participantes de chf
-        	ParticipanteCohorteFamilia pchf = new ParticipanteCohorteFamilia();
-        	pchf.setParticipanteCHF(id);
-        	pchf.setParticipante(participante);
-        	pchf.setCasaCHF(casaCHF);
-        	pchf.setRecordDate(new Date());
-        	pchf.setRecordUser(username);
-        	pchf.setDeviceid(infoMovil.getDeviceId());
-        	pchf.setEstado('0');
-        	pchf.setPasive('0');
-        	//Guarda el participante de chf
-        	estudiosAdapter.crearParticipanteCohorteFamilia(pchf);
-        	//Cierra la base de datos
-        	estudiosAdapter.close();
-        	
-        	//Abre el menu para este participante
-        	Bundle arguments = new Bundle();
-            if (pchf!=null) arguments.putSerializable(Constants.PARTICIPANTE , pchf);
-            Intent i = new Intent(getApplicationContext(),
-            		MenuParticipanteActivity.class);
-            i.putExtras(arguments);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
-            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
-    		toast.show();
-            finish();
+    	//Pregunta si acepta realizar el tamizaje
+    	if (t.getAceptaTamizajePersona().equals("S")) {
+	    	//Pregunta si es elegible y acepta participar
+	    	if (t.getAceptaParticipar().equals("S")) {
+	        	//Si la respuesta es si crea o busca un participante
+	    		//Obtener datos del bundle para el participante
+	    		
+	    		String participadoCohortePediatrica = datos.getString(this.getString(R.string.participadoCohortePediatrica));
+	    		String codigoCohorte = datos.getString(this.getString(R.string.codigoCohorte));
+	    		String codigoNuevoParticipante = datos.getString(this.getString(R.string.codigoNuevoParticipante));
+	    		String nombre1 = datos.getString(this.getString(R.string.nombre1));
+	    		String nombre2 = datos.getString(this.getString(R.string.nombre2));
+	    		String apellido1 = datos.getString(this.getString(R.string.apellido1));
+	    		String apellido2 = datos.getString(this.getString(R.string.apellido2));
+	    		String nombre1Padre = datos.getString(this.getString(R.string.nombre1Padre));
+	    		String nombre2Padre = datos.getString(this.getString(R.string.nombre2Padre));
+	    		String apellido1Padre = datos.getString(this.getString(R.string.apellido1Padre));
+	    		String apellido2Padre = datos.getString(this.getString(R.string.apellido2Padre));
+	    		String nombre1Madre = datos.getString(this.getString(R.string.nombre1Madre));
+	    		String nombre2Madre = datos.getString(this.getString(R.string.nombre2Madre));
+	    		String apellido1Madre = datos.getString(this.getString(R.string.apellido1Madre));
+	    		String apellido2Madre = datos.getString(this.getString(R.string.apellido2Madre));
+	    		
+	    		Participante participante;
+	    		MessageResource catParticipadoCohortePediatrica = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participadoCohortePediatrica + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+	    		//Pregunta si es de la cohorte pediatrica
+	    		Integer codigo = 0;
+	    		if(catParticipadoCohortePediatrica.getCatKey().matches("S")){
+	    			//Si la respuesta es si, buscamos al participante
+	    			if (tieneValor(codigoCohorte)) codigo = Integer.parseInt(codigoCohorte);
+	    			participante = estudiosAdapter.getParticipante(MainDBConstants.codigo +" = "+ codigo , null);
+	    		}
+	    		else{
+	    			//Creamos un nuevo participante
+	    			participante = new Participante();
+	    			if (tieneValor(codigoNuevoParticipante)) codigo = Integer.parseInt(codigoNuevoParticipante);
+	    			participante.setCodigo(codigo);
+	    			if (tieneValor(nombre1)) participante.setNombre1(nombre1);
+	    			if (tieneValor(nombre2)) participante.setNombre2(nombre2);
+	    			if (tieneValor(apellido1)) participante.setApellido1(apellido1);
+	    			if (tieneValor(apellido2)) participante.setApellido2(apellido2);
+	    			if (tieneValor(nombre1Padre)) {
+	    				if (tieneValor(nombre1Padre)) participante.setNombre1Padre(nombre1Padre);
+	    				if (tieneValor(nombre2Padre)) participante.setNombre2Padre(nombre2Padre);
+	        			if (tieneValor(apellido1Padre)) participante.setApellido1Padre(apellido1Padre);
+	        			if (tieneValor(apellido2Padre)) participante.setApellido2Padre(apellido2Padre);
+	        			if (tieneValor(nombre1Madre)) participante.setNombre1Madre(nombre1Madre);
+	        			if (tieneValor(nombre2Madre)) participante.setNombre2Madre(nombre2Madre);
+	        			if (tieneValor(apellido1Madre)) participante.setApellido1Madre(apellido1Madre);
+	        			if (tieneValor(apellido2Madre)) participante.setApellido2Madre(apellido2Madre);
+	    			}
+	    			else{
+	    				participante.setNombre1Padre("NA");
+	    				participante.setNombre2Padre("NA");
+	        			participante.setApellido1Padre("NA");
+	        			participante.setApellido2Padre("NA");
+	        			participante.setNombre1Madre("NA");
+	        			participante.setNombre2Madre("NA");
+	        			participante.setApellido1Madre("NA");
+	        			participante.setApellido2Madre("NA");
+	    			}
+	    			participante.setSexo(t.getSexo());
+	    			participante.setFechaNac(t.getFechaNacimiento());
+	    			participante.setCasa(casaCHF.getCasa());
+	    			participante.setRecordDate(new Date());
+	    			participante.setRecordUser(username);
+	    			participante.setDeviceid(infoMovil.getDeviceId());
+	    			participante.setEstado('0');
+	    			participante.setPasive('0');
+	    			//Guarda nuevo participante
+	    			estudiosAdapter.crearParticipante(participante);
+	    		}
+	    		
+	    		//Obtener datos del bundle para el consentimiento
+	    		
+	    		String emancipado = datos.getString(this.getString(R.string.emancipado));
+	    		String nombre1Tutor = datos.getString(this.getString(R.string.nombre1Tutor));
+	    		String nombre2Tutor = datos.getString(this.getString(R.string.nombre2Tutor));
+	    		String apellido1Tutor = datos.getString(this.getString(R.string.apellido1Tutor));
+	    		String apellido2Tutor = datos.getString(this.getString(R.string.apellido2Tutor));
+	    		String relacionFamiliarTutor = datos.getString(this.getString(R.string.relacionFamiliarTutor));
+	    		String participanteOTutorAlfabeto = datos.getString(this.getString(R.string.participanteOTutorAlfabeto));
+	    		String testigoPresente = datos.getString(this.getString(R.string.testigoPresente));
+	    		String nombre1Testigo = datos.getString(this.getString(R.string.nombre1Testigo));
+	    		String nombre2Testigo = datos.getString(this.getString(R.string.nombre2Testigo));
+	    		String apellido1Testigo = datos.getString(this.getString(R.string.apellido1Testigo));
+	    		String apellido2Testigo = datos.getString(this.getString(R.string.apellido2Testigo));
+	    		String aceptaParteA = datos.getString(this.getString(R.string.aceptaParteA));
+	    		String motivoRechazoParteA = datos.getString(this.getString(R.string.motivoRechazoParteA));
+	    		String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturo));
+	    		String aceptaParteB = datos.getString(this.getString(R.string.aceptaParteB));
+	    		String aceptaParteC = datos.getString(this.getString(R.string.aceptaParteC));
+	    	    
+	        	//Inserta un nuevo consentimiento
+	    		CartaConsentimiento cc = new CartaConsentimiento();
+	    		cc.setCodigo(id);
+	    		cc.setFechaFirma(new Date());
+	    		cc.setTamizaje(t);
+	    		cc.setParticipante(participante);
+	    		if (tieneValor(emancipado)) {
+	    			MessageResource catEmancipado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + emancipado + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+	    			if (catEmancipado!=null) cc.setEmancipado(catEmancipado.getCatKey());
+	    		}
+	    		if (tieneValor(nombre1Tutor)) cc.setNombre1Tutor(nombre1Tutor);
+	    		if (tieneValor(nombre2Tutor)) cc.setNombre2Tutor(nombre2Tutor);
+	    		if (tieneValor(apellido1Tutor)) cc.setApellido1Tutor(apellido1Tutor);
+	    		if (tieneValor(apellido2Tutor)) cc.setApellido2Tutor(apellido2Tutor);
+	    		if (tieneValor(relacionFamiliarTutor)) {
+	    			MessageResource catRelacionFamiliarTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + relacionFamiliarTutor + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_RFTUTOR'", null);
+	    			if (catRelacionFamiliarTutor!=null) cc.setRelacionFamiliarTutor(catRelacionFamiliarTutor.getCatKey());
+	    		}
+	    		if (tieneValor(participanteOTutorAlfabeto)) {
+	    			MessageResource catParticipanteOTutorAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participanteOTutorAlfabeto + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+	    			if (catParticipanteOTutorAlfabeto!=null) cc.setParticipanteOTutorAlfabeto(catParticipanteOTutorAlfabeto.getCatKey());
+	    		}
+	    		if (tieneValor(testigoPresente)) {
+	    			MessageResource catTestigoPresente = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + testigoPresente + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+	    			if (catTestigoPresente!=null) cc.setTestigoPresente(catTestigoPresente.getCatKey());
+	    		}
+	
+	    		if (tieneValor(nombre1Testigo)) cc.setNombre1Testigo(nombre1Testigo);
+	    		if (tieneValor(nombre2Testigo)) cc.setNombre2Testigo(nombre2Testigo);
+	    		if (tieneValor(apellido1Testigo)) cc.setApellido1Testigo(apellido1Testigo);
+	    		if (tieneValor(apellido2Testigo)) cc.setApellido2Testigo(apellido2Testigo);
+	    	    if (tieneValor(aceptaParteA)) {
+	    			MessageResource catAceptaParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteA + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+	    			if (catAceptaParteA!=null) cc.setAceptaParteA(catAceptaParteA.getCatKey());
+	    		}
+	    	    if (tieneValor(motivoRechazoParteA)) {
+	    			MessageResource catMotivoRechazoParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + motivoRechazoParteA + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+	    			if (catMotivoRechazoParteA!=null) cc.setMotivoRechazoParteA(catMotivoRechazoParteA.getCatKey());
+	    		}
+	    	    if (tieneValor(aceptaContactoFuturo)) {
+	    			MessageResource catAceptaContactoFuturo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaContactoFuturo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+	    			if (catAceptaContactoFuturo!=null) cc.setAceptaContactoFuturo(catAceptaContactoFuturo.getCatKey());
+	    		}
+	    	    if (tieneValor(aceptaParteB)) {
+	    			MessageResource catAceptaParteB = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteB + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+	    			if (catAceptaParteB!=null) cc.setAceptaParteB(catAceptaParteB.getCatKey());
+	    		}
+	    	    if (tieneValor(aceptaParteC)) {
+	    			MessageResource catAceptaParteC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteC + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+	    			if (catAceptaParteC!=null) cc.setAceptaParteC(catAceptaParteC.getCatKey());
+	    		}
+	    	    cc.setRecordDate(new Date());
+	        	cc.setRecordUser(username);
+	        	cc.setDeviceid(infoMovil.getDeviceId());
+	        	cc.setEstado('0');
+	        	cc.setPasive('0');
+	    	    //Ingresa la carta
+	        	estudiosAdapter.crearCartaConsentimiento(cc);
+	        	//Crea un nuevo participantes de chf
+	        	ParticipanteCohorteFamilia pchf = new ParticipanteCohorteFamilia();
+	        	pchf.setParticipanteCHF(id);
+	        	pchf.setParticipante(participante);
+	        	pchf.setCasaCHF(casaCHF);
+	        	pchf.setRecordDate(new Date());
+	        	pchf.setRecordUser(username);
+	        	pchf.setDeviceid(infoMovil.getDeviceId());
+	        	pchf.setEstado('0');
+	        	pchf.setPasive('0');
+	        	//Guarda el participante de chf
+	        	estudiosAdapter.crearParticipanteCohorteFamilia(pchf);
+	        	//Cierra la base de datos
+	        	estudiosAdapter.close();
+	        	
+	        	//Abre el menu para este participante
+	        	Bundle arguments = new Bundle();
+	            if (pchf!=null) arguments.putSerializable(Constants.PARTICIPANTE , pchf);
+	            Intent i = new Intent(getApplicationContext(),
+	            		MenuParticipanteActivity.class);
+	            i.putExtras(arguments);
+	            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	            startActivity(i);
+	            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
+	    		toast.show();
+	            finish();
+	    	}
+	    	else{
+	    		Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.noAceptaParticipar),Toast.LENGTH_LONG);
+	    		toast.show();
+	    		finish();
+	    	}
     	}
     	else{
-    		Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.noAceptaParticipar),Toast.LENGTH_LONG);
+    		Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.noAceptaTamizajePersona),Toast.LENGTH_LONG);
     		toast.show();
     		finish();
     	}

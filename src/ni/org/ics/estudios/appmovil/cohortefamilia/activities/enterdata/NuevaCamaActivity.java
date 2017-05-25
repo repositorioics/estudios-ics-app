@@ -29,7 +29,7 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaCamasActivity
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.CamaForm;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cama;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Habitacion;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
@@ -66,7 +66,7 @@ public class NuevaCamaActivity extends FragmentActivity implements
     private StepPagerStrip mStepPagerStrip;
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
-    private static Habitacion hab = new Habitacion();
+    private static Cuarto cuarto = new Cuarto();
 	private String username;
 	private SharedPreferences settings;
 	private static final int EXIT = 1;
@@ -88,7 +88,7 @@ public class NuevaCamaActivity extends FragmentActivity implements
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 		infoMovil = new DeviceInfo(NuevaCamaActivity.this);
-		hab = (Habitacion) getIntent().getExtras().getSerializable(Constants.HABITACION);
+		cuarto = (Cuarto) getIntent().getExtras().getSerializable(Constants.HABITACION);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new CamaForm(this,mPass);
         if (savedInstanceState != null) {
@@ -188,7 +188,7 @@ public class NuevaCamaActivity extends FragmentActivity implements
 					// Finish app
 					Bundle arguments = new Bundle();
 					Intent i;
-					if (hab!=null) arguments.putSerializable(Constants.HABITACION , hab);
+					if (cuarto!=null) arguments.putSerializable(Constants.HABITACION , cuarto);
 					i = new Intent(getApplicationContext(),
 							ListaCamasActivity.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -398,7 +398,7 @@ public class NuevaCamaActivity extends FragmentActivity implements
 		Cama h = new Cama();
 		h.setCodigoCama(id);		
 		h.setDescCama(descCama);
-		h.setHabitacion(hab);
+		h.setCuarto(cuarto);
 		h.setRecordDate(new Date());
 		h.setRecordUser(username);
 		h.setDeviceid(infoMovil.getDeviceId());
@@ -409,7 +409,7 @@ public class NuevaCamaActivity extends FragmentActivity implements
 		estudiosAdapter.crearCama(h);
 		Bundle arguments = new Bundle();
 		Intent i;
-		if (hab!=null) arguments.putSerializable(Constants.HABITACION , hab);
+		if (cuarto!=null) arguments.putSerializable(Constants.CUARTO , cuarto);
 		i = new Intent(getApplicationContext(),
 				ListaCamasActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

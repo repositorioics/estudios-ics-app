@@ -371,7 +371,7 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCodigoMx())) {
-                horaTomaMx = DateToString(new Date(), "HH:mm");
+                horaTomaMx = DateToString(new Date(), "HH:mm:ss");
                 notificarCambios = false;
                 onPageTreeChanged();
             }

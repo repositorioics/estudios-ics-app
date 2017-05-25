@@ -8,14 +8,13 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
+import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
-import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -41,6 +40,7 @@ public class UploadAllTask extends UploadTask {
 	protected static final String TAG = UploadAllTask.class.getSimpleName();
     
 	private EstudiosAdapter estudioAdapter = null;
+	private List<VisitaTerreno> mVisitasTerreno = new ArrayList<VisitaTerreno>();
     private List<PreTamizaje> mPreTamizajes = new ArrayList<PreTamizaje>();
 	private List<CasaCohorteFamilia> mCasasCHF = new ArrayList<CasaCohorteFamilia>();
     private List<Tamizaje> mTamizajes = new ArrayList<Tamizaje>();
@@ -61,7 +61,7 @@ public class UploadAllTask extends UploadTask {
     private List<EncuestaPesoTalla> mEncuestasPesoTalla = new ArrayList<EncuestaPesoTalla>();
     private List<EncuestaLactanciaMaterna> mEncuestasLacMat = new ArrayList<EncuestaLactanciaMaterna>();
     private List<Muestra> mMuestras = new ArrayList<Muestra>();
-    private List<Paxgene> mPaxgenes = new ArrayList<Paxgene>();
+    //private List<Paxgene> mPaxgenes = new ArrayList<Paxgene>();
 
 	private String url = null;
 	private String username = null;
@@ -69,27 +69,28 @@ public class UploadAllTask extends UploadTask {
 	private String error = null;
 	protected UploadListener mStateListener;
 
-    public static final String PRETAMIZAJE = "1";
-    public static final String CASACHF = "2";
-    public static final String TAMIZAJE = "3";
-    public static final String PARTICIPANTE = "4";
-    public static final String PARTICIPANTECHF = "5";
-    public static final String CARTAS_CONSENT = "6";
-    public static final String ENCUESTA_CASACHF = "7";
-    public static final String COCINA = "8";
-    public static final String COMEDOR = "9";
-    public static final String SALA = "10";
-    public static final String HABITACION = "11";
-    public static final String BANIOS = "12";
-    public static final String VENTANAS = "13";
-    public static final String CAMAS = "14";
-    public static final String PERSONAS_CAMA = "15";
-    public static final String ENCUESTA_PARTICIPANTECHF = "16";
-    public static final String ENCUESTA_DATOSPBB = "17";
-    public static final String ENCUESTA_PESOTALLA = "18";
-    public static final String ENCUESTA_LACTMAT = "19";
-    public static final String MUESTRAS = "20";
-    public static final String MUESTRAS_PAXGENE = "21";
+	public static final String VISITA = "1";
+	public static final String PRETAMIZAJE = "2";
+    public static final String CASACHF = "3";
+    public static final String TAMIZAJE = "4";
+    public static final String PARTICIPANTE = "5";
+    public static final String PARTICIPANTECHF = "6";
+    public static final String CARTAS_CONSENT = "7";
+    public static final String ENCUESTA_CASACHF = "8";
+    public static final String COCINA = "9";
+    public static final String COMEDOR = "10";
+    public static final String SALA = "11";
+    public static final String HABITACION = "12";
+    public static final String BANIOS = "13";
+    public static final String VENTANAS = "14";
+    public static final String CAMAS = "15";
+    public static final String PERSONAS_CAMA = "16";
+    public static final String ENCUESTA_PARTICIPANTECHF = "17";
+    public static final String ENCUESTA_DATOSPBB = "18";
+    public static final String ENCUESTA_PESOTALLA = "19";
+    public static final String ENCUESTA_LACTMAT = "20";
+    public static final String MUESTRAS = "21";
+    //public static final String MUESTRAS_PAXGENE = "22";
 	private static final String TOTAL_TASK = "21";
 	
 
@@ -103,7 +104,8 @@ public class UploadAllTask extends UploadTask {
 			publishProgress("Obteniendo registros de la base de datos", "1", "2");
 			estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
 			estudioAdapter.open();
-            String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
+			String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
+			mVisitasTerreno = estudioAdapter.getVisitasTerreno(filtro, null);
             mPreTamizajes = estudioAdapter.getPreTamizajes(filtro, MainDBConstants.codigo);
 			mCasasCHF = estudioAdapter.getCasaCohorteFamilias(filtro, MainDBConstants.codigoCHF);
             mTamizajes = estudioAdapter.getTamizajes(filtro, MainDBConstants.codigo);
@@ -127,6 +129,14 @@ public class UploadAllTask extends UploadTask {
             //mPaxgenes = estudioAdapter.getPaxgenes(filtro, null);
 
 			publishProgress("Datos completos!", "2", "2");
+			
+			//Enviando datos
+			actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITA);
+			error = cargarVisitas(url, username, password);
+			if (!error.matches("Datos recibidos!")){
+				actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITA);
+				return error;
+			}
 			actualizarBaseDatos(Constants.STATUS_SUBMITTED, PRETAMIZAJE);
 			error = cargarPretamizajes(url, username, password);
 			if (!error.matches("Datos recibidos!")){
@@ -247,8 +257,7 @@ public class UploadAllTask extends UploadTask {
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
                 return error;
             }
-            /*
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS_PAXGENE);
+            /*actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS_PAXGENE);
             error = cargarPaxgene(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS_PAXGENE);
@@ -492,7 +501,7 @@ public class UploadAllTask extends UploadTask {
                 }
             }
         }
-        if(opcion.equalsIgnoreCase(MUESTRAS_PAXGENE)){
+        /*if(opcion.equalsIgnoreCase(MUESTRAS_PAXGENE)){
             c = mPaxgenes.size();
             if(c>0){
                 for (Paxgene paxgene : mPaxgenes) {
@@ -502,9 +511,45 @@ public class UploadAllTask extends UploadTask {
                             .valueOf(c).toString());
                 }
             }
-        }
+        }*/
 
 	}
+	
+	
+    /***************************************************/
+    /********************* Pretamizajes ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarVisitas(String url, String username,
+                                    String password) throws Exception {
+        try {
+            if(mVisitasTerreno.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando visitas de casas cohorte familia!", VISITA, TOTAL_TASK);
+                final String urlRequest = url + "/movil/visitas";
+                VisitaTerreno[] envio = mVisitasTerreno.toArray(new VisitaTerreno[mVisitasTerreno.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<VisitaTerreno[]> requestEntity =
+                        new HttpEntity<VisitaTerreno[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la VisitaTerreno y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
 
     /***************************************************/
     /********************* Pretamizajes ************************/
@@ -1209,7 +1254,7 @@ public class UploadAllTask extends UploadTask {
     /***************************************************/
     /********************* Muestras Paxgene ************************/
     /***************************************************/
-    // url, username, password
+    /* url, username, password
     protected String cargarPaxgene(String url, String username,
                                     String password) throws Exception {
         try {
@@ -1239,5 +1284,5 @@ public class UploadAllTask extends UploadTask {
             Log.e(TAG, e.getMessage(), e);
             return e.getMessage();
         }
-    }
+    }*/
 }

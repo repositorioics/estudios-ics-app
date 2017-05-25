@@ -26,11 +26,11 @@ public class TamizajeHelper {
         cv.put(MainDBConstants.dondeAsisteProblemasSalud, tamizaje.getDondeAsisteProblemasSalud());
         cv.put(MainDBConstants.otroCentroSalud, tamizaje.getOtroCentroSalud());
         cv.put(MainDBConstants.puestoSalud, tamizaje.getPuestoSalud());
-        cv.put(MainDBConstants.aceptaAtenderCentro, String.valueOf(tamizaje.getAceptaAtenderCentro()));
-        cv.put(MainDBConstants.esElegible, String.valueOf(tamizaje.getEsElegible()));
-        cv.put(MainDBConstants.aceptaParticipar, String.valueOf(tamizaje.getAceptaParticipar()));
-        cv.put(MainDBConstants.razonNoAceptaParticipar, String.valueOf(tamizaje.getRazonNoAceptaParticipar()));
-        cv.put(MainDBConstants.asentimientoVerbal, String.valueOf(tamizaje.getAsentimientoVerbal()));
+        cv.put(MainDBConstants.aceptaAtenderCentro, tamizaje.getAceptaAtenderCentro());
+        cv.put(MainDBConstants.esElegible, tamizaje.getEsElegible());
+        cv.put(MainDBConstants.aceptaParticipar, tamizaje.getAceptaParticipar());
+        cv.put(MainDBConstants.razonNoAceptaParticipar, tamizaje.getRazonNoAceptaParticipar());
+        cv.put(MainDBConstants.asentimientoVerbal, tamizaje.getAsentimientoVerbal());
         if (tamizaje.getRecordDate() != null) cv.put(MainDBConstants.recordDate, tamizaje.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, tamizaje.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(tamizaje.getPasive()));

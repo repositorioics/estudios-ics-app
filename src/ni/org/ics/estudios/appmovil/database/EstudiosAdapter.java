@@ -82,49 +82,6 @@ public class EstudiosAdapter {
             db.execSQL(MainDBConstants.CREATE_CAMA_TABLE);
             db.execSQL(MainDBConstants.CREATE_PERSONACAMA_TABLE);
             db.execSQL(MainDBConstants.CREATE_TAMIZAJE_TABLE);
-            
-			db.execSQL("INSERT INTO `barrios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cuba')");
-			db.execSQL("INSERT INTO `estudios` (`CODIGO`, `identificador_equipo`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `NOMBRE`) VALUES (1, 'server', '1', '0', '2017-05-10 11:01:26', 'admin', 'Cohorte Familia')");
-			db.execSQL("INSERT INTO `casas` (`CODIGO`, `IDENTIFICADOR_EQUIPO`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `apellido1JefeFamilia`, `apellido2JefeFamilia`, `DIRECCION`, `MANZANA`, `nombre1JefeFamilia`, `nombre2JefeFamilia`, `barrio`) VALUES (1, 'server', '1', '0', '2017-05-10 11:22:29', 'admin', 'Lopez', 'Martinez', 'sfgsgsgsd', '3', 'Pedro', 'Ramon', 1)");
-			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('no', '0', 'CAT_SINO', NULL, '0', 2, '0', 'No');");
-			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('yes', '1', 'CAT_SINO', NULL, '0', 1, '0', 'Si');");
-			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('male', 'M', 'CAT_SEXO', NULL, '0', 1, '0', 'Masculino');");
-			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('female', 'F', 'CAT_SEXO', NULL, '0', 2, '0', 'Femenino');");
-			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('noquiere', 'NQ', 'CAT_RAZON_NP', NULL, '0', 2, '0', 'No quiere participar');");
-			db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('nomuestra', 'NM', 'CAT_RAZON_NP', NULL, '0', 1, '0', 'No quiere que le tomen muestras');");
-            db.execSQL("INSERT INTO `chf_casas_cohorte_familia` (`codigoCHF`, `IDENTIFICADOR_EQUIPO`, `ESTADO`, `PASIVE`, `recordDate`, `recordUser`, `apellido1JefeFamilia`, `apellido2JefeFamilia`, `nombre1JefeFamilia`, `nombre2JefeFamilia`, `casa`) VALUES ('5678', 'server', '1', '0', '2017-05-10 11:22:29', 'admin', 'Lopez', 'Martinez', 'Pedro', 'Ramon', 1)");
-            db.execSQL("INSERT INTO `participantes` (`codigo`, `nombre1`, `apellido1`, `nombre1Padre`, `apellido1Padre`, `nombre1Madre`, `apellido1Madre`, `casa`, `estado`, `fechaNac`, `sexo`, `PASIVE`) " +
-            		"VALUES (123, 'Jose', 'Perez', 'Juan', 'Perez', 'Mirna', 'Lopez','1','1', '2013-09-12 13:36:45', 'M','0')");
-            db.execSQL("INSERT INTO `chf_participantes` (`participanteCHF`, `participante`, `casaCHF`, `estado`, `PASIVE`) " +
-            		"VALUES ('00-43883', '123', '5678','1','0')");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('dentro', 'DENTRO', 'CAT_DENTROFUERA', NULL, '0', 1, '0', 'Fuera');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('fuera', 'FUERA', 'CAT_DENTROFUERA', NULL, '0', 2, '0', 'Dentro');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('dentrofuera', 'DEFU', 'CAT_DENTROFUERA', NULL, '0', 3, '0', 'Dentro y Fuera');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('shared', 'COMPART', 'CAT_COMPARTIDO', NULL, '0', 1, '0', 'Compartido');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('not_shared', 'NOCOMPART', 'CAT_COMPARTIDO', NULL, '0', 2, '0', 'No compartido');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('madera', 'MADEP', 'CAT_MAT_PARED', NULL, '0', 1, '0', 'Madera');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('concretopared', 'CONCP', 'CAT_MAT_PARED', NULL, '0', 2, '0', 'Concreto');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('plasticopared', 'PLASTP', 'CAT_MAT_PARED', NULL, '0', 3, '0', 'Plástico');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('carton', 'CARTP', 'CAT_MAT_PARED', NULL, '0', 4, '0', 'Cartón');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('adobe', 'ADOBP', 'CAT_MAT_PARED', NULL, '0', 5, '0', 'Adobe');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('zincpared', 'ZINCP', 'CAT_MAT_PARED', NULL, '0', 6, '0', 'Zinc');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('otro', 'OTROP', 'CAT_MAT_PARED', NULL, '0', 7, '0', 'Otro');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('concretopiso', 'CONCPS', 'CAT_MAT_PISO', NULL, '0', 1, '0', 'Concreto');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('ladrillos', 'LADRPS', 'CAT_MAT_PISO', NULL, '0', 2, '0', 'Ladrillos');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('tierra', 'TIERPS', 'CAT_MAT_PISO', NULL, '0', 3, '0', 'Piso de tierra');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('ceramica', 'CERAPS', 'CAT_MAT_PISO', NULL, '0', 4, '0', 'Cerámica');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('otropiso', 'OTROPS', 'CAT_MAT_PISO', NULL, '0', 5, '0', 'Otro');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('zinctecho', 'ZINCT', 'CAT_MAT_TECHO', NULL, '0', 1, '0', 'Zinc');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('plasticotecho', 'PLAST', 'CAT_MAT_TECHO', NULL, '0', 2, '0', 'Plástico');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('teja', 'TEJAT', 'CAT_MAT_TECHO', NULL, '0', 3, '0', 'Tejas');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('otrotecho', 'OTROT', 'CAT_MAT_TECHO', NULL, '0', 4, '0', 'Otro');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('dia', 'DIA', 'CAT_FUN_ABANICO', NULL, '0', 1, '0', 'Día');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('noche', 'NOCHE', 'CAT_FUN_ABANICO', NULL, '0', 2, '0', 'Noche');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('diario', 'DR', 'CAT_PERIOD_COCINA', NULL, '0', 1, '0', 'Diario');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('semanal', 'SM', 'CAT_PERIOD_COCINA', NULL, '0', 2, '0', 'Semanal');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('quincenal', 'QC', 'CAT_PERIOD_COCINA', NULL, '0', 3, '0', 'Quincenal');");
-            db.execSQL("INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `english`, `isCat`, `orden`, `pasive`, `spanish`) VALUES ('mensual', 'MS', 'CAT_PERIOD_COCINA', NULL, '0', 4, '0', 'Mensual');");
-
         }
 
 		@Override
@@ -1150,7 +1107,7 @@ public class EstudiosAdapter {
      *            Objeto Paxgenes que contiene la informacion
      *
      */
-    //Crear nuevo Paxgenes en la base de datos
+    /*Crear nuevo Paxgenes en la base de datos
     public void crearPaxgenes(Paxgene paxgene) {
         ContentValues cv = MuestraHelper.crearPaxgeneContentValues(paxgene);
         mDb.insert(MuestrasDBConstants.PAXGENE_TABLE, null, cv);
@@ -1195,7 +1152,7 @@ public class EstudiosAdapter {
         }
         if (!cursor.isClosed()) cursor.close();
         return mPaxgenes;
-    }
+    }*/
     
 	/**
 	 * Metodos para Habitaciones en la base de datos
@@ -1359,4 +1316,328 @@ public class EstudiosAdapter {
 		if (!cursorPersonasCama.isClosed()) cursorPersonasCama.close();
 		return mPersonasCama;
 	}
+	
+	/**
+	 * Metodos para AreaAmbiente en la base de datos
+	 * 
+	 * @param AreaAmbiente
+	 *            Objeto AreaAmbiente que contiene la informacion
+	 *
+	 */
+	//Crear nuevo AreaAmbiente en la base de datos
+	public void crearAreaAmbiente(AreaAmbiente area) {
+		ContentValues cv = AreaAmbienteHelper.crearAreaAmbienteContentValues(area);
+		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+	}
+	//Editar AreaAmbiente existente en la base de datos
+	public boolean editarAreaAmbiente(AreaAmbiente area) {
+		ContentValues cv = AreaAmbienteHelper.crearAreaAmbienteContentValues(area);
+		return mDb.update(MainDBConstants.AREA_AMBIENTE_TABLE , cv, MainDBConstants.codigo + "='" 
+				+ area.getCodigo()+ "'", null) > 0;
+	}
+
+	//Obtener un AreaAmbiente de la base de datos
+	public AreaAmbiente getAreaAmbiente(String filtro, String orden) throws SQLException {
+		AreaAmbiente mAreaAmbiente = null;
+		Cursor cursorAreaAmbiente = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE , filtro, null, orden);
+		if (cursorAreaAmbiente != null && cursorAreaAmbiente.getCount() > 0) {
+			cursorAreaAmbiente.moveToFirst();
+			mAreaAmbiente=AreaAmbienteHelper.crearAreaAmbiente(cursorAreaAmbiente);
+			CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorAreaAmbiente.getString(cursorAreaAmbiente.getColumnIndex(MainDBConstants.casa))+"'", null);
+			mAreaAmbiente.setCasa(casa);
+		}
+		if (!cursorAreaAmbiente.isClosed()) cursorAreaAmbiente.close();
+		return mAreaAmbiente;
+	}
+	//Obtener una lista de AreaAmbiente de la base de datos
+	public List<AreaAmbiente> getAreasAmbiente(String filtro, String orden) throws SQLException {
+		List<AreaAmbiente> mAreasAmbiente = new ArrayList<AreaAmbiente>();
+		Cursor cursorAreasAmbiente = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE, filtro, null, orden);
+		if (cursorAreasAmbiente != null && cursorAreasAmbiente.getCount() > 0) {
+			cursorAreasAmbiente.moveToFirst();
+			mAreasAmbiente.clear();
+			do{
+				AreaAmbiente mAreaAmbiente = null;
+				mAreaAmbiente = AreaAmbienteHelper.crearAreaAmbiente(cursorAreasAmbiente);
+				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorAreasAmbiente.getString(cursorAreasAmbiente.getColumnIndex(MainDBConstants.casa))+"'", null);
+				mAreaAmbiente.setCasa(casa);
+				mAreasAmbiente.add(mAreaAmbiente);
+			} while (cursorAreasAmbiente.moveToNext());
+		}
+		if (!cursorAreasAmbiente.isClosed()) cursorAreasAmbiente.close();
+		return mAreasAmbiente;
+	}  
+	
+	/**
+	 * Metodos para Banio en la base de datos
+	 * 
+	 * @param Banio
+	 *            Objeto Banio que contiene la informacion
+	 *
+	 */
+	//Crear nuevo Banio en la base de datos
+	public void crearBanio(Banio banio) {
+		ContentValues cv = AreaAmbienteHelper.crearBanioContentValues(banio);
+		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+	}
+	//Editar Banio existente en la base de datos
+	public boolean editarBanio(Banio banio) {
+		ContentValues cv = AreaAmbienteHelper.crearBanioContentValues(banio);
+		return mDb.update(MainDBConstants.AREA_AMBIENTE_TABLE , cv, MainDBConstants.codigo + "='" 
+				+ banio.getCodigo()+ "'", null) > 0;
+	}
+
+	//Obtener un Banio de la base de datos
+	public Banio getBanio(String filtro, String orden) throws SQLException {
+		Banio mBanio = null;
+		Cursor cursorBanio = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE , filtro, null, orden);
+		if (cursorBanio != null && cursorBanio.getCount() > 0) {
+			cursorBanio.moveToFirst();
+			mBanio=AreaAmbienteHelper.crearBanio(cursorBanio);
+			AreaAmbiente area = this.getAreaAmbiente(MainDBConstants.codigo + "='" + cursorBanio.getString(cursorBanio.getColumnIndex(MainDBConstants.areaAmbiente))+ "'", null);
+			if(area != null){
+				mBanio.setAreaAmbiente(area);
+				mBanio.setCasa(area.getCasa());
+				
+			}
+			else{
+				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorBanio.getString(cursorBanio.getColumnIndex(MainDBConstants.casa))+"'", null);
+				mBanio.setCasa(casa);
+			}
+		}
+		if (!cursorBanio.isClosed()) cursorBanio.close();
+		return mBanio;
+	}
+	//Obtener una lista de Banio de la base de datos
+	public List<Banio> getBanios(String filtro, String orden) throws SQLException {
+		List<Banio> mBanios = new ArrayList<Banio>();
+		Cursor cursorBanios = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE, filtro, null, orden);
+		if (cursorBanios != null && cursorBanios.getCount() > 0) {
+			cursorBanios.moveToFirst();
+			mBanios.clear();
+			do{
+				Banio mBanio = null;
+				mBanio = AreaAmbienteHelper.crearBanio(cursorBanios);
+				AreaAmbiente area = this.getAreaAmbiente(MainDBConstants.codigo + "='" + cursorBanios.getString(cursorBanios.getColumnIndex(MainDBConstants.areaAmbiente))+ "'", null);
+				if(area != null){
+					mBanio.setAreaAmbiente(area);
+					mBanio.setCasa(area.getCasa());
+					
+				}
+				else{
+					CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorBanios.getString(cursorBanios.getColumnIndex(MainDBConstants.casa))+"'", null);
+					mBanio.setCasa(casa);
+				}
+			} while (cursorBanios.moveToNext());
+		}
+		if (!cursorBanios.isClosed()) cursorBanios.close();
+		return mBanios;
+	}  
+	
+	/**
+	 * Metodos para sala en la base de datos
+	 * 
+	 * @param Sala
+	 *            Objeto Sala que contiene la informacion
+	 *
+	 */
+	//Crear nuevo Sala en la base de datos
+	public void crearSala(Sala sala) {
+		ContentValues cv = AreaAmbienteHelper.crearAreaAmbienteContentValues(sala);
+		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+	}
+	//Editar Sala existente en la base de datos
+	public boolean editarSala(Sala sala) {
+		ContentValues cv = AreaAmbienteHelper.crearAreaAmbienteContentValues(sala);
+		return mDb.update(MainDBConstants.AREA_AMBIENTE_TABLE , cv, MainDBConstants.codigo + "='" 
+				+ sala.getCodigo()+ "'", null) > 0;
+	}
+
+	//Obtener un Sala de la base de datos
+	public Sala getSala(String filtro, String orden) throws SQLException {
+		Sala mSala = null;
+		Cursor cursorSala = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE , filtro, null, orden);
+		if (cursorSala != null && cursorSala.getCount() > 0) {
+			cursorSala.moveToFirst();
+			mSala=(Sala) AreaAmbienteHelper.crearAreaAmbiente(cursorSala);
+			CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorSala.getString(cursorSala.getColumnIndex(MainDBConstants.casa))+"'", null);
+			mSala.setCasa(casa);
+		}
+		if (!cursorSala.isClosed()) cursorSala.close();
+		return mSala;
+	}
+	//Obtener una lista de Sala de la base de datos
+	public List<Sala> getSalas(String filtro, String orden) throws SQLException {
+		List<Sala> mSalas = new ArrayList<Sala>();
+		Cursor cursorSalas = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE, filtro, null, orden);
+		if (cursorSalas != null && cursorSalas.getCount() > 0) {
+			cursorSalas.moveToFirst();
+			mSalas.clear();
+			do{
+				Sala mSala = null;
+				mSala = (Sala) AreaAmbienteHelper.crearAreaAmbiente(cursorSalas);
+				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorSalas.getString(cursorSalas.getColumnIndex(MainDBConstants.casa))+"'", null);
+				mSala.setCasa(casa);
+			} while (cursorSalas.moveToNext());
+		}
+		if (!cursorSalas.isClosed()) cursorSalas.close();
+		return mSalas;
+	}  
+	
+	/**
+	 * Metodos para Cocina en la base de datos
+	 * 
+	 * @param Cocina
+	 *            Objeto Cocina que contiene la informacion
+	 *
+	 */
+	//Crear nuevo Cocina en la base de datos
+	public void crearCocina(Cocina cocina) {
+		ContentValues cv = AreaAmbienteHelper.crearAreaAmbienteContentValues(cocina);
+		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+	}
+	//Editar Cocina existente en la base de datos
+	public boolean editarCocina(Cocina cocina) {
+		ContentValues cv = AreaAmbienteHelper.crearAreaAmbienteContentValues(cocina);
+		return mDb.update(MainDBConstants.AREA_AMBIENTE_TABLE , cv, MainDBConstants.codigo + "='" 
+				+ cocina.getCodigo()+ "'", null) > 0;
+	}
+
+	//Obtener un Cocina de la base de datos
+	public Cocina getCocina(String filtro, String orden) throws SQLException {
+		Cocina mCocina = null;
+		Cursor cursorCocina = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE , filtro, null, orden);
+		if (cursorCocina != null && cursorCocina.getCount() > 0) {
+			cursorCocina.moveToFirst();
+			mCocina=(Cocina) AreaAmbienteHelper.crearAreaAmbiente(cursorCocina);
+			CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorCocina.getString(cursorCocina.getColumnIndex(MainDBConstants.casa))+"'", null);
+			mCocina.setCasa(casa);
+		}
+		if (!cursorCocina.isClosed()) cursorCocina.close();
+		return mCocina;
+	}
+	//Obtener una lista de Cocina de la base de datos
+	public List<Cocina> getCocinas(String filtro, String orden) throws SQLException {
+		List<Cocina> mCocinas = new ArrayList<Cocina>();
+		Cursor cursorCocinas = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE, filtro, null, orden);
+		if (cursorCocinas != null && cursorCocinas.getCount() > 0) {
+			cursorCocinas.moveToFirst();
+			mCocinas.clear();
+			do{
+				Cocina mCocina = null;
+				mCocina = (Cocina) AreaAmbienteHelper.crearAreaAmbiente(cursorCocinas);
+				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorCocinas.getString(cursorCocinas.getColumnIndex(MainDBConstants.casa))+"'", null);
+				mCocina.setCasa(casa);
+			} while (cursorCocinas.moveToNext());
+		}
+		if (!cursorCocinas.isClosed()) cursorCocinas.close();
+		return mCocinas;
+	}  
+	
+	/**
+	 * Metodos para Comedor en la base de datos
+	 * 
+	 * @param Comedor
+	 *            Objeto Comedor que contiene la informacion
+	 *
+	 */
+	//Crear nuevo Comedor en la base de datos
+	public void crearComedor(Comedor comedor) {
+		ContentValues cv = AreaAmbienteHelper.crearAreaAmbienteContentValues(comedor);
+		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+	}
+	//Editar Comedor existente en la base de datos
+	public boolean editarComedor(Comedor comedor) {
+		ContentValues cv = AreaAmbienteHelper.crearAreaAmbienteContentValues(comedor);
+		return mDb.update(MainDBConstants.AREA_AMBIENTE_TABLE , cv, MainDBConstants.codigo + "='" 
+				+ comedor.getCodigo()+ "'", null) > 0;
+	}
+
+	//Obtener un Comedor de la base de datos
+	public Comedor getComedor(String filtro, String orden) throws SQLException {
+		Comedor mComedor = null;
+		Cursor cursorComedor = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE , filtro, null, orden);
+		if (cursorComedor != null && cursorComedor.getCount() > 0) {
+			cursorComedor.moveToFirst();
+			mComedor=(Comedor) AreaAmbienteHelper.crearAreaAmbiente(cursorComedor);
+			CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorComedor.getString(cursorComedor.getColumnIndex(MainDBConstants.casa))+"'", null);
+			mComedor.setCasa(casa);
+		}
+		if (!cursorComedor.isClosed()) cursorComedor.close();
+		return mComedor;
+	}
+	//Obtener una lista de Comedor de la base de datos
+	public List<Comedor> getComedores(String filtro, String orden) throws SQLException {
+		List<Comedor> mComedores = new ArrayList<Comedor>();
+		Cursor cursorComedores = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE, filtro, null, orden);
+		if (cursorComedores != null && cursorComedores.getCount() > 0) {
+			cursorComedores.moveToFirst();
+			mComedores.clear();
+			do{
+				Comedor mComedor = null;
+				mComedor = (Comedor) AreaAmbienteHelper.crearAreaAmbiente(cursorComedores);
+				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorComedores.getString(cursorComedores.getColumnIndex(MainDBConstants.casa))+"'", null);
+				mComedor.setCasa(casa);
+			} while (cursorComedores.moveToNext());
+		}
+		if (!cursorComedores.isClosed()) cursorComedores.close();
+		return mComedores;
+	}  
+
+	/**
+	 * Metodos para Ventana en la base de datos
+	 * 
+	 * @param Ventana
+	 *            Objeto Ventana que contiene la informacion
+	 *
+	 */
+	//Crear nuevo Ventana en la base de datos
+	public void crearVentana(Ventana ventana) {
+		ContentValues cv = AreaAmbienteHelper.crearVentanaContentValues(ventana);
+		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+	}
+	//Editar Ventana existente en la base de datos
+	public boolean editarVentana(Ventana ventana) {
+		ContentValues cv = AreaAmbienteHelper.crearVentanaContentValues(ventana);
+		return mDb.update(MainDBConstants.AREA_AMBIENTE_TABLE , cv, MainDBConstants.codigo + "='" 
+				+ ventana.getCodigo()+ "'", null) > 0;
+	}
+
+	//Obtener un Ventana de la base de datos
+	public Ventana getVentana(String filtro, String orden) throws SQLException {
+		Ventana mVentana = null;
+		Cursor cursorVentana = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE , filtro, null, orden);
+		if (cursorVentana != null && cursorVentana.getCount() > 0) {
+			cursorVentana.moveToFirst();
+			mVentana=AreaAmbienteHelper.crearVentana(cursorVentana);
+			AreaAmbiente area = this.getAreaAmbiente(MainDBConstants.codigo + "='" + cursorVentana.getString(cursorVentana.getColumnIndex(MainDBConstants.areaAmbiente))+ "'", null);
+			if(area != null){
+				mVentana.setAreaAmbiente(area);
+				mVentana.setCasa(area.getCasa());
+			}
+		}
+		if (!cursorVentana.isClosed()) cursorVentana.close();
+		return mVentana;
+	}
+	//Obtener una lista de Ventana de la base de datos
+	public List<Ventana> getVentanas(String filtro, String orden) throws SQLException {
+		List<Ventana> mVentanas = new ArrayList<Ventana>();
+		Cursor cursorVentanas = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE, filtro, null, orden);
+		if (cursorVentanas != null && cursorVentanas.getCount() > 0) {
+			cursorVentanas.moveToFirst();
+			mVentanas.clear();
+			do{
+				Ventana mVentana = null;
+				mVentana = AreaAmbienteHelper.crearVentana(cursorVentanas);
+				AreaAmbiente area = this.getAreaAmbiente(MainDBConstants.codigo + "='" + cursorVentanas.getString(cursorVentanas.getColumnIndex(MainDBConstants.areaAmbiente))+ "'", null);
+				if(area != null){
+					mVentana.setAreaAmbiente(area);
+					mVentana.setCasa(area.getCasa());
+					
+				}
+			} while (cursorVentanas.moveToNext());
+		}
+		if (!cursorVentanas.isClosed()) cursorVentanas.close();
+		return mVentanas;
+	}  
 }

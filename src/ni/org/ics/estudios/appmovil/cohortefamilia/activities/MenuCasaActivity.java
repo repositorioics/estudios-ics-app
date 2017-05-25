@@ -93,6 +93,13 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
     					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     					i.putExtras(arguments);
     					startActivity(i);break;
+                    case 3:
+                    	if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+    					i = new Intent(getApplicationContext(),
+    							ListaAreasActivity.class);
+    					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    					i.putExtras(arguments);
+    					startActivity(i);break;    					
 				    default:
                         break;
 		        }

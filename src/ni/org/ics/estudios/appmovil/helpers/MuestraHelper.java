@@ -3,7 +3,6 @@ package ni.org.ics.estudios.appmovil.helpers;
 import android.content.ContentValues;
 import android.database.Cursor;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Paxgene;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
 
@@ -73,7 +72,7 @@ public class MuestraHelper {
         return mMuestra;
     }
 
-    public static ContentValues crearPaxgeneContentValues(Paxgene paxgene){
+    /*public static ContentValues crearPaxgeneContentValues(Paxgene paxgene){
         ContentValues cv = new ContentValues();
         cv.put(MuestrasDBConstants.codigoMx, paxgene.getMuestra().getCodigoMx());
         cv.put(MuestrasDBConstants.horaInicio, paxgene.getHoraInicio());
@@ -99,5 +98,5 @@ public class MuestraHelper {
         mPaxgene.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mPaxgene.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mPaxgene;
-    }
+    }*/
 }

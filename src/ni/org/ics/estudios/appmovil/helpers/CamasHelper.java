@@ -45,8 +45,8 @@ public class CamasHelper {
         cv.put(MainDBConstants.codigoPersona, personaCama.getCodigoPersona());
         cv.put(MainDBConstants.cama, personaCama.getCama().getCodigoCama());
         cv.put(MainDBConstants.estaEnEstudio, String.valueOf(personaCama.getEstaEnEstudio()));
-        cv.put(MainDBConstants.edad, personaCama.getEdad());
-        cv.put(MainDBConstants.sexo, personaCama.getSexo());
+        if (personaCama.getEdad() != null) cv.put(MainDBConstants.edad, personaCama.getEdad());
+        if (personaCama.getSexo() != null) cv.put(MainDBConstants.sexo, personaCama.getSexo());
         if (personaCama.getParticipante() != null) cv.put(MainDBConstants.participante, personaCama.getParticipante().getCodigo());
         if (personaCama.getRecordDate() != null) cv.put(MainDBConstants.recordDate, personaCama.getRecordDate().getTime());
 		cv.put(MainDBConstants.recordUser, personaCama.getRecordUser());

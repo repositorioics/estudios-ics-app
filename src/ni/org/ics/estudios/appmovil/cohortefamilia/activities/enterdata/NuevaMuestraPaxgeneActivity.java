@@ -18,7 +18,6 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestraBHCForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestraPaxgeneForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestrasFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
@@ -29,7 +28,6 @@ import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
-import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
 import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
@@ -500,7 +498,7 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
             estudiosAdapter.crearMuestras(muestra);
             if (muestra.getRealizaPaxgene().equalsIgnoreCase("S")) {
                 Paxgene paxgene = new Paxgene();
-                paxgene.setMuestra(muestra);
+                paxgene.setMuestra(infoMovil.getId());
                 Page horapax = mWizardModel.findByKey(labels.getHoraInicioPax());
                 String valor = horapax.getHint();
                 if (valor != null && !valor.isEmpty()) {
@@ -512,7 +510,7 @@ public class NuevaMuestraPaxgeneActivity extends FragmentActivity implements
                 paxgene.setDeviceid(infoMovil.getDeviceId());
                 paxgene.setEstado('0');
                 paxgene.setPasive('0');
-                estudiosAdapter.crearPaxgenes(paxgene);
+                //estudiosAdapter.crearPaxgenes(paxgene);
             }
             estudiosAdapter.close();
             Bundle arguments = new Bundle();

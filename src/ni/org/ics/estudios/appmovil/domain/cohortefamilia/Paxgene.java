@@ -12,15 +12,15 @@ public class Paxgene extends BaseMetaData implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Muestra muestra;
+    private String muestra;
     private String horaInicio;
     private String horaFin;
 
-    public Muestra getMuestra() {
+    public String getMuestra() {
         return muestra;
     }
 
-    public void setMuestra(Muestra muestra) {
+    public void setMuestra(String muestra) {
         this.muestra = muestra;
     }
 
@@ -42,7 +42,7 @@ public class Paxgene extends BaseMetaData implements Serializable {
 
     @Override
     public String toString() {
-        return "Paxgene{" + muestra.getCodigoMx() +
+        return "Paxgene{" + muestra +
                 '}';
     }
 

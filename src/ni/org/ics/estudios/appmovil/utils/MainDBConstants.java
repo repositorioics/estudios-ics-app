@@ -398,7 +398,6 @@ public class MainDBConstants {
     public static final String totalM2 = "totalM2";
     public static final String numVentanas = "numVentanas";
     public static final String tipo = "tipo";
-    public static final String habitacion = "habitacion";
     public static final String conVentana = "conVentana";
     public static final String cantidadCamas = "cantidadCamas";
     public static final String areaAmbiente = "areaAmbiente"; // para las ventanas
@@ -417,11 +416,9 @@ public class MainDBConstants {
             + totalM2 + " real, "
             + numVentanas + " integer, "
             + tipo + " text not null, "
-            + habitacion + " text, "
             + conVentana + " text, "
             + cantidadCamas + " integer, "
             + areaAmbiente + " text, "
-            + alto + " real, "
             + abierta + " text, "
             + codigoHabitacion + " text, "
             + recordDate + " date, "
@@ -437,6 +434,7 @@ public class MainDBConstants {
     //campos tabla Camas
     public static final String codigoCama = "codigoCama";
     public static final String descCama = "descCama";
+    public static final String habitacion = "habitacion";
 
     // crear tabla Camas
     public static final String CREATE_CAMA_TABLE = "create table if not exists "
@@ -466,6 +464,7 @@ public class MainDBConstants {
             + codigoPersona + " text not null, "
             + cama + " text not null, "
             + estaEnEstudio + " text, "
+            + participante + " integer, "
             + edad + " integer, "
             + sexo + " text, "
             + recordDate + " date, "

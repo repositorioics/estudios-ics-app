@@ -36,21 +36,26 @@ public class PersonaCamaAdapter extends ArrayAdapter<PersonaCama> {
 			TextView textView = (TextView) v.findViewById(R.id.identifier_text);
 			textView.setTextColor(Color.BLACK);
 			if (textView != null) {
-				if (p.getEstaEnEstudio()=='1'){
-					textView.setText(this.getContext().getString(R.string.edad) + ": " + p.getParticipante().getCodigo());
+				if (p.getEstaEnEstudio()=='S'){
+					textView.setText(this.getContext().getString(R.string.code) + ": " + p.getParticipante().getCodigo());
 				}
 			}
 			
 			textView = (TextView) v.findViewById(R.id.der_text);
 			textView.setTextColor(Color.BLACK);
 			if (textView != null) {
-				textView.setText(mDateFormat.format(p.getRecordDate()));
+				if (p.getEstaEnEstudio()=='S'){
+					textView.setText(this.getContext().getString(R.string.fechaNacimiento)+": "+mDateFormat.format(p.getParticipante().getFechaNac()));
+				}
+				else{
+					textView.setText(mDateFormat.format(p.getRecordDate()));
+				}
 			}
 
 			textView = (TextView) v.findViewById(R.id.name_text);
 			textView.setTextColor(Color.BLACK);
 			if (textView != null) {
-				if (p.getEstaEnEstudio()=='1'){
+				if (p.getEstaEnEstudio()=='S'){
 					textView.setText(p.getParticipante().getNombre1()+" "+ p.getParticipante().getApellido1());
 				}
 				else {

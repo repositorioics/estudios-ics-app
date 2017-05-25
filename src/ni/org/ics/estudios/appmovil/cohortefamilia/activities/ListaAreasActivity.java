@@ -1,22 +1,17 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoHabitacionActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.HabitacionAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Habitacion;
 import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.content.Intent;
@@ -39,7 +34,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
     private AreaAmbiente area = new AreaAmbiente();
 	private ArrayAdapter<AreaAmbiente> mAreaAdapter;
-	private List<AreaAmbiente> mAreas = new ArrayList<AreaAmbiente>();
+	//private List<AreaAmbiente> mAreas = new ArrayList<AreaAmbiente>();
 	private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -183,7 +178,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	}
 	
 	private class FetchDataCasaTask extends AsyncTask<String, Void, String> {
-		private String codigoCasaCHF = null;
+		//private String codigoCasaCHF = null;
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -192,7 +187,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 
 		@Override
 		protected String doInBackground(String... values) {      
-			codigoCasaCHF = values[0];
+			//codigoCasaCHF = values[0];
 			try {
 				estudiosAdapter.open();
 				//mAreas = estudiosAdapter.getHabitaciones(MainDBConstants.casa +" = '" + codigoCasaCHF + "' and " + MainDBConstants.tipo + " ='habitacion' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);

@@ -11,17 +11,16 @@ public class Banio extends  AreaAmbiente {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Habitacion habitacion;
+	private AreaAmbiente areaAmbiente;
     private char conVentana;
 
-    public Habitacion getHabitacion() {
-        return habitacion;
+    public AreaAmbiente getAreaAmbiente() {
+        return areaAmbiente;
     }
 
-    public void setHabitacion(Habitacion habitacion) {
-        this.habitacion = habitacion;
+    public void setAreaAmbiente(AreaAmbiente areaAmbiente) {
+        this.areaAmbiente = areaAmbiente;
     }
-
     public char getConVentana() {
         return conVentana;
     }

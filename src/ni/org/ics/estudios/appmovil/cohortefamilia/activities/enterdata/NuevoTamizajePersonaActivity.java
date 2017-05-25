@@ -846,7 +846,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     		cc.setParticipante(participante);
     		if (tieneValor(emancipado)) {
     			MessageResource catEmancipado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + emancipado + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catEmancipado!=null) cc.setEmancipado(catEmancipado.getCatKey().charAt(0));
+    			if (catEmancipado!=null) cc.setEmancipado(catEmancipado.getCatKey());
     		}
     		if (tieneValor(nombre1Tutor)) cc.setNombre1Tutor(nombre1Tutor);
     		if (tieneValor(nombre2Tutor)) cc.setNombre2Tutor(nombre2Tutor);
@@ -858,11 +858,11 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     		}
     		if (tieneValor(participanteOTutorAlfabeto)) {
     			MessageResource catParticipanteOTutorAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participanteOTutorAlfabeto + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catParticipanteOTutorAlfabeto!=null) cc.setParticipanteOTutorAlfabeto(catParticipanteOTutorAlfabeto.getCatKey().charAt(0));
+    			if (catParticipanteOTutorAlfabeto!=null) cc.setParticipanteOTutorAlfabeto(catParticipanteOTutorAlfabeto.getCatKey());
     		}
     		if (tieneValor(testigoPresente)) {
     			MessageResource catTestigoPresente = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + testigoPresente + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catTestigoPresente!=null) cc.setTestigoPresente(catTestigoPresente.getCatKey().charAt(0));
+    			if (catTestigoPresente!=null) cc.setTestigoPresente(catTestigoPresente.getCatKey());
     		}
 
     		if (tieneValor(nombre1Testigo)) cc.setNombre1Testigo(nombre1Testigo);
@@ -871,7 +871,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     		if (tieneValor(apellido2Testigo)) cc.setApellido2Testigo(apellido2Testigo);
     	    if (tieneValor(aceptaParteA)) {
     			MessageResource catAceptaParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteA + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catAceptaParteA!=null) cc.setAceptaParteA(catAceptaParteA.getCatKey().charAt(0));
+    			if (catAceptaParteA!=null) cc.setAceptaParteA(catAceptaParteA.getCatKey());
     		}
     	    if (tieneValor(motivoRechazoParteA)) {
     			MessageResource catMotivoRechazoParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + motivoRechazoParteA + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -879,15 +879,15 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     		}
     	    if (tieneValor(aceptaContactoFuturo)) {
     			MessageResource catAceptaContactoFuturo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaContactoFuturo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catAceptaContactoFuturo!=null) cc.setAceptaContactoFuturo(catAceptaContactoFuturo.getCatKey().charAt(0));
+    			if (catAceptaContactoFuturo!=null) cc.setAceptaContactoFuturo(catAceptaContactoFuturo.getCatKey());
     		}
     	    if (tieneValor(aceptaParteB)) {
     			MessageResource catAceptaParteB = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteB + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catAceptaParteB!=null) cc.setAceptaParteB(catAceptaParteB.getCatKey().charAt(0));
+    			if (catAceptaParteB!=null) cc.setAceptaParteB(catAceptaParteB.getCatKey());
     		}
     	    if (tieneValor(aceptaParteC)) {
     			MessageResource catAceptaParteC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteC + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-    			if (catAceptaParteC!=null) cc.setAceptaParteC(catAceptaParteC.getCatKey().charAt(0));
+    			if (catAceptaParteC!=null) cc.setAceptaParteC(catAceptaParteC.getCatKey());
     		}
     	    cc.setRecordDate(new Date());
         	cc.setRecordUser(username);

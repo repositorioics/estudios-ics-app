@@ -12,10 +12,10 @@ import java.util.Date;
 public class EncuestaCasa extends BaseMetaData {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private CasaCohorteFamilia casa;
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    private CasaCohorteFamilia casa;
     private int cantidadCuartos;
     private int cantidadCuartosDormir;
     private Date fechaEncuestas;
@@ -23,24 +23,24 @@ public class EncuestaCasa extends BaseMetaData {
     private int hrsSinServicioAgua;
     private String ubicacionLlaveAgua;
     private String llaveCompartida;
-    private char almacenaAgua;
-    private char almacenaEnBarriles;
-    private char almacenaEnTanques;
-    private char almacenaEnPilas;
-    private char almacenaOtrosRecipientes;
+    private String almacenaAgua;
+    private String almacenaEnBarriles;
+    private String almacenaEnTanques;
+    private String almacenaEnPilas;
+    private String almacenaOtrosRecipientes;
     private String otrosRecipientes;
     private Integer numBarriles;
     private Integer numTanques;
     private Integer numPilas;
     private Integer numOtrosRecipientes;
-    private char barrilesTapados;
-    private char tanquesTapados;
-    private char pilasTapadas;
-    private char otrosRecipientesTapados;
-    private char barrilesConAbate;
-    private char tanquesConAbate;
-    private char pilasConAbate;
-    private char otrosRecipientesConAbate;
+    private String barrilesTapados;
+    private String tanquesTapados;
+    private String pilasTapadas;
+    private String otrosRecipientesTapados;
+    private String barrilesConAbate;
+    private String tanquesConAbate;
+    private String pilasConAbate;
+    private String otrosRecipientesConAbate;
     private String ubicacionLavandero;
     private String materialParedes;
     private String materialPiso;
@@ -48,43 +48,43 @@ public class EncuestaCasa extends BaseMetaData {
     private String otroMaterialParedes;
     private String otroMaterialPiso;
     private String otroMaterialTecho;
-    private char casaPropia;
-    private char tieneAbanico;
-    private char tieneTelevisor;
-    private char tieneRefrigerador;
-    private char tienAireAcondicionado;
+    private String casaPropia;
+    private String tieneAbanico;
+    private String tieneTelevisor;
+    private String tieneRefrigerador;
+    private String tienAireAcondicionado;
     private String aireAcondicionadoFuncionando;
     private Integer numAbanicos;
     private Integer numTelevisores;
     private Integer numRefrigeradores;
-    private char tieneMoto;
-    private char tieneCarro;
-    private char tienMicrobus;
-    private char tieneCamioneta;
-    private char tieneCamion;
-    private char tieneOtroMedioTransAuto;
+    private String tieneMoto;
+    private String tieneCarro;
+    private String tienMicrobus;
+    private String tieneCamioneta;
+    private String tieneCamion;
+    private String tieneOtroMedioTransAuto;
     private String otroMedioTransAuto;
-    private char cocinaConLenia;
+    private String cocinaConLenia;
     private String ubicacionCocinaLenia;
     private String periodicidadCocinaLenia;
     private Integer numDiarioCocinaLenia;   //# de veces que cocina
     private Integer numSemanalCocinaLenia;  //# de veces que cocina semanalmente
     private Integer numQuincenalCocinaLenia;    //# de veces que cocina quincenalmente
     private Integer numMensualCocinaLenia;  //# de veces que cocina al mes
-    private char tieneAnimales;
-    private char tieneGallinas;
-    private char tienePatos;
-    private char tieneCerdos;
+    private String tieneAnimales;
+    private String tieneGallinas;
+    private String tienePatos;
+    private String tieneCerdos;
     private Integer cantidadGallinas;
     private Integer cantidadPatos;
     private Integer cantidadCerdos;
-    private char gallinasDentroCasa;
-    private char patosDentroCasa;
-    private char cerdosDentroCasa;
-    private char personaFumaDentroCasa;  //Alguna persona que no pertenece al estudio fuma dentro de la casa
-    private char madreFuma;
-    private char padreFuma;
-    private char otrosFuman;
+    private String gallinasDentroCasa;
+    private String patosDentroCasa;
+    private String cerdosDentroCasa;
+    private String personaFumaDentroCasa;  //Alguna persona que no pertenece al estudio fuma dentro de la casa
+    private String madreFuma;
+    private String padreFuma;
+    private String otrosFuman;
     private Integer cantidadOtrosFuman;
     private Integer cantidadCigarrilosMadre; // diarios
     private Integer cantidadCigarrillosPadre; // diarios
@@ -154,43 +154,43 @@ public class EncuestaCasa extends BaseMetaData {
         this.llaveCompartida = llaveCompartida;
     }
 
-    public char getAlmacenaAgua() {
+    public String getAlmacenaAgua() {
         return almacenaAgua;
     }
 
-    public void setAlmacenaAgua(char almacenaAgua) {
+    public void setAlmacenaAgua(String almacenaAgua) {
         this.almacenaAgua = almacenaAgua;
     }
 
-    public char getAlmacenaEnBarriles() {
+    public String getAlmacenaEnBarriles() {
         return almacenaEnBarriles;
     }
 
-    public void setAlmacenaEnBarriles(char almacenaEnBarriles) {
+    public void setAlmacenaEnBarriles(String almacenaEnBarriles) {
         this.almacenaEnBarriles = almacenaEnBarriles;
     }
 
-    public char getAlmacenaEnTanques() {
+    public String getAlmacenaEnTanques() {
         return almacenaEnTanques;
     }
 
-    public void setAlmacenaEnTanques(char almacenaEnTanques) {
+    public void setAlmacenaEnTanques(String almacenaEnTanques) {
         this.almacenaEnTanques = almacenaEnTanques;
     }
 
-    public char getAlmacenaEnPilas() {
+    public String getAlmacenaEnPilas() {
         return almacenaEnPilas;
     }
 
-    public void setAlmacenaEnPilas(char almacenaEnPilas) {
+    public void setAlmacenaEnPilas(String almacenaEnPilas) {
         this.almacenaEnPilas = almacenaEnPilas;
     }
 
-    public char getAlmacenaOtrosRecipientes() {
+    public String getAlmacenaOtrosRecipientes() {
         return almacenaOtrosRecipientes;
     }
 
-    public void setAlmacenaOtrosRecipientes(char almacenaOtrosRecipientes) {
+    public void setAlmacenaOtrosRecipientes(String almacenaOtrosRecipientes) {
         this.almacenaOtrosRecipientes = almacenaOtrosRecipientes;
     }
 
@@ -234,67 +234,67 @@ public class EncuestaCasa extends BaseMetaData {
         this.numOtrosRecipientes = numOtrosRecipientes;
     }
 
-    public char getBarrilesTapados() {
+    public String getBarrilesTapados() {
         return barrilesTapados;
     }
 
-    public void setBarrilesTapados(char barrilesTapados) {
+    public void setBarrilesTapados(String barrilesTapados) {
         this.barrilesTapados = barrilesTapados;
     }
 
-    public char getTanquesTapados() {
+    public String getTanquesTapados() {
         return tanquesTapados;
     }
 
-    public void setTanquesTapados(char tanquesTapados) {
+    public void setTanquesTapados(String tanquesTapados) {
         this.tanquesTapados = tanquesTapados;
     }
 
-    public char getPilasTapadas() {
+    public String getPilasTapadas() {
         return pilasTapadas;
     }
 
-    public void setPilasTapadas(char pilasTapadas) {
+    public void setPilasTapadas(String pilasTapadas) {
         this.pilasTapadas = pilasTapadas;
     }
 
-    public char getOtrosRecipientesTapados() {
+    public String getOtrosRecipientesTapados() {
         return otrosRecipientesTapados;
     }
 
-    public void setOtrosRecipientesTapados(char otrosRecipientesTapados) {
+    public void setOtrosRecipientesTapados(String otrosRecipientesTapados) {
         this.otrosRecipientesTapados = otrosRecipientesTapados;
     }
 
-    public char getBarrilesConAbate() {
+    public String getBarrilesConAbate() {
         return barrilesConAbate;
     }
 
-    public void setBarrilesConAbate(char barrilesConAbate) {
+    public void setBarrilesConAbate(String barrilesConAbate) {
         this.barrilesConAbate = barrilesConAbate;
     }
 
-    public char getTanquesConAbate() {
+    public String getTanquesConAbate() {
         return tanquesConAbate;
     }
 
-    public void setTanquesConAbate(char tanquesConAbate) {
+    public void setTanquesConAbate(String tanquesConAbate) {
         this.tanquesConAbate = tanquesConAbate;
     }
 
-    public char getPilasConAbate() {
+    public String getPilasConAbate() {
         return pilasConAbate;
     }
 
-    public void setPilasConAbate(char pilasConAbate) {
+    public void setPilasConAbate(String pilasConAbate) {
         this.pilasConAbate = pilasConAbate;
     }
 
-    public char getOtrosRecipientesConAbate() {
+    public String getOtrosRecipientesConAbate() {
         return otrosRecipientesConAbate;
     }
 
-    public void setOtrosRecipientesConAbate(char otrosRecipientesConAbate) {
+    public void setOtrosRecipientesConAbate(String otrosRecipientesConAbate) {
         this.otrosRecipientesConAbate = otrosRecipientesConAbate;
     }
 
@@ -354,43 +354,43 @@ public class EncuestaCasa extends BaseMetaData {
         this.otroMaterialTecho = otroMaterialTecho;
     }
 
-    public char getCasaPropia() {
+    public String getCasaPropia() {
         return casaPropia;
     }
 
-    public void setCasaPropia(char casaPropia) {
+    public void setCasaPropia(String casaPropia) {
         this.casaPropia = casaPropia;
     }
 
-    public char getTieneAbanico() {
+    public String getTieneAbanico() {
         return tieneAbanico;
     }
 
-    public void setTieneAbanico(char tieneAbanico) {
+    public void setTieneAbanico(String tieneAbanico) {
         this.tieneAbanico = tieneAbanico;
     }
 
-    public char getTieneTelevisor() {
+    public String getTieneTelevisor() {
         return tieneTelevisor;
     }
 
-    public void setTieneTelevisor(char tieneTelevisor) {
+    public void setTieneTelevisor(String tieneTelevisor) {
         this.tieneTelevisor = tieneTelevisor;
     }
 
-    public char getTieneRefrigerador() {
+    public String getTieneRefrigerador() {
         return tieneRefrigerador;
     }
 
-    public void setTieneRefrigerador(char tieneRefrigerador) {
+    public void setTieneRefrigerador(String tieneRefrigerador) {
         this.tieneRefrigerador = tieneRefrigerador;
     }
 
-    public char getTienAireAcondicionado() {
+    public String getTienAireAcondicionado() {
         return tienAireAcondicionado;
     }
 
-    public void setTienAireAcondicionado(char tienAireAcondicionado) {
+    public void setTienAireAcondicionado(String tienAireAcondicionado) {
         this.tienAireAcondicionado = tienAireAcondicionado;
     }
 
@@ -426,51 +426,51 @@ public class EncuestaCasa extends BaseMetaData {
         this.numRefrigeradores = numRefrigeradores;
     }
 
-    public char getTieneMoto() {
+    public String getTieneMoto() {
         return tieneMoto;
     }
 
-    public void setTieneMoto(char tieneMoto) {
+    public void setTieneMoto(String tieneMoto) {
         this.tieneMoto = tieneMoto;
     }
 
-    public char getTieneCarro() {
+    public String getTieneCarro() {
         return tieneCarro;
     }
 
-    public void setTieneCarro(char tieneCarro) {
+    public void setTieneCarro(String tieneCarro) {
         this.tieneCarro = tieneCarro;
     }
 
-    public char getTienMicrobus() {
+    public String getTienMicrobus() {
         return tienMicrobus;
     }
 
-    public void setTienMicrobus(char tienMicrobus) {
+    public void setTienMicrobus(String tienMicrobus) {
         this.tienMicrobus = tienMicrobus;
     }
 
-    public char getTieneCamioneta() {
+    public String getTieneCamioneta() {
         return tieneCamioneta;
     }
 
-    public void setTieneCamioneta(char tieneCamioneta) {
+    public void setTieneCamioneta(String tieneCamioneta) {
         this.tieneCamioneta = tieneCamioneta;
     }
 
-    public char getTieneCamion() {
+    public String getTieneCamion() {
         return tieneCamion;
     }
 
-    public void setTieneCamion(char tieneCamion) {
+    public void setTieneCamion(String tieneCamion) {
         this.tieneCamion = tieneCamion;
     }
 
-    public char getTieneOtroMedioTransAuto() {
+    public String getTieneOtroMedioTransAuto() {
         return tieneOtroMedioTransAuto;
     }
 
-    public void setTieneOtroMedioTransAuto(char tieneOtroMedioTransAuto) {
+    public void setTieneOtroMedioTransAuto(String tieneOtroMedioTransAuto) {
         this.tieneOtroMedioTransAuto = tieneOtroMedioTransAuto;
     }
 
@@ -482,11 +482,11 @@ public class EncuestaCasa extends BaseMetaData {
         this.otroMedioTransAuto = otroMedioTransAuto;
     }
 
-    public char getCocinaConLenia() {
+    public String getCocinaConLenia() {
         return cocinaConLenia;
     }
 
-    public void setCocinaConLenia(char cocinaConLenia) {
+    public void setCocinaConLenia(String cocinaConLenia) {
         this.cocinaConLenia = cocinaConLenia;
     }
 
@@ -538,35 +538,35 @@ public class EncuestaCasa extends BaseMetaData {
         this.numMensualCocinaLenia = numMensualCocinaLenia;
     }
 
-    public char getTieneAnimales() {
+    public String getTieneAnimales() {
         return tieneAnimales;
     }
 
-    public void setTieneAnimales(char tieneAnimales) {
+    public void setTieneAnimales(String tieneAnimales) {
         this.tieneAnimales = tieneAnimales;
     }
 
-    public char getTieneGallinas() {
+    public String getTieneGallinas() {
         return tieneGallinas;
     }
 
-    public void setTieneGallinas(char tieneGallinas) {
+    public void setTieneGallinas(String tieneGallinas) {
         this.tieneGallinas = tieneGallinas;
     }
 
-    public char getTienePatos() {
+    public String getTienePatos() {
         return tienePatos;
     }
 
-    public void setTienePatos(char tienePatos) {
+    public void setTienePatos(String tienePatos) {
         this.tienePatos = tienePatos;
     }
 
-    public char getTieneCerdos() {
+    public String getTieneCerdos() {
         return tieneCerdos;
     }
 
-    public void setTieneCerdos(char tieneCerdos) {
+    public void setTieneCerdos(String tieneCerdos) {
         this.tieneCerdos = tieneCerdos;
     }
 
@@ -594,59 +594,59 @@ public class EncuestaCasa extends BaseMetaData {
         this.cantidadCerdos = cantidadCerdos;
     }
 
-    public char getGallinasDentroCasa() {
+    public String getGallinasDentroCasa() {
         return gallinasDentroCasa;
     }
 
-    public void setGallinasDentroCasa(char gallinasDentroCasa) {
+    public void setGallinasDentroCasa(String gallinasDentroCasa) {
         this.gallinasDentroCasa = gallinasDentroCasa;
     }
 
-    public char getPatosDentroCasa() {
+    public String getPatosDentroCasa() {
         return patosDentroCasa;
     }
 
-    public void setPatosDentroCasa(char patosDentroCasa) {
+    public void setPatosDentroCasa(String patosDentroCasa) {
         this.patosDentroCasa = patosDentroCasa;
     }
 
-    public char getCerdosDentroCasa() {
+    public String getCerdosDentroCasa() {
         return cerdosDentroCasa;
     }
 
-    public void setCerdosDentroCasa(char cerdosDentroCasa) {
+    public void setCerdosDentroCasa(String cerdosDentroCasa) {
         this.cerdosDentroCasa = cerdosDentroCasa;
     }
 
-    public char getPersonaFumaDentroCasa() {
+    public String getPersonaFumaDentroCasa() {
         return personaFumaDentroCasa;
     }
 
-    public void setPersonaFumaDentroCasa(char personaFumaDentroCasa) {
+    public void setPersonaFumaDentroCasa(String personaFumaDentroCasa) {
         this.personaFumaDentroCasa = personaFumaDentroCasa;
     }
 
-    public char getMadreFuma() {
+    public String getMadreFuma() {
         return madreFuma;
     }
 
-    public void setMadreFuma(char madreFuma) {
+    public void setMadreFuma(String madreFuma) {
         this.madreFuma = madreFuma;
     }
 
-    public char getPadreFuma() {
+    public String getPadreFuma() {
         return padreFuma;
     }
 
-    public void setPadreFuma(char padreFuma) {
+    public void setPadreFuma(String padreFuma) {
         this.padreFuma = padreFuma;
     }
 
-    public char getOtrosFuman() {
+    public String getOtrosFuman() {
         return otrosFuman;
     }
 
-    public void setOtrosFuman(char otrosFuman) {
+    public void setOtrosFuman(String otrosFuman) {
         this.otrosFuman = otrosFuman;
     }
 

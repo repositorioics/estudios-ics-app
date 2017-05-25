@@ -584,12 +584,12 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(estaEmbarazada)){
                 MessageResource msEstaEmbarazada = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + estaEmbarazada + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (msEstaEmbarazada != null) encuesta.setEstaEmbarazada(msEstaEmbarazada.getCatKey().charAt(0));
+                if (msEstaEmbarazada != null) encuesta.setEstaEmbarazada(msEstaEmbarazada.getCatKey());
             }
             if (tieneValor(esAlfabeto)){
                 MessageResource msEsAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + esAlfabeto + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (msEsAlfabeto != null) encuesta.setEsAlfabeto(msEsAlfabeto.getCatKey().charAt(0));
+                if (msEsAlfabeto != null) encuesta.setEsAlfabeto(msEsAlfabeto.getCatKey());
             }
             if (tieneValor(nivelEducacion)){
                 MessageResource msNivelEducacion = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + nivelEducacion + "' and "
@@ -599,7 +599,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(trabaja)){
                 MessageResource msTrabaja = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + trabaja + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (msTrabaja != null) encuesta.setTrabaja(msTrabaja.getCatKey().charAt(0));
+                if (msTrabaja != null) encuesta.setTrabaja(msTrabaja.getCatKey());
             }
             if (tieneValor(tipoTrabajo)){
                 MessageResource msTipoTrabajo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipoTrabajo + "' and "
@@ -609,7 +609,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(vaNinoEscuela)){
                 MessageResource msVaNinoEscuela = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + vaNinoEscuela + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (msVaNinoEscuela != null) encuesta.setVaNinoEscuela(msVaNinoEscuela.getCatKey().charAt(0));
+                if (msVaNinoEscuela != null) encuesta.setVaNinoEscuela(msVaNinoEscuela.getCatKey());
             }
             if (tieneValor(gradoCursa)){
                 MessageResource msGradoCursa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + gradoCursa + "' and "
@@ -629,7 +629,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(ninoTrabaja)){
                 MessageResource msninoTrabaja = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + ninoTrabaja + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (msninoTrabaja != null) encuesta.setNinoTrabaja(msninoTrabaja.getCatKey().charAt(0));
+                if (msninoTrabaja != null) encuesta.setNinoTrabaja(msninoTrabaja.getCatKey());
             }
             if (tieneValor(conQuienViveNino)){
                 MessageResource msconQuienViveNino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + conQuienViveNino + "' and "
@@ -639,12 +639,12 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(padreEnEstudio)){
                 MessageResource mspadreEnEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + padreEnEstudio + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (mspadreEnEstudio != null) encuesta.setPadreEnEstudio(mspadreEnEstudio.getCatKey().charAt(0));
+                if (mspadreEnEstudio != null) encuesta.setPadreEnEstudio(mspadreEnEstudio.getCatKey());
             }
             if (tieneValor(padreAlfabeto)){
                 MessageResource mspadreAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + padreAlfabeto + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mspadreAlfabeto != null) encuesta.setPadreAlfabeto(mspadreAlfabeto.getCatKey().charAt(0));
+                if (mspadreAlfabeto != null) encuesta.setPadreAlfabeto(mspadreAlfabeto.getCatKey());
             }
             if (tieneValor(nivelEducacionPadre)){
                 MessageResource msnivelEducacionPadre = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + nivelEducacionPadre + "' and "
@@ -654,7 +654,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(trabajaPadre)){
                 MessageResource mstrabajaPadre = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + trabajaPadre + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mstrabajaPadre != null) encuesta.setTrabajaPadre(mstrabajaPadre.getCatKey().charAt(0));
+                if (mstrabajaPadre != null) encuesta.setTrabajaPadre(mstrabajaPadre.getCatKey());
             }
             if (tieneValor(tipoTrabajoPadre)){
                 MessageResource msTipoTrabajoPadre = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipoTrabajoPadre + "' and "
@@ -664,12 +664,12 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(madreEnEstudio)){
                 MessageResource msmadreEnEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + madreEnEstudio + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (msmadreEnEstudio != null) encuesta.setMadreEnEstudio(msmadreEnEstudio.getCatKey().charAt(0));
+                if (msmadreEnEstudio != null) encuesta.setMadreEnEstudio(msmadreEnEstudio.getCatKey());
             }
             if (tieneValor(madreAlfabeto)){
                 MessageResource msmadreAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + madreAlfabeto + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (msmadreAlfabeto != null) encuesta.setMadreAlfabeto(msmadreAlfabeto.getCatKey().charAt(0));
+                if (msmadreAlfabeto != null) encuesta.setMadreAlfabeto(msmadreAlfabeto.getCatKey());
             }
             if (tieneValor(nivelEducacionMadre)){
                 MessageResource msnivelEducacionMadre = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + nivelEducacionMadre + "' and "
@@ -679,7 +679,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(trabajaMadre)){
                 MessageResource mstrabajaMadre = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + trabajaMadre + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mstrabajaMadre != null) encuesta.setTrabajaMadre(mstrabajaMadre.getCatKey().charAt(0));
+                if (mstrabajaMadre != null) encuesta.setTrabajaMadre(mstrabajaMadre.getCatKey());
             }
             if (tieneValor(tipoTrabajoMadre)){
                 MessageResource msTipoTrabajoMadre = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipoTrabajoMadre + "' and "
@@ -689,7 +689,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(fuma)){
                 MessageResource msfuma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + fuma + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (msfuma != null) encuesta.setFuma(msfuma.getCatKey().charAt(0));
+                if (msfuma != null) encuesta.setFuma(msfuma.getCatKey());
             }
             if (tieneValor(periodicidadFuma)){
                 MessageResource msperiodicidadFuma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + periodicidadFuma + "' and "
@@ -699,12 +699,12 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(fumaDentroCasa)){
                 MessageResource msfumaDentroCasa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + fumaDentroCasa + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (msfumaDentroCasa != null) encuesta.setFumaDentroCasa(msfumaDentroCasa.getCatKey().charAt(0));
+                if (msfumaDentroCasa != null) encuesta.setFumaDentroCasa(msfumaDentroCasa.getCatKey());
             }
             if (tieneValor(tuberculosisPulmonarActual)){
                 MessageResource mstuberculosisPulmonarActual = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tuberculosisPulmonarActual + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mstuberculosisPulmonarActual != null) encuesta.setTuberculosisPulmonarActual(mstuberculosisPulmonarActual.getCatKey().charAt(0));
+                if (mstuberculosisPulmonarActual != null) encuesta.setTuberculosisPulmonarActual(mstuberculosisPulmonarActual.getCatKey());
             }
             //setear fechaDiagnosticoTubPulActual
             String fechaDiagnosticoCompuesta = anioFechaDiagnosticoTubPulActual;
@@ -720,24 +720,24 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(tomaTratamientoTubPulActual)){
                 MessageResource mstomaTratamientoTubPulActual = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaTratamientoTubPulActual + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mstomaTratamientoTubPulActual != null) encuesta.setTomaTratamientoTubPulActual(mstomaTratamientoTubPulActual.getCatKey().charAt(0));
+                if (mstomaTratamientoTubPulActual != null) encuesta.setTomaTratamientoTubPulActual(mstomaTratamientoTubPulActual.getCatKey());
             }
             if (tieneValor(completoTratamientoTubPulActual)){
                 MessageResource mscompletoTratamientoTubPulActual = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + completoTratamientoTubPulActual + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mscompletoTratamientoTubPulActual != null) encuesta.setCompletoTratamientoTubPulActual(mscompletoTratamientoTubPulActual.getCatKey().charAt(0));
+                if (mscompletoTratamientoTubPulActual != null) encuesta.setCompletoTratamientoTubPulActual(mscompletoTratamientoTubPulActual.getCatKey());
             }
             if (tieneValor(tuberculosisPulmonarPasado)){
                 MessageResource mstuberculosisPulmonarPasado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tuberculosisPulmonarPasado + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mstuberculosisPulmonarPasado != null) encuesta.setTuberculosisPulmonarPasado(mstuberculosisPulmonarPasado.getCatKey().charAt(0));
+                if (mstuberculosisPulmonarPasado != null) encuesta.setTuberculosisPulmonarPasado(mstuberculosisPulmonarPasado.getCatKey());
             }
             if (tieneValor(fechaDiagnosticoTubPulPasadoSn)){
                 MessageResource msfechaDiagnosticoTubPulPasadoSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + fechaDiagnosticoTubPulPasadoSn + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msfechaDiagnosticoTubPulPasadoSn != null){
                     if (msfechaDiagnosticoTubPulPasadoSn.getCatKey().equalsIgnoreCase("S")) {
-                        encuesta.setFechaDiagnosticoTubPulPasadoDes('N');
+                        encuesta.setFechaDiagnosticoTubPulPasadoDes("N");
                         //setear fechaDiagnosticoTubPulPasado
                         String fechaDiagnosticoCompuestaPas = anioFechaDiagnosticoTubPulPasado;
                         if (tieneValor(mesFechaDiagnosticoTubPulPasado)){
@@ -750,24 +750,24 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                         encuesta.setFechaDiagnosticoTubPulPasado(fechaDiagnosticoCompuestaPas);
                     }
                     else
-                        encuesta.setFechaDiagnosticoTubPulPasadoDes('S');
+                        encuesta.setFechaDiagnosticoTubPulPasadoDes("S");
 
                 }
             }
             if (tieneValor(tomaTratamientoTubPulPasado)){
                 MessageResource mstomaTratamientoTubPulPasado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaTratamientoTubPulPasado + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mstomaTratamientoTubPulPasado != null) encuesta.setTomaTratamientoTubPulPasado(mstomaTratamientoTubPulPasado.getCatKey().charAt(0));
+                if (mstomaTratamientoTubPulPasado != null) encuesta.setTomaTratamientoTubPulPasado(mstomaTratamientoTubPulPasado.getCatKey());
             }
             if (tieneValor(completoTratamientoTubPulPasado)){
                 MessageResource mscompletoTratamientoTubPulPasado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + completoTratamientoTubPulPasado + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mscompletoTratamientoTubPulPasado != null) encuesta.setCompletoTratamientoTubPulPasado(mscompletoTratamientoTubPulPasado.getCatKey().charAt(0));
+                if (mscompletoTratamientoTubPulPasado != null) encuesta.setCompletoTratamientoTubPulPasado(mscompletoTratamientoTubPulPasado.getCatKey());
             }
             if (tieneValor(alergiaRespiratoria)){
                 MessageResource msalergiaRespiratoria = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + alergiaRespiratoria + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (msalergiaRespiratoria != null) encuesta.setAlergiaRespiratoria(msalergiaRespiratoria.getCatKey().charAt(0));
+                if (msalergiaRespiratoria != null) encuesta.setAlergiaRespiratoria(msalergiaRespiratoria.getCatKey());
             }
             if (tieneValor(cardiopatia)){
                 MessageResource mscardiopatia = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + cardiopatia + "' and "
@@ -777,52 +777,52 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (tieneValor(enfermedadPulmonarOC)){
                 MessageResource msenfermedadPulmonarOC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfermedadPulmonarOC + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (msenfermedadPulmonarOC != null) encuesta.setEnfermedadPulmonarOC(msenfermedadPulmonarOC.getCatKey().charAt(0));
+                if (msenfermedadPulmonarOC != null) encuesta.setEnfermedadPulmonarOC(msenfermedadPulmonarOC.getCatKey());
             }
             if (tieneValor(diabetes)){
                 MessageResource msdiabetes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + diabetes + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (msdiabetes != null) encuesta.setDiabetes(msdiabetes.getCatKey().charAt(0));
+                if (msdiabetes != null) encuesta.setDiabetes(msdiabetes.getCatKey());
             }
             if (tieneValor(presionAlta)){
                 MessageResource mspresionAlta = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + presionAlta + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mspresionAlta != null) encuesta.setPresionAlta(mspresionAlta.getCatKey().charAt(0));
+                if (mspresionAlta != null) encuesta.setPresionAlta(mspresionAlta.getCatKey());
             }
             if (tieneValor(asma)){
                 MessageResource msasma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + asma + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (msasma != null) encuesta.setAsma(msasma.getCatKey().charAt(0));
+                if (msasma != null) encuesta.setAsma(msasma.getCatKey());
             }
             if (tieneValor(silbidoRespirarPechoApretado)){
                 MessageResource mssilbidoRespirarPechoApretado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + silbidoRespirarPechoApretado + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mssilbidoRespirarPechoApretado != null) encuesta.setSilbidoRespirarPechoApretado(mssilbidoRespirarPechoApretado.getCatKey().charAt(0));
+                if (mssilbidoRespirarPechoApretado != null) encuesta.setSilbidoRespirarPechoApretado(mssilbidoRespirarPechoApretado.getCatKey());
             }
             if (tieneValor(tosSinFiebreResfriado)){
                 MessageResource mstosSinFiebreResfriado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tosSinFiebreResfriado + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mstosSinFiebreResfriado != null) encuesta.setTosSinFiebreResfriado(mstosSinFiebreResfriado.getCatKey().charAt(0));
+                if (mstosSinFiebreResfriado != null) encuesta.setTosSinFiebreResfriado(mstosSinFiebreResfriado.getCatKey());
             }
             if (tieneValor(usaInhaladoresSpray)){
                 MessageResource msusaInhaladoresSpray = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + usaInhaladoresSpray + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (msusaInhaladoresSpray != null) encuesta.setUsaInhaladoresSpray(msusaInhaladoresSpray.getCatKey().charAt(0));
+                if (msusaInhaladoresSpray != null) encuesta.setUsaInhaladoresSpray(msusaInhaladoresSpray.getCatKey());
             }
             if (tieneValor(crisisAsma)){
                 MessageResource mscrisisAsma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + crisisAsma + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (mscrisisAsma != null) encuesta.setCrisisAsma(mscrisisAsma.getCatKey().charAt(0));
+                if (mscrisisAsma != null) encuesta.setCrisisAsma(mscrisisAsma.getCatKey());
             }
             if (tieneValor(otrasEnfermedades)){
                 MessageResource msotrasEnfermedades = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + otrasEnfermedades + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (msotrasEnfermedades != null) encuesta.setOtrasEnfermedades(msotrasEnfermedades.getCatKey().charAt(0));
+                if (msotrasEnfermedades != null) encuesta.setOtrasEnfermedades(msotrasEnfermedades.getCatKey());
             }
             if (tieneValor(vacunaInfluenza)){
                 MessageResource msvacunaInfluenza = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + vacunaInfluenza + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
-                if (msvacunaInfluenza != null) encuesta.setVacunaInfluenza(msvacunaInfluenza.getCatKey().charAt(0));
+                if (msvacunaInfluenza != null) encuesta.setVacunaInfluenza(msvacunaInfluenza.getCatKey());
             }
             //Numericos
             if (tieneValor(semanasEmbarazo)) encuesta.setSemanasEmbarazo(Integer.valueOf(semanasEmbarazo));

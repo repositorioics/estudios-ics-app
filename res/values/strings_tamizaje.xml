@@ -98,6 +98,8 @@
     <string name="aceptaParteBHint">¿Acepta Parte B Almacenamiento y uso de Muestras en Estudios Futuros?</string>
     <string name="aceptaParteC">Acepta Parte C</string>
     <string name="aceptaParteCHint">¿Acepta Parte C Estudios Geneticos?</string>
+    <string name="aceptaSeroprevalencia">Acepta estudio Seroprevalencia</string>
+    <string name="aceptaSeroprevalenciaHint">¿Acepta participar en estudio seroprevalencia arbovirus?</string>
     
 	<string name="noAceptaTamizajePersona">No acepta tamizaje!</string>
 	<string name="noCumpleCriteriosInclusion">No cumple los criterios de inclusión!</string>

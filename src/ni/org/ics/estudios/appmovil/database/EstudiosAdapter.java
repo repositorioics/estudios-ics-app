@@ -19,9 +19,15 @@ import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.helpers.*;
+import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.EncuestaCasaSAHelper;
+import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.EncuestaParticipanteSAHelper;
+import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.ParticipanteSeroprevalenciaHelper;
 import ni.org.ics.estudios.appmovil.utils.*;
 
 
@@ -756,6 +762,22 @@ public class EstudiosAdapter {
     public boolean borrarCartasConsentimiento() {
         return mDb.delete(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE, null, null) > 0;
     }
+
+    //Obtener una lista de ParticipanteCohorteFamilia de la base de datos
+    public CartaConsentimiento getCartaConsentimientos(String filtro, String orden) throws SQLException {
+        CartaConsentimiento cartaConsentimiento = null;
+        Cursor cursorCarta = crearCursor(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE , filtro, null, orden);
+        if (cursorCarta != null && cursorCarta.getCount() > 0) {
+            cursorCarta.moveToFirst();
+            cartaConsentimiento=CartaConsentimientoHelper.crearCartaConsentimiento(cursorCarta);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorCarta.getInt(cursorCarta.getColumnIndex(MainDBConstants.participante)), null);
+            cartaConsentimiento.setParticipante(participante);
+            Tamizaje tamizaje = this.getTamizaje(MainDBConstants.codigo + "='" +cursorCarta.getString(cursorCarta.getColumnIndex(MainDBConstants.tamizaje))+"'", null);
+            cartaConsentimiento.setTamizaje(tamizaje);
+        }
+        if (!cursorCarta.isClosed()) cursorCarta.close();
+        return cartaConsentimiento;
+    }
     //Obtener una lista de ParticipanteCohorteFamilia de la base de datos
     public ArrayList<CartaConsentimiento> getCartasConsentimientos(String filtro, String orden) throws SQLException {
         ArrayList<CartaConsentimiento> mParticipanteCohorteFamilias = new ArrayList<CartaConsentimiento>();
@@ -1238,7 +1260,7 @@ public class EstudiosAdapter {
 		if (cursorCama != null && cursorCama.getCount() > 0) {
 			cursorCama.moveToFirst();
 			mCama=CamasHelper.crearCama(cursorCama);
-			Cuarto cuarto = this.getCuarto(MainDBConstants.codigo + "='" +cursorCama.getString(cursorCama.getColumnIndex(MainDBConstants.habitacion))+"'", null);
+			Cuarto cuarto = this.getCuarto(MainDBConstants.codigo + "='" + cursorCama.getString(cursorCama.getColumnIndex(MainDBConstants.habitacion)) + "'", null);
 			mCama.setCuarto(cuarto);
 		}
 		if (!cursorCama.isClosed()) cursorCama.close();
@@ -1254,7 +1276,7 @@ public class EstudiosAdapter {
 			do{
 				Cama mCama = null;
 				mCama = CamasHelper.crearCama(cursorCamas);
-				Cuarto cuarto = this.getCuarto(MainDBConstants.codigo + "='" +cursorCamas.getString(cursorCamas.getColumnIndex(MainDBConstants.habitacion))+"'", null);
+				Cuarto cuarto = this.getCuarto(MainDBConstants.codigo + "='" + cursorCamas.getString(cursorCamas.getColumnIndex(MainDBConstants.habitacion)) + "'", null);
 				mCama.setCuarto(cuarto);
 				mCamas.add(mCama);
 			} while (cursorCamas.moveToNext());
@@ -1699,5 +1721,171 @@ public class EstudiosAdapter {
 		}
 		if (!cursorCuartos.isClosed()) cursorCuartos.close();
 		return mCuartos;
-	} 
+	}
+
+    /**
+     * Metodos para ParticipanteSeroprevalencia en la base de datos
+     *
+     * @param participanteSeroprevalencia
+     *            Objeto ParticipanteSeroprevalencias que contiene la informacion
+     *
+     */
+    //Crear nuevo ParticipanteSeroprevalencias en la base de datos
+    public void crearParticipanteSeroprevalencia(ParticipanteSeroprevalencia participanteSeroprevalencia) {
+        ContentValues cv = ParticipanteSeroprevalenciaHelper.crearParticipanteSeroprevalenciaContentValues(participanteSeroprevalencia);
+        mDb.insert(SeroprevalenciaDBConstants.PARTICIPANTESA_TABLE, null, cv);
+    }
+    //Editar ParticipanteSeroprevalencia existente en la base de datos
+    public boolean editarParticipanteSeroprevalencia(ParticipanteSeroprevalencia participanteSeroprevalencia) {
+        ContentValues cv = ParticipanteSeroprevalenciaHelper.crearParticipanteSeroprevalenciaContentValues(participanteSeroprevalencia);
+        return mDb.update(SeroprevalenciaDBConstants.PARTICIPANTESA_TABLE, cv, SeroprevalenciaDBConstants.participante + "='"
+                + participanteSeroprevalencia.getParticipante().getCodigo() + "'", null) > 0;
+    }
+    //Limpiar la tabla de ParticipanteSeroprevalencia de la base de datos
+    public boolean borrarParticipanteSeroprevalencia() {
+        return mDb.delete(SeroprevalenciaDBConstants.PARTICIPANTESA_TABLE, null, null) > 0;
+    }
+    //Obtener una ParticipanteSeroprevalencia de la base de datos
+    public ParticipanteSeroprevalencia getParticipanteSeroprevalencia(String filtro, String orden) throws SQLException {
+        ParticipanteSeroprevalencia mParticipanteSeroprevalencia = null;
+        Cursor cursor = crearCursor(SeroprevalenciaDBConstants.PARTICIPANTESA_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mParticipanteSeroprevalencia= ParticipanteSeroprevalenciaHelper.crearParticipanteSeroprevalencia(cursor);
+            CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" + cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.casaCHF)), null);
+            mParticipanteSeroprevalencia.setCasaCHF(cchf);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.participante)), null);
+            mParticipanteSeroprevalencia.setParticipante(participante);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mParticipanteSeroprevalencia;
+    }
+    //Obtener una lista de ParticipanteSeroprevalencia de la base de datos
+    public List<ParticipanteSeroprevalencia> getParticipantesSeroprevalencia(String filtro, String orden) throws SQLException {
+        List<ParticipanteSeroprevalencia> mParticipanteSeroprevalencias = new ArrayList<ParticipanteSeroprevalencia>();
+        Cursor cursor = crearCursor(SeroprevalenciaDBConstants.PARTICIPANTESA_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mParticipanteSeroprevalencias.clear();
+            do{
+                ParticipanteSeroprevalencia mParticipanteSeroprevalencia = null;
+                mParticipanteSeroprevalencia = ParticipanteSeroprevalenciaHelper.crearParticipanteSeroprevalencia(cursor);
+                CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" + cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.casaCHF)), null);
+                mParticipanteSeroprevalencia.setCasaCHF(cchf);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.participante)), null);
+                mParticipanteSeroprevalencia.setParticipante(participante);
+                mParticipanteSeroprevalencias.add(mParticipanteSeroprevalencia);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mParticipanteSeroprevalencias;
+    }
+
+    /**
+     * Metodos para EncuestaCasaSA en la base de datos
+     *
+     * @param encuestaCasaSA
+     *            Objeto EncuestaCasaSA que contiene la informacion
+     *
+     */
+    //Crear nuevo EncuestaCasaSA en la base de datos
+    public void crearEncuestaCasaSA(EncuestaCasaSA encuestaCasaSA) {
+        ContentValues cv = EncuestaCasaSAHelper.crearEncuestaCasaSAContentValues(encuestaCasaSA);
+        mDb.insert(SeroprevalenciaDBConstants.ENCUESTA_CASASA_TABLE, null, cv);
+    }
+    //Editar EncuestaCasaSA existente en la base de datos
+    public boolean editarEncuestaCasaSA(EncuestaCasaSA encuestaCasaSA) {
+        ContentValues cv = EncuestaCasaSAHelper.crearEncuestaCasaSAContentValues(encuestaCasaSA);
+        return mDb.update(SeroprevalenciaDBConstants.ENCUESTA_CASASA_TABLE, cv, SeroprevalenciaDBConstants.casaCHF + "='"
+                + encuestaCasaSA.getCasaCHF().getCodigoCHF() + "'", null) > 0;
+    }
+    //Limpiar la tabla de EncuestaCasaSA de la base de datos
+    public boolean borrarEncuestaCasaSA() {
+        return mDb.delete(SeroprevalenciaDBConstants.ENCUESTA_CASASA_TABLE, null, null) > 0;
+    }
+    //Obtener una EncuestaCasaSA de la base de datos
+    public EncuestaCasaSA getEncuestaCasaSA(String filtro, String orden) throws SQLException {
+        EncuestaCasaSA mEncuestaCasaSA = null;
+        Cursor cursor = crearCursor(SeroprevalenciaDBConstants.ENCUESTA_CASASA_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mEncuestaCasaSA= EncuestaCasaSAHelper.crearEncuestaCasaSA(cursor);
+            CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" + cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.casaCHF)), null);
+            mEncuestaCasaSA.setCasaCHF(cchf);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mEncuestaCasaSA;
+    }
+    //Obtener una lista de EncuestaCasaSA de la base de datos
+    public List<EncuestaCasaSA> getEncuestasCasaSA(String filtro, String orden) throws SQLException {
+        List<EncuestaCasaSA> mEncuestaCasaSAs = new ArrayList<EncuestaCasaSA>();
+        Cursor cursor = crearCursor(SeroprevalenciaDBConstants.ENCUESTA_CASASA_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mEncuestaCasaSAs.clear();
+            do{
+                EncuestaCasaSA mEncuestaCasaSA = null;
+                mEncuestaCasaSA = EncuestaCasaSAHelper.crearEncuestaCasaSA(cursor);
+                CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" + cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.casaCHF)), null);
+                mEncuestaCasaSA.setCasaCHF(cchf);
+                mEncuestaCasaSAs.add(mEncuestaCasaSA);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mEncuestaCasaSAs;
+    }
+
+    /**
+     * Metodos para EncuestaParticipanteSA en la base de datos
+     *
+     * @param encuestaParticipanteSA
+     *            Objeto EncuestaParticipanteSA que contiene la informacion
+     *
+     */
+    //Crear nuevo EncuestaParticipanteSA en la base de datos
+    public void crearEncuestaParticipanteSA(EncuestaParticipanteSA encuestaParticipanteSA) {
+        ContentValues cv = EncuestaParticipanteSAHelper.crearEncuestaParticipanteSAContentValues(encuestaParticipanteSA);
+        mDb.insert(SeroprevalenciaDBConstants.ENCUESTA_PARTICIPANTESA_TABLE, null, cv);
+    }
+    //Editar EncuestaParticipanteSA existente en la base de datos
+    public boolean editarEncuestaParticipanteSA(EncuestaParticipanteSA encuestaParticipanteSA) {
+        ContentValues cv = EncuestaParticipanteSAHelper.crearEncuestaParticipanteSAContentValues(encuestaParticipanteSA);
+        return mDb.update(SeroprevalenciaDBConstants.ENCUESTA_PARTICIPANTESA_TABLE, cv, SeroprevalenciaDBConstants.participanteSA + "='"
+                + encuestaParticipanteSA.getParticipanteSA().getParticipanteSA() + "'", null) > 0;
+    }
+    //Limpiar la tabla de EncuestaParticipanteSA de la base de datos
+    public boolean borrarEncuestaParticipanteSA() {
+        return mDb.delete(SeroprevalenciaDBConstants.ENCUESTA_PARTICIPANTESA_TABLE, null, null) > 0;
+    }
+    //Obtener una EncuestaParticipanteSA de la base de datos
+    public EncuestaParticipanteSA getEncuestaParticipanteSA(String filtro, String orden) throws SQLException {
+        EncuestaParticipanteSA mEncuestaParticipanteSA = null;
+        Cursor cursor = crearCursor(SeroprevalenciaDBConstants.ENCUESTA_PARTICIPANTESA_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mEncuestaParticipanteSA= EncuestaParticipanteSAHelper.crearEncuestaParticipanteSA(cursor);
+            ParticipanteSeroprevalencia participante = this.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participanteSA + "=" + cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.participanteSA)), null);
+            mEncuestaParticipanteSA.setParticipanteSA(participante);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mEncuestaParticipanteSA;
+    }
+    //Obtener una lista de EncuestaParticipanteSA de la base de datos
+    public List<EncuestaParticipanteSA> getEncuestasParticipanteSA(String filtro, String orden) throws SQLException {
+        List<EncuestaParticipanteSA> mEncuestasParticipanteSA = new ArrayList<EncuestaParticipanteSA>();
+        Cursor cursor = crearCursor(SeroprevalenciaDBConstants.ENCUESTA_PARTICIPANTESA_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mEncuestasParticipanteSA.clear();
+            do{
+                EncuestaParticipanteSA mEncuestaParticipanteSA = null;
+                mEncuestaParticipanteSA = EncuestaParticipanteSAHelper.crearEncuestaParticipanteSA(cursor);
+                ParticipanteSeroprevalencia participante = this.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participanteSA + "=" + cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.participanteSA)), null);
+                mEncuestaParticipanteSA.setParticipanteSA(participante);
+                mEncuestasParticipanteSA.add(mEncuestaParticipanteSA);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mEncuestasParticipanteSA;
+    }
 }

@@ -20,14 +20,16 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
     private boolean habilitarBhc = false;
     private boolean habilitarRojo = false;
     private boolean existeencuestaParticip = false;
+    private boolean existeencuestaParticipSA = false;
     private boolean existeencuestaParto = false;
     private boolean existeencuestaPeso = false;
     private boolean existeencuestaLact = false;
+    private boolean habilitarEncuestaParticipSA = false;
 
     private final Context context;
     private final ParticipanteCohorteFamilia participanteCHF;
 	public MenuParticipanteAdapter(Context context, int textViewResourceId,
-                                   String[] values, ParticipanteCohorteFamilia participanteCHF, boolean existeencuestaParticip, boolean existeencuestaParto, boolean existeencuestaPeso, boolean existeencuestaLact) {
+                                   String[] values, ParticipanteCohorteFamilia participanteCHF, boolean existeencuestaParticip, boolean existeencuestaParto, boolean existeencuestaPeso, boolean existeencuestaLact, boolean existeencuestaParticipSA, boolean habilitarEncuestaParticipSA) {
 		super(context, textViewResourceId, values);
         this.context = context;
 		this.values = values;
@@ -36,6 +38,8 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
         this.existeencuestaParto = existeencuestaParto;
         this.existeencuestaPeso = existeencuestaPeso;
         this.existeencuestaLact = existeencuestaLact;
+        this.existeencuestaParticipSA = existeencuestaParticipSA;
+        this.habilitarEncuestaParticipSA = habilitarEncuestaParticipSA;
         validarOpcionesMenu();
 	}
 
@@ -90,6 +94,9 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
             case 4 : habilitado = habilitarBhc;
                 break;
             case 5 : habilitado = habilitarRojo;
+                break;
+            case 6 :
+                habilitado = habilitarEncuestaParticipSA && !existeencuestaParticipSA;
                 break;
             default: break;
         }
@@ -171,6 +178,21 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
                 }
                 img=getContext().getResources().getDrawable(R.drawable.redtubes);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+            case 6:
+                if (habilitarEncuestaParticipSA) {
+                    textView.setTextColor(Color.GRAY);
+                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+                }else{
+                    if (existeencuestaParticipSA) {
+                        textView.setTextColor(Color.BLUE);
+                        textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
+                    }else{
+                        textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+                    }
+                }
+                img=getContext().getResources().getDrawable(R.drawable.male);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
 		default:

@@ -24,14 +24,21 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.*;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuParticipanteAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaDatosPartoBB;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaLactanciaMaterna;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaPesoTalla;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
+import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaParticipanteSAActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.SeroprevalenciaDBConstants;
+
+import java.util.List;
 
 
 public class MenuParticipanteActivity extends AbstractAsyncActivity {
@@ -48,6 +55,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     boolean existeencuestaParto = false;
     boolean existeencuestaPeso = false;
     boolean existeencuestaLact = false;
+    boolean existeencuestaParticipSA = false;
+    boolean habilitarEncuestaParticipSA = false;
 
     private AlertDialog alertDialog;
 
@@ -155,6 +164,9 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             if (visible6ml) labelMuestra = getString(R.string.rojo6ml);
                             if (visible12ml) labelMuestra = getString(R.string.rojo12ml);
                         }
+                        break;
+                    case 6:
+                        tituloEncuesta = getString(R.string.new_participant_sa_survey);
                         break;
                     default:
                         break;
@@ -347,6 +359,14 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.putExtras(arguments);
                         startActivity(i);
                         break;
+                    case 6:
+                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
+                        i = new Intent(getApplicationContext(),
+                                NuevaEncuestaParticipanteSAActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        break;
                     default:
                         break;
 
@@ -397,6 +417,19 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                 if (encuestaLactanciaMaterna!=null) {
                     existeencuestaLact = true;
                 }
+
+                List<CartaConsentimiento> cartaConsentimiento = estudiosAdapter.getCartasConsentimientos(MainDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
+
+                for(CartaConsentimiento carta : cartaConsentimiento) {
+                    if (carta.getTamizaje().getEstudio().getCodigo()==Constants.COD_EST_SEROPREVALENCIA && carta.getAceptaParteA().equalsIgnoreCase("S")) {
+                        habilitarEncuestaParticipSA = true;
+                        EncuestaParticipanteSA encuestaParticipanteSA = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + participanteCHF.getParticipante().getCodigo(), null);
+                        if (encuestaParticipanteSA != null) {
+                            existeencuestaParticipSA = true;
+                        }
+                    }
+                }
+
                 estudiosAdapter.close();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
@@ -421,7 +454,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     + getString(R.string.participant)+ ": "+ participanteCHF.getParticipante().getNombreCompleto() +"\n"
                     + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " +participanteCHF.getParticipante().getSexo());
 
-            gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participanteCHF, existeencuestaParticip, existeencuestaParto, existeencuestaPeso, existeencuestaLact));
+            gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participanteCHF, existeencuestaParticip, existeencuestaParto, existeencuestaPeso, existeencuestaLact,
+                    existeencuestaParticipSA, habilitarEncuestaParticipSA));
             dismissProgressDialog();
         }
 

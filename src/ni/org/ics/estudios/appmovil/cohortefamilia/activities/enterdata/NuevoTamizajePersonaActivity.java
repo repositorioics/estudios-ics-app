@@ -40,6 +40,7 @@ import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CalcularEdad;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
@@ -377,6 +378,10 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	                notificarCambios = true;
 	                onPageTreeChanged();
 				}
+                //si tiene 2 o mas años preguntar si paticipa en estudio seroprevalencia
+                visible = edadAnios >= 2;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaSeroprevalencia()), visible);
+
 			}
 			if(page.getTitle().equals(labels.getAceptaTamizajePersona())){
 	            visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
@@ -838,6 +843,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	    		String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturo));
 	    		String aceptaParteB = datos.getString(this.getString(R.string.aceptaParteB));
 	    		String aceptaParteC = datos.getString(this.getString(R.string.aceptaParteC));
+                String aceptaSeroprevalencia = datos.getString(this.getString(R.string.aceptaSeroprevalencia));
 	    	    
 	        	//Inserta un nuevo consentimiento
 	    		CartaConsentimiento cc = new CartaConsentimiento();
@@ -909,6 +915,31 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	        	pchf.setPasive('0');
 	        	//Guarda el participante de chf
 	        	estudiosAdapter.crearParticipanteCohorteFamilia(pchf);
+
+                //Si acepta participar estudio seroprevalencia guardar participanteSeroprevalencia y carta de consentimiento para estudio Seroprevalencia
+                if(tieneValor(aceptaSeroprevalencia)){
+                    if (aceptaSeroprevalencia.equalsIgnoreCase(Constants.YES)) {
+                        //Recupera el estudio de la base de datos para el tamizaje
+                        Estudio estudioSA = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" +Constants.COD_EST_SEROPREVALENCIA, null);
+                        t.setEstudio(estudioSA);
+                        estudiosAdapter.crearTamizaje(t);
+
+                        cc.setTamizaje(t);
+                        estudiosAdapter.crearCartaConsentimiento(cc);
+
+                        ParticipanteSeroprevalencia pSA = new ParticipanteSeroprevalencia();
+                        pSA.setParticipanteSA(id);
+                        pSA.setParticipante(participante);
+                        pSA.setCasaCHF(casaCHF);
+                        pSA.setRecordDate(new Date());
+                        pSA.setRecordUser(username);
+                        pSA.setDeviceid(infoMovil.getDeviceId());
+                        pSA.setEstado('0');
+                        pSA.setPasive('0');
+                        //Guarda el participante de chf
+                        estudiosAdapter.crearParticipanteSeroprevalencia(pSA);
+                    }
+                }
 	        	//Cierra la base de datos
 	        	estudiosAdapter.close();
 	        	

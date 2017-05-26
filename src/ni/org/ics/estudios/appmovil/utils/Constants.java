@@ -37,4 +37,6 @@ public class Constants {
     public static final String OTRO = "Otro";
     public static final String NO = "No";
 
+    public static final int COD_EST_SEROPREVALENCIA = 2;
+
 }

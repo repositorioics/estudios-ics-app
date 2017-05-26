@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_house_sa_survey">Encuesta Casa Seroprevalencia</string>
+    <string name="confirm_house_survey">¿Desea agregar encuesta de seroprevalencia a esta casa? </string>
+    <string name="sedazoPuertasVentanas">¿Su casa tiene sedazo en las puertas y ventanas?</string>
+    <string name="compraProdEvitarZancudos">¿Compran productos para evitar los Zancudos en el hogar?</string>
+    <string name="tienePatioJardin">¿Tiene patio y/o jardín en su casa?</string>
+    <string name="utilizaAbate">¿Utiliza Abate o Temefos?</string>
+    <string name="fumiga">¿Fumigan su casa?</string>
+    <string name="cadaCuantoFumiga">¿Cada cuanto fumigan su casa?</string>
+
+    <string name="miembroFamConZikaSn">¿A algun miembro de su familia se le diagnostico Zika?</string>
+    <string name="cantMiembrosZika">¿A cuantos miembros de su hogar se le ha diagnosticado Zika?</string>
+    <string name="fechaDxZika">¿En que fecha se le diagnostico Zika?</string>
+    <string name="relacionFamZika">¿Que relacion familiar tiene con el participante? (Zika)</string>
+    <string name="otraRelacionFamZika">Otra relación familiar diagósticado zika</string>
+
+    <string name="miembroFamConDengueSn">¿A algun miembro de su familia se le diagnostico Dengue?</string>
+    <string name="cantMiembrosDengue">¿A cuantos miembros de su hogar se le ha diagnosticado dengue?</string>
+    <string name="fechaDxDengue">¿En que fecha se le diagnostico dengue?</string>
+    <string name="relacionFamDengue">¿Que relacion familiar tiene con el participante? (Dengue)</string>
+    <string name="otraRelacionFamDengue">Otra relación familiar diagósticado dengue</string>
+
+    <string name="miembroFamConChikSn">¿A algun miembro de su familia se le diagnostico Chikungunya?</string>
+    <string name="cantMiembrosChik">¿A cuantos miembros de su hogar se le ha diagnosticado Chikungunya?</string>
+    <string name="fechaDxChik">¿En que fecha se le diagnostico Chikungunya?</string>
+    <string name="relacionFamChik">¿Que relacion familiar tiene con el participante? (Chik)</string>
+    <string name="otraRelacionFamChik">Otra relación familiar diagósticado Chikungunya</string>
+</resources>

@@ -104,6 +104,8 @@ public class TamizajeFormLabels {
 	protected String aceptaParteBHint;
 	protected String aceptaParteC;
 	protected String aceptaParteCHint;
+    protected String aceptaSeroprevalencia;
+    protected String aceptaSeroprevalenciaHint;
 	
 	protected String finTamizajeLabel;
 
@@ -205,6 +207,8 @@ public class TamizajeFormLabels {
 		aceptaParteBHint = res.getString(R.string.aceptaParteBHint);
 		aceptaParteC = res.getString(R.string.aceptaParteC);
 		aceptaParteCHint = res.getString(R.string.aceptaParteCHint);
+        aceptaSeroprevalencia = res.getString(R.string.aceptaSeroprevalencia);
+        aceptaSeroprevalenciaHint = res.getString(R.string.aceptaSeroprevalenciaHint);
 		
 		finTamizajeLabel = res.getString(R.string.finTamizajeLabel);
 		
@@ -1669,7 +1673,20 @@ public class TamizajeFormLabels {
 		this.finTamizajeLabel = finTamizajeLabel;
 	}
 
-	
-	
-	
+
+    public String getAceptaSeroprevalencia() {
+        return aceptaSeroprevalencia;
+    }
+
+    public void setAceptaSeroprevalencia(String aceptaSeroprevalencia) {
+        this.aceptaSeroprevalencia = aceptaSeroprevalencia;
+    }
+
+    public String getAceptaSeroprevalenciaHint() {
+        return aceptaSeroprevalenciaHint;
+    }
+
+    public void setAceptaSeroprevalenciaHint(String aceptaSeroprevalenciaHint) {
+        this.aceptaSeroprevalenciaHint = aceptaSeroprevalenciaHint;
+    }
 }

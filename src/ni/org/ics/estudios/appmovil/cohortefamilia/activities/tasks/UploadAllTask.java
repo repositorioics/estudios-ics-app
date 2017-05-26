@@ -284,6 +284,17 @@ public class UploadAllTask extends UploadTask {
 	
 	private void actualizarBaseDatos(String estado, String opcion) {
 		int c;
+        if(opcion.equalsIgnoreCase(VISITA)){
+            c = mVisitasTerreno.size();
+            if(c>0){
+                for (VisitaTerreno visitaTerreno : mVisitasTerreno) {
+                    visitaTerreno.setEstado(estado.charAt(0));
+                    estudioAdapter.editarVisitaTerreno(visitaTerreno);
+                    publishProgress("Actualizando pretamizajes en base de datos local", Integer.valueOf(mVisitasTerreno.indexOf(visitaTerreno)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
         if(opcion.equalsIgnoreCase(PRETAMIZAJE)){
             c = mPreTamizajes.size();
             if(c>0){

@@ -170,7 +170,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (anios > 14 && participanteCHF.getParticipante().getSexo().matches("F")){
                 changeStatus(mWizardModel.findByKey(labels.getEstaEmbarazada()), true);
             }
-            if (anios > 18) {
+            if (anios >= 18) {
                 changeStatus(mWizardModel.findByKey(labels.getEsAlfabeto()), true);
                 changeStatus(mWizardModel.findByKey(labels.getNivelEducacion()), true);
                 changeStatus(mWizardModel.findByKey(labels.getTrabaja()), true);

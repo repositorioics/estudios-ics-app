@@ -925,6 +925,9 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         estudiosAdapter.crearTamizaje(t);
 
                         cc.setTamizaje(t);
+                        cc.setAceptaParteB(null);
+                        cc.setAceptaParteC(null);
+                        cc.setAceptaContactoFuturo(null);
                         estudiosAdapter.crearCartaConsentimiento(cc);
 
                         ParticipanteSeroprevalencia pSA = new ParticipanteSeroprevalencia();

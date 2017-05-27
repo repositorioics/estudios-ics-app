@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="new_house_sa_survey">Encuesta Casa Seroprevalencia</string>
-    <string name="confirm_house_survey">¿Desea agregar encuesta de seroprevalencia a esta casa? </string>
+    <string name="confirm_house_sa_survey">¿Desea agregar encuesta de seroprevalencia a esta casa? </string>
     <string name="sedazoPuertasVentanas">¿Su casa tiene sedazo en las puertas y ventanas?</string>
     <string name="compraProdEvitarZancudos">¿Compran productos para evitar los Zancudos en el hogar?</string>
     <string name="tienePatioJardin">¿Tiene patio y/o jardín en su casa?</string>

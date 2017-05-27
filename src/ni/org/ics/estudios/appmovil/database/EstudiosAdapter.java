@@ -89,6 +89,9 @@ public class EstudiosAdapter {
             db.execSQL(MainDBConstants.CREATE_PERSONACAMA_TABLE);
             db.execSQL(MainDBConstants.CREATE_TAMIZAJE_TABLE);
             db.execSQL(MainDBConstants.CREATE_CUARTO_TABLE);
+            db.execSQL(SeroprevalenciaDBConstants.CREATE_PARTICIPANTESA_TABLE);
+            db.execSQL(SeroprevalenciaDBConstants.CREATE_ENCUESTA_CASASA_TABLE);
+            db.execSQL(SeroprevalenciaDBConstants.CREATE_ENCUESTA_PARTICIPANTESA_TABLE);
         }
 
 		@Override

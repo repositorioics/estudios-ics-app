@@ -84,7 +84,7 @@ public class SeroprevalenciaDBConstants {
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
-            + "primary key (" + participante + "));";
+            + "primary key (" + casaCHF + "));";
 
     //Tabla EncuestaParticipanteSA
     public static final String ENCUESTA_PARTICIPANTESA_TABLE = "sa_encuestas_participante";

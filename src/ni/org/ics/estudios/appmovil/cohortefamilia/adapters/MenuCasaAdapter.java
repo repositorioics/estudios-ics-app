@@ -17,14 +17,16 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
 	private final String[] values;
 	private final int numPart;
 	private final int numCuartos;
+	private final int numAreas;
     private final boolean existeencuestaCasa;
 	public MenuCasaAdapter(Context context, int textViewResourceId,
-                           String[] values, int numPart, int numCuartos, boolean existeEncuestaCasa) {
+                           String[] values, int numPart, int numCuartos, boolean existeEncuestaCasa, int numAreas) {
 		super(context, textViewResourceId, values);
 		this.values = values;
 		this.numPart=numPart;
 		this.numCuartos=numCuartos;
         this.existeencuestaCasa = existeEncuestaCasa;
+        this.numAreas=numAreas;
 	}
 
     @Override
@@ -80,8 +82,13 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                 }
 			    break;			    
             case 3:
+            	textView.setText(values[position] + "(" + numAreas + ")");
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_selectall_holo_light);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                if (numAreas < 1){
+                    textView.setTextColor(Color.RED);
+                    textView.setTypeface(null, Typeface.BOLD);
+                }
                 break;
 
             default:

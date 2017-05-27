@@ -20,7 +20,8 @@ public class PersonaCamaForm extends AbstractWizardModel {
 	private PersonaCamaFormLabels labels;
 	private EstudiosAdapter estudiosAdapter;
 	int index = 0;
-
+	private String[] catSexo;
+	private String[] catSiNo;
 	
 	private String[] fillCatalog(String codigoCatalogo){
         String[] catalogo;
@@ -45,14 +46,14 @@ public class PersonaCamaForm extends AbstractWizardModel {
     	labels = new PersonaCamaFormLabels();
     	this.estudiosAdapter = new EstudiosAdapter(mContext,mPass,false,false);
     	estudiosAdapter.open();
-    	String[] catSexo = fillCatalog("CHF_CAT_SEXO");
-    	String[] catSiNo = fillCatalog("CHF_CAT_SINO");
+    	catSexo = fillCatalog("CHF_CAT_SEXO");
+    	catSiNo = fillCatalog("CHF_CAT_SINO");
     	estudiosAdapter.close();
     	
 		Page estaEnEstudio = new SingleFixedChoicePage(this,labels.getEstaEnEstudio(),"", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 		Page participante = new SelectParticipantPage(this,labels.getParticipante(),"", Constants.WIZARD, false).setRequired(true);
 		Page edad = new NumberPage(this,labels.getEdad(),"", Constants.WIZARD, false).setRangeValidation(true, 0, 100).setRequired(true);
-		Page sexo = new SingleFixedChoicePage(this,labels.getSexo(), "", Constants.WIZARD, true).setChoices(catSexo).setRequired(true);
+		Page sexo = new SingleFixedChoicePage(this,labels.getSexo(), "", Constants.WIZARD, false).setChoices(catSexo).setRequired(true);
         return new PageList(estaEnEstudio,participante,edad,sexo);
     }
 
@@ -60,8 +61,14 @@ public class PersonaCamaForm extends AbstractWizardModel {
 		return labels;
 	}
 
-	public void setLabels(PersonaCamaFormLabels labels) {
-		this.labels = labels;
+	public String[] getCatSexo() {
+		return catSexo;
 	}
+
+	public String[] getCatSiNo() {
+		return catSiNo;
+	}
+	
+	
     
 }

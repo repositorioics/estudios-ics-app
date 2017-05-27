@@ -10,12 +10,11 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 
 
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoCuartoActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaAreaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.AreaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Habitacion;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import android.os.AsyncTask;
@@ -100,7 +99,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
-        area = (Habitacion)this.getListAdapter().getItem(position);
+        area = (AreaAmbiente)this.getListAdapter().getItem(position);
         // Opcion de lista seleccionada
         Bundle arguments = new Bundle();
 		Intent i;
@@ -164,7 +163,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 				Bundle arguments = new Bundle();
 		        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
 				Intent i = new Intent(getApplicationContext(),
-						NuevoCuartoActivity.class);
+						NuevaAreaActivity.class);
 				i.putExtras(arguments);
 		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);

@@ -17,7 +17,7 @@ public class CamasHelper {
     public static ContentValues crearCamaContentValues(Cama cama){
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigoCama, cama.getCodigoCama());
-        cv.put(MainDBConstants.habitacion, cama.getCuarto().getCodigo());
+        if (cama.getCuarto()!=null) cv.put(MainDBConstants.habitacion, cama.getCuarto().getCodigo());
         cv.put(MainDBConstants.descCama, cama.getDescCama());
         if (cama.getRecordDate() != null) cv.put(MainDBConstants.recordDate, cama.getRecordDate().getTime());
 		cv.put(MainDBConstants.recordUser, cama.getRecordUser());

@@ -1867,7 +1867,7 @@ public class EstudiosAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mEncuestaParticipanteSA= EncuestaParticipanteSAHelper.crearEncuestaParticipanteSA(cursor);
-            ParticipanteSeroprevalencia participante = this.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participanteSA + "=" + cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.participanteSA)), null);
+            ParticipanteSeroprevalencia participante = this.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participanteSA + " = '" + cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.participanteSA))+"'", null);
             mEncuestaParticipanteSA.setParticipanteSA(participante);
         }
         if (!cursor.isClosed()) cursor.close();
@@ -1883,7 +1883,7 @@ public class EstudiosAdapter {
             do{
                 EncuestaParticipanteSA mEncuestaParticipanteSA = null;
                 mEncuestaParticipanteSA = EncuestaParticipanteSAHelper.crearEncuestaParticipanteSA(cursor);
-                ParticipanteSeroprevalencia participante = this.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participanteSA + "=" + cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.participanteSA)), null);
+                ParticipanteSeroprevalencia participante = this.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participanteSA + " = '" + cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.participanteSA))+"'", null);
                 mEncuestaParticipanteSA.setParticipanteSA(participante);
                 mEncuestasParticipanteSA.add(mEncuestaParticipanteSA);
             } while (cursor.moveToNext());

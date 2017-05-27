@@ -11,6 +11,9 @@ import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -62,6 +65,9 @@ public class UploadAllTask extends UploadTask {
     private List<EncuestaPesoTalla> mEncuestasPesoTalla = new ArrayList<EncuestaPesoTalla>();
     private List<EncuestaLactanciaMaterna> mEncuestasLacMat = new ArrayList<EncuestaLactanciaMaterna>();
     private List<Muestra> mMuestras = new ArrayList<Muestra>();
+    private List<ParticipanteSeroprevalencia> mParticipantesSA = new ArrayList<ParticipanteSeroprevalencia>();
+    private List<EncuestaCasaSA> mEncuestasCasaSA = new ArrayList<EncuestaCasaSA>();
+    private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = new ArrayList<EncuestaParticipanteSA>();
     //private List<Paxgene> mPaxgenes = new ArrayList<Paxgene>();
 
 	private String url = null;
@@ -92,8 +98,10 @@ public class UploadAllTask extends UploadTask {
     public static final String ENCUESTA_PESOTALLA = "20";
     public static final String ENCUESTA_LACTMAT = "21";
     public static final String MUESTRAS = "22";
-    //public static final String MUESTRAS_PAXGENE = "22";
-	private static final String TOTAL_TASK = "22";
+    public static final String PARTICIPANTESA = "23";
+    public static final String ENCUESTA_PARTICIPANTESA = "24";
+    public static final String ENCUESTA_CASASA = "25";
+	private static final String TOTAL_TASK = "25";
 	
 
 	@Override
@@ -129,7 +137,9 @@ public class UploadAllTask extends UploadTask {
             mEncuestasPesoTalla = estudioAdapter.getEncuestasPesoTallas(filtro, null);
             mEncuestasLacMat = estudioAdapter.getEncuestasLactanciaMaternas(filtro, null);
             mMuestras = estudioAdapter.getMuestras(filtro, null);
-            //mPaxgenes = estudioAdapter.getPaxgenes(filtro, null);
+            mParticipantesSA = estudioAdapter.getParticipantesSeroprevalencia(filtro, null);
+            mEncuestasCasaSA = estudioAdapter.getEncuestasCasaSA(filtro, null);
+            mEncuestasParticipanteSA = estudioAdapter.getEncuestasParticipanteSA(filtro,null);
 
 			publishProgress("Datos completos!", "2", "2");
 			
@@ -266,12 +276,24 @@ public class UploadAllTask extends UploadTask {
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
                 return error;
             }
-            /*actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS_PAXGENE);
-            error = cargarPaxgene(url, username, password);
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTESA);
+            error = cargarParticipantesSa(url, username, password);
             if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS_PAXGENE);
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTESA);
                 return error;
-            }*/
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_CASASA);
+            error = cargarEncuestasCasaSa(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_CASASA);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_PARTICIPANTESA);
+            error = cargarEncuestasParticipantesSa(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PARTICIPANTESA);
+                return error;
+            }
 		} catch (Exception e1) {
 
 			e1.printStackTrace();
@@ -1318,23 +1340,23 @@ public class UploadAllTask extends UploadTask {
     }
 
     /***************************************************/
-    /********************* Muestras Paxgene ************************/
+    /********************* Participantes sero prevalencia ************************/
     /***************************************************/
-    /* url, username, password
-    protected String cargarPaxgene(String url, String username,
+    // url, username, password
+    protected String cargarParticipantesSa(String url, String username,
                                     String password) throws Exception {
         try {
-            if(mPaxgenes.size()>0){
+            if(mParticipantesSA.size()>0){
                 // La URL de la solicitud POST
-                publishProgress("Enviando datos de PaxGene!", MUESTRAS_PAXGENE, TOTAL_TASK);
-                final String urlRequest = url + "/movil/paxgene";
-                Paxgene[] envio = mPaxgenes.toArray(new Paxgene[mPaxgenes.size()]);
+                publishProgress("Enviando muestras!", PARTICIPANTESA, TOTAL_TASK);
+                final String urlRequest = url + "/movil/participantesSA";
+                ParticipanteSeroprevalencia[] envio = mParticipantesSA.toArray(new ParticipanteSeroprevalencia[mParticipantesSA.size()]);
                 HttpHeaders requestHeaders = new HttpHeaders();
                 HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
                 requestHeaders.setContentType(MediaType.APPLICATION_JSON);
                 requestHeaders.setAuthorization(authHeader);
-                HttpEntity<Paxgene[]> requestEntity =
-                        new HttpEntity<Paxgene[]>(envio, requestHeaders);
+                HttpEntity<ParticipanteSeroprevalencia[]> requestEntity =
+                        new HttpEntity<ParticipanteSeroprevalencia[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
@@ -1350,5 +1372,75 @@ public class UploadAllTask extends UploadTask {
             Log.e(TAG, e.getMessage(), e);
             return e.getMessage();
         }
-    }*/
+    }
+
+    /***************************************************/
+    /********************* Encuestas Casas sero prevalencia ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarEncuestasCasaSa(String url, String username,
+                                                    String password) throws Exception {
+        try {
+            if(mEncuestasCasaSA.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando muestras!", ENCUESTA_CASASA, TOTAL_TASK);
+                final String urlRequest = url + "/movil/encuestasCasaSA";
+                EncuestaCasaSA[] envio = mEncuestasCasaSA.toArray(new EncuestaCasaSA[mEncuestasCasaSA.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<EncuestaCasaSA[]> requestEntity =
+                        new HttpEntity<EncuestaCasaSA[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* Encuestas Participantes sero prevalencia ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarEncuestasParticipantesSa(String url, String username,
+                                           String password) throws Exception {
+        try {
+            if(mEncuestasParticipanteSA.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando muestras!", ENCUESTA_PARTICIPANTESA, TOTAL_TASK);
+                final String urlRequest = url + "/movil/encuestasParticipanteSA";
+                EncuestaParticipanteSA[] envio = mEncuestasParticipanteSA.toArray(new EncuestaParticipanteSA[mEncuestasParticipanteSA.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<EncuestaParticipanteSA[]> requestEntity =
+                        new HttpEntity<EncuestaParticipanteSA[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
 }

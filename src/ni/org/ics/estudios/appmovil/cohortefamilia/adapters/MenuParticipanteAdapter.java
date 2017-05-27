@@ -181,7 +181,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
             case 6:
-                if (habilitarEncuestaParticipSA) {
+                if (!habilitarEncuestaParticipSA) {
                     textView.setTextColor(Color.GRAY);
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
                 }else{

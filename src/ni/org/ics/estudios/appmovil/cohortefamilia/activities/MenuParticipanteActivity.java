@@ -32,6 +32,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaLact
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaPesoTalla;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaParticipanteSAActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
@@ -47,6 +48,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private TextView textView;
     private String[] menu_participante;
     private static ParticipanteCohorteFamilia participanteCHF = new ParticipanteCohorteFamilia();
+    private static ParticipanteSeroprevalencia participanteSA = new ParticipanteSeroprevalencia();
     private EstudiosAdapter estudiosAdapter;
     private boolean habilitarBHC = false;
     private boolean habilitarRojo = false;
@@ -361,6 +363,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         break;
                     case 6:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
+                        if (participanteSA!=null) arguments.putSerializable(Constants.PARTICIPANTE_SA , participanteSA);
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaParticipanteSAActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -423,7 +426,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                 for(CartaConsentimiento carta : cartaConsentimiento) {
                     if (carta.getTamizaje().getEstudio().getCodigo()==Constants.COD_EST_SEROPREVALENCIA && carta.getAceptaParteA().equalsIgnoreCase("S")) {
                         habilitarEncuestaParticipSA = true;
-                        EncuestaParticipanteSA encuestaParticipanteSA = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + participanteCHF.getParticipante().getCodigo(), null);
+                        participanteSA = estudiosAdapter.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
+                        EncuestaParticipanteSA encuestaParticipanteSA = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participanteSA + "='" + participanteSA.getParticipanteSA()+"'", null);
                         if (encuestaParticipanteSA != null) {
                             existeencuestaParticipSA = true;
                         }

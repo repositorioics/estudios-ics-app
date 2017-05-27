@@ -178,7 +178,7 @@ public class Participante extends BaseMetaData implements Serializable{
             calendarToday.setTime(new Date());
             calendarDOB.setTime(this.fechaNac);
             Integer diaInicio = calendarDOB.get(Calendar.DAY_OF_MONTH);
-            Integer mesInicio = calendarDOB.get(Calendar.MONTH);
+            Integer mesInicio = calendarDOB.get(Calendar.MONTH)+1;
             Integer anioInicio = calendarDOB.get(Calendar.YEAR);
 
             Integer diaActual = calendarToday.get(Calendar.DAY_OF_MONTH);

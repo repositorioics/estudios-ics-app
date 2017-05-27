@@ -60,6 +60,7 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
     private static ParticipanteCohorteFamilia participanteCHF = new ParticipanteCohorteFamilia();
+    private static ParticipanteSeroprevalencia participanteSA = new ParticipanteSeroprevalencia();
     private String username;
     private SharedPreferences settings;
     private static final int EXIT = 1;
@@ -77,6 +78,7 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
                         null);
         infoMovil = new DeviceInfo(NuevaEncuestaParticipanteSAActivity.this);
         participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        participanteSA = (ParticipanteSeroprevalencia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE_SA);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new EncuestaParticipanteSAForm(this,mPass);
@@ -159,8 +161,8 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             }
         });
 
-        if (participanteCHF.getParticipante()!=null){
-            String edad[] = participanteCHF.getParticipante().getEdad().split("/");
+        if (participanteSA.getParticipante()!=null){
+            String edad[] = participanteSA.getParticipante().getEdad().split("/");
 
             int anios = 0;
             if (edad.length > 0)
@@ -171,6 +173,13 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
                 changeStatus(mWizardModel.findByKey(labels.getUsaCondon()), true);
                 changeStatus(mWizardModel.findByKey(labels.getUsaOtroMetodo()), true);
             }
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(participanteSA.getParticipante().getFechaNac());
+            int anioNac = calendar.get(Calendar.YEAR);
+            calendar.setTime(new Date());
+            int anioActual = calendar.get(Calendar.YEAR);
+            NumberPage p1 = (NumberPage)mWizardModel.findByKey(labels.getFechaVacunaFiebreAmar());
+            p1.setRangeValidation(true, anioNac, anioActual);
         }
 
         onPageTreeChanged();
@@ -329,14 +338,21 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
     public void updateModel(Page page){
         try {
             boolean visible = false;
+            if (page.getTitle().equals(labels.getEscuchadoZikaSn())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).contains(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getQueEsSika()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getTransmiteZika()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
             if (page.getTitle().equals(labels.getQueEsSika())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra");
+                visible = page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains("Otra");
                 changeStatus(mWizardModel.findByKey(labels.getOtroQueEsSika()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTransmiteZika())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra");
+                visible = page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains("Otra");
                 changeStatus(mWizardModel.findByKey(labels.getOtroTransmiteZika()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -382,7 +398,7 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getLugaresLarvas())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros lugares");
+                visible = page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains("Otros lugares");
                 changeStatus(mWizardModel.findByKey(labels.getOtrosLugaresLarvas()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -396,7 +412,7 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
     public void changeStatus(Page page, boolean visible){
         String clase = page.getClass().toString();
         if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage")){
-            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
             BarcodePage modifPage = (BarcodePage) page; modifPage.setValue("").setmVisible(visible);
@@ -411,10 +427,15 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             NumberPage modifPage = (NumberPage) page; modifPage.setValue("").setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")){
-            MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+            MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.DatePage")){
             DatePage modifPage = (DatePage) page; modifPage.setValue("").setmVisible(visible);
+        }
+        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NewDatePage")){
+            NewDatePage modifPage = (NewDatePage) page;
+            modifPage.resetData(new Bundle());
+            modifPage.setmVisible(visible);
         }
     }
 
@@ -464,7 +485,6 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
                 estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
             estudiosAdapter.open();
 
-            ParticipanteSeroprevalencia participanteSA = estudiosAdapter.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + "=" + participanteCHF.getParticipante().getCodigo(), null);
             EncuestaParticipanteSA encuesta = new EncuestaParticipanteSA();
             encuesta.setParticipanteSA(participanteSA);
             //listas
@@ -623,7 +643,7 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             encuesta.setEstado('0');
             encuesta.setPasive('0');
             boolean actualizada = false;
-            EncuestaParticipanteSA encuestaExiste = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participanteSA + "='" + participanteCHF.getParticipanteCHF() + "'", SeroprevalenciaDBConstants.participanteSA);
+            EncuestaParticipanteSA encuestaExiste = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participanteSA + "='" + participanteSA.getParticipanteSA() + "'", SeroprevalenciaDBConstants.participanteSA);
             if (encuestaExiste != null && encuestaExiste.getParticipanteSA() != null && encuestaExiste.getParticipanteSA().getParticipanteSA() != null)
                 actualizada = estudiosAdapter.editarEncuestaParticipanteSA(encuesta);
             else estudiosAdapter.crearEncuestaParticipanteSA(encuesta);

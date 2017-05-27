@@ -39,5 +39,6 @@ public class Constants {
     public static final String NO = "No";
 
     public static final int COD_EST_SEROPREVALENCIA = 2;
+    public static final String PARTICIPANTE_SA = "participanteSA";
 
 }

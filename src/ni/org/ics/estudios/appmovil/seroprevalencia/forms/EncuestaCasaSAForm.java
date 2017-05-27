@@ -54,8 +54,7 @@ public class EncuestaCasaSAForm extends AbstractWizardModel {
 
         Calendar calendarToday = Calendar.getInstance();
         calendarToday.setTime(new Date());
-        int anioInicio = calendarToday.get(Calendar.YEAR);
-        int anioFin = calendarToday.get(Calendar.YEAR)-2;
+        int anioFin = calendarToday.get(Calendar.YEAR);
 
         Page scSedazoPuertasVentanas = new SingleFixedChoicePage(this,labels.getSedazoPuertasVentanas(), "",Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scCompraProdEvitarZancudos = new SingleFixedChoicePage(this,labels.getCompraProdEvitarZancudos(), "",Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
@@ -66,19 +65,19 @@ public class EncuestaCasaSAForm extends AbstractWizardModel {
 
         Page scMiembroFamConZikaSn = new SingleFixedChoicePage(this,labels.getMiembroFamConZikaSn(), "",Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page npCantMiembrosZika = new NumberPage(this, labels.getCantMiembrosZika(), "", Constants.WIZARD, false).setRangeValidation(true, 0, 20).setRequired(true);
-        Page npFechaDxZika = new NumberPage(this, labels.getFechaDxZika(), "", Constants.WIZARD, false).setRangeValidation(true, anioInicio, anioFin).setRequired(true);
+        Page npFechaDxZika = new NumberPage(this, labels.getFechaDxZika(), "", Constants.WIZARD, false).setRangeValidation(true, 1900, anioFin).setRequired(true);
         Page scRelacionFamZika = new MultipleFixedChoicePage(this,labels.getRelacionFamZika(), "",Constants.WIZARD, false).setChoices(catRelacionFam).setRequired(true);
         Page tpOtraRelacionFamZika = new TextPage(this, labels.getOtraRelacionFamZika(), "", Constants.WIZARD, false).setRequired(true);
 
         Page scMiembroFamConDengueSn = new SingleFixedChoicePage(this,labels.getMiembroFamConDengueSn(), "",Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page npCantMiembrosDengue = new NumberPage(this, labels.getCantMiembrosDengue(), "", Constants.WIZARD, false).setRangeValidation(true, 0, 20).setRequired(true);
-        Page npFechaDxDengue = new NumberPage(this, labels.getFechaDxDengue(), "", Constants.WIZARD, false).setRangeValidation(true, anioInicio, anioFin).setRequired(true);
+        Page npFechaDxDengue = new NumberPage(this, labels.getFechaDxDengue(), "", Constants.WIZARD, false).setRangeValidation(true, 1900, anioFin).setRequired(true);
         Page scRelacionFamDengue = new MultipleFixedChoicePage(this,labels.getRelacionFamDengue(), "",Constants.WIZARD, false).setChoices(catRelacionFam).setRequired(true);
         Page tpOtraRelacionFamDengue = new TextPage(this, labels.getOtraRelacionFamDengue(), "", Constants.WIZARD, false).setRequired(true);
 
         Page scMiembroFamConChikSn = new SingleFixedChoicePage(this,labels.getMiembroFamConChikSn(), "",Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page npCantMiembrosChik = new NumberPage(this, labels.getCantMiembrosChik(), "", Constants.WIZARD, false).setRangeValidation(true, 0, 20).setRequired(true);
-        Page npFechaDxChik = new NumberPage(this, labels.getFechaDxChik(), "", Constants.WIZARD, false).setRangeValidation(true, anioInicio, anioFin).setRequired(true);
+        Page npFechaDxChik = new NumberPage(this, labels.getFechaDxChik(), "", Constants.WIZARD, false).setRangeValidation(true, 1900, anioFin).setRequired(true);
         Page scRelacionFamChik = new MultipleFixedChoicePage(this,labels.getRelacionFamChik(), "",Constants.WIZARD, false).setChoices(catRelacionFam).setRequired(true);
         Page tpOtraRelacionFamChik = new TextPage(this, labels.getOtraRelacionFamChik(), "", Constants.WIZARD, false).setRequired(true);
 

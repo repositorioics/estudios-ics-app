@@ -921,9 +921,11 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     if (aceptaSeroprevalencia.equalsIgnoreCase(Constants.YES)) {
                         //Recupera el estudio de la base de datos para el tamizaje
                         Estudio estudioSA = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" +Constants.COD_EST_SEROPREVALENCIA, null);
+                        t.setCodigo(infoMovil.getId());
                         t.setEstudio(estudioSA);
                         estudiosAdapter.crearTamizaje(t);
 
+                        cc.setCodigo(infoMovil.getId());
                         cc.setTamizaje(t);
                         cc.setAceptaParteB(null);
                         cc.setAceptaParteC(null);

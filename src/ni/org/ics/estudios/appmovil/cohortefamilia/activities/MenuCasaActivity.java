@@ -27,14 +27,19 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaCasaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCasaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
+import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
+import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaCasaSAActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.SeroprevalenciaDBConstants;
 
 
 public class MenuCasaActivity extends AbstractAsyncActivity {
@@ -47,7 +52,9 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 	private List<Cuarto> mCuartos = new ArrayList<Cuarto>();
 	private List<AreaAmbiente> mAreas = new ArrayList<AreaAmbiente>();
     private AlertDialog alertDialog;
-    boolean existeencuestaCasa = false;
+    private boolean existeencuestaCasa = false;
+    private boolean habilitarencuestaCasaSA = false;
+    private boolean existeencuestaCasaSA = false;
 
 	private EstudiosAdapter estudiosAdapter;
 
@@ -101,7 +108,10 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
     							ListaAreasActivity.class);
     					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     					i.putExtras(arguments);
-    					startActivity(i);break;    					
+    					startActivity(i);break;
+                    case 4:
+                        createDialog(position);
+                        break;
 				    default:
                         break;
 		        }
@@ -159,16 +169,33 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 		}
 	}
 
-    private void createDialog(int dialog) {
+    private void createDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        switch(dialog){
+        switch(position){
             case 1:
                 builder.setTitle(this.getString(R.string.confirm));
                 builder.setMessage(getString(R.string.confirm_house_survey) + "\n" + getString(R.string.code) + ": " + casaCHF.getCasa().getCodigo() + " " + casaCHF.getCasa().getNombre1JefeFamilia() + " " + casaCHF.getCasa().getApellido1JefeFamilia());
                 builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        crearEncuestaCasa();
+                        crearEncuestaCasa(position);
+                    }
+                });
+                builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+                break;
+            case 4:
+                builder.setTitle(this.getString(R.string.confirm));
+                builder.setMessage(getString(R.string.confirm_house_sa_survey) + "\n" + getString(R.string.code) + ": " + casaCHF.getCasa().getCodigo() + " " + casaCHF.getCasa().getNombre1JefeFamilia() + " " + casaCHF.getCasa().getApellido1JefeFamilia());
+                builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        crearEncuestaCasa(position);
                     }
                 });
                 builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -186,14 +213,15 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
         alertDialog.show();
     }
 
-    private void crearEncuestaCasa(){
-        new OpenDataEnterActivityTask().execute();
+    private void crearEncuestaCasa(int position){
+        new OpenDataEnterActivityTask().execute(String.valueOf(position));
     }
 	
 	// ***************************************
 	// Private classes
 	// ***************************************
     private class OpenDataEnterActivityTask extends AsyncTask<String, Void, String> {
+        private int position = 0;
         @Override
         protected void onPreExecute() {
             // before the request begins, show a progress indicator
@@ -202,16 +230,30 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 
         @Override
         protected String doInBackground(String... values) {
+            position = Integer.valueOf(values[0]);
             Bundle arguments = new Bundle();
             Intent i;
             try {
-                  if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+                switch (position) {
+                    case 1:
+                    if (casaCHF != null) arguments.putSerializable(Constants.CASA, casaCHF);
+                    i = new Intent(getApplicationContext(),
+                            NuevaEncuestaCasaActivity.class);
+                    i.putExtras(arguments);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                        break;
+                    case 4:
+                        if (casaCHF != null) arguments.putSerializable(Constants.CASA, casaCHF);
                         i = new Intent(getApplicationContext(),
-                                NuevaEncuestaCasaActivity.class);
+                                NuevaEncuestaCasaSAActivity.class);
                         i.putExtras(arguments);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
 
+                        break;
+                    default: break;
+                }
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
                 return "error";
@@ -240,11 +282,29 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 			try {
 				estudiosAdapter.open();
 				mParticipantes = estudiosAdapter.getParticipanteCohorteFamilias(MainDBConstants.casaCHF +" = " + codigoCasaCHF, MainDBConstants.participante);
-				mCuartos = estudiosAdapter.getCuartos(MainDBConstants.casa +" = '" + codigoCasaCHF + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
-				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + codigoCasaCHF + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
-                EncuestaCasa encuestaExiste = estudiosAdapter.getEncuestaCasa(EncuestasDBConstants.casa_chf + "=" + casaCHF.getCodigoCHF(), EncuestasDBConstants.casa_chf);
+				mCuartos = estudiosAdapter.getCuartos(MainDBConstants.casa + " = '" + codigoCasaCHF + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
+				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa + " = '" + codigoCasaCHF + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
+                EncuestaCasa encuestaExiste = estudiosAdapter.getEncuestaCasa(EncuestasDBConstants.casa_chf + " = " + casaCHF.getCodigoCHF(), EncuestasDBConstants.casa_chf);
                 if (encuestaExiste != null)
                     existeencuestaCasa = true;
+
+                EncuestaCasaSA encuestaCasaSA = estudiosAdapter.getEncuestaCasaSA(SeroprevalenciaDBConstants.casaCHF + " = '" + casaCHF.getCodigoCHF() + "'", null);
+                if (encuestaCasaSA != null) {
+                    existeencuestaCasaSA = true;
+                    habilitarencuestaCasaSA = true;
+                }
+                if (!existeencuestaCasaSA) {
+                    for (ParticipanteCohorteFamilia participanteCHF : mParticipantes) {
+                        List<CartaConsentimiento> cartaConsentimiento = estudiosAdapter.getCartasConsentimientos(MainDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
+                        for (CartaConsentimiento carta : cartaConsentimiento) {
+                            if (carta.getTamizaje().getEstudio().getCodigo() == Constants.COD_EST_SEROPREVALENCIA && carta.getAceptaParteA().equalsIgnoreCase("S")) {
+                                habilitarencuestaCasaSA = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
                 estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -258,7 +318,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
 			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.header_casa)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
-			gridView.setAdapter(new MenuCasaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_casa, mParticipantes.size(), mCuartos.size(), existeencuestaCasa, mAreas.size()));
+			gridView.setAdapter(new MenuCasaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_casa, mParticipantes.size(), mCuartos.size(), existeencuestaCasa, mAreas.size(), habilitarencuestaCasaSA, existeencuestaCasaSA));
 			dismissProgressDialog();
 		}
 

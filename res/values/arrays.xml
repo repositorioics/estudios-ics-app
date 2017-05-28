@@ -19,6 +19,7 @@
         <item>@string/new_survey_1</item>
         <item>@string/rooms</item>
         <item>@string/environments</item>
+        <item>@string/new_house_sa_survey</item>
     </string-array>
 
     <string-array name="menu_participante">

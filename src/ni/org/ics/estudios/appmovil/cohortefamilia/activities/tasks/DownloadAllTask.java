@@ -12,6 +12,9 @@ import ni.org.ics.estudios.appmovil.domain.*;
 
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -61,6 +64,9 @@ public class DownloadAllTask extends DownloadTask {
     private List<EncuestaPesoTalla> mEncuestasPesoTalla = null;
     private List<EncuestaLactanciaMaterna> mEncuestasLacMat = null;
     private List<Muestra> mMuestras = null;
+    private List<ParticipanteSeroprevalencia> mParticipantesSA = null;
+    private List<EncuestaCasaSA> mEncuestasCasaSA = null;
+    private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = null;
 	
 	public static final String ESTUDIO = "1";
 	public static final String BARRIO = "2";
@@ -86,7 +92,11 @@ public class DownloadAllTask extends DownloadTask {
     public static final String ENCUESTA_PESOTALLA = "22";
     public static final String ENCUESTA_LACTMAT = "23";
     public static final String MUESTRAS = "24";
-	private static final String TOTAL_TASK = "24";
+    public static final String PARTICIPANTESA = "25";
+    public static final String ENCUESTA_PARTICIPANTESA = "26";
+    public static final String ENCUESTA_CASASA = "27";
+
+    private static final String TOTAL_TASK = "27";
 
 	private String error = null;
 	private String url = null;
@@ -131,6 +141,9 @@ public class DownloadAllTask extends DownloadTask {
         estudioAdapter.borrarEncuestasLactanciaMaternas();
         estudioAdapter.borrarMuestras();
         estudioAdapter.borrarVisitasTerreno();
+        estudioAdapter.borrarParticipanteSeroprevalencia();
+        estudioAdapter.borrarEncuestaCasaSA();
+        estudioAdapter.borrarEncuestaParticipanteSA();
 		try {
 			if (mEstudios != null){
 				v = mEstudios.size();
@@ -350,6 +363,33 @@ public class DownloadAllTask extends DownloadTask {
                 while (iter.hasNext()){
                     estudioAdapter.crearMuestras(iter.next());
                     publishProgress("Insertando muestras en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mParticipantesSA != null){
+                v = mParticipantesSA.size();
+                ListIterator<ParticipanteSeroprevalencia> iter = mParticipantesSA.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearParticipanteSeroprevalencia(iter.next());
+                    publishProgress("Insertando participantes seroprevalencia en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mEncuestasCasaSA != null){
+                v = mEncuestasCasaSA.size();
+                ListIterator<EncuestaCasaSA> iter = mEncuestasCasaSA.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearEncuestaCasaSA(iter.next());
+                    publishProgress("Insertando encuestas de casa seroprevalencia en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mEncuestasParticipanteSA != null){
+                v = mEncuestasParticipanteSA.size();
+                ListIterator<EncuestaParticipanteSA> iter = mEncuestasParticipanteSA.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearEncuestaParticipanteSA(iter.next());
+                    publishProgress("Insertando encuestas de participantes seroprevalencia en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
             }
@@ -594,6 +634,33 @@ public class DownloadAllTask extends DownloadTask {
                     Muestra[].class);
             // convert the array to a list and return it
             mMuestras = Arrays.asList(responseEntityMuestras.getBody());
+
+            //Descargar participantes seroprevalencia
+            urlRequest = url + "/movil/participantesSA/";
+            publishProgress("Solicitando participantes seroprevalencia",PARTICIPANTESA,TOTAL_TASK);
+            // Perform the HTTP GET request
+            ResponseEntity<ParticipanteSeroprevalencia[]> responseEntityPartiSa = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ParticipanteSeroprevalencia[].class);
+            // convert the array to a list and return it
+            mParticipantesSA = Arrays.asList(responseEntityPartiSa.getBody());
+
+            //Descargar encuestas casas seroprevalencia
+            urlRequest = url + "/movil/encuestasCasaSA/";
+            publishProgress("Solicitando encuestas de casas seroprevalencia",ENCUESTA_CASASA,TOTAL_TASK);
+            // Perform the HTTP GET request
+            ResponseEntity<EncuestaCasaSA[]> responseEntityEncuCasaSa = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    EncuestaCasaSA[].class);
+            // convert the array to a list and return it
+            mEncuestasCasaSA = Arrays.asList(responseEntityEncuCasaSa.getBody());
+
+            //Descargar encuestas participantes seroprevalencia
+            urlRequest = url + "/movil/encuestasParticipanteSA/";
+            publishProgress("Solicitando encuestas de participantes seroprevalencia",ENCUESTA_PARTICIPANTESA,TOTAL_TASK);
+            // Perform the HTTP GET request
+            ResponseEntity<EncuestaParticipanteSA[]> responseEntityEncuPartiSa = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    EncuestaParticipanteSA[].class);
+            // convert the array to a list and return it
+            mEncuestasParticipanteSA = Arrays.asList(responseEntityEncuPartiSa.getBody());
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

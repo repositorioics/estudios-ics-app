@@ -1348,7 +1348,7 @@ public class UploadAllTask extends UploadTask {
         try {
             if(mParticipantesSA.size()>0){
                 // La URL de la solicitud POST
-                publishProgress("Enviando muestras!", PARTICIPANTESA, TOTAL_TASK);
+                publishProgress("Enviando participantes seroprevalencia!", PARTICIPANTESA, TOTAL_TASK);
                 final String urlRequest = url + "/movil/participantesSA";
                 ParticipanteSeroprevalencia[] envio = mParticipantesSA.toArray(new ParticipanteSeroprevalencia[mParticipantesSA.size()]);
                 HttpHeaders requestHeaders = new HttpHeaders();
@@ -1383,7 +1383,7 @@ public class UploadAllTask extends UploadTask {
         try {
             if(mEncuestasCasaSA.size()>0){
                 // La URL de la solicitud POST
-                publishProgress("Enviando muestras!", ENCUESTA_CASASA, TOTAL_TASK);
+                publishProgress("Enviando enguestas de casa seroprevalencia!", ENCUESTA_CASASA, TOTAL_TASK);
                 final String urlRequest = url + "/movil/encuestasCasaSA";
                 EncuestaCasaSA[] envio = mEncuestasCasaSA.toArray(new EncuestaCasaSA[mEncuestasCasaSA.size()]);
                 HttpHeaders requestHeaders = new HttpHeaders();
@@ -1418,7 +1418,7 @@ public class UploadAllTask extends UploadTask {
         try {
             if(mEncuestasParticipanteSA.size()>0){
                 // La URL de la solicitud POST
-                publishProgress("Enviando muestras!", ENCUESTA_PARTICIPANTESA, TOTAL_TASK);
+                publishProgress("Enviando encuestas de participantes seroprevalencia!", ENCUESTA_PARTICIPANTESA, TOTAL_TASK);
                 final String urlRequest = url + "/movil/encuestasParticipanteSA";
                 EncuestaParticipanteSA[] envio = mEncuestasParticipanteSA.toArray(new EncuestaParticipanteSA[mEncuestasParticipanteSA.size()]);
                 HttpHeaders requestHeaders = new HttpHeaders();

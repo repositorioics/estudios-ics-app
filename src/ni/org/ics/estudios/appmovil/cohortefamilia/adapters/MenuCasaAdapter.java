@@ -19,14 +19,18 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
 	private final int numCuartos;
 	private final int numAreas;
     private final boolean existeencuestaCasa;
+    private final boolean habilitarencuestaCasaSA;
+    private final boolean existeencuestaCasaSA;
 	public MenuCasaAdapter(Context context, int textViewResourceId,
-                           String[] values, int numPart, int numCuartos, boolean existeEncuestaCasa, int numAreas) {
+                           String[] values, int numPart, int numCuartos, boolean existeEncuestaCasa, int numAreas, boolean habilitarencuestaCasaSA, boolean existeencuestaCasaSA) {
 		super(context, textViewResourceId, values);
 		this.values = values;
 		this.numPart=numPart;
 		this.numCuartos=numCuartos;
         this.existeencuestaCasa = existeEncuestaCasa;
         this.numAreas=numAreas;
+        this.existeencuestaCasaSA = existeencuestaCasaSA;
+        this.habilitarencuestaCasaSA = habilitarencuestaCasaSA;
 	}
 
     @Override
@@ -36,6 +40,9 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
         if (position == 1){
                 habilitado = !existeencuestaCasa;
          }
+        if (position == 4){
+            habilitado = habilitarencuestaCasaSA && !existeencuestaCasaSA;
+        }
         return habilitado;
     }
 	@Override
@@ -89,6 +96,21 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                     textView.setTypeface(null, Typeface.BOLD);
                 }
+                break;
+            case 4:
+                if (!habilitarencuestaCasaSA) {
+                    textView.setTextColor(Color.GRAY);
+                    textView.setText(textView.getText()+"\n"+ getContext().getResources().getString(R.string.notavailable));
+                }else{
+                    if (existeencuestaCasaSA) {
+                        textView.setTextColor(Color.BLUE);
+                        textView.setText(textView.getText()+"\n"+ getContext().getResources().getString(R.string.done));
+                    }else{
+                        textView.setText(textView.getText()+"\n"+ getContext().getResources().getString(R.string.pending));
+                    }
+                }
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_archive);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
 
             default:

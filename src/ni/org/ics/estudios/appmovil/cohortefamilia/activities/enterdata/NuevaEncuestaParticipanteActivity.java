@@ -361,6 +361,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getTrabaja())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTipoTrabajo()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOcupacionActual()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -368,8 +369,11 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getVaNinoEscuela())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getGradoCursa()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTurno()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombreCentroEstudio()), visible);
+                notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getDondeCuidanNino()), visible);
                 notificarCambios = false;
@@ -384,9 +388,12 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getPadreEnEstudio())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoPadreEstudio()), visible);
+                notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getPadreAlfabeto()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNivelEducacionPadre()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTrabajaPadre()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -400,9 +407,12 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getMadreEnEstudio())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoMadreEstudio()), visible);
+                notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getMadreAlfabeto()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNivelEducacionMadre()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTrabajaMadre()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -416,7 +426,9 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getFuma())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getPeriodicidadFuma()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrillos()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getFumaDentroCasa()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -424,8 +436,11 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getTuberculosisPulmonarActual())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioFechaDiagnosticoTubPulActual()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMesFechaDiagnosticoTubPulActual()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTomaTratamientoTubPulActual()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCompletoTratamientoTubPulActual()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -445,6 +460,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getFechaDiagnosticoTubPulPasadoSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioFechaDiagnosticoTubPulPasado()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMesFechaDiagnosticoTubPulPasado()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();

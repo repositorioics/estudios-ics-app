@@ -172,6 +172,7 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
                 changeStatus(mWizardModel.findByKey(labels.getUsaPlanificacionFam()), true);
                 changeStatus(mWizardModel.findByKey(labels.getUsaCondon()), true);
                 changeStatus(mWizardModel.findByKey(labels.getUsaOtroMetodo()), true);
+
             }
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(participanteSA.getParticipante().getFechaNac());
@@ -341,6 +342,7 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             if (page.getTitle().equals(labels.getEscuchadoZikaSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).contains(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getQueEsSika()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTransmiteZika()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -360,7 +362,9 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             if (page.getTitle().equals(labels.getTenidoZikaSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getFechaZika()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getSintomasZika()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getZikaConfirmadoMedico()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -368,6 +372,7 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             if (page.getTitle().equals(labels.getTenidoDengueSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getFechaDengue()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDengueConfirmadoMedico()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -375,6 +380,7 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             if (page.getTitle().equals(labels.getTenidoChikSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getFechaChik()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getChikConfirmadoMedico()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -412,7 +418,7 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
     public void changeStatus(Page page, boolean visible){
         String clase = page.getClass().toString();
         if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage")){
-            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);//modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
             BarcodePage modifPage = (BarcodePage) page; modifPage.setValue("").setmVisible(visible);

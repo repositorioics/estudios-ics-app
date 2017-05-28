@@ -52,6 +52,8 @@ public class NuevaEncuestaCasaSAActivity extends FragmentActivity implements
     private Button mNextButton;
     private Button mPrevButton;
 
+    private List<String> valoresSeleccionados = null;
+
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
 
@@ -331,27 +333,31 @@ public class NuevaEncuestaCasaSAActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getMiembroFamConZikaSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCantMiembrosZika()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getFechaDxZika()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelacionFamZika()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRelacionFamZika())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra relacion familiar");
-                changeStatus(mWizardModel.findByKey(labels.getOtraRelacionFamZika()), visible);
-                notificarCambios = false;
-                onPageTreeChanged();
+                    visible = page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains("Otra relacion familiar");
+                    changeStatus(mWizardModel.findByKey(labels.getOtraRelacionFamZika()), visible);
+                    notificarCambios = false;
+                    onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getMiembroFamConDengueSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCantMiembrosDengue()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getFechaDxDengue()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelacionFamDengue()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRelacionFamDengue())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra relacion familiar");
+                visible = page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains("Otra relacion familiar");
                 changeStatus(mWizardModel.findByKey(labels.getOtraRelacionFamDengue()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -359,13 +365,15 @@ public class NuevaEncuestaCasaSAActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getMiembroFamConChikSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCantMiembrosChik()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getFechaDxChik()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelacionFamChik()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRelacionFamChik())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra relacion familiar");
+                visible = page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains("Otra relacion familiar");
                 changeStatus(mWizardModel.findByKey(labels.getOtraRelacionFamChik()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -379,7 +387,7 @@ public class NuevaEncuestaCasaSAActivity extends FragmentActivity implements
     public void changeStatus(Page page, boolean visible){
         String clase = page.getClass().toString();
         if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage")){
-            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
+            SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);//modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
             BarcodePage modifPage = (BarcodePage) page; modifPage.setValue("").setmVisible(visible);
@@ -539,8 +547,8 @@ public class NuevaEncuestaCasaSAActivity extends FragmentActivity implements
             encuestaCasa.setOtraRelacionFamChik(otraRelacionFamChik);
 
             if (tieneValor(cantMiembrosZika)) encuestaCasa.setCantMiembrosZika(Integer.valueOf(cantMiembrosZika));
-            if (tieneValor(cantMiembrosDengue)) encuestaCasa.setCantMiembrosZika(Integer.valueOf(cantMiembrosDengue));
-            if (tieneValor(cantMiembrosChik)) encuestaCasa.setCantMiembrosZika(Integer.valueOf(cantMiembrosChik));
+            if (tieneValor(cantMiembrosDengue)) encuestaCasa.setCantMiembrosDengue(Integer.valueOf(cantMiembrosDengue));
+            if (tieneValor(cantMiembrosChik)) encuestaCasa.setCantMiembrosChik(Integer.valueOf(cantMiembrosChik));
 
             //Metadata
             encuestaCasa.setRecordDate(new Date());

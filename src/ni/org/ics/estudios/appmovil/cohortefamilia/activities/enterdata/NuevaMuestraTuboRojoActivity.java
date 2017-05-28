@@ -360,10 +360,13 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getTomaMxSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoMx()), visible);
-                //changeStatus(mWizardModel.findByKey(labels.getHora()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNumPinchazos()), visible);
+                notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoToma()), visible);
                 if (visible) horaTomaMx = null;

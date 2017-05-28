@@ -344,7 +344,9 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
             if (page.getTitle().equals(labels.getTiempoEmbSndr())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTiempoEmbSemana()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDocMedTiempoEmbSn()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDocMedEdadGestSn()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -353,8 +355,11 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
                 if (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null) {
                     visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                     changeStatus(mWizardModel.findByKey(labels.getDocMedTiempoEmb()), visible);
+                    notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getFum()), visible);
+                    notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoSn()), visible);
+                    notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), visible);
                 }
                 notificarCambios = false;
@@ -373,7 +378,9 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
                     int semanaGest = diferenciaEnSemanas(participanteCHF.getParticipante().getFechaNac(), dFum);
                     if (semanaGest < 25 || semanaGest > 45) visible = true;
                     changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoSn()), visible);
+                    notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), visible);
+                    notificarCambios = false;
                 }
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -381,6 +388,7 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
             if (page.getTitle().equals(labels.getFumFueraRangoSn())) {
                 if (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null) {
                     changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES));
+                    notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getReingresarFUM()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO));
                 }
                 notificarCambios = false;
@@ -389,6 +397,7 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
             if (page.getTitle().equals(labels.getDocMedEdadGestSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getEdadGest()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDocMedEdadGest()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -402,6 +411,7 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
             if (page.getTitle().equals(labels.getPesoBBSndr())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getPesoBB()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDocMedPesoBBSn()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();

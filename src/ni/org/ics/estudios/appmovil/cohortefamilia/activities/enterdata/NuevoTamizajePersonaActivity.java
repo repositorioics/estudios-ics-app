@@ -374,6 +374,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	    				changeStatus(mWizardModel.findByKey(labels.getParticipadoCohortePediatrica()), visible);
 	    				if(!visible) resetForm(96);
 	    			}
+                    notificarCambios = false;
 	                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParticipar()), !visible);
 	                notificarCambios = true;
 	                onPageTreeChanged();
@@ -386,6 +387,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 			if(page.getTitle().equals(labels.getAceptaTamizajePersona())){
 	            visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
 	            changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusion()), visible);
+                notificarCambios = false;
 	            changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), !visible);
 	            if(!visible) {
 	            	resetForm(100);
@@ -398,22 +400,30 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 			if (page.getTitle().equals(labels.getDondeAsisteProblemasSalud())) {
 				if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Centro de Salud Sócrates Flores")){
 					changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
+                    notificarCambios = false;
 	                changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
+                    notificarCambios = false;
 					changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), false);
 				}
 				else if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro centro de salud")){
 	            	changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), true);
+                    notificarCambios = false;
 	                changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
+                    notificarCambios = false;
 	                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true);
 	            }
 	            else if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Puesto de Salud")){
 	            	changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
+                    notificarCambios = false;
 	                changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), true);
+                    notificarCambios = false;
 	                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true);
 	            }
 	            else{
 	            	changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
+                    notificarCambios = false;
 	                changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
+                    notificarCambios = false;
 	                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true);
 	            }
 	            notificarCambios = false;
@@ -423,7 +433,9 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 				ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
 	            visible = test.size()>3;
 	            changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), visible);
+                notificarCambios = false;
 	            changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), visible);
+                notificarCambios = false;
 	            changeStatus(mWizardModel.findByKey(labels.getEsElegible()), visible);
 	            if(!visible){
 	            	resetForm(99);
@@ -452,6 +464,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 				else{
 					changeStatus(mWizardModel.findByKey(labels.getParticipadoCohortePediatrica()), visible);
 				}
+                notificarCambios = false;
 	            changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParticipar()), !visible);
 	            if(!visible){
 	            	resetForm(97);
@@ -475,30 +488,49 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 			if(page.getTitle().equals(labels.getParticipadoCohortePediatrica())){
 				visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
 				changeStatus(mWizardModel.findByKey(labels.getCodigoCohorte()), visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getCodigoNuevoParticipante()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getNombre1()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getNombre2()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido1()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido2()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getNombre1Padre()), !visible && edadAnios<18);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getNombre2Padre()), !visible && edadAnios<18);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido1Padre()), !visible && edadAnios<18);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido2Padre()), !visible && edadAnios<18);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getNombre1Madre()), !visible && edadAnios<18);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getNombre2Madre()), !visible && edadAnios<18);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido1Madre()), !visible && edadAnios<18);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido2Madre()), !visible && edadAnios<18);
 
 				if(edadAnios>18){
 					changeStatus(mWizardModel.findByKey(labels.getEmancipado()), false);
+                    notificarCambios = false;
 					changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), false);
+                    notificarCambios = false;
 	    			changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), false);
+                    notificarCambios = false;
 	    			changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), false);
+                    notificarCambios = false;
 	    			changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), false);
+                    notificarCambios = false;
 	    			changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), false);
 				}
 				else{
 					changeStatus(mWizardModel.findByKey(labels.getEmancipado()), true);
+                    notificarCambios = false;
 				}
 				changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), true);
 	            notificarCambios = false;
@@ -507,13 +539,21 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 			if(page.getTitle().equals(labels.getParticipanteOTutorAlfabeto())){
 				visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
 				changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getTestigoPresente()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), !visible);
 	            notificarCambios = false;
 	            if(!visible) {
@@ -526,8 +566,11 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 			if(page.getTitle().equals(labels.getEmancipado())){
 				visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
 				changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), !visible);
 				changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), !visible);
 	            notificarCambios = false;
@@ -536,9 +579,13 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 			if(page.getTitle().equals(labels.getTestigoPresente())){
 				visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
 				changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
 				notificarCambios = false;
 	            onPageTreeChanged();
@@ -546,8 +593,11 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 			if(page.getTitle().equals(labels.getAceptaParteA())){
 				visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
 				changeStatus(mWizardModel.findByKey(labels.getMotivoRechazoParteA()), !visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
+                notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
 	            
 	            notificarCambios = false;

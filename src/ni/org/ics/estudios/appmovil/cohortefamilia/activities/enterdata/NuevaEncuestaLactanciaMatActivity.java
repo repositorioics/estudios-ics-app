@@ -344,6 +344,7 @@ public class NuevaEncuestaLactanciaMatActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getDioPecho())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTiemPecho()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getPechoExc()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -351,8 +352,10 @@ public class NuevaEncuestaLactanciaMatActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getTiemPecho())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Aun se lo da");
                 changeStatus(mWizardModel.findByKey(labels.getPechoExc()), visible);
+                notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && !page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Desconocido") && !visible;
                 changeStatus(mWizardModel.findByKey(labels.getPechoExcAntes()), visible);
+                notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Numero de meses (02- 36)");
                 changeStatus(mWizardModel.findByKey(labels.getMesDioPecho()), visible);
                 notificarCambios = false;
@@ -361,23 +364,20 @@ public class NuevaEncuestaLactanciaMatActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getPechoExc())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("No Exclusivamente");
                 changeStatus(mWizardModel.findByKey(labels.getFormAlim()), visible);
-                //changeStatus(mWizardModel.findByKey(labels.getPechoExcAntes()), visible);
-                //changeStatus(mWizardModel.findByKey(labels.getTiempPechoExcAntes()), visible);
-                //changeStatus(mWizardModel.findByKey(labels.getMestPechoExc()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtraAlim()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEdadLiqDistPecho()), visible);
-                //changeStatus(mWizardModel.findByKey(labels.getMesDioLiqDisPecho()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEdadLiqDistLeche()), visible);
-                //changeStatus(mWizardModel.findByKey(labels.getMesDioLiqDisLeche()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEdAlimSolidos()), visible);
-                //changeStatus(mWizardModel.findByKey(labels.getMesDioAlimSol()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getPechoExcAntes())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Exclusivamente");
                 changeStatus(mWizardModel.findByKey(labels.getTiempPechoExcAntes()), visible);
-                //changeStatus(mWizardModel.findByKey(labels.getMestPechoExc()), false);
                 notificarCambios = false;
                 onPageTreeChanged();
             }

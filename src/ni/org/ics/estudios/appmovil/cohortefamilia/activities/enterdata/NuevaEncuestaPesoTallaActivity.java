@@ -367,8 +367,11 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
                             visible = false;
                         }
                         changeStatus(mWizardModel.findByKey(labels.getDifMediciones()), visible, null);
+                        notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getTalla3()), visible, null);
+                        notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getPeso3()), visible, null);
+                        notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getImc3()), visible, null);
                     }
                 }

@@ -339,6 +339,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     		if (page.getTitle().equals(labels.getVisitaExitosa())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
                 changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajeCasa()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonVisitaNoExitosa()), !visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -346,9 +347,13 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     		if (page.getTitle().equals(labels.getAceptaTamizajeCasa())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
                 changeStatus(mWizardModel.findByKey(labels.getCodigoCHF()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMismoJefe()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getFinTamizajeLabel()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaTamizajeCasa()), !visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaTamizajeCasaLabel()), !visible);
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -356,8 +361,11 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     		if (page.getTitle().equals(labels.getMismoJefe())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("No");
                 changeStatus(mWizardModel.findByKey(labels.getNombre1JefeFamilia()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2JefeFamilia()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido1JefeFamilia()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2JefeFamilia()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();

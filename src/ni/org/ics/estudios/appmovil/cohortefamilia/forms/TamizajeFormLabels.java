@@ -106,6 +106,12 @@ public class TamizajeFormLabels {
 	protected String aceptaParteCHint;
     protected String aceptaSeroprevalencia;
     protected String aceptaSeroprevalenciaHint;
+    protected String aceptaCohorteDengue;
+    protected String aceptaCohorteDengueHint;
+    protected String aceptaParteD;
+    protected String aceptaParteDHint;
+    protected String aceptaCohorteInfluenza;
+    protected String aceptaCohorteInfluenzaHint;
 	
 	protected String finTamizajeLabel;
 
@@ -209,6 +215,12 @@ public class TamizajeFormLabels {
 		aceptaParteCHint = res.getString(R.string.aceptaParteCHint);
         aceptaSeroprevalencia = res.getString(R.string.aceptaSeroprevalencia);
         aceptaSeroprevalenciaHint = res.getString(R.string.aceptaSeroprevalenciaHint);
+        aceptaCohorteDengue = res.getString(R.string.aceptaCohorteDengue);
+        aceptaCohorteDengueHint = res.getString(R.string.aceptaCohorteDengueHint);
+        aceptaParteD = res.getString(R.string.aceptaParteD);
+        aceptaParteDHint = res.getString(R.string.aceptaParteDHint);
+        aceptaCohorteInfluenza = res.getString(R.string.aceptaCohorteInfluenza);
+        aceptaCohorteInfluenzaHint = res.getString(R.string.aceptaCohorteInfluenzaHint);
 		
 		finTamizajeLabel = res.getString(R.string.finTamizajeLabel);
 		
@@ -1688,5 +1700,53 @@ public class TamizajeFormLabels {
 
     public void setAceptaSeroprevalenciaHint(String aceptaSeroprevalenciaHint) {
         this.aceptaSeroprevalenciaHint = aceptaSeroprevalenciaHint;
+    }
+
+    public String getAceptaCohorteDengue() {
+        return aceptaCohorteDengue;
+    }
+
+    public void setAceptaCohorteDengue(String aceptaCohorteDengue) {
+        this.aceptaCohorteDengue = aceptaCohorteDengue;
+    }
+
+    public String getAceptaCohorteDengueHint() {
+        return aceptaCohorteDengueHint;
+    }
+
+    public void setAceptaCohorteDengueHint(String aceptaCohorteDengueHint) {
+        this.aceptaCohorteDengueHint = aceptaCohorteDengueHint;
+    }
+
+    public String getAceptaCohorteInfluenza() {
+        return aceptaCohorteInfluenza;
+    }
+
+    public void setAceptaCohorteInfluenza(String aceptaCohorteInfluenza) {
+        this.aceptaCohorteInfluenza = aceptaCohorteInfluenza;
+    }
+
+    public String getAceptaCohorteInfluenzaHint() {
+        return aceptaCohorteInfluenzaHint;
+    }
+
+    public void setAceptaCohorteInfluenzaHint(String aceptaCohorteInfluenzaHint) {
+        this.aceptaCohorteInfluenzaHint = aceptaCohorteInfluenzaHint;
+    }
+
+    public String getAceptaParteD() {
+        return aceptaParteD;
+    }
+
+    public void setAceptaParteD(String aceptaParteD) {
+        this.aceptaParteD = aceptaParteD;
+    }
+
+    public String getAceptaParteDHint() {
+        return aceptaParteDHint;
+    }
+
+    public void setAceptaParteDHint(String aceptaParteDHint) {
+        this.aceptaParteDHint = aceptaParteDHint;
     }
 }

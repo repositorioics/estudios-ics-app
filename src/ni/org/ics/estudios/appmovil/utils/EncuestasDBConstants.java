@@ -298,6 +298,7 @@ public class EncuestasDBConstants {
     public static final String vaNinoEscuela = "vaNinoEscuela";
     public static final String gradoCursa = "gradoCursa";
     public static final String turno = "turno";
+    public static final String centroEstudio = "centroEstudio";
     public static final String nombreCentroEstudio = "nombreCentroEstudio";
     public static final String dondeCuidanNino = "dondeCuidanNino";
     public static final String ninoTrabaja = "ninoTrabaja";
@@ -368,6 +369,7 @@ public class EncuestasDBConstants {
             + vaNinoEscuela  + " text, "
             + gradoCursa  + " text, "
             + turno  + " text, "
+            + centroEstudio + " text, "
             + nombreCentroEstudio  + " text, "
             + dondeCuidanNino  + " text, "
             + ninoTrabaja  + " text, "
@@ -427,6 +429,8 @@ public class EncuestasDBConstants {
     public static final String ENCUESTA_PESOTALLA_TABLE = "chf_encuestas_pesotalla";
 
     //campos tabla EncuestaPesoTalla
+    public static final String tomoMedidaSn = "tomoMedidaSn";
+    public static final String razonNoTomoMedidas = "razonNoTomoMedidas";
     public static final String peso1 = "peso1";
     public static final String peso2 = "peso2";
     public static final String peso3 = "peso3";
@@ -443,6 +447,8 @@ public class EncuestasDBConstants {
     public static final String CREATE_ENCUESTA_PESOTALLA_TABLE = "create table if not exists "
             + ENCUESTA_PESOTALLA_TABLE + " ("
             + participante_chf + " text not null, "
+            + tomoMedidaSn + " text, "
+            + razonNoTomoMedidas + " text, "
             + peso1 + " real, "
             + peso2 + " real, "
             + peso3 + " real, "

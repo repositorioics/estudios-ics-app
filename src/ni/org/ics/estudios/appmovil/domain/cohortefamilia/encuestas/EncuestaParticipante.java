@@ -29,6 +29,7 @@ public class EncuestaParticipante extends BaseMetaData {
     private String vaNinoEscuela;
     private String gradoCursa;
     private String turno;
+    private String centroEstudio;
     private String nombreCentroEstudio;
     private String dondeCuidanNino;
     private String ninoTrabaja;
@@ -193,6 +194,14 @@ public class EncuestaParticipante extends BaseMetaData {
 
     public void setTurno(String turno) {
         this.turno = turno;
+    }
+
+    public String getCentroEstudio() {
+        return centroEstudio;
+    }
+
+    public void setCentroEstudio(String centroEstudio) {
+        this.centroEstudio = centroEstudio;
     }
 
     public String getNombreCentroEstudio() {

@@ -39,6 +39,15 @@ public class Constants {
     public static final String NO = "No";
 
     public static final int COD_EST_SEROPREVALENCIA = 2;
+    public static final int COD_EST_COHORTEDENGUE = 3;
+    public static final int COD_EST_COHORTEINFLUENZA = 4;
+
+    //VERSIONES CARTA DE CONSENTIMIENTO
+    public static final String VERSION_CC_CHF = "1"; //COHORTE DENGUE
+    public static final String VERSION_CC_SA = "1"; //SEROPREVALENCIA
+    public static final String VERSION_CC_CD = "11"; //COHORTE DENGUE
+    public static final String VERSION_CC_CI = "7"; //COHORTE INFLUENZA
+
     public static final String PARTICIPANTE_SA = "participanteSA";
 
 }

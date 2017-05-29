@@ -2,7 +2,7 @@
 <resources>
     <string name="new_participant_sa_survey">Encuesta Participante Seroprevalencia</string>
     <string name="escuchadoZikaSn">¿Usted ha escuchado sobre Zika?</string>
-    <string name="queEsSika">¿Que es Zika?</string>
+    <string name="queEsSika">¿Qué es Zika?</string>
     <string name="otroQueEsSika">Otra definición</string>
     <string name="otroQueEsSikaHint">Indicar otra definición de Zika</string>
     <string name="transmiteZika">¿Cómo se transmite Zika?</string>
@@ -11,17 +11,17 @@
     <string name="sintomas">¿Ha tenido los  siguiente sintomas en los ultimos 18 meses (1 año y medio)?</string>
     <string name="tenidoZikaSn">¿Ha tenido Zika en los ultimos 2 años?</string>
     <string name="fechaZika">¿En que año tuvo Zika?</string>
-    <string name="sintomasZika">¿Que sintomas tuvo con Zika?</string>
+    <string name="sintomasZika">¿Qué sintomas tuvo con Zika?</string>
     <string name="zikaConfirmadoMedico">¿El diagnóstico de Zika fue confirmado por un médico?</string>
     <string name="tenidoDengueSn">¿Ha tenido Dengue en los ultimos 2 años?</string>
     <string name="fechaDengue">¿En que año tuvo dengue?</string>
     <string name="dengueConfirmadoMedico">¿El diagnóstico de dengue fue confirmado por un médico?</string>
     <string name="tenidoChikSn">¿Ha tenido Chikungunya en los ultimos 2 años?</string>
     <string name="fechaChik">¿En que año tuvo Chikungunya?</string>
-    <string name="chikConfirmadoMedico">¿El diagnósticado de Chikungunya fue confirmado por un médico?</string>
+    <string name="chikConfirmadoMedico">¿El diagnóstico de Chikungunya fue confirmado por un médico?</string>
     <string name="vacunaFiebreAmarillaSn">¿Ha sido vacunado contra la fiebre amarilla?</string>
     <string name="fechaVacunaFiebreAmar">¿En que año fue vacunado contra la fiebre amarilla?</string>
-    <string name="transfusionSangreSn">¿Ha tenido una transfusión de sangre en los ultimos 18 meses (1 ano y medio)?</string>
+    <string name="transfusionSangreSn">¿Ha tenido una transfusión de sangre en los ultimos 18 meses (1 año y medio)?</string>
     <string name="fechaTransfusionSangre">¿En que fecha ha  tenido una transfusión de sangre?</string>
     <string name="usaRepelentes">¿Se aplica repelente de insectos en su cuerpo? </string>
     <string name="conoceLarvas">¿Usted conoce las larvas o clavitos de los zancudos que transmiten: Dengue, Chikungunya y Zika?</string>
@@ -29,7 +29,7 @@
     <string name="otrosLugaresLarvas">Otros lugares</string>
     <string name="otrosLugaresLarvasHint">Indique en que otros lugares ha visto las larvas en su casa</string>
     <string name="tenidoHijos">¿Ha tenido hijos?</string>
-    <string name="usaPlanificacionFam">¿Usa planificacion familiar?</string>
+    <string name="usaPlanificacionFam">¿Usa planificación familiar?</string>
     <string name="usaCondon">¿Usa condón con su pareja?</string>
     <string name="usaOtroMetodo">¿Usa otro método para protejerse de enfermedades de transmisión sexual?</string>
 </resources>

@@ -19,6 +19,7 @@
     <string name="vaNinoEscuela">¿Va el niño a la escuela?</string>
     <string name="gradoCursa">¿En qué grado está?</string>
     <string name="turno">Turno</string>
+    <string name="centroEstudio">Seleccione nombre de la escuela (Universidad)</string>
     <string name="nombreCentroEstudio">Nombre de la escuela (Universidad)</string>
     <string name="dondeCuidanNino">Si el niño No va a la escuela, donde lo cuidan?</string>
     <string name="ninoTrabaja">¿Niño Trabaja?</string>

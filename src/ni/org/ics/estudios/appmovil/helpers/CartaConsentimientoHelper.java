@@ -37,6 +37,8 @@ public class CartaConsentimientoHelper {
         cv.put(MainDBConstants.aceptaContactoFuturo, carta.getAceptaContactoFuturo());
         cv.put(MainDBConstants.aceptaParteB, carta.getAceptaParteB());
         cv.put(MainDBConstants.aceptaParteC, carta.getAceptaParteC());
+        cv.put(MainDBConstants.aceptaParteD, carta.getAceptaParteD());
+        cv.put(MainDBConstants.version, carta.getVersion());
         if (carta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, carta.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, carta.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(carta.getPasive()));
@@ -69,6 +71,8 @@ public class CartaConsentimientoHelper {
         mCarta.setAceptaContactoFuturo(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaContactoFuturo)));
         mCarta.setAceptaParteB(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParteB)));
         mCarta.setAceptaParteC(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParteC)));
+        mCarta.setAceptaParteD(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParteD)));
+        mCarta.setVersion(cursor.getString(cursor.getColumnIndex(MainDBConstants.version)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mCarta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mCarta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         mCarta.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));

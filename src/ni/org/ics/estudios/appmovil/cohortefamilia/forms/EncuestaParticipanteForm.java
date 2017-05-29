@@ -21,6 +21,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
     private String[] catTipoTrab;
     private String[] catGrado;
     private String[] catTurno;
+    private String[] catCentro;
     private String[] catCuidan;
     private String[] catViveNino;
     private String[] catSiNoDe;
@@ -62,6 +63,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         catSiNoDe = fillCatalog("CHF_CAT_SND");
         catFuma = fillCatalog("CHF_CAT_FREC_FUMA");
         catMeses = fillCatalog("CHF_CAT_MESES");
+        catCentro = fillCatalog("CENTRO_EST");
 
         estudiosAdapter.close();
 
@@ -76,6 +78,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         Page scVaNinoEscuela = new SingleFixedChoicePage(this, labels.getVaNinoEscuela(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scGradoCursa = new SingleFixedChoicePage(this, labels.getGradoCursa(), "", Constants.WIZARD, false).setChoices(catGrado).setRequired(true);
         Page sTurno = new SingleFixedChoicePage(this, labels.getTurno(), "", Constants.WIZARD, false).setChoices(catTurno).setRequired(true);
+        Page scCentroEstudio = new SingleFixedChoicePage(this, labels.getCentroEstudio(), "", Constants.WIZARD, false).setChoices(catCentro).setRequired(true);
         Page tpNombreCentroEstudio = new TextPage(this, labels.getNombreCentroEstudio(), "", Constants.WIZARD, false).setRequired(true);
         Page scDondeCuidanNino = new SingleFixedChoicePage(this, labels.getDondeCuidanNino(), "", Constants.WIZARD, false).setChoices(catCuidan).setRequired(true);
         Page scNinoTrabaja = new SingleFixedChoicePage(this, labels.getNinoTrabaja(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
@@ -131,7 +134,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         Page scVacunaInfluenza = new SingleFixedChoicePage(this, labels.getVacunaInfluenza(), "", Constants.WIZARD, true).setChoices(catSiNoDe).setRequired(true);
         Page anioVacunaInfluenza = new NumberPage(this, labels.getAnioVacunaInfluenza(), "", Constants.WIZARD, false).setRequired(true);
 
-        return new PageList(scEstaEmbarazada, npSemanasEmbarazo, scEsAlfabeto, scNivelEducacion, scTrabaja, scTipoTrabajo, tpOcupacionActual, scVaNinoEscuela, scGradoCursa, sTurno, tpNombreCentroEstudio, scDondeCuidanNino, scNinoTrabaja, tpOcupacionActualNino,
+        return new PageList(scEstaEmbarazada, npSemanasEmbarazo, scEsAlfabeto, scNivelEducacion, scTrabaja, scTipoTrabajo, tpOcupacionActual, scVaNinoEscuela, scGradoCursa, sTurno, scCentroEstudio, tpNombreCentroEstudio, scDondeCuidanNino, scNinoTrabaja, tpOcupacionActualNino,
                 npCantNinosLugarCuidan, scConQuienViveNino, tpDescOtroViveNino, scPadreEnEstudio, bpCodigoPadreEstudio, scPadreAlfabeto, scNivelEducacionPadre, scTrabajaPadre, scTipoTrabajoPadre, scMadreEnEstudio, bpCodigoMadreEstudio, scMadreAlfabeto,
                 scNivelEducacionMadre, scTrabajaMadre, scTipoTrabajoMadre, scFuma, scPeriodicidadFuma, npCantidadCigarrillos, scFumaDentroCasa, scTuberculosisPulmonarActual, npAnioFechaDiagnosticoTubPulActual, scMesFechaDiagnosticoTubPulActual, scTomaTratamientoTubPulActual, scCompletoTratamientoTubPulActual,
                 scTuberculosisPulmonarPasado, scFechaDiagnosticoTubPulPasadoSn, npAnioFechaDiagnosticoTubPulPasado, scMesFechaDiagnosticoTubPulPasado, scTomaTratamientoTubPulPasado, scCompletoTratamientoTubPulPasado, scAlergiaRespiratoria, scCardiopatia, scEnfermedadPulmonarOC, scDiabetes, scPresionAlta, scAsma, scSilbidoRespirarPechoApretado,

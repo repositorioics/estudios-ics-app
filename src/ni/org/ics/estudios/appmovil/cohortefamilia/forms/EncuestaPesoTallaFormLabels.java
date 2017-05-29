@@ -10,6 +10,8 @@ import ni.org.ics.estudios.appmovil.R;
  */
 public class EncuestaPesoTallaFormLabels {
 
+    protected String tomoMedidaSn;
+    protected String razonNoTomoMedidas;
     protected String peso1;
     protected String peso2;
     protected String peso3;
@@ -27,6 +29,8 @@ public class EncuestaPesoTallaFormLabels {
 
     public EncuestaPesoTallaFormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
+        tomoMedidaSn = res.getString(R.string.tomoMedidaSn);
+        razonNoTomoMedidas = res.getString(R.string.razonNoTomoMedidas);
         peso1 = res.getString(R.string.peso1);
         peso2 = res.getString(R.string.peso2);
         peso3 = res.getString(R.string.peso3);
@@ -154,5 +158,21 @@ public class EncuestaPesoTallaFormLabels {
 
     public void setDifMediciones(String difMediciones) {
         this.difMediciones = difMediciones;
+    }
+
+    public String getTomoMedidaSn() {
+        return tomoMedidaSn;
+    }
+
+    public void setTomoMedidaSn(String tomoMedidaSn) {
+        this.tomoMedidaSn = tomoMedidaSn;
+    }
+
+    public String getRazonNoTomoMedidas() {
+        return razonNoTomoMedidas;
+    }
+
+    public void setRazonNoTomoMedidas(String razonNoTomoMedidas) {
+        this.razonNoTomoMedidas = razonNoTomoMedidas;
     }
 }

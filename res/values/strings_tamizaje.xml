@@ -100,6 +100,12 @@
     <string name="aceptaParteCHint">¿Acepta Parte C Estudios Geneticos?</string>
     <string name="aceptaSeroprevalencia">Acepta estudio Seroprevalencia</string>
     <string name="aceptaSeroprevalenciaHint">¿Acepta participar en estudio seroprevalencia arbovirus?</string>
+    <string name="aceptaCohorteDengue">Acepta estudio Cohorte Dengue</string>
+    <string name="aceptaCohorteDengueHint">¿Acepta participar en estudio Cohorte pediátrica de Dengue?</string>
+    <string name="aceptaParteD">Acepta Parte D</string>
+    <string name="aceptaParteDHint">¿Acepta Parte D-Zika estudio Cohorte pediátrica de Dengue?</string>
+    <string name="aceptaCohorteInfluenza">Acepta estudio Cohorte Influeza</string>
+    <string name="aceptaCohorteInfluenzaHint">¿Acepta participar en estudio Cohorte pediátrica de Influenza?</string>
     
 	<string name="noAceptaTamizajePersona">No acepta tamizaje!</string>
 	<string name="noCumpleCriteriosInclusion">No cumple los criterios de inclusión!</string>

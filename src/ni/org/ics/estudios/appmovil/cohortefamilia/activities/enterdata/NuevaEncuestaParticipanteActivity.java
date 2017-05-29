@@ -372,10 +372,16 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTurno()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getNombreCentroEstudio()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getCentroEstudio()), visible);
                 notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getDondeCuidanNino()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getCentroEstudio())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra");
+                changeStatus(mWizardModel.findByKey(labels.getNombreCentroEstudio()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -536,6 +542,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             String vaNinoEscuela = datos.getString(this.getString(R.string.vaNinoEscuela));
             String gradoCursa = datos.getString(this.getString(R.string.gradoCursa));
             String turno = datos.getString(this.getString(R.string.turno));
+            String centroEstudio = datos.getString(this.getString(R.string.centroEstudio));
             String nombreCentroEstudio = datos.getString(this.getString(R.string.nombreCentroEstudio));
             String dondeCuidanNino = datos.getString(this.getString(R.string.dondeCuidanNino));
             String ninoTrabaja = datos.getString(this.getString(R.string.ninoTrabaja));
@@ -636,6 +643,11 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 MessageResource msTurno = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + turno + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_TURNO'", null);
                 if (msTurno != null) encuesta.setTurno(msTurno.getCatKey());
+            }
+            if (tieneValor(centroEstudio)){
+                MessageResource mscentroEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + centroEstudio + "' and "
+                        + CatalogosDBConstants.catRoot + "='CENTRO_EST'", null);
+                if (mscentroEstudio != null) encuesta.setCentroEstudio(mscentroEstudio.getCatKey());
             }
             if (tieneValor(dondeCuidanNino)){
                 MessageResource msdondeCuidanNino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + dondeCuidanNino + "' and "

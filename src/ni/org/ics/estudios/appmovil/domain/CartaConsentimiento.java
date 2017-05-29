@@ -33,7 +33,8 @@ public class CartaConsentimiento extends BaseMetaData {
     private String aceptaContactoFuturo;
     private String aceptaParteB; //Consentimiento para almacenamiento y uso de muestras en estudios futuros
     private String aceptaParteC; //Consentimiento adicional para estudios genéticos
-
+    private String aceptaParteD; //Consentimiento adicional para ZIKA (Estudio Cohorte Dengue)
+    private String version; //Indicar la versión actual al momento de registrar la carta
 
 
     public String getCodigo() {
@@ -202,6 +203,22 @@ public class CartaConsentimiento extends BaseMetaData {
 
     public void setAceptaParteC(String aceptaParteC) {
         this.aceptaParteC = aceptaParteC;
+    }
+
+    public String getAceptaParteD() {
+        return aceptaParteD;
+    }
+
+    public void setAceptaParteD(String aceptaParteD) {
+        this.aceptaParteD = aceptaParteD;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     @Override

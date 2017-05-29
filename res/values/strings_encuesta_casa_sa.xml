@@ -9,21 +9,21 @@
     <string name="fumiga">¿Fumigan su casa?</string>
     <string name="cadaCuantoFumiga">¿Cada cuánto fumigan su casa?</string>
 
-    <string name="miembroFamConZikaSn">¿A algun miembro de su familia se le diagnostico Zika?</string>
+    <string name="miembroFamConZikaSn">¿A algun miembro de su familia se le diagnosticó Zika?</string>
     <string name="cantMiembrosZika">¿A cuantos miembros de su hogar se le ha diagnosticado Zika?</string>
-    <string name="fechaDxZika">¿En que año se le diagnostico Zika?</string>
+    <string name="fechaDxZika">¿En que año se le diagnosticó Zika?</string>
     <string name="relacionFamZika">¿Que relación familiar tiene con el participante? (Zika)</string>
-    <string name="otraRelacionFamZika">Otra relación familiar diagósticado zika</string>
+    <string name="otraRelacionFamZika">Otra relación familiar diagnosticado zika</string>
 
-    <string name="miembroFamConDengueSn">¿A algun miembro de su familia se le diagnostico Dengue?</string>
+    <string name="miembroFamConDengueSn">¿A algun miembro de su familia se le diagnosticó Dengue?</string>
     <string name="cantMiembrosDengue">¿A cuantos miembros de su hogar se le ha diagnosticado dengue?</string>
-    <string name="fechaDxDengue">¿En que año se le diagnostico dengue?</string>
+    <string name="fechaDxDengue">¿En que año se le diagnosticó dengue?</string>
     <string name="relacionFamDengue">¿Que relación familiar tiene con el participante? (Dengue)</string>
-    <string name="otraRelacionFamDengue">Otra relación familiar diagósticado dengue</string>
+    <string name="otraRelacionFamDengue">Otra relación familiar diagnosticado dengue</string>
 
-    <string name="miembroFamConChikSn">¿A algun miembro de su familia se le diagnostico Chikungunya?</string>
+    <string name="miembroFamConChikSn">¿A algun miembro de su familia se le diagnosticó Chikungunya?</string>
     <string name="cantMiembrosChik">¿A cuantos miembros de su hogar se le ha diagnosticado Chikungunya?</string>
-    <string name="fechaDxChik">¿En que año se le diagnostico Chikungunya?</string>
+    <string name="fechaDxChik">¿En que año se le diagnosticó Chikungunya?</string>
     <string name="relacionFamChik">¿Que relación familiar tiene con el participante? (Chik)</string>
-    <string name="otraRelacionFamChik">Otra relación familiar diagósticado Chikungunya</string>
+    <string name="otraRelacionFamChik">Otra relación familiar diagnosticado Chikungunya</string>
 </resources>

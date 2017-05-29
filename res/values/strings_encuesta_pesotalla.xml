@@ -2,6 +2,8 @@
 <resources>
 
     <string name="new_Weighheight_survey">Encuesta Peso y Talla</string>
+    <string name="tomoMedidaSn">¿Se tomó medida de peso y talla?</string>
+    <string name="razonNoTomoMedidas">Indicar porque razón no se tomaron las medidas</string>
     <string name="pesoHint">(Kg)</string>
     <string name="peso1">Digite Peso 1</string>
     <string name="peso2">Digite Peso 2</string>

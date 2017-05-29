@@ -316,66 +316,85 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
     public void updateModel(Page page){
         try {
             boolean visible = false;
+            if (page.getTitle().equals(labels.getTomoMedidaSn())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getPeso1()), visible, null);
+                changeStatus(mWizardModel.findByKey(labels.getTalla1()), visible, null);
+                changeStatus(mWizardModel.findByKey(labels.getImc1()), visible, null);
+                changeStatus(mWizardModel.findByKey(labels.getPeso2()), visible, null);
+                changeStatus(mWizardModel.findByKey(labels.getTalla2()), visible, null);
+                changeStatus(mWizardModel.findByKey(labels.getImc2()), visible, null);
+                changeStatus(mWizardModel.findByKey(labels.getPeso3()), visible, null);
+                changeStatus(mWizardModel.findByKey(labels.getTalla3()), visible, null);
+                changeStatus(mWizardModel.findByKey(labels.getImc3()), visible, null);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoTomoMedidas()), visible, null);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
             if (page.getTitle().equals(labels.getTalla1())) {
-                Page peso = mWizardModel.findByKey(labels.getPeso1());
-                String valorPeso = peso.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                String valorTalla = page.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                if (valorPeso != null && !valorPeso.isEmpty()) {
-                    Double dPeso = Double.valueOf(valorPeso);
-                    if (valorTalla != null && !valorTalla.isEmpty()) {
-                        Double dTalla = Double.valueOf(valorTalla)/100; // se convierte a metro
-                        Double imc = dPeso/Math.pow(dTalla, 2);
-                        changeStatus(mWizardModel.findByKey(labels.getImc1()), true, String.valueOf(imc));
+
+                    Double imc = 0D;
+                    Page peso = mWizardModel.findByKey(labels.getPeso1());
+                    String valorPeso = peso.getData().getString(NumberPage.SIMPLE_DATA_KEY);
+                    String valorTalla = page.getData().getString(NumberPage.SIMPLE_DATA_KEY);
+                    if (valorPeso != null && !valorPeso.isEmpty()) {
+                        Double dPeso = Double.valueOf(valorPeso);
+                        if (valorTalla != null && !valorTalla.isEmpty()) {
+                            Double dTalla = Double.valueOf(valorTalla) / 100; // se convierte a metro
+                            imc = dPeso / Math.pow(dTalla, 2);
+                            visible = true;
+                        }
                     }
-                }
+                    changeStatus(mWizardModel.findByKey(labels.getImc1()), visible, String.valueOf(imc));
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTalla2())) {
-                Page peso1 = mWizardModel.findByKey(labels.getPeso1());
-                Page peso2 = mWizardModel.findByKey(labels.getPeso2());
-                Page talla1 = mWizardModel.findByKey(labels.getTalla1());
+                    Page peso1 = mWizardModel.findByKey(labels.getPeso1());
+                    Page peso2 = mWizardModel.findByKey(labels.getPeso2());
+                    Page talla1 = mWizardModel.findByKey(labels.getTalla1());
 
-                String valorPeso1 = peso1.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                String valorTalla1 = talla1.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                String valorPeso2 = peso2.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                String valorTalla2 = page.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                if (valorPeso2 != null && !valorPeso2.isEmpty()) {
-                    Double dPeso2 = Double.valueOf(valorPeso2);
-                    if (valorTalla2 != null && !valorTalla2.isEmpty()) {
-                        Double dTalla2M = Double.valueOf(valorTalla2)/100; // se convierte a metro
-                        Double imc = dPeso2/Math.pow(dTalla2M, 2);
-                        changeStatus(mWizardModel.findByKey(labels.getImc2()), true, String.valueOf(imc));
-                        //calcular diferencia de mediciones
-                        Double difTalla;
-                        Double difPeso;
-                        Double dPeso1 = Double.valueOf(valorPeso1);
-                        Double dTalla1 = Double.valueOf(valorTalla1);
-                        Double dTalla2 = Double.valueOf(valorTalla2);
-                        if (dPeso1 - dPeso2 > 0)
-                            difPeso = ((((dPeso1 - dPeso2) * 10 + 0.5) / 10) / dPeso1 * 100);
-                        else
-                            difPeso = ((((dPeso2 - dPeso1) * 10 - 0.5) / 10) / dPeso1 * 100);
-                        if (dTalla1 - dTalla2 > 0)
-                            difTalla = ((((dTalla1 - dTalla2) * 10 + 0.5) / 10) / dTalla1 * 100);
-                        else
-                            difTalla = ((((dTalla2 - dTalla1) * 10 - 0.5) / 10) / dTalla1 * 100);
-
-                        if (difPeso >= 5 || difTalla >= 5) {
+                    Double difTalla = 0D;
+                    Double difPeso = 0D;
+                    Double imc = 0D;
+                    String valorPeso1 = peso1.getData().getString(NumberPage.SIMPLE_DATA_KEY);
+                    String valorTalla1 = talla1.getData().getString(NumberPage.SIMPLE_DATA_KEY);
+                    String valorPeso2 = peso2.getData().getString(NumberPage.SIMPLE_DATA_KEY);
+                    String valorTalla2 = page.getData().getString(NumberPage.SIMPLE_DATA_KEY);
+                    if (valorPeso2 != null && !valorPeso2.isEmpty()) {
+                        Double dPeso2 = Double.valueOf(valorPeso2);
+                        if (valorTalla2 != null && !valorTalla2.isEmpty()) {
+                            Double dTalla2M = Double.valueOf(valorTalla2) / 100; // se convierte a metro
+                            imc = dPeso2 / Math.pow(dTalla2M, 2);
                             visible = true;
-                        }else{
-                            visible = false;
+                            //calcular diferencia de mediciones
+
+                            Double dPeso1 = Double.valueOf(valorPeso1);
+                            Double dTalla1 = Double.valueOf(valorTalla1);
+                            Double dTalla2 = Double.valueOf(valorTalla2);
+                            if (dPeso1 - dPeso2 > 0)
+                                difPeso = ((((dPeso1 - dPeso2) * 10 + 0.5) / 10) / dPeso1 * 100);
+                            else
+                                difPeso = ((((dPeso2 - dPeso1) * 10 - 0.5) / 10) / dPeso1 * 100);
+                            if (dTalla1 - dTalla2 > 0)
+                                difTalla = ((((dTalla1 - dTalla2) * 10 + 0.5) / 10) / dTalla1 * 100);
+                            else
+                                difTalla = ((((dTalla2 - dTalla1) * 10 - 0.5) / 10) / dTalla1 * 100);
                         }
-                        changeStatus(mWizardModel.findByKey(labels.getDifMediciones()), visible, null);
-                        notificarCambios = false;
-                        changeStatus(mWizardModel.findByKey(labels.getTalla3()), visible, null);
-                        notificarCambios = false;
-                        changeStatus(mWizardModel.findByKey(labels.getPeso3()), visible, null);
-                        notificarCambios = false;
-                        changeStatus(mWizardModel.findByKey(labels.getImc3()), visible, null);
-                    }
+                    changeStatus(mWizardModel.findByKey(labels.getImc2()), visible, String.valueOf(imc));
+                    notificarCambios = false;
+                    visible = difPeso >= 5 || difTalla >= 5;
+                    changeStatus(mWizardModel.findByKey(labels.getDifMediciones()), visible, null);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getPeso3()), visible, null);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTalla3()), visible, null);
+
                 }
                 notificarCambios = false;
+                //changeStatus(mWizardModel.findByKey(labels.getImc3()), visible, null);
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
 
@@ -383,14 +402,16 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
                 Page peso = mWizardModel.findByKey(labels.getPeso3());
                 String valorPeso = peso.getData().getString(NumberPage.SIMPLE_DATA_KEY);
                 String valorTalla = page.getData().getString(NumberPage.SIMPLE_DATA_KEY);
+                Double imc = 0D;
                 if (valorPeso != null && !valorPeso.isEmpty()) {
                     Double dPeso = Double.valueOf(valorPeso);
                     if (valorTalla != null && !valorTalla.isEmpty()) {
                         Double dTalla = Double.valueOf(valorTalla)/100; // se convierte a metro
-                        Double imc = dPeso/Math.pow(dTalla, 2);
-                        changeStatus(mWizardModel.findByKey(labels.getImc3()), true, String.valueOf(imc));
+                        imc = dPeso/Math.pow(dTalla, 2);
+                        visible = true;
                     }
                 }
+                changeStatus(mWizardModel.findByKey(labels.getImc3()), visible, String.valueOf(imc));
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -414,10 +435,10 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
             modifPage.setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
-            TextPage modifPage = (TextPage) page; modifPage.setValue("").setmVisible(visible);
+            TextPage modifPage = (TextPage) page; modifPage.setValue("").setmVisible(visible); //modifPage.resetData(new Bundle()); modifPage.setmVisible(visible); //
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")){
-            NumberPage modifPage = (NumberPage) page; modifPage.setValue("").setmVisible(visible);
+            NumberPage modifPage = (NumberPage) page; modifPage.setValue("").setmVisible(visible); //modifPage.resetData(new Bundle()); modifPage.setmVisible(visible); //
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")){
             MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
@@ -440,6 +461,8 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
                 datos.putString(entry.getKey(), entry.getValue());
             }
 
+            String tomoMedidaSn = datos.getString(this.getString(R.string.tomoMedidaSn));
+            String razonNoTomoMedidas = datos.getString(this.getString(R.string.razonNoTomoMedidas));
             String peso1 = datos.getString(this.getString(R.string.peso1));
             String peso2 = datos.getString(this.getString(R.string.peso2));
             String peso3 = datos.getString(this.getString(R.string.peso3));
@@ -453,6 +476,12 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
             EncuestaPesoTalla encuesta = new EncuestaPesoTalla();
             encuesta.setParticipante(participanteCHF);
 
+            if (tieneValor(tomoMedidaSn)){
+                MessageResource mstomoMedidaSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomoMedidaSn + "' and "
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                if (mstomoMedidaSn != null) encuesta.setTomoMedidaSn(mstomoMedidaSn.getCatKey());
+            }
+            encuesta.setRazonNoTomoMedidas(razonNoTomoMedidas);
             if (tieneValor(peso1)) encuesta.setPeso1(Double.valueOf(peso1));
             if (tieneValor(peso2)) encuesta.setPeso2(Double.valueOf(peso2));
             if (tieneValor(peso3)) encuesta.setPeso3(Double.valueOf(peso3));

@@ -280,6 +280,8 @@ public class MainDBConstants {
     public static final String aceptaContactoFuturo = "aceptaContactoFuturo";
     public static final String aceptaParteB = "aceptaParteB"; //Consentimiento para almacenamiento y uso de muestras en estudios futuros
     public static final String aceptaParteC = "aceptaParteC"; //Consentimiento adicional para estudios genéticos
+    public static final String aceptaParteD = "aceptaParteD"; //Consentimiento adicional para ZIKA (Estudio Cohorte Dengue)
+    public static final String version = "version"; //Indicar la versión actual al momento de registrar la carta
 
 
     //crear tabla cartas_consentimientos
@@ -306,6 +308,8 @@ public class MainDBConstants {
             + aceptaContactoFuturo + " text, "
             + aceptaParteB + " text, "
             + aceptaParteC + " text, "
+            + aceptaParteD + " text, "
+            + version + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "

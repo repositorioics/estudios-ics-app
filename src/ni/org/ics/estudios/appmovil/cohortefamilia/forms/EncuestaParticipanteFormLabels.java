@@ -21,6 +21,7 @@ public class EncuestaParticipanteFormLabels {
     protected String vaNinoEscuela;
     protected String gradoCursa;
     protected String turno;
+    protected String centroEstudio;
     protected String nombreCentroEstudio;
     protected String dondeCuidanNino;
     protected String ninoTrabaja;
@@ -88,6 +89,7 @@ public class EncuestaParticipanteFormLabels {
         vaNinoEscuela = res.getString(R.string.vaNinoEscuela);
         gradoCursa = res.getString(R.string.gradoCursa);
         turno = res.getString(R.string.turno);
+        centroEstudio = res.getString(R.string.centroEstudio);
         nombreCentroEstudio = res.getString(R.string.nombreCentroEstudio);
         dondeCuidanNino = res.getString(R.string.dondeCuidanNino);
         ninoTrabaja = res.getString(R.string.ninoTrabaja);
@@ -228,6 +230,14 @@ public class EncuestaParticipanteFormLabels {
 
     public void setTurno(String turno) {
         this.turno = turno;
+    }
+
+    public String getCentroEstudio() {
+        return centroEstudio;
+    }
+
+    public void setCentroEstudio(String centroEstudio) {
+        this.centroEstudio = centroEstudio;
     }
 
     public String getNombreCentroEstudio() {

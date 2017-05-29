@@ -31,6 +31,7 @@ public class EncuestaParticipanteHelper {
         cv.put(EncuestasDBConstants.vaNinoEscuela, encuesta.getVaNinoEscuela());
         cv.put(EncuestasDBConstants.gradoCursa, encuesta.getGradoCursa());
         cv.put(EncuestasDBConstants.turno, encuesta.getTurno());
+        cv.put(EncuestasDBConstants.centroEstudio, encuesta.getCentroEstudio());
         cv.put(EncuestasDBConstants.nombreCentroEstudio, encuesta.getNombreCentroEstudio());
         cv.put(EncuestasDBConstants.dondeCuidanNino, encuesta.getDondeCuidanNino());
         cv.put(EncuestasDBConstants.ninoTrabaja, encuesta.getNinoTrabaja());
@@ -105,6 +106,7 @@ public class EncuestaParticipanteHelper {
         if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.vaNinoEscuela))!=null) mEncuesta.setVaNinoEscuela(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.vaNinoEscuela)));
         mEncuesta.setGradoCursa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.gradoCursa)));
         mEncuesta.setTurno(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.turno)));
+        mEncuesta.setCentroEstudio(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.centroEstudio)));
         mEncuesta.setNombreCentroEstudio(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.nombreCentroEstudio)));
         mEncuesta.setDondeCuidanNino(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.dondeCuidanNino)));
         if (cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ninoTrabaja))!=null) mEncuesta.setNinoTrabaja(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.ninoTrabaja)));

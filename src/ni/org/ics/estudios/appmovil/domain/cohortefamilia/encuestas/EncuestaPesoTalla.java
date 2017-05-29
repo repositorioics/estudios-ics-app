@@ -21,6 +21,8 @@ public class EncuestaPesoTalla extends BaseMetaData {
 	 */
 	
 	private ParticipanteCohorteFamilia participante;
+    private String tomoMedidaSn;
+    private String razonNoTomoMedidas;
 	private Double peso1;
 	private Double peso2;
 	private Double peso3;
@@ -43,7 +45,23 @@ public class EncuestaPesoTalla extends BaseMetaData {
         this.participante = participante;
     }
 
-	public Double getPeso1() {
+    public String getTomoMedidaSn() {
+        return tomoMedidaSn;
+    }
+
+    public void setTomoMedidaSn(String tomoMedidaSn) {
+        this.tomoMedidaSn = tomoMedidaSn;
+    }
+
+    public String getRazonNoTomoMedidas() {
+        return razonNoTomoMedidas;
+    }
+
+    public void setRazonNoTomoMedidas(String razonNoTomoMedidas) {
+        this.razonNoTomoMedidas = razonNoTomoMedidas;
+    }
+
+    public Double getPeso1() {
 		return peso1;
 	}
 

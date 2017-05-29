@@ -11,14 +11,14 @@
     <string name="alto">Alto</string>
     <string name="total">Total</string>
     <string name="numVentanas">Número de ventanas</string>
-    <string name="ventAbierta">Abierta o cerrada</string>
+    <string name="abierta">Abierta?</string>
     <string name="conVentana">Con ventana</string>
     <string name="codigoHabitacion">Codigo Habitacion</string>
     <string name="cantidadCamas">Numero de camas</string>
 	<string name="descCama">Observación cama</string>
 	<string name="estaEnEstudio">Esta en el estudio?</string>
 	<string name="participante">Escanear Código</string>
-	<string name="tipo">Tipo</string>
+	<string name="tipo">Tipo de ambiente</string>
 	<string name="largo">Largo (mts)</string>
 	<string name="ancho">Ancho (mts)</string>
 	<string name="area">Area (mts2)</string>

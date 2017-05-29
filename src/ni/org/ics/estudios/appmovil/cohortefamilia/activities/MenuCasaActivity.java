@@ -28,7 +28,6 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEnc
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCasaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
-import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
@@ -283,7 +282,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 				estudiosAdapter.open();
 				mParticipantes = estudiosAdapter.getParticipanteCohorteFamilias(MainDBConstants.casaCHF +" = " + codigoCasaCHF, MainDBConstants.participante);
 				mCuartos = estudiosAdapter.getCuartos(MainDBConstants.casa + " = '" + codigoCasaCHF + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
-				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa + " = '" + codigoCasaCHF + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
+				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa + " = '" + codigoCasaCHF + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
                 EncuestaCasa encuestaExiste = estudiosAdapter.getEncuestaCasa(EncuestasDBConstants.casa_chf + " = " + casaCHF.getCodigoCHF(), EncuestasDBConstants.casa_chf);
                 if (encuestaExiste != null)
                     existeencuestaCasa = true;

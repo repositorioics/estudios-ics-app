@@ -21,8 +21,26 @@ public class AreaAmbiente extends BaseMetaData implements Serializable {
     private Integer numVentanas;
     private CasaCohorteFamilia casa;
     private String tipo;
+    
+    
 
-    public String getCodigo() {
+    public AreaAmbiente() {
+	}
+
+	public AreaAmbiente(String codigo, Double largo, Double ancho,
+			Double totalM2, Integer numVentanas, CasaCohorteFamilia casa,
+			String tipo) {
+		super();
+		this.codigo = codigo;
+		this.largo = largo;
+		this.ancho = ancho;
+		this.totalM2 = totalM2;
+		this.numVentanas = numVentanas;
+		this.casa = casa;
+		this.tipo = tipo;
+	}
+
+	public String getCodigo() {
         return codigo;
     }
 

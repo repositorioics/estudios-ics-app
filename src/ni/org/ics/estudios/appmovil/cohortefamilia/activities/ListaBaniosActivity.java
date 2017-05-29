@@ -10,11 +10,11 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 
 
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaAreaActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.AreaAdapter;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoBanioActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.BanioAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Banio;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import android.os.AsyncTask;
@@ -36,38 +36,36 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ListaAreasActivity extends AbstractAsyncListActivity {
+public class ListaBaniosActivity extends AbstractAsyncListActivity {
 	
 	private TextView textView;
 	private Drawable img = null;
 	private Button mAddButton;
-	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
-    private AreaAmbiente area = new AreaAmbiente();
-	private ArrayAdapter<AreaAmbiente> mAreaAdapter;
-	private List<AreaAmbiente> mAreas = new ArrayList<AreaAmbiente>();
+	private static AreaAmbiente area = new AreaAmbiente();
+    private Banio banio = new Banio();
+	private ArrayAdapter<Banio> mBanioAdapter;
+	private List<Banio> mBanios = new ArrayList<Banio>();
 	private EstudiosAdapter estudiosAdapter;
 	
-	private static final int BORRAR_AREA = 1;
+	private static final int BORRAR_BANIO = 1;
 	private AlertDialog alertDialog;
 	
-	private MenuItem verBanios; 
-	private MenuItem verVentanas; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_add);
 		registerForContextMenu(getListView());
-		casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+		area = (AreaAmbiente) getIntent().getExtras().getSerializable(Constants.AREA);
 		textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_menu_selectall_holo_light);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		new FetchDataCasaTask().execute();
+		new FetchDataAreaTask().execute();
 		
 		mAddButton = (Button) findViewById(R.id.add_button);
-		mAddButton.setText(getString(R.string.new_area));
+		mAddButton.setText(getString(R.string.new_bath));
 
 		mAddButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
@@ -110,7 +108,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
-		area = (AreaAmbiente)this.getListAdapter().getItem(position);
+		banio = (Banio)this.getListAdapter().getItem(position);
 		listView.showContextMenuForChild(view);
 	}
 	
@@ -118,47 +116,15 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.optionsareas, menu);
-		verBanios = menu.findItem(R.id.MENU_VER_BANIOS);
-		verVentanas = menu.findItem(R.id.MENU_VER_VENTANAS);
-		verBanios.setVisible(false);
-		verVentanas.setVisible(true);
-		if (area.getTipo().equals("habitacion")){
-			verBanios.setVisible(true);
-		}
-		if (area.getTipo().equals("banio")){
-			verVentanas.setVisible(false);
-		}
-		
+		inflater.inflate(R.menu.optionspersonascamas, menu);
 	}
 	
-
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		Bundle arguments = new Bundle();
-		Intent i;
+	public boolean onContextItemSelected(MenuItem item) {    	
 		switch(item.getItemId()) {
-		case R.id.MENU_VER_BANIOS:
-			arguments.putSerializable(Constants.AREA, area);
-			i = new Intent(getApplicationContext(),
-					ListaBaniosActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	        i.putExtras(arguments);
-			startActivity(i);
-			finish();
+		case R.id.MENU_BORRAR_PCAMA:
+			createDialog(BORRAR_BANIO);
 			return true;
-		case R.id.MENU_VER_VENTANAS:
-			arguments.putSerializable(Constants.AREA , area);
-			i = new Intent(getApplicationContext(),
-					ListaVentanasActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	        i.putExtras(arguments);
-			startActivity(i);
-			finish();
-			return true;
-		case R.id.MENU_BORRAR_AREA:
-			createDialog(BORRAR_AREA);
-			return true;	
 		default:
 			return super.onContextItemSelected(item);
 		}
@@ -167,13 +133,13 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	private void createDialog(int dialog) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		switch(dialog){
-		case BORRAR_AREA:
+		case BORRAR_BANIO:
 			builder.setTitle(this.getString(R.string.confirm));
-			builder.setMessage(getString(R.string.remove_area));
+			builder.setMessage(getString(R.string.remove_bath));
 			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
-					new UpdateAreaTask().execute();
+					new UpdateBanioTask().execute();
 				}
 			});
 			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -195,9 +161,9 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	public void onBackPressed (){
 		Bundle arguments = new Bundle();
 		Intent i;
-		if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+		if (area!=null) arguments.putSerializable(Constants.CASA , area.getCasa());
 		i = new Intent(getApplicationContext(),
-				MenuCasaActivity.class);
+				ListaAreasActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);
 		startActivity(i);
@@ -240,9 +206,9 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {
 			try {
 				Bundle arguments = new Bundle();
-		        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+		        if (area!=null) arguments.putSerializable(Constants.AREA , area);
 				Intent i = new Intent(getApplicationContext(),
-						NuevaAreaActivity.class);
+						NuevoBanioActivity.class);
 				i.putExtras(arguments);
 		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
@@ -261,7 +227,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 
 	}
 	
-	private class FetchDataCasaTask extends AsyncTask<String, Void, String> {
+	private class FetchDataAreaTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -272,7 +238,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {      
 			try {
 				estudiosAdapter.open();
-				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + casaCHF.getCodigoCHF() + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
+				mBanios = estudiosAdapter.getBanios(MainDBConstants.areaAmbiente +" = '" + area.getCodigo() +"' and " + MainDBConstants.tipo + " ='banio' and " + MainDBConstants.pasive + " ='0'", null);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -285,15 +251,15 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 			// after the request completes, hide the progress indicator
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.areas)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
-			mAreaAdapter = new AreaAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mAreas);
-			setListAdapter(mAreaAdapter);
+			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.banio)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+area.getCasa().getCodigoCHF());
+			mBanioAdapter = new BanioAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mBanios);
+			setListAdapter(mBanioAdapter);
 			dismissProgressDialog();
 		}
 
 	}	
 	
-	private class UpdateAreaTask extends AsyncTask<String, Void, String> {
+	private class UpdateBanioTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -304,10 +270,10 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {
 			try {
 				estudiosAdapter.open();
-				area.setPasive('1');
-				area.setEstado('0');
-				estudiosAdapter.editarAreaAmbiente(area);
-				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + area.getCasa().getCodigoCHF() + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
+				banio.setPasive('1');
+				banio.setEstado('0');
+				estudiosAdapter.editarBanio(banio);
+				mBanios = estudiosAdapter.getBanios(MainDBConstants.areaAmbiente +" = '" + area.getCodigo() +"' and " + MainDBConstants.tipo + " ='banio' and " + MainDBConstants.pasive + " ='0'", null);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -320,9 +286,9 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 			// after the request completes, hide the progress indicator
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.areas)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
-			mAreaAdapter = new AreaAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mAreas);
-			setListAdapter(mAreaAdapter);
+			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.banio)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+area.getCasa().getCodigoCHF());
+			mBanioAdapter = new BanioAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mBanios);
+			setListAdapter(mBanioAdapter);
 			dismissProgressDialog();
 		}
 

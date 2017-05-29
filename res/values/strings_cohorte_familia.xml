@@ -19,7 +19,14 @@
     <string name="view_pbed">Ver personas en esta cama</string>
     <string name="edit_pbed">Editar esta persona?</string>
     <string name="remove_pbed">Quitar persona de esta cama? Va a quitarlo de sus datos y no va a recuperarlo!!</string>
+    <string name="view_bath">Ver baños</string>
+    <string name="remove_bath">Quitar baño de este ambiente? Va a quitarlo de sus datos y no va a recuperarlo!!</string>
+    <string name="new_window">Nueva ventana</string>
+    <string name="new_bath">Nuevo baño</string>
+    <string name="view_window">Ver ventanas</string>
+    <string name="remove_window">Quitar ventana de este ambiente? Va a quitarlo de sus datos y no va a recuperarlo!!</string>
     <string name="new_area">Nuevo ambiente</string>
+    <string name="remove_area">Quitar este ambiente de esta casa? Va a quitarlo de sus datos y no va a recuperarlo!!</string>
     <string name="new_survey_1">Encuesta Casa</string>
     <string name="new_survey_2">Encuesta Participante</string>
     <string name="environments">Areas</string>

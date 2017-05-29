@@ -1428,7 +1428,6 @@ public class EstudiosAdapter {
 			if(area != null){
 				mBanio.setAreaAmbiente(area);
 				mBanio.setCasa(area.getCasa());
-				
 			}
 			else{
 				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorBanio.getString(cursorBanio.getColumnIndex(MainDBConstants.casa))+"'", null);
@@ -1458,6 +1457,7 @@ public class EstudiosAdapter {
 					CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorBanios.getString(cursorBanios.getColumnIndex(MainDBConstants.casa))+"'", null);
 					mBanio.setCasa(casa);
 				}
+				mBanios.add(mBanio);
 			} while (cursorBanios.moveToNext());
 		}
 		if (!cursorBanios.isClosed()) cursorBanios.close();
@@ -1508,6 +1508,7 @@ public class EstudiosAdapter {
 				mSala = (Sala) AreaAmbienteHelper.crearAreaAmbiente(cursorSalas);
 				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorSalas.getString(cursorSalas.getColumnIndex(MainDBConstants.casa))+"'", null);
 				mSala.setCasa(casa);
+				mSalas.add(mSala);
 			} while (cursorSalas.moveToNext());
 		}
 		if (!cursorSalas.isClosed()) cursorSalas.close();
@@ -1558,6 +1559,7 @@ public class EstudiosAdapter {
 				mCocina = (Cocina) AreaAmbienteHelper.crearAreaAmbiente(cursorCocinas);
 				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorCocinas.getString(cursorCocinas.getColumnIndex(MainDBConstants.casa))+"'", null);
 				mCocina.setCasa(casa);
+				mCocinas.add(mCocina);
 			} while (cursorCocinas.moveToNext());
 		}
 		if (!cursorCocinas.isClosed()) cursorCocinas.close();
@@ -1608,6 +1610,7 @@ public class EstudiosAdapter {
 				mComedor = (Comedor) AreaAmbienteHelper.crearAreaAmbiente(cursorComedores);
 				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorComedores.getString(cursorComedores.getColumnIndex(MainDBConstants.casa))+"'", null);
 				mComedor.setCasa(casa);
+				mComedores.add(mComedor);
 			} while (cursorComedores.moveToNext());
 		}
 		if (!cursorComedores.isClosed()) cursorComedores.close();
@@ -1665,6 +1668,7 @@ public class EstudiosAdapter {
 					mVentana.setCasa(area.getCasa());
 					
 				}
+				mVentanas.add(mVentana);
 			} while (cursorVentanas.moveToNext());
 		}
 		if (!cursorVentanas.isClosed()) cursorVentanas.close();

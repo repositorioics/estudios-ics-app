@@ -26,13 +26,12 @@ import java.util.Map;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaAreasActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.AreaAmbienteCasaForm;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaBaniosActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.AreaAmbienteCasaFormLabels;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.BanioForm;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Banio;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -55,7 +54,7 @@ import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
 import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 
 
-public class NuevaAreaActivity extends FragmentActivity implements
+public class NuevoBanioActivity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -70,7 +69,7 @@ public class NuevaAreaActivity extends FragmentActivity implements
     private StepPagerStrip mStepPagerStrip;
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
-    private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
+    private static AreaAmbiente areaCasa = new AreaAmbiente();
 	private String username;
 	private SharedPreferences settings;
 	private static final int EXIT = 1;
@@ -92,10 +91,10 @@ public class NuevaAreaActivity extends FragmentActivity implements
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
-		infoMovil = new DeviceInfo(NuevaAreaActivity.this);
-		casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+		infoMovil = new DeviceInfo(NuevoBanioActivity.this);
+		areaCasa = (AreaAmbiente) getIntent().getExtras().getSerializable(Constants.AREA);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        mWizardModel = new AreaAmbienteCasaForm(this,mPass);
+        mWizardModel = new BanioForm(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
@@ -193,9 +192,9 @@ public class NuevaAreaActivity extends FragmentActivity implements
 					// Finish app
 					Bundle arguments = new Bundle();
 					Intent i;
-					if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+					if (areaCasa!=null) arguments.putSerializable(Constants.AREA , areaCasa);
 					i = new Intent(getApplicationContext(),
-							ListaAreasActivity.class);
+							ListaBaniosActivity.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					i.putExtras(arguments);
 					startActivity(i);
@@ -339,14 +338,6 @@ public class NuevaAreaActivity extends FragmentActivity implements
     
     public void updateModel(Page page){
     	try{
-    		boolean visible = false;
-    		if (page.getTitle().equals(labels.getTipo())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Baño");
-                changeStatus(mWizardModel.findByKey(labels.getNumVentanas()), !visible);
-                changeStatus(mWizardModel.findByKey(labels.getConVentana()), visible);
-                notificarCambios = false;
-                onPageTreeChanged();
-            }
     		if (page.getTitle().equals(labels.getAncho())) {
     			if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
     				Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString());
@@ -424,64 +415,44 @@ public class NuevaAreaActivity extends FragmentActivity implements
 		
 		//Obtener datos del bundle para el areaambiente
 		String id = infoMovil.getId();
-		String tipo = datos.getString(this.getString(R.string.tipo));
 		String largo = datos.getString(this.getString(R.string.largo));
-		String ancho = datos.getString(this.getString(R.string.ancho));
-		String numVentanas = datos.getString(this.getString(R.string.numVentanas));
+		String ancho = datos.getString(this.getString(R.string.ancho));		
 		String conVentana = datos.getString(this.getString(R.string.conVentana));
-		String conVent = null;
-		
-		//Crea un nuevo areaambiente
 
-		AreaAmbiente a = new AreaAmbiente();
-		a.setCodigo(id);
-		a.setCasa(casaCHF);
-		if (tieneValor(tipo)) {
-			MessageResource catTipo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_AREA'", null);
-			a.setTipo(catTipo.getCatKey());
-		}
+		
+		//Crea un nuevo banio
+
+		Banio b = new Banio();
+		b.setCodigo(id);
+		b.setCasa(areaCasa.getCasa());
+		b.setAreaAmbiente(areaCasa);
+		
 		if (tieneValor(largo)) {
-			a.setLargo(Double.valueOf(largo));
+			b.setLargo(Double.valueOf(largo));
 		}
 		if (tieneValor(ancho)) {
-			a.setAncho(Double.valueOf(ancho));
+			b.setAncho(Double.valueOf(ancho));
 		}
 		Page area = mWizardModel.findByKey(labels.getTotalM2());
 		if (tieneValor(area.getHint())) {
-			a.setTotalM2(Double.valueOf(area.getHint()));
+			b.setTotalM2(Double.valueOf(area.getHint()));
 		}
-		if (tieneValor(numVentanas)) {
-			a.setNumVentanas(Integer.valueOf(numVentanas));
+		if (tieneValor(conVentana)) {
+			MessageResource catConVentana = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + conVentana + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+			b.setConVentana(catConVentana.getCatKey());
 		}
-		
-		a.setRecordDate(new Date());
-		a.setRecordUser(username);
-		a.setDeviceid(infoMovil.getDeviceId());
-		a.setEstado('0');
-		a.setPasive('0');
-		
-		//Guarda el areaambiente
-		if(a.getTipo().matches("banio")){
-			if (tieneValor(conVentana)) {
-				MessageResource catConVentana = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + conVentana + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-				conVent = catConVentana.getCatKey();
-			}
-			Banio b = new Banio(a.getCodigo(), a.getLargo(), a.getAncho(), a.getTotalM2(), a.getNumVentanas(), a.getCasa(), a.getTipo(), conVent);
-			b.setRecordDate(new Date());
-			b.setRecordUser(username);
-			b.setDeviceid(infoMovil.getDeviceId());
-			b.setEstado('0');
-			b.setPasive('0');
-			estudiosAdapter.crearBanio(b);
-		}
-		else{
-			estudiosAdapter.crearAreaAmbiente(a);
-		}
+		b.setTipo("banio");
+		b.setRecordDate(new Date());
+		b.setRecordUser(username);
+		b.setDeviceid(infoMovil.getDeviceId());
+		b.setEstado('0');
+		b.setPasive('0');
+		estudiosAdapter.crearBanio(b);
 		Bundle arguments = new Bundle();
 		Intent i;
-		if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+		if (areaCasa!=null) arguments.putSerializable(Constants.AREA , areaCasa);
 		i = new Intent(getApplicationContext(),
-				ListaAreasActivity.class);
+				ListaBaniosActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);
 		startActivity(i);

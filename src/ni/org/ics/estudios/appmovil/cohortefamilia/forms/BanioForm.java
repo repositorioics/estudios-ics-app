@@ -14,13 +14,12 @@ import ni.org.ics.estudios.appmovil.wizard.model.PageList;
 import ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage;
 import android.content.Context;
 
-public class AreaAmbienteCasaForm extends AbstractWizardModel {
+public class BanioForm extends AbstractWizardModel {
 	
 
 	private AreaAmbienteCasaFormLabels labels;
 	private EstudiosAdapter estudiosAdapter;
 	int index = 0;
-	private String[] catTipo;
 	private String[] catConVentana;
 	
 	private String[] fillCatalog(String codigoCatalogo){
@@ -36,7 +35,7 @@ public class AreaAmbienteCasaForm extends AbstractWizardModel {
     }
 
 	
-    public AreaAmbienteCasaForm(Context context, String pass) {    	
+    public BanioForm(Context context, String pass) {    	
         super(context,pass);
     }
 
@@ -46,17 +45,14 @@ public class AreaAmbienteCasaForm extends AbstractWizardModel {
     	this.estudiosAdapter = new EstudiosAdapter(mContext,mPass,false,false);
     	
     	estudiosAdapter.open();
-    	catTipo = fillCatalog("CHF_CAT_TIPO_AREA");
     	catConVentana = fillCatalog("CHF_CAT_SINO");
     	estudiosAdapter.close();
     	
-		Page tipo = new SingleFixedChoicePage(this,labels.getTipo(),"", Constants.WIZARD, true).setChoices(catTipo).setRequired(true);		
 		Page largo = new NumberPage(this,labels.getLargo(),"", Constants.WIZARD, true).setRangeValidation(true, 0, 20).setRequired(true);
 		Page ancho = new NumberPage(this,labels.getAncho(),"", Constants.WIZARD, true).setRangeValidation(true, 0, 20).setRequired(true);
 		Page totalM2 = new LabelPage(this,labels.getTotalM2(),"", Constants.WIZARD, true).setRequired(true);
-		Page numVentanas = new NumberPage(this,labels.getNumVentanas(),"", Constants.WIZARD, false).setRangeValidation(true, 1, 20).setRequired(true);
-		Page conVentana = new SingleFixedChoicePage(this,labels.getConVentana(),"", Constants.WIZARD, false).setChoices(catConVentana).setRequired(true);	
-        return new PageList(tipo,largo,ancho,totalM2,numVentanas,conVentana);
+		Page conVentana = new SingleFixedChoicePage(this,labels.getConVentana(),"", Constants.WIZARD, true).setChoices(catConVentana).setRequired(true);	
+        return new PageList(largo,ancho,totalM2,conVentana);
     }
 
 	public AreaAmbienteCasaFormLabels getLabels() {

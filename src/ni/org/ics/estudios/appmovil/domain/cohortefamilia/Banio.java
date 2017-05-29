@@ -13,8 +13,19 @@ public class Banio extends  AreaAmbiente {
 	private static final long serialVersionUID = 1L;
 	private AreaAmbiente areaAmbiente;
     private String conVentana;
+    
+    
+	public Banio() {
+	}
 
-    public AreaAmbiente getAreaAmbiente() {
+	public Banio(String codigo, Double largo, Double ancho,
+			Double totalM2, Integer numVentanas, CasaCohorteFamilia casa,
+			String tipo, String conVentana) {
+		super(codigo, largo, ancho, totalM2, numVentanas, casa, tipo);
+		this.conVentana = conVentana;
+	}
+
+	public AreaAmbiente getAreaAmbiente() {
         return areaAmbiente;
     }
 

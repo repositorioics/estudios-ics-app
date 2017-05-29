@@ -23,6 +23,7 @@ public class Constants {
     public static final String CUARTO = "cuarto";
     public static final String CAMA = "cama";
     public static final String PERSONACAMA = "personacama";
+    public static final String AREA = "area";
     
     //Form wizard
     public static final String FORM_NAME = "form";

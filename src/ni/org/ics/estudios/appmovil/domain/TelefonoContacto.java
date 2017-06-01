@@ -11,17 +11,18 @@ public class TelefonoContacto extends BaseMetaData {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	private String id;
     private String numero;
     private String operadora;
+    private String tipo;
     private Casa casa;
     private Participante participante;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -56,8 +57,18 @@ public class TelefonoContacto extends BaseMetaData {
     public void setOperadora(String operadora) {
         this.operadora = operadora;
     }
+    
+    
 
-    @Override
+    public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	@Override
     public String toString() {
         return id.toString();
     }

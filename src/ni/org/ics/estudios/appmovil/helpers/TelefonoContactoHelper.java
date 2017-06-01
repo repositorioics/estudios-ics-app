@@ -19,6 +19,7 @@ public class TelefonoContactoHelper {
         cv.put(MainDBConstants.id, telefonoContacto.getId());
         cv.put(MainDBConstants.numero, telefonoContacto.getNumero());
         cv.put(MainDBConstants.operadora, telefonoContacto.getOperadora());
+        cv.put(MainDBConstants.tipotel, telefonoContacto.getTipo());
         if (telefonoContacto.getCasa() != null) cv.put(MainDBConstants.casa, telefonoContacto.getCasa().getCodigo());
         if (telefonoContacto.getParticipante() != null) cv.put(MainDBConstants.participante, telefonoContacto.getParticipante().getCodigo());
         if (telefonoContacto.getRecordDate() != null) cv.put(MainDBConstants.recordDate, telefonoContacto.getRecordDate().getTime());
@@ -33,9 +34,10 @@ public class TelefonoContactoHelper {
     public static TelefonoContacto crearTelefonoContacto(Cursor cursor){
         TelefonoContacto mTelefonoContacto = new TelefonoContacto();
 
-        mTelefonoContacto.setId(cursor.getInt(cursor.getColumnIndex(MainDBConstants.id)));
+        mTelefonoContacto.setId(cursor.getString(cursor.getColumnIndex(MainDBConstants.id)));
         mTelefonoContacto.setNumero(cursor.getString(cursor.getColumnIndex(MainDBConstants.numero)));
-        mTelefonoContacto.setOperadora(null);
+        mTelefonoContacto.setOperadora(cursor.getString(cursor.getColumnIndex(MainDBConstants.operadora)));
+        mTelefonoContacto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipotel)));
         mTelefonoContacto.setCasa(null);
         mTelefonoContacto.setParticipante(null);
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mTelefonoContacto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));

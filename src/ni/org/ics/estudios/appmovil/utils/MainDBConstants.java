@@ -377,15 +377,17 @@ public class MainDBConstants {
     public static final String id = "id";
     public static final String numero = "numero";
     public static final String operadora = "operadora";
+    public static final String tipotel = "tipotel";
 
     //crear tabla telefonocontacto
     public static final String CREATE_TELEFONO_CONTACTO_TABLE = "create table if not exists "
             + TELEFONO_CONTACTO_TABLE + " ("
-            + id + " integer not null, "
+            + id + " text not null, "
             + numero + " text not null, "
-            + operadora + " integer not null, "
-            + casa + " integer not null, "
-            + participante + " integer not null, "
+            + operadora + " text, "
+            + tipotel + " text, "
+            + casa + " integer, "
+            + participante + " integer, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "

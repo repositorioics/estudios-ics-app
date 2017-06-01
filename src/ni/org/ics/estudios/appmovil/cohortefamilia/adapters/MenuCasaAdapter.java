@@ -18,17 +18,19 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
 	private final int numPart;
 	private final int numCuartos;
 	private final int numAreas;
+	private final int numTelefonos;
     private final boolean existeencuestaCasa;
     private final boolean habilitarencuestaCasaSA;
     private final boolean existeencuestaCasaSA;
 	public MenuCasaAdapter(Context context, int textViewResourceId,
-                           String[] values, int numPart, int numCuartos, boolean existeEncuestaCasa, int numAreas, boolean habilitarencuestaCasaSA, boolean existeencuestaCasaSA) {
+                           String[] values, int numPart, int numCuartos, boolean existeEncuestaCasa, int numAreas, boolean habilitarencuestaCasaSA, boolean existeencuestaCasaSA, int numTelefonos) {
 		super(context, textViewResourceId, values);
 		this.values = values;
 		this.numPart=numPart;
 		this.numCuartos=numCuartos;
         this.existeencuestaCasa = existeEncuestaCasa;
         this.numAreas=numAreas;
+        this.numTelefonos=numTelefonos;
         this.existeencuestaCasaSA = existeencuestaCasaSA;
         this.habilitarencuestaCasaSA = habilitarencuestaCasaSA;
 	}
@@ -40,7 +42,7 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
         if (position == 1){
                 habilitado = !existeencuestaCasa;
          }
-        if (position == 4){
+        if (position == 5){
             habilitado = habilitarencuestaCasaSA && !existeencuestaCasaSA;
         }
         return habilitado;
@@ -98,6 +100,15 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                 }
                 break;
             case 4:
+            	textView.setText(values[position] + "(" + numTelefonos + ")");
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_call);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                if (numTelefonos < 1){
+                    textView.setTextColor(Color.RED);
+                    textView.setTypeface(null, Typeface.BOLD);
+                }
+                break;
+            case 5:
                 if (!habilitarencuestaCasaSA) {
                     textView.setTextColor(Color.GRAY);
                     textView.setText(textView.getText()+"\n"+ getContext().getResources().getString(R.string.notavailable));
@@ -109,7 +120,7 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                         textView.setText(textView.getText()+"\n"+ getContext().getResources().getString(R.string.pending));
                     }
                 }
-                img=getContext().getResources().getDrawable(R.drawable.ic_menu_archive);
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_paste_holo_light);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
 

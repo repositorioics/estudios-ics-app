@@ -317,39 +317,39 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 	}
 	
 	// ***************************************
-		// Private classes
-		// ***************************************
-		private class OpenDataEnterActivityTask extends AsyncTask<String, Void, String> {
-			@Override
-			protected void onPreExecute() {
-				// before the request begins, show a progress indicator
-				showLoadingProgressDialog();
-			}
-
-			@Override
-			protected String doInBackground(String... values) {
-				try {
-					Bundle arguments = new Bundle();
-			        if (mCasa!=null) arguments.putSerializable(Constants.CASA , mCasa);
-			        Intent i = new Intent(getApplicationContext(),
-			        		NuevoTamizajeCasaActivity.class);
-			        i.putExtras(arguments);
-			        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			        startActivity(i);
-			        finish();
-				} catch (Exception e) {
-					Log.e(TAG, e.getLocalizedMessage(), e);
-					return "error";
-				}
-				return "exito";
-			}
-
-			protected void onPostExecute(String resultado) {
-				// after the request completes, hide the progress indicator
-				dismissProgressDialog();
-			}
-
+	// Private classes
+	// ***************************************
+	private class OpenDataEnterActivityTask extends AsyncTask<String, Void, String> {
+		@Override
+		protected void onPreExecute() {
+			// before the request begins, show a progress indicator
+			showLoadingProgressDialog();
 		}
+
+		@Override
+		protected String doInBackground(String... values) {
+			try {
+				Bundle arguments = new Bundle();
+		        if (mCasa!=null) arguments.putSerializable(Constants.CASA , mCasa);
+		        Intent i = new Intent(getApplicationContext(),
+		        		NuevoTamizajeCasaActivity.class);
+		        i.putExtras(arguments);
+		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		        startActivity(i);
+		        finish();
+			} catch (Exception e) {
+				Log.e(TAG, e.getLocalizedMessage(), e);
+				return "error";
+			}
+			return "exito";
+		}
+
+		protected void onPostExecute(String resultado) {
+			// after the request completes, hide the progress indicator
+			dismissProgressDialog();
+		}
+
+	}
 
 	// ***************************************
 	// Private methods

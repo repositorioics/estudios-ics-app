@@ -73,6 +73,7 @@ public class LoginActivity extends Activity {
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
+	private TextView mLogoLabel;
 	private SharedPreferences settings;
 	private String url;
 	private AlertDialog alertDialog;
@@ -87,6 +88,9 @@ public class LoginActivity extends Activity {
 		// Set up the login form.
 
 		mUserView = (EditText) findViewById(R.id.user);
+		
+		mLogoLabel = (TextView) findViewById(R.id.label_logo);
+		mLogoLabel.setText(getString(R.string.main_header)+"\n"+getString(R.string.version_app_preferences)+"\n"+getString(R.string.versiondate_app_preferences));
 
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView

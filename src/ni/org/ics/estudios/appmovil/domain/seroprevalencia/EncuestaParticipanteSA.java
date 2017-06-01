@@ -2,15 +2,17 @@ package ni.org.ics.estudios.appmovil.domain.seroprevalencia;
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
 
-import java.util.Date;
-
 /**
  * Created by Miguel Salinas on 5/25/2017.
  * V1.0
  */
 public class EncuestaParticipanteSA extends BaseMetaData {
 
-    private ParticipanteSeroprevalencia participanteSA;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private ParticipanteSeroprevalencia participanteSA;
     //Aspectos Educacionales
     private String escuchadoZikaSn;
     private String queEsSika;

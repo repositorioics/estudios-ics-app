@@ -16,6 +16,7 @@ import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
+import ni.org.ics.estudios.appmovil.domain.TelefonoContacto;
 import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
@@ -92,6 +93,7 @@ public class EstudiosAdapter {
             db.execSQL(SeroprevalenciaDBConstants.CREATE_PARTICIPANTESA_TABLE);
             db.execSQL(SeroprevalenciaDBConstants.CREATE_ENCUESTA_CASASA_TABLE);
             db.execSQL(SeroprevalenciaDBConstants.CREATE_ENCUESTA_PARTICIPANTESA_TABLE);
+            db.execSQL(MainDBConstants.CREATE_TELEFONO_CONTACTO_TABLE);
         }
 
 		@Override
@@ -1489,7 +1491,7 @@ public class EstudiosAdapter {
 		Cursor cursorSala = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE , filtro, null, orden);
 		if (cursorSala != null && cursorSala.getCount() > 0) {
 			cursorSala.moveToFirst();
-			mSala=(Sala) AreaAmbienteHelper.crearAreaAmbiente(cursorSala);
+			mSala= AreaAmbienteHelper.crearSala(cursorSala);
 			CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorSala.getString(cursorSala.getColumnIndex(MainDBConstants.casa))+"'", null);
 			mSala.setCasa(casa);
 		}
@@ -1505,7 +1507,7 @@ public class EstudiosAdapter {
 			mSalas.clear();
 			do{
 				Sala mSala = null;
-				mSala = (Sala) AreaAmbienteHelper.crearAreaAmbiente(cursorSalas);
+				mSala = AreaAmbienteHelper.crearSala(cursorSalas);
 				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorSalas.getString(cursorSalas.getColumnIndex(MainDBConstants.casa))+"'", null);
 				mSala.setCasa(casa);
 				mSalas.add(mSala);
@@ -1540,7 +1542,7 @@ public class EstudiosAdapter {
 		Cursor cursorCocina = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE , filtro, null, orden);
 		if (cursorCocina != null && cursorCocina.getCount() > 0) {
 			cursorCocina.moveToFirst();
-			mCocina=(Cocina) AreaAmbienteHelper.crearAreaAmbiente(cursorCocina);
+			mCocina=AreaAmbienteHelper.crearCocina(cursorCocina);
 			CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorCocina.getString(cursorCocina.getColumnIndex(MainDBConstants.casa))+"'", null);
 			mCocina.setCasa(casa);
 		}
@@ -1556,7 +1558,7 @@ public class EstudiosAdapter {
 			mCocinas.clear();
 			do{
 				Cocina mCocina = null;
-				mCocina = (Cocina) AreaAmbienteHelper.crearAreaAmbiente(cursorCocinas);
+				mCocina =AreaAmbienteHelper.crearCocina(cursorCocinas);
 				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorCocinas.getString(cursorCocinas.getColumnIndex(MainDBConstants.casa))+"'", null);
 				mCocina.setCasa(casa);
 				mCocinas.add(mCocina);
@@ -1591,7 +1593,7 @@ public class EstudiosAdapter {
 		Cursor cursorComedor = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE , filtro, null, orden);
 		if (cursorComedor != null && cursorComedor.getCount() > 0) {
 			cursorComedor.moveToFirst();
-			mComedor=(Comedor) AreaAmbienteHelper.crearAreaAmbiente(cursorComedor);
+			mComedor=AreaAmbienteHelper.crearComedor(cursorComedor);
 			CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorComedor.getString(cursorComedor.getColumnIndex(MainDBConstants.casa))+"'", null);
 			mComedor.setCasa(casa);
 		}
@@ -1607,7 +1609,7 @@ public class EstudiosAdapter {
 			mComedores.clear();
 			do{
 				Comedor mComedor = null;
-				mComedor = (Comedor) AreaAmbienteHelper.crearAreaAmbiente(cursorComedores);
+				mComedor = AreaAmbienteHelper.crearComedor(cursorComedores);
 				CasaCohorteFamilia casa = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" +cursorComedores.getString(cursorComedores.getColumnIndex(MainDBConstants.casa))+"'", null);
 				mComedor.setCasa(casa);
 				mComedores.add(mComedor);
@@ -1895,4 +1897,62 @@ public class EstudiosAdapter {
         if (!cursor.isClosed()) cursor.close();
         return mEncuestasParticipanteSA;
     }
+    
+	/**
+	 * Metodos para Telefonos en la base de datos
+	 * 
+	 * @param TelefonoContacto
+	 *            Objeto TelefonoContacto que contiene la informacion
+	 *
+	 */
+	//Crear nuevo TelefonoContacto en la base de datos
+	public void crearTelefonoContacto(TelefonoContacto tel) {
+		ContentValues cv = TelefonoContactoHelper.crearTelefContactoContentValues(tel);
+		mDb.insert(MainDBConstants.TELEFONO_CONTACTO_TABLE, null, cv);
+	}
+	//Editar TelefonoContacto existente en la base de datos
+	public boolean editarTelefonoContacto(TelefonoContacto tel) {
+		ContentValues cv = TelefonoContactoHelper.crearTelefContactoContentValues(tel);
+		return mDb.update(MainDBConstants.TELEFONO_CONTACTO_TABLE , cv, MainDBConstants.id + "='" 
+				+ tel.getId()+ "'", null) > 0;
+	}
+	//Limpiar la tabla de TelefonoContacto de la base de datos
+	public boolean borrarTelefonoContacto() {
+		return mDb.delete(MainDBConstants.TELEFONO_CONTACTO_TABLE, null, null) > 0;
+	}
+	//Obtener un TelefonoContacto de la base de datos
+	public TelefonoContacto getTelefonoContacto(String filtro, String orden) throws SQLException {
+		TelefonoContacto mTelefonoContacto = null;
+		Cursor cursorTelefonoContacto = crearCursor(MainDBConstants.TELEFONO_CONTACTO_TABLE , filtro, null, orden);
+		if (cursorTelefonoContacto != null && cursorTelefonoContacto.getCount() > 0) {
+			cursorTelefonoContacto.moveToFirst();
+			mTelefonoContacto=TelefonoContactoHelper.crearTelefonoContacto(cursorTelefonoContacto);
+			Casa casa = this.getCasa(MainDBConstants.codigo + "='" +cursorTelefonoContacto.getString(cursorTelefonoContacto.getColumnIndex(MainDBConstants.casa))+"'", null);
+			mTelefonoContacto.setCasa(casa);
+			Participante part = this.getParticipante(MainDBConstants.codigo + "='" +cursorTelefonoContacto.getString(cursorTelefonoContacto.getColumnIndex(MainDBConstants.participante))+"'", null);
+			mTelefonoContacto.setParticipante(part);
+		}
+		if (!cursorTelefonoContacto.isClosed()) cursorTelefonoContacto.close();
+		return mTelefonoContacto;
+	}
+	//Obtener una lista de TelefonoContacto de la base de datos
+	public List<TelefonoContacto> getTelefonosContacto(String filtro, String orden) throws SQLException {
+		List<TelefonoContacto> mTelefonosContacto = new ArrayList<TelefonoContacto>();
+		Cursor cursorTelefonosContacto = crearCursor(MainDBConstants.TELEFONO_CONTACTO_TABLE, filtro, null, orden);
+		if (cursorTelefonosContacto != null && cursorTelefonosContacto.getCount() > 0) {
+			cursorTelefonosContacto.moveToFirst();
+			mTelefonosContacto.clear();
+			do{
+				TelefonoContacto mTelefonoContacto = null;
+				mTelefonoContacto = TelefonoContactoHelper.crearTelefonoContacto(cursorTelefonosContacto);
+				Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorTelefonosContacto.getInt(cursorTelefonosContacto.getColumnIndex(MainDBConstants.casa)), null);
+				mTelefonoContacto.setCasa(casa);
+				Participante part = this.getParticipante(MainDBConstants.codigo + "=" +cursorTelefonosContacto.getInt(cursorTelefonosContacto.getColumnIndex(MainDBConstants.participante)), null);
+				mTelefonoContacto.setParticipante(part);
+				mTelefonosContacto.add(mTelefonoContacto);
+			} while (cursorTelefonosContacto.moveToNext());
+		}
+		if (!cursorTelefonosContacto.isClosed()) cursorTelefonosContacto.close();
+		return mTelefonosContacto;
+	}
 }

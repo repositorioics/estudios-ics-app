@@ -126,7 +126,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 }else{
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
                 }
-                img=getContext().getResources().getDrawable(R.drawable.male);
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_myplaces);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
             case 1:
@@ -192,7 +192,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                         textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
                     }
                 }
-                img=getContext().getResources().getDrawable(R.drawable.male);
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_friendslist);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
 		default:

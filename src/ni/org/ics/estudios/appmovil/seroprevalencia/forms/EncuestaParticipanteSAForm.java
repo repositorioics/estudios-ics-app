@@ -7,8 +7,6 @@ import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
 import org.joda.time.DateMidnight;
-import org.joda.time.format.DateTimeFormat;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;

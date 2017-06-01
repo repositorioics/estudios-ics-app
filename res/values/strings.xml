@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">Estudios ICS</string>
     <string name="main_header">Estudios de Investigación</string>
@@ -78,5 +78,28 @@
     <string name="tp4">Prueba 4</string>
     <string name="tp5">Prueba 5</string>
     <string name="tp6">Prueba 6</string>
+    
+        <!--  BluetoothChat -->
+    <string name="send">Enviar</string>
+    <string name="not_connected">No está conectado!</string>
+    <string name="bt_not_enabled_leaving">Bluetooth deshabilitado. Saliendo de la actividad.</string>
+    <string name="title_connecting">conectando..</string>
+    <string name="title_connected_to">Conectado a <xliff:g id="device_name">%1$s</xliff:g></string>
+    <string name="connected_to">Conectado a </string>
+    <string name="title_not_connected">No conectado</string>
+
+    <!--  DeviceListActivity -->
+    <string name="scanning">Buscando dispositivos..</string>
+    <string name="select_device">Seleccionar dispositivo para conectar</string>
+    <string name="none_paired">Ho hay equipos pareados</string>
+    <string name="none_found">No se encuentran dispositivos</string>
+    <string name="title_paired_devices">Equipos pareados</string>
+    <string name="title_other_devices">Otros disponibles</string>
+    <string name="button_scan">Buscar equipos</string>
+
+    <!-- Options Menu -->
+    <string name="secure_connect">Conectar</string>
+    <string name="insecure_connect">Conectar (inseguro)..</string>
+    <string name="discoverable">Hacer visible</string>
     
 </resources>

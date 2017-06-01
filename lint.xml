@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
+    <issue id="HandlerLeak">
+        <ignore path="src/ni/org/ics/estudios/appmovil/bluetooth/activity/BluetoothChatFragment.java" />
+    </issue>
     <issue id="InflateParams" severity="ignore">
         <ignore path="src/ni/org/ics/estudios/appmovil/adapters/MainActivityAdapter.java" />
     </issue>
@@ -14,6 +17,7 @@
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/HabitacionAdapter.java" />
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/ParticipanteCHFAdapter.java" />
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/PersonaCamaAdapter.java" />
+        <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/TelefonoContactoAdapter.java" />
         <ignore path="src/ni/org/ics/estudios/appmovil/cohortefamilia/adapters/VentanaAdapter.java" />
     </issue>
     <issue id="ViewHolder">

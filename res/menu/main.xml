@@ -6,5 +6,5 @@
     <item android:id="@+id/MENU_EXIT" 
         android:title="@string/exit" 
         android:showAsAction="ifRoom|withText"
-        android:icon="@drawable/ic_lock_power_off"></item>
+        android:icon="@drawable/ic_menu_close_clear_cancel"></item>
 </menu>

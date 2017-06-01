@@ -54,7 +54,7 @@ public class AreaAmbienteCasaForm extends AbstractWizardModel {
 		Page largo = new NumberPage(this,labels.getLargo(),"", Constants.WIZARD, true).setRangeValidation(true, 0, 20).setRequired(true);
 		Page ancho = new NumberPage(this,labels.getAncho(),"", Constants.WIZARD, true).setRangeValidation(true, 0, 20).setRequired(true);
 		Page totalM2 = new LabelPage(this,labels.getTotalM2(),"", Constants.WIZARD, true).setRequired(true);
-		Page numVentanas = new NumberPage(this,labels.getNumVentanas(),"", Constants.WIZARD, false).setRangeValidation(true, 1, 20).setRequired(true);
+		Page numVentanas = new NumberPage(this,labels.getNumVentanas(),"", Constants.WIZARD, false).setRangeValidation(true, 0, 20).setRequired(true);
 		Page conVentana = new SingleFixedChoicePage(this,labels.getConVentana(),"", Constants.WIZARD, false).setChoices(catConVentana).setRequired(true);	
         return new PageList(tipo,largo,ancho,totalM2,numVentanas,conVentana);
     }

@@ -10,6 +10,6 @@
         android:id="@+id/menu_cancel"
         android:showAsAction="always|withText"
         android:title="@string/menu_cancel"
-        android:icon="@drawable/ic_lock_power_off"/>
+        android:icon="@drawable/ic_menu_close_clear_cancel"/>
 
 </menu>

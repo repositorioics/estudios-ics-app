@@ -57,6 +57,7 @@ public class DownloadAllTask extends DownloadTask {
     private List<Habitacion> mHabitaciones = null;
     private List<Banio> mBanios = null;
     private List<Ventana> mVentanas = null;
+    private List<Cuarto> mCuartos = null;
     private List<Cama> mCamas = null;
     private List<PersonaCama> mPersonaCamas = null;
     private List<EncuestaParticipante> mEncuestasParticipante = null;
@@ -67,6 +68,7 @@ public class DownloadAllTask extends DownloadTask {
     private List<ParticipanteSeroprevalencia> mParticipantesSA = null;
     private List<EncuestaCasaSA> mEncuestasCasaSA = null;
     private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = null;
+    private List<TelefonoContacto> mTelefonos = null;
 	
 	public static final String ESTUDIO = "1";
 	public static final String BARRIO = "2";
@@ -85,18 +87,20 @@ public class DownloadAllTask extends DownloadTask {
     public static final String HABITACION = "15";
     public static final String BANIOS = "16";
     public static final String VENTANAS = "17";
-    public static final String CAMAS = "18";
-    public static final String PERSONAS_CAMA = "19";
-    public static final String ENCUESTA_PARTICIPANTECHF = "20";
-    public static final String ENCUESTA_DATOSPBB = "21";
-    public static final String ENCUESTA_PESOTALLA = "22";
-    public static final String ENCUESTA_LACTMAT = "23";
-    public static final String MUESTRAS = "24";
-    public static final String PARTICIPANTESA = "25";
-    public static final String ENCUESTA_PARTICIPANTESA = "26";
-    public static final String ENCUESTA_CASASA = "27";
+    public static final String CUARTOS = "18";
+    public static final String CAMAS = "19";
+    public static final String PERSONAS_CAMA = "20";
+    public static final String ENCUESTA_PARTICIPANTECHF = "21";
+    public static final String ENCUESTA_DATOSPBB = "22";
+    public static final String ENCUESTA_PESOTALLA = "23";
+    public static final String ENCUESTA_LACTMAT = "24";
+    public static final String MUESTRAS = "25";
+    public static final String PARTICIPANTESA = "26";
+    public static final String ENCUESTA_PARTICIPANTESA = "27";
+    public static final String ENCUESTA_CASASA = "28";
+    public static final String TELEFONOS = "29";
 
-    private static final String TOTAL_TASK = "27";
+    private static final String TOTAL_TASK = "29";
 
 	private String error = null;
 	private String url = null;
@@ -133,6 +137,7 @@ public class DownloadAllTask extends DownloadTask {
         estudioAdapter.borrarCartasConsentimiento();
         estudioAdapter.borrarEncuestaCasas();
         estudioAdapter.borrarAreasAmbiente();
+        estudioAdapter.borrarCuartos();
         estudioAdapter.borrarCamas();
         estudioAdapter.borrarPersonasCama();
         estudioAdapter.borrarEncuestasParticipantes();
@@ -144,6 +149,7 @@ public class DownloadAllTask extends DownloadTask {
         estudioAdapter.borrarParticipanteSeroprevalencia();
         estudioAdapter.borrarEncuestaCasaSA();
         estudioAdapter.borrarEncuestaParticipanteSA();
+        estudioAdapter.borrarTelefonoContacto();
 		try {
 			if (mEstudios != null){
 				v = mEstudios.size();
@@ -244,32 +250,29 @@ public class DownloadAllTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
             }
-            //TODO: insertar cocina
             if (mCocinas != null){
                 v = mCocinas.size();
                 ListIterator<Cocina> iter = mCocinas.listIterator();
                 while (iter.hasNext()){
-                    //estudioAdapter.crea(iter.next());
+                    estudioAdapter.crearCocina(iter.next());
                     publishProgress("Insertando cocinas en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
             }
-            //TODO: insertar comedor
             if (mComedores != null){
                 v = mComedores.size();
                 ListIterator<Comedor> iter = mComedores.listIterator();
                 while (iter.hasNext()){
-                    //estudioAdapter.crea(iter.next());
+                    estudioAdapter.crearComedor(iter.next());
                     publishProgress("Insertando comedores en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
             }
-            //TODO: insertar sala
             if (mSalas != null){
                 v = mSalas.size();
                 ListIterator<Sala> iter = mSalas.listIterator();
                 while (iter.hasNext()){
-                    //estudioAdapter.crea(iter.next());
+                    estudioAdapter.crearSala(iter.next());
                     publishProgress("Insertando salas en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
@@ -283,23 +286,30 @@ public class DownloadAllTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
             }
-            //TODO: insertar banios
             if (mBanios != null){
                 v = mBanios.size();
                 ListIterator<Banio> iter = mBanios.listIterator();
                 while (iter.hasNext()){
-                    //estudioAdapter.crea(iter.next());
+                    estudioAdapter.crearBanio(iter.next());
                     publishProgress("Insertando baños en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
             }
-            //TODO: insertar ventanas
             if (mVentanas != null){
                 v = mVentanas.size();
                 ListIterator<Ventana> iter = mVentanas.listIterator();
                 while (iter.hasNext()){
-                    //estudioAdapter.crea(iter.next());
-                    publishProgress("Insertando cocinas en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                    estudioAdapter.crearVentana(iter.next());
+                    publishProgress("Insertando ventanas en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mCuartos != null){
+                v = mCuartos.size();
+                ListIterator<Cuarto> iter = mCuartos.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearCuarto(iter.next());
+                    publishProgress("Insertando cuartos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
             }
@@ -390,6 +400,15 @@ public class DownloadAllTask extends DownloadTask {
                 while (iter.hasNext()){
                     estudioAdapter.crearEncuestaParticipanteSA(iter.next());
                     publishProgress("Insertando encuestas de participantes seroprevalencia en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+            }
+            if (mTelefonos != null){
+                v = mTelefonos.size();
+                ListIterator<TelefonoContacto> iter = mTelefonos.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearTelefonoContacto(iter.next());
+                    publishProgress("Insertando telefonos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
             }
@@ -571,6 +590,15 @@ public class DownloadAllTask extends DownloadTask {
                     Ventana[].class);
             // convert the array to a list and return it
             mVentanas = Arrays.asList(responseEntityVentanas.getBody());
+            
+            //Descargar Cuartos
+            urlRequest = url + "/movil/cuartos/";
+            publishProgress("Solicitando cuartos",CUARTOS,TOTAL_TASK);
+            // Perform the HTTP GET request
+            ResponseEntity<Cuarto[]> responseEntityCuartos = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+            		Cuarto[].class);
+            // convert the array to a list and return it
+            mCuartos = Arrays.asList(responseEntityCuartos.getBody());
 
             //Descargar Camas
             urlRequest = url + "/movil/camas/";
@@ -661,6 +689,17 @@ public class DownloadAllTask extends DownloadTask {
                     EncuestaParticipanteSA[].class);
             // convert the array to a list and return it
             mEncuestasParticipanteSA = Arrays.asList(responseEntityEncuPartiSa.getBody());
+            
+            //Descargar telefonos
+            urlRequest = url + "/movil/telefonos/";
+            publishProgress("Solicitando encuestas de participantes seroprevalencia",TELEFONOS,TOTAL_TASK);
+            // Perform the HTTP GET request
+            ResponseEntity<TelefonoContacto[]> responseEntityTelefonos = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+            		TelefonoContacto[].class);
+            // convert the array to a list and return it
+            mTelefonos = Arrays.asList(responseEntityTelefonos.getBody());
+            
+            
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

@@ -122,8 +122,8 @@ public class AreaAmbienteHelper {
 	public static ContentValues crearVentanaContentValues(Ventana objeto){
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigo, objeto.getCodigo());
-        cv.put(MainDBConstants.casa, objeto.getCasa().getCodigoCHF());
-        if (objeto.getAreaAmbiente() != null) cv.put(MainDBConstants.areaAmbiente, objeto.getAreaAmbiente().getCodigo());
+        if (objeto.getAreaAmbiente() != null) cv.put(MainDBConstants.casa, objeto.getCasa().getCodigoCHF());
+        if (objeto.getCasa() != null) cv.put(MainDBConstants.areaAmbiente, objeto.getAreaAmbiente().getCodigo());
         if (objeto.getAncho() != null) cv.put(MainDBConstants.ancho, objeto.getAncho());
         if (objeto.getLargo() != null) cv.put(MainDBConstants.largo, objeto.getLargo());
         if (objeto.getTotalM2() != null) cv.put(MainDBConstants.totalM2, objeto.getTotalM2());
@@ -148,6 +148,110 @@ public class AreaAmbienteHelper {
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2))>0) objeto.setTotalM2(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2)));
         if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
         objeto.setAbierta(cursor.getString(cursor.getColumnIndex(MainDBConstants.abierta)));
+        objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        objeto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        objeto.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
+        objeto.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        objeto.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
+        return objeto;
+    }
+	
+	
+	public static ContentValues crearCocinaContentValues(Cocina objeto){
+        ContentValues cv = new ContentValues();
+        cv.put(MainDBConstants.codigo, objeto.getCodigo());
+        cv.put(MainDBConstants.casa, objeto.getCasa().getCodigoCHF());
+        if (objeto.getAncho() != null) cv.put(MainDBConstants.ancho, objeto.getAncho());
+        if (objeto.getLargo() != null) cv.put(MainDBConstants.largo, objeto.getLargo());
+        if (objeto.getTotalM2() != null) cv.put(MainDBConstants.totalM2, objeto.getTotalM2());
+        if (objeto.getNumVentanas() != null) cv.put(MainDBConstants.numVentanas, objeto.getNumVentanas());
+        cv.put(MainDBConstants.tipo, objeto.getTipo());
+        if (objeto.getRecordDate() != null) cv.put(MainDBConstants.recordDate, objeto.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, objeto.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(objeto.getPasive()));
+        cv.put(MainDBConstants.estado, String.valueOf(objeto.getEstado()));
+        cv.put(MainDBConstants.deviceId, objeto.getDeviceid());
+        return cv;
+    }
+
+	public static Cocina crearCocina(Cursor cursor){
+		Cocina objeto = new Cocina();
+        objeto.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
+        objeto.setCasa(null);
+        if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho))>0) objeto.setAncho(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho)));
+        if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.largo)) > 0) objeto.setLargo(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.largo)));
+        if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2))>0) objeto.setTotalM2(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2)));
+        if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
+        objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        objeto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        objeto.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
+        objeto.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        objeto.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
+        return objeto;
+    }
+	
+	public static ContentValues crearComedorContentValues(Comedor objeto){
+        ContentValues cv = new ContentValues();
+        cv.put(MainDBConstants.codigo, objeto.getCodigo());
+        cv.put(MainDBConstants.casa, objeto.getCasa().getCodigoCHF());
+        if (objeto.getAncho() != null) cv.put(MainDBConstants.ancho, objeto.getAncho());
+        if (objeto.getLargo() != null) cv.put(MainDBConstants.largo, objeto.getLargo());
+        if (objeto.getTotalM2() != null) cv.put(MainDBConstants.totalM2, objeto.getTotalM2());
+        if (objeto.getNumVentanas() != null) cv.put(MainDBConstants.numVentanas, objeto.getNumVentanas());
+        cv.put(MainDBConstants.tipo, objeto.getTipo());
+        if (objeto.getRecordDate() != null) cv.put(MainDBConstants.recordDate, objeto.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, objeto.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(objeto.getPasive()));
+        cv.put(MainDBConstants.estado, String.valueOf(objeto.getEstado()));
+        cv.put(MainDBConstants.deviceId, objeto.getDeviceid());
+        return cv;
+    }
+
+	public static Comedor crearComedor(Cursor cursor){
+		Comedor objeto = new Comedor();
+        objeto.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
+        objeto.setCasa(null);
+        if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho))>0) objeto.setAncho(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho)));
+        if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.largo)) > 0) objeto.setLargo(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.largo)));
+        if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2))>0) objeto.setTotalM2(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2)));
+        if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
+        objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        objeto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        objeto.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
+        objeto.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        objeto.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
+        return objeto;
+    }
+	
+	
+	public static ContentValues crearSalaContentValues(Sala objeto){
+        ContentValues cv = new ContentValues();
+        cv.put(MainDBConstants.codigo, objeto.getCodigo());
+        cv.put(MainDBConstants.casa, objeto.getCasa().getCodigoCHF());
+        if (objeto.getAncho() != null) cv.put(MainDBConstants.ancho, objeto.getAncho());
+        if (objeto.getLargo() != null) cv.put(MainDBConstants.largo, objeto.getLargo());
+        if (objeto.getTotalM2() != null) cv.put(MainDBConstants.totalM2, objeto.getTotalM2());
+        if (objeto.getNumVentanas() != null) cv.put(MainDBConstants.numVentanas, objeto.getNumVentanas());
+        cv.put(MainDBConstants.tipo, objeto.getTipo());
+        if (objeto.getRecordDate() != null) cv.put(MainDBConstants.recordDate, objeto.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, objeto.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(objeto.getPasive()));
+        cv.put(MainDBConstants.estado, String.valueOf(objeto.getEstado()));
+        cv.put(MainDBConstants.deviceId, objeto.getDeviceid());
+        return cv;
+    }
+
+	public static Sala crearSala(Cursor cursor){
+		Sala objeto = new Sala();
+        objeto.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
+        objeto.setCasa(null);
+        if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho))>0) objeto.setAncho(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.ancho)));
+        if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.largo)) > 0) objeto.setLargo(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.largo)));
+        if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2))>0) objeto.setTotalM2(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2)));
+        if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
         objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         objeto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

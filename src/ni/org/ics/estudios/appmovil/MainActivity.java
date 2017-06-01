@@ -1,8 +1,8 @@
 package ni.org.ics.estudios.appmovil;
 
 
-import ni.org.ics.estudios.appmovil.activities.DataEnterActivity;
 import ni.org.ics.estudios.appmovil.adapters.MainActivityAdapter;
+import ni.org.ics.estudios.appmovil.bluetooth.activity.ChatActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCohorteFamiliaActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 
@@ -80,7 +80,7 @@ public class MainActivity extends ListActivity {
 			break;
 		case 1: 
 			i = new Intent(getApplicationContext(),
-					DataEnterActivity.class);
+					ChatActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			break;

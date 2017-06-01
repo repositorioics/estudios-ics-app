@@ -9,7 +9,11 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
  */
 public class EncuestaCasaSA extends BaseMetaData {
 
-    private CasaCohorteFamilia casaCHF;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private CasaCohorteFamilia casaCHF;
     private String sedazoPuertasVentanas;
     private String compraProdEvitarZancudos;
     private String tienePatioJardin;

@@ -272,7 +272,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {      
 			try {
 				estudiosAdapter.open();
-				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + casaCHF.getCodigoCHF() + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
+				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + casaCHF.getCodigoCHF() + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.tipo);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -307,7 +307,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 				area.setPasive('1');
 				area.setEstado('0');
 				estudiosAdapter.editarAreaAmbiente(area);
-				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + area.getCasa().getCodigoCHF() + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
+				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + area.getCasa().getCodigoCHF() + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.tipo);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

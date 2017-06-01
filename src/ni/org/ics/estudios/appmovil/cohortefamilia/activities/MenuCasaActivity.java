@@ -28,6 +28,7 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEnc
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCasaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
+import ni.org.ics.estudios.appmovil.domain.TelefonoContacto;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
@@ -50,6 +51,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 	private List<ParticipanteCohorteFamilia> mParticipantes = new ArrayList<ParticipanteCohorteFamilia>();
 	private List<Cuarto> mCuartos = new ArrayList<Cuarto>();
 	private List<AreaAmbiente> mAreas = new ArrayList<AreaAmbiente>();
+	private List<TelefonoContacto> mTelefonosContacto = new ArrayList<TelefonoContacto>();
     private AlertDialog alertDialog;
     private boolean existeencuestaCasa = false;
     private boolean habilitarencuestaCasaSA = false;
@@ -83,14 +85,14 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 				Bundle arguments = new Bundle();
 				Intent i;
 				switch (position){
-				case 0:
-					if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
-					i = new Intent(getApplicationContext(),
-							ListaParticipantesActivity.class);
-					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					i.putExtras(arguments);
-					startActivity(i);
-		        	break;
+					case 0:
+						if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+						i = new Intent(getApplicationContext(),
+								ListaParticipantesActivity.class);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						i.putExtras(arguments);
+						startActivity(i);
+			        	break;
                     case 1:
                         createDialog(position);
                         break;
@@ -109,6 +111,13 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
     					i.putExtras(arguments);
     					startActivity(i);break;
                     case 4:
+                    	if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+    					i = new Intent(getApplicationContext(),
+    							ListaTelefonosActivity.class);
+    					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    					i.putExtras(arguments);
+    					startActivity(i);break;
+                    case 5:
                         createDialog(position);
                         break;
 				    default:
@@ -188,7 +197,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                     }
                 });
                 break;
-            case 4:
+            case 5:
                 builder.setTitle(this.getString(R.string.confirm));
                 builder.setMessage(getString(R.string.confirm_house_sa_survey) + "\n" + getString(R.string.code) + ": " + casaCHF.getCasa().getCodigo() + " " + casaCHF.getCasa().getNombre1JefeFamilia() + " " + casaCHF.getCasa().getApellido1JefeFamilia());
                 builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
@@ -242,7 +251,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                         break;
-                    case 4:
+                    case 5:
                         if (casaCHF != null) arguments.putSerializable(Constants.CASA, casaCHF);
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaCasaSAActivity.class);
@@ -282,7 +291,8 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 				estudiosAdapter.open();
 				mParticipantes = estudiosAdapter.getParticipanteCohorteFamilias(MainDBConstants.casaCHF +" = " + codigoCasaCHF, MainDBConstants.participante);
 				mCuartos = estudiosAdapter.getCuartos(MainDBConstants.casa + " = '" + codigoCasaCHF + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
-				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa + " = '" + codigoCasaCHF + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
+				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa + " = '" + codigoCasaCHF + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.tipo);
+				mTelefonosContacto = estudiosAdapter.getTelefonosContacto(MainDBConstants.casa +" = '" + casaCHF.getCodigoCHF() + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.numero);
                 EncuestaCasa encuestaExiste = estudiosAdapter.getEncuestaCasa(EncuestasDBConstants.casa_chf + " = " + casaCHF.getCodigoCHF(), EncuestasDBConstants.casa_chf);
                 if (encuestaExiste != null)
                     existeencuestaCasa = true;
@@ -317,7 +327,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
 			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.header_casa)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
-			gridView.setAdapter(new MenuCasaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_casa, mParticipantes.size(), mCuartos.size(), existeencuestaCasa, mAreas.size(), habilitarencuestaCasaSA, existeencuestaCasaSA));
+			gridView.setAdapter(new MenuCasaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_casa, mParticipantes.size(), mCuartos.size(), existeencuestaCasa, mAreas.size(), habilitarencuestaCasaSA, existeencuestaCasaSA,mTelefonosContacto.size()));
 			dismissProgressDialog();
 		}
 

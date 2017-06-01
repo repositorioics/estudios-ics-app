@@ -18,6 +18,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -41,6 +44,13 @@
         </activity>
         <activity android:name="ni.org.ics.estudios.appmovil.MainActivity" 
             android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.bluetooth.activity.ChatActivity" 
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="ni.org.ics.estudios.appmovil.bluetooth.activity.DeviceListActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/select_device"
+            android:theme="@android:style/Theme.Holo.Dialog"/>
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCohorteFamiliaActivity" 
             android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.BuscarCasaActivity" 
@@ -56,6 +66,8 @@
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaParticipantesActivity"
             android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaCuartosActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaTelefonosActivity"
             android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaAreasActivity"
             android:screenOrientation="portrait" />
@@ -90,6 +102,8 @@
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaMuestraBHCPaxgeneActivity"
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoCuartoActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTelefonoContactoActivity"
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaAreaActivity"
                   android:screenOrientation="portrait" />

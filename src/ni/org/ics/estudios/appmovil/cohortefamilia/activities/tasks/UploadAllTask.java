@@ -8,6 +8,7 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
+import ni.org.ics.estudios.appmovil.domain.TelefonoContacto;
 import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
@@ -68,6 +69,7 @@ public class UploadAllTask extends UploadTask {
     private List<ParticipanteSeroprevalencia> mParticipantesSA = new ArrayList<ParticipanteSeroprevalencia>();
     private List<EncuestaCasaSA> mEncuestasCasaSA = new ArrayList<EncuestaCasaSA>();
     private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = new ArrayList<EncuestaParticipanteSA>();
+    private List<TelefonoContacto> mTelefonos = new ArrayList<TelefonoContacto>();
     //private List<Paxgene> mPaxgenes = new ArrayList<Paxgene>();
 
 	private String url = null;
@@ -101,7 +103,8 @@ public class UploadAllTask extends UploadTask {
     public static final String PARTICIPANTESA = "23";
     public static final String ENCUESTA_PARTICIPANTESA = "24";
     public static final String ENCUESTA_CASASA = "25";
-	private static final String TOTAL_TASK = "25";
+    public static final String TELEFONOS = "26";
+	private static final String TOTAL_TASK = "26";
 	
 
 	@Override
@@ -123,12 +126,19 @@ public class UploadAllTask extends UploadTask {
             mParticipantesCHF = estudioAdapter.getParticipanteCohorteFamilias(filtro, null);
             mCartasConsent = estudioAdapter.getCartasConsentimientos(filtro, MainDBConstants.codigo);
             mEncuestasCasas = estudioAdapter.getEncuestaCasas(filtro, null);
-            //mCocinas = estudioAdapter.get(filtro, MainDBConstants.codigo);
-            //mComedores = estudioAdapter.get(filtro, MainDBConstants.codigo);
-            //mSalas = estudioAdapter.get(filtro, MainDBConstants.codigo);
-            //mHabitaciones = estudioAdapter.getHabitaciones(filtro, null);
-            //mBanios = estudioAdapter.get(filtro, MainDBConstants.codigo);
-            //mVentanas = estudioAdapter.get(filtro, MainDBConstants.codigo);
+            filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "' and " + MainDBConstants.tipo + "='cocina'";
+            mCocinas = estudioAdapter.getCocinas(filtro, null);
+            filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "' and " + MainDBConstants.tipo + "='comedor'";
+            mComedores = estudioAdapter.getComedores(filtro, null);
+            filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "' and " + MainDBConstants.tipo + "='sala'";
+            mSalas = estudioAdapter.getSalas(filtro, null);
+            filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "' and " + MainDBConstants.tipo + "='habitacion'";
+            mHabitaciones = estudioAdapter.getHabitaciones(filtro, null);
+            filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "' and " + MainDBConstants.tipo + "='banio'";
+            mBanios = estudioAdapter.getBanios(filtro, null);
+            filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "' and " + MainDBConstants.tipo + "='ventana'";
+            mVentanas = estudioAdapter.getVentanas(filtro, null);
+            filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
             mCuartos = estudioAdapter.getCuartos(filtro, null);
             mCamas = estudioAdapter.getCamas(filtro, null);
             mPersonaCamas = estudioAdapter.getPersonasCama(filtro, null);
@@ -140,6 +150,7 @@ public class UploadAllTask extends UploadTask {
             mParticipantesSA = estudioAdapter.getParticipantesSeroprevalencia(filtro, null);
             mEncuestasCasaSA = estudioAdapter.getEncuestasCasaSA(filtro, null);
             mEncuestasParticipanteSA = estudioAdapter.getEncuestasParticipanteSA(filtro,null);
+            mTelefonos = estudioAdapter.getTelefonosContacto(filtro, null);
 
 			publishProgress("Datos completos!", "2", "2");
 			
@@ -294,6 +305,12 @@ public class UploadAllTask extends UploadTask {
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PARTICIPANTESA);
                 return error;
             }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, TELEFONOS);
+            error = cargarTelefonos(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TELEFONOS);
+                return error;
+            }
 		} catch (Exception e1) {
 
 			e1.printStackTrace();
@@ -394,37 +411,34 @@ public class UploadAllTask extends UploadTask {
                 }
             }
         }
-        //TODO: ACTUALIZAR ESTADO DEL OBJETO
         if(opcion.equalsIgnoreCase(COCINA)){
             c = mCocinas.size();
             if(c>0){
                 for (Cocina cocina : mCocinas) {
                     cocina.setEstado(estado.charAt(0));
-                    //estudioAdapter.editarCocina(cocina);
+                    estudioAdapter.editarCocina(cocina);
                     publishProgress("Actualizando cocinas en base de datos local", Integer.valueOf(mCocinas.indexOf(cocina)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
         }
-        //TODO: ACTUALIZAR ESTADO DEL OBJETO
         if(opcion.equalsIgnoreCase(COMEDOR)){
             c = mComedores.size();
             if(c>0){
                 for (Comedor comedor : mComedores) {
                     comedor.setEstado(estado.charAt(0));
-                    //estudioAdapter.editarCocina(comedor);
+                    estudioAdapter.editarComedor(comedor);
                     publishProgress("Actualizando comedores en base de datos local", Integer.valueOf(mComedores.indexOf(comedor)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
         }
-        //TODO: ACTUALIZAR ESTADO DEL OBJETO
         if(opcion.equalsIgnoreCase(SALA)){
             c = mSalas.size();
             if(c>0){
                 for (Sala sala : mSalas) {
                     sala.setEstado(estado.charAt(0));
-                    //estudioAdapter.editarCocina(sala);
+                    estudioAdapter.editarSala(sala);
                     publishProgress("Actualizando salas en base de datos local", Integer.valueOf(mSalas.indexOf(sala)).toString(), Integer
                             .valueOf(c).toString());
                 }
@@ -441,25 +455,23 @@ public class UploadAllTask extends UploadTask {
                 }
             }
         }
-        //TODO: ACTUALIZAR ESTADO DEL OBJETO
         if(opcion.equalsIgnoreCase(BANIOS)){
             c = mBanios.size();
             if(c>0){
                 for (Banio banio : mBanios) {
                     banio.setEstado(estado.charAt(0));
-                    //estudioAdapter.editarCocina(banio);
+                    estudioAdapter.editarBanio(banio);
                     publishProgress("Actualizando baños en base de datos local", Integer.valueOf(mBanios.indexOf(banio)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
         }
-        //TODO: ACTUALIZAR ESTADO DEL OBJETO
         if(opcion.equalsIgnoreCase(VENTANAS)){
             c = mVentanas.size();
             if(c>0){
                 for (Ventana ventana : mVentanas) {
                     ventana.setEstado(estado.charAt(0));
-                    //estudioAdapter.editarCocina(ventana);
+                    estudioAdapter.editarVentana(ventana);
                     publishProgress("Actualizando ventanas en base de datos local", Integer.valueOf(mVentanas.indexOf(ventana)).toString(), Integer
                             .valueOf(c).toString());
                 }
@@ -549,6 +561,17 @@ public class UploadAllTask extends UploadTask {
                     muestra.setEstado(estado.charAt(0));
                     estudioAdapter.editarMuestras(muestra);
                     publishProgress("Actualizando muestras en base de datos local", Integer.valueOf(mMuestras.indexOf(muestra)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(TELEFONOS)){
+            c = mTelefonos.size();
+            if(c>0){
+                for (TelefonoContacto telef : mTelefonos) {
+                    telef.setEstado(estado.charAt(0));
+                    estudioAdapter.editarTelefonoContacto(telef);
+                    publishProgress("Actualizando telefonos en base de datos local", Integer.valueOf(mTelefonos.indexOf(telef)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
@@ -1443,4 +1466,39 @@ public class UploadAllTask extends UploadTask {
             return e.getMessage();
         }
     }
+    
+    /***************************************************/
+    /********************* Telefonos ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarTelefonos(String url, String username,String password) throws Exception {
+        try {
+            if(mTelefonos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando telefonos!", TELEFONOS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/telefonos";
+                TelefonoContacto[] envio = mTelefonos.toArray(new TelefonoContacto[mTelefonos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<TelefonoContacto[]> requestEntity =
+                        new HttpEntity<TelefonoContacto[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    
 }

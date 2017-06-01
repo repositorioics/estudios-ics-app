@@ -525,7 +525,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 notificarCambios = false;
 				changeStatus(mWizardModel.findByKey(labels.getApellido2Madre()), !visible && edadAnios<18);
 
-				if(edadAnios>18){
+				if(edadAnios>17){
 					changeStatus(mWizardModel.findByKey(labels.getEmancipado()), false);
                     notificarCambios = false;
 					changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), false);

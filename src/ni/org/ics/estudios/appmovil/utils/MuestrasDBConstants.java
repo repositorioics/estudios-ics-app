@@ -23,7 +23,7 @@ public class MuestrasDBConstants {
     public static final String tubo = "tubo";
     public static final String tipoMuestra = "tipoMuestra";
     public static final String proposito = "proposito";
-    public static final String participanteCHF = "participanteCHF";
+    public static final String participanteCHF = "participante";
     public static final String realizaPaxgene = "realizaPaxgene";
     public static final String horaInicioPax = "horaInicioPax";
     public static final String horaFinPax = "horaFinPax";
@@ -45,7 +45,7 @@ public class MuestrasDBConstants {
             + tubo + " text, "
             + tipoMuestra + " text, "
             + proposito + " text, "
-            + participanteCHF + " text not null, "
+            + participanteCHF + " integer not null, "
             + realizaPaxgene + " text, "
             + horaInicioPax + " text, "
             + horaFinPax + " text, "

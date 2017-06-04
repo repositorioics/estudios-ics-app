@@ -16,7 +16,7 @@ public class EncuestaDatosPartoBBHelper {
 
     public static ContentValues crearEncuestaDatosPartoBBContentValues(EncuestaDatosPartoBB encuesta){
         ContentValues cv = new ContentValues();
-        cv.put(EncuestasDBConstants.participante_chf, encuesta.getParticipante().getParticipanteCHF());
+        cv.put(EncuestasDBConstants.participante, encuesta.getParticipante().getParticipante().getCodigo());
         cv.put(EncuestasDBConstants.tipoParto, encuesta.getTipoParto());
         cv.put(EncuestasDBConstants.tiempoEmb_sndr, encuesta.getTiempoEmb_sndr());
         cv.put(EncuestasDBConstants.tiempoEmbSemana, encuesta.getTiempoEmbSemana());

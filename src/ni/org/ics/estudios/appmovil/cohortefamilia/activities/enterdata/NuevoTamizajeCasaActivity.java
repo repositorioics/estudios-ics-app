@@ -337,7 +337,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
     	try{
     		boolean visible = false;
     		if (page.getTitle().equals(labels.getVisitaExitosa())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
                 changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajeCasa()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonVisitaNoExitosa()), !visible);
@@ -345,7 +345,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
     		if (page.getTitle().equals(labels.getAceptaTamizajeCasa())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
                 changeStatus(mWizardModel.findByKey(labels.getCodigoCHF()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMismoJefe()), visible);
@@ -359,7 +359,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
     		if (page.getTitle().equals(labels.getMismoJefe())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("No");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("No");
                 changeStatus(mWizardModel.findByKey(labels.getNombre1JefeFamilia()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2JefeFamilia()), visible);
@@ -518,6 +518,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
 	        	cchf.setPasive('0');
 	        	//Inserta una nueva casa CHF
 	        	estudiosAdapter.crearCasaCohorteFamilia(cchf);
+                estudiosAdapter.close();
 	        	Bundle arguments = new Bundle();
 	            if (cchf!=null) arguments.putSerializable(Constants.CASA , cchf);
 	            Intent i = new Intent(getApplicationContext(),

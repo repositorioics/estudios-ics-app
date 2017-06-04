@@ -1003,7 +1003,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	        	estudiosAdapter.crearCartaConsentimiento(cc);
 	        	//Crea un nuevo participantes de chf
 	        	ParticipanteCohorteFamilia pchf = new ParticipanteCohorteFamilia();
-	        	pchf.setParticipanteCHF(id);
+	        	//pchf.setParticipanteCHF(id);
 	        	pchf.setParticipante(participante);
 	        	pchf.setCasaCHF(casaCHF);
 	        	pchf.setRecordDate(new Date());
@@ -1032,7 +1032,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         estudiosAdapter.crearCartaConsentimiento(cc);
 
                         ParticipanteSeroprevalencia pSA = new ParticipanteSeroprevalencia();
-                        pSA.setParticipanteSA(id);
+                        //pSA.setParticipanteSA(id);
                         pSA.setParticipante(participante);
                         pSA.setCasaCHF(casaCHF);
                         pSA.setRecordDate(new Date());

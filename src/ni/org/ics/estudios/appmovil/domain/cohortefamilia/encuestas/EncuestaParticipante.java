@@ -606,7 +606,7 @@ public class EncuestaParticipante extends BaseMetaData {
 
     @Override
     public String toString() {
-        return "EncuestaParticipante{" + participante.getParticipanteCHF() +
+        return "EncuestaParticipante{" + participante.getParticipante().getCodigo() +
                 '}';
     }
 

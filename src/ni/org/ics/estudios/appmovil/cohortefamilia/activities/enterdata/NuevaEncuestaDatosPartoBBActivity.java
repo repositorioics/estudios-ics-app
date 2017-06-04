@@ -590,8 +590,8 @@ public class NuevaEncuestaDatosPartoBBActivity  extends FragmentActivity impleme
             encuesta.setEstado('0');
             encuesta.setPasive('0');
             boolean actualizada = false;
-            EncuestaDatosPartoBB encuestaExiste = estudiosAdapter.getEncuestasDatosPartoBB(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF()+"'", EncuestasDBConstants.participante_chf);
-            if (encuestaExiste != null && encuestaExiste.getParticipante() != null && encuestaExiste.getParticipante().getParticipanteCHF() != null)
+            EncuestaDatosPartoBB encuestaExiste = estudiosAdapter.getEncuestasDatosPartoBB(EncuestasDBConstants.participante + "=" + participanteCHF.getParticipante().getCodigo(), EncuestasDBConstants.participante);
+            if (encuestaExiste != null && encuestaExiste.getParticipante() != null)
                 actualizada = estudiosAdapter.editarEncuestasDatosPartoBB(encuesta);
             else estudiosAdapter.crearEncuestasDatosPartoBB(encuesta);
             estudiosAdapter.close();

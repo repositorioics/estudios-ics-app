@@ -649,8 +649,8 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             encuesta.setEstado('0');
             encuesta.setPasive('0');
             boolean actualizada = false;
-            EncuestaParticipanteSA encuestaExiste = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participanteSA + "='" + participanteSA.getParticipanteSA() + "'", SeroprevalenciaDBConstants.participanteSA);
-            if (encuestaExiste != null && encuestaExiste.getParticipanteSA() != null && encuestaExiste.getParticipanteSA().getParticipanteSA() != null)
+            EncuestaParticipanteSA encuestaExiste = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + participanteSA.getParticipante().getCodigo() , SeroprevalenciaDBConstants.participante);
+            if (encuestaExiste != null && encuestaExiste.getParticipanteSA() != null && encuestaExiste.getParticipanteSA().getParticipante() != null)
                 actualizada = estudiosAdapter.editarEncuestaParticipanteSA(encuesta);
             else estudiosAdapter.crearEncuestaParticipanteSA(encuesta);
             estudiosAdapter.close();

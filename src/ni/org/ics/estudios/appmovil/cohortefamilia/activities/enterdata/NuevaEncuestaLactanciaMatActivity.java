@@ -545,8 +545,8 @@ public class NuevaEncuestaLactanciaMatActivity extends FragmentActivity implemen
             encuesta.setEstado('0');
             encuesta.setPasive('0');
             boolean actualizada = false;
-            EncuestaLactanciaMaterna encuestaExiste = estudiosAdapter.getEncuestasLactanciaMaterna(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
-            if (encuestaExiste != null && encuestaExiste.getParticipante() != null && encuestaExiste.getParticipante().getParticipanteCHF() != null)
+            EncuestaLactanciaMaterna encuestaExiste = estudiosAdapter.getEncuestasLactanciaMaterna(EncuestasDBConstants.participante + "=" + participanteCHF.getParticipante().getCodigo(), EncuestasDBConstants.participante);
+            if (encuestaExiste != null && encuestaExiste.getParticipante() != null && encuestaExiste.getParticipante().getParticipante() != null)
                 actualizada = estudiosAdapter.editarEncuestasLactanciaMaterna(encuesta);
             else estudiosAdapter.crearEncuestasLactanciaMaterna(encuesta);
             estudiosAdapter.close();

@@ -10,14 +10,14 @@ public class SeroprevalenciaDBConstants {
     public static final String PARTICIPANTESA_TABLE = "sa_participante_seroprevalencia";
 
     //CAMPOS  tabla ParticipanteSeroprevalencia
-    public static final String participanteSA = "participanteSA";
+    //public static final String participanteSA = "participanteSA";
     public static final String participante = "participante";
     public static final String casaCHF = "casaCHF";
 
     //crear tabla ParticipanteSeroprevalencia
     public static final String CREATE_PARTICIPANTESA_TABLE = "create table if not exists "
             + PARTICIPANTESA_TABLE + " ("
-            + participanteSA + " text not null, "
+            //+ participanteSA + " text not null, "
             + participante + " integer not null, "
             + casaCHF + " text not null, "
             + MainDBConstants.recordDate + " date, "
@@ -127,7 +127,7 @@ public class SeroprevalenciaDBConstants {
     //Crear tabla EncuestaParticipanteSA
     public static final String CREATE_ENCUESTA_PARTICIPANTESA_TABLE = "create table if not exists "
             + ENCUESTA_PARTICIPANTESA_TABLE + " ("
-            + participanteSA + " text not null, "
+            + participante + " integer not null, "
             + escuchadoZikaSn + " text, "
             + queEsSika + " text, "
             + otroQueEsSika + " text, "
@@ -166,6 +166,6 @@ public class SeroprevalenciaDBConstants {
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
-            + "primary key (" + participanteSA + "));";
+            + "primary key (" + participante + "));";
 
 }

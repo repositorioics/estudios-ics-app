@@ -79,7 +79,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-        new FetchDataCasaTask().execute(participanteCHF.getParticipanteCHF());
+        new FetchDataCasaTask().execute();
 
 
         gridView.setOnItemClickListener(new OnItemClickListener() {
@@ -390,7 +390,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     }
 
     private class FetchDataCasaTask extends AsyncTask<String, Void, String> {
-        private String codigoCasaCHF = null;
         @Override
         protected void onPreExecute() {
             // before the request begins, show a progress indicator
@@ -401,22 +400,24 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         protected String doInBackground(String... values) {
             try {
                 estudiosAdapter.open();
-                EncuestaParticipante encuesta = estudiosAdapter.getEncuestasParticipante(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+                String filtro = EncuestasDBConstants.participante + "=" + participanteCHF.getParticipante().getCodigo();
+
+                EncuestaParticipante encuesta = estudiosAdapter.getEncuestasParticipante(filtro, EncuestasDBConstants.participante);
                 if (encuesta!=null) {
                     existeencuestaParticip = true;
                 }
 
-                EncuestaDatosPartoBB encuestaDatosPartoBB = estudiosAdapter.getEncuestasDatosPartoBB(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+                EncuestaDatosPartoBB encuestaDatosPartoBB = estudiosAdapter.getEncuestasDatosPartoBB(filtro, EncuestasDBConstants.participante);
                 if (encuestaDatosPartoBB!=null) {
                     existeencuestaParto = true;
                 }
 
-                EncuestaPesoTalla encuestaPesoTalla = estudiosAdapter.getEncuestasPesoTalla(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+                EncuestaPesoTalla encuestaPesoTalla = estudiosAdapter.getEncuestasPesoTalla(filtro, EncuestasDBConstants.participante);
                 if (encuestaPesoTalla!=null) {
                     existeencuestaPeso = true;
                 }
 
-                EncuestaLactanciaMaterna encuestaLactanciaMaterna = estudiosAdapter.getEncuestasLactanciaMaterna(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF() + "'", EncuestasDBConstants.participante_chf);
+                EncuestaLactanciaMaterna encuestaLactanciaMaterna = estudiosAdapter.getEncuestasLactanciaMaterna(filtro, EncuestasDBConstants.participante);
                 if (encuestaLactanciaMaterna!=null) {
                     existeencuestaLact = true;
                 }
@@ -427,7 +428,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     if (carta.getTamizaje().getEstudio().getCodigo()==Constants.COD_EST_SEROPREVALENCIA && carta.getAceptaParteA().equalsIgnoreCase("S")) {
                         habilitarEncuestaParticipSA = true;
                         participanteSA = estudiosAdapter.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
-                        EncuestaParticipanteSA encuestaParticipanteSA = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participanteSA + "='" + participanteSA.getParticipanteSA()+"'", null);
+                        EncuestaParticipanteSA encuestaParticipanteSA = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participante + "='" + participanteSA.getParticipante().getCodigo()+"'", null);
                         if (encuestaParticipanteSA != null) {
                             existeencuestaParticipSA = true;
                         }

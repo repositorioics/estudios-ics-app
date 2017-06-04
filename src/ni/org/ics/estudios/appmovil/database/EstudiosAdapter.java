@@ -648,8 +648,8 @@ public class EstudiosAdapter {
 	//Editar ParticipanteCohorteFamilia existente en la base de datos
 	public boolean editarParticipanteCohorteFamilia(ParticipanteCohorteFamilia participanteCohorteFamilia) {
 		ContentValues cv = ParticipanteCohorteFamiliaHelper.crearParticipanteCohorteFamiliaContentValues(participanteCohorteFamilia);
-		return mDb.update(MainDBConstants.PARTICIPANTE_CHF_TABLE , cv, MainDBConstants.participanteCHF + "='" 
-				+ participanteCohorteFamilia.getParticipanteCHF()+"'", null) > 0;
+		return mDb.update(MainDBConstants.PARTICIPANTE_CHF_TABLE , cv, MainDBConstants.participante + "="
+				+ participanteCohorteFamilia.getParticipante().getCodigo(), null) > 0;
 	}
 	//Limpiar la tabla de ParticipanteCohorteFamilia de la base de datos
 	public boolean borrarParticipanteCohorteFamilias() {
@@ -873,8 +873,8 @@ public class EstudiosAdapter {
     //Editar EncuestasDatosPartoBB existente en la base de datos
     public boolean editarEncuestasDatosPartoBB(EncuestaDatosPartoBB encuestaDatosPartoBB) {
         ContentValues cv = EncuestaDatosPartoBBHelper.crearEncuestaDatosPartoBBContentValues(encuestaDatosPartoBB);
-        return mDb.update(EncuestasDBConstants.ENCUESTA_PARTOBB_TABLE, cv, EncuestasDBConstants.participante_chf + "='"
-                + encuestaDatosPartoBB.getParticipante().getParticipanteCHF() + "'", null) > 0;
+        return mDb.update(EncuestasDBConstants.ENCUESTA_PARTOBB_TABLE, cv, EncuestasDBConstants.participante + "="
+                + encuestaDatosPartoBB.getParticipante().getParticipante().getCodigo(), null) > 0;
     }
     //Limpiar la tabla de EncuestasDatosPartoBB de la base de datos
     public boolean borrarEncuestasDatosPartoBBs() {
@@ -887,7 +887,7 @@ public class EstudiosAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mEncuestasDatosPartoBB=EncuestaDatosPartoBBHelper.crearEncuestaDatosPartoBB(cursor);
-            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)) + "'", null);
+            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)), null);
             if (participanteCohorteFamilia != null) mEncuestasDatosPartoBB.setParticipante(participanteCohorteFamilia);
         }
         if (!cursor.isClosed()) cursor.close();
@@ -903,7 +903,7 @@ public class EstudiosAdapter {
             do{
                 EncuestaDatosPartoBB mEncuesta = null;
                 mEncuesta = EncuestaDatosPartoBBHelper.crearEncuestaDatosPartoBB(cursor);
-                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)) + "'", null);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)), null);
                 if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
                 mEncuestas.add(mEncuesta);
             } while (cursor.moveToNext());
@@ -927,8 +927,8 @@ public class EstudiosAdapter {
     //Editar EncuestasParticipante existente en la base de datos
     public boolean editarEncuestasParticipante(EncuestaParticipante encuestaParticipante) {
         ContentValues cv = EncuestaParticipanteHelper.crearEncuestaParticipanteContentValues(encuestaParticipante);
-        return mDb.update(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, cv, EncuestasDBConstants.participante_chf + "='"
-                + encuestaParticipante.getParticipante().getParticipanteCHF() + "'", null) > 0;
+        return mDb.update(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, cv, EncuestasDBConstants.participante + "="
+                + encuestaParticipante.getParticipante().getParticipante().getCodigo(), null) > 0;
     }
     //Limpiar la tabla de EncuestasParticipante de la base de datos
     public boolean borrarEncuestasParticipantes() {
@@ -941,7 +941,7 @@ public class EstudiosAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mEncuestasParticipante=EncuestaParticipanteHelper.crearEncuestaParticipante(cursor);
-            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)) + "'", null);
+            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)), null);
             if (participanteCohorteFamilia != null) mEncuestasParticipante.setParticipante(participanteCohorteFamilia);
         }
         if (!cursor.isClosed()) cursor.close();
@@ -957,7 +957,7 @@ public class EstudiosAdapter {
             do{
                 EncuestaParticipante mEncuesta = null;
                 mEncuesta = EncuestaParticipanteHelper.crearEncuestaParticipante(cursor);
-                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf))+"'", null);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)), null);
                 if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
                 mEncuestas.add(mEncuesta);
             } while (cursor.moveToNext());
@@ -981,8 +981,8 @@ public class EstudiosAdapter {
     //Editar EncuestasPesoTalla existente en la base de datos
     public boolean editarEncuestasPesoTalla(EncuestaPesoTalla encuestaPesoTalla) {
         ContentValues cv = EncuestaPesoTallaHelper.crearEncuestaPesoTallaContentValues(encuestaPesoTalla);
-        return mDb.update(EncuestasDBConstants.ENCUESTA_PESOTALLA_TABLE, cv, EncuestasDBConstants.participante_chf + "='"
-                + encuestaPesoTalla.getParticipante().getParticipanteCHF() + "'", null) > 0;
+        return mDb.update(EncuestasDBConstants.ENCUESTA_PESOTALLA_TABLE, cv, EncuestasDBConstants.participante + "="
+                + encuestaPesoTalla.getParticipante().getParticipante().getCodigo(), null) > 0;
     }
     //Limpiar la tabla de EncuestasPesoTalla de la base de datos
     public boolean borrarEncuestasPesoTallas() {
@@ -995,7 +995,7 @@ public class EstudiosAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mEncuestasPesoTalla=EncuestaPesoTallaHelper.crearEncuestaPesoTalla(cursor);
-            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)) + "'", null);
+            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)), null);
             if (participanteCohorteFamilia != null) mEncuestasPesoTalla.setParticipante(participanteCohorteFamilia);
         }
         if (!cursor.isClosed()) cursor.close();
@@ -1011,7 +1011,7 @@ public class EstudiosAdapter {
             do{
                 EncuestaPesoTalla mEncuesta = null;
                 mEncuesta = EncuestaPesoTallaHelper.crearEncuestaPesoTalla(cursor);
-                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf))+"'", null);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)), null);
                 if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
                 mEncuestas.add(mEncuesta);
             } while (cursor.moveToNext());
@@ -1035,8 +1035,8 @@ public class EstudiosAdapter {
     //Editar EncuestasLactanciaMaterna existente en la base de datos
     public boolean editarEncuestasLactanciaMaterna(EncuestaLactanciaMaterna encuestaLactanciaMaterna) {
         ContentValues cv = EncuestaLactanciaMatHelper.crearEncuestaLactanciaMaternaContentValues(encuestaLactanciaMaterna);
-        return mDb.update(EncuestasDBConstants.ENCUESTA_LACTANCIAMAT_TABLE, cv, EncuestasDBConstants.participante_chf + "='"
-                + encuestaLactanciaMaterna.getParticipante().getParticipanteCHF() + "'", null) > 0;
+        return mDb.update(EncuestasDBConstants.ENCUESTA_LACTANCIAMAT_TABLE, cv, EncuestasDBConstants.participante + "="
+                + encuestaLactanciaMaterna.getParticipante().getParticipante().getCodigo(), null) > 0;
     }
     //Limpiar la tabla de EncuestasLactanciaMaterna de la base de datos
     public boolean borrarEncuestasLactanciaMaternas() {
@@ -1049,7 +1049,7 @@ public class EstudiosAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mEncuestasLactanciaMaterna=EncuestaLactanciaMatHelper.crearEncuestaLactanciaMaterna(cursor);
-            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)) + "'", null);
+            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)), null);
             if (participanteCohorteFamilia != null) mEncuestasLactanciaMaterna.setParticipante(participanteCohorteFamilia);
         }
         if (!cursor.isClosed()) cursor.close();
@@ -1065,7 +1065,7 @@ public class EstudiosAdapter {
             do{
                 EncuestaLactanciaMaterna mEncuesta = null;
                 mEncuesta = EncuestaLactanciaMatHelper.crearEncuestaLactanciaMaterna(cursor);
-                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante_chf)) + "'", null);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)), null);
                 if (participanteCohorteFamilia != null) mEncuesta.setParticipante(participanteCohorteFamilia);
                 mEncuestas.add(mEncuesta);
             } while (cursor.moveToNext());
@@ -1103,7 +1103,7 @@ public class EstudiosAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mMuestras=MuestraHelper.crearMuestra(cursor);
-            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteCHF)) + "'", null);
+            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MuestrasDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteCHF)), null);
             if (participanteCohorteFamilia != null) mMuestras.setParticipanteCHF(participanteCohorteFamilia);
         }
         if (!cursor.isClosed()) cursor.close();
@@ -1119,7 +1119,7 @@ public class EstudiosAdapter {
             do{
                 Muestra mMuestra = null;
                 mMuestra = MuestraHelper.crearMuestra(cursor);
-                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MainDBConstants.participanteCHF + "='" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteCHF)) + "'", null);
+                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MuestrasDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteCHF)), null);
                 if (participanteCohorteFamilia != null) mMuestra.setParticipanteCHF(participanteCohorteFamilia);
                 mMuestras.add(mMuestra);
             } while (cursor.moveToNext());
@@ -1185,7 +1185,7 @@ public class EstudiosAdapter {
 	/**
 	 * Metodos para Habitaciones en la base de datos
 	 * 
-	 * @param Habitacion
+	 * @param habitacion
 	 *            Objeto Habitacion que contiene la informacion
 	 *
 	 */
@@ -1239,7 +1239,7 @@ public class EstudiosAdapter {
 	/**
 	 * Metodos para Camas en la base de datos
 	 * 
-	 * @param Cama
+	 * @param cama
 	 *            Objeto Cama que contiene la informacion
 	 *
 	 */
@@ -1294,7 +1294,7 @@ public class EstudiosAdapter {
 	/**
 	 * Metodos para PersonaCama en la base de datos
 	 * 
-	 * @param PersonaCama
+	 * @param personacama
 	 *            Objeto PersonaCama que contiene la informacion
 	 *
 	 */
@@ -1352,7 +1352,7 @@ public class EstudiosAdapter {
 	/**
 	 * Metodos para AreaAmbiente en la base de datos
 	 * 
-	 * @param AreaAmbiente
+	 * @param area
 	 *            Objeto AreaAmbiente que contiene la informacion
 	 *
 	 */
@@ -1403,7 +1403,7 @@ public class EstudiosAdapter {
 	/**
 	 * Metodos para Banio en la base de datos
 	 * 
-	 * @param Banio
+	 * @param banio
 	 *            Objeto Banio que contiene la informacion
 	 *
 	 */
@@ -1469,7 +1469,7 @@ public class EstudiosAdapter {
 	/**
 	 * Metodos para sala en la base de datos
 	 * 
-	 * @param Sala
+	 * @param sala
 	 *            Objeto Sala que contiene la informacion
 	 *
 	 */
@@ -1520,7 +1520,7 @@ public class EstudiosAdapter {
 	/**
 	 * Metodos para Cocina en la base de datos
 	 * 
-	 * @param Cocina
+	 * @param cocina
 	 *            Objeto Cocina que contiene la informacion
 	 *
 	 */
@@ -1571,7 +1571,7 @@ public class EstudiosAdapter {
 	/**
 	 * Metodos para Comedor en la base de datos
 	 * 
-	 * @param Comedor
+	 * @param comedor
 	 *            Objeto Comedor que contiene la informacion
 	 *
 	 */
@@ -1622,7 +1622,7 @@ public class EstudiosAdapter {
 	/**
 	 * Metodos para Ventana en la base de datos
 	 * 
-	 * @param Ventana
+	 * @param ventana
 	 *            Objeto Ventana que contiene la informacion
 	 *
 	 */
@@ -1681,7 +1681,7 @@ public class EstudiosAdapter {
 	/**
 	 * Metodos para Cuartos en la base de datos
 	 * 
-	 * @param Cuarto
+	 * @param cuarto
 	 *            Objeto Cuarto que contiene la informacion
 	 *
 	 */
@@ -1859,8 +1859,8 @@ public class EstudiosAdapter {
     //Editar EncuestaParticipanteSA existente en la base de datos
     public boolean editarEncuestaParticipanteSA(EncuestaParticipanteSA encuestaParticipanteSA) {
         ContentValues cv = EncuestaParticipanteSAHelper.crearEncuestaParticipanteSAContentValues(encuestaParticipanteSA);
-        return mDb.update(SeroprevalenciaDBConstants.ENCUESTA_PARTICIPANTESA_TABLE, cv, SeroprevalenciaDBConstants.participanteSA + "='"
-                + encuestaParticipanteSA.getParticipanteSA().getParticipanteSA() + "'", null) > 0;
+        return mDb.update(SeroprevalenciaDBConstants.ENCUESTA_PARTICIPANTESA_TABLE, cv, SeroprevalenciaDBConstants.participante + "="
+                + encuestaParticipanteSA.getParticipanteSA().getParticipante().getCodigo(), null) > 0;
     }
     //Limpiar la tabla de EncuestaParticipanteSA de la base de datos
     public boolean borrarEncuestaParticipanteSA() {
@@ -1873,7 +1873,7 @@ public class EstudiosAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mEncuestaParticipanteSA= EncuestaParticipanteSAHelper.crearEncuestaParticipanteSA(cursor);
-            ParticipanteSeroprevalencia participante = this.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participanteSA + " = '" + cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.participanteSA))+"'", null);
+            ParticipanteSeroprevalencia participante = this.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.participante)), null);
             mEncuestaParticipanteSA.setParticipanteSA(participante);
         }
         if (!cursor.isClosed()) cursor.close();
@@ -1889,7 +1889,7 @@ public class EstudiosAdapter {
             do{
                 EncuestaParticipanteSA mEncuestaParticipanteSA = null;
                 mEncuestaParticipanteSA = EncuestaParticipanteSAHelper.crearEncuestaParticipanteSA(cursor);
-                ParticipanteSeroprevalencia participante = this.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participanteSA + " = '" + cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.participanteSA))+"'", null);
+                ParticipanteSeroprevalencia participante = this.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.participante)), null);
                 mEncuestaParticipanteSA.setParticipanteSA(participante);
                 mEncuestasParticipanteSA.add(mEncuestaParticipanteSA);
             } while (cursor.moveToNext());
@@ -1901,7 +1901,7 @@ public class EstudiosAdapter {
 	/**
 	 * Metodos para Telefonos en la base de datos
 	 * 
-	 * @param TelefonoContacto
+	 * @param tel
 	 *            Objeto TelefonoContacto que contiene la informacion
 	 *
 	 */

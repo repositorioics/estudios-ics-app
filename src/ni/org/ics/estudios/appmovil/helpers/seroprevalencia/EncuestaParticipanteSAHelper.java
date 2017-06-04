@@ -17,7 +17,7 @@ public class EncuestaParticipanteSAHelper {
     public static ContentValues crearEncuestaParticipanteSAContentValues(EncuestaParticipanteSA encuesta){
         ContentValues cv = new ContentValues();
 
-        cv.put(SeroprevalenciaDBConstants.participanteSA, encuesta.getParticipanteSA().getParticipanteSA());
+        cv.put(SeroprevalenciaDBConstants.participante, encuesta.getParticipanteSA().getParticipante().getCodigo());
         cv.put(SeroprevalenciaDBConstants.escuchadoZikaSn, encuesta.getEscuchadoZikaSn());
         cv.put(SeroprevalenciaDBConstants.queEsSika, encuesta.getQueEsSika());
         cv.put(SeroprevalenciaDBConstants.otroQueEsSika, encuesta.getOtroQueEsSika());

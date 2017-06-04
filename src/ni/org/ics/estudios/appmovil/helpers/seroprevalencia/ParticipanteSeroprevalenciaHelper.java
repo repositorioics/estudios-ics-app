@@ -17,7 +17,7 @@ public class ParticipanteSeroprevalenciaHelper {
     public static ContentValues crearParticipanteSeroprevalenciaContentValues(ParticipanteSeroprevalencia seroprevalencia){
         ContentValues cv = new ContentValues();
 
-        cv.put(SeroprevalenciaDBConstants.participanteSA, seroprevalencia.getParticipanteSA());
+        cv.put(SeroprevalenciaDBConstants.participante, seroprevalencia.getParticipante().getCodigo());
         if (seroprevalencia.getCasaCHF() != null) cv.put(SeroprevalenciaDBConstants.casaCHF, seroprevalencia.getCasaCHF().getCodigoCHF());
         if (seroprevalencia.getParticipante() != null) cv.put(SeroprevalenciaDBConstants.participante, seroprevalencia.getParticipante().getCodigo());
         if (seroprevalencia.getRecordDate() != null) cv.put(MainDBConstants.recordDate, seroprevalencia.getRecordDate().getTime());
@@ -32,7 +32,7 @@ public class ParticipanteSeroprevalenciaHelper {
     public static ParticipanteSeroprevalencia crearParticipanteSeroprevalencia(Cursor cursor){
         ParticipanteSeroprevalencia mParticipanteSeroprevalencia = new ParticipanteSeroprevalencia();
 
-        mParticipanteSeroprevalencia.setParticipanteSA(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.participanteSA)));
+        //mParticipanteSeroprevalencia.setParticipanteSA(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.participanteSA)));
         mParticipanteSeroprevalencia.setCasaCHF(null);
         mParticipanteSeroprevalencia.setParticipante(null);
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mParticipanteSeroprevalencia.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));

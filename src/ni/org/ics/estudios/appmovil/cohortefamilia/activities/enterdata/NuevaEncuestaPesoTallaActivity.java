@@ -536,8 +536,8 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
             encuesta.setEstado('0');
             encuesta.setPasive('0');
             boolean actualizada = false;
-            EncuestaPesoTalla encuestaExiste = estudiosAdapter.getEncuestasPesoTalla(EncuestasDBConstants.participante_chf + "='" + participanteCHF.getParticipanteCHF()+"'", EncuestasDBConstants.participante_chf);
-            if (encuestaExiste != null && encuestaExiste.getParticipante() != null && encuestaExiste.getParticipante().getParticipanteCHF() != null)
+            EncuestaPesoTalla encuestaExiste = estudiosAdapter.getEncuestasPesoTalla(EncuestasDBConstants.participante + "=" + participanteCHF.getParticipante().getCodigo(), EncuestasDBConstants.participante);
+            if (encuestaExiste != null && encuestaExiste.getParticipante() != null)
                 actualizada = estudiosAdapter.editarEncuestasPesoTalla(encuesta);
             else estudiosAdapter.crearEncuestasPesoTalla(encuesta);
             estudiosAdapter.close();

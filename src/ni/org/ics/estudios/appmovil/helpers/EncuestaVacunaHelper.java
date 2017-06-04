@@ -16,7 +16,7 @@ public class EncuestaVacunaHelper {
 
     public static ContentValues crearEncuestaVacunaContentValues(EncuestaVacuna encuesta){
         ContentValues cv = new ContentValues();
-        cv.put(EncuestasDBConstants.participante_chf, encuesta.getParticipante().getCodigo());
+        cv.put(EncuestasDBConstants.participante, encuesta.getParticipante().getCodigo());
         cv.put(EncuestasDBConstants.vacuna, encuesta.getVacuna());
         if (encuesta.getFechaVac() != null ) cv.put(EncuestasDBConstants.fechaVac, encuesta.getFechaVac().getTime());
         cv.put(EncuestasDBConstants.tipovacuna, encuesta.getTipovacuna());

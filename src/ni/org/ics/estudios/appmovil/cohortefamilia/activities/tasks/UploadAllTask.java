@@ -576,17 +576,39 @@ public class UploadAllTask extends UploadTask {
                 }
             }
         }
-        /*if(opcion.equalsIgnoreCase(MUESTRAS_PAXGENE)){
-            c = mPaxgenes.size();
+        if(opcion.equalsIgnoreCase(PARTICIPANTESA)){
+            c = mParticipantesSA.size();
             if(c>0){
-                for (Paxgene paxgene : mPaxgenes) {
-                    paxgene.setEstado(estado.charAt(0));
-                    estudioAdapter.editarPaxgenes(paxgene);
-                    publishProgress("Actualizando datos de PaxGene en base de datos local", Integer.valueOf(mPaxgenes.indexOf(paxgene)).toString(), Integer
+                for (ParticipanteSeroprevalencia seroprevalencia : mParticipantesSA) {
+                    seroprevalencia.setEstado(estado.charAt(0));
+                    estudioAdapter.editarParticipanteSeroprevalencia(seroprevalencia);
+                    publishProgress("Actualizando participantes seroprevalencia en base de datos local", Integer.valueOf(mParticipantesSA.indexOf(seroprevalencia)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
-        }*/
+        }
+        if(opcion.equalsIgnoreCase(ENCUESTA_CASASA)){
+            c = mEncuestasCasaSA.size();
+            if(c>0){
+                for (EncuestaCasaSA encuestaCasaSA : mEncuestasCasaSA) {
+                    encuestaCasaSA.setEstado(estado.charAt(0));
+                    estudioAdapter.editarEncuestaCasaSA(encuestaCasaSA);
+                    publishProgress("Actualizando encuestas casas seroprevalencia en base de datos local", Integer.valueOf(mEncuestasCasaSA.indexOf(encuestaCasaSA)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(ENCUESTA_PARTICIPANTESA)){
+            c = mEncuestasParticipanteSA.size();
+            if(c>0){
+                for (EncuestaParticipanteSA encuestaParticipanteSA : mEncuestasParticipanteSA) {
+                    encuestaParticipanteSA.setEstado(estado.charAt(0));
+                    estudioAdapter.editarEncuestaParticipanteSA(encuestaParticipanteSA);
+                    publishProgress("Actualizando encuestas de participantes seroprevalencia en base de datos local", Integer.valueOf(mEncuestasParticipanteSA.indexOf(encuestaParticipanteSA)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
 
 	}
 	

@@ -17,7 +17,7 @@ public class EncuestaPesoTallaHelper {
     public static ContentValues crearEncuestaPesoTallaContentValues(EncuestaPesoTalla encuesta){
         ContentValues cv = new ContentValues();
 
-        cv.put(EncuestasDBConstants.participante_chf, encuesta.getParticipante().getParticipanteCHF());
+        cv.put(EncuestasDBConstants.participante, encuesta.getParticipante().getParticipante().getCodigo());
         cv.put(EncuestasDBConstants.tomoMedidaSn, encuesta.getTomoMedidaSn());
         cv.put(EncuestasDBConstants.razonNoTomoMedidas, encuesta.getRazonNoTomoMedidas());
         cv.put(EncuestasDBConstants.peso1, encuesta.getPeso1());

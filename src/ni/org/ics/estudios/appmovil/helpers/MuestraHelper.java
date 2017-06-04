@@ -30,7 +30,7 @@ public class MuestraHelper {
         cv.put(MuestrasDBConstants.tubo, muestra.getTubo());
         cv.put(MuestrasDBConstants.tipoMuestra, muestra.getTipoMuestra());
         cv.put(MuestrasDBConstants.proposito, muestra.getProposito());
-        cv.put(MuestrasDBConstants.participanteCHF, muestra.getParticipanteCHF().getParticipanteCHF());
+        cv.put(MuestrasDBConstants.participanteCHF, muestra.getParticipanteCHF().getParticipante().getCodigo());
         cv.put(MuestrasDBConstants.realizaPaxgene, muestra.getRealizaPaxgene());
         cv.put(MuestrasDBConstants.horaInicioPax, muestra.getHoraInicioPax());
         cv.put(MuestrasDBConstants.horaFinPax, muestra.getHoraFinPax());

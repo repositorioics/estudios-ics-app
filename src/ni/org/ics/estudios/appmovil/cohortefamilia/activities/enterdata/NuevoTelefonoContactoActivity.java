@@ -438,6 +438,7 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
 		
 		//Guarda el telefono
 		estudiosAdapter.crearTelefonoContacto(tel);
+        estudiosAdapter.close();
 		Bundle arguments = new Bundle();
 		Intent i;
 		if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);

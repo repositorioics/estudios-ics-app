@@ -442,6 +442,7 @@ public class NuevaPersonaCamaActivity extends FragmentActivity implements
 		//Guarda la persona en la cama
 		//TODO validar que sea de la casa, validar que no sea repetido
 		estudiosAdapter.crearPersonaCama(h);
+        estudiosAdapter.close();
 		Bundle arguments = new Bundle();
 		Intent i;
 		if (cama!=null) arguments.putSerializable(Constants.CAMA , cama);

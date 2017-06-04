@@ -20,10 +20,10 @@ public class ParticipanteCohorteFamilia extends BaseMetaData implements Serializ
 	/**
 	 * 
 	 */
-	private String participanteCHF;
+	//private String participanteCHF;
 	private Participante participante;
     private CasaCohorteFamilia casaCHF;
-    
+    /*
     public String getParticipanteCHF() {
 		return participanteCHF;
 	}
@@ -31,7 +31,7 @@ public class ParticipanteCohorteFamilia extends BaseMetaData implements Serializ
 	public void setParticipanteCHF(String participanteCHF) {
 		this.participanteCHF = participanteCHF;
 	}
-
+*/
 	public Participante getParticipante() {
 		return participante;
 	}
@@ -60,11 +60,11 @@ public class ParticipanteCohorteFamilia extends BaseMetaData implements Serializ
 
         ParticipanteCohorteFamilia participante = (ParticipanteCohorteFamilia) o;
 
-        return (!participanteCHF.equals(participante.participanteCHF));
+        return (!this.participante.getCodigo().equals(participante.participante.getCodigo()));
     }
 
     @Override
     public int hashCode() {
-        return participanteCHF.hashCode();
+        return participante.getCodigo().hashCode();
     }
 }

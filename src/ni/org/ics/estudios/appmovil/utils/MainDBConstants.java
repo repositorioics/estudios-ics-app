@@ -194,14 +194,14 @@ public class MainDBConstants {
     public static final String PARTICIPANTE_CHF_TABLE = "chf_participantes";
 
     // Campos Participantes cohorte familia
-    public static final String participanteCHF = "participanteCHF";
+    //public static final String participanteCHF = "participanteCHF";
     public static final String casaCHF = "casaCHF";
     public static final String participante= "participante";
     
     //Crear tabla participantes cohorte familia
     public static final String CREATE_PARTICIPANTE_CHF_TABLE = "create table if not exists "
             + PARTICIPANTE_CHF_TABLE + " ("
-            + participanteCHF + " text not null, "
+            //+ participanteCHF + " text not null, "
             + participante + " integer not null, "
             + casaCHF + " integer not null, "
             + recordDate + " date, "

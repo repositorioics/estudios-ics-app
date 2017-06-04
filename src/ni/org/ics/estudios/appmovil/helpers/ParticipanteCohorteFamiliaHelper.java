@@ -16,7 +16,7 @@ public class ParticipanteCohorteFamiliaHelper {
     public static ContentValues crearParticipanteCohorteFamiliaContentValues(ParticipanteCohorteFamilia participanteCHF){
         ContentValues cv = new ContentValues();
 
-        cv.put(MainDBConstants.participanteCHF, participanteCHF.getParticipanteCHF());
+        cv.put(MainDBConstants.participante, participanteCHF.getParticipante().getCodigo());
         if (participanteCHF.getCasaCHF() != null) cv.put(MainDBConstants.casaCHF, participanteCHF.getCasaCHF().getCodigoCHF());
         if (participanteCHF.getParticipante() != null) cv.put(MainDBConstants.participante, participanteCHF.getParticipante().getCodigo());
         if (participanteCHF.getRecordDate() != null) cv.put(MainDBConstants.recordDate, participanteCHF.getRecordDate().getTime());
@@ -30,7 +30,7 @@ public class ParticipanteCohorteFamiliaHelper {
 
     public static ParticipanteCohorteFamilia crearParticipanteCohorteFamilia(Cursor cursor){
     	ParticipanteCohorteFamilia mParticipanteCohorteFamilia = new ParticipanteCohorteFamilia();
-        mParticipanteCohorteFamilia.setParticipanteCHF(cursor.getString(cursor.getColumnIndex(MainDBConstants.participanteCHF)));
+        //mParticipanteCohorteFamilia.setParticipanteCHF(cursor.getString(cursor.getColumnIndex(MainDBConstants.participanteCHF)));
         mParticipanteCohorteFamilia.setCasaCHF(null);
         mParticipanteCohorteFamilia.setParticipante(null);
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mParticipanteCohorteFamilia.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));

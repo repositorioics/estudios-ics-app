@@ -231,7 +231,7 @@ public class EncuestaDatosPartoBB extends BaseMetaData {
 
     @Override
     public String toString() {
-        return "EncuestaDatosPartoBB{" + participante.getParticipanteCHF() +
+        return "EncuestaDatosPartoBB{" + participante.getParticipante().getCodigo() +
                 '}';
     }
 

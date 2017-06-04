@@ -21,10 +21,10 @@ public class ParticipanteSeroprevalencia extends BaseMetaData implements Seriali
 	/**
 	 * 
 	 */
-	private String participanteSA;
+	//private String participanteSA;
 	private Participante participante;
     private CasaCohorteFamilia casaCHF;
-
+/*
     public String getParticipanteSA() {
 		return participanteSA;
 	}
@@ -32,7 +32,7 @@ public class ParticipanteSeroprevalencia extends BaseMetaData implements Seriali
 	public void setParticipanteSA(String participanteSA) {
 		this.participanteSA = participanteSA;
 	}
-
+*/
 	public Participante getParticipante() {
 		return participante;
 	}
@@ -61,12 +61,12 @@ public class ParticipanteSeroprevalencia extends BaseMetaData implements Seriali
 
         ParticipanteSeroprevalencia participante = (ParticipanteSeroprevalencia) o;
 
-        return (!participanteSA.equals(participante.participanteSA));
+        return (!this.participante.getCodigo().equals(participante.getParticipante().getCodigo()));
     }
 
     @Override
     public int hashCode() {
-        return participanteSA.hashCode();
+        return participante.getCodigo().hashCode();
     }
 
 }

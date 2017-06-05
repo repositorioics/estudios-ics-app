@@ -4,6 +4,7 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.bluetooth.activity.ConstantsBT;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadAllActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadCatalogosActivity;
 //import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.UploadTamizajesActivity;
@@ -79,6 +80,7 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
                     i = new Intent(getApplicationContext(),
                             BuscarCasaCHFActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.putExtra(ConstantsBT.DEVICE_NAME, "");
                     startActivity(i);
                     break;
                 case 2:

@@ -16,13 +16,19 @@
 
 package ni.org.ics.estudios.appmovil.bluetooth.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.Gson;
 
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.bluetooth.common.logger.Log;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.BuscarCasaCHFActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
 import android.app.ActionBar;
@@ -61,6 +67,7 @@ public class BluetoothChatFragment extends Fragment {
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     private static final int REQUEST_ENABLE_BT = 3;
+    private static final int REQUEST_HOUSE = 4;
 
     // Layout Views
     private ListView mConversationView;
@@ -87,7 +94,11 @@ public class BluetoothChatFragment extends Fragment {
     private BluetoothChatService mChatService = null;
     
     private EstudiosAdapter estudiosAdapter;
-    private CasaCohorteFamilia casa;
+    private CasaCohorteFamilia mCasa;
+    private List<ParticipanteCohorteFamilia> mParticipantes = new ArrayList<ParticipanteCohorteFamilia>();
+    
+    private CasaCohorteFamilia mCasaRecibida;
+    private List<ParticipanteCohorteFamilia> mParticipantesRecibidos = new ArrayList<ParticipanteCohorteFamilia>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -125,6 +136,7 @@ public class BluetoothChatFragment extends Fragment {
         super.onDestroy();
         if (mChatService != null) {
             mChatService.stop();
+            mBluetoothAdapter.disable();
         }
     }
 
@@ -154,6 +166,7 @@ public class BluetoothChatFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mConversationView = (ListView) view.findViewById(R.id.in);
         mSendButton = (Button) view.findViewById(R.id.button_send);
+        mSendButton.setText(R.string.send_request);
     }
 
     /**
@@ -178,7 +191,8 @@ public class BluetoothChatFragment extends Fragment {
                         Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
                         return;
                     }
-                	new GetDataCasaTask().execute();
+                	manageSendHandShake();
+                	
                 }
             }
         });
@@ -187,6 +201,7 @@ public class BluetoothChatFragment extends Fragment {
         mChatService = new BluetoothChatService(getActivity(), mHandler);
     }
 
+    
     /**
      * Makes this device discoverable for 300 seconds (5 minutes).
      */
@@ -259,13 +274,15 @@ public class BluetoothChatFragment extends Fragment {
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+        	try{
             FragmentActivity activity = getActivity();
             switch (msg.what) {
-                case Constants.MESSAGE_STATE_CHANGE:
+                case ConstantsBT.MESSAGE_STATE_CHANGE:
                     switch (msg.arg1) {
                         case BluetoothChatService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
                             mConversationArrayAdapter.clear();
+                            mSendButton.setText(R.string.send_request);
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -275,39 +292,58 @@ public class BluetoothChatFragment extends Fragment {
                             setStatus(R.string.title_not_connected);
                             break;
                     }
+                    mSendButton.setEnabled(true);
                     break;
-                case Constants.MESSAGE_WRITE:
+                case ConstantsBT.MESSAGE_WRITE:
                     byte[] writeBuf = (byte[]) msg.obj;
                     // construct a string from the buffer
                     String writeMessage = new String(writeBuf);
                     mConversationArrayAdapter.add("Enviando:  " + writeMessage);
                     break;
-                case Constants.MESSAGE_READ:
+                case ConstantsBT.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
+                    manageReceiveHandShake(readMessage);
                     mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                     break;
-                case Constants.MESSAGE_DEVICE_NAME:
+                case ConstantsBT.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
-                    mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
+                    mConnectedDeviceName = msg.getData().getString(ConstantsBT.DEVICE_NAME);
                     if (null != activity) {
                         Toast.makeText(activity, "Conectado a "
                                 + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
                     }
                     break;
-                case Constants.MESSAGE_TOAST:
+                case ConstantsBT.MESSAGE_TOAST:
                     if (null != activity) {
-                        Toast.makeText(activity, msg.getData().getString(Constants.TOAST),
+                        Toast.makeText(activity, msg.getData().getString(ConstantsBT.TOAST),
                                 Toast.LENGTH_SHORT).show();
                     }
+                    mConversationArrayAdapter.clear();
+                    mSendButton.setText(R.string.send_request);
                     break;
             }
+        	}
+        	catch(Exception e){
+        		
+        	}
         }
     };
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
+        	case REQUEST_HOUSE:
+            // When DeviceListActivity returns with a device to connect
+            if (resultCode == Activity.RESULT_OK) {
+            	mCasa = (CasaCohorteFamilia) data.getExtras().getSerializable(Constants.CASA);
+            	mSendButton.setEnabled(false);
+            	mSendButton.setText(getString(R.string.sending_data));
+            	sendMessage(getString(R.string.sending_data));
+            	sendMessage(getString(R.string.house_selected, mCasa.getCodigoCHF()));
+            	new GetDataCasaTask().execute();
+            }
+            break;
             case REQUEST_CONNECT_DEVICE_SECURE:
                 // When DeviceListActivity returns with a device to connect
                 if (resultCode == Activity.RESULT_OK) {
@@ -367,8 +403,8 @@ public class BluetoothChatFragment extends Fragment {
             }
             case R.id.insecure_connect_scan: {
                 // Launch the DeviceListActivity to see devices and do scan
-                Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
-                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
+                //Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
+                //startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
                 return true;
             }
             case R.id.discoverable: {
@@ -380,9 +416,49 @@ public class BluetoothChatFragment extends Fragment {
         return false;
     }
     
-    private void enviarDatos(boolean exito){
+    private void enviarDatos(){
     	Gson json = new Gson();
-    	sendMessage(json.toJson(casa));
+    	String resultado;
+    	resultado = Constants.CASA+json.toJson(mCasa);
+    	for (ParticipanteCohorteFamilia part: mParticipantes){
+    		resultado = resultado + Constants.PARTICIPANTE+json.toJson(part);
+    	}
+    	sendMessage(resultado);
+    }
+    
+
+    private void manageSendHandShake(){
+    	if(mSendButton.getText().toString().matches(this.getString(R.string.send_request))){
+    		sendMessage(this.getString(R.string.request_sent));
+    	}
+    	if(mSendButton.getText().toString().matches(this.getString(R.string.accept_request))){
+    		sendMessage(this.getString(R.string.request_accepted));
+    		mSendButton.setText(this.getString(R.string.waiting_data));
+    		mSendButton.setEnabled(false);
+    	}
+    	if(mSendButton.getText().toString().matches(this.getString(R.string.select_house))){
+    		Intent i = new Intent(getActivity().getApplicationContext(),
+                    BuscarCasaCHFActivity.class);
+    		i.putExtra(ConstantsBT.DEVICE_NAME, mConnectedDeviceName);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivityForResult(i, REQUEST_HOUSE);
+    	}
+    }
+    
+    private void manageReceiveHandShake(String mensaje){
+    	if(mensaje.matches(this.getString(R.string.request_sent))){
+    		mSendButton.setText(this.getString(R.string.accept_request));
+    	}
+    	else if(mensaje.matches(this.getString(R.string.request_accepted))){
+    		mSendButton.setText(this.getString(R.string.select_house));
+    	}
+    	else if(mensaje.matches(this.getString(R.string.sending_data))){
+    		mSendButton.setText(this.getString(R.string.receiving_data));
+    	}
+    	else{
+    		String resultado = mensaje;
+    		Toast.makeText(getActivity(), resultado, Toast.LENGTH_SHORT).show();
+    	}
     }
     
     
@@ -397,8 +473,8 @@ public class BluetoothChatFragment extends Fragment {
 		protected void onPreExecute() {
 		    super.onPreExecute();
 		    nDialog = new ProgressDialog(getActivity()); 
-		    nDialog.setMessage("Enviando..");
-		    nDialog.setTitle("Abriendo base de datos");
+		    nDialog.setMessage("Abriendo base de datos");
+		    nDialog.setTitle("Enviando..");
 		    nDialog.setIndeterminate(false);
 		    nDialog.setCancelable(true);
 		    nDialog.show();
@@ -407,10 +483,10 @@ public class BluetoothChatFragment extends Fragment {
 		@Override
 		protected String doInBackground(String... arg0) {
 			// TODO Auto-generated method stub
-        	filtro = MainDBConstants.codigoCHF + "=1";
+        	filtro = MainDBConstants.casaCHF + "="+ mCasa.getCodigoCHF();
 			try {
 				estudiosAdapter.open();
-				casa = estudiosAdapter.getCasaCohorteFamilia(filtro, null);
+				mParticipantes = estudiosAdapter.getParticipanteCohorteFamilias(filtro, MainDBConstants.participante);
 				estudiosAdapter.close();
 				return "exito";
 			} catch (Exception e) {
@@ -422,12 +498,7 @@ public class BluetoothChatFragment extends Fragment {
 		protected void onPostExecute(String resultado) {
 			// after the request completes, hide the progress indicator
 			nDialog.hide();
-			if (resultado.matches("exito")){
-				enviarDatos(true);
-			}
-			else{
-				enviarDatos(false);
-			}
+			enviarDatos();
 		}
 	}
 

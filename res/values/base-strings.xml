@@ -18,14 +18,10 @@
 <resources>
     <string name="intro_message">
         <![CDATA[
-        
-            
             Para enviar información tiene que estar pareado con el otro dispositivo:
               (1) Buscar en los dispositivos pareados
               (2) Conectar al dispositivo remoto
               (3) Enviar los datos
-            
-        
         ]]>
     </string>
 </resources>

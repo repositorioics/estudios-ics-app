@@ -3,7 +3,7 @@
 
     <string-array name="menu_main">
         <item>@string/main_1</item>
-        <item>@string/main_1</item>
+		
     </string-array>
     
     <string-array name="menu_cohorte_familia">

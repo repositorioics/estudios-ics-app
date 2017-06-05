@@ -16,6 +16,7 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.bluetooth.activity.ConstantsBT;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.CasaCHFAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
@@ -32,13 +33,14 @@ public class BuscarCasaCHFActivity extends AbstractAsyncListActivity {
 	private EditText mParametroView;
 	private ImageButton mBarcodeButton;
 	private ImageButton mFindButton;
+	private TextView textView;
 	
 	public static final int BARCODE_CAPTURE = 2;
 	private int opcion;
 
 	private EstudiosAdapter estudiosAdapter;
 	private List<CasaCohorteFamilia> mCasasCHF = new ArrayList<CasaCohorteFamilia>();
-	
+	private String mDispositivo;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -50,6 +52,8 @@ public class BuscarCasaCHFActivity extends AbstractAsyncListActivity {
 			ActionBar actionBar = getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
+		
+		mDispositivo = getIntent().getExtras().getString(ConstantsBT.DEVICE_NAME);
 	
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
@@ -61,6 +65,10 @@ public class BuscarCasaCHFActivity extends AbstractAsyncListActivity {
 		list.add(getString(R.string.enter)+" "+getString(R.string.casa_id));
 		list.add(getString(R.string.enter)+" "+getString(R.string.casa_jefe_familia_nombre));
 		list.add(getString(R.string.enter)+" "+getString(R.string.casa_jefe_familia_apellido));
+		textView = (TextView) findViewById(R.id.label_header);
+		if (mDispositivo != null && !mDispositivo.equals("")){
+			textView.setText(textView.getText()+ "\n" + getString(R.string.send_to) + "\n" +mDispositivo);
+		}
 		
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, list);
@@ -165,7 +173,18 @@ public class BuscarCasaCHFActivity extends AbstractAsyncListActivity {
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
         CasaCohorteFamilia mCasa = (CasaCohorteFamilia) getListAdapter().getItem(position);
-		cargarMenu(mCasa);
+        if(mDispositivo!=null && !mDispositivo.equals("")){
+        	Bundle arguments = new Bundle();
+        	if (mCasa!=null) arguments.putSerializable(Constants.CASA , mCasa);
+        	Intent intent = new Intent();
+        	intent.putExtra(Constants.CASA, mCasa);
+        	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			setResult(RESULT_OK, intent);
+			finish();
+        }
+        else{
+        	cargarMenu(mCasa);
+        }
 	}
 
     private void cargarMenu(CasaCohorteFamilia mCasa){

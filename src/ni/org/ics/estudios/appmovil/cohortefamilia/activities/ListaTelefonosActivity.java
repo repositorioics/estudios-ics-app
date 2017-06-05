@@ -62,7 +62,7 @@ public class ListaTelefonosActivity extends AbstractAsyncListActivity {
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		new FetchDataCasaTask().execute(casaCHF.getCodigoCHF());
+		new FetchDataCasaTask().execute();
 		
 		mAddButton = (Button) findViewById(R.id.add_button);
 		mAddButton.setText(getString(R.string.add_phone));
@@ -228,7 +228,6 @@ public class ListaTelefonosActivity extends AbstractAsyncListActivity {
 	}
 	
 	private class FetchDataCasaTask extends AsyncTask<String, Void, String> {
-		private String codigoCasaCHF = null;
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -237,10 +236,9 @@ public class ListaTelefonosActivity extends AbstractAsyncListActivity {
 
 		@Override
 		protected String doInBackground(String... values) {
-			codigoCasaCHF = values[0];
 			try {
 				estudiosAdapter.open();
-				mTelefonosContacto = estudiosAdapter.getTelefonosContacto(MainDBConstants.casa +" = '" + codigoCasaCHF + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.numero);
+				mTelefonosContacto = estudiosAdapter.getTelefonosContacto(MainDBConstants.casa +" = " + casaCHF.getCasa().getCodigo() + " and " + MainDBConstants.pasive + " ='0'", MainDBConstants.numero);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -275,7 +273,7 @@ public class ListaTelefonosActivity extends AbstractAsyncListActivity {
 				telefono.setPasive('1');
 				telefono.setEstado('0');
 				estudiosAdapter.editarTelefonoContacto(telefono);
-				mTelefonosContacto = estudiosAdapter.getTelefonosContacto(MainDBConstants.casa +" = '" + casaCHF.getCodigoCHF() + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.numero);
+				mTelefonosContacto = estudiosAdapter.getTelefonosContacto(MainDBConstants.casa +" = " + casaCHF.getCasa().getCodigo() + " and " + MainDBConstants.pasive + " ='0'", MainDBConstants.numero);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

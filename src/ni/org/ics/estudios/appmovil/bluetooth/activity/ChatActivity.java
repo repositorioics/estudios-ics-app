@@ -72,6 +72,11 @@ public class ChatActivity extends SampleActivityBase {
 
         return super.onPrepareOptionsMenu(menu);
     }
+    
+    @Override
+	public void onBackPressed (){
+		finish();
+	}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

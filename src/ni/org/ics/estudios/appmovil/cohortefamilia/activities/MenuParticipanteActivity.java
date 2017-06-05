@@ -50,15 +50,19 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private static ParticipanteCohorteFamilia participanteCHF = new ParticipanteCohorteFamilia();
     private static ParticipanteSeroprevalencia participanteSA = new ParticipanteSeroprevalencia();
     private EstudiosAdapter estudiosAdapter;
-    private boolean habilitarBHC = false;
-    private boolean habilitarRojo = false;
-    private boolean habilitarPaxG = false;
     boolean existeencuestaParticip = false;
     boolean existeencuestaParto = false;
     boolean existeencuestaPeso = false;
     boolean existeencuestaLact = false;
     boolean existeencuestaParticipSA = false;
     boolean habilitarEncuestaParticipSA = false;
+
+    private final int OPCION_ENCUESTA_PARTICIPANTE = 0;
+    private final int OPCION_ENCUESTA_DATOSPARTO = 1;
+    private final int OPCION_ENCUESTA_PESOTALLA = 2;
+    private final int OPCION_ENCUESTA_LACTANCIA = 3;
+    private final int OPCION_ENCUESTA_MUESTRAS = 4;
+    private final int OPCION_ENCUESTA_PARTICIPANTESA = 5;
 
     private AlertDialog alertDialog;
 
@@ -86,96 +90,30 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                boolean existeencuesta = false;
                 String tituloEncuesta = "";
                 String labelMuestra = "";
                 switch (position){
-                    case 0:
+                    case OPCION_ENCUESTA_PARTICIPANTE:
                         tituloEncuesta = getString(R.string.new_participant_survey);
                         break;
-                    case 1:
+                    case OPCION_ENCUESTA_DATOSPARTO:
                         tituloEncuesta = getString(R.string.new_birthdata_survey);
                         break;
-                    case 2:
+                    case OPCION_ENCUESTA_PESOTALLA:
                         tituloEncuesta = getString(R.string.new_Weighheight_survey);
                         break;
-                    case 3:
+                    case OPCION_ENCUESTA_LACTANCIA:
                         tituloEncuesta = getString(R.string.new_breastfeed_survey);
                         break;
-                    case 4:
-                        if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
-                            int anios = 0;
-                            int meses = 0;
-                            int dias = 0;
-                            String edad[] = participanteCHF.getParticipante().getEdad().split("/");
-                            if (edad.length > 0) {
-                                anios = Integer.valueOf(edad[0]);
-                                meses = Integer.valueOf(edad[1]);
-                                dias = Integer.valueOf(edad[2]);
-                                if (anios>=14) labelMuestra = getString(R.string.volumenPaxgene14);
-                                else {
-                                    //BHC y Paxgene (2 años a 13 años)
-                                    if (anios>=2 && anios<13) {
-                                        labelMuestra = getString(R.string.volumenPaxgene);
-                                    }else if (anios == 13 && meses == 0 && dias == 0){
-                                        labelMuestra = getString(R.string.volumenPaxgene);
-                                    }
-                                }
-                            }
-                        }
-                        tituloEncuesta = getString(R.string.new_sample_paxgene);
-                        break;
-                    case 5:
-                        tituloEncuesta = getString(R.string.new_sample_rojo);
-                        if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
-                            int anios = 0;
-                            int meses = 0;
-                            int dias = 0;
-                            boolean visible3ml = false;
-                            boolean visible6ml = false;
-                            boolean visible12ml = false;
-                            String edad[] = participanteCHF.getParticipante().getEdad().split("/");
-                            if (edad.length > 0) {
-                                anios = Integer.valueOf(edad[0]);
-                                meses = Integer.valueOf(edad[1]);
-                                dias = Integer.valueOf(edad[2]);
-                                //Rojo (2 años a 13 años)
-                                if (anios >= 2 && anios < 13) {
-                                    visible6ml = true;
-                                } else if (anios == 13) {
-                                    if (meses > 0)
-                                        visible6ml = false;
-                                    else {
-                                        visible6ml = (dias <= 0);
-                                    }
-                                } else {
-                                    visible6ml = false;
-                                }
-                                //Rojo (6 meses y menos de 2 años)
-                                if (!visible6ml) {
-                                    if (anios == 1) visible3ml = true;
-                                    else if (anios == 0) {
-                                        if (meses >= 6) visible3ml = true;
-                                    } else visible3ml = false;
-                                }
-                                if (anios >= 14){
-                                    visible12ml = true;
-                                }
-                            }
-                            if (visible3ml) labelMuestra = getString(R.string.rojo3ml);
-                            if (visible6ml) labelMuestra = getString(R.string.rojo6ml);
-                            if (visible12ml) labelMuestra = getString(R.string.rojo12ml);
-                        }
-                        break;
-                    case 6:
+                    case OPCION_ENCUESTA_MUESTRAS:
+                        crearFomulario(position); break;
+                    case OPCION_ENCUESTA_PARTICIPANTESA:
                         tituloEncuesta = getString(R.string.new_participant_sa_survey);
                         break;
                     default:
                         break;
                 }
-                if(!labelMuestra.isEmpty())
-                    createDialogMuestras(position, labelMuestra);
-                else createDialog(position, tituloEncuesta);
+                if (!tituloEncuesta.isEmpty()) createDialog(position, tituloEncuesta);
 
             }
         });
@@ -245,33 +183,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         }
     }
 
-    private void createDialogExiste(final String opcion) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(this.getString(R.string.notavailable));
-        builder.setMessage(String.format(this.getString(R.string.exist_survey_participant), opcion)+"\n"+getString(R.string.code)+": " + participanteCHF.getParticipante().getCodigo() + " - " + participanteCHF.getParticipante().getNombre1() + " " + participanteCHF.getParticipante().getApellido1());
-        builder.setPositiveButton(this.getString(R.string.ok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    private void createDialogMuestras(final int opcion, final String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(this.getString(R.string.remember));
-        builder.setMessage(mensaje+"\n"+getString(R.string.code)+": " + participanteCHF.getParticipante().getCodigo() + " - " + participanteCHF.getParticipante().getNombre1() + " " + participanteCHF.getParticipante().getApellido1());
-        builder.setPositiveButton(this.getString(R.string.ok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                crearFomulario(opcion);
-            }
-        });
-        alertDialog = builder.create();
-        alertDialog.show();
-    }
-
     private void createDialog(final int opcion, final String mensaje) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(this.getString(R.string.confirm));
@@ -313,7 +224,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
             Intent i;
             try {
                 switch (position){
-                    case 0:
+                    case OPCION_ENCUESTA_PARTICIPANTE:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaParticipanteActivity.class);
@@ -321,7 +232,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.putExtras(arguments);
                         startActivity(i);
                         break;
-                    case 1:
+                    case OPCION_ENCUESTA_DATOSPARTO:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaDatosPartoBBActivity.class);
@@ -329,7 +240,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.putExtras(arguments);
                         startActivity(i);
                         break;
-                    case 2:
+                    case OPCION_ENCUESTA_PESOTALLA:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaPesoTallaActivity.class);
@@ -337,7 +248,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.putExtras(arguments);
                         startActivity(i);
                         break;
-                    case 3:
+                    case OPCION_ENCUESTA_LACTANCIA:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaLactanciaMatActivity.class);
@@ -345,23 +256,15 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.putExtras(arguments);
                         startActivity(i);
                         break;
-                    case 4:
+                    case OPCION_ENCUESTA_MUESTRAS:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
                         i = new Intent(getApplicationContext(),
-                                NuevaMuestraBHCPaxgeneActivity.class);
+                                ListaMuestrasActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
                         break;
-                    case 5:
-                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
-                        i = new Intent(getApplicationContext(),
-                                NuevaMuestraTuboRojoActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtras(arguments);
-                        startActivity(i);
-                        break;
-                    case 6:
+                    case OPCION_ENCUESTA_PARTICIPANTESA:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
                         if (participanteSA!=null) arguments.putSerializable(Constants.PARTICIPANTE_SA , participanteSA);
                         i = new Intent(getApplicationContext(),
@@ -463,8 +366,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     existeencuestaParticipSA, habilitarEncuestaParticipSA));
             dismissProgressDialog();
         }
-
     }
-
 }
 

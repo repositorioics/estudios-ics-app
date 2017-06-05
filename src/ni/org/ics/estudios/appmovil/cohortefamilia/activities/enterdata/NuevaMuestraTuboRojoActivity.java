@@ -17,6 +17,7 @@ import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestraTuboRojoForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestrasFormLabels;
@@ -66,6 +67,7 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
     private AlertDialog alertDialog;
     private boolean notificarCambios = true;
     private String horaTomaMx;
+    private Double volumenMaximoPermitido = 0D;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
                         null);
         infoMovil = new DeviceInfo(NuevaMuestraTuboRojoActivity.this);
         participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        volumenMaximoPermitido = (Double) getIntent().getExtras().getSerializable(Constants.VOLUMEN);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new MuestraTuboRojoForm(this,mPass);
@@ -159,42 +162,13 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
-        /*if (!participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
-            int anios = 0;
-            int meses = 0;
-            int dias = 0;
-            boolean visible3ml = false;
-            boolean visible6ml = false;
-            String edad[] = participanteCHF.getParticipante().getEdad().split("/");
-            if (edad.length > 0) {
-                anios = Integer.valueOf(edad[0]);
-                meses = Integer.valueOf(edad[1]);
-                dias = Integer.valueOf(edad[2]);
-                //Rojo (2 años a 13 años)
-                if (anios >= 2 && anios < 13) {
-                    visible6ml = true;
-                } else if (anios == 13) {
-                    if (meses > 0)
-                        visible6ml = false;
-                    else {
-                        visible6ml = (dias <= 0);
-                    }
-                } else {
-                    visible6ml = false;
-                }
-                //Rojo (6 meses y menos de 2 años)
-                if (!visible6ml) {
-                    if (anios == 1) visible3ml = true;
-                    else if (anios == 0) {
-                        if (meses >= 6) visible3ml = true;
-                    } else visible3ml = false;
-                }
-            }*/
-            //changeStatus(mWizardModel.findByKey(labels.getRojo3ml()), visible3ml);
-            //changeStatus(mWizardModel.findByKey(labels.getRojo6ml()), visible6ml);
-            changeStatus(mWizardModel.findByKey(labels.getRojo3ml()), false);
-            changeStatus(mWizardModel.findByKey(labels.getRojo6ml()), false);
-        //}
+
+        changeStatus(mWizardModel.findByKey(labels.getRojo3ml()), false);
+        changeStatus(mWizardModel.findByKey(labels.getRojo6ml()), false);
+        //seter el máximo permitido para el volumen de la muestra
+        NumberPage vol = (NumberPage)mWizardModel.findByKey(labels.getVolumen());
+        vol.setRangeValidation(true, 0, volumenMaximoPermitido.intValue());
+
         onPageTreeChanged();
         updateBottomBar();
     }
@@ -511,7 +485,7 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
             Intent i = new Intent(getApplicationContext(),
-                    MenuParticipanteActivity.class);
+                    ListaMuestrasActivity.class);
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestraBHCPaxgeneForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestrasFormLabels;
@@ -66,6 +67,7 @@ public class NuevaMuestraBHCPaxgeneActivity extends FragmentActivity implements
     private static final int EXIT = 1;
     private AlertDialog alertDialog;
     private boolean notificarCambios = true;
+    private Double volumenMaximoPermitido = 0D;
     private String horaTomaMx;
 
     @Override
@@ -79,6 +81,7 @@ public class NuevaMuestraBHCPaxgeneActivity extends FragmentActivity implements
                         null);
         infoMovil = new DeviceInfo(NuevaMuestraBHCPaxgeneActivity.this);
         participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        volumenMaximoPermitido = (Double) getIntent().getExtras().getSerializable(Constants.VOLUMEN);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new MuestraBHCPaxgeneForm(this,mPass);
@@ -161,6 +164,10 @@ public class NuevaMuestraBHCPaxgeneActivity extends FragmentActivity implements
             }
         });
         changeStatus(mWizardModel.findByKey(labels.getVolumenPaxgene()), false, null);
+        //seter el máximo permitido para el volumen de la muestra
+        NumberPage vol = (NumberPage)mWizardModel.findByKey(labels.getVolumen());
+        vol.setRangeValidation(true, 0, volumenMaximoPermitido.intValue());
+
         onPageTreeChanged();
         updateBottomBar();
     }
@@ -504,27 +511,11 @@ public class NuevaMuestraBHCPaxgeneActivity extends FragmentActivity implements
             muestra.setEstado('0');
             muestra.setPasive('0');
             estudiosAdapter.crearMuestras(muestra);
-            /*if (muestra.getRealizaPaxgene().equalsIgnoreCase("S")) {
-                Paxgene paxgene = new Paxgene();
-                paxgene.setMuestra(muestra);
-                Page horapax = mWizardModel.findByKey(labels.getHoraInicioPax());
-                String valor = horapax.getHint();
-                if (valor != null && !valor.isEmpty()) {
-                    paxgene.setHoraInicio(valor);
-                    paxgene.setHoraFin(DateToString(new Date(), "HH:mm"));
-                }
-                paxgene.setRecordDate(new Date());
-                paxgene.setRecordUser(username);
-                paxgene.setDeviceid(infoMovil.getDeviceId());
-                paxgene.setEstado('0');
-                paxgene.setPasive('0');
-                estudiosAdapter.crearPaxgenes(paxgene);
-            }*/
             estudiosAdapter.close();
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
             Intent i = new Intent(getApplicationContext(),
-                    MenuParticipanteActivity.class);
+                    ListaMuestrasActivity.class);
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);

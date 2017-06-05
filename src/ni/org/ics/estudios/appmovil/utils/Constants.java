@@ -24,6 +24,7 @@ public class Constants {
     public static final String CAMA = "cama";
     public static final String PERSONACAMA = "personacama";
     public static final String AREA = "area";
+    public static final String VOLUMEN = "volumen";
     
     //Form wizard
     public static final String FORM_NAME = "form";

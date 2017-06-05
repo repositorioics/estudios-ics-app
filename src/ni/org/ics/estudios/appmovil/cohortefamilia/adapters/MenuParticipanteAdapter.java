@@ -25,6 +25,12 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
     private boolean existeencuestaPeso = false;
     private boolean existeencuestaLact = false;
     private boolean habilitarEncuestaParticipSA = false;
+    private final int OPCION_ENCUESTA_PARTICIPANTE = 0;
+    private final int OPCION_ENCUESTA_DATOSPARTO = 1;
+    private final int OPCION_ENCUESTA_PESOTALLA = 2;
+    private final int OPCION_ENCUESTA_LACTANCIA = 3;
+    private final int OPCION_ENCUESTA_MUESTRAS = 4;
+    private final int OPCION_ENCUESTA_PARTICIPANTESA = 5;
 
     private final Context context;
     private final ParticipanteCohorteFamilia participanteCHF;
@@ -79,23 +85,21 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
         // Disable the first item of GridView
         boolean habilitado = true;
         switch (position){
-            case 0:
+            case OPCION_ENCUESTA_PARTICIPANTE:
                 habilitado = !existeencuestaParticip;
                 break;
-            case 1:
+            case OPCION_ENCUESTA_DATOSPARTO:
                 habilitado = !existeencuestaParto;
                 break;
-            case 2:
+            case OPCION_ENCUESTA_PESOTALLA:
                 habilitado = !existeencuestaPeso;
                 break;
-            case 3 :
+            case OPCION_ENCUESTA_LACTANCIA :
                 habilitado = habilitarLactancia && !existeencuestaLact;
                 break;
-            case 4 : habilitado = habilitarBhc;
+            case OPCION_ENCUESTA_MUESTRAS : habilitado = true;
                 break;
-            case 5 : habilitado = habilitarRojo;
-                break;
-            case 6 :
+            case OPCION_ENCUESTA_PARTICIPANTESA :
                 habilitado = habilitarEncuestaParticipSA && !existeencuestaParticipSA;
                 break;
             default: break;
@@ -119,7 +123,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
 		// Change icon based on position
 		Drawable img = null;
 		switch (position){
-            case 0:
+            case OPCION_ENCUESTA_PARTICIPANTE:
                 if (existeencuestaParticip) {
                     textView.setTextColor(Color.BLUE);
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
@@ -129,7 +133,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_myplaces);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
-            case 1:
+            case OPCION_ENCUESTA_DATOSPARTO:
                 if (existeencuestaParto) {
                     textView.setTextColor(Color.BLUE);
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
@@ -139,7 +143,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 img=getContext().getResources().getDrawable(R.drawable.ic_baby);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
-            case 2:
+            case OPCION_ENCUESTA_PESOTALLA:
                 if (existeencuestaPeso) {
                     textView.setTextColor(Color.BLUE);
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
@@ -149,7 +153,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 img=getContext().getResources().getDrawable(R.drawable.ic_weight);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
-            case 3:
+            case OPCION_ENCUESTA_LACTANCIA:
                 if (!habilitarLactancia) {
                     textView.setTextColor(Color.GRAY);
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
@@ -164,6 +168,11 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 img = getContext().getResources().getDrawable(R.drawable.ic_breastfeeding);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
+            case OPCION_ENCUESTA_MUESTRAS:
+                img=getContext().getResources().getDrawable(R.drawable.ic_samples);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+            /*
             case 4:
                 if (!habilitarBhc) {
                     textView.setTextColor(Color.GRAY);
@@ -180,7 +189,8 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 img=getContext().getResources().getDrawable(R.drawable.redtubes);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
-            case 6:
+            */
+            case OPCION_ENCUESTA_PARTICIPANTESA:
                 if (!habilitarEncuestaParticipSA) {
                     textView.setTextColor(Color.GRAY);
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));

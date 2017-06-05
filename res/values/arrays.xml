@@ -29,8 +29,7 @@
         <item>@string/new_survey_3</item>
         <item>@string/new_survey_4</item>
         <item>@string/new_survey_5</item>
-        <item>@string/new_mx_bhc</item>
-        <item>@string/new_mx_rojo</item>
+        <item>@string/samples</item>
         <item>@string/new_participant_sa_survey</item>
     </string-array>
 

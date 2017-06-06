@@ -30,7 +30,7 @@ public class MuestraHelper {
         cv.put(MuestrasDBConstants.tubo, muestra.getTubo());
         cv.put(MuestrasDBConstants.tipoMuestra, muestra.getTipoMuestra());
         cv.put(MuestrasDBConstants.proposito, muestra.getProposito());
-        cv.put(MuestrasDBConstants.participanteCHF, muestra.getParticipanteCHF().getParticipante().getCodigo());
+        cv.put(MuestrasDBConstants.participante, muestra.getParticipante().getCodigo());
         cv.put(MuestrasDBConstants.realizaPaxgene, muestra.getRealizaPaxgene());
         cv.put(MuestrasDBConstants.horaInicioPax, muestra.getHoraInicioPax());
         cv.put(MuestrasDBConstants.horaFinPax, muestra.getHoraFinPax());
@@ -59,7 +59,7 @@ public class MuestraHelper {
         mMuestra.setTubo(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.tubo)));
         mMuestra.setTipoMuestra(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.tipoMuestra)));
         mMuestra.setProposito(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.proposito)));
-        mMuestra.setParticipanteCHF(null);
+        mMuestra.setParticipante(null);
         mMuestra.setRealizaPaxgene(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.realizaPaxgene)));
         mMuestra.setHoraInicioPax(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.horaInicioPax)));
         mMuestra.setHoraFinPax(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.horaFinPax)));
@@ -71,32 +71,4 @@ public class MuestraHelper {
         mMuestra.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mMuestra;
     }
-
-    /*public static ContentValues crearPaxgeneContentValues(Paxgene paxgene){
-        ContentValues cv = new ContentValues();
-        cv.put(MuestrasDBConstants.codigoMx, paxgene.getMuestra().getCodigoMx());
-        cv.put(MuestrasDBConstants.horaInicio, paxgene.getHoraInicio());
-        cv.put(MuestrasDBConstants.horaFin, paxgene.getHoraFin());
-
-        if (paxgene.getRecordDate() != null) cv.put(MainDBConstants.recordDate, paxgene.getRecordDate().getTime());
-        cv.put(MainDBConstants.recordUser, paxgene.getRecordUser());
-        cv.put(MainDBConstants.pasive, String.valueOf(paxgene.getPasive()));
-        cv.put(MainDBConstants.estado, String.valueOf(paxgene.getEstado()));
-        cv.put(MainDBConstants.deviceId, paxgene.getDeviceid());
-        return cv;
-    }
-
-    public static Paxgene crearPaxgene(Cursor cursor){
-        Paxgene mPaxgene = new Paxgene();
-        mPaxgene.setMuestra(null);
-        mPaxgene.setHoraInicio(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.horaInicio)));
-        mPaxgene.setHoraFin(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.horaFin)));
-
-        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mPaxgene.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
-        mPaxgene.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
-        mPaxgene.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
-        mPaxgene.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
-        mPaxgene.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
-        return mPaxgene;
-    }*/
 }

@@ -99,8 +99,6 @@
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaMuestraBHCActivity"
                   android:screenOrientation="portrait" />
-        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaMuestraPaxgeneActivity"
-                  android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaMuestraBHCPaxgeneActivity"
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoCuartoActivity"

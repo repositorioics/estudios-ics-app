@@ -33,7 +33,7 @@
     <string name="tanquesTapadosHint">Ud. mantiene los tanques tapados</string>
     <string name="pilasTapadas">¿Pilas tapadas?</string>
     <string name="pilasTapadasHint">Ud. mantiene las pilas tapadas</string>
-    <string name="otrosRecipientesTapados">Otros recipinetes tapados?</string>
+    <string name="otrosRecipientesTapados">Otros recipientes tapados?</string>
     <string name="otrosRecipientesTapadosHint">Ud. mantiene los otros recipientes tapados</string>
     <string name="barrilesConAbate">¿Barriles con abate?</string>
     <string name="barrilesConAbateHint">Ud. mantiene los barriles con abate</string>
@@ -41,7 +41,7 @@
     <string name="tanquesConAbateHint">Ud. mantiene los tanques con abate</string>
     <string name="pilasConAbate">¿Pilas con abate?</string>
     <string name="pilasConAbateHint">Ud. mantiene las pilas con abate</string>
-    <string name="otrosRecipientesConAbate">¿Otros recipinetes con abate?</string>
+    <string name="otrosRecipientesConAbate">¿Otros recipientes con abate?</string>
     <string name="otrosRecipientesConAbateHint">Ud. mantiene los otros recipientes con abate</string>
     <string name="ubicacionLavandero">¿El lavandero de su casa queda dentro o fuera de la casa?</string>
     <string name="materialParedes">Material de construcción de las paredes de la casa</string>

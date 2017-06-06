@@ -23,7 +23,7 @@ public class MuestrasDBConstants {
     public static final String tubo = "tubo";
     public static final String tipoMuestra = "tipoMuestra";
     public static final String proposito = "proposito";
-    public static final String participanteCHF = "participante";
+    public static final String participante = "participante";
     public static final String realizaPaxgene = "realizaPaxgene";
     public static final String horaInicioPax = "horaInicioPax";
     public static final String horaFinPax = "horaFinPax";
@@ -45,7 +45,7 @@ public class MuestrasDBConstants {
             + tubo + " text, "
             + tipoMuestra + " text, "
             + proposito + " text, "
-            + participanteCHF + " integer not null, "
+            + participante + " integer not null, "
             + realizaPaxgene + " text, "
             + horaInicioPax + " text, "
             + horaFinPax + " text, "
@@ -56,23 +56,4 @@ public class MuestrasDBConstants {
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigo + "));";
 
-    //tabla Paxgene
-    public static final String PAXGENE_TABLE = "chf_datos_paxgene";
-
-    //campos tabla Paxgene
-    public static final String muestra = "muestra";
-    public static final String horaInicio = "horaInicio";
-
-    //crear tabla Paxgene
-    public static final String CREATE_PAXGENE_TABLE = "create table if not exists "
-            + PAXGENE_TABLE + " ("
-            + codigoMx + " text not null, "
-            + horaInicio + " text not null, "
-            + horaFin + " text not null, "
-            + MainDBConstants.recordDate + " date, "
-            + MainDBConstants.recordUser + " text, "
-            + MainDBConstants.pasive + " text, "
-            + MainDBConstants.deviceId + " text, "
-            + MainDBConstants.estado + " text not null, "
-            + "primary key (" + codigoMx + "));";
 }

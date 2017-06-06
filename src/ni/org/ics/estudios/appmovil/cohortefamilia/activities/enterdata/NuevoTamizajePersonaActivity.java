@@ -1003,7 +1003,6 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	        	estudiosAdapter.crearCartaConsentimiento(cc);
 	        	//Crea un nuevo participantes de chf
 	        	ParticipanteCohorteFamilia pchf = new ParticipanteCohorteFamilia();
-	        	//pchf.setParticipanteCHF(id);
 	        	pchf.setParticipante(participante);
 	        	pchf.setCasaCHF(casaCHF);
 	        	pchf.setRecordDate(new Date());

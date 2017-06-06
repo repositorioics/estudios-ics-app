@@ -30,7 +30,6 @@ public class ParticipanteCohorteFamiliaHelper {
 
     public static ParticipanteCohorteFamilia crearParticipanteCohorteFamilia(Cursor cursor){
     	ParticipanteCohorteFamilia mParticipanteCohorteFamilia = new ParticipanteCohorteFamilia();
-        //mParticipanteCohorteFamilia.setParticipanteCHF(cursor.getString(cursor.getColumnIndex(MainDBConstants.participanteCHF)));
         mParticipanteCohorteFamilia.setCasaCHF(null);
         mParticipanteCohorteFamilia.setParticipante(null);
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mParticipanteCohorteFamilia.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));

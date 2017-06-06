@@ -91,7 +91,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 String tituloEncuesta = "";
-                String labelMuestra = "";
                 switch (position){
                     case OPCION_ENCUESTA_PARTICIPANTE:
                         tituloEncuesta = getString(R.string.new_participant_survey);
@@ -204,7 +203,18 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         alertDialog.show();
     }
     private void crearFomulario(int position){
-        new OpenDataEnterActivityTask().execute(String.valueOf(position));
+        if (position == OPCION_ENCUESTA_MUESTRAS) {
+            Bundle arguments = new Bundle();
+            Intent i;
+            if (participanteCHF != null) arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
+            i = new Intent(getApplicationContext(),
+                    ListaMuestrasActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtras(arguments);
+            startActivity(i);
+        }else {
+            new OpenDataEnterActivityTask().execute(String.valueOf(position));
+        }
     }
     // ***************************************
     // Private classes
@@ -256,14 +266,14 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.putExtras(arguments);
                         startActivity(i);
                         break;
-                    case OPCION_ENCUESTA_MUESTRAS:
+                    /*case OPCION_ENCUESTA_MUESTRAS:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
                         i = new Intent(getApplicationContext(),
                                 ListaMuestrasActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
-                        break;
+                        break;*/
                     case OPCION_ENCUESTA_PARTICIPANTESA:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
                         if (participanteSA!=null) arguments.putSerializable(Constants.PARTICIPANTE_SA , participanteSA);

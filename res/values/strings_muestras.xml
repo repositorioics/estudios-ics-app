@@ -44,4 +44,5 @@
     <string name="rojo6mlPermitido">2 años a 13 años. Rojo: 6 ml es el volumen máximo permitido</string>
     <string name="rojo12mlPermitido">14 años y mas. Rojo: 12 ml es el volumen máximo permitido</string>
     <string name="bhcMlPermitido">14 años y mas. BHC : 2 ml es el volumen máximo permitido</string>
+    <string name="existeMA2017">Ya se tomó muestra anual</string>
 </resources>

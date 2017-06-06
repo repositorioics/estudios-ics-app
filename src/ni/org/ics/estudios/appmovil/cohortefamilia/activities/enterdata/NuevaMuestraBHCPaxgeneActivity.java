@@ -18,7 +18,6 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestraBHCPaxgeneForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestrasFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
@@ -459,7 +458,7 @@ public class NuevaMuestraBHCPaxgeneActivity extends FragmentActivity implements
 
             Muestra muestra = new Muestra();
             muestra.setCodigo(infoMovil.getId());
-            muestra.setParticipanteCHF(participanteCHF);
+            muestra.setParticipante(participanteCHF.getParticipante());
             muestra.setTipoMuestra("1"); //Sangre
             muestra.setTubo("2"); //BHC
             muestra.setProposito("1");//Muestreo anual

@@ -352,9 +352,10 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getFinTamizajeLabel()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaTamizajeCasa()), !visible);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("No");
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaTamizajeCasa()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaTamizajeCasaLabel()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaTamizajeCasaLabel()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }

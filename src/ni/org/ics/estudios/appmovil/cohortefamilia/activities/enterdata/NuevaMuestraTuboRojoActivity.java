@@ -18,7 +18,6 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestraTuboRojoForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestrasFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
@@ -31,7 +30,6 @@ import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
 import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -442,7 +440,7 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
 
             Muestra muestra = new Muestra();
             muestra.setCodigo(infoMovil.getId());
-            muestra.setParticipanteCHF(participanteCHF);
+            muestra.setParticipante(participanteCHF.getParticipante());
             muestra.setTipoMuestra("1"); //Sangre
             muestra.setTubo("1"); //Rojo
             muestra.setProposito("1");//Muestreo anual

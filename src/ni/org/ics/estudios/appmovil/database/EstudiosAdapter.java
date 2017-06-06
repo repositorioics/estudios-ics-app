@@ -84,7 +84,6 @@ public class EstudiosAdapter {
             db.execSQL(MainDBConstants.CREATE_CARTACONSENTIMIENTO_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_LACTANCIAMAT_TABLE);
             db.execSQL(MuestrasDBConstants.CREATE_MUESTRA_TABLE);
-            db.execSQL(MuestrasDBConstants.CREATE_PAXGENE_TABLE);
             db.execSQL(MainDBConstants.CREATE_AREA_AMBIENTE_TABLE);
             db.execSQL(MainDBConstants.CREATE_CAMA_TABLE);
             db.execSQL(MainDBConstants.CREATE_PERSONACAMA_TABLE);
@@ -1103,8 +1102,8 @@ public class EstudiosAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mMuestras=MuestraHelper.crearMuestra(cursor);
-            ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MuestrasDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteCHF)), null);
-            if (participanteCohorteFamilia != null) mMuestras.setParticipanteCHF(participanteCohorteFamilia);
+            Participante participante = this.getParticipante(MuestrasDBConstants.participante + "=" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participante)), null);
+            if (participante != null) mMuestras.setParticipante(participante);
         }
         if (!cursor.isClosed()) cursor.close();
         return mMuestras;
@@ -1119,8 +1118,8 @@ public class EstudiosAdapter {
             do{
                 Muestra mMuestra = null;
                 mMuestra = MuestraHelper.crearMuestra(cursor);
-                ParticipanteCohorteFamilia participanteCohorteFamilia = this.getParticipanteCohorteFamilia(MuestrasDBConstants.participanteCHF + "=" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteCHF)), null);
-                if (participanteCohorteFamilia != null) mMuestra.setParticipanteCHF(participanteCohorteFamilia);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participante)), null);
+                if (participante != null) mMuestra.setParticipante(participante);
                 mMuestras.add(mMuestra);
             } while (cursor.moveToNext());
         }

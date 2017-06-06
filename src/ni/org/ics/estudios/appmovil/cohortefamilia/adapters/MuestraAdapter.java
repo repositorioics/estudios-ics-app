@@ -48,6 +48,11 @@ public class MuestraAdapter extends ArrayAdapter<Muestra> {
                 textView.setTextColor(Color.RED);
             else if (p.getTubo().equalsIgnoreCase("2"))
                 textView.setTextColor(Color.MAGENTA);
+            else if (p.getTubo().equalsIgnoreCase("3")){
+                textView.setTextColor(Color.BLUE);
+            }else{
+                textView.setTextColor(Color.BLACK);
+            }
             if (textView != null) {
 				textView.setText(getDescripcionCatalogo(p.getTubo(), "CHF_CAT_TIP_TUBO_MX"));
 			}
@@ -61,14 +66,14 @@ public class MuestraAdapter extends ArrayAdapter<Muestra> {
             textView.setTextColor(Color.BLACK);
             if (textView != null) {
                 if (p.getRazonNoToma() == null) {
-                    textView.setText(this.getContext().getString(R.string.hora) + ": " + p.getHora() + " - " + this.getContext().getString(R.string.volumen) + ": " + p.getVolumen() + this.getContext().getString(R.string.ml));
+                    textView.setText(this.getContext().getString(R.string.hora) + ": " + (p.getHora()!=null?p.getHora():"") + " - " + this.getContext().getString(R.string.volumen) + ": " + p.getVolumen() + this.getContext().getString(R.string.ml)
+                     + (p.getDescOtraObservacion()!=null? "\n" +p.getDescOtraObservacion():""));
 
                 } else {
                     textView.setText(this.getContext().getString(R.string.noSeTomoMuestra)+". "+
                             (p.getDescOtraRazonNoToma()!=null?p.getDescOtraRazonNoToma():getDescripcionCatalogo(p.getRazonNoToma(),"CHF_CAT_RAZON_NO_MX")));
                 }
             }
-			
 		}
 		return v;
 	}

@@ -1,6 +1,7 @@
 package ni.org.ics.estudios.appmovil.domain.cohortefamilia;
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
+import ni.org.ics.estudios.appmovil.domain.Participante;
 
 import java.io.Serializable;
 
@@ -26,7 +27,7 @@ public class Muestra extends BaseMetaData implements Serializable {
     private String tubo;
     private String tipoMuestra;
     private String proposito;
-    private ParticipanteCohorteFamilia participanteCHF;
+    private Participante participante;
     private String realizaPaxgene;
     private String horaInicioPax;
     private String horaFinPax;
@@ -143,12 +144,12 @@ public class Muestra extends BaseMetaData implements Serializable {
         this.proposito = proposito;
     }
 
-    public ParticipanteCohorteFamilia getParticipanteCHF() {
-        return participanteCHF;
+    public Participante getParticipante() {
+        return participante;
     }
 
-    public void setParticipanteCHF(ParticipanteCohorteFamilia participanteCHF) {
-        this.participanteCHF = participanteCHF;
+    public void setParticipante(Participante participanteCHF) {
+        this.participante = participanteCHF;
     }
 
     public String getRealizaPaxgene() {

@@ -20,7 +20,6 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaAreaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaMuestraBHCPaxgeneActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaMuestraTuboRojoActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MuestraAdapter;
@@ -47,7 +46,11 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
     private List<MessageResource> mTiposMuestra = new ArrayList<MessageResource>();
 	private EstudiosAdapter estudiosAdapter;
     private Double volumenTotalPermitido = 0D;
-
+    private int anios = 0;
+    private int meses = 0;
+    private int dias = 0;
+    private boolean habilitarBhc;
+    private boolean habilitarRojo;
     private AlertDialog alertDialog;
 
 	@Override
@@ -62,10 +65,23 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		new FetchDataCasaTask().execute();
-		
+
+        String edad[] = participanteCHF.getParticipante().getEdad().split("/");
+        if (edad.length > 0) {
+            anios = Integer.valueOf(edad[0]);
+            meses = Integer.valueOf(edad[1]);
+            dias = Integer.valueOf(edad[2]);
+        }
+
+        //BHC y Paxgene (2 años a 13 años y 14 años y mas)
+        habilitarBhc = anios >= 2;
+        //Rojo (6 meses y menos de 2 años y 2 años a 13 años Y 14 años y mas)
+        if (anios == 0) habilitarRojo = meses >= 6;
+        else habilitarRojo = anios >= 1;
+
 		mAddBHCButton = (Button) findViewById(R.id.add_button1);
 		mAddBHCButton.setText(getString(R.string.add) + " " + getString(R.string.new_sample_bhc));
-
+        mAddBHCButton.setEnabled(habilitarBhc);
 		mAddBHCButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +91,7 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
 
         mAddRojoCButton = (Button) findViewById(R.id.add_button2);
         mAddRojoCButton.setText(getString(R.string.add) + " " + getString(R.string.new_sample_rojo));
-
+        mAddRojoCButton.setEnabled(habilitarRojo);
         mAddRojoCButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,6 +180,15 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
         new OpenDataEnterActivityTask().execute(tipo);
     }
 
+    private boolean getMuestraAnual(){
+        for (Muestra muestra : mMuestras) {
+            if (muestra.getCodigo().contains("MA2017")){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private double getVolumenExistente(String tipoTubo){
         double volumenTotal = 0D;
         for (Muestra muestra : mMuestras) {
@@ -177,42 +202,30 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
         String labelMuestra = "";
         String tipoTubo = "0";
         String labelVolumenPermitido = "";
+        boolean validarVolumenExistente = true;
         if (opcion.equalsIgnoreCase(getString(R.string.new_mx_bhc)) && !participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
-            int anios = 0;
-            int meses = 0;
-            int dias = 0;
-            String edad[] = participanteCHF.getParticipante().getEdad().split("/");
-            if (edad.length > 0) {
-                anios = Integer.valueOf(edad[0]);
-                meses = Integer.valueOf(edad[1]);
-                dias = Integer.valueOf(edad[2]);
-                if (anios >= 14) labelMuestra = getString(R.string.volumenPaxgene14);
-                else {
-                    //BHC y Paxgene (2 años a 13 años)
-                    if (anios >= 2 && anios < 13) {
-                        labelMuestra = getString(R.string.volumenPaxgene);
-                    } else if (anios == 13 && meses == 0 && dias == 0) {
-                        labelMuestra = getString(R.string.volumenPaxgene);
-                    }
+            if (anios >= 14) labelMuestra = getString(R.string.volumenPaxgene14);
+            else {
+                //BHC y Paxgene (2 años a 13 años)
+                if (anios >= 2 && anios <= 13) {
+                    labelMuestra = getString(R.string.volumenPaxgene);
                 }
-                volumenTotalPermitido = 2D;
-                labelVolumenPermitido = getString(R.string.bhcMlPermitido);
             }
+            volumenTotalPermitido = 2D;
+            labelVolumenPermitido = getString(R.string.bhcMlPermitido);
             tipoTubo = "2";
         }
 
         if (opcion.equalsIgnoreCase(getString(R.string.new_mx_rojo)) && !participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
-            int anios = 0;
-            int meses = 0;
-            int dias = 0;
-            boolean visible3ml = false;
-            boolean visible6ml = false;
-            boolean visible12ml = false;
-            String edad[] = participanteCHF.getParticipante().getEdad().split("/");
-            if (edad.length > 0) {
-                anios = Integer.valueOf(edad[0]);
-                meses = Integer.valueOf(edad[1]);
-                dias = Integer.valueOf(edad[2]);
+            if (getMuestraAnual()){
+                validarVolumenExistente = false;
+                labelVolumenPermitido = getString(R.string.existeMA2017);
+            }else {
+
+                boolean visible3ml = false;
+                boolean visible6ml = false;
+                boolean visible12ml = false;
+
                 //Rojo (2 años a 13 años)
                 if (anios >= 2 && anios < 13) {
                     visible6ml = true;
@@ -232,29 +245,31 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
                         if (meses >= 6) visible3ml = true;
                     } else visible3ml = false;
                 }
-                if (anios >= 14){
+                if (anios >= 14) {
                     visible12ml = true;
                 }
+
+                if (visible3ml) {
+                    labelMuestra = getString(R.string.rojo3ml);
+                    labelVolumenPermitido = getString(R.string.rojo3mlPermitido);
+                    volumenTotalPermitido = 3D;
+                }
+                if (visible6ml) {
+                    labelMuestra = getString(R.string.rojo6ml);
+                    labelVolumenPermitido = getString(R.string.rojo6mlPermitido);
+                    volumenTotalPermitido = 6D;
+                }
+                if (visible12ml) {
+                    labelMuestra = getString(R.string.rojo12ml);
+                    labelVolumenPermitido = getString(R.string.rojo12mlPermitido);
+                    volumenTotalPermitido = 12D;
+                }
+                tipoTubo = "1";
             }
-            if (visible3ml) {
-                labelMuestra = getString(R.string.rojo3ml);
-                labelVolumenPermitido = getString(R.string.rojo3mlPermitido);
-                volumenTotalPermitido = 3D;
-            }
-            if (visible6ml) {
-                labelMuestra = getString(R.string.rojo6ml);
-                labelVolumenPermitido = getString(R.string.rojo6mlPermitido);
-                volumenTotalPermitido = 6D;
-            }
-            if (visible12ml) {
-                labelMuestra = getString(R.string.rojo12ml);
-                labelVolumenPermitido = getString(R.string.rojo12mlPermitido);
-                volumenTotalPermitido = 12D;
-            }
-            tipoTubo = "1";
         }
+
         Double volumenExistente = getVolumenExistente(tipoTubo);
-        if (volumenTotalPermitido > volumenExistente) {
+        if (validarVolumenExistente && volumenTotalPermitido > volumenExistente) {
             volumenTotalPermitido = volumenTotalPermitido - volumenExistente;
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(this.getString(R.string.remember));
@@ -340,14 +355,15 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {      
 			try {
 				estudiosAdapter.open();
-				mMuestras = estudiosAdapter.getMuestras(MuestrasDBConstants.participanteCHF + " = " + participanteCHF.getParticipante().getCodigo() +" and " + MainDBConstants.pasive + " ='0'", MuestrasDBConstants.tipoMuestra);
+				mMuestras = estudiosAdapter.getMuestras(MuestrasDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo() +" and " + MainDBConstants.pasive + " ='0'", MuestrasDBConstants.tipoMuestra);
                 mTiposMuestra = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TUBO_MX'" + " or " + CatalogosDBConstants.catRoot + "='CHF_CAT_RAZON_NO_MX'", null);
-                estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
 				return "error";
-			}
-			return "exito";
+			}finally {
+                estudiosAdapter.close();
+            }
+            return "exito";
 		}
 
 		protected void onPostExecute(String resultado) {

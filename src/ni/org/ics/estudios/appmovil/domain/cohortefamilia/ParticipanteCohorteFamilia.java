@@ -20,18 +20,9 @@ public class ParticipanteCohorteFamilia extends BaseMetaData implements Serializ
 	/**
 	 * 
 	 */
-	//private String participanteCHF;
 	private Participante participante;
     private CasaCohorteFamilia casaCHF;
-    /*
-    public String getParticipanteCHF() {
-		return participanteCHF;
-	}
 
-	public void setParticipanteCHF(String participanteCHF) {
-		this.participanteCHF = participanteCHF;
-	}
-*/
 	public Participante getParticipante() {
 		return participante;
 	}

@@ -19,7 +19,6 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestraBHCForm;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestraTuboRojoForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestrasFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
@@ -28,7 +27,6 @@ import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
-import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
 import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
@@ -429,7 +427,7 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
 
             Muestra muestra = new Muestra();
             muestra.setCodigo(infoMovil.getId());
-            muestra.setParticipanteCHF(participanteCHF);
+            muestra.setParticipante(participanteCHF.getParticipante());
             muestra.setTipoMuestra("1"); //Sangre
             muestra.setTubo("2"); //BHC
             muestra.setProposito("1");//Muestreo anual

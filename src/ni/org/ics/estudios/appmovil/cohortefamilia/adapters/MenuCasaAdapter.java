@@ -123,7 +123,11 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_paste_holo_light);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
-
+            case 6:
+            	textView.setText(values[position]);
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_chat_dashboard);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
             default:
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_help);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);

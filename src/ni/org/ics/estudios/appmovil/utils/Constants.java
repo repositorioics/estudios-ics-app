@@ -39,6 +39,10 @@ public class Constants {
     public static final String YES = "Si";
     public static final String OTRO = "Otro";
     public static final String NO = "No";
+    
+    public static final String ACCION = "accion";
+    public static final String SENDING = "enviando";
+    public static final String RECEIVING = "recibiendo";
 
     public static final int COD_EST_SEROPREVALENCIA = 2;
     public static final int COD_EST_COHORTEDENGUE = 3;

@@ -12,6 +12,7 @@
         <item>@string/download</item>
         <item>@string/upload</item>
         <item>@string/catalog</item>
+        <item>@string/receive_house</item>
         <item>@string/exit</item>
     </string-array>
 
@@ -22,6 +23,7 @@
         <item>@string/environments</item>
         <item>@string/phones</item>
         <item>@string/new_house_sa_survey</item>
+        <item>@string/send_house</item>
     </string-array>
 
     <string-array name="menu_participante">

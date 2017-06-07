@@ -536,6 +536,10 @@ public class EstudiosAdapter {
 		ContentValues cv = CasaCohorteFamiliaHelper.crearCasaCHFontentValues(casaCHF);
 		mDb.insert(MainDBConstants.CASA_CHF_TABLE, null, cv);
 	}
+	//Crear nuevo CasaCohorteFamilia en la base de datos desde otro equipo
+	public void insertarCasaCohorteFamilia(String casaSQL) {
+		mDb.execSQL(casaSQL);
+	}
 	//Editar CasaCohorteFamilia existente en la base de datos
 	public boolean editarCasaCohorteFamilia(CasaCohorteFamilia casaCHF) {
 		ContentValues cv = CasaCohorteFamiliaHelper.crearCasaCHFontentValues(casaCHF);
@@ -590,6 +594,10 @@ public class EstudiosAdapter {
 		ContentValues cv = ParticipanteHelper.crearParticipanteContentValues(participante);
 		mDb.insert(MainDBConstants.PARTICIPANTE_TABLE, null, cv);
 	}
+	//Crear nuevo Participante en la base de datos desde otro equipo
+	public void insertarParticipante(String participanteSQL) {
+		mDb.execSQL(participanteSQL);
+	}
 	//Editar Participante existente en la base de datos
 	public boolean editarParticipante(Participante participante) {
 		ContentValues cv = ParticipanteHelper.crearParticipanteContentValues(participante);
@@ -643,6 +651,10 @@ public class EstudiosAdapter {
 	public void crearParticipanteCohorteFamilia(ParticipanteCohorteFamilia participanteCohorteFamilia) {
 		ContentValues cv = ParticipanteCohorteFamiliaHelper.crearParticipanteCohorteFamiliaContentValues(participanteCohorteFamilia);
 		mDb.insert(MainDBConstants.PARTICIPANTE_CHF_TABLE, null, cv);
+	}
+	//Crear nuevo ParticipanteCohorteFamilia en la base de datos desde otro equipo
+	public void insertarParticipanteCohorteFamilia(String participanteCohorteFamiliaSQL) {
+		mDb.execSQL(participanteCohorteFamiliaSQL);
 	}
 	//Editar ParticipanteCohorteFamilia existente en la base de datos
 	public boolean editarParticipanteCohorteFamilia(ParticipanteCohorteFamilia participanteCohorteFamilia) {

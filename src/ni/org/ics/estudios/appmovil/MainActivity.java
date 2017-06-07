@@ -78,12 +78,6 @@ public class MainActivity extends ListActivity {
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			break;
-		case 1: 
-			i = new Intent(getApplicationContext(),
-					ChatActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			break;
 		default: 
 			String s = (String) getListAdapter().getItem(position);
 			Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();

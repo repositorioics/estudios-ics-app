@@ -90,16 +90,21 @@
     <string name="title_not_connected">No conectado</string>
     
     <string name="send_request">Enviar solicitud</string>
+    <string name="send_house">Enviar casa</string>
+    <string name="receive_house">Recibir casa</string>
     <string name="accept_request">Aceptar solicitud</string>
-    <string name="request_sent">Le solicita recibir datos..</string>
+    <string name="request_sent">Solicitud de enviar datos..</string>
     <string name="request_accepted">La solicitud fue aceptada</string>
     <string name="waiting_data">Esperando datos..</string>
     <string name="sending_data">Enviando datos..</string>
     <string name="receiving_data">Recibiendo datos..</string>
     <string name="receiving">Recibiendo </string>
-    <string name="finished">Finalizado </string>
+    <string name="finished">/*Proceso finalizado*/</string>
+    <string name="finished_house">/*Terminado casa*/</string>
+    <string name="finished_part">/*Terminado participante*/</string>
     <string name="select_house">Seleccionar casa</string>
     <string name="house_selected">Casa seleccionada <xliff:g id="codigo_casa">%1$s</xliff:g></string>
+    <string name="participant_selected">Participante seleccionado <xliff:g id="codigo_part">%1$s</xliff:g></string>
 
     <!--  DeviceListActivity -->
     <string name="scanning">Buscando dispositivos..</string>

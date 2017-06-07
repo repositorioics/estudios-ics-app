@@ -4,12 +4,14 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.bluetooth.activity.ChatActivity;
 import ni.org.ics.estudios.appmovil.bluetooth.activity.ConstantsBT;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadAllActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadCatalogosActivity;
 //import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.UploadTamizajesActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.UploadAllActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCohorteFamiliaAdapter;
+import ni.org.ics.estudios.appmovil.utils.Constants;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -93,6 +95,15 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
                 	createDialog(CATALOG);
                     break;
                 case 5:
+                	Bundle arguments = new Bundle();
+        			i = new Intent(getApplicationContext(),
+        					ChatActivity.class);
+        			arguments.putSerializable(Constants.CASA , null);
+        			i.putExtra(Constants.ACCION, Constants.SENDING);
+        			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        			startActivity(i);
+        			break;
+                case 6:
                 	createDialog(EXIT);
                     break;                    
 				default:

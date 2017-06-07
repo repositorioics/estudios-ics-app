@@ -24,6 +24,7 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.bluetooth.activity.ChatActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaCasaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCasaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
@@ -120,6 +121,14 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                     case 5:
                         createDialog(position);
                         break;
+                    case 6:
+            			i = new Intent(getApplicationContext(),
+            					ChatActivity.class);
+            			if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+            			i.putExtra(Constants.ACCION, Constants.SENDING);
+            			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            			startActivity(i);
+            			break;
 				    default:
                         break;
 		        }

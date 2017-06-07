@@ -22,7 +22,7 @@ import java.util.List;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.bluetooth.common.logger.Log;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.BuscarCasaCHFActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCasaActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
@@ -65,7 +65,6 @@ public class BluetoothChatFragment extends Fragment {
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     private static final int REQUEST_ENABLE_BT = 3;
-    private static final int REQUEST_HOUSE = 4;
 
     // Layout Views
     private ListView mConversationView;
@@ -98,6 +97,7 @@ public class BluetoothChatFragment extends Fragment {
     private int totalPartEnviar = 0;
     private int totalPartEnviados = 0;
     private String casaSQL;
+    private String codigoCHF;
     private String[] participantesSQL;
     private String[] participantesChfSQL;
     private String accion;
@@ -177,11 +177,11 @@ public class BluetoothChatFragment extends Fragment {
         mConversationView = (ListView) view.findViewById(R.id.in);
         mSendButton = (Button) view.findViewById(R.id.button_send);
         if (accion.equals(Constants.SENDING)) {
-        	mSendButton.setText(R.string.send_request);
+        	mSendButton.setText(this.getString(R.string.send_house) + " " + mCasa.getCodigoCHF());
         	mSendButton.setEnabled(true);
         }
         else{
-        	mSendButton.setText(R.string.waiting_data);
+        	mSendButton.setText(this.getString(R.string.waiting_data));
         	mSendButton.setEnabled(false);
         }
     }
@@ -208,7 +208,7 @@ public class BluetoothChatFragment extends Fragment {
                         Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
                         return;
                     }
-                	manageSendHandShake("");
+        			enviarCasa();
                 	
                 }
             }
@@ -268,15 +268,6 @@ public class BluetoothChatFragment extends Fragment {
     
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-        	case REQUEST_HOUSE:
-            // When DeviceListActivity returns with a device to connect
-            if (resultCode == Activity.RESULT_OK) {
-            	mCasa = (CasaCohorteFamilia) data.getExtras().getSerializable(Constants.CASA);
-        		mSendButton.setText(getString(R.string.sending_data));
-        		mSendButton.setEnabled(false);
-            	manageSendHandShake("");
-            }
-            break;
             case REQUEST_CONNECT_DEVICE_SECURE:
                 // When DeviceListActivity returns with a device to connect
                 if (resultCode == Activity.RESULT_OK) {
@@ -334,12 +325,6 @@ public class BluetoothChatFragment extends Fragment {
                 startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
                 return true;
             }
-            case R.id.insecure_connect_scan: {
-                // Launch the DeviceListActivity to see devices and do scan
-                //Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
-                //startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
-                return true;
-            }
             case R.id.discoverable: {
                 // Ensure this device is discoverable by others
                 ensureDiscoverable();
@@ -363,7 +348,6 @@ public class BluetoothChatFragment extends Fragment {
                         case BluetoothChatService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
                             mConversationArrayAdapter.clear();
-                            mSendButton.setText(R.string.send_request);
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -373,7 +357,6 @@ public class BluetoothChatFragment extends Fragment {
                             setStatus(R.string.title_not_connected);
                             break;
                     }
-                    mSendButton.setEnabled(true);
                     break;
                 case ConstantsBT.MESSAGE_WRITE:
                     byte[] writeBuf = (byte[]) msg.obj;
@@ -433,17 +416,6 @@ public class BluetoothChatFragment extends Fragment {
         }
     }
     
-    private void limpiarVariables(){
-        mCasa = null;
-        mParticipantes = new ArrayList<ParticipanteCohorteFamilia>();
-        contador = 0;
-        totalPartEnviar = 0;
-        totalPartEnviados = 0;
-        casaSQL = "";
-        participantesSQL = new String[30];
-		participantesChfSQL = new String[30];
-    }
-
     private void enviarCasa(){
     	String insertCasaSQL;
     	insertCasaSQL = "INSERT INTO chf_casas_cohorte_familia VALUES ('"+ 
@@ -501,42 +473,13 @@ public class BluetoothChatFragment extends Fragment {
     	sendMessage(insertParticipanteChfSQL);
     }
     
-        
-
-    private void manageSendHandShake(String mensaje){
-    	if(mSendButton.getText().toString().matches(this.getString(R.string.send_request))){
-    		sendMessage(this.getString(R.string.request_sent));
-    	}
-    	if(mSendButton.getText().toString().matches(this.getString(R.string.accept_request))){
-    		sendMessage(this.getString(R.string.request_accepted));
-    		mSendButton.setText(this.getString(R.string.waiting_data));
-    		mSendButton.setEnabled(false);
-    	}
-    	if(mSendButton.getText().toString().matches(this.getString(R.string.select_house))){
-    		Intent i = new Intent(getActivity(),
-                    BuscarCasaCHFActivity.class);
-    		i.putExtra(ConstantsBT.DEVICE_NAME, mConnectedDeviceName);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivityForResult(i, REQUEST_HOUSE);
-    	}
-    	if(mSendButton.getText().toString().matches(this.getString(R.string.sending_data))){
-    		sendMessage(getString(R.string.sending_data)+ " " + getString(R.string.house_selected,mCasa.getCodigoCHF()));
-    		new GetDataCasaTask().execute();
-    	}
-    }
     
     private void manageReceiveHandShake(String mensaje){
-    	if(mensaje.matches(this.getString(R.string.request_sent))){
-    		mSendButton.setText(this.getString(R.string.accept_request));
-    	}
-    	else if(mensaje.matches(this.getString(R.string.request_accepted))){
-    		mSendButton.setText(this.getString(R.string.select_house));
-    	}
-    	else if(mensaje.startsWith(this.getString(R.string.sending_data))){
-    		mSendButton.setText(this.getString(R.string.receiving_data));
-    	}
-    	else if(mensaje.startsWith("INSERT INTO chf_casas_cohorte_familia")){
+    	if(mensaje.startsWith("INSERT INTO chf_casas_cohorte_familia")){
     		casaSQL = mensaje;
+    		int codigoComienza = 47;
+    		int codigoTermina = casaSQL.indexOf(",",0)-1;
+    		codigoCHF = casaSQL.substring(codigoComienza, codigoTermina);
     		sendMessage(this.getString(R.string.finished_house));
     		try { Thread.sleep(200); }
     		catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
@@ -579,8 +522,7 @@ public class BluetoothChatFragment extends Fragment {
     		}
     		else{
     			sendMessage(this.getString(R.string.finished));
-    			mSendButton.setText(this.getString(R.string.send_request));
-    			mSendButton.setEnabled(true);
+    			getActivity().finish();
     		}
     		try { Thread.sleep(200); }
     		catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
@@ -630,7 +572,6 @@ public class BluetoothChatFragment extends Fragment {
 			// after the request completes, hide the progress indicator
 			nDialog.dismiss();
 			totalPartEnviar = mParticipantes.size();
-			enviarCasa();
 		}
 	}
 	
@@ -682,6 +623,8 @@ public class BluetoothChatFragment extends Fragment {
 						error = error + e.getMessage();
 					}
 				}
+				String filtro = MainDBConstants.codigoCHF + "='"+ codigoCHF +"'";
+				mCasa = estudiosAdapter.getCasaCohorteFamilia(filtro, null);
 				estudiosAdapter.close();
 				if (error.equals("")) {
 					return getActivity().getString(R.string.success);
@@ -695,7 +638,14 @@ public class BluetoothChatFragment extends Fragment {
 				// after the request completes, hide the progress indicator
 				nDialog.dismiss();
 				Toast.makeText(getActivity(), resultado, Toast.LENGTH_LONG).show();
-				limpiarVariables();
+				Bundle arguments = new Bundle();
+		        if (mCasa!=null) arguments.putSerializable(Constants.CASA , mCasa);
+		        Intent i = new Intent(getActivity(),
+		        		MenuCasaActivity.class);
+		        i.putExtras(arguments);
+		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		        startActivity(i);
+	        	getActivity().finish();
 			}
 		}
 

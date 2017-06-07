@@ -126,6 +126,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
             					ChatActivity.class);
             			if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
             			i.putExtra(Constants.ACCION, Constants.SENDING);
+            			i.putExtras(arguments);
             			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             			startActivity(i);
             			break;

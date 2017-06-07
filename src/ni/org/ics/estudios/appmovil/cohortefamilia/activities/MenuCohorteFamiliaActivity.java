@@ -99,7 +99,7 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
         			i = new Intent(getApplicationContext(),
         					ChatActivity.class);
         			arguments.putSerializable(Constants.CASA , null);
-        			i.putExtra(Constants.ACCION, Constants.SENDING);
+        			i.putExtra(Constants.ACCION, Constants.RECEIVING);
         			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         			startActivity(i);
         			break;

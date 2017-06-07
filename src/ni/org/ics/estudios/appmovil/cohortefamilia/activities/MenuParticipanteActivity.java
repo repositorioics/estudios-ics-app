@@ -335,18 +335,20 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     existeencuestaLact = true;
                 }
 
-                List<CartaConsentimiento> cartaConsentimiento = estudiosAdapter.getCartasConsentimientos(MainDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
+                //List<CartaConsentimiento> cartaConsentimiento = estudiosAdapter.getCartasConsentimientos(MainDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
 
-                for(CartaConsentimiento carta : cartaConsentimiento) {
-                    if (carta.getTamizaje().getEstudio().getCodigo()==Constants.COD_EST_SEROPREVALENCIA && carta.getAceptaParteA().equalsIgnoreCase("S")) {
-                        habilitarEncuestaParticipSA = true;
-                        participanteSA = estudiosAdapter.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
-                        EncuestaParticipanteSA encuestaParticipanteSA = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participante + "='" + participanteSA.getParticipante().getCodigo()+"'", null);
-                        if (encuestaParticipanteSA != null) {
-                            existeencuestaParticipSA = true;
-                        }
+                //for(CartaConsentimiento carta : cartaConsentimiento) {
+                    //if (carta.getTamizaje().getEstudio().getCodigo()==Constants.COD_EST_SEROPREVALENCIA && carta.getAceptaParteA().equalsIgnoreCase("S")) {
+                participanteSA = estudiosAdapter.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
+                if (participanteSA!=null) {
+                    habilitarEncuestaParticipSA = true;
+                    EncuestaParticipanteSA encuestaParticipanteSA = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participante + "='" + participanteSA.getParticipante().getCodigo() + "'", null);
+                    if (encuestaParticipanteSA != null) {
+                        existeencuestaParticipSA = true;
                     }
                 }
+                    //}
+                //}
 
                 estudiosAdapter.close();
             } catch (Exception e) {

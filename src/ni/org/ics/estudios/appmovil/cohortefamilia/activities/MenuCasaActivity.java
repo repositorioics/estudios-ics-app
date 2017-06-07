@@ -36,6 +36,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaCasaSAActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
@@ -314,13 +315,19 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                 }
                 if (!existeencuestaCasaSA) {
                     for (ParticipanteCohorteFamilia participanteCHF : mParticipantes) {
+                        ParticipanteSeroprevalencia participanteSA = estudiosAdapter.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
+                        if (participanteSA!=null) {
+                            habilitarencuestaCasaSA = true;
+                            break;
+                        }
+                        /*
                         List<CartaConsentimiento> cartaConsentimiento = estudiosAdapter.getCartasConsentimientos(MainDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
                         for (CartaConsentimiento carta : cartaConsentimiento) {
                             if (carta.getTamizaje().getEstudio().getCodigo() == Constants.COD_EST_SEROPREVALENCIA && carta.getAceptaParteA().equalsIgnoreCase("S")) {
                                 habilitarencuestaCasaSA = true;
                                 break;
                             }
-                        }
+                        }*/
                     }
                 }
 

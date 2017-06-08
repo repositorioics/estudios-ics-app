@@ -204,15 +204,19 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
         String labelVolumenPermitido = "";
         boolean validarVolumenExistente = true;
         if (opcion.equalsIgnoreCase(getString(R.string.new_mx_bhc)) && !participanteCHF.getParticipante().getEdad().equalsIgnoreCase("ND")) {
-            if (anios >= 14) labelMuestra = getString(R.string.volumenPaxgene14);
+            if (anios >= 14){
+                labelMuestra = getString(R.string.volumenPaxgene14);
+                labelVolumenPermitido = getString(R.string.bhcMlPermitido);
+            }
             else {
                 //BHC y Paxgene (2 años a 13 años)
                 if (anios >= 2 && anios <= 13) {
                     labelMuestra = getString(R.string.volumenPaxgene);
+                    labelVolumenPermitido = getString(R.string.bhcMlPermitido2a13);
                 }
             }
             volumenTotalPermitido = 2D;
-            labelVolumenPermitido = getString(R.string.bhcMlPermitido);
+
             tipoTubo = "2";
         }
 
@@ -227,14 +231,8 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
                 boolean visible12ml = false;
 
                 //Rojo (2 años a 13 años)
-                if (anios >= 2 && anios < 13) {
+                if (anios >= 2 && anios <= 13) {
                     visible6ml = true;
-                } else if (anios == 13) {
-                    if (meses > 0)
-                        visible6ml = false;
-                    else {
-                        visible6ml = (dias <= 0);
-                    }
                 } else {
                     visible6ml = false;
                 }

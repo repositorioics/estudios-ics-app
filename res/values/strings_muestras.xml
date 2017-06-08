@@ -2,7 +2,7 @@
 <resources>
 
     <string name="new_sample">Muestra</string>
-    <string name="new_sample_bhc">Muestra BCH</string>
+    <string name="new_sample_bhc">Muestra BHC</string>
     <string name="new_sample_rojo">Muestra de tubo Rojo</string>
     <string name="new_sample_paxgene">Muestra PaxGene</string>
     <string name="tomaMxSn">Se tomó muestra?</string>
@@ -44,5 +44,6 @@
     <string name="rojo6mlPermitido">2 años a 13 años. Rojo: 6 ml es el volumen máximo permitido</string>
     <string name="rojo12mlPermitido">14 años y mas. Rojo: 12 ml es el volumen máximo permitido</string>
     <string name="bhcMlPermitido">14 años y mas. BHC : 2 ml es el volumen máximo permitido</string>
+    <string name="bhcMlPermitido2a13">2 años a 13 años. BHC : 2 ml es el volumen máximo permitido</string>
     <string name="existeMA2017">Ya se tomó muestra anual</string>
 </resources>

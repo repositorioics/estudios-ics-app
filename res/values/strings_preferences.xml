@@ -13,7 +13,7 @@
     
     <string name="app_preferences">Configuración Aplicación</string>
     <string name="update_app_preferences">Actualizar Aplicación</string>
-    <string name="version_app_preferences">Versión 1.4</string>
-    <string name="versiondate_app_preferences">Jun 07, 2017</string>
+    <string name="version_app_preferences">Versión 1.5</string>
+    <string name="versiondate_app_preferences">Jun 08, 2017</string>
   
 </resources>

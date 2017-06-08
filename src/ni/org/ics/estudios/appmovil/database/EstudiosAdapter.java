@@ -1755,6 +1755,10 @@ public class EstudiosAdapter {
         ContentValues cv = ParticipanteSeroprevalenciaHelper.crearParticipanteSeroprevalenciaContentValues(participanteSeroprevalencia);
         mDb.insert(SeroprevalenciaDBConstants.PARTICIPANTESA_TABLE, null, cv);
     }
+	//Crear nuevo ParticipanteSeroprevalencia en la base de datos desde otro equipo
+	public void insertarParticipanteSeroprevalencia(String participanteSeroprevalenciaSQL) {
+		mDb.execSQL(participanteSeroprevalenciaSQL);
+	}
     //Editar ParticipanteSeroprevalencia existente en la base de datos
     public boolean editarParticipanteSeroprevalencia(ParticipanteSeroprevalencia participanteSeroprevalencia) {
         ContentValues cv = ParticipanteSeroprevalenciaHelper.crearParticipanteSeroprevalenciaContentValues(participanteSeroprevalencia);

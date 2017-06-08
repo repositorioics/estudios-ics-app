@@ -459,9 +459,9 @@ public class NuevaMuestraBHCPaxgeneActivity extends FragmentActivity implements
             Muestra muestra = new Muestra();
             muestra.setCodigo(infoMovil.getId());
             muestra.setParticipante(participanteCHF.getParticipante());
-            muestra.setTipoMuestra("1"); //Sangre
-            muestra.setTubo("2"); //BHC
-            muestra.setProposito("1");//Muestreo anual
+            muestra.setTipoMuestra(Constants.CODIGO_TIPO_SANGRE); //Sangre
+            muestra.setTubo(Constants.CODIGO_TUBO_BHC); //BHC
+            muestra.setProposito(Constants.CODIGO_PROPOSITO_MA);//Muestreo anual
             //listas
             if (tieneValor(tomaMxSn)){
                 MessageResource mstomaMxSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaMxSn + "' and "

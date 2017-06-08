@@ -70,7 +70,7 @@ public class UploadAllTask extends UploadTask {
     private List<EncuestaCasaSA> mEncuestasCasaSA = new ArrayList<EncuestaCasaSA>();
     private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = new ArrayList<EncuestaParticipanteSA>();
     private List<TelefonoContacto> mTelefonos = new ArrayList<TelefonoContacto>();
-    //private List<Paxgene> mPaxgenes = new ArrayList<Paxgene>();
+    private List<RecepcionMuestra> mRecepcionMuestras = new ArrayList<RecepcionMuestra>();
 
 	private String url = null;
 	private String username = null;
@@ -104,7 +104,8 @@ public class UploadAllTask extends UploadTask {
     public static final String ENCUESTA_PARTICIPANTESA = "24";
     public static final String ENCUESTA_CASASA = "25";
     public static final String TELEFONOS = "26";
-	private static final String TOTAL_TASK = "26";
+    public static final String RECEPCION_MUESTRA = "27";
+	private static final String TOTAL_TASK = "27";
 	
 
 	@Override
@@ -151,6 +152,7 @@ public class UploadAllTask extends UploadTask {
             mEncuestasCasaSA = estudioAdapter.getEncuestasCasaSA(filtro, null);
             mEncuestasParticipanteSA = estudioAdapter.getEncuestasParticipanteSA(filtro,null);
             mTelefonos = estudioAdapter.getTelefonosContacto(filtro, null);
+            mRecepcionMuestras = estudioAdapter.getRecepcionMuestras(filtro, null);
 
 			publishProgress("Datos completos!", "2", "2");
 			
@@ -309,6 +311,12 @@ public class UploadAllTask extends UploadTask {
             error = cargarTelefonos(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TELEFONOS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, RECEPCION_MUESTRA);
+            error = cargarRecepcionMuestras(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCION_MUESTRA);
                 return error;
             }
 		} catch (Exception e1) {
@@ -606,6 +614,22 @@ public class UploadAllTask extends UploadTask {
                     estudioAdapter.editarEncuestaParticipanteSA(encuestaParticipanteSA);
                     publishProgress("Actualizando encuestas de participantes seroprevalencia en base de datos local", Integer.valueOf(mEncuestasParticipanteSA.indexOf(encuestaParticipanteSA)).toString(), Integer
                             .valueOf(c).toString());
+                }
+            }
+        }
+
+        if(opcion.equalsIgnoreCase(RECEPCION_MUESTRA)){
+            c = mRecepcionMuestras.size();
+            if(c>0){
+                for (RecepcionMuestra recepcionMuestra : mRecepcionMuestras) {
+                    recepcionMuestra.setEstado(estado.charAt(0));
+                    try {
+                        estudioAdapter.editarRecepcionMuestra(recepcionMuestra);
+                        publishProgress("Actualizando recepciones de muestras en base de datos local", Integer.valueOf(mRecepcionMuestras.indexOf(recepcionMuestra)).toString(), Integer
+                                .valueOf(c).toString());
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
                 }
             }
         }
@@ -1522,5 +1546,34 @@ public class UploadAllTask extends UploadTask {
             return e.getMessage();
         }
     }
-    
+
+    protected String cargarRecepcionMuestras(String url, String username,String password) throws Exception {
+        try {
+            if(mRecepcionMuestras.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando recepciones de muestras!", RECEPCION_MUESTRA, TOTAL_TASK);
+                final String urlRequest = url + "/movil/recepcionMuestras";
+                RecepcionMuestra[] envio = mRecepcionMuestras.toArray(new RecepcionMuestra[mRecepcionMuestras.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<RecepcionMuestra[]> requestEntity =
+                        new HttpEntity<RecepcionMuestra[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
 }

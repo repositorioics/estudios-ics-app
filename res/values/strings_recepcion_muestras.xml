@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="header_bhc">Recepción BHC</string>
+    <string name="header_red">Recepción Rojo</string>
+    <string name="codigoMxR">Escanee código de muestra</string>
+    <string name="volumenR">Volumen</string>
+    <string name="observacionR">Observaciones</string>
+    <string name="observacionHint">Observaciones de la recepción</string>
+    <string name="lugar">Lugar</string>
+    <string name="fechaRecepcion">Fecha de recepción</string>
+    <string name="paxgene">¿PaxGene?</string>
+    <string name="paxgeneHint">Indicar si para muestra BHC se realizó PaxGene</string>
+    <string name="error_volumen">Volumen inválido</string>
+    <string name="error_codigo">Código inválido</string>
+    <string name="error_lugar">Seleccione lugar donde se tomó la muestra</string>
+</resources>

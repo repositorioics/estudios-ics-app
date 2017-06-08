@@ -1,16 +1,23 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
+import android.os.AsyncTask;
+import android.util.Log;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 
+import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.bluetooth.activity.ChatActivity;
 import ni.org.ics.estudios.appmovil.bluetooth.activity.ConstantsBT;
+import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaRecepcionMuestraBHCActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaRecepcionMuestraRojoActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadAllActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadCatalogosActivity;
 //import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.UploadTamizajesActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.UploadAllActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCohorteFamiliaAdapter;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 
 import android.os.Build;
@@ -28,6 +35,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 
@@ -48,6 +58,10 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 	
 	private AlertDialog alertDialog;
 
+    private EstudiosAdapter estudiosAdapter;
+
+    private List<MessageResource> mCatalogos = new ArrayList<MessageResource>();
+
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,13 +73,14 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 			ActionBar actionBar = getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
-		textView = (TextView) findViewById(R.id.label);
-		gridView = (GridView) findViewById(R.id.gridView1);
-		menu_cohorte_familia = getResources().getStringArray(R.array.menu_cohorte_familia);
-		textView.setText("");
-		textView.setTextColor(Color.BLACK);
-		textView.setText(getString(R.string.main_1)+"\n"+getString(R.string.header_main));
-		gridView.setAdapter(new MenuCohorteFamiliaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_cohorte_familia));
+
+        textView = (TextView) findViewById(R.id.label);
+        gridView = (GridView) findViewById(R.id.gridView1);
+        menu_cohorte_familia = getResources().getStringArray(R.array.menu_cohorte_familia);
+        String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+        new FetchDataCasaTask().execute();
+
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
@@ -103,7 +118,19 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
         			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         			startActivity(i);
         			break;
-                case 6:
+                    case 6:
+                        i = new Intent(getApplicationContext(),
+                                NuevaRecepcionMuestraBHCActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        break;
+                    case 7:
+                        i = new Intent(getApplicationContext(),
+                                NuevaRecepcionMuestraRojoActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        break;
+                case 8:
                 	createDialog(EXIT);
                     break;                    
 				default:
@@ -284,7 +311,11 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 				builder.setTitle(getApplicationContext().getString(R.string.confirm));
 				builder.setIcon(R.drawable.ic_menu_info_details);
 				mensaje = getApplicationContext().getString(R.string.success);
+                if (requestCode == UPDATE_CATALOG){
+                    new FetchDataCasaTask().execute();
+                }
 			}
+
 			builder.setMessage(mensaje)
 			.setCancelable(false)
 			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -297,6 +328,38 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 			return;
 		}
 	}
+
+    private class FetchDataCasaTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            // before the request begins, show a progress indicator
+            showLoadingProgressDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... values) {
+            try {
+                estudiosAdapter.open();
+                mCatalogos = estudiosAdapter.getMessageResources(null,null);
+
+            } catch (Exception e) {
+                Log.e(TAG, e.getLocalizedMessage(), e);
+                return "error";
+            }finally {
+                estudiosAdapter.close();
+            }
+            return "exito";
+        }
+
+        protected void onPostExecute(String resultado) {
+
+            textView.setText("");
+            textView.setTextColor(Color.BLACK);
+            textView.setText(getString(R.string.main_1)+"\n"+getString(R.string.header_main));
+            gridView.setAdapter(new MenuCohorteFamiliaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_cohorte_familia, mCatalogos.size()));
+            dismissProgressDialog();
+        }
+    }
 		
 }
 	

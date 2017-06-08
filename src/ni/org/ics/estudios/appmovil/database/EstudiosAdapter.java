@@ -93,6 +93,7 @@ public class EstudiosAdapter {
             db.execSQL(SeroprevalenciaDBConstants.CREATE_ENCUESTA_CASASA_TABLE);
             db.execSQL(SeroprevalenciaDBConstants.CREATE_ENCUESTA_PARTICIPANTESA_TABLE);
             db.execSQL(MainDBConstants.CREATE_TELEFONO_CONTACTO_TABLE);
+            db.execSQL(MuestrasDBConstants.CREATE_RECEPCION_MUESTRA_TABLE);
         }
 
 		@Override
@@ -1139,60 +1140,6 @@ public class EstudiosAdapter {
         return mMuestras;
     }
 
-    /**
-     * Metodos para Paxgene en la base de datos
-     *
-     * @param paxgene
-     *            Objeto Paxgenes que contiene la informacion
-     *
-     */
-    /*Crear nuevo Paxgenes en la base de datos
-    public void crearPaxgenes(Paxgene paxgene) {
-        ContentValues cv = MuestraHelper.crearPaxgeneContentValues(paxgene);
-        mDb.insert(MuestrasDBConstants.PAXGENE_TABLE, null, cv);
-    }
-    //Editar Paxgenes existente en la base de datos
-    public boolean editarPaxgenes(Paxgene paxgene) {
-        ContentValues cv = MuestraHelper.crearPaxgeneContentValues(paxgene);
-        return mDb.update(MuestrasDBConstants.PAXGENE_TABLE, cv, MuestrasDBConstants.codigoMx + "='"
-                + paxgene.getMuestra().getCodigoMx() + "'", null) > 0;
-    }
-    //Limpiar la tabla de Paxgenes de la base de datos
-    public boolean borrarPaxgeness() {
-        return mDb.delete(MuestrasDBConstants.PAXGENE_TABLE, null, null) > 0;
-    }
-    //Obtener una Paxgene de la base de datos
-    public Paxgene getPaxgene(String filtro, String orden) throws SQLException {
-        Paxgene mPaxgene = null;
-        Cursor cursor = crearCursor(MuestrasDBConstants.PAXGENE_TABLE , filtro, null, orden);
-        if (cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            mPaxgene=MuestraHelper.crearPaxgene(cursor);
-            Muestra muestra = this.getMuestra(MuestrasDBConstants.codigoMx + "='" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.codigoMx)) + "'", null);
-            if (muestra != null) mPaxgene.setMuestra(muestra);
-        }
-        if (!cursor.isClosed()) cursor.close();
-        return mPaxgene;
-    }
-    //Obtener una lista de Paxgenes de la base de datos
-    public List<Paxgene> getPaxgenes(String filtro, String orden) throws SQLException {
-        List<Paxgene> mPaxgenes = new ArrayList<Paxgene>();
-        Cursor cursor = crearCursor(MuestrasDBConstants.PAXGENE_TABLE, filtro, null, orden);
-        if (cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            mPaxgenes.clear();
-            do{
-                Paxgene mPaxgene = null;
-                mPaxgene = MuestraHelper.crearPaxgene(cursor);
-                Muestra muestra = this.getMuestra(MuestrasDBConstants.codigoMx + "='" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.codigoMx)) + "'", null);
-                if (muestra != null) mPaxgene.setMuestra(muestra);
-                mPaxgenes.add(mPaxgene);
-            } while (cursor.moveToNext());
-        }
-        if (!cursor.isClosed()) cursor.close();
-        return mPaxgenes;
-    }*/
-    
 	/**
 	 * Metodos para Habitaciones en la base de datos
 	 * 
@@ -1966,4 +1913,50 @@ public class EstudiosAdapter {
 		if (!cursorTelefonosContacto.isClosed()) cursorTelefonosContacto.close();
 		return mTelefonosContacto;
 	}
+
+
+    //Crear nuevo recepcionMuestra en la base de datos
+    public void crearRecepcionMuestra(RecepcionMuestra recepcionMuestra) throws Exception {
+        ContentValues cv = RecepcionMuestraHelper.crearRecepcionMuestraContentValues(recepcionMuestra);
+        mDb.insertOrThrow(MuestrasDBConstants.RECEPCION_MUESTRA_TABLE, null, cv);
+    }
+
+    //Editar recepcionMuestra existente en la base de datos
+    public boolean editarRecepcionMuestra(RecepcionMuestra recepcionMuestra) throws Exception{
+        ContentValues cv = RecepcionMuestraHelper.crearRecepcionMuestraContentValues(recepcionMuestra);
+        return mDb.update(MuestrasDBConstants.RECEPCION_MUESTRA_TABLE , cv, MuestrasDBConstants.codigoMx + "="
+                + recepcionMuestra.getCodigoMx() + " and " + MuestrasDBConstants.fechaRecepcion + " = " + recepcionMuestra.getFechaRecepcion().getTime()
+                + " and "+MuestrasDBConstants.tubo + " = '"+ recepcionMuestra.getTubo() + "'", null) > 0;
+    }
+    //Limpiar la tabla de recepción de muestras de la base de datos
+    public boolean borrarRecepcionMuestras() {
+        return mDb.delete(MuestrasDBConstants.RECEPCION_MUESTRA_TABLE, null, null) > 0;
+    }
+    //Obtener un recepcionMuestra de la base de datos
+    public RecepcionMuestra getRecepcionMuestra(String filtro, String orden) throws SQLException {
+        RecepcionMuestra mRecepcion = null;
+        Cursor cursor = crearCursor(MuestrasDBConstants.RECEPCION_MUESTRA_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mRecepcion=RecepcionMuestraHelper.crearRecepcionMuestra(cursor);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mRecepcion;
+    }
+    //Obtener una lista de recepción de muestras de la base de datos
+    public List<RecepcionMuestra> getRecepcionMuestras(String filtro, String orden) throws SQLException {
+        List<RecepcionMuestra> mRecepciones = new ArrayList<RecepcionMuestra>();
+        Cursor cursor = crearCursor(MuestrasDBConstants.RECEPCION_MUESTRA_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mRecepciones.clear();
+            do{
+                RecepcionMuestra mRecepcion = null;
+                mRecepcion = RecepcionMuestraHelper.crearRecepcionMuestra(cursor);
+                mRecepciones.add(mRecepcion);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mRecepciones;
+    }
 }

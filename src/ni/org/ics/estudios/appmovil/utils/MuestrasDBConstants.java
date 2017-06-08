@@ -56,4 +56,33 @@ public class MuestrasDBConstants {
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigo + "));";
 
+    //Tabla Recepción de muestras
+    public static final String RECEPCION_MUESTRA_TABLE = "recepcion_muestras";
+
+    //Campos Recepción de muestra
+    public static final String fechaRecepcion = "fechaRecepcion";
+    public static final String paxgene = "paxgene";
+    public static final String lugar = "lugar";
+
+    //Crear tabla Recepción de muestra
+    public static final String CREATE_RECEPCION_MUESTRA_TABLE = "create table if not exists "
+            + RECEPCION_MUESTRA_TABLE + " ("
+            + codigoMx + " text not null, "
+            + fechaRecepcion + " date not null, "
+            + volumen + " real null, "
+            + lugar + " text, "
+            + observacion + " text, "
+            + paxgene + " text, "
+            + tubo + " text, "
+            + tipoMuestra + " text, "
+            + proposito + " text, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + codigoMx + "," + fechaRecepcion + "," + tubo +"));";
+
+
+
 }

@@ -121,6 +121,10 @@
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaParticipanteSAActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaRecepcionMuestraBHCActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaRecepcionMuestraRojoActivity"
+                  android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.UploadAllActivity"
             android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.UploadTamizajesActivity"

@@ -15,10 +15,12 @@ import android.widget.TextView;
 public class MenuCohorteFamiliaAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
+    private final int numCatalogs;
 	public MenuCohorteFamiliaAdapter(Context context, int textViewResourceId,
-			String[] values) {
+			String[] values, int numCatalogs) {
 		super(context, textViewResourceId, values);
 		this.values = values;
+        this.numCatalogs = numCatalogs;
 	}
 
 	@Override
@@ -53,15 +55,28 @@ public class MenuCohorteFamiliaAdapter extends ArrayAdapter<String> {
 			img=getContext().getResources().getDrawable(R.drawable.ic_menu_upload);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
-		case 4: 
+		case 4:
+            textView.setText(values[position] + "(" + numCatalogs + ")");
 			img=getContext().getResources().getDrawable(R.drawable.ic_menu_manage);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+            if (numCatalogs < 1){
+                textView.setTextColor(Color.RED);
+                textView.setTypeface(null, Typeface.BOLD);
+            }
 			break;
 		case 5: 
 			img=getContext().getResources().getDrawable(R.drawable.ic_menu_chat_dashboard);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
-		case 6: 
+            case 6:
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_goto);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+            case 7:
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_goto);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+		case 8:
 			img=getContext().getResources().getDrawable(R.drawable.ic_menu_revert);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;			

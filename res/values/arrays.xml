@@ -13,6 +13,8 @@
         <item>@string/upload</item>
         <item>@string/catalog</item>
         <item>@string/receive_house</item>
+        <item>@string/header_bhc</item>
+        <item>@string/header_red</item>
         <item>@string/exit</item>
     </string-array>
 

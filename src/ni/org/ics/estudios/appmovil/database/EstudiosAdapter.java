@@ -1928,9 +1928,8 @@ public class EstudiosAdapter {
     //Editar recepcionMuestra existente en la base de datos
     public boolean editarRecepcionMuestra(RecepcionMuestra recepcionMuestra) throws Exception{
         ContentValues cv = RecepcionMuestraHelper.crearRecepcionMuestraContentValues(recepcionMuestra);
-        return mDb.update(MuestrasDBConstants.RECEPCION_MUESTRA_TABLE , cv, MuestrasDBConstants.codigoMx + "="
-                + recepcionMuestra.getCodigoMx() + " and " + MuestrasDBConstants.fechaRecepcion + " = " + recepcionMuestra.getFechaRecepcion().getTime()
-                + " and "+MuestrasDBConstants.tubo + " = '"+ recepcionMuestra.getTubo() + "'", null) > 0;
+        return mDb.update(MuestrasDBConstants.RECEPCION_MUESTRA_TABLE , cv, MuestrasDBConstants.codigo + "='"
+                + recepcionMuestra.getCodigo() + "'", null) > 0;
     }
     //Limpiar la tabla de recepción de muestras de la base de datos
     public boolean borrarRecepcionMuestras() {

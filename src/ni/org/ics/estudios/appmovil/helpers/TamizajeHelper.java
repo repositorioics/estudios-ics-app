@@ -21,6 +21,7 @@ public class TamizajeHelper {
         if (tamizaje.getFechaNacimiento()!=null) cv.put(MainDBConstants.fechaNacimiento, tamizaje.getFechaNacimiento().getTime());
         cv.put(MainDBConstants.aceptaTamizajePersona, String.valueOf(tamizaje.getAceptaTamizajePersona()));
         cv.put(MainDBConstants.razonNoAceptaTamizajePersona, tamizaje.getRazonNoAceptaTamizajePersona());
+        cv.put(MainDBConstants.otraRazonNoAceptaTamizajePersona, tamizaje.getOtraRazonNoAceptaTamizajePersona());
         cv.put(MainDBConstants.criteriosInclusion, tamizaje.getCriteriosInclusion());
         cv.put(MainDBConstants.enfermedad, tamizaje.getEnfermedad());
         cv.put(MainDBConstants.dondeAsisteProblemasSalud, tamizaje.getDondeAsisteProblemasSalud());
@@ -30,6 +31,7 @@ public class TamizajeHelper {
         cv.put(MainDBConstants.esElegible, tamizaje.getEsElegible());
         cv.put(MainDBConstants.aceptaParticipar, tamizaje.getAceptaParticipar());
         cv.put(MainDBConstants.razonNoAceptaParticipar, tamizaje.getRazonNoAceptaParticipar());
+        cv.put(MainDBConstants.otraRazonNoAceptaParticipar, tamizaje.getOtraRazonNoAceptaParticipar());
         cv.put(MainDBConstants.asentimientoVerbal, tamizaje.getAsentimientoVerbal());
         if (tamizaje.getRecordDate() != null) cv.put(MainDBConstants.recordDate, tamizaje.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, tamizaje.getRecordUser());
@@ -48,6 +50,7 @@ public class TamizajeHelper {
         if (cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaNacimiento)) > 0) mTamizaje.setFechaNacimiento(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaNacimiento))));
         mTamizaje.setAceptaTamizajePersona(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaTamizajePersona)));
         mTamizaje.setRazonNoAceptaTamizajePersona(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonNoAceptaTamizajePersona)));
+        mTamizaje.setOtraRazonNoAceptaTamizajePersona(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraRazonNoAceptaTamizajePersona)));
         mTamizaje.setCriteriosInclusion(cursor.getString(cursor.getColumnIndex(MainDBConstants.criteriosInclusion)));
         mTamizaje.setDondeAsisteProblemasSalud(cursor.getString(cursor.getColumnIndex(MainDBConstants.dondeAsisteProblemasSalud)));
         mTamizaje.setOtroCentroSalud(cursor.getString(cursor.getColumnIndex(MainDBConstants.otroCentroSalud)));
@@ -56,6 +59,7 @@ public class TamizajeHelper {
         mTamizaje.setEsElegible(cursor.getString(cursor.getColumnIndex(MainDBConstants.esElegible)));
         mTamizaje.setAceptaParticipar(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParticipar)));
         mTamizaje.setRazonNoAceptaParticipar(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonNoAceptaParticipar)));
+        mTamizaje.setOtraRazonNoAceptaParticipar(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraRazonNoAceptaParticipar)));
         mTamizaje.setAsentimientoVerbal(cursor.getString(cursor.getColumnIndex(MainDBConstants.asentimientoVerbal)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mTamizaje.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mTamizaje.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

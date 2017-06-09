@@ -67,6 +67,7 @@ public class MuestrasDBConstants {
     //Crear tabla Recepción de muestra
     public static final String CREATE_RECEPCION_MUESTRA_TABLE = "create table if not exists "
             + RECEPCION_MUESTRA_TABLE + " ("
+            + codigo + " text not null, "
             + codigoMx + " text not null, "
             + fechaRecepcion + " date not null, "
             + volumen + " real null, "
@@ -81,7 +82,7 @@ public class MuestrasDBConstants {
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
-            + "primary key (" + codigoMx + "," + fechaRecepcion + "," + tubo +"));";
+            + "primary key (" + codigo +"));";
 
 
 

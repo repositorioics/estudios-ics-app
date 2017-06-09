@@ -13,7 +13,7 @@ public class RecepcionMuestra extends BaseMetaData {
 	/**
 	 * 
 	 */
-
+    private String codigo;
     private String codigoMx;
     private Date fechaRecepcion;
     private String paxgene;
@@ -24,6 +24,13 @@ public class RecepcionMuestra extends BaseMetaData {
     private String tipoMuestra;
     private String proposito;
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
     public String getCodigoMx() {
         return codigoMx;
@@ -102,6 +109,7 @@ public class RecepcionMuestra extends BaseMetaData {
         return "RecepcionMuestra{" + codigoMx + "," + fechaRecepcion +'}';
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -109,16 +117,13 @@ public class RecepcionMuestra extends BaseMetaData {
 
         RecepcionMuestra that = (RecepcionMuestra) o;
 
-        if (!codigoMx.equals(that.codigoMx)) return false;
-        if (!fechaRecepcion.equals(that.fechaRecepcion)) return false;
+        if (!codigo.equals(that.codigo)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = codigoMx.hashCode();
-        result = 31 * result + fechaRecepcion.hashCode();
-        return result;
+        return codigo.hashCode();
     }
 }

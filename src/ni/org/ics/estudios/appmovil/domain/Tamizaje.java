@@ -21,6 +21,7 @@ public class Tamizaje extends BaseMetaData {
     private Date fechaNacimiento;
     private String aceptaTamizajePersona;
     private String razonNoAceptaTamizajePersona;
+    private String otraRazonNoAceptaTamizajePersona;
     private String criteriosInclusion;
     private String enfermedad;
     private String dondeAsisteProblemasSalud;
@@ -30,6 +31,7 @@ public class Tamizaje extends BaseMetaData {
     private String esElegible;
     private String aceptaParticipar;
     private String razonNoAceptaParticipar;
+    private String otraRazonNoAceptaParticipar;
     private String asentimientoVerbal;
  
     public String getCodigo() {
@@ -152,7 +154,23 @@ public class Tamizaje extends BaseMetaData {
 		this.razonNoAceptaParticipar = razonNoAceptaParticipar;
 	}
 
-	@Override
+    public String getOtraRazonNoAceptaParticipar() {
+        return otraRazonNoAceptaParticipar;
+    }
+
+    public void setOtraRazonNoAceptaParticipar(String otraRazonNoAceptaParticipar) {
+        this.otraRazonNoAceptaParticipar = otraRazonNoAceptaParticipar;
+    }
+
+    public String getOtraRazonNoAceptaTamizajePersona() {
+        return otraRazonNoAceptaTamizajePersona;
+    }
+
+    public void setOtraRazonNoAceptaTamizajePersona(String otraRazonNoAceptaTamizajePersona) {
+        this.otraRazonNoAceptaTamizajePersona = otraRazonNoAceptaTamizajePersona;
+    }
+
+    @Override
     public String toString() {
         return "'" + codigo + "'";
     }

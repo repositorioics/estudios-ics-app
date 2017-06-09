@@ -17,6 +17,7 @@ public class RecepcionMuestraHelper {
 
     public static ContentValues crearRecepcionMuestraContentValues(RecepcionMuestra recepcionMuestra){
         ContentValues cv = new ContentValues();
+        cv.put(MuestrasDBConstants.codigo, recepcionMuestra.getCodigo());
         cv.put(MuestrasDBConstants.codigoMx, recepcionMuestra.getCodigoMx());
         if (recepcionMuestra.getFechaRecepcion()!=null) cv.put(MuestrasDBConstants.fechaRecepcion, recepcionMuestra.getFechaRecepcion().getTime());
         cv.put(MuestrasDBConstants.volumen, recepcionMuestra.getVolumen());
@@ -37,6 +38,7 @@ public class RecepcionMuestraHelper {
 
     public static RecepcionMuestra crearRecepcionMuestra(Cursor cursor){
         RecepcionMuestra mRecepcionMuestra = new RecepcionMuestra();
+        mRecepcionMuestra.setCodigo(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.codigo)));
         mRecepcionMuestra.setCodigoMx(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.codigoMx)));
         if(cursor.getLong(cursor.getColumnIndex(MuestrasDBConstants.fechaRecepcion))>0) mRecepcionMuestra.setFechaRecepcion(new Date(cursor.getLong(cursor.getColumnIndex(MuestrasDBConstants.fechaRecepcion))));
         if (cursor.getDouble(cursor.getColumnIndex(MuestrasDBConstants.volumen))>0) mRecepcionMuestra.setVolumen(cursor.getDouble(cursor.getColumnIndex(MuestrasDBConstants.volumen)));

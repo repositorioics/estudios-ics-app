@@ -333,6 +333,7 @@ public class MainDBConstants {
     public static final String fechaNacimiento = "fechaNacimiento";
     public static final String aceptaTamizajePersona = "aceptaTamizajePersona";
     public static final String razonNoAceptaTamizajePersona = "razonNoAceptaTamizajePersona";
+    public static final String otraRazonNoAceptaTamizajePersona = "otraRazonNoAceptaTamizajePersona";
     public static final String criteriosInclusion = "criteriosInclusion";
     public static final String enfermedad = "enfermedad";
     public static final String esElegible = "esElegible";
@@ -342,6 +343,7 @@ public class MainDBConstants {
     public static final String aceptaAtenderCentro = "aceptaAtenderCentro";
     public static final String aceptaParticipar = "aceptaParticipar";
     public static final String razonNoAceptaParticipar = "razonNoAceptaParticipar";
+    public static final String otraRazonNoAceptaParticipar = "otraRazonNoAceptaParticipar";
     public static final String asentimientoVerbal = "asentimientoVerbal"; //Para Niños de 6 a 17 años
     
     //crear tabla tamizaje
@@ -353,6 +355,7 @@ public class MainDBConstants {
             + fechaNacimiento + " date, "
             + aceptaTamizajePersona + " text, "
             + razonNoAceptaTamizajePersona + " text, "
+            + otraRazonNoAceptaTamizajePersona + " text, "
             + criteriosInclusion + " text, "
             + enfermedad + " text, "
             + dondeAsisteProblemasSalud + " text, "
@@ -362,6 +365,7 @@ public class MainDBConstants {
             + esElegible + " text, "
             + aceptaParticipar + " text, "
             + razonNoAceptaParticipar + " text, "
+            + otraRazonNoAceptaParticipar + " text, "
             + asentimientoVerbal + " text, "
             + recordDate + " date, "
             + recordUser + " text, "

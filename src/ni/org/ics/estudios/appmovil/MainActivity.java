@@ -121,6 +121,9 @@ public class MainActivity extends ListActivity {
 					// Finish app
 					dialog.dismiss();
 					finish();
+					int pid = android.os.Process.myPid();
+			        android.os.Process.killProcess(pid);
+			        System.exit(0);
 				}
 			});
 			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {

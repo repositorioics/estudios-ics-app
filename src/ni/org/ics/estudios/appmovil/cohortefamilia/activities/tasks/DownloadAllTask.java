@@ -44,12 +44,12 @@ public class DownloadAllTask extends DownloadTask {
 	private List<Barrio> mBarrios = null;
 	private List<Casa> mCasas = null;
 	private List<Participante> mParticipantes = null;
-    private List<PreTamizaje> mPreTamizajes = null;
+    //private List<PreTamizaje> mPreTamizajes = null;
     private List<CasaCohorteFamilia> mCasasCHF = null;
-    private List<Tamizaje> mTamizajes = null;
-    private List<VisitaTerreno> mVisitas = null;
+    //private List<Tamizaje> mTamizajes = null;
+    //private List<VisitaTerreno> mVisitas = null;
     private List<ParticipanteCohorteFamilia> mParticipantesCHF = null;
-    private List<CartaConsentimiento> mCartasConsent = null;
+    //private List<CartaConsentimiento> mCartasConsent = null;
     private List<EncuestaCasa> mEncuestasCasas = null;
     private List<Cocina> mCocinas = null;
     private List<Comedor> mComedores = null;
@@ -187,7 +187,7 @@ public class DownloadAllTask extends DownloadTask {
 							.valueOf(v).toString());
 				}
 			}
-            if (mVisitas != null){
+            /*if (mVisitas != null){
                 v = mVisitas.size();
                 ListIterator<VisitaTerreno> iter = mVisitas.listIterator();
                 while (iter.hasNext()){
@@ -195,8 +195,8 @@ public class DownloadAllTask extends DownloadTask {
                     publishProgress("Insertando visitas de terreno en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
-            }
-            if (mPreTamizajes != null){
+            }*/
+            /*if (mPreTamizajes != null){
                 v = mPreTamizajes.size();
                 ListIterator<PreTamizaje> iter = mPreTamizajes.listIterator();
                 while (iter.hasNext()){
@@ -204,7 +204,7 @@ public class DownloadAllTask extends DownloadTask {
                     publishProgress("Insertando pretamizajes en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
-            }
+            }*/
             if (mCasasCHF != null){
                 v = mCasasCHF.size();
                 ListIterator<CasaCohorteFamilia> iter = mCasasCHF.listIterator();
@@ -214,7 +214,7 @@ public class DownloadAllTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
             }
-            if (mTamizajes != null){
+            /*if (mTamizajes != null){
                 v = mTamizajes.size();
                 ListIterator<Tamizaje> iter = mTamizajes.listIterator();
                 while (iter.hasNext()){
@@ -222,7 +222,7 @@ public class DownloadAllTask extends DownloadTask {
                     publishProgress("Insertando tamizajes en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
-            }
+            }*/
             if (mParticipantesCHF != null){
                 v = mParticipantesCHF.size();
                 ListIterator<ParticipanteCohorteFamilia> iter = mParticipantesCHF.listIterator();
@@ -232,7 +232,7 @@ public class DownloadAllTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
             }
-            if (mCartasConsent != null){
+            /*if (mCartasConsent != null){
                 v = mCartasConsent.size();
                 ListIterator<CartaConsentimiento> iter = mCartasConsent.listIterator();
                 while (iter.hasNext()){
@@ -240,7 +240,7 @@ public class DownloadAllTask extends DownloadTask {
                     publishProgress("Insertando cartas de consentimiento en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
-            }
+            }*/
             if (mEncuestasCasas != null){
                 v = mEncuestasCasas.size();
                 ListIterator<EncuestaCasa> iter = mEncuestasCasas.listIterator();
@@ -474,23 +474,23 @@ public class DownloadAllTask extends DownloadTask {
             // convert the array to a list and return it
             mParticipantes = Arrays.asList(responseEntityParticipante.getBody());
 
-            //Descargar visitas terreno
+            /*/Descargar visitas terreno
             urlRequest = url + "/movil/visitas/";
             publishProgress("Solicitando visitas de terreno",VISITAS,TOTAL_TASK);
             // Perform the HTTP GET request
             ResponseEntity<VisitaTerreno[]> responseEntityVisitas = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     VisitaTerreno[].class);
             // convert the array to a list and return it
-            mVisitas = Arrays.asList(responseEntityVisitas.getBody());
+            mVisitas = Arrays.asList(responseEntityVisitas.getBody());*/
 
-            //Descargar pretamizajes
+            /*/Descargar pretamizajes
             urlRequest = url + "/movil/preTamizajes/";
             publishProgress("Solicitando pretamizajes",PRETAMIZAJE,TOTAL_TASK);
             // Perform the HTTP GET request
             ResponseEntity<PreTamizaje[]> responseEntityPretamizaje = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     PreTamizaje[].class);
             // convert the array to a list and return it
-            mPreTamizajes = Arrays.asList(responseEntityPretamizaje.getBody());
+            mPreTamizajes = Arrays.asList(responseEntityPretamizaje.getBody());*/
 
             //Descargar casascohorte familia
             urlRequest = url + "/movil/casasCHF/";
@@ -501,14 +501,14 @@ public class DownloadAllTask extends DownloadTask {
             // convert the array to a list and return it
             mCasasCHF = Arrays.asList(responseEntityCasasCHF.getBody());
 
-            //Descargar tamizajes
+            /*/Descargar tamizajes
             urlRequest = url + "/movil/tamizajes/";
             publishProgress("Solicitando tamizajes",TAMIZAJE,TOTAL_TASK);
             // Perform the HTTP GET request
             ResponseEntity<Tamizaje[]> responseEntityTamizajes = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Tamizaje[].class);
             // convert the array to a list and return it
-            mTamizajes = Arrays.asList(responseEntityTamizajes.getBody());
+            mTamizajes = Arrays.asList(responseEntityTamizajes.getBody());*/
 
             //Descargar participantes cohorte
             urlRequest = url + "/movil/participantesCHF/";
@@ -519,14 +519,14 @@ public class DownloadAllTask extends DownloadTask {
             // convert the array to a list and return it
             mParticipantesCHF = Arrays.asList(responseEntityParticipantesCHF.getBody());
 
-            //Descargar cartas de consetimiento
+            /*/Descargar cartas de consetimiento
             urlRequest = url + "/movil/cartasConsen/";
             publishProgress("Solicitando cartas de consentimiento",CARTAS_CONSENT,TOTAL_TASK);
             // Perform the HTTP GET request
             ResponseEntity<CartaConsentimiento[]> responseEntityCartas = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     CartaConsentimiento[].class);
             // convert the array to a list and return it
-            mCartasConsent = Arrays.asList(responseEntityCartas.getBody());
+            mCartasConsent = Arrays.asList(responseEntityCartas.getBody());*/
 
             //Descargar cartas de consetimiento
             urlRequest = url + "/movil/encuestasCasa/";

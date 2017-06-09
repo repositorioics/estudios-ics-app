@@ -28,7 +28,6 @@ import ni.org.ics.estudios.appmovil.bluetooth.activity.ChatActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaCasaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCasaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
 import ni.org.ics.estudios.appmovil.domain.TelefonoContacto;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
@@ -320,14 +319,6 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                             habilitarencuestaCasaSA = true;
                             break;
                         }
-                        /*
-                        List<CartaConsentimiento> cartaConsentimiento = estudiosAdapter.getCartasConsentimientos(MainDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
-                        for (CartaConsentimiento carta : cartaConsentimiento) {
-                            if (carta.getTamizaje().getEstudio().getCodigo() == Constants.COD_EST_SEROPREVALENCIA && carta.getAceptaParteA().equalsIgnoreCase("S")) {
-                                habilitarencuestaCasaSA = true;
-                                break;
-                            }
-                        }*/
                     }
                 }
 

@@ -399,6 +399,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	            changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusion()), visible);
                 notificarCambios = false;
 	            changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoParticipaPersona()), !visible);
 	            if(!visible) {
 	            	resetForm(100);
 	            	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noAceptaTamizajePersona),Toast.LENGTH_LONG);
@@ -407,6 +408,12 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	            notificarCambios = false;
 	            onPageTreeChanged();
 	        }
+            if(page.getTitle().equals(labels.getRazonNoParticipaPersona())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoParticipaPersona()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
 			if (page.getTitle().equals(labels.getDondeAsisteProblemasSalud())) {
 				if(page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Centro de Salud Sócrates Flores")){
 					changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
@@ -476,7 +483,9 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 				}
                 notificarCambios = false;
 	            changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParticipar()), !visible);
-	            if(!visible){
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParticipar()), !visible);
+
+                if(!visible){
 	            	resetForm(97);
 	            	Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noAceptaParticipar),Toast.LENGTH_LONG);
 	    			toast.show();
@@ -484,6 +493,12 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	            notificarCambios = false;
 	            onPageTreeChanged();
 	        }
+            if(page.getTitle().equals(labels.getRazonNoAceptaParticipar())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParticipar()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
 			if(page.getTitle().equals(labels.getAsentimientoVerbal())){
 				visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
 				changeStatus(mWizardModel.findByKey(labels.getParticipadoCohortePediatrica()), visible);
@@ -625,9 +640,45 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	            notificarCambios = false;
 	            onPageTreeChanged();
 	        }
+            if(page.getTitle().equals(labels.getAceptaSeroprevalencia())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaSeroprevalencia()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaSeroprevalencia()), false);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getRazonNoAceptaSeroprevalencia())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaSeroprevalencia()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
             if(page.getTitle().equals(labels.getAceptaCohorteDengue())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteD()), visible);
+                notificarCambios = false;
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaDengue()), false);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getRazonNoAceptaDengue())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaDengue()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getAceptaCohorteInfluenza())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaInfluenza()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenza()), false);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getRazonNoAceptaInfluenza())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenza()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -646,6 +697,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     	if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEsElegible()), false);
     	if (preg>97) changeStatus(mWizardModel.findByKey(labels.getAceptaParticipar()), false);
     	if (preg>97) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParticipar()), false);
+        if (preg>97) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParticipar()), false);
     	if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), false);
     	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getParticipadoCohortePediatrica()), false);
     	if (preg>95) changeStatus(mWizardModel.findByKey(labels.getCodigoCohorte()), false);
@@ -680,9 +732,15 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), false);
     	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), false);
         if (preg>94) changeStatus(mWizardModel.findByKey(labels.getAceptaSeroprevalencia()), false);
+        if (preg>94) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaSeroprevalencia()), false);
+        if (preg>94) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaSeroprevalencia()), false);
         if (preg>94) changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), false);
+        if (preg>94) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), false);
+        if (preg>94) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaDengue()), false);
         if (preg>94) changeStatus(mWizardModel.findByKey(labels.getAceptaParteD()), false);
         if (preg>94) changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), false);
+        if (preg>94) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaInfluenza()), false);
+        if (preg>94) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenza()), false);
     	if (preg>94) changeStatus(mWizardModel.findByKey(labels.getFinTamizajeLabel()), false);
     }
     
@@ -751,6 +809,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 		}
 		String aceptaTamizajePersona = datos.getString(this.getString(R.string.aceptaTamizajePersona));
 		String razonNoAceptaTamizajePersona = datos.getString(this.getString(R.string.razonNoParticipaPersona));
+        String otraRazonNoAceptaTamizajePersona = datos.getString(this.getString(R.string.otraRazonNoParticipaPersona));
 		String criteriosInclusion = datos.getString(this.getString(R.string.criteriosInclusion));
 		String enfermedad = datos.getString(this.getString(R.string.enfermedad));
 		String dondeAsisteProblemasSalud = datos.getString(this.getString(R.string.dondeAsisteProblemasSalud));
@@ -760,6 +819,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 		String esElegible = datos.getString(this.getString(R.string.esElegible));
 		String aceptaParticipar = datos.getString(this.getString(R.string.aceptaParticipar));
 		String razonNoAceptaParticipar = datos.getString(this.getString(R.string.razonNoAceptaParticipar));
+        String otraRazonNoAceptaParticipar = datos.getString(this.getString(R.string.otraRazonNoAceptaParticipar));
 		String asentimientoVerbal = datos.getString(this.getString(R.string.asentimientoVerbal));
 
 	    
@@ -825,7 +885,9 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 			MessageResource catAsentimientoVerbal = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + asentimientoVerbal + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
 			if (catAsentimientoVerbal!=null) t.setAsentimientoVerbal(catAsentimientoVerbal.getCatKey());
 		}
-	    
+
+        t.setOtraRazonNoAceptaTamizajePersona(otraRazonNoAceptaTamizajePersona);
+        t.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaParticipar);
     	t.setRecordDate(new Date());
     	t.setRecordUser(username);
     	t.setDeviceid(infoMovil.getDeviceId());
@@ -855,6 +917,12 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	    		String nombre2Madre = datos.getString(this.getString(R.string.nombre2Madre));
 	    		String apellido1Madre = datos.getString(this.getString(R.string.apellido1Madre));
 	    		String apellido2Madre = datos.getString(this.getString(R.string.apellido2Madre));
+                String razonNoAceptaSeroprevalencia = datos.getString(this.getString(R.string.razonNoAceptaSeroprevalencia));
+                String otraRazonNoAceptaSeroprevalencia = datos.getString(this.getString(R.string.otraRazonNoAceptaSeroprevalencia));
+                String razonNoAceptaInfluenza = datos.getString(this.getString(R.string.razonNoAceptaInfluenza));
+                String otraRazonNoAceptaInfluenza = datos.getString(this.getString(R.string.otraRazonNoAceptaInfluenza));
+                String razonNoAceptaDengue = datos.getString(this.getString(R.string.razonNoAceptaDengue));
+                String otraRazonNoAceptaDengue = datos.getString(this.getString(R.string.otraRazonNoAceptaDengue));
 	    		
 	    		Participante participante;
 	    		MessageResource catParticipadoCohortePediatrica = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participadoCohortePediatrica + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -1015,13 +1083,22 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 
                 //Si acepta participar estudio seroprevalencia guardar participanteSeroprevalencia y carta de consentimiento para estudio Seroprevalencia
                 if(tieneValor(aceptaSeroprevalencia)){
-                    if (aceptaSeroprevalencia.equalsIgnoreCase(Constants.YES)) {
-                        //Recupera el estudio de la base de datos para el tamizaje
-                        Estudio estudioSA = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" +Constants.COD_EST_SEROPREVALENCIA, null);
-                        t.setCodigo(infoMovil.getId());
-                        t.setEstudio(estudioSA);
-                        estudiosAdapter.crearTamizaje(t);
+                    //Si acepta o no participar, siempre registrar tamizaje
+                    MessageResource catAceptaTamizajePersona = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaSeroprevalencia + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    if (catAceptaTamizajePersona!=null) t.setAceptaParticipar(catAceptaTamizajePersona.getCatKey());
+                    //Recupera el estudio de la base de datos para el tamizaje
+                    Estudio estudioSA = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" +Constants.COD_EST_SEROPREVALENCIA, null);
+                    t.setCodigo(infoMovil.getId());
+                    t.setEstudio(estudioSA);
+                    if (tieneValor(razonNoAceptaSeroprevalencia)) {
+                        MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaSeroprevalencia + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NPP'", null);
+                        if (catRazonNoAceptaParticipar!=null) t.setRazonNoAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
+                    }
+                    t.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaSeroprevalencia);
 
+                    estudiosAdapter.crearTamizaje(t);
+
+                    if (aceptaSeroprevalencia.equalsIgnoreCase(Constants.YES)) {
                         cc.setCodigo(infoMovil.getId());
                         cc.setTamizaje(t);
                         cc.setVersion(Constants.VERSION_CC_SA);
@@ -1045,13 +1122,22 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 }
                 //Si acepta participar estudio cohorte dengue guardar tamizaje y carta de consentimiento para estudio cohorte dengue
                 if(tieneValor(aceptaCohorteDengue)){
-                    if (aceptaCohorteDengue.equalsIgnoreCase(Constants.YES)) {
-                        //Recupera el estudio de la base de datos para el tamizaje
-                        Estudio estudioCDengue = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" +Constants.COD_EST_COHORTEDENGUE, null);
-                        t.setCodigo(infoMovil.getId());
-                        t.setEstudio(estudioCDengue);
-                        estudiosAdapter.crearTamizaje(t);
+                    //Si acepta o no participar, siempre registrar tamizaje
+                    MessageResource catAceptaTamizajePersona = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaCohorteDengue + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    if (catAceptaTamizajePersona!=null) t.setAceptaParticipar(catAceptaTamizajePersona.getCatKey());
+                    //Recupera el estudio de la base de datos para el tamizaje
+                    Estudio estudioCDengue = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" +Constants.COD_EST_COHORTEDENGUE, null);
+                    t.setCodigo(infoMovil.getId());
+                    t.setEstudio(estudioCDengue);
+                    if (tieneValor(razonNoAceptaDengue)) {
+                        MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaDengue + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NPP'", null);
+                        if (catRazonNoAceptaParticipar!=null) t.setRazonNoAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
+                    }
+                    t.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaDengue);
 
+                    estudiosAdapter.crearTamizaje(t);
+
+                    if (aceptaCohorteDengue.equalsIgnoreCase(Constants.YES)) {
                         cc.setCodigo(infoMovil.getId());
                         cc.setTamizaje(t);
                         cc.setVersion(Constants.VERSION_CC_CD);
@@ -1067,13 +1153,23 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 }
                 //Si acepta participar estudio influenza dengue guardar tamizaje y carta de consentimiento para estudio cohorte influenza
                 if(tieneValor(aceptaCohorteInfluenza)){
-                    if (aceptaCohorteInfluenza.equalsIgnoreCase(Constants.YES)) {
-                        //Recupera el estudio de la base de datos para el tamizaje
-                        Estudio estudioCInfluenza = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" +Constants.COD_EST_COHORTEINFLUENZA, null);
-                        t.setCodigo(infoMovil.getId());
-                        t.setEstudio(estudioCInfluenza);
-                        estudiosAdapter.crearTamizaje(t);
+                    //Si acepta o no participar, siempre registrar tamizaje
+                    MessageResource catAceptaTamizajePersona = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaCohorteInfluenza + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    if (catAceptaTamizajePersona!=null) t.setAceptaParticipar(catAceptaTamizajePersona.getCatKey());
 
+                    //Recupera el estudio de la base de datos para el tamizaje
+                    Estudio estudioCInfluenza = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" +Constants.COD_EST_COHORTEINFLUENZA, null);
+                    t.setCodigo(infoMovil.getId());
+                    t.setEstudio(estudioCInfluenza);
+                    if (tieneValor(razonNoAceptaInfluenza)) {
+                        MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaInfluenza + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NPP'", null);
+                        if (catRazonNoAceptaParticipar!=null) t.setRazonNoAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
+                    }
+                    t.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaInfluenza);
+
+                    estudiosAdapter.crearTamizaje(t);
+
+                    if (aceptaCohorteInfluenza.equalsIgnoreCase(Constants.YES)) {
                         cc.setCodigo(infoMovil.getId());
                         cc.setTamizaje(t);
                         cc.setVersion(Constants.VERSION_CC_CI);

@@ -9,6 +9,8 @@
     <string name="aceptaTamizajePersonaHint">Pregunte si está de acuerdo en realizar el tamizaje.</string>
     <string name="razonNoParticipaPersona">Porque no acepta tamizaje?</string>
     <string name="razonNoParticipaPersonaHint">Pregunte porque no está de acuerdo en realizar el tamizaje.</string>
+    <string name="otraRazonNoParticipaPersona">Otra razón desacuerdo tamizaje</string>
+    <string name="otraRazonNoParticipaPersonaHint">Indicar porque otra razón no esta de acuerdo en realizar tamisaje</string>
     <string name="criteriosInclusion">Criterios de Inclusión</string>
     <string name="criteriosInclusionHint">Verifique cada uno de los Criterios de Inclusión</string>
     <string name="enfermedad">Enfermo</string>
@@ -26,6 +28,8 @@
     <string name="aceptaParticipar">Acepta participar en el estudio?</string>
     <string name="aceptaParticiparHint"></string>
     <string name="razonNoAceptaParticipar">Porque no acepta participar en el estudio?</string>
+    <string name="otraRazonNoAceptaParticipar">Otra razón</string>
+    <string name="otraRazonNoAceptaParticiparHint">Indicar porque otra razón no acepta participar en el estudio</string>
     <string name="razonNoAceptaParticiparHint"></string>
     <string name="asentimientoVerbal">Dió el niño Asentimiento verbal</string>
     <string name="asentimientoVerbalHint">(Para Niños de 6 a 17 años)</string>
@@ -98,15 +102,30 @@
     <string name="aceptaParteBHint">¿Acepta Parte B Almacenamiento y uso de Muestras en Estudios Futuros?</string>
     <string name="aceptaParteC">Acepta Parte C</string>
     <string name="aceptaParteCHint">¿Acepta Parte C Estudios Geneticos?</string>
+
     <string name="aceptaSeroprevalencia">Acepta estudio Seroprevalencia</string>
-    <string name="aceptaSeroprevalenciaHint">¿Acepta participar en estudio seroprevalencia arbovirus?</string>
+    <string name="aceptaSeroprevalenciaHint">¿Acepta participar en estudio Seroprevalencia Arbovirus?</string>
+    <string name="razonNoAceptaSeroprevalencia">Porque no acepta participar en el estudio Seroprevalencia Arbovirus?</string>
+    <string name="otraRazonNoAceptaSeroprevalencia">Otra razón Seroprevalencia Arbovirus</string>
+    <string name="otraRazonNoAceptaSeroprevalenciaHint">Indicar porque otra razón no acepta participar en el estudio Seroprevalencia Arbovirus</string>
+    <string name="razonNoAceptaSeroprevalenciaHint"></string>
+
     <string name="aceptaCohorteDengue">Acepta estudio Cohorte Dengue</string>
     <string name="aceptaCohorteDengueHint">¿Acepta participar en estudio Cohorte pediátrica de Dengue?</string>
     <string name="aceptaParteD">Acepta Parte D</string>
     <string name="aceptaParteDHint">¿Acepta Parte D-Zika estudio Cohorte pediátrica de Dengue?</string>
+    <string name="razonNoAceptaDengue">Porque no acepta participar en el estudio Cohorte pediátrica de Dengue?</string>
+    <string name="otraRazonNoAceptaDengue">Otra razón Cohorte pediátrica de Dengue</string>
+    <string name="otraRazonNoAceptaDengueHint">Indicar porque otra razón no acepta participar en el estudio Cohorte pediátrica de Dengue</string>
+    <string name="razonNoAceptaDengueHint"></string>
+
     <string name="aceptaCohorteInfluenza">Acepta estudio Cohorte Influeza</string>
     <string name="aceptaCohorteInfluenzaHint">¿Acepta participar en estudio Cohorte pediátrica de Influenza?</string>
-    
+    <string name="razonNoAceptaInfluenza">Porque no acepta participar en el estudio Cohorte pediátrica de Influenza?</string>
+    <string name="otraRazonNoAceptaInfluenza">Otra razón estudio Cohorte pediátrica de Influenza</string>
+    <string name="otraRazonNoAceptaInfluenzaHint">Indicar porque otra razón no acepta participar en el estudio Cohorte pediátrica de Influenza</string>
+    <string name="razonNoAceptaInfluenzaHint"></string>
+
 	<string name="noAceptaTamizajePersona">No acepta tamizaje!</string>
 	<string name="noCumpleCriteriosInclusion">No cumple los criterios de inclusión!</string>
 	<string name="noEsElegible">No es elegible para el estudio!</string>

@@ -66,6 +66,7 @@ public class TamizajeForm extends AbstractWizardModel {
 		Page fechaNacimiento = new NewDatePage(this,labels.getFechaNacimiento(), labels.getFechaNacimientoHint(), Constants.WIZARD, true).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
 		Page aceptaTamizajePersona = new SingleFixedChoicePage(this,labels.getAceptaTamizajePersona(), labels.getAceptaTamizajePersonaHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 		Page razonNoParticipaPersona = new SingleFixedChoicePage(this,labels.getRazonNoParticipaPersona(), labels.getRazonNoParticipaPersonaHint(), Constants.WIZARD, false).setChoices(catRazonNoParticipaPersona).setRequired(true);
+        Page otraRazonNoParticipaPersona = new TextPage(this,labels.getOtraRazonNoParticipaPersona(),labels.getOtraRazonNoParticipaPersonaHint(),Constants.WIZARD,false).setRequired(true);
 		Page criteriosInclusion = new MultipleFixedChoicePage(this,labels.getCriteriosInclusion(), labels.getCriteriosInclusionHint(), Constants.WIZARD, false).setChoices(catCriteriosInclusion).setRequired(false);
 		Page enfermedad = new SingleFixedChoicePage(this,labels.getEnfermedad(), labels.getEnfermedadHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 		Page dondeAsisteProblemasSalud = new SingleFixedChoicePage(this,labels.getDondeAsisteProblemasSalud(), labels.getDondeAsisteProblemasSaludHint(), Constants.WIZARD, false).setChoices(catDondeAsisteProblemasSalud).setRequired(true);
@@ -75,7 +76,8 @@ public class TamizajeForm extends AbstractWizardModel {
 		Page esElegible = new SingleFixedChoicePage(this,labels.getEsElegible(), labels.getEsElegibleHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 		Page aceptaParticipar = new SingleFixedChoicePage(this,labels.getAceptaParticipar(), labels.getAceptaParticiparHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 		Page razonNoAceptaParticipar = new SingleFixedChoicePage(this,labels.getRazonNoAceptaParticipar(), labels.getRazonNoAceptaParticiparHint(), Constants.WIZARD, false).setChoices(catRazonNoParticipaPersona).setRequired(true);
-		Page asentimientoVerbal = new SingleFixedChoicePage(this,labels.getAsentimientoVerbal(), labels.getAsentimientoVerbalHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page otraRazonNoAceptaParticipar = new TextPage(this,labels.getOtraRazonNoAceptaParticipar(),labels.getOtraRazonNoAceptaParticiparHint(),Constants.WIZARD,false).setRequired(true);
+        Page asentimientoVerbal = new SingleFixedChoicePage(this,labels.getAsentimientoVerbal(), labels.getAsentimientoVerbalHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 		Page participadoCohortePediatrica = new SingleFixedChoicePage(this,labels.getParticipadoCohortePediatrica(), labels.getParticipadoCohortePediatricaHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 		Page codigoCohorte = new SelectParticipantPage(this,labels.getCodigoCohorte(),labels.getNombre1Hint(),Constants.WIZARD,false).setRequired(true);
 		Page codigoNuevoParticipante = new BarcodePage(this,labels.getCodigoNuevoParticipante(),"",Constants.WIZARD,false).setRequired(true);
@@ -110,18 +112,29 @@ public class TamizajeForm extends AbstractWizardModel {
 		Page aceptaContactoFuturo = new SingleFixedChoicePage(this,labels.getAceptaContactoFuturo(), labels.getAceptaContactoFuturoHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 		Page aceptaParteB = new SingleFixedChoicePage(this,labels.getAceptaParteB(), labels.getAceptaParteBHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 		Page aceptaParteC = new SingleFixedChoicePage(this,labels.getAceptaParteC(), labels.getAceptaParteCHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+
         Page aceptaSeroprevalencia = new SingleFixedChoicePage(this,labels.getAceptaSeroprevalencia(), labels.getAceptaSeroprevalenciaHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page razonNoAceptaSeroprevalencia = new SingleFixedChoicePage(this,labels.getRazonNoAceptaSeroprevalencia(), labels.getRazonNoAceptaSeroprevalenciaHint(), Constants.WIZARD, false).setChoices(catRazonNoParticipaPersona).setRequired(true);
+        Page otraRazonNoAceptaSeroprevalencia = new TextPage(this,labels.getOtraRazonNoAceptaSeroprevalencia(),labels.getOtraRazonNoAceptaSeroprevalenciaHint(),Constants.WIZARD,false).setRequired(true);
+
         Page aceptaCohorteDengue = new SingleFixedChoicePage(this,labels.getAceptaCohorteDengue(), labels.getAceptaCohorteDengueHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page aceptaParteD = new SingleFixedChoicePage(this,labels.getAceptaParteD(), labels.getAceptaParteD(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page razonNoAceptaDengue = new SingleFixedChoicePage(this,labels.getRazonNoAceptaDengue(), labels.getRazonNoAceptaDengueHint(), Constants.WIZARD, false).setChoices(catRazonNoParticipaPersona).setRequired(true);
+        Page otraRazonNoAceptaDengue = new TextPage(this,labels.getOtraRazonNoAceptaDengue(),labels.getOtraRazonNoAceptaDengueHint(),Constants.WIZARD,false).setRequired(true);
+
         Page aceptaCohorteInfluenza = new SingleFixedChoicePage(this,labels.getAceptaCohorteInfluenza(), labels.getAceptaCohorteInfluenzaHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-		Page finTamizajeLabel = new LabelPage(this,labels.getFinTamizajeLabel(),"", Constants.WIZARD, false).setRequired(false);
+        Page razonNoAceptaInfluenza = new SingleFixedChoicePage(this,labels.getRazonNoAceptaInfluenza(), labels.getRazonNoAceptaInfluenzaHint(), Constants.WIZARD, false).setChoices(catRazonNoParticipaPersona).setRequired(true);
+        Page otraRazonNoAceptaInfluenza = new TextPage(this,labels.getOtraRazonNoAceptaInfluenza(),labels.getOtraRazonNoAceptaInfluenzaHint(),Constants.WIZARD,false).setRequired(true);
+
+        Page finTamizajeLabel = new LabelPage(this,labels.getFinTamizajeLabel(),"", Constants.WIZARD, false).setRequired(false);
 		
 		
-		return new PageList(sexo,fechaNacimiento,aceptaTamizajePersona,razonNoParticipaPersona,
-				criteriosInclusion,enfermedad,dondeAsisteProblemasSalud,otroCentroSalud,puestoSalud,aceptaAtenderCentro,esElegible,aceptaParticipar,razonNoAceptaParticipar,asentimientoVerbal,
+		return new PageList(sexo,fechaNacimiento,aceptaTamizajePersona,razonNoParticipaPersona,otraRazonNoParticipaPersona,
+				criteriosInclusion,enfermedad,dondeAsisteProblemasSalud,otroCentroSalud,puestoSalud,aceptaAtenderCentro,esElegible,aceptaParticipar,razonNoAceptaParticipar,otraRazonNoAceptaParticipar,asentimientoVerbal,
 				participadoCohortePediatrica,codigoCohorte,codigoNuevoParticipante,nombre1,nombre2,apellido1,apellido2,nombre1Padre,nombre2Padre,apellido1Padre,apellido2Padre,nombre1Madre,nombre2Madre,apellido1Madre,apellido2Madre,
 				emancipado,nombre1Tutor,nombre2Tutor,apellido1Tutor,apellido2Tutor,relacionFamiliarTutor,participanteOTutorAlfabeto,testigoPresente,nombre1Testigo,nombre2Testigo,apellido1Testigo,apellido2Testigo,
-				aceptaParteA,motivoRechazoParteA,aceptaContactoFuturo,aceptaParteB,aceptaParteC,aceptaSeroprevalencia,aceptaCohorteDengue,aceptaParteD,aceptaCohorteInfluenza,finTamizajeLabel);
+				aceptaParteA,motivoRechazoParteA,aceptaContactoFuturo,aceptaParteB,aceptaParteC,aceptaSeroprevalencia, razonNoAceptaSeroprevalencia, otraRazonNoAceptaSeroprevalencia,aceptaCohorteDengue,
+                aceptaParteD, razonNoAceptaDengue, otraRazonNoAceptaDengue,aceptaCohorteInfluenza, razonNoAceptaInfluenza, otraRazonNoAceptaInfluenza, finTamizajeLabel);
     }
 
 	public TamizajeFormLabels getLabels() {

@@ -24,7 +24,6 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.*;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuParticipanteAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaDatosPartoBB;
@@ -36,10 +35,7 @@ import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeropreva
 import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaParticipanteSAActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.SeroprevalenciaDBConstants;
-
-import java.util.List;
 
 
 public class MenuParticipanteActivity extends AbstractAsyncActivity {
@@ -335,10 +331,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     existeencuestaLact = true;
                 }
 
-                //List<CartaConsentimiento> cartaConsentimiento = estudiosAdapter.getCartasConsentimientos(MainDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
-
-                //for(CartaConsentimiento carta : cartaConsentimiento) {
-                    //if (carta.getTamizaje().getEstudio().getCodigo()==Constants.COD_EST_SEROPREVALENCIA && carta.getAceptaParteA().equalsIgnoreCase("S")) {
                 participanteSA = estudiosAdapter.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
                 if (participanteSA!=null) {
                     habilitarEncuestaParticipSA = true;
@@ -347,8 +339,6 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         existeencuestaParticipSA = true;
                     }
                 }
-                    //}
-                //}
 
                 estudiosAdapter.close();
             } catch (Exception e) {

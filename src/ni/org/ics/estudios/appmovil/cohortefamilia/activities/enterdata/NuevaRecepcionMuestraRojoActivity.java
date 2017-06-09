@@ -20,8 +20,8 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.*;
@@ -39,7 +39,6 @@ import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
-import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -161,11 +160,11 @@ public class NuevaRecepcionMuestraRojoActivity extends AbstractAsyncActivity {
 					}
 
 					if (!(volumen>=0.1 && volumen<=12)){
-						labelVolumen.setText("Volumen Inválido");
+                        labelVolumen.setText(getString(R.string.error_volumen));
 						labelVolumen.setTextColor(Color.RED);
 					}
 					else{
-						labelVolumen.setText("Volumen");
+                        labelVolumen.setText(getString(R.string.volumenR));
 						labelVolumen.setTextColor(Color.BLACK);
 					}
 				}
@@ -175,7 +174,7 @@ public class NuevaRecepcionMuestraRojoActivity extends AbstractAsyncActivity {
 		lugar = (Spinner) findViewById(R.id.lugar);
         estudiosAdapter.open();
 		List<String> list = new ArrayList<String>();
-		list.add("Seleccionar..");
+		list.add(getString(R.string.select)+"..");
         list.addAll(fillCatalog("CAT_LUGAR_RECEP"));
         estudiosAdapter.close();
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
@@ -192,42 +191,13 @@ public class NuevaRecepcionMuestraRojoActivity extends AbstractAsyncActivity {
 					volumen = Double.valueOf(editVolumen.getText().toString());
 				}
 				catch(Exception e){
-					showToast("No ingresó volumen válido!!!",1);
+                    showToast(getString(R.string.error_volumen),1);
 					return;
 				}
 				observacion = editObs.getText().toString();
 				lugarText = lugar.getSelectedItem().toString();
 				if(validarEntrada()){
-                    try {
-                        estudiosAdapter.open();
-
-                        RecepcionMuestra recepcionMuestra = new RecepcionMuestra();
-                        recepcionMuestra.setFechaRecepcion(todayWithZeroTime);
-                        recepcionMuestra.setCodigoMx(String.valueOf(codigo));
-                        recepcionMuestra.setVolumen(volumen);
-                        recepcionMuestra.setObservacion(observacion);
-                        if (tieneValor(lugarText)) {
-                            MessageResource msLugar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + lugarText + "' and "
-                                    + CatalogosDBConstants.catRoot + "='CAT_LUGAR_RECEP'", null);
-                            if (msLugar != null) recepcionMuestra.setLugar(msLugar.getCatKey());
-                        }
-                        recepcionMuestra.setRecordUser(username);
-                        recepcionMuestra.setEstado(Constants.STATUS_NOT_SUBMITTED.charAt(0));
-                        recepcionMuestra.setRecordDate(new Date());
-                        recepcionMuestra.setPasive('0');
-                        recepcionMuestra.setDeviceid(infoMovil.getDeviceId());
-                        recepcionMuestra.setTipoMuestra(Constants.CODIGO_TIPO_SANGRE); //Sangre
-                        recepcionMuestra.setTubo(Constants.CODIGO_TUBO_ROJO); //Rojo
-                        recepcionMuestra.setProposito(Constants.CODIGO_PROPOSITO_MA);//Muestreo anual
-
-                        estudiosAdapter.crearRecepcionMuestra(recepcionMuestra);
-                        showToast("Registro Guardado", 0);
-                        reiniciar();
-                    }catch (Exception ex){
-                        showToast(ex.getMessage(),1);
-                    }finally {
-                        estudiosAdapter.close();
-                    }
+                    new FetchDataTask().execute();
 				}
 			}
 
@@ -297,25 +267,20 @@ public class NuevaRecepcionMuestraRojoActivity extends AbstractAsyncActivity {
                     codigo = Integer.parseInt(sb);
                 }
                 catch(Exception e){
-                    showToast("Lectura Inválida!!!!",1);
+                    codigo = null;
+                    editCodigo.setText(null);
+                    showToast(getString(R.string.error_codigoMx),1);
                     return;
                 }
             }
             if (codigo>0 && codigo <=10500){
-                estudiosAdapter.open();
-                RecepcionMuestra recepcionMuestra = estudiosAdapter.getRecepcionMuestra(MuestrasDBConstants.codigoMx + "="
-                        + codigo + " and " + MuestrasDBConstants.fechaRecepcion + " = " + todayWithZeroTime.getTime()
-                        + " and " + MuestrasDBConstants.tubo + " ='" + Constants.CODIGO_TUBO_ROJO + "'", null);
-                if (recepcionMuestra != null) {
-                    showToast("Ya ingresó este código!!!!",1);
-                }else{
-                    editCodigo.setText(codigo.toString());
-                }
-                estudiosAdapter.close();
+                editCodigo.setText(codigo.toString());
             }
             else
             {
-                showToast("Lectura Inválida!!!!",1);
+                codigo = null;
+                editCodigo.setText(null);
+                showToast(getString(R.string.error_codigoMx),1);
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);
@@ -437,4 +402,59 @@ public class NuevaRecepcionMuestraRojoActivity extends AbstractAsyncActivity {
 		mAlertDialog.show();
 	}
 
+    private class FetchDataTask extends AsyncTask<String, Void, String> {
+        protected String message;
+        protected int codeMessage;
+        @Override
+        protected void onPreExecute() {
+            // before the request begins, show a progress indicator
+            showLoadingProgressDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... values) {
+            try {
+
+                estudiosAdapter.open();
+
+                RecepcionMuestra recepcionMuestra = new RecepcionMuestra();
+                recepcionMuestra.setCodigo(infoMovil.getId());
+                recepcionMuestra.setFechaRecepcion(todayWithZeroTime);
+                recepcionMuestra.setCodigoMx(String.valueOf(codigo));
+                recepcionMuestra.setVolumen(volumen);
+                recepcionMuestra.setObservacion(observacion);
+                if (tieneValor(lugarText)) {
+                    MessageResource msLugar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + lugarText + "' and "
+                            + CatalogosDBConstants.catRoot + "='CAT_LUGAR_RECEP'", null);
+                    if (msLugar != null) recepcionMuestra.setLugar(msLugar.getCatKey());
+                }
+                recepcionMuestra.setRecordUser(username);
+                recepcionMuestra.setEstado(Constants.STATUS_NOT_SUBMITTED.charAt(0));
+                recepcionMuestra.setRecordDate(new Date());
+                recepcionMuestra.setPasive('0');
+                recepcionMuestra.setDeviceid(infoMovil.getDeviceId());
+                recepcionMuestra.setTipoMuestra(Constants.CODIGO_TIPO_SANGRE); //Sangre
+                recepcionMuestra.setTubo(Constants.CODIGO_TUBO_ROJO); //Rojo
+                recepcionMuestra.setProposito(Constants.CODIGO_PROPOSITO_MA);//Muestreo anual
+
+                estudiosAdapter.crearRecepcionMuestra(recepcionMuestra);
+                message = getString(R.string.success);
+                codeMessage = 0;
+            }catch (Exception ex){
+                message = ex.getMessage();
+                codeMessage = 1;
+                return "error";
+            }finally {
+                estudiosAdapter.close();
+            }
+            return "exito";
+        }
+
+        protected void onPostExecute(String resultado) {
+            dismissProgressDialog();
+            if (codeMessage == 0) reiniciar();
+            showToast(message, codeMessage);
+        }
+
+    }
 }

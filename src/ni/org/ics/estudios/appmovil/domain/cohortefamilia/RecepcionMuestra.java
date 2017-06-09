@@ -106,7 +106,7 @@ public class RecepcionMuestra extends BaseMetaData {
 
     @Override
     public String toString() {
-        return "RecepcionMuestra{" + codigoMx + "," + fechaRecepcion +'}';
+        return "RecepcionMuestra{'" + codigo +'}';
     }
 
 

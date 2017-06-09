@@ -20,6 +20,8 @@ public class TamizajeFormLabels {
 	protected String aceptaTamizajePersonaHint;
 	protected String razonNoParticipaPersona;
 	protected String razonNoParticipaPersonaHint;
+    protected String otraRazonNoParticipaPersona;
+    protected String otraRazonNoParticipaPersonaHint;
 	protected String criteriosInclusion;
 	protected String criteriosInclusionHint;
 	protected String enfermedad;
@@ -38,6 +40,8 @@ public class TamizajeFormLabels {
 	protected String aceptaParticiparHint;
 	protected String razonNoAceptaParticipar;
 	protected String razonNoAceptaParticiparHint;
+    protected String otraRazonNoAceptaParticipar;
+    protected String otraRazonNoAceptaParticiparHint;
 	protected String asentimientoVerbal;
 	protected String asentimientoVerbalHint;
 	
@@ -104,15 +108,30 @@ public class TamizajeFormLabels {
 	protected String aceptaParteBHint;
 	protected String aceptaParteC;
 	protected String aceptaParteCHint;
+
     protected String aceptaSeroprevalencia;
     protected String aceptaSeroprevalenciaHint;
+    protected String razonNoAceptaSeroprevalencia;
+    protected String otraRazonNoAceptaSeroprevalencia;
+    protected String razonNoAceptaSeroprevalenciaHint;
+    protected String otraRazonNoAceptaSeroprevalenciaHint;
+
     protected String aceptaCohorteDengue;
     protected String aceptaCohorteDengueHint;
     protected String aceptaParteD;
     protected String aceptaParteDHint;
+    protected String razonNoAceptaDengue;
+    protected String otraRazonNoAceptaDengue;
+    protected String razonNoAceptaDengueHint;
+    protected String otraRazonNoAceptaDengueHint;
+
     protected String aceptaCohorteInfluenza;
     protected String aceptaCohorteInfluenzaHint;
-	
+    protected String razonNoAceptaInfluenza;
+    protected String otraRazonNoAceptaInfluenza;
+    protected String razonNoAceptaInfluenzaHint;
+    protected String otraRazonNoAceptaInfluenzaHint;
+
 	protected String finTamizajeLabel;
 
 	
@@ -128,6 +147,8 @@ public class TamizajeFormLabels {
 		aceptaTamizajePersonaHint = res.getString(R.string.aceptaTamizajePersonaHint);
 		razonNoParticipaPersona = res.getString(R.string.razonNoParticipaPersona);
 		razonNoParticipaPersonaHint = res.getString(R.string.razonNoParticipaPersonaHint);
+        otraRazonNoParticipaPersona = res.getString(R.string.otraRazonNoParticipaPersona);
+        otraRazonNoParticipaPersonaHint = res.getString(R.string.otraRazonNoParticipaPersonaHint);
 		criteriosInclusion = res.getString(R.string.criteriosInclusion);
 		criteriosInclusionHint = res.getString(R.string.criteriosInclusionHint);
 		enfermedad = res.getString(R.string.enfermedad);
@@ -147,6 +168,8 @@ public class TamizajeFormLabels {
 		aceptaParticiparHint = res.getString(R.string.aceptaParticiparHint);
 		razonNoAceptaParticipar = res.getString(R.string.razonNoAceptaParticipar);
 		razonNoAceptaParticiparHint = res.getString(R.string.razonNoAceptaParticiparHint);
+        otraRazonNoAceptaParticipar = res.getString(R.string.otraRazonNoAceptaParticipar);
+        otraRazonNoAceptaParticiparHint = res.getString(R.string.otraRazonNoAceptaParticiparHint);
 		asentimientoVerbal = res.getString(R.string.asentimientoVerbal);
 		asentimientoVerbalHint = res.getString(R.string.asentimientoVerbalHint);
 		
@@ -213,15 +236,30 @@ public class TamizajeFormLabels {
 		aceptaParteBHint = res.getString(R.string.aceptaParteBHint);
 		aceptaParteC = res.getString(R.string.aceptaParteC);
 		aceptaParteCHint = res.getString(R.string.aceptaParteCHint);
+
         aceptaSeroprevalencia = res.getString(R.string.aceptaSeroprevalencia);
         aceptaSeroprevalenciaHint = res.getString(R.string.aceptaSeroprevalenciaHint);
+        razonNoAceptaSeroprevalencia = res.getString(R.string.razonNoAceptaSeroprevalencia);
+        razonNoAceptaSeroprevalenciaHint = res.getString(R.string.razonNoAceptaSeroprevalenciaHint);
+        otraRazonNoAceptaSeroprevalencia = res.getString(R.string.otraRazonNoAceptaSeroprevalencia);
+        otraRazonNoAceptaSeroprevalenciaHint = res.getString(R.string.otraRazonNoAceptaSeroprevalenciaHint);
+
         aceptaCohorteDengue = res.getString(R.string.aceptaCohorteDengue);
         aceptaCohorteDengueHint = res.getString(R.string.aceptaCohorteDengueHint);
         aceptaParteD = res.getString(R.string.aceptaParteD);
         aceptaParteDHint = res.getString(R.string.aceptaParteDHint);
+        razonNoAceptaDengue = res.getString(R.string.razonNoAceptaDengue);
+        razonNoAceptaDengueHint = res.getString(R.string.razonNoAceptaDengueHint);
+        otraRazonNoAceptaDengue = res.getString(R.string.otraRazonNoAceptaDengue);
+        otraRazonNoAceptaDengueHint = res.getString(R.string.otraRazonNoAceptaDengueHint);
+
         aceptaCohorteInfluenza = res.getString(R.string.aceptaCohorteInfluenza);
         aceptaCohorteInfluenzaHint = res.getString(R.string.aceptaCohorteInfluenzaHint);
-		
+        razonNoAceptaInfluenza = res.getString(R.string.razonNoAceptaInfluenza);
+        razonNoAceptaInfluenzaHint = res.getString(R.string.razonNoAceptaInfluenzaHint);
+        otraRazonNoAceptaInfluenza = res.getString(R.string.otraRazonNoAceptaInfluenza);
+        otraRazonNoAceptaInfluenzaHint = res.getString(R.string.otraRazonNoAceptaInfluenzaHint);
+
 		finTamizajeLabel = res.getString(R.string.finTamizajeLabel);
 		
 	}
@@ -1748,5 +1786,133 @@ public class TamizajeFormLabels {
 
     public void setAceptaParteDHint(String aceptaParteDHint) {
         this.aceptaParteDHint = aceptaParteDHint;
+    }
+
+    public String getOtraRazonNoParticipaPersona() {
+        return otraRazonNoParticipaPersona;
+    }
+
+    public void setOtraRazonNoParticipaPersona(String otraRazonNoParticipaPersona) {
+        this.otraRazonNoParticipaPersona = otraRazonNoParticipaPersona;
+    }
+
+    public String getOtraRazonNoParticipaPersonaHint() {
+        return otraRazonNoParticipaPersonaHint;
+    }
+
+    public void setOtraRazonNoParticipaPersonaHint(String otraRazonNoParticipaPersonaHint) {
+        this.otraRazonNoParticipaPersonaHint = otraRazonNoParticipaPersonaHint;
+    }
+
+    public String getOtraRazonNoAceptaParticipar() {
+        return otraRazonNoAceptaParticipar;
+    }
+
+    public void setOtraRazonNoAceptaParticipar(String otraRazonNoAceptaParticipar) {
+        this.otraRazonNoAceptaParticipar = otraRazonNoAceptaParticipar;
+    }
+
+    public String getOtraRazonNoAceptaParticiparHint() {
+        return otraRazonNoAceptaParticiparHint;
+    }
+
+    public void setOtraRazonNoAceptaParticiparHint(String otraRazonNoAceptaParticiparHint) {
+        this.otraRazonNoAceptaParticiparHint = otraRazonNoAceptaParticiparHint;
+    }
+
+    public String getRazonNoAceptaSeroprevalencia() {
+        return razonNoAceptaSeroprevalencia;
+    }
+
+    public void setRazonNoAceptaSeroprevalencia(String razonNoAceptaSeroprevalencia) {
+        this.razonNoAceptaSeroprevalencia = razonNoAceptaSeroprevalencia;
+    }
+
+    public String getOtraRazonNoAceptaSeroprevalencia() {
+        return otraRazonNoAceptaSeroprevalencia;
+    }
+
+    public void setOtraRazonNoAceptaSeroprevalencia(String otraRazonNoAceptaSeroprevalencia) {
+        this.otraRazonNoAceptaSeroprevalencia = otraRazonNoAceptaSeroprevalencia;
+    }
+
+    public String getRazonNoAceptaSeroprevalenciaHint() {
+        return razonNoAceptaSeroprevalenciaHint;
+    }
+
+    public void setRazonNoAceptaSeroprevalenciaHint(String razonNoAceptaSeroprevalenciaHint) {
+        this.razonNoAceptaSeroprevalenciaHint = razonNoAceptaSeroprevalenciaHint;
+    }
+
+    public String getOtraRazonNoAceptaSeroprevalenciaHint() {
+        return otraRazonNoAceptaSeroprevalenciaHint;
+    }
+
+    public void setOtraRazonNoAceptaSeroprevalenciaHint(String otraRazonNoAceptaSeroprevalenciaHint) {
+        this.otraRazonNoAceptaSeroprevalenciaHint = otraRazonNoAceptaSeroprevalenciaHint;
+    }
+
+    public String getRazonNoAceptaDengue() {
+        return razonNoAceptaDengue;
+    }
+
+    public void setRazonNoAceptaDengue(String razonNoAceptaDengue) {
+        this.razonNoAceptaDengue = razonNoAceptaDengue;
+    }
+
+    public String getOtraRazonNoAceptaDengue() {
+        return otraRazonNoAceptaDengue;
+    }
+
+    public void setOtraRazonNoAceptaDengue(String otraRazonNoAceptaDengue) {
+        this.otraRazonNoAceptaDengue = otraRazonNoAceptaDengue;
+    }
+
+    public String getRazonNoAceptaDengueHint() {
+        return razonNoAceptaDengueHint;
+    }
+
+    public void setRazonNoAceptaDengueHint(String razonNoAceptaDengueHint) {
+        this.razonNoAceptaDengueHint = razonNoAceptaDengueHint;
+    }
+
+    public String getOtraRazonNoAceptaDengueHint() {
+        return otraRazonNoAceptaDengueHint;
+    }
+
+    public void setOtraRazonNoAceptaDengueHint(String otraRazonNoAceptaDengueHint) {
+        this.otraRazonNoAceptaDengueHint = otraRazonNoAceptaDengueHint;
+    }
+
+    public String getRazonNoAceptaInfluenza() {
+        return razonNoAceptaInfluenza;
+    }
+
+    public void setRazonNoAceptaInfluenza(String razonNoAceptaInfluenza) {
+        this.razonNoAceptaInfluenza = razonNoAceptaInfluenza;
+    }
+
+    public String getOtraRazonNoAceptaInfluenza() {
+        return otraRazonNoAceptaInfluenza;
+    }
+
+    public void setOtraRazonNoAceptaInfluenza(String otraRazonNoAceptaInfluenza) {
+        this.otraRazonNoAceptaInfluenza = otraRazonNoAceptaInfluenza;
+    }
+
+    public String getRazonNoAceptaInfluenzaHint() {
+        return razonNoAceptaInfluenzaHint;
+    }
+
+    public void setRazonNoAceptaInfluenzaHint(String razonNoAceptaInfluenzaHint) {
+        this.razonNoAceptaInfluenzaHint = razonNoAceptaInfluenzaHint;
+    }
+
+    public String getOtraRazonNoAceptaInfluenzaHint() {
+        return otraRazonNoAceptaInfluenzaHint;
+    }
+
+    public void setOtraRazonNoAceptaInfluenzaHint(String otraRazonNoAceptaInfluenzaHint) {
+        this.otraRazonNoAceptaInfluenzaHint = otraRazonNoAceptaInfluenzaHint;
     }
 }

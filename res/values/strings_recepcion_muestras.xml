@@ -13,4 +13,5 @@
     <string name="error_volumen">Volumen inválido</string>
     <string name="error_codigo">Código inválido</string>
     <string name="error_lugar">Seleccione lugar donde se tomó la muestra</string>
+    <string name="error_codigoMx">Lectura Inválida!!!!</string>
 </resources>

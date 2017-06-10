@@ -11,7 +11,7 @@
     -->
     <string name="estaEmbarazada">¿Esta embarazada?</string>
     <string name="semanasEmbarazo">Semanas de Embarazada</string>
-    <string name="esAlfabeto">¿Usted es alfabeto? </string>
+    <string name="esAlfabeto">¿Usted es alfabeto?</string>
     <string name="nivelEducacion">¿Cuál es su nivel de educación?</string>
     <string name="trabaja">¿Trabaja?</string>
     <string name="tipoTrabajo">Que tipo  de trabajo</string>
@@ -23,7 +23,7 @@
     <string name="nombreCentroEstudio">Nombre de la escuela (Universidad)</string>
     <string name="dondeCuidanNino">Si el niño No va a la escuela, donde lo cuidan?</string>
     <string name="ninoTrabaja">¿Niño Trabaja?</string>
-    <string name="ocupacionActualNino">Ocupación Actual para mayores de 14 años</string>
+    <string name="ocupacionActualNino">Ocupación Actual del niño</string>
     <string name="cantNinosLugarCuidan">¿Cuántos niños aproximadamente hay en el lugar que cuidan al niño?</string>
     <string name="conQuienViveNino">¿Con quién vive el niño?</string>
     <string name="descOtroViveNino">Indicar con que otra persona vive el niño</string>
@@ -62,9 +62,12 @@
     <string name="diabetes">¿Le han diagnosticado Diabetes?</string>
     <string name="presionAlta">¿Le han diagnosticado Presión alta?</string>
     <string name="asma">¿Le  han diagnosticado asma?</string>
-    <string name="silbidoRespirarPechoApretado">En los últimos 12 meses, ¿usted/su niño ha tenido silbido al respirar, o sensación de pecho apretado?</string>
-    <string name="tosSinFiebreResfriado">En los últimos 12 meses, ¿usted/su niño ha tenido, durante el día, una tos que permaneció por 3 o más días, cuando no estaba con fiebre o resfriado?</string>
-    <string name="usaInhaladoresSpray">En los últimos 12 meses, ¿usted/su niño ha tomado medicamentos por silbido de pecho o dificultad al respirar, como inhaladores o “puffers”, spray?</string>
+    <string name="silbidoRespirarPechoApretado">Silbido al respirar o sensación de pecho apretado</string>
+    <string name="silbidoRespirarPechoApretadoHint">Preguntar si en los últimos 12 meses, ¿El participante ha tenido silbido al respirar, o sensación de pecho apretado?</string>
+    <string name="tosSinFiebreResfriado">Tos que permaneció por 3 o más días cuando no estaba con fiebre o resfriado</string>
+    <string name="tosSinFiebreResfriadoHint">Preguntar si en los últimos 12 meses, ¿El participante ha tenido, durante el día, una tos que permaneció por 3 o más días, cuando no estaba con fiebre o resfriado?</string>
+    <string name="usaInhaladoresSpray">Medicamentos por silbido de pecho o dificultad al respirar</string>
+    <string name="usaInhaladoresSprayHint">Preguntar si en los últimos 12 meses, ¿El participante ha tomado medicamentos por silbido de pecho o dificultad al respirar, como inhaladores o “puffers”, spray?</string>
     <string name="crisisAsma">En el último año ha tenido usted/su niño crisis de Asma?</string>
     <string name="cantidadCrisisAsma">¿Cuántas veces?</string>
     <string name="vecesEnfermoEnfermedadesRes">¿Cuántas veces enfermo en el último año por cuadros o enfermedades respiratorias?</string>

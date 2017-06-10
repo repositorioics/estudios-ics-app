@@ -167,22 +167,27 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             int anios = 0;
             if (edad.length > 0)
                 anios = Integer.valueOf(edad[0]);
-            if (anios > 14 && participanteCHF.getParticipante().getSexo().matches("F")){
+            if (anios > 14 && anios <=50 && participanteCHF.getParticipante().getSexo().matches("F")){
                 changeStatus(mWizardModel.findByKey(labels.getEstaEmbarazada()), true);
             }
-            if (anios >= 18) {
+            if (anios >= 18){
                 changeStatus(mWizardModel.findByKey(labels.getEsAlfabeto()), true);
                 changeStatus(mWizardModel.findByKey(labels.getNivelEducacion()), true);
                 changeStatus(mWizardModel.findByKey(labels.getTrabaja()), true);
             }
             if (anios < 18){
                 changeStatus(mWizardModel.findByKey(labels.getVaNinoEscuela()), true);
-                changeStatus(mWizardModel.findByKey(labels.getNinoTrabaja()), true);
-                changeStatus(mWizardModel.findByKey(labels.getCantNinosLugarCuidan()), true);
                 changeStatus(mWizardModel.findByKey(labels.getConQuienViveNino()), true);
                 changeStatus(mWizardModel.findByKey(labels.getPadreEnEstudio()), true);
                 changeStatus(mWizardModel.findByKey(labels.getMadreEnEstudio()), true);
             }
+            if (anios >=14 && anios < 18){
+                changeStatus(mWizardModel.findByKey(labels.getNinoTrabaja()), true);
+            }
+            if (anios >= 12){
+                changeStatus(mWizardModel.findByKey(labels.getFuma()), true);
+            }
+
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(participanteCHF.getParticipante().getFechaNac());
             int anioNac = calendar.get(Calendar.YEAR);
@@ -377,6 +382,8 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getDondeCuidanNino()), visible);
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getCantNinosLugarCuidan()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCentroEstudio())) {
@@ -398,9 +405,13 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getPadreAlfabeto()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getNivelEducacionPadre()), visible);
-                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTrabajaPadre()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getPadreAlfabeto())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getNivelEducacionPadre()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -417,9 +428,13 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getMadreAlfabeto()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getNivelEducacionMadre()), visible);
-                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTrabajaMadre()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getMadreAlfabeto())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getNivelEducacionMadre()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }

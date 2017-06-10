@@ -74,6 +74,9 @@ public class EncuestaParticipanteFormLabels {
     protected String descOtrasEnfermedades;
     protected String vacunaInfluenza;
     protected String anioVacunaInfluenza;
+    protected String silbidoRespirarPechoApretadoHint;
+    protected String tosSinFiebreResfriadoHint;
+    protected String usaInhaladoresSprayHint;
 
 
     public EncuestaParticipanteFormLabels(){
@@ -142,6 +145,9 @@ public class EncuestaParticipanteFormLabels {
         descOtrasEnfermedades = res.getString(R.string.descOtrasEnfermedades);
         vacunaInfluenza = res.getString(R.string.vacunaInfluenza);
         anioVacunaInfluenza = res.getString(R.string.anioVacunaInfluenza);
+        silbidoRespirarPechoApretadoHint = res.getString(R.string.silbidoRespirarPechoApretadoHint);
+        tosSinFiebreResfriadoHint = res.getString(R.string.tosSinFiebreResfriadoHint);
+        usaInhaladoresSprayHint = res.getString(R.string.usaInhaladoresSprayHint);
     }
 
     public String getLabelInicio() {
@@ -654,5 +660,29 @@ public class EncuestaParticipanteFormLabels {
 
     public void setMesFechaDiagnosticoTubPulPasado(String mesFechaDiagnosticoTubPulPasado) {
         this.mesFechaDiagnosticoTubPulPasado = mesFechaDiagnosticoTubPulPasado;
+    }
+
+    public String getSilbidoRespirarPechoApretadoHint() {
+        return silbidoRespirarPechoApretadoHint;
+    }
+
+    public void setSilbidoRespirarPechoApretadoHint(String silbidoRespirarPechoApretadoHint) {
+        this.silbidoRespirarPechoApretadoHint = silbidoRespirarPechoApretadoHint;
+    }
+
+    public String getTosSinFiebreResfriadoHint() {
+        return tosSinFiebreResfriadoHint;
+    }
+
+    public void setTosSinFiebreResfriadoHint(String tosSinFiebreResfriadoHint) {
+        this.tosSinFiebreResfriadoHint = tosSinFiebreResfriadoHint;
+    }
+
+    public String getUsaInhaladoresSprayHint() {
+        return usaInhaladoresSprayHint;
+    }
+
+    public void setUsaInhaladoresSprayHint(String usaInhaladoresSprayHint) {
+        this.usaInhaladoresSprayHint = usaInhaladoresSprayHint;
     }
 }

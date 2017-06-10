@@ -69,7 +69,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
 
         //Page lpInicio = new LabelPage(this, labels.getLabelInicio(), "", Constants.ROJO, true).setRequired(false);
         Page scEstaEmbarazada = new SingleFixedChoicePage(this, labels.getEstaEmbarazada(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page npSemanasEmbarazo = new NumberPage(this, labels.getSemanasEmbarazo(), "", Constants.WIZARD, false).setRangeValidation(true, 1, 44).setRequired(true);
+        Page npSemanasEmbarazo = new NumberPage(this, labels.getSemanasEmbarazo(), "", Constants.WIZARD, false).setRangeValidation(true, 1, 42).setRequired(true);
         Page scEsAlfabeto = new SingleFixedChoicePage(this, labels.getEsAlfabeto(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scNivelEducacion = new SingleFixedChoicePage(this, labels.getNivelEducacion(), "", Constants.WIZARD, false).setChoices(catNivelEdu).setRequired(true);
         Page scTrabaja = new SingleFixedChoicePage(this, labels.getTrabaja(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
@@ -83,7 +83,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         Page scDondeCuidanNino = new SingleFixedChoicePage(this, labels.getDondeCuidanNino(), "", Constants.WIZARD, false).setChoices(catCuidan).setRequired(true);
         Page scNinoTrabaja = new SingleFixedChoicePage(this, labels.getNinoTrabaja(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page tpOcupacionActualNino = new TextPage(this, labels.getOcupacionActualNino(), "", Constants.WIZARD, false).setRequired(true);
-        Page npCantNinosLugarCuidan = new NumberPage(this, labels.getCantNinosLugarCuidan(), "", Constants.WIZARD, false).setRangeValidation(true,1,999).setRequired(true);
+        Page npCantNinosLugarCuidan = new NumberPage(this, labels.getCantNinosLugarCuidan(), "", Constants.WIZARD, false).setRangeValidation(true,0,999).setRequired(true);
         Page scConQuienViveNino = new SingleFixedChoicePage(this, labels.getConQuienViveNino(), "", Constants.WIZARD, false).setChoices(catViveNino).setRequired(true);
         Page tpDescOtroViveNino = new TextPage(this, labels.getDescOtroViveNino(), "", Constants.WIZARD, false).setRequired(true);
         Page scPadreEnEstudio = new SingleFixedChoicePage(this, labels.getPadreEnEstudio(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
@@ -98,9 +98,9 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         Page scNivelEducacionMadre = new SingleFixedChoicePage(this, labels.getNivelEducacionMadre(), "", Constants.WIZARD, false).setChoices(catNivelEdu).setRequired(true);
         Page scTrabajaMadre = new SingleFixedChoicePage(this, labels.getTrabajaMadre(), "", Constants.WIZARD, false).setChoices(catSiNoDe).setRequired(true);
         Page scTipoTrabajoMadre = new SingleFixedChoicePage(this, labels.getTipoTrabajoMadre(), "", Constants.WIZARD, false).setChoices(catTipoTrab).setRequired(true);
-        Page scFuma = new SingleFixedChoicePage(this, labels.getFuma(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+        Page scFuma = new SingleFixedChoicePage(this, labels.getFuma(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scPeriodicidadFuma = new SingleFixedChoicePage(this, labels.getPeriodicidadFuma(), "", Constants.WIZARD, false).setChoices(catFuma).setRequired(true);
-        Page npCantidadCigarrillos = new NumberPage(this, labels.getCantidadCigarrillos(), "", Constants.WIZARD, false).setRequired(true);
+        Page npCantidadCigarrillos = new NumberPage(this, labels.getCantidadCigarrillos(), "", Constants.WIZARD, false).setRangeValidation(true,1,50).setRequired(true);
         Page scFumaDentroCasa = new SingleFixedChoicePage(this, labels.getFumaDentroCasa(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scTuberculosisPulmonarActual = new SingleFixedChoicePage(this, labels.getTuberculosisPulmonarActual(), "", Constants.WIZARD, true).setChoices(catSiNoDe).setRequired(true);
 
@@ -123,9 +123,9 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         Page scDiabetes = new SingleFixedChoicePage(this, labels.getDiabetes(), "", Constants.WIZARD, true).setChoices(catSiNoDe).setRequired(true);
         Page scPresionAlta = new SingleFixedChoicePage(this, labels.getPresionAlta(), "", Constants.WIZARD, true).setChoices(catSiNoDe).setRequired(true);
         Page scAsma = new SingleFixedChoicePage(this, labels.getAsma(), "", Constants.WIZARD, true).setChoices(catSiNoDe).setRequired(true);
-        Page scSilbidoRespirarPechoApretado = new SingleFixedChoicePage(this, labels.getSilbidoRespirarPechoApretado(), "", Constants.WIZARD, true).setChoices(catSiNoDe).setRequired(true);
-        Page scTosSinFiebreResfriado = new SingleFixedChoicePage(this, labels.getTosSinFiebreResfriado(), "", Constants.WIZARD, true).setChoices(catSiNoDe).setRequired(true);
-        Page scUsaInhaladoresSpray = new SingleFixedChoicePage(this, labels.getUsaInhaladoresSpray(), "", Constants.WIZARD, true).setChoices(catSiNoDe).setRequired(true);
+        Page scSilbidoRespirarPechoApretado = new SingleFixedChoicePage(this, labels.getSilbidoRespirarPechoApretado(), labels.getSilbidoRespirarPechoApretadoHint(), Constants.WIZARD, true).setChoices(catSiNoDe).setRequired(true);
+        Page scTosSinFiebreResfriado = new SingleFixedChoicePage(this, labels.getTosSinFiebreResfriado(), labels.getTosSinFiebreResfriadoHint(), Constants.WIZARD, true).setChoices(catSiNoDe).setRequired(true);
+        Page scUsaInhaladoresSpray = new SingleFixedChoicePage(this, labels.getUsaInhaladoresSpray(), labels.getUsaInhaladoresSprayHint(), Constants.WIZARD, true).setChoices(catSiNoDe).setRequired(true);
         Page scCrisisAsma = new SingleFixedChoicePage(this, labels.getCrisisAsma(), "", Constants.WIZARD, true).setChoices(catSiNoDe).setRequired(true);
         Page npCantidadCrisisAsma = new NumberPage(this, labels.getCantidadCrisisAsma(), "", Constants.WIZARD, false).setRequired(true);
         Page npVecesEnfermoEnfermedadesRes = new NumberPage(this, labels.getVecesEnfermoEnfermedadesRes(), "", Constants.WIZARD, true).setRequired(true);

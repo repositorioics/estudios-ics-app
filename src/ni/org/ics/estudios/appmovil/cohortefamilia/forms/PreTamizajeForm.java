@@ -26,8 +26,10 @@ public class PreTamizajeForm extends AbstractWizardModel {
 	
 	private Page visitaExitosa;
 	private Page razonVisitaNoExitosa;
+    private Page otraRazonVisitaNoExitosa;
 	private Page aceptaTamizajeCasa;
 	private Page razonNoAceptaTamizajeCasa;
+    private Page otraRazonNoAceptaTamizajeCasa;
 	private Page razonNoAceptaTamizajeCasaLabel;
 	private Page codigoCHF;
 	private Page mismoJefe;
@@ -65,9 +67,11 @@ public class PreTamizajeForm extends AbstractWizardModel {
 		
 		visitaExitosa = new SingleFixedChoicePage(this,labels.getVisitaExitosa(),labels.getVisitaExitosaHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 		razonVisitaNoExitosa = new SingleFixedChoicePage(this,labels.getRazonVisitaNoExitosa(),labels.getRazonVisitaNoExitosaHint(), Constants.WIZARD, false).setChoices(catRazonVisitaNoExitosa).setRequired(true);
+        otraRazonVisitaNoExitosa = new TextPage(this,labels.getOtraRazonVisitaNoExitosa(),labels.getOtraRazonVisitaNoExitosaHint(), Constants.WIZARD, false).setRequired(true);
 		aceptaTamizajeCasa = new SingleFixedChoicePage(this,labels.getAceptaTamizajeCasa(),labels.getAceptaTamizajeCasaHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 		razonNoAceptaTamizajeCasa = new SingleFixedChoicePage(this,labels.getRazonNoAceptaTamizajeCasa(),labels.getRazonNoAceptaTamizajeCasaHint(), Constants.WIZARD, false).setChoices(catRazonNoAceptaTamizajeCasa).setRequired(true);
-		razonNoAceptaTamizajeCasaLabel = new LabelPage(this,labels.getRazonNoAceptaTamizajeCasaLabel(),"", Constants.ROJO, false).setRequired(false);
+        otraRazonNoAceptaTamizajeCasa = new TextPage(this,labels.getOtraRazonNoAceptaTamizajeCasa(),labels.getOtraRazonNoAceptaTamizajeCasaHint(), Constants.WIZARD, false).setRequired(true);
+        razonNoAceptaTamizajeCasaLabel = new LabelPage(this,labels.getRazonNoAceptaTamizajeCasaLabel(),"", Constants.ROJO, false).setRequired(false);
 		
 		codigoCHF = new BarcodePage(this,labels.getCodigoCHF(),labels.getMismoJefeHint(), Constants.WIZARD, false).setRequired(true);
 		mismoJefe = new SingleFixedChoicePage(this,labels.getMismoJefe(),labels.getMismoJefeHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
@@ -77,7 +81,7 @@ public class PreTamizajeForm extends AbstractWizardModel {
 		apellido2JefeFamilia = new TextPage(this,labels.getApellido2JefeFamilia(),labels.getJefeFamiliaCHFHint(), Constants.WIZARD, false).setRequired(false);
 		finTamizajeLabel = new LabelPage(this,labels.getFinTamizajeLabel(),"", Constants.WIZARD, false).setRequired(false);
 		
-        return new PageList(visitaExitosa,razonVisitaNoExitosa,aceptaTamizajeCasa,razonNoAceptaTamizajeCasa,razonNoAceptaTamizajeCasaLabel,
+        return new PageList(visitaExitosa,razonVisitaNoExitosa,otraRazonVisitaNoExitosa,aceptaTamizajeCasa,razonNoAceptaTamizajeCasa,otraRazonNoAceptaTamizajeCasa,razonNoAceptaTamizajeCasaLabel,
         		codigoCHF,mismoJefe,nombre1JefeFamilia,nombre2JefeFamilia,apellido1JefeFamilia,apellido2JefeFamilia,finTamizajeLabel);
     }
 

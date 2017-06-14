@@ -20,6 +20,7 @@ public class VisitaTerrenoHelper {
         if (visitaTerreno.getFechaVisita() != null) cv.put(MainDBConstants.fechaVisita, visitaTerreno.getFechaVisita().getTime());
         cv.put(MainDBConstants.visitaExitosa, visitaTerreno.getVisitaExitosa());
         cv.put(MainDBConstants.razonVisitaNoExitosa, visitaTerreno.getRazonVisitaNoExitosa());
+        cv.put(MainDBConstants.otraRazonVisitaNoExitosa, visitaTerreno.getOtraRazonVisitaNoExitosa());
         if (visitaTerreno.getRecordDate() != null) cv.put(MainDBConstants.recordDate, visitaTerreno.getRecordDate().getTime());
 		cv.put(MainDBConstants.recordUser, visitaTerreno.getRecordUser());
 		cv.put(MainDBConstants.pasive, String.valueOf(visitaTerreno.getPasive()));
@@ -36,6 +37,7 @@ public class VisitaTerrenoHelper {
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaVisita))>0) visitaTerreno.setFechaVisita(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaVisita))));
         visitaTerreno.setVisitaExitosa(cursor.getString(cursor.getColumnIndex(MainDBConstants.visitaExitosa)));
         visitaTerreno.setRazonVisitaNoExitosa(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonVisitaNoExitosa)));
+        visitaTerreno.setOtraRazonVisitaNoExitosa(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraRazonVisitaNoExitosa)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) visitaTerreno.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         visitaTerreno.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         visitaTerreno.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));

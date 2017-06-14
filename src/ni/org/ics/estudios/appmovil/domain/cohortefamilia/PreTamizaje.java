@@ -18,6 +18,7 @@ public class PreTamizaje extends BaseMetaData {
 	private String codigo;
     private char aceptaTamizajeCasa;
     private String razonNoAceptaTamizajeCasa;
+    private String otraRazonNoAceptaTamizajeCasa;
     private Casa casa;
     private Estudio estudio;
 
@@ -43,6 +44,14 @@ public class PreTamizaje extends BaseMetaData {
 
     public void setRazonNoAceptaTamizajeCasa(String razonNoAceptaTamizajeCasa) {
         this.razonNoAceptaTamizajeCasa = razonNoAceptaTamizajeCasa;
+    }
+
+    public String getOtraRazonNoAceptaTamizajeCasa() {
+        return otraRazonNoAceptaTamizajeCasa;
+    }
+
+    public void setOtraRazonNoAceptaTamizajeCasa(String otraRazonNoAceptaTamizajeCasa) {
+        this.otraRazonNoAceptaTamizajeCasa = otraRazonNoAceptaTamizajeCasa;
     }
 
     public Casa getCasa() {

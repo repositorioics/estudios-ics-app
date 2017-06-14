@@ -18,12 +18,17 @@ public class PreTamizajeFormLabels {
 	protected String visitaExitosaHint;
 	protected String razonVisitaNoExitosa;
 	protected String razonVisitaNoExitosaHint;
+    protected String otraRazonVisitaNoExitosa;
+    protected String otraRazonVisitaNoExitosaHint;
 	protected String aceptaTamizajeCasa;
 	protected String aceptaTamizajeCasaHint;
 	protected String razonNoAceptaTamizajeCasa;
 	protected String razonNoAceptaTamizajeCasaHint;
+    protected String otraRazonNoAceptaTamizajeCasa;
+    protected String otraRazonNoAceptaTamizajeCasaHint;
 	protected String razonNoAceptaTamizajeCasaLabel;
-	
+
+
 	protected String mismoJefe;
 	protected String mismoJefeHint;
 	
@@ -45,12 +50,16 @@ public class PreTamizajeFormLabels {
 		visitaExitosaHint = res.getString(R.string.visitaExitosaHint);
 		razonVisitaNoExitosa = res.getString(R.string.razonVisitaNoExitosa);
 		razonVisitaNoExitosaHint = res.getString(R.string.razonVisitaNoExitosaHint);
+        otraRazonVisitaNoExitosa = res.getString(R.string.otraRazonVisitaNoExitosa);
+        otraRazonVisitaNoExitosaHint = res.getString(R.string.otraRazonVisitaNoExitosaHint);
 		aceptaTamizajeCasa = res.getString(R.string.aceptaTamizajeCasa);
 		aceptaTamizajeCasaHint = res.getString(R.string.aceptaTamizajeCasaHint);
 		razonNoAceptaTamizajeCasa = res.getString(R.string.razonNoAceptaTamizajeCasa);
 		razonNoAceptaTamizajeCasaHint = res.getString(R.string.razonNoAceptaTamizajeCasaHint);
 		razonNoAceptaTamizajeCasaLabel = res.getString(R.string.razonNoAceptaTamizajeCasaLabel);
-		
+        otraRazonNoAceptaTamizajeCasa = res.getString(R.string.otraRazonNoAceptaTamizajeCasa);
+        otraRazonNoAceptaTamizajeCasaHint = res.getString(R.string.otraRazonNoAceptaTamizajeCasaHint);
+
 		mismoJefe = res.getString(R.string.mismoJefe);
 		mismoJefeHint = res.getString(R.string.mismoJefeHint);
 		
@@ -234,7 +243,35 @@ public class PreTamizajeFormLabels {
 		this.finTamizajeLabel = finTamizajeLabel;
 	}
 
+    public String getOtraRazonVisitaNoExitosa() {
+        return otraRazonVisitaNoExitosa;
+    }
 
+    public void setOtraRazonVisitaNoExitosa(String otraRazonVisitaNoExitosa) {
+        this.otraRazonVisitaNoExitosa = otraRazonVisitaNoExitosa;
+    }
 
-	
+    public String getOtraRazonVisitaNoExitosaHint() {
+        return otraRazonVisitaNoExitosaHint;
+    }
+
+    public void setOtraRazonVisitaNoExitosaHint(String otraRazonVisitaNoExitosaHint) {
+        this.otraRazonVisitaNoExitosaHint = otraRazonVisitaNoExitosaHint;
+    }
+
+    public String getOtraRazonNoAceptaTamizajeCasa() {
+        return otraRazonNoAceptaTamizajeCasa;
+    }
+
+    public void setOtraRazonNoAceptaTamizajeCasa(String otraRazonNoAceptaTamizajeCasa) {
+        this.otraRazonNoAceptaTamizajeCasa = otraRazonNoAceptaTamizajeCasa;
+    }
+
+    public String getOtraRazonNoAceptaTamizajeCasaHint() {
+        return otraRazonNoAceptaTamizajeCasaHint;
+    }
+
+    public void setOtraRazonNoAceptaTamizajeCasaHint(String otraRazonNoAceptaTamizajeCasaHint) {
+        this.otraRazonNoAceptaTamizajeCasaHint = otraRazonNoAceptaTamizajeCasaHint;
+    }
 }

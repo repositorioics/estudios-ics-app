@@ -219,6 +219,7 @@ public class MainDBConstants {
     public static final String fechaVisita = "fechaVisita";
     public static final String visitaExitosa = "visitaExitosa";
     public static final String razonVisitaNoExitosa = "razonVisitaNoExitosa";
+    public static final String otraRazonVisitaNoExitosa = "otraRazonVisitaNoExitosa";
 
     //crear tabla Visitas
     public static final String CREATE_VISITA_TABLE = "create table if not exists "
@@ -228,6 +229,7 @@ public class MainDBConstants {
             + visitaExitosa + " text, "
             + casa + " integer not null, "
             + razonVisitaNoExitosa + " text, "
+            + otraRazonVisitaNoExitosa + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -242,6 +244,7 @@ public class MainDBConstants {
     public static final String estudio = "estudio";
     public static final String aceptaTamizajeCasa = "aceptaTamizajeCasa";
     public static final String razonNoAceptaTamizajeCasa = "razonNoAceptaTamizajeCasa";
+    public static final String otraRazonNoAceptaTamizajeCasa = "otraRazonNoAceptaTamizajeCasa";
 
     //crear tabla Pretamizajes
     public static final String CREATE_PRETAMIZAJE_TABLE = "create table if not exists "
@@ -249,6 +252,7 @@ public class MainDBConstants {
             + codigo + " text not null, "
             + aceptaTamizajeCasa + " text not null, "
             + razonNoAceptaTamizajeCasa + " text, "
+            + otraRazonNoAceptaTamizajeCasa + " text, "
             + casa + " integer not null, "
             + estudio + " integer not null, "
             + recordDate + " date, "

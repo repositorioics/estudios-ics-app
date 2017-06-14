@@ -19,6 +19,7 @@ public class PreTamizajeHelper {
         cv.put(MainDBConstants.codigo, preTamizaje.getCodigo());
         cv.put(MainDBConstants.aceptaTamizajeCasa, String.valueOf(preTamizaje.getAceptaTamizajeCasa()));
         cv.put(MainDBConstants.razonNoAceptaTamizajeCasa, preTamizaje.getRazonNoAceptaTamizajeCasa());
+        cv.put(MainDBConstants.otraRazonNoAceptaTamizajeCasa, preTamizaje.getOtraRazonNoAceptaTamizajeCasa());
         cv.put(MainDBConstants.casa, preTamizaje.getCasa().getCodigo());
         cv.put(MainDBConstants.estudio, preTamizaje.getEstudio().getCodigo());
         if (preTamizaje.getRecordDate() != null) cv.put(MainDBConstants.recordDate, preTamizaje.getRecordDate().getTime());
@@ -35,6 +36,7 @@ public class PreTamizajeHelper {
         mPreTamizaje.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         mPreTamizaje.setAceptaTamizajeCasa(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaTamizajeCasa)).charAt(0));
         mPreTamizaje.setRazonNoAceptaTamizajeCasa(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonNoAceptaTamizajeCasa)));
+        mPreTamizaje.setOtraRazonNoAceptaTamizajeCasa(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraRazonNoAceptaTamizajeCasa)));
         mPreTamizaje.setCasa(null);
         mPreTamizaje.setEstudio(null);
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mPreTamizaje.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));

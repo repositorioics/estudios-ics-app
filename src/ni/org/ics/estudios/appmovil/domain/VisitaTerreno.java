@@ -17,6 +17,7 @@ public class VisitaTerreno extends BaseMetaData {
 	private Date fechaVisita;
 	private String visitaExitosa;
 	private String razonVisitaNoExitosa;
+    private String otraRazonVisitaNoExitosa;
 
     public String getCodigoVisita() {
 		return codigoVisita;
@@ -58,7 +59,15 @@ public class VisitaTerreno extends BaseMetaData {
 		this.razonVisitaNoExitosa = razonVisitaNoExitosa;
 	}
 
-	@Override
+    public String getOtraRazonVisitaNoExitosa() {
+        return otraRazonVisitaNoExitosa;
+    }
+
+    public void setOtraRazonVisitaNoExitosa(String otraRazonVisitaNoExitosa) {
+        this.otraRazonVisitaNoExitosa = otraRazonVisitaNoExitosa;
+    }
+
+    @Override
     public String toString() {
         return "'" + codigoVisita + "'";
     }

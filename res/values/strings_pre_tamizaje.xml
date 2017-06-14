@@ -8,12 +8,16 @@
     <string name="visitaExitosaHint"></string>
     <string name="razonVisitaNoExitosa">Razon visita no exitosa</string>
     <string name="razonVisitaNoExitosaHint">Seleccione porque razón no logró realizar una visita exitosa</string>
-    
+    <string name="otraRazonVisitaNoExitosa">Otra razón visita no exitosa</string>
+    <string name="otraRazonVisitaNoExitosaHint">Indicar porque otra razón no logró realizar una visita exitosa</string>
+
     <string name="aceptaTamizajeCasa">Acepta realizar tamizaje?</string>
     <string name="aceptaTamizajeCasaHint">Pregunte si el jefe de familia permite realizar tamizaje a los miembros de este hogar.</string>
     <string name="razonNoAceptaTamizajeCasa">Porque no acepta?</string>
     <string name="razonNoAceptaTamizajeCasaHint">Pregunte cual es la razón por la que no desea que su casa participe en el estudio.</string>
     <string name="razonNoAceptaTamizajeCasaLabel">No acepta realizar tamizaje. Finaliza el formulario</string>
+    <string name="otraRazonNoAceptaTamizajeCasa">¿Porque otra razón no acepta?</string>
+    <string name="otraRazonNoAceptaTamizajeCasaHint">Indicar por cual otra razón no desea que la casa participe en el estudio.</string>
     
     <string name="mismoJefe">Es el mismo jefe de familia que en la casa cohorte?</string>
     <string name="mismoJefeHint">Si selecciona si se guarda la información del jefe de famila, si no, se pide los nombres y apellidos del jefe de esta familia</string>

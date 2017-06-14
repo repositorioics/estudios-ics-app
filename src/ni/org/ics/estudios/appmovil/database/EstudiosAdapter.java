@@ -19,6 +19,9 @@ import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.domain.TelefonoContacto;
 import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
@@ -26,6 +29,9 @@ import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeropreva
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.helpers.*;
+import ni.org.ics.estudios.appmovil.helpers.chf.casos.CasaCohorteFamiliaCasoHelper;
+import ni.org.ics.estudios.appmovil.helpers.chf.casos.ParticipanteCohorteFamiliaCasoHelper;
+import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaSeguimientoCasoHelper;
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.EncuestaCasaSAHelper;
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.EncuestaParticipanteSAHelper;
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.ParticipanteSeroprevalenciaHelper;
@@ -94,12 +100,20 @@ public class EstudiosAdapter {
             db.execSQL(SeroprevalenciaDBConstants.CREATE_ENCUESTA_PARTICIPANTESA_TABLE);
             db.execSQL(MainDBConstants.CREATE_TELEFONO_CONTACTO_TABLE);
             db.execSQL(MuestrasDBConstants.CREATE_RECEPCION_MUESTRA_TABLE);
+            db.execSQL(CasosDBConstants.CREATE_CASAS_CASOS_TABLE);
+            db.execSQL(CasosDBConstants.CREATE_PARTICIPANTES_CASOS_TABLE);
+            db.execSQL(CasosDBConstants.CREATE_VISITAS_CASOS_TABLE);
+            db.execSQL(CasosDBConstants.CREATE_CONTACTOS_CASOS_TABLE);
+            db.execSQL(CasosDBConstants.CREATE_SINTOMAS_CASOS_TABLE);
         }
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			onCreate(db);
 			if(oldVersion==0) return;
+			if(oldVersion==1){
+				
+			}
 		}	
 	}
 
@@ -1962,4 +1976,153 @@ public class EstudiosAdapter {
         if (!cursor.isClosed()) cursor.close();
         return mRecepciones;
     }
+    
+  //Crear nuevo CasaCohorteFamiliaCaso en la base de datos
+    public void crearCasaCohorteFamiliaCaso(CasaCohorteFamiliaCaso casacaso) throws Exception {
+        ContentValues cv = CasaCohorteFamiliaCasoHelper.crearCasaCohorteFamiliaCasoContentValues(casacaso);
+        mDb.insertOrThrow(CasosDBConstants.CASAS_CASOS_TABLE, null, cv);
+    }
+
+    //Editar CasaCohorteFamiliaCaso existente en la base de datos
+    public boolean editarCasaCohorteFamiliaCaso(CasaCohorteFamiliaCaso casacaso) throws Exception{
+        ContentValues cv = CasaCohorteFamiliaCasoHelper.crearCasaCohorteFamiliaCasoContentValues(casacaso);
+        return mDb.update(CasosDBConstants.CASAS_CASOS_TABLE , cv, CasosDBConstants.codigoCaso + "='"
+                + casacaso.getCodigoCaso() + "'", null) > 0;
+    }
+    //Limpiar la tabla de CasaCohorteFamiliaCaso de la base de datos
+    public boolean borrarCasaCohorteFamiliaCaso() {
+        return mDb.delete(CasosDBConstants.CASAS_CASOS_TABLE, null, null) > 0;
+    }
+    //Obtener un CasaCohorteFamiliaCaso de la base de datos
+    public CasaCohorteFamiliaCaso getCasaCohorteFamiliaCaso(String filtro, String orden) throws SQLException {
+    	CasaCohorteFamiliaCaso mCasaCohorteFamiliaCaso = null;
+        Cursor cursor = crearCursor(CasosDBConstants.CASAS_CASOS_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mCasaCohorteFamiliaCaso=CasaCohorteFamiliaCasoHelper.crearCasaCohorteFamiliaCaso(cursor);
+            CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" + cursor.getString(cursor.getColumnIndex(MainDBConstants.casa)) +"'", null);
+            mCasaCohorteFamiliaCaso.setCasa(cchf);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mCasaCohorteFamiliaCaso;
+    }
+    //Obtener una lista de CasaCohorteFamiliaCaso de la base de datos
+    public List<CasaCohorteFamiliaCaso> getCasaCohorteFamiliaCasos(String filtro, String orden) throws SQLException {
+        List<CasaCohorteFamiliaCaso> mCasaCohorteFamiliaCasos = new ArrayList<CasaCohorteFamiliaCaso>();
+        Cursor cursor = crearCursor(CasosDBConstants.CASAS_CASOS_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mCasaCohorteFamiliaCasos.clear();
+            do{
+            	CasaCohorteFamiliaCaso mCasaCohorteFamiliaCaso = null;
+                mCasaCohorteFamiliaCaso = CasaCohorteFamiliaCasoHelper.crearCasaCohorteFamiliaCaso(cursor);
+                CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" + cursor.getString(cursor.getColumnIndex(MainDBConstants.casa)) +"'", null);
+                mCasaCohorteFamiliaCaso.setCasa(cchf);
+                mCasaCohorteFamiliaCasos.add(mCasaCohorteFamiliaCaso);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mCasaCohorteFamiliaCasos;
+    }
+    
+    //Crear nuevo ParticipanteCohorteFamiliaCaso en la base de datos
+    public void crearParticipanteCohorteFamiliaCaso(ParticipanteCohorteFamiliaCaso partcaso) throws Exception {
+        ContentValues cv = ParticipanteCohorteFamiliaCasoHelper.crearParticipanteCohorteFamiliaCasoContentValues(partcaso);
+        mDb.insertOrThrow(CasosDBConstants.PARTICIPANTES_CASOS_TABLE, null, cv);
+    }
+
+    //Editar ParticipanteCohorteFamiliaCaso existente en la base de datos
+    public boolean editarParticipanteCohorteFamiliaCaso(ParticipanteCohorteFamiliaCaso partcaso) throws Exception{
+        ContentValues cv = ParticipanteCohorteFamiliaCasoHelper.crearParticipanteCohorteFamiliaCasoContentValues(partcaso);
+        return mDb.update(CasosDBConstants.PARTICIPANTES_CASOS_TABLE , cv, CasosDBConstants.codigoCasoParticipante + "='"
+                + partcaso.getCodigoCasoParticipante() + "'", null) > 0;
+    }
+    //Limpiar la tabla de ParticipanteCohorteFamiliaCaso de la base de datos
+    public boolean borrarParticipanteCohorteFamiliaCaso() {
+        return mDb.delete(CasosDBConstants.PARTICIPANTES_CASOS_TABLE, null, null) > 0;
+    }
+    //Obtener un ParticipanteCohorteFamiliaCaso de la base de datos
+    public ParticipanteCohorteFamiliaCaso getParticipanteCohorteFamiliaCaso(String filtro, String orden) throws SQLException {
+    	ParticipanteCohorteFamiliaCaso mParticipanteCohorteFamiliaCaso = null;
+        Cursor cursor = crearCursor(CasosDBConstants.PARTICIPANTES_CASOS_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mParticipanteCohorteFamiliaCaso=ParticipanteCohorteFamiliaCasoHelper.crearParticipanteCohorteFamiliaCaso(cursor);
+            CasaCohorteFamiliaCaso caso = this.getCasaCohorteFamiliaCaso(CasosDBConstants.codigoCaso + "='" +cursor.getString(cursor.getColumnIndex(CasosDBConstants.codigoCaso))+"'", null);
+            mParticipanteCohorteFamiliaCaso.setCodigoCaso(caso);
+            ParticipanteCohorteFamilia participante = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" +cursor.getInt(cursor.getColumnIndex(CasosDBConstants.participante)), null);
+            mParticipanteCohorteFamiliaCaso.setParticipante(participante);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mParticipanteCohorteFamiliaCaso;
+    }
+    //Obtener una lista de ParticipanteCohorteFamiliaCaso de la base de datos
+    public List<ParticipanteCohorteFamiliaCaso> getParticipanteCohorteFamiliaCasos(String filtro, String orden) throws SQLException {
+        List<ParticipanteCohorteFamiliaCaso> mParticipanteCohorteFamiliaCasos = new ArrayList<ParticipanteCohorteFamiliaCaso>();
+        Cursor cursor = crearCursor(CasosDBConstants.PARTICIPANTES_CASOS_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mParticipanteCohorteFamiliaCasos.clear();
+            do{
+            	ParticipanteCohorteFamiliaCaso mParticipanteCohorteFamiliaCaso = null;
+                mParticipanteCohorteFamiliaCaso = ParticipanteCohorteFamiliaCasoHelper.crearParticipanteCohorteFamiliaCaso(cursor);
+                CasaCohorteFamiliaCaso caso = this.getCasaCohorteFamiliaCaso(CasosDBConstants.codigoCaso + "='" +cursor.getString(cursor.getColumnIndex(CasosDBConstants.codigoCaso))+"'", null);
+                mParticipanteCohorteFamiliaCaso.setCodigoCaso(caso);
+                ParticipanteCohorteFamilia participante = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" +cursor.getInt(cursor.getColumnIndex(CasosDBConstants.participante)), null);
+                mParticipanteCohorteFamiliaCaso.setParticipante(participante);
+                mParticipanteCohorteFamiliaCasos.add(mParticipanteCohorteFamiliaCaso);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mParticipanteCohorteFamiliaCasos;
+    }
+    
+    //Crear nuevo VisitaSeguimientoCaso en la base de datos
+    public void crearVisitaSeguimientoCaso(VisitaSeguimientoCaso visitacaso) throws Exception {
+        ContentValues cv = VisitaSeguimientoCasoHelper.crearVisitaSeguimientoCasoContentValues(visitacaso);
+        mDb.insertOrThrow(CasosDBConstants.VISITAS_CASOS_TABLE, null, cv);
+    }
+
+    //Editar VisitaSeguimientoCaso existente en la base de datos
+    public boolean editarVisitaSeguimientoCaso(VisitaSeguimientoCaso visitacaso) throws Exception{
+        ContentValues cv = VisitaSeguimientoCasoHelper.crearVisitaSeguimientoCasoContentValues(visitacaso);
+        return mDb.update(CasosDBConstants.VISITAS_CASOS_TABLE , cv, CasosDBConstants.codigoCasoVisita + "='"
+                + visitacaso.getCodigoCasoVisita() + "'", null) > 0;
+    }
+    //Limpiar la tabla de VisitaSeguimientoCaso de la base de datos
+    public boolean borrarVisitaSeguimientoCaso() {
+        return mDb.delete(CasosDBConstants.VISITAS_CASOS_TABLE, null, null) > 0;
+    }
+    //Obtener un VisitaSeguimientoCaso de la base de datos
+    public VisitaSeguimientoCaso getVisitaSeguimientoCaso(String filtro, String orden) throws SQLException {
+    	VisitaSeguimientoCaso mVisitaSeguimientoCaso = null;
+        Cursor cursor = crearCursor(CasosDBConstants.VISITAS_CASOS_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mVisitaSeguimientoCaso=VisitaSeguimientoCasoHelper.crearVisitaSeguimientoCaso(cursor);
+            ParticipanteCohorteFamiliaCaso caso = this.getParticipanteCohorteFamiliaCaso(CasosDBConstants.codigoCasoParticipante + "='" +cursor.getString(cursor.getColumnIndex(CasosDBConstants.codigoCasoParticipante)) +"'", null);
+            mVisitaSeguimientoCaso.setCodigoParticipanteCaso(caso);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mVisitaSeguimientoCaso;
+    }
+    //Obtener una lista de VisitaSeguimientoCaso de la base de datos
+    public List<VisitaSeguimientoCaso> getVisitaSeguimientoCasos(String filtro, String orden) throws SQLException {
+        List<VisitaSeguimientoCaso> mVisitaSeguimientoCasos = new ArrayList<VisitaSeguimientoCaso>();
+        Cursor cursor = crearCursor(CasosDBConstants.VISITAS_CASOS_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mVisitaSeguimientoCasos.clear();
+            do{
+            	VisitaSeguimientoCaso mVisitaSeguimientoCaso = null;
+                mVisitaSeguimientoCaso = VisitaSeguimientoCasoHelper.crearVisitaSeguimientoCaso(cursor);
+                ParticipanteCohorteFamiliaCaso caso = this.getParticipanteCohorteFamiliaCaso(CasosDBConstants.codigoCasoParticipante + "='" +cursor.getString(cursor.getColumnIndex(CasosDBConstants.codigoCasoParticipante)) +"'", null);
+                mVisitaSeguimientoCaso.setCodigoParticipanteCaso(caso);
+                mVisitaSeguimientoCasos.add(mVisitaSeguimientoCaso);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mVisitaSeguimientoCasos;
+    }
+    
 }

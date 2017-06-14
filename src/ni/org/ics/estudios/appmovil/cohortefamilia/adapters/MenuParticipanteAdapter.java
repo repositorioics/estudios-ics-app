@@ -17,8 +17,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
     private boolean habilitarLactancia = false;
-    private boolean habilitarBhc = false;
-    private boolean habilitarRojo = false;
+    private boolean habilitarDatosParto = false;
     private boolean existeencuestaParticip = false;
     private boolean existeencuestaParticipSA = false;
     private boolean existeencuestaParto = false;
@@ -71,10 +70,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 } else habilitarLactancia = false;
 
                 //BHC y Paxgene (2 años a 13 años y 14 años y mas)
-                habilitarBhc = anios >= 2;
-                //Rojo (6 meses y menos de 2 años y 2 años a 13 años Y 14 años y mas)
-                if (anios == 0) habilitarRojo = meses >= 6;
-                else habilitarRojo = anios >= 1;
+                habilitarDatosParto = anios < 18;
             }
         }
 
@@ -89,7 +85,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 habilitado = !existeencuestaParticip;
                 break;
             case OPCION_ENCUESTA_DATOSPARTO:
-                habilitado = !existeencuestaParto;
+                habilitado = habilitarDatosParto && !existeencuestaParto;
                 break;
             case OPCION_ENCUESTA_PESOTALLA:
                 habilitado = !existeencuestaPeso;
@@ -134,11 +130,16 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
             case OPCION_ENCUESTA_DATOSPARTO:
-                if (existeencuestaParto) {
-                    textView.setTextColor(Color.BLUE);
-                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
-                }else{
-                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
+                if (!habilitarDatosParto) {
+                    textView.setTextColor(Color.GRAY);
+                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+                }else {
+                    if (existeencuestaParto) {
+                        textView.setTextColor(Color.BLUE);
+                        textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
+                    } else {
+                        textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
+                    }
                 }
                 img=getContext().getResources().getDrawable(R.drawable.ic_baby);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
@@ -172,24 +173,6 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 img=getContext().getResources().getDrawable(R.drawable.ic_samples);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
-            /*
-            case 4:
-                if (!habilitarBhc) {
-                    textView.setTextColor(Color.GRAY);
-                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
-                }
-                img=getContext().getResources().getDrawable(R.drawable.bhctubes);
-                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                break;
-            case 5:
-                if (!habilitarRojo) {
-                    textView.setTextColor(Color.GRAY);
-                    textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
-                }
-                img=getContext().getResources().getDrawable(R.drawable.redtubes);
-                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                break;
-            */
             case OPCION_ENCUESTA_PARTICIPANTESA:
                 if (!habilitarEncuestaParticipSA) {
                     textView.setTextColor(Color.GRAY);

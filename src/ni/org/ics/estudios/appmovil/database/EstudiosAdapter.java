@@ -112,7 +112,8 @@ public class EstudiosAdapter {
 			onCreate(db);
 			if(oldVersion==0) return;
 			if(oldVersion==1){
-				
+                db.execSQL("ALTER TABLE " + MainDBConstants.VISITA_TABLE + " ADD COLUMN " + MainDBConstants.otraRazonVisitaNoExitosa + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.PRETAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.otraRazonNoAceptaTamizajeCasa + " text");
 			}
 		}	
 	}

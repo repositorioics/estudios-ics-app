@@ -1,62 +1,40 @@
-package ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata;
+package ni.org.ics.estudios.appmovil.cohortefamilia.activities.editdata;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.*;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import ni.org.ics.estudios.appmovil.MyIcsApplication;
+import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaCuartosActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.CuartoForm;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.CuartoFormLabels;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
+import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+import ni.org.ics.estudios.appmovil.utils.*;
+import ni.org.ics.estudios.appmovil.wizard.model.*;
+import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
+import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
+import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import ni.org.ics.estudios.appmovil.MyIcsApplication;
-import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaTelefonosActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.TelefonoContactoForm;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.TelefonoContactoFormLabels;
-import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.Participante;
-import ni.org.ics.estudios.appmovil.domain.TelefonoContacto;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
-import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
-import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
-import ni.org.ics.estudios.appmovil.utils.FileUtils;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
-import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
-import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
-import ni.org.ics.estudios.appmovil.wizard.model.DatePage;
-import ni.org.ics.estudios.appmovil.wizard.model.LabelPage;
-import ni.org.ics.estudios.appmovil.wizard.model.ModelCallbacks;
-import ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage;
-import ni.org.ics.estudios.appmovil.wizard.model.NewDatePage;
-import ni.org.ics.estudios.appmovil.wizard.model.NumberPage;
-import ni.org.ics.estudios.appmovil.wizard.model.Page;
-import ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage;
-import ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage;
-import ni.org.ics.estudios.appmovil.wizard.model.TextPage;
-import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
-import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
-import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 
-
-public class NuevoTelefonoContactoActivity extends FragmentActivity implements
+public class EditarCuartoActivity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -72,12 +50,14 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
     private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
+    private static Cuarto cuarto = new Cuarto();
 	private String username;
 	private SharedPreferences settings;
 	private static final int EXIT = 1;
 	private AlertDialog alertDialog;
 	private boolean notificarCambios = true;
-	private TelefonoContactoFormLabels labels = new TelefonoContactoFormLabels();
+	private CuartoFormLabels labels = new CuartoFormLabels();
+	public static final String SIMPLE_DATA_KEY = "_";
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -93,15 +73,37 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
-		infoMovil = new DeviceInfo(NuevoTelefonoContactoActivity.this);
-		casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+		infoMovil = new DeviceInfo(EditarCuartoActivity.this);
+        casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+		cuarto = (Cuarto) getIntent().getExtras().getSerializable(Constants.CUARTO);
+		
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        mWizardModel = new TelefonoContactoForm(this,mPass);
+        mWizardModel = new CuartoForm(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
+        //Abre la base de datos
+		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+		estudiosAdapter.open();
+        if (cuarto != null) {
+        	Bundle dato = null;
+        	Page modifPage;
+	        if(cuarto.getCodigoHabitacion()!= null){
+	        	modifPage = (NumberPage) mWizardModel.findByKey(labels.getCodigoHabitacion());
+	        	dato = new Bundle();
+	        	dato.putString(SIMPLE_DATA_KEY, cuarto.getCodigoHabitacion());
+	        	modifPage.resetData(dato);
+	        }	
+	        if(cuarto.getCantidadCamas()!= null){
+	        	modifPage = (NumberPage) mWizardModel.findByKey(labels.getCantidadCamas());
+		        dato = new Bundle();
+		        dato.putString(SIMPLE_DATA_KEY, cuarto.getCantidadCamas().toString());
+		        modifPage.resetData(dato);
+		        modifPage.setmVisible(true);
+	        }
+        }
+        estudiosAdapter.close();
         mWizardModel.registerListener(this);
-
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
@@ -175,51 +177,52 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
-        onPageTreeChanged(); 
+        
+        onPageTreeChangedInitial(); 
     }
     
 	@Override
 	public void onBackPressed (){
 		createDialog(EXIT);
 	}
-	
-	private void createDialog(int dialog) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		switch(dialog){
-		case EXIT:
-			builder.setTitle(this.getString(R.string.confirm));
-			builder.setMessage(this.getString(R.string.exiting));
-			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					// Finish app
-					Bundle arguments = new Bundle();
-					Intent i;
-					if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
-					i = new Intent(getApplicationContext(),
-							ListaTelefonosActivity.class);
-					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					i.putExtras(arguments);
-					startActivity(i);
-					Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.err_cancel),Toast.LENGTH_LONG);
-					toast.show();
-					dialog.dismiss();
-					finish();
-				}
-			});
-			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// Do nothing
-					dialog.dismiss();
-				}
-			});
-			break;		
-		default:
-			break;
-		}
-		alertDialog = builder.create();
-		alertDialog.show();
-	}
+
+    private void createDialog(int dialog) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        switch(dialog){
+            case EXIT:
+                builder.setTitle(this.getString(R.string.confirm));
+                builder.setMessage(this.getString(R.string.exiting));
+                builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Finish app
+                        Bundle arguments = new Bundle();
+                        Intent i;
+                        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+                        i = new Intent(getApplicationContext(),
+                                ListaCuartosActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.err_cancel),Toast.LENGTH_LONG);
+                        toast.show();
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+                builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+        alertDialog = builder.create();
+        alertDialog.show();
+    }
 
     @Override
     public void onPageTreeChanged() {
@@ -227,6 +230,15 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
         mStepPagerStrip.setPageCount(mCurrentPageSequence.size() + 1); // + 1 = review step
         mPagerAdapter.notifyDataSetChanged();
         updateBottomBar();
+    }
+    
+    public void onPageTreeChangedInitial() {
+        mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
+        mStepPagerStrip.setPageCount(mCurrentPageSequence.size() + 1); // + 1 = review step
+        mPagerAdapter.notifyDataSetChanged();
+        if (recalculateCutOffPage()) {
+            updateBottomBar();
+        }
     }
 
     private void updateBottomBar() {
@@ -280,13 +292,17 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
 
     @Override
     public void onPageDataChanged(Page page) {
-    	updateModel(page);
-    	updateConstrains();
-        if (recalculateCutOffPage()) {
-        	if (notificarCambios) mPagerAdapter.notifyDataSetChanged();
-            updateBottomBar();
-        }
-        notificarCambios = true;
+    	try{
+	    	updateModel(page);
+	    	updateConstrains();
+	        if (recalculateCutOffPage()) {
+	        	if (notificarCambios) mPagerAdapter.notifyDataSetChanged();
+	            updateBottomBar();
+	        }
+	        notificarCambios = true;
+	    }catch (Exception ex){
+	        ex.printStackTrace();
+	    }
     }
 
     @Override
@@ -307,7 +323,7 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
             if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")) {
             	NumberPage np = (NumberPage) page;
             	String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-        		if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Integer.valueOf(valor) || np.getmLowerOrEqualsThan() < Integer.valueOf(valor)))
+        		if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Double.valueOf(valor) || np.getmLowerOrEqualsThan() < Double.valueOf(valor)))
         				|| (np.ismValPattern() && !valor.matches(np.getmPattern()))){
         			cutOffPage = i;
         			break;
@@ -339,18 +355,6 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
     }
     
     public void updateModel(Page page){
-    	try{
-    		boolean visible = false;
-    		if (page.getTitle().equals(labels.getTipo())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Celular");
-                changeStatus(mWizardModel.findByKey(labels.getOperadora()), visible);
-                notificarCambios = false;
-                onPageTreeChanged();
-            }
-    		
-    	}catch (Exception ex){
-            ex.printStackTrace();
-        }
     }
     
     public void changeStatus(Page page, boolean visible){
@@ -359,7 +363,7 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
     		SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")){
-    		BarcodePage modifPage = (BarcodePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    		BarcodePage modifPage = (BarcodePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);;
     	}
     	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.LabelPage")){
     		LabelPage modifPage = (LabelPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
@@ -388,69 +392,62 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
         return (entrada != null && !entrada.isEmpty());
     }
     
+    
     public void saveData(){
-		Map<String, String> mapa = mWizardModel.getAnswers();
-		//Guarda las respuestas en un bundle
-		Bundle datos = new Bundle();
-		for (Map.Entry<String, String> entry : mapa.entrySet()){
-			datos.putString(entry.getKey(), entry.getValue());
-		}
-		
-		//Abre la base de datos
-		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		estudiosAdapter.open();
-		
-		//Obtener datos del bundle para la habitacion
-		String id = infoMovil.getId();
-		
-		String numero = datos.getString(this.getString(R.string.numero));
-		String operadora = datos.getString(this.getString(R.string.operadora));
-		String tipo = datos.getString(this.getString(R.string.tipoTel));
-		String participante = datos.getString(this.getString(R.string.participante));
-		
-		//Crea un nuevo TelefonoContacto
-		TelefonoContacto tel = new TelefonoContacto();
-		tel.setId(id);
-		tel.setCasa(casaCHF.getCasa());
-		if (tieneValor(tipo)) {
-			MessageResource catTipo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipo + "' and " + CatalogosDBConstants.catRoot + "='CAT_TIPO_TEL'", null);
-			tel.setTipo(catTipo.getCatKey());
-		}
-		if (tieneValor(operadora)) {
-			MessageResource catOperadora = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + operadora + "' and " + CatalogosDBConstants.catRoot + "='CAT_OPER_TEL'", null);
-			tel.setOperadora(catOperadora.getCatKey());
-		}
+        try {
+            Map<String, String> mapa = mWizardModel.getAnswers();
+            //Guarda las respuestas en un bundle
+            Bundle datos = new Bundle();
+            for (Map.Entry<String, String> entry : mapa.entrySet()) {
+                datos.putString(entry.getKey(), entry.getValue());
+            }
 
-		Integer codigo = 0;
-		if (tieneValor(participante)) {
-			codigo = Integer.parseInt(participante);
-			Participante part = estudiosAdapter.getParticipante(MainDBConstants.codigo +" = "+ codigo , null);
-			tel.setParticipante(part);
-		}
-		
-		tel.setNumero(numero);
-		tel.setRecordDate(new Date());
-		tel.setRecordUser(username);
-		tel.setDeviceid(infoMovil.getDeviceId());
-		tel.setEstado('0');
-		tel.setPasive('0');
-		
-		//Guarda el telefono
-		estudiosAdapter.crearTelefonoContacto(tel);
-        estudiosAdapter.close();
-		Bundle arguments = new Bundle();
-		Intent i;
-		if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
-		i = new Intent(getApplicationContext(),
-				ListaTelefonosActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		i.putExtras(arguments);
-		startActivity(i);
-		Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
-		toast.show();
-		finish();
-		
+            //Obtener datos del bundle para el cuarto
+            String codigoHabitacion = datos.getString(this.getString(R.string.codigoHabitacion));
+            String cantidadCamas = datos.getString(this.getString(R.string.cantidadCamas));
+
+            //Abre la base de datos
+            String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+            estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
+            estudiosAdapter.open();
+
+
+            if (tieneValor(codigoHabitacion)) {
+                cuarto.setCodigoHabitacion(codigoHabitacion);
+            } else {
+                cuarto.setCodigoHabitacion(null);
+            }
+            if (tieneValor(cantidadCamas)) {
+                cuarto.setCantidadCamas(Integer.parseInt(cantidadCamas));
+            } else {
+                cuarto.setCantidadCamas(null);
+            }
+
+            cuarto.setRecordDate(new Date());
+            cuarto.setRecordUser(username);
+            cuarto.setDeviceid(infoMovil.getDeviceId());
+            cuarto.setEstado('0');
+            cuarto.setPasive('0');
+
+            //Guarda el cuarto
+            estudiosAdapter.editarCuarto(cuarto);
+            Bundle arguments = new Bundle();
+            Intent i;
+            if (casaCHF != null) arguments.putSerializable(Constants.CASA, casaCHF);
+            i = new Intent(getApplicationContext(),
+                    ListaCuartosActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtras(arguments);
+            startActivity(i);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_LONG);
+            toast.show();
+            finish();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            if (estudiosAdapter != null)
+                estudiosAdapter.close();
+        }
     }
 
 
@@ -473,10 +470,12 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
 
         @Override
         public int getItemPosition(Object object) {
-        	if (object == mPrimaryItem) {
+            // TODO: be smarter about this
+            if (object == mPrimaryItem) {
                 // Re-use the current fragment (its position never changes)
                 return POSITION_UNCHANGED;
             }
+
             return POSITION_NONE;
         }
 

@@ -348,7 +348,8 @@ public class NuevaAreaActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
     		if (page.getTitle().equals(labels.getAncho())) {
-    			if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
+    			if (page.getData().get(Page.SIMPLE_DATA_KEY)!=null && tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())
+                        && mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY)!=null && tieneValor(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
     				Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString());
     				mWizardModel.findByKey(labels.getTotalM2()).setHint(area.toString());
     			}
@@ -359,7 +360,8 @@ public class NuevaAreaActivity extends FragmentActivity implements
                 onPageTreeChanged();
     		}
     		if (page.getTitle().equals(labels.getLargo())) {
-    			if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
+    			if (page.getData().get(Page.SIMPLE_DATA_KEY)!=null && tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())
+                        && mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY)!=null && tieneValor(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
     				Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString());
     				mWizardModel.findByKey(labels.getTotalM2()).setHint(area.toString());
     			}

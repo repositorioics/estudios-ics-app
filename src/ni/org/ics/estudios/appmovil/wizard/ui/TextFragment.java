@@ -99,13 +99,14 @@ public class TextFragment extends Fragment {
 					int count) {
 			}
 
-			@Override
-			public void afterTextChanged(Editable editable) {
-				mPage.getData().putString(Page.SIMPLE_DATA_KEY,
-						(editable != null) ? editable.toString() : null);
-				mPage.notifyDataChanged();
-
-			}
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable != null && editable.length() >= 0 && isResumed()) {
+                    mPage.getData().putString(Page.SIMPLE_DATA_KEY,
+                            (editable != null) ? editable.toString() : null);
+                    mPage.notifyDataChanged();
+                }
+            }
 
 		});
 	}
@@ -113,5 +114,5 @@ public class TextFragment extends Fragment {
 	protected void setInputType() {
 		mEditTextInput.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
 		mEditTextInput.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
-	}	
+	}
 }

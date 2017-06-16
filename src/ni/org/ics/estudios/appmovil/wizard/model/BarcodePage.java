@@ -15,7 +15,7 @@ public class BarcodePage extends Page {
 	protected boolean mValRange = false;
 
 	public BarcodePage(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean isVisible) {
-		super(callbacks, title, hintText, textColor, isVisible);
+		super(callbacks, title, hintText, textColor, isVisible, true);
 	}
 
 	@Override

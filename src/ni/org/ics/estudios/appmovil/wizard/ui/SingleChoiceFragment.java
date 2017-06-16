@@ -25,10 +25,7 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,8 +79,11 @@ public class SingleChoiceFragment extends ListFragment {
         
 		mTitleTextInput = (TextView) rootView.findViewById(android.R.id.title);
 		mTitleTextInput.setText(mPage.getTitle());
-		mTitleTextInput.setTextColor(Color.parseColor(mPage.getTextColor()));
-		
+        if (!mPage.ismEnabled()) {
+            mTitleTextInput.setTextColor(Color.GRAY);
+        }else {
+            mTitleTextInput.setTextColor(Color.parseColor(mPage.getTextColor()));
+        }
 		mHintTextInput = (TextView) rootView.findViewById(R.id.label_hint);
 		mHintTextInput.setText(mPage.getHint());
 		mHintTextInput.setTextColor(Color.parseColor(mPage.getmHintTextColor()));
@@ -94,6 +94,7 @@ public class SingleChoiceFragment extends ListFragment {
                 android.R.id.text1,
                 mChoices));
         listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        listView.setEnabled(mPage.ismEnabled());
 
         // Pre-select currently selected item.
         new Handler().post(new Runnable() {

@@ -446,77 +446,80 @@ public class EditarPersonaCamaActivity extends FragmentActivity implements
     
     
     public void saveData(){
-		Map<String, String> mapa = mWizardModel.getAnswers();
-		//Guarda las respuestas en un bundle
-		Bundle datos = new Bundle();
-		for (Map.Entry<String, String> entry : mapa.entrySet()){
-			datos.putString(entry.getKey(), entry.getValue());
-		}
+        try {
+            Map<String, String> mapa = mWizardModel.getAnswers();
+            //Guarda las respuestas en un bundle
+            Bundle datos = new Bundle();
+            for (Map.Entry<String, String> entry : mapa.entrySet()) {
+                datos.putString(entry.getKey(), entry.getValue());
+            }
 
-		//Obtener datos del bundle para la habitacion
-		//String id = infoMovil.getId();
-		String estaEnEstudio = datos.getString(this.getString(R.string.estaEnEstudio));
-		String participante = datos.getString(this.getString(R.string.participante));
-		String sexo = datos.getString(this.getString(R.string.sexo));
-		String edad = datos.getString(this.getString(R.string.edad));
-		
-		//Abre la base de datos
-		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		estudiosAdapter.open();
-		
-		if (tieneValor(estaEnEstudio)) {
-			MessageResource catEstaEnEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + estaEnEstudio + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-			if (catEstaEnEstudio!=null) pc.setEstaEnEstudio(catEstaEnEstudio.getCatKey());
-		}
-		else{
-			pc.setEstaEnEstudio(null);
-		}
-		if (tieneValor(sexo)) {
-			MessageResource catSexo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + sexo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SEXO'", null);
-			if (catSexo!=null) pc.setSexo(catSexo.getCatKey());
-		}
-		else{
-			pc.setSexo(null);
-		}
-		if(tieneValor(edad)) {
-			pc.setEdad(Integer.parseInt(edad));
-		}
-		else{
-			pc.setEdad(null);
-		}
-		
-		Integer codigo = 0;
-		if (tieneValor(participante)) {
-			codigo = Integer.parseInt(participante);
-			Participante part = estudiosAdapter.getParticipante(MainDBConstants.codigo +" = "+ codigo , null);
-			pc.setParticipante(part);
-		}
-		else{
-			pc.setParticipante(null);
-		}
-		
-		pc.setRecordDate(new Date());
-		pc.setRecordUser(username);
-		pc.setDeviceid(infoMovil.getDeviceId());
-		pc.setEstado('0');
-		pc.setPasive('0');
-		
-		//Guarda la persona en la cama
-		//TODO validar que sea de la casa, validar que no sea repetido
-		estudiosAdapter.editarPersonaCama(pc);
-		Bundle arguments = new Bundle();
-		Intent i;
-		if (cama!=null) arguments.putSerializable(Constants.CAMA , cama);
-		i = new Intent(getApplicationContext(),
-				ListaPersonasCamaActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		i.putExtras(arguments);
-		startActivity(i);
-		Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
-		toast.show();
-		finish();
-		
+            //Obtener datos del bundle para la habitacion
+            //String id = infoMovil.getId();
+            String estaEnEstudio = datos.getString(this.getString(R.string.estaEnEstudio));
+            String participante = datos.getString(this.getString(R.string.participante));
+            String sexo = datos.getString(this.getString(R.string.sexo));
+            String edad = datos.getString(this.getString(R.string.edad));
+
+            //Abre la base de datos
+            String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+            estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
+            estudiosAdapter.open();
+
+            if (tieneValor(estaEnEstudio)) {
+                MessageResource catEstaEnEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + estaEnEstudio + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                if (catEstaEnEstudio != null) pc.setEstaEnEstudio(catEstaEnEstudio.getCatKey());
+            } else {
+                pc.setEstaEnEstudio(null);
+            }
+            if (tieneValor(sexo)) {
+                MessageResource catSexo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + sexo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SEXO'", null);
+                if (catSexo != null) pc.setSexo(catSexo.getCatKey());
+            } else {
+                pc.setSexo(null);
+            }
+            if (tieneValor(edad)) {
+                pc.setEdad(Integer.parseInt(edad));
+            } else {
+                pc.setEdad(null);
+            }
+
+            Integer codigo = 0;
+            if (tieneValor(participante)) {
+                codigo = Integer.parseInt(participante);
+                Participante part = estudiosAdapter.getParticipante(MainDBConstants.codigo + " = " + codigo, null);
+                pc.setParticipante(part);
+            } else {
+                pc.setParticipante(null);
+            }
+
+            pc.setRecordDate(new Date());
+            pc.setRecordUser(username);
+            pc.setDeviceid(infoMovil.getDeviceId());
+            pc.setEstado('0');
+            pc.setPasive('0');
+
+            //Guarda la persona en la cama
+            //TODO validar que sea de la casa, validar que no sea repetido
+            estudiosAdapter.editarPersonaCama(pc);
+            estudiosAdapter.close();
+            Bundle arguments = new Bundle();
+            Intent i;
+            if (cama != null) arguments.putSerializable(Constants.CAMA, cama);
+            i = new Intent(getApplicationContext(),
+                    ListaPersonasCamaActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtras(arguments);
+            startActivity(i);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_LONG);
+            toast.show();
+            finish();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            if (estudiosAdapter != null)
+                estudiosAdapter.close();
+        }
     }
 
 

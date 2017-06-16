@@ -14,7 +14,7 @@ public class TextPage extends Page {
 	protected String mPattern="";
 
 	public TextPage(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean isVisible) {
-		super(callbacks, title, hintText, textColor, isVisible);
+		super(callbacks, title, hintText, textColor, isVisible, true);
 	}
 
 	@Override

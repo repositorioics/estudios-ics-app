@@ -17,7 +17,7 @@ public class TelefonoContactoFormLabels {
 	
 	public TelefonoContactoFormLabels(){
 		Resources res = MyIcsApplication.getContext().getResources();
-		tipo = res.getString(R.string.tipo);
+		tipo = res.getString(R.string.tipoTel);
 		operadora = res.getString(R.string.operadora);
 		numero = res.getString(R.string.numero);
 		participante = res.getString(R.string.participante);

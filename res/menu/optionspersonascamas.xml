@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <!--<item android:id="@+id/MENU_EDITAR_PCAMA" 
-        android:title="@string/edit"></item>-->
+    <item android:id="@+id/MENU_EDITAR_PCAMA"
+        android:title="@string/edit"></item>
     <item android:id="@+id/MENU_BORRAR_PCAMA" 
         android:title="@string/delete"></item>
 </menu>

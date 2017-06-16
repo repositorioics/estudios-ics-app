@@ -32,7 +32,7 @@ public class SingleFixedChoicePage extends Page {
     protected ArrayList<String> mChoices = new ArrayList<String>();
 
     public SingleFixedChoicePage(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean isVisible) {
-        super(callbacks, title, hintText, textColor, isVisible);
+        super(callbacks, title, hintText, textColor, isVisible, true);
     }
 
     @Override

@@ -128,9 +128,9 @@ public class ListaPersonasCamaActivity extends AbstractAsyncListActivity {
 		case R.id.MENU_BORRAR_PCAMA:
 			createDialog(BORRAR_PERSONA);
 			return true;
-		/*case R.id.MENU_EDITAR_PCAMA:
+		case R.id.MENU_EDITAR_PCAMA:
 			createDialog(EDITAR_PERSONA);	
-			return true;*/
+			return true;
 		default:
 			return super.onContextItemSelected(item);
 		}

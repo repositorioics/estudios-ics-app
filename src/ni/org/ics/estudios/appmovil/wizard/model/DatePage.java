@@ -16,7 +16,7 @@ public class DatePage extends Page {
 	protected boolean mValRange = false;
 
 	public DatePage(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean isVisible) {
-		super(callbacks, title, hintText, textColor, isVisible);
+		super(callbacks, title, hintText, textColor, isVisible, true);
 	}
 
 	@Override

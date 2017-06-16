@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/MENU_VER_PCAMAS" 
         android:title="@string/view_pbed"></item>
-    <!-- item android:id="@+id/MENU_EDITAR_CAMA" 
-        android:title="@string/edit"></item>-->
+    <item android:id="@+id/MENU_EDITAR_CAMA"
+        android:title="@string/edit"></item>
     <item android:id="@+id/MENU_BORRAR_CAMA" 
         android:title="@string/delete"></item>
 </menu>

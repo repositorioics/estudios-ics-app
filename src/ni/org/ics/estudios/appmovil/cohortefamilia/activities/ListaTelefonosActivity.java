@@ -9,6 +9,7 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.editdata.EditarTelefonoContactoActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTelefonoContactoActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.TelefonoContactoAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
@@ -45,8 +46,9 @@ public class ListaTelefonosActivity extends AbstractAsyncListActivity {
 	private ArrayAdapter<TelefonoContacto> mTelefonoContactoAdapter;
 	private List<TelefonoContacto> mTelefonosContacto = new ArrayList<TelefonoContacto>();
 	private EstudiosAdapter estudiosAdapter;
-	
-	private static final int BORRAR_TEL = 1;
+
+    private static final int EDITAR_TEL = 1;
+	private static final int BORRAR_TEL = 2;
 	private AlertDialog alertDialog;
 
 	@Override
@@ -124,7 +126,10 @@ public class ListaTelefonosActivity extends AbstractAsyncListActivity {
 		switch(item.getItemId()) {
 		case R.id.MENU_BORRAR_PCAMA:
 			createDialog(BORRAR_TEL);
-			return true;	
+			return true;
+            case R.id.MENU_EDITAR_PCAMA:
+            createDialog(EDITAR_TEL);
+            return true;
 		default:
 			return super.onContextItemSelected(item);
 		}
@@ -149,7 +154,24 @@ public class ListaTelefonosActivity extends AbstractAsyncListActivity {
 					dialog.dismiss();
 				}
 			});
-			break;		
+			break;
+            case EDITAR_TEL:
+                builder.setTitle(this.getString(R.string.confirm));
+                builder.setMessage(getString(R.string.edit_phone));
+                builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        new OpenDataEditActivityTask().execute();
+                    }
+                });
+                builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+                break;
 		default:
 			break;
 		}
@@ -293,5 +315,41 @@ public class ListaTelefonosActivity extends AbstractAsyncListActivity {
 		}
 
 	}
+
+    // ***************************************
+    // Private classes
+    // ***************************************
+    private class OpenDataEditActivityTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            // before the request begins, show a progress indicator
+            showLoadingProgressDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... values) {
+            try {
+                Bundle arguments = new Bundle();
+                if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+                if (telefono!=null) arguments.putSerializable(Constants.TELEFONO , telefono);
+                Intent i = new Intent(getApplicationContext(),
+                        EditarTelefonoContactoActivity.class);
+                i.putExtras(arguments);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+            } catch (Exception e) {
+                Log.e(TAG, e.getLocalizedMessage(), e);
+                return "error";
+            }
+            return "exito";
+        }
+
+        protected void onPostExecute(String resultado) {
+            // after the request completes, hide the progress indicator
+            dismissProgressDialog();
+        }
+
+    }
 
 }

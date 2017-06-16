@@ -4,8 +4,8 @@
         android:title="@string/view_bath"></item>
     <item android:id="@+id/MENU_VER_VENTANAS" 
         android:title="@string/view_window"></item>
-    <!--<item android:id="@+id/MENU_EDITAR_CUARTO" 
-        android:title="@string/edit"></item>-->
+    <item android:id="@+id/MENU_EDITAR_AREA"
+        android:title="@string/edit"></item>
     <item android:id="@+id/MENU_BORRAR_AREA" 
         android:title="@string/delete"></item>
 </menu>

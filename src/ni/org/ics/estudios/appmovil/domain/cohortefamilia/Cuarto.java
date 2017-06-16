@@ -17,7 +17,7 @@ public class Cuarto extends BaseMetaData {
 	private String codigo;
 	private CasaCohorteFamilia casa;
 	private String codigoHabitacion;
-    private int cantidadCamas;
+    private Integer cantidadCamas;
     
     
     public String getCodigo() {
@@ -47,11 +47,11 @@ public class Cuarto extends BaseMetaData {
     }
 
 
-    public int getCantidadCamas() {
+    public Integer getCantidadCamas() {
         return cantidadCamas;
     }
 
-    public void setCantidadCamas(int cantidadCamas) {
+    public void setCantidadCamas(Integer cantidadCamas) {
         this.cantidadCamas = cantidadCamas;
     }
 

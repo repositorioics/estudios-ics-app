@@ -11,7 +11,7 @@ public class LabelPage extends Page {
 	protected String mPattern="";
 
 	public LabelPage(ModelCallbacks callbacks, String title, String hintText, String textColor,boolean isVisible) {
-		super(callbacks, title, hintText, textColor, isVisible);
+		super(callbacks, title, hintText, textColor, isVisible, true);
 	}
 
 	@Override

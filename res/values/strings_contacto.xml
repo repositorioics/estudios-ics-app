@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="add_phone">Nuevo teléfono</string>
-	<string name="remove_phone">Quitar teléfono</string>
+	<string name="remove_phone">Quitar teléfono?</string>
+    <string name="edit_phone">Editar teléfono?</string>
 	<string name="tipoTel">Tipo de teléfono</string>
 	<string name="operadora">Compañía operadora</string>
    	<string name="numero">Número de teléfono</string>

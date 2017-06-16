@@ -119,10 +119,11 @@ public class ParticipanteFragment extends Fragment {
 
 			@Override
 			public void afterTextChanged(Editable editable) {
-				mPage.getData().putString(Page.SIMPLE_DATA_KEY,
-						(editable != null) ? editable.toString() : null);
-				mPage.notifyDataChanged();
-
+                if (editable != null && editable.length() >= 0 && isResumed()) {
+                    mPage.getData().putString(Page.SIMPLE_DATA_KEY,
+                            (editable != null) ? editable.toString() : null);
+                    mPage.notifyDataChanged();
+                }
 			}
 
 		});

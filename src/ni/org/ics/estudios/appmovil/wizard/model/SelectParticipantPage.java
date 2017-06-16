@@ -10,7 +10,7 @@ public class SelectParticipantPage extends Page {
 	
 
 	public SelectParticipantPage(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean isVisible) {
-		super(callbacks, title, hintText, textColor, isVisible);
+		super(callbacks, title, hintText, textColor, isVisible, true);
 	}
 
 	@Override

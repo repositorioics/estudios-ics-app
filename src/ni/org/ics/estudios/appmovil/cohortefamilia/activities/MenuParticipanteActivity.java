@@ -21,6 +21,10 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.editdata.EditarEncuestaDatosPartoBBActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.editdata.EditarEncuestaLactanciaMatActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.editdata.EditarEncuestaParticipanteActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.editdata.EditarEncuestaPesoTallaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.*;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuParticipanteAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
@@ -33,6 +37,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaPeso
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaParticipanteSAActivity;
+import ni.org.ics.estudios.appmovil.seroprevalencia.activities.editdata.EditarEncuestaParticipanteSAActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
 import ni.org.ics.estudios.appmovil.utils.SeroprevalenciaDBConstants;
@@ -87,28 +92,39 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 String tituloEncuesta = "";
+                boolean existeEncuesta = false;
                 switch (position){
                     case OPCION_ENCUESTA_PARTICIPANTE:
                         tituloEncuesta = getString(R.string.new_participant_survey);
+                        existeEncuesta = existeencuestaParticip;
                         break;
                     case OPCION_ENCUESTA_DATOSPARTO:
                         tituloEncuesta = getString(R.string.new_birthdata_survey);
+                        existeEncuesta = existeencuestaParto;
                         break;
                     case OPCION_ENCUESTA_PESOTALLA:
                         tituloEncuesta = getString(R.string.new_Weighheight_survey);
+                        existeEncuesta = existeencuestaPeso;
                         break;
                     case OPCION_ENCUESTA_LACTANCIA:
                         tituloEncuesta = getString(R.string.new_breastfeed_survey);
+                        existeEncuesta = existeencuestaLact;
                         break;
                     case OPCION_ENCUESTA_MUESTRAS:
                         crearFomulario(position); break;
                     case OPCION_ENCUESTA_PARTICIPANTESA:
                         tituloEncuesta = getString(R.string.new_participant_sa_survey);
+                        existeEncuesta = existeencuestaParticipSA;
                         break;
                     default:
                         break;
                 }
-                if (!tituloEncuesta.isEmpty()) createDialog(position, tituloEncuesta);
+                if (!tituloEncuesta.isEmpty()){
+                    if (!existeEncuesta)
+                        createDialog(position, tituloEncuesta);
+                    else
+                        createEditDialog(position, tituloEncuesta);
+                }
 
             }
         });
@@ -198,6 +214,28 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         alertDialog = builder.create();
         alertDialog.show();
     }
+
+    private void createEditDialog(final int opcion, final String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(this.getString(R.string.confirm));
+        builder.setMessage(String.format(getString(R.string.edit_info_participant), mensaje)+"\n"+getString(R.string.code)+": " + participanteCHF.getParticipante().getCodigo() + " - " + participanteCHF.getParticipante().getNombre1() + " " + participanteCHF.getParticipante().getApellido1());
+        builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                crearFomulario(opcion);
+            }
+        });
+        builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing
+                dialog.dismiss();
+            }
+        });
+        alertDialog = builder.create();
+        alertDialog.show();
+    }
+
     private void crearFomulario(int position){
         if (position == OPCION_ENCUESTA_MUESTRAS) {
             Bundle arguments = new Bundle();
@@ -229,38 +267,88 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
             Bundle arguments = new Bundle();
             Intent i;
             try {
+                estudiosAdapter.open();
+                String filtro = EncuestasDBConstants.participante + "=" + participanteCHF.getParticipante().getCodigo();
                 switch (position){
                     case OPCION_ENCUESTA_PARTICIPANTE:
-                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
-                        i = new Intent(getApplicationContext(),
-                                NuevaEncuestaParticipanteActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtras(arguments);
-                        startActivity(i);
+                        if (!existeencuestaParticip) {
+                            if (participanteCHF != null)
+                                arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
+                            i = new Intent(getApplicationContext(),
+                                    NuevaEncuestaParticipanteActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                        }else{
+                            EncuestaParticipante encuesta = estudiosAdapter.getEncuestasParticipante(filtro, EncuestasDBConstants.participante);
+                            if (encuesta!=null)
+                                arguments.putSerializable(Constants.ENCUESTA, encuesta);
+                            i = new Intent(getApplicationContext(),
+                                    EditarEncuestaParticipanteActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                        }
                         break;
                     case OPCION_ENCUESTA_DATOSPARTO:
-                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
-                        i = new Intent(getApplicationContext(),
-                                NuevaEncuestaDatosPartoBBActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtras(arguments);
-                        startActivity(i);
+                        if (!existeencuestaParto) {
+                            if (participanteCHF != null)
+                                arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
+                            i = new Intent(getApplicationContext(),
+                                    NuevaEncuestaDatosPartoBBActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                        }else{
+                            EncuestaDatosPartoBB encuestaDatosPartoBB = estudiosAdapter.getEncuestasDatosPartoBB(filtro, EncuestasDBConstants.participante);
+                            if (encuestaDatosPartoBB!=null)
+                                arguments.putSerializable(Constants.ENCUESTA, encuestaDatosPartoBB);
+                            i = new Intent(getApplicationContext(),
+                                    EditarEncuestaDatosPartoBBActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                        }
                         break;
                     case OPCION_ENCUESTA_PESOTALLA:
-                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
-                        i = new Intent(getApplicationContext(),
-                                NuevaEncuestaPesoTallaActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtras(arguments);
-                        startActivity(i);
+                        if (!existeencuestaPeso) {
+                            if (participanteCHF != null)
+                                arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
+                            i = new Intent(getApplicationContext(),
+                                    NuevaEncuestaPesoTallaActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                        }else{
+                            EncuestaPesoTalla encuestaPesoTalla = estudiosAdapter.getEncuestasPesoTalla(filtro, EncuestasDBConstants.participante);
+                            if (encuestaPesoTalla!=null)
+                                arguments.putSerializable(Constants.ENCUESTA, encuestaPesoTalla);
+                            i = new Intent(getApplicationContext(),
+                                    EditarEncuestaPesoTallaActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                        }
                         break;
                     case OPCION_ENCUESTA_LACTANCIA:
-                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
-                        i = new Intent(getApplicationContext(),
-                                NuevaEncuestaLactanciaMatActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtras(arguments);
-                        startActivity(i);
+                        if (!existeencuestaLact) {
+                            if (participanteCHF != null)
+                                arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
+                            i = new Intent(getApplicationContext(),
+                                    NuevaEncuestaLactanciaMatActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                        }else{
+                            EncuestaLactanciaMaterna encuestaLactanciaMaterna = estudiosAdapter.getEncuestasLactanciaMaterna(filtro, EncuestasDBConstants.participante);
+                            if (encuestaLactanciaMaterna!=null)
+                                arguments.putSerializable(Constants.ENCUESTA, encuestaLactanciaMaterna);
+                            i = new Intent(getApplicationContext(),
+                                    EditarEncuestaLactanciaMatActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                        }
                         break;
                     /*case OPCION_ENCUESTA_MUESTRAS:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
@@ -271,13 +359,27 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         startActivity(i);
                         break;*/
                     case OPCION_ENCUESTA_PARTICIPANTESA:
-                        if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
-                        if (participanteSA!=null) arguments.putSerializable(Constants.PARTICIPANTE_SA , participanteSA);
-                        i = new Intent(getApplicationContext(),
-                                NuevaEncuestaParticipanteSAActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtras(arguments);
-                        startActivity(i);
+                        if (!existeencuestaParticipSA) {
+                            if (participanteCHF != null)
+                                arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
+                            if (participanteSA != null)
+                                arguments.putSerializable(Constants.PARTICIPANTE_SA, participanteSA);
+                            i = new Intent(getApplicationContext(),
+                                    NuevaEncuestaParticipanteSAActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                        }else{
+                            arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
+                            EncuestaParticipanteSA encuestaParticipanteSA = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participante + "='" + participanteSA.getParticipante().getCodigo() + "'", null);
+                            if (encuestaParticipanteSA != null)
+                                arguments.putSerializable(Constants.ENCUESTA, encuestaParticipanteSA);
+                            i = new Intent(getApplicationContext(),
+                                    EditarEncuestaParticipanteSAActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                        }
                         break;
                     default:
                         break;
@@ -287,6 +389,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
                 return "error";
+            }finally {
+                estudiosAdapter.close();
             }
             return "exito";
         }

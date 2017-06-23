@@ -76,7 +76,7 @@ public class EncuestaDatosPartoBBForm extends AbstractWizardModel {
         Page tpOtroDocMedEdadGest = new TextPage(this, labels.getOtroDocMedEdadGest(), labels.getOtroDocMedEdadGestHint(), Constants.WIZARD, false).setRequired(true);
         Page scPrematuroSndr = new SingleFixedChoicePage(this,labels.getPrematuroSndr(), "",Constants.WIZARD, true).setChoices(catSndr).setRequired(true);
         Page scPesoBBSndr = new SingleFixedChoicePage(this,labels.getPesoBBSndr(), "",Constants.WIZARD, true).setChoices(catSndr).setRequired(true);
-        Page npPesoBB = new NumberPage(this, labels.getPesoBB(), "", Constants.WIZARD, true).setRangeValidation(true, 1200, 10000).setRequired(true);
+        Page npPesoBB = new NumberPage(this, labels.getPesoBB(), "", Constants.WIZARD, false).setRangeValidation(true, 1200, 10000).setRequired(true);
         Page scDocMedPesoBBSn = new SingleFixedChoicePage(this,labels.getDocMedPesoBBSn(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scDocMedPesoBB = new SingleFixedChoicePage(this,labels.getDocMedPesoBB(), "",Constants.WIZARD, false).setChoices(catDocMedico).setRequired(true);
         Page tpOtroDocMedPesoBB = new TextPage(this, labels.getOtroDocMedPesoBB(), labels.getOtroDocMedPesoBBHint(), Constants.WIZARD, false).setRequired(true);

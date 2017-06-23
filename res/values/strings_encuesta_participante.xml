@@ -2,6 +2,7 @@
 <resources>
 
     <string name="add_info_participant">¿Desea agregar %s para el participante ?</string>
+    <string name="edit_info_participant">¿Desea editar %s para el participante ?</string>
     <string name="exist_survey_participant">Ya existe %s para el participante</string>
     <string name="new_participant_survey">Encuesta Participante</string>
     <!--

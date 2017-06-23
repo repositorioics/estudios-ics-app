@@ -57,8 +57,8 @@ public class EncuestaPesoTallaHelper {
         if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc1)) > 0) mEncuesta.setImc1(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc1)));
         if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc2)) > 0) mEncuesta.setImc2(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc2)));
         if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc3)) > 0) mEncuesta.setImc3(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.imc3)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difPeso)) > 0) mEncuesta.setDifPeso(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difPeso)));
-        if (cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difTalla)) > 0) mEncuesta.setDifTalla(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difTalla)));
+        mEncuesta.setDifPeso(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difPeso)));
+        mEncuesta.setDifTalla(cursor.getDouble(cursor.getColumnIndex(EncuestasDBConstants.difTalla)));
         mEncuesta.setRecurso1(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.recurso1)));
         mEncuesta.setOtrorecurso1(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrorecurso1)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mEncuesta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));

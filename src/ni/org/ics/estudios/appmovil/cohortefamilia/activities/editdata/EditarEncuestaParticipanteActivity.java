@@ -1,4 +1,4 @@
-package ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata;
+package ni.org.ics.estudios.appmovil.cohortefamilia.activities.editdata;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -21,7 +21,6 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteAc
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.EncuestaParticipanteForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.EncuestaParticipanteFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
@@ -42,7 +41,7 @@ import java.util.Map;
  * Created by Miguel Salinas on 5/17/2017.
  * V1.0
  */
-public class NuevaEncuestaParticipanteActivity extends FragmentActivity implements
+public class EditarEncuestaParticipanteActivity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -58,15 +57,16 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
 
-    private EncuestaParticipanteFormLabels labels;
+    private EncuestaParticipanteFormLabels labels = new EncuestaParticipanteFormLabels();
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
-    private static ParticipanteCohorteFamilia participanteCHF = new ParticipanteCohorteFamilia();
+    private static EncuestaParticipante encuesta = new EncuestaParticipante();
     private String username;
     private SharedPreferences settings;
     private static final int EXIT = 1;
     private AlertDialog alertDialog;
     private boolean notificarCambios = true;
+    public static final String SIMPLE_DATA_KEY = "_";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,16 +77,581 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
         username =
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
-        infoMovil = new DeviceInfo(NuevaEncuestaParticipanteActivity.this);
-        participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        infoMovil = new DeviceInfo(EditarEncuestaParticipanteActivity.this);
+        encuesta = (EncuestaParticipante) getIntent().getExtras().getSerializable(Constants.ENCUESTA);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new EncuestaParticipanteForm(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
+
+        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
+        estudiosAdapter.open();
+
+        if (encuesta!=null) {
+            try {
+                Bundle dato = null;
+                Page modifPage;
+                String edad[] = encuesta.getParticipante().getParticipante().getEdad().split("/");
+
+                int anios = 0;
+                if (edad.length > 0)
+                    anios = Integer.valueOf(edad[0]);
+            /*if (anios > 14 && anios <=50 && encuesta.getParticipante().getParticipante().getSexo().matches("F")){
+                changeStatus(mWizardModel.findByKey(labels.getEstaEmbarazada()), true);
+            }
+            if (anios >= 18){
+                changeStatus(mWizardModel.findByKey(labels.getEsAlfabeto()), true);
+                changeStatus(mWizardModel.findByKey(labels.getNivelEducacion()), true);
+                changeStatus(mWizardModel.findByKey(labels.getTrabaja()), true);
+            }
+            if (anios < 18){
+                changeStatus(mWizardModel.findByKey(labels.getVaNinoEscuela()), true);
+                changeStatus(mWizardModel.findByKey(labels.getConQuienViveNino()), true);
+                changeStatus(mWizardModel.findByKey(labels.getPadreEnEstudio()), true);
+                changeStatus(mWizardModel.findByKey(labels.getMadreEnEstudio()), true);
+            }
+            if (anios >=14 && anios < 18){
+                changeStatus(mWizardModel.findByKey(labels.getNinoTrabaja()), true);
+            }
+            if (anios >= 12){
+                changeStatus(mWizardModel.findByKey(labels.getFuma()), true);
+            }
+            */
+                if (anios > 14 && anios <= 50 && encuesta.getParticipante().getParticipante().getSexo().matches("F") && encuesta.getEstaEmbarazada() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getEstaEmbarazada());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getEstaEmbarazada()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (anios > 14 && anios <= 50 && encuesta.getParticipante().getParticipante().getSexo().matches("F") && encuesta.getSemanasEmbarazo() != null) {
+                    modifPage = (NumberPage) mWizardModel.findByKey(labels.getSemanasEmbarazo());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, String.valueOf(encuesta.getSemanasEmbarazo()));
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (anios >= 18 && encuesta.getEsAlfabeto() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getEsAlfabeto());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getEsAlfabeto()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (anios >= 18 && encuesta.getNivelEducacion() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getNivelEducacion());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getNivelEducacion()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NIV_EDU'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (anios >= 18 && encuesta.getTrabaja() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTrabaja());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTrabaja()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getTipoTrabajo() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipoTrabajo());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTipoTrabajo()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TRABAJO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getOcupacionActual() != null) {
+                    modifPage = (TextPage) mWizardModel.findByKey(labels.getOcupacionActual());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, encuesta.getOcupacionActual());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getVaNinoEscuela() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getVaNinoEscuela());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getVaNinoEscuela()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getGradoCursa() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getGradoCursa());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getGradoCursa()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_GRD_EDU'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getTurno() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTurno());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTurno()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TURNO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getCentroEstudio() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCentroEstudio());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getCentroEstudio()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CENTRO_EST'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getNombreCentroEstudio() != null) {
+                    modifPage = (TextPage) mWizardModel.findByKey(labels.getNombreCentroEstudio());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, encuesta.getNombreCentroEstudio());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getDondeCuidanNino() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getDondeCuidanNino());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getDondeCuidanNino()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_CUIDAN_NINO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (anios >= 14 && anios < 18 && encuesta.getNinoTrabaja() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getNinoTrabaja());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getNinoTrabaja()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getOcupacionActualNino() != null) {
+                    modifPage = (TextPage) mWizardModel.findByKey(labels.getOcupacionActualNino());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, encuesta.getOcupacionActualNino());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getCantNinosLugarCuidan() != null) {
+                    modifPage = (NumberPage) mWizardModel.findByKey(labels.getCantNinosLugarCuidan());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, String.valueOf(encuesta.getCantNinosLugarCuidan()));
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getConQuienViveNino() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getConQuienViveNino());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getConQuienViveNino()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_VIVE_NINO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getDescOtroViveNino() != null) {
+                    modifPage = (TextPage) mWizardModel.findByKey(labels.getDescOtroViveNino());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, encuesta.getDescOtroViveNino());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getPadreEnEstudio() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getPadreEnEstudio());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getPadreEnEstudio()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getCodigoPadreEstudio() != null) {
+                    modifPage = (BarcodePage) mWizardModel.findByKey(labels.getCodigoPadreEstudio());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, encuesta.getCodigoPadreEstudio());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getPadreAlfabeto() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getPadreAlfabeto());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getPadreAlfabeto()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getNivelEducacionPadre() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getNivelEducacionPadre());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getNivelEducacionPadre()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NIV_EDU'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getTrabajaPadre() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTrabajaPadre());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTrabajaPadre()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getTipoTrabajoPadre() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipoTrabajoPadre());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTipoTrabajoPadre()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TRABAJO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getMadreEnEstudio() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getMadreEnEstudio());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getMadreEnEstudio()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getCodigoMadreEstudio() != null) {
+                    modifPage = (BarcodePage) mWizardModel.findByKey(labels.getCodigoMadreEstudio());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, encuesta.getCodigoMadreEstudio());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getMadreAlfabeto() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getMadreAlfabeto());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getMadreAlfabeto()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getNivelEducacionMadre() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getNivelEducacionMadre());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getNivelEducacionMadre()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NIV_EDU'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getTrabajaMadre() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTrabajaMadre());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTrabajaMadre()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getTipoTrabajoMadre() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipoTrabajoMadre());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTipoTrabajoMadre()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TRABAJO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (anios >= 12 && encuesta.getFuma() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getFuma());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getFuma()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+
+                    if (catSiNo.getSpanish().equalsIgnoreCase(Constants.YES)) {
+                        modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getPeriodicidadFuma());
+                        catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getPeriodicidadFuma()
+                                + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_FREC_FUMA'", null);
+                        dato = new Bundle();
+                        if (catSiNo != null) dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                        modifPage.resetData(dato);
+                        modifPage.setmVisible(true);
+                    }
+                }
+
+                if (encuesta.getCantidadCigarrillos() != null) {
+                    modifPage = (NumberPage) mWizardModel.findByKey(labels.getCantidadCigarrillos());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, String.valueOf(encuesta.getCantidadCigarrillos()));
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getFumaDentroCasa() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getFumaDentroCasa());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getFumaDentroCasa()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getTuberculosisPulmonarActual() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTuberculosisPulmonarActual());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTuberculosisPulmonarActual()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getFechaDiagnosticoTubPulActual() != null) {
+                    String[] fechaCompuesta = encuesta.getFechaDiagnosticoTubPulActual().split("/");
+                    modifPage = (NumberPage) mWizardModel.findByKey(labels.getAnioFechaDiagnosticoTubPulActual());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, (fechaCompuesta.length > 1 ? fechaCompuesta[1] : fechaCompuesta[0]));
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                    if (fechaCompuesta.length > 1) {
+                        modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getMesFechaDiagnosticoTubPulActual());
+                        MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + fechaCompuesta[0]
+                                + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                        dato = new Bundle();
+                        dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                        modifPage.resetData(dato);
+                        modifPage.setmVisible(true);
+                    }
+                }
+                if (encuesta.getTomaTratamientoTubPulActual() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTomaTratamientoTubPulActual());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTomaTratamientoTubPulActual()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getCompletoTratamientoTubPulActual() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCompletoTratamientoTubPulActual());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getCompletoTratamientoTubPulActual()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getTuberculosisPulmonarPasado() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTuberculosisPulmonarPasado());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTuberculosisPulmonarPasado()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (tieneValor(encuesta.getFechaDiagnosticoTubPulPasadoDes())) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getFechaDiagnosticoTubPulPasadoSn());
+                    dato.putString(SIMPLE_DATA_KEY, Constants.NO);
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getFechaDiagnosticoTubPulPasado() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getFechaDiagnosticoTubPulPasadoSn());
+                    dato.putString(SIMPLE_DATA_KEY, Constants.YES);
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+
+
+                    String[] fechaCompuesta = encuesta.getFechaDiagnosticoTubPulPasado().split("/");
+                    modifPage = (NumberPage) mWizardModel.findByKey(labels.getAnioFechaDiagnosticoTubPulPasado());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, (fechaCompuesta.length > 1 ? fechaCompuesta[1] : fechaCompuesta[0]));
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                    if (fechaCompuesta.length > 1) {
+                        modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getMesFechaDiagnosticoTubPulPasado());
+                        MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + fechaCompuesta[0]
+                                + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                        dato = new Bundle();
+                        dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                        modifPage.resetData(dato);
+                        modifPage.setmVisible(true);
+                    }
+                }
+                if (encuesta.getTomaTratamientoTubPulPasado() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTomaTratamientoTubPulPasado());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTomaTratamientoTubPulPasado()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getCompletoTratamientoTubPulPasado() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCompletoTratamientoTubPulPasado());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getCompletoTratamientoTubPulPasado()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getAlergiaRespiratoria() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAlergiaRespiratoria());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getAlergiaRespiratoria()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getCardiopatia() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCardiopatia());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getCardiopatia()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getEnfermedadPulmonarOC() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getEnfermedadPulmonarOC());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getEnfermedadPulmonarOC()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getDiabetes() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getDiabetes());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getDiabetes()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getPresionAlta() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getPresionAlta());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getPresionAlta()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getAsma() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAsma());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getAsma()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getSilbidoRespirarPechoApretado() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getSilbidoRespirarPechoApretado());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getSilbidoRespirarPechoApretado()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getTosSinFiebreResfriado() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTosSinFiebreResfriado());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTosSinFiebreResfriado()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getUsaInhaladoresSpray() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getUsaInhaladoresSpray());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getUsaInhaladoresSpray()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getCrisisAsma() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCrisisAsma());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getCrisisAsma()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getCantidadCrisisAsma() != null) {
+                    modifPage = (NumberPage) mWizardModel.findByKey(labels.getCantidadCrisisAsma());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, String.valueOf(encuesta.getCantidadCrisisAsma()));
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getVecesEnfermoEnfermedadesRes() != null) {
+                    modifPage = (NumberPage) mWizardModel.findByKey(labels.getVecesEnfermoEnfermedadesRes());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, String.valueOf(encuesta.getVecesEnfermoEnfermedadesRes()));
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getOtrasEnfermedades() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getOtrasEnfermedades());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getOtrasEnfermedades()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getDescOtrasEnfermedades() != null) {
+                    modifPage = (TextPage) mWizardModel.findByKey(labels.getDescOtrasEnfermedades());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, encuesta.getDescOtrasEnfermedades());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getVacunaInfluenza() != null) {
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getVacunaInfluenza());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getVacunaInfluenza()
+                            + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+                if (encuesta.getAnioVacunaInfluenza() != null) {
+                    modifPage = (NumberPage) mWizardModel.findByKey(labels.getAnioVacunaInfluenza());
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, String.valueOf(encuesta.getAnioVacunaInfluenza()));
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+                }
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+
+        }
+        estudiosAdapter.close();
         mWizardModel.registerListener(this);
-        labels = new EncuestaParticipanteFormLabels();
 
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -161,35 +726,9 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             }
         });
 
-        if (participanteCHF.getParticipante()!=null){
-            String edad[] = participanteCHF.getParticipante().getEdad().split("/");
-
-            int anios = 0;
-            if (edad.length > 0)
-                anios = Integer.valueOf(edad[0]);
-            if (anios > 14 && anios <=50 && participanteCHF.getParticipante().getSexo().matches("F")){
-                changeStatus(mWizardModel.findByKey(labels.getEstaEmbarazada()), true);
-            }
-            if (anios >= 18){
-                changeStatus(mWizardModel.findByKey(labels.getEsAlfabeto()), true);
-                changeStatus(mWizardModel.findByKey(labels.getNivelEducacion()), true);
-                changeStatus(mWizardModel.findByKey(labels.getTrabaja()), true);
-            }
-            if (anios < 18){
-                changeStatus(mWizardModel.findByKey(labels.getVaNinoEscuela()), true);
-                changeStatus(mWizardModel.findByKey(labels.getConQuienViveNino()), true);
-                changeStatus(mWizardModel.findByKey(labels.getPadreEnEstudio()), true);
-                changeStatus(mWizardModel.findByKey(labels.getMadreEnEstudio()), true);
-            }
-            if (anios >=14 && anios < 18){
-                changeStatus(mWizardModel.findByKey(labels.getNinoTrabaja()), true);
-            }
-            if (anios >= 12){
-                changeStatus(mWizardModel.findByKey(labels.getFuma()), true);
-            }
-
+        if (encuesta.getParticipante()!=null){
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(participanteCHF.getParticipante().getFechaNac());
+            calendar.setTime(encuesta.getParticipante().getParticipante().getFechaNac());
             int anioNac = calendar.get(Calendar.YEAR);
             calendar.setTime(new Date());
             int anioActual = calendar.get(Calendar.YEAR);
@@ -201,8 +740,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             p3.setRangeValidation(true, anioNac, anioActual);
         }
 
-        onPageTreeChanged();
-        updateBottomBar();
+        onPageTreeChangedInitial();
     }
 
     @Override
@@ -242,6 +780,14 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
         updateBottomBar();
     }
 
+    public void onPageTreeChangedInitial() {
+        mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
+        mStepPagerStrip.setPageCount(mCurrentPageSequence.size() + 1); // + 1 = review step
+        mPagerAdapter.notifyDataSetChanged();
+        if (recalculateCutOffPage()) {
+            updateBottomBar();
+        }
+    }
     @Override
     public Page onGetPage(String key) {
         return mWizardModel.findByKey(key);
@@ -616,138 +1162,188 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
             estudiosAdapter.open();
 
-            EncuestaParticipante encuesta = new EncuestaParticipante();
-            encuesta.setParticipante(participanteCHF);
-            //listas
+           //listas
             if (tieneValor(estaEmbarazada)){
                 MessageResource msEstaEmbarazada = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + estaEmbarazada + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msEstaEmbarazada != null) encuesta.setEstaEmbarazada(msEstaEmbarazada.getCatKey());
+            } else {
+                encuesta.setEstaEmbarazada(null);
             }
             if (tieneValor(esAlfabeto)){
                 MessageResource msEsAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + esAlfabeto + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msEsAlfabeto != null) encuesta.setEsAlfabeto(msEsAlfabeto.getCatKey());
+            } else {
+                encuesta.setEsAlfabeto(null);
             }
             if (tieneValor(nivelEducacion)){
                 MessageResource msNivelEducacion = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + nivelEducacion + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_NIV_EDU'", null);
                 if (msNivelEducacion != null) encuesta.setNivelEducacion(msNivelEducacion.getCatKey());
+            } else {
+                encuesta.setNivelEducacion(null);
             }
             if (tieneValor(trabaja)){
                 MessageResource msTrabaja = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + trabaja + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msTrabaja != null) encuesta.setTrabaja(msTrabaja.getCatKey());
+            } else {
+                encuesta.setTrabaja(null);
             }
             if (tieneValor(tipoTrabajo)){
                 MessageResource msTipoTrabajo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipoTrabajo + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TRABAJO'", null);
                 if (msTipoTrabajo != null) encuesta.setTipoTrabajo(msTipoTrabajo.getCatKey());
+            } else {
+                encuesta.setTipoTrabajo(null);
             }
             if (tieneValor(vaNinoEscuela)){
                 MessageResource msVaNinoEscuela = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + vaNinoEscuela + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msVaNinoEscuela != null) encuesta.setVaNinoEscuela(msVaNinoEscuela.getCatKey());
+            } else {
+                encuesta.setVaNinoEscuela(null);
             }
             if (tieneValor(gradoCursa)){
                 MessageResource msGradoCursa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + gradoCursa + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_GRD_EDU'", null);
                 if (msGradoCursa != null) encuesta.setGradoCursa(msGradoCursa.getCatKey());
+            } else {
+                encuesta.setGradoCursa(null);
             }
             if (tieneValor(turno)){
                 MessageResource msTurno = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + turno + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_TURNO'", null);
                 if (msTurno != null) encuesta.setTurno(msTurno.getCatKey());
+            } else {
+                encuesta.setTurno(null);
             }
             if (tieneValor(centroEstudio)){
                 MessageResource mscentroEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + centroEstudio + "' and "
                         + CatalogosDBConstants.catRoot + "='CENTRO_EST'", null);
                 if (mscentroEstudio != null) encuesta.setCentroEstudio(mscentroEstudio.getCatKey());
+            } else {
+                encuesta.setCentroEstudio(null);
             }
             if (tieneValor(dondeCuidanNino)){
                 MessageResource msdondeCuidanNino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + dondeCuidanNino + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_CUIDAN_NINO'", null);
                 if (msdondeCuidanNino != null) encuesta.setDondeCuidanNino(msdondeCuidanNino.getCatKey());
+            } else {
+                encuesta.setDondeCuidanNino(null);
             }
             if (tieneValor(ninoTrabaja)){
                 MessageResource msninoTrabaja = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + ninoTrabaja + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msninoTrabaja != null) encuesta.setNinoTrabaja(msninoTrabaja.getCatKey());
+            } else {
+                encuesta.setNinoTrabaja(null);
             }
             if (tieneValor(conQuienViveNino)){
                 MessageResource msconQuienViveNino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + conQuienViveNino + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_VIVE_NINO'", null);
                 if (msconQuienViveNino != null) encuesta.setConQuienViveNino(msconQuienViveNino.getCatKey());
+            } else {
+                encuesta.setConQuienViveNino(null);
             }
             if (tieneValor(padreEnEstudio)){
                 MessageResource mspadreEnEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + padreEnEstudio + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (mspadreEnEstudio != null) encuesta.setPadreEnEstudio(mspadreEnEstudio.getCatKey());
+            } else {
+                encuesta.setPadreEnEstudio(null);
             }
             if (tieneValor(padreAlfabeto)){
                 MessageResource mspadreAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + padreAlfabeto + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mspadreAlfabeto != null) encuesta.setPadreAlfabeto(mspadreAlfabeto.getCatKey());
+            } else {
+                encuesta.setPadreAlfabeto(null);
             }
             if (tieneValor(nivelEducacionPadre)){
                 MessageResource msnivelEducacionPadre = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + nivelEducacionPadre + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_NIV_EDU'", null);
                 if (msnivelEducacionPadre != null) encuesta.setNivelEducacionPadre(msnivelEducacionPadre.getCatKey());
+            } else {
+                encuesta.setNivelEducacionPadre(null);
             }
             if (tieneValor(trabajaPadre)){
                 MessageResource mstrabajaPadre = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + trabajaPadre + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mstrabajaPadre != null) encuesta.setTrabajaPadre(mstrabajaPadre.getCatKey());
+            } else {
+                encuesta.setTrabajaPadre(null);
             }
             if (tieneValor(tipoTrabajoPadre)){
                 MessageResource msTipoTrabajoPadre = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipoTrabajoPadre + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TRABAJO'", null);
                 if (msTipoTrabajoPadre != null) encuesta.setTipoTrabajoPadre(msTipoTrabajoPadre.getCatKey());
+            } else {
+                encuesta.setTipoTrabajoPadre(null);
             }
             if (tieneValor(madreEnEstudio)){
                 MessageResource msmadreEnEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + madreEnEstudio + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msmadreEnEstudio != null) encuesta.setMadreEnEstudio(msmadreEnEstudio.getCatKey());
+            } else {
+                encuesta.setMadreEnEstudio(null);
             }
             if (tieneValor(madreAlfabeto)){
                 MessageResource msmadreAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + madreAlfabeto + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (msmadreAlfabeto != null) encuesta.setMadreAlfabeto(msmadreAlfabeto.getCatKey());
+            } else {
+                encuesta.setMadreAlfabeto(null);
             }
             if (tieneValor(nivelEducacionMadre)){
                 MessageResource msnivelEducacionMadre = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + nivelEducacionMadre + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_NIV_EDU'", null);
                 if (msnivelEducacionMadre != null) encuesta.setNivelEducacionMadre(msnivelEducacionMadre.getCatKey());
+            } else {
+                encuesta.setNivelEducacionMadre(null);
             }
             if (tieneValor(trabajaMadre)){
                 MessageResource mstrabajaMadre = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + trabajaMadre + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mstrabajaMadre != null) encuesta.setTrabajaMadre(mstrabajaMadre.getCatKey());
+            } else {
+                encuesta.setTrabajaMadre(null);
             }
             if (tieneValor(tipoTrabajoMadre)){
                 MessageResource msTipoTrabajoMadre = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipoTrabajoMadre + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TRABAJO'", null);
                 if (msTipoTrabajoMadre != null) encuesta.setTipoTrabajoMadre(msTipoTrabajoMadre.getCatKey());
+            } else {
+                encuesta.setTipoTrabajoMadre(null);
             }
             if (tieneValor(fuma)){
                 MessageResource msfuma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + fuma + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msfuma != null) encuesta.setFuma(msfuma.getCatKey());
+            } else {
+                encuesta.setFuma(null);
             }
             if (tieneValor(periodicidadFuma)){
                 MessageResource msperiodicidadFuma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + periodicidadFuma + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_FREC_FUMA'", null);
                 if (msperiodicidadFuma != null) encuesta.setPeriodicidadFuma(msperiodicidadFuma.getCatKey());
+            } else {
+                encuesta.setPeriodicidadFuma(null);
             }
             if (tieneValor(fumaDentroCasa)){
                 MessageResource msfumaDentroCasa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + fumaDentroCasa + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msfumaDentroCasa != null) encuesta.setFumaDentroCasa(msfumaDentroCasa.getCatKey());
+            } else {
+                encuesta.setFumaDentroCasa(null);
             }
             if (tieneValor(tuberculosisPulmonarActual)){
                 MessageResource mstuberculosisPulmonarActual = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tuberculosisPulmonarActual + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mstuberculosisPulmonarActual != null) encuesta.setTuberculosisPulmonarActual(mstuberculosisPulmonarActual.getCatKey());
+            } else {
+                encuesta.setTuberculosisPulmonarActual(null);
             }
             //setear fechaDiagnosticoTubPulActual
             String fechaDiagnosticoCompuesta = anioFechaDiagnosticoTubPulActual;
@@ -764,16 +1360,22 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                 MessageResource mstomaTratamientoTubPulActual = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaTratamientoTubPulActual + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mstomaTratamientoTubPulActual != null) encuesta.setTomaTratamientoTubPulActual(mstomaTratamientoTubPulActual.getCatKey());
+            } else {
+                encuesta.setTomaTratamientoTubPulActual(null);
             }
             if (tieneValor(completoTratamientoTubPulActual)){
                 MessageResource mscompletoTratamientoTubPulActual = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + completoTratamientoTubPulActual + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mscompletoTratamientoTubPulActual != null) encuesta.setCompletoTratamientoTubPulActual(mscompletoTratamientoTubPulActual.getCatKey());
+            } else {
+                encuesta.setCompletoTratamientoTubPulActual(null);
             }
             if (tieneValor(tuberculosisPulmonarPasado)){
                 MessageResource mstuberculosisPulmonarPasado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tuberculosisPulmonarPasado + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mstuberculosisPulmonarPasado != null) encuesta.setTuberculosisPulmonarPasado(mstuberculosisPulmonarPasado.getCatKey());
+            } else {
+                encuesta.setTuberculosisPulmonarPasado(null);
             }
             if (tieneValor(fechaDiagnosticoTubPulPasadoSn)){
                 MessageResource msfechaDiagnosticoTubPulPasadoSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + fechaDiagnosticoTubPulPasadoSn + "' and "
@@ -796,84 +1398,133 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
                         encuesta.setFechaDiagnosticoTubPulPasadoDes("S");
 
                 }
+            } else {
+                encuesta.setFechaDiagnosticoTubPulPasado(null);
+                encuesta.setFechaDiagnosticoTubPulPasadoDes(null);
             }
             if (tieneValor(tomaTratamientoTubPulPasado)){
                 MessageResource mstomaTratamientoTubPulPasado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaTratamientoTubPulPasado + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mstomaTratamientoTubPulPasado != null) encuesta.setTomaTratamientoTubPulPasado(mstomaTratamientoTubPulPasado.getCatKey());
+            } else {
+                encuesta.setTomaTratamientoTubPulPasado(null);
             }
             if (tieneValor(completoTratamientoTubPulPasado)){
                 MessageResource mscompletoTratamientoTubPulPasado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + completoTratamientoTubPulPasado + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mscompletoTratamientoTubPulPasado != null) encuesta.setCompletoTratamientoTubPulPasado(mscompletoTratamientoTubPulPasado.getCatKey());
+            } else {
+                encuesta.setCompletoTratamientoTubPulPasado(null);
             }
             if (tieneValor(alergiaRespiratoria)){
                 MessageResource msalergiaRespiratoria = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + alergiaRespiratoria + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (msalergiaRespiratoria != null) encuesta.setAlergiaRespiratoria(msalergiaRespiratoria.getCatKey());
+            } else {
+                encuesta.setAlergiaRespiratoria(null);
             }
             if (tieneValor(cardiopatia)){
                 MessageResource mscardiopatia = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + cardiopatia + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mscardiopatia != null) encuesta.setCardiopatia(mscardiopatia.getCatKey());
+            } else {
+                encuesta.setPeriodicidadFuma(null);
             }
             if (tieneValor(enfermedadPulmonarOC)){
                 MessageResource msenfermedadPulmonarOC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfermedadPulmonarOC + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (msenfermedadPulmonarOC != null) encuesta.setEnfermedadPulmonarOC(msenfermedadPulmonarOC.getCatKey());
+            } else {
+                encuesta.setEnfermedadPulmonarOC(null);
             }
             if (tieneValor(diabetes)){
                 MessageResource msdiabetes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + diabetes + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (msdiabetes != null) encuesta.setDiabetes(msdiabetes.getCatKey());
+            } else {
+                encuesta.setDiabetes(null);
             }
             if (tieneValor(presionAlta)){
                 MessageResource mspresionAlta = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + presionAlta + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mspresionAlta != null) encuesta.setPresionAlta(mspresionAlta.getCatKey());
+            } else {
+                encuesta.setPresionAlta(null);
             }
             if (tieneValor(asma)){
                 MessageResource msasma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + asma + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (msasma != null) encuesta.setAsma(msasma.getCatKey());
+            } else {
+                encuesta.setAsma(null);
             }
             if (tieneValor(silbidoRespirarPechoApretado)){
                 MessageResource mssilbidoRespirarPechoApretado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + silbidoRespirarPechoApretado + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mssilbidoRespirarPechoApretado != null) encuesta.setSilbidoRespirarPechoApretado(mssilbidoRespirarPechoApretado.getCatKey());
+            } else {
+                encuesta.setSilbidoRespirarPechoApretado(null);
             }
             if (tieneValor(tosSinFiebreResfriado)){
                 MessageResource mstosSinFiebreResfriado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tosSinFiebreResfriado + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mstosSinFiebreResfriado != null) encuesta.setTosSinFiebreResfriado(mstosSinFiebreResfriado.getCatKey());
+            } else {
+                encuesta.setTosSinFiebreResfriado(null);
             }
             if (tieneValor(usaInhaladoresSpray)){
                 MessageResource msusaInhaladoresSpray = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + usaInhaladoresSpray + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (msusaInhaladoresSpray != null) encuesta.setUsaInhaladoresSpray(msusaInhaladoresSpray.getCatKey());
+            } else {
+                encuesta.setUsaInhaladoresSpray(null);
             }
             if (tieneValor(crisisAsma)){
                 MessageResource mscrisisAsma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + crisisAsma + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (mscrisisAsma != null) encuesta.setCrisisAsma(mscrisisAsma.getCatKey());
+            } else {
+                encuesta.setCrisisAsma(null);
             }
             if (tieneValor(otrasEnfermedades)){
                 MessageResource msotrasEnfermedades = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + otrasEnfermedades + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (msotrasEnfermedades != null) encuesta.setOtrasEnfermedades(msotrasEnfermedades.getCatKey());
+            } else {
+                encuesta.setOtrasEnfermedades(null);
             }
             if (tieneValor(vacunaInfluenza)){
                 MessageResource msvacunaInfluenza = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + vacunaInfluenza + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (msvacunaInfluenza != null) encuesta.setVacunaInfluenza(msvacunaInfluenza.getCatKey());
+            } else {
+                encuesta.setVacunaInfluenza(null);
             }
             //Numericos
             if (tieneValor(semanasEmbarazo)) encuesta.setSemanasEmbarazo(Integer.valueOf(semanasEmbarazo));
+            else {
+                encuesta.setSemanasEmbarazo(null);
+            }
             if (tieneValor(cantNinosLugarCuidan)) encuesta.setCantNinosLugarCuidan(Integer.valueOf(cantNinosLugarCuidan));
+            else {
+                encuesta.setCantNinosLugarCuidan(null);
+            }
             if (tieneValor(cantidadCigarrillos)) encuesta.setCantidadCigarrillos(Integer.valueOf(cantidadCigarrillos));
+            else {
+                encuesta.setCantidadCigarrillos(null);
+            }
             if (tieneValor(cantidadCrisisAsma)) encuesta.setCantidadCrisisAsma(Integer.valueOf(cantidadCrisisAsma));
+            else {
+                encuesta.setCantidadCrisisAsma(null);
+            }
             if (tieneValor(vecesEnfermoEnfermedadesRes)) encuesta.setVecesEnfermoEnfermedadesRes(Integer.valueOf(vecesEnfermoEnfermedadesRes));
+            else {
+                encuesta.setVecesEnfermoEnfermedadesRes(null);
+            }
             if (tieneValor(anioVacunaInfluenza)) encuesta.setAnioVacunaInfluenza(Integer.valueOf(anioVacunaInfluenza));
+            else {
+                encuesta.setAnioVacunaInfluenza(null);
+            }
             //textos
             encuesta.setDescOtrasEnfermedades(descOtrasEnfermedades);
             encuesta.setOcupacionActual(ocupacionActual);
@@ -890,14 +1541,10 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             encuesta.setDeviceid(infoMovil.getDeviceId());
             encuesta.setEstado('0');
             encuesta.setPasive('0');
-            boolean actualizada = false;
-            EncuestaParticipante encuestaExiste = estudiosAdapter.getEncuestasParticipante(EncuestasDBConstants.participante + "=" + participanteCHF.getParticipante().getCodigo(), EncuestasDBConstants.participante);
-            if (encuestaExiste != null && encuestaExiste.getParticipante() != null && encuestaExiste.getParticipante().getParticipante() != null)
-                actualizada = estudiosAdapter.editarEncuestasParticipante(encuesta);
-            else estudiosAdapter.crearEncuestasParticipante(encuesta);
-            estudiosAdapter.close();
+            estudiosAdapter.editarEncuestasParticipante(encuesta);
+
             Bundle arguments = new Bundle();
-            arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
+            arguments.putSerializable(Constants.PARTICIPANTE, encuesta.getParticipante());
             Intent i = new Intent(getApplicationContext(),
                     MenuParticipanteActivity.class);
             i.putExtras(arguments);
@@ -910,6 +1557,9 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             ex.printStackTrace();
             Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error),Toast.LENGTH_LONG);
             toast.show();
+        }finally {
+            if (estudiosAdapter!=null)
+                estudiosAdapter.close();
         }
     }
 

@@ -2,6 +2,7 @@
 <resources>
     <string name="new_house_survey">Nuevo Encuesta Casa</string>
     <string name="confirm_house_survey">¿Desea agregar encuesta de casa a esta casa? </string>
+    <string name="confirm_house_survey_edit">¿Desea editar encuesta de casa? </string>
     <string name="cuantoCuartos">¿Cuántos cuartos hay en la casa? </string>
     <string name="cuartosDormir">¿Cuántos cuartos de la casa son utilizados para dormir?</string>
     <string name="horasSinAgua">¿Cuántas horas por día  no tiene servicio de agua?</string>

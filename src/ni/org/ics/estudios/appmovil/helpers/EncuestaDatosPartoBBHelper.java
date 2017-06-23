@@ -69,7 +69,7 @@ public class EncuestaDatosPartoBBHelper {
         mEncuesta.setPrematuro_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.prematuro_sndr)));
         mEncuesta.setPesoBB_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.pesoBB_sndr)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.pesoBB)) > 0) mEncuesta.setPesoBB(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.pesoBB)));
-        mEncuesta.setPesoBB_sndr(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedPesoBB_sn)));
+        mEncuesta.setDocMedPesoBB_sn(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedPesoBB_sn)));
         mEncuesta.setDocMedPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.docMedPesoBB)));
         mEncuesta.setOtroDocMedPesoBB(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroDocMedPesoBB)));
         mEncuesta.setRecurso1(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.recurso1)));

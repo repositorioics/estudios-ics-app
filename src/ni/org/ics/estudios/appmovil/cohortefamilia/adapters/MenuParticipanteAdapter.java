@@ -82,21 +82,21 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
         boolean habilitado = true;
         switch (position){
             case OPCION_ENCUESTA_PARTICIPANTE:
-                habilitado = !existeencuestaParticip;
+                habilitado = true;
                 break;
             case OPCION_ENCUESTA_DATOSPARTO:
-                habilitado = habilitarDatosParto && !existeencuestaParto;
+                habilitado = habilitarDatosParto;
                 break;
             case OPCION_ENCUESTA_PESOTALLA:
-                habilitado = !existeencuestaPeso;
+                habilitado = true;
                 break;
             case OPCION_ENCUESTA_LACTANCIA :
-                habilitado = habilitarLactancia && !existeencuestaLact;
+                habilitado = habilitarLactancia;
                 break;
             case OPCION_ENCUESTA_MUESTRAS : habilitado = true;
                 break;
             case OPCION_ENCUESTA_PARTICIPANTESA :
-                habilitado = habilitarEncuestaParticipSA && !existeencuestaParticipSA;
+                habilitado = habilitarEncuestaParticipSA;
                 break;
             default: break;
         }

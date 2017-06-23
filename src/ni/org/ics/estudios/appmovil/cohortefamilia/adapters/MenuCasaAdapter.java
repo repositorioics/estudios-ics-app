@@ -39,11 +39,8 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
     public boolean isEnabled(int position) {
         // Disable the first item of GridView
         boolean habilitado = true;
-        if (position == 1){
-                habilitado = !existeencuestaCasa;
-         }
         if (position == 5){
-            habilitado = habilitarencuestaCasaSA && !existeencuestaCasaSA;
+            habilitado = habilitarencuestaCasaSA;
         }
         return habilitado;
     }

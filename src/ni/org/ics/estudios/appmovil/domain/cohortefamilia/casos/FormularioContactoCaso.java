@@ -1,9 +1,8 @@
 package ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos;
 
-import java.util.Date;
-
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+
 
 
 /**
@@ -18,8 +17,7 @@ public class FormularioContactoCaso extends BaseMetaData {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String codigoCasoContacto;
-	private ParticipanteCohorteFamiliaCaso codigoParticipanteCaso;
-	private Date fechaVisita;
+	private VisitaSeguimientoCaso codigoVisitaCaso;
 	private ParticipanteCohorteFamilia partContacto;
 	private String tiempoInteraccion;
 	private String tipoInteraccion;
@@ -32,20 +30,13 @@ public class FormularioContactoCaso extends BaseMetaData {
 		this.codigoCasoContacto = codigoCasoContacto;
 	}
 
-	public ParticipanteCohorteFamiliaCaso getCodigoParticipanteCaso() {
-		return codigoParticipanteCaso;
+
+	public VisitaSeguimientoCaso getCodigoVisitaCaso() {
+		return codigoVisitaCaso;
 	}
 
-	public void setCodigoParticipanteCaso(ParticipanteCohorteFamiliaCaso codigoParticipanteCaso) {
-		this.codigoParticipanteCaso = codigoParticipanteCaso;
-	}
-	
-	public Date getFechaVisita() {
-		return fechaVisita;
-	}
-
-	public void setFechaVisita(Date fechaVisita) {
-		this.fechaVisita = fechaVisita;
+	public void setCodigoVisitaCaso(VisitaSeguimientoCaso codigoVisitaCaso) {
+		this.codigoVisitaCaso = codigoVisitaCaso;
 	}
 
 	public ParticipanteCohorteFamilia getPartContacto() {
@@ -74,7 +65,7 @@ public class FormularioContactoCaso extends BaseMetaData {
 
 	@Override
 	public String toString(){
-		return codigoParticipanteCaso.getCodigoCaso().getCasa().getCodigoCHF() + "-" + codigoParticipanteCaso.getParticipante().getParticipante().getCodigo() + "-" + codigoParticipanteCaso.getCodigoCaso().getFechaInicio();
+		return codigoVisitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF() + "-" + codigoVisitaCaso.getCodigoParticipanteCaso().getParticipante().getParticipante().getCodigo() + "-" + codigoVisitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio();
 	}
 	@Override
     public boolean equals(Object o) {
@@ -91,7 +82,7 @@ public class FormularioContactoCaso extends BaseMetaData {
     @Override
     public int hashCode() {
         int result = codigoCasoContacto.hashCode();
-        result = 31 * result + codigoParticipanteCaso.getParticipante().hashCode();
+        result = 31 * result + codigoVisitaCaso.getCodigoParticipanteCaso().getParticipante().hashCode();
         return result;
     }
 }

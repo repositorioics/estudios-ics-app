@@ -59,8 +59,7 @@ public class CasosDBConstants {
 
     //Campos FormularioContactoCaso
     public static final String codigoCasoContacto = "codigoCasoContacto";
-    public static final String codigoParticipanteCaso = "codigoParticipanteCaso";
-    public static final String fechaContacto = "fechaVisita";
+    public static final String codigoVisitaCaso = "codigoVisitaCaso";
     public static final String partContacto = "partContacto";
     public static final String tiempoInteraccion = "tiempoInteraccion";
     public static final String tipoInteraccion = "tipoInteraccion";
@@ -69,8 +68,7 @@ public class CasosDBConstants {
     public static final String CREATE_CONTACTOS_CASOS_TABLE = "create table if not exists "
             + CONTACTOS_CASOS_TABLE + " ("
             + codigoCasoContacto + " text not null, "
-            + codigoParticipanteCaso + " text not null, "
-            + fechaContacto + " date, "
+            + codigoVisitaCaso + " text not null, "
             + partContacto + " integer, "
             + tiempoInteraccion + " text, "
             + tipoInteraccion + " text, "
@@ -79,7 +77,7 @@ public class CasosDBConstants {
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
-            + "primary key (" + codigoCasoParticipante + "));";
+            + "primary key (" + codigoCasoContacto + "));";
 
     //Tabla VisitaSeguimientoCaso
     public static final String VISITAS_CASOS_TABLE = "chf_visitas_casos";
@@ -178,5 +176,50 @@ public class CasosDBConstants {
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigoCasoSintoma + "));";
+    
+    //Tabla VisitaFallidaCaso
+    public static final String VISITAS_FALLIDAS_CASOS_TABLE = "chf_visitas_fallidas_casos";
+
+    //Campos VisitaFallidaCaso
+    public static final String codigoFallaVisita = "codigoFallaVisita";
+    public static final String codigoParticipanteCaso = "codigoParticipanteCaso";
+    public static final String razonVisitaFallida = "razonVisitaFallida";
+    public static final String otraRazon = "otraRazon";
+
+    //Crear VisitaFallidaCaso
+    public static final String CREATE_VISITAS_FALLIDAS_CASOS_TABLE = "create table if not exists "
+            + VISITAS_FALLIDAS_CASOS_TABLE + " ("
+            + codigoFallaVisita + " text not null, "
+            + codigoParticipanteCaso + " text not null, "
+            + fechaVisita + " date, "
+            + razonVisitaFallida + " text, "
+            + otraRazon + " text, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + codigoFallaVisita + "));";
+    
+    //Tabla InformacionNoCompletaCaso
+    public static final String NO_DATA_CASOS_TABLE = "chf_no_data_casos";
+
+    //Campos InformacionNoCompletaCaso
+    public static final String codigoNoDataVisita = "codigoNoDataVisita";
+    public static final String razonNoCompletaInformacion = "razonNoCompletaInformacion";
+    
+    //Crear InformacionNoCompletaCaso
+    public static final String CREATE_NO_DATA_CASOS_TABLE = "create table if not exists "
+            + NO_DATA_CASOS_TABLE + " ("
+            + codigoNoDataVisita + " text not null, "
+            + codigoVisitaCaso + " text not null, "
+            + razonNoCompletaInformacion + " text, "
+            + otraRazon + " text, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + codigoNoDataVisita + "));";
 
 }

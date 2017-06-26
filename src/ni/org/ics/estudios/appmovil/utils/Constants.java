@@ -20,6 +20,7 @@ public class Constants {
 	public static final String PARTICIPANTES = "participantes";
     public static final String PARTICIPANTE = "participante";
     public static final String HABITACION = "habitacion";
+    public static final String VISITA = "visita";
     public static final String CUARTO = "cuarto";
     public static final String CAMA = "cama";
     public static final String PERSONACAMA = "personacama";
@@ -43,6 +44,13 @@ public class Constants {
     public static final String YES = "Si";
     public static final String OTRO = "Otro";
     public static final String NO = "No";
+    
+    public static final String YESKEY = "S";
+    public static final String NOKEY = "N";
+    
+    public static final String YESKEYSND = "1";
+    public static final String OTROKEYSND = "999";
+    public static final String NOKEYSND = "0";
     
     public static final String ACCION = "accion";
     public static final String SENDING = "enviando";

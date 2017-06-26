@@ -1,0 +1,87 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/WizardPageContainer">
+
+    <TextView style="@style/WizardPageTitle" />
+
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/codigoParticipanteCaso" />
+
+            <EditText android:id="@+id/inputCodigoParticipanteCaso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/fecha_visita" />
+
+            <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginBottom="20dp"
+	            android:orientation="horizontal">
+				<EditText android:id="@+id/inputFechaVisita"
+	                android:layout_width="0dip"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1.0"
+	                android:focusable="false"
+	                android:inputType="text" />
+				<ImageButton
+	                android:id="@+id/changedate_button"
+	                android:layout_width="wrap_content"
+	                android:layout_height="fill_parent"
+	                android:contentDescription="@string/app_name"
+	                android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+            
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/horaProbableVisita" />
+            
+            <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginBottom="20dp"
+	            android:orientation="horizontal">
+				<EditText android:id="@+id/inputHoraProbableVisita"
+	                android:layout_width="0dip"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1.0"
+	                android:focusable="false"
+	                android:inputType="text" />
+				<ImageButton
+	                android:id="@+id/changetime_button"
+	                android:layout_width="wrap_content"
+	                android:layout_height="fill_parent"
+	                android:contentDescription="@string/app_name"
+	                android:src="@drawable/ic_menu_recent_history" />
+            </LinearLayout>
+            
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/expCS" />
+            
+            <Spinner android:id="@+id/spinExpCS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"/>
+            
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/temp" />
+
+            <EditText android:id="@+id/inputTemp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:inputType="numberDecimal" />
+            
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

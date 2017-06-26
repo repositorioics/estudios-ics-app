@@ -15,6 +15,7 @@
         <item>@string/receive_house</item>
         <item>@string/header_bhc</item>
         <item>@string/header_red</item>
+        <item>@string/follow_up</item>
         <item>@string/exit</item>
     </string-array>
 
@@ -35,6 +36,12 @@
         <item>@string/new_survey_5</item>
         <item>@string/samples</item>
         <item>@string/new_participant_sa_survey</item>
+    </string-array>
+    
+    <string-array name="menu_visitas">
+        <item>@string/sint</item>
+        <item>@string/contacts</item>
+        <item>@string/samples</item>
     </string-array>
 
 </resources>

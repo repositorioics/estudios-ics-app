@@ -3,7 +3,7 @@ package ni.org.ics.estudios.appmovil.catalogs;
 import java.io.Serializable;
 
 
-public class MessageResource implements Serializable{
+public class MessageResource implements Serializable, Comparable<MessageResource>{
 
 	/**
 	 * 
@@ -21,8 +21,19 @@ public class MessageResource implements Serializable{
     public MessageResource() {
 
 	}
+    
+    
 
-    public String getMessageKey() {
+    public MessageResource(String catKey, int order, String spanish) {
+		super();
+		this.catKey = catKey;
+		this.order = order;
+		this.spanish = spanish;
+	}
+
+
+
+	public String getMessageKey() {
         return messageKey;
     }
 
@@ -86,6 +97,11 @@ public class MessageResource implements Serializable{
 	public void setSpanish(String spanish) {
 		this.spanish = spanish;
 	}
+	
+	@Override
+	public String toString(){
+		return this.spanish;
+	}
 
 	@Override
     public boolean equals(Object o) {
@@ -103,5 +119,14 @@ public class MessageResource implements Serializable{
     public int hashCode() {
         return messageKey != null ? messageKey.hashCode() : 0;
     }
+
+
+
+	@Override
+	public int compareTo(MessageResource arg0) {
+		// TODO Auto-generated method stub
+		return order<arg0.getOrder()?-1:order>arg0.getOrder()?1:0;
+
+	}
 	
 }

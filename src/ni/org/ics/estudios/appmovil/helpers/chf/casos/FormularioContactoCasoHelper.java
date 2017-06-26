@@ -17,8 +17,7 @@ public class FormularioContactoCasoHelper {
     public static ContentValues crearFormularioContactoCasoContentValues(FormularioContactoCaso contactoCaso){
         ContentValues cv = new ContentValues();
         cv.put(CasosDBConstants.codigoCasoContacto, contactoCaso.getCodigoCasoContacto());
-        cv.put(CasosDBConstants.codigoParticipanteCaso, contactoCaso.getCodigoParticipanteCaso().getCodigoCasoParticipante());        
-        if (contactoCaso.getFechaVisita() != null) cv.put(CasosDBConstants.fechaVisita, contactoCaso.getFechaVisita().getTime());
+        cv.put(CasosDBConstants.codigoVisitaCaso, contactoCaso.getCodigoVisitaCaso().getCodigoCasoVisita());        
         cv.put(CasosDBConstants.partContacto, contactoCaso.getPartContacto().getParticipante().getCodigo());
         cv.put(CasosDBConstants.tiempoInteraccion, contactoCaso.getTiempoInteraccion());
         cv.put(CasosDBConstants.tipoInteraccion, contactoCaso.getTipoInteraccion());
@@ -35,8 +34,7 @@ public class FormularioContactoCasoHelper {
     	FormularioContactoCaso mFormularioContactoCaso = new FormularioContactoCaso();
         
     	mFormularioContactoCaso.setCodigoCasoContacto(cursor.getString(cursor.getColumnIndex(CasosDBConstants.codigoCasoContacto)));
-    	mFormularioContactoCaso.setCodigoParticipanteCaso(null);
-    	if(cursor.getLong(cursor.getColumnIndex(CasosDBConstants.fechaVisita))>0) mFormularioContactoCaso.setFechaVisita(new Date(cursor.getLong(cursor.getColumnIndex(CasosDBConstants.fechaVisita))));
+    	mFormularioContactoCaso.setCodigoVisitaCaso(null);
     	mFormularioContactoCaso.setPartContacto(null);
     	mFormularioContactoCaso.setTiempoInteraccion(cursor.getString(cursor.getColumnIndex(CasosDBConstants.tiempoInteraccion)));
     	mFormularioContactoCaso.setTipoInteraccion(cursor.getString(cursor.getColumnIndex(CasosDBConstants.tipoInteraccion)));

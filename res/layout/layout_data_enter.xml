@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        
+    <FrameLayout
+          android:id="@+id/data_content_fragment"
+          android:layout_weight="2"
+          android:layout_width="match_parent"
+          android:layout_height="0px" />
+    
+
+    <View android:id="@+id/divider"
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="?android:attr/dividerHorizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="?android:attr/buttonBarStyle">
+
+        <Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/save_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            style="?android:attr/buttonBarStyle" />
+        
+        <Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/cancel_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            style="?android:attr/buttonBarStyle" />
+
+    </LinearLayout>
+
+</LinearLayout>

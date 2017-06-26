@@ -118,19 +118,25 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
         			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         			startActivity(i);
         			break;
-                    case 6:
-                        i = new Intent(getApplicationContext(),
-                                NuevaRecepcionMuestraBHCActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
-                        break;
-                    case 7:
-                        i = new Intent(getApplicationContext(),
-                                NuevaRecepcionMuestraRojoActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
-                        break;
+                case 6:
+                    i = new Intent(getApplicationContext(),
+                            NuevaRecepcionMuestraBHCActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                    break;
+                case 7:
+                    i = new Intent(getApplicationContext(),
+                            NuevaRecepcionMuestraRojoActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                    break;
                 case 8:
+                	i = new Intent(getApplicationContext(),
+							ListaCasasCasosActivity.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(i);
+		        	break;
+                case 9:
                 	createDialog(EXIT);
                     break;                    
 				default:

@@ -68,18 +68,22 @@ public class MenuCohorteFamiliaAdapter extends ArrayAdapter<String> {
 			img=getContext().getResources().getDrawable(R.drawable.ic_menu_chat_dashboard);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
-            case 6:
-                img=getContext().getResources().getDrawable(R.drawable.ic_menu_goto);
-                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                break;
-            case 7:
-                img=getContext().getResources().getDrawable(R.drawable.ic_menu_goto);
-                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                break;
+        case 6:
+            img=getContext().getResources().getDrawable(R.drawable.ic_menu_goto);
+            textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+            break;
+        case 7:
+            img=getContext().getResources().getDrawable(R.drawable.ic_menu_goto);
+            textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+            break;
 		case 8:
+			img=getContext().getResources().getDrawable(R.drawable.ic_menu_today);
+			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+			break;	
+		case 9:
 			img=getContext().getResources().getDrawable(R.drawable.ic_menu_revert);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-			break;			
+			break;
 		default:
 			img=getContext().getResources().getDrawable(R.drawable.ic_menu_help);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);

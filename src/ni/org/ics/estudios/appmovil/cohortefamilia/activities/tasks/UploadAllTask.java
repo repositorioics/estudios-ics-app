@@ -11,6 +11,13 @@ import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.domain.TelefonoContacto;
 import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.FormularioContactoCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.InformacionNoCompletaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFallidaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCasoSintomas;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
@@ -71,6 +78,14 @@ public class UploadAllTask extends UploadTask {
     private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = new ArrayList<EncuestaParticipanteSA>();
     private List<TelefonoContacto> mTelefonos = new ArrayList<TelefonoContacto>();
     private List<RecepcionMuestra> mRecepcionMuestras = new ArrayList<RecepcionMuestra>();
+    private List<CasaCohorteFamiliaCaso> mCasaCohorteFamiliaCasos = new ArrayList<CasaCohorteFamiliaCaso>();
+    private List<ParticipanteCohorteFamiliaCaso> mParticipanteCohorteFamiliaCasos = new ArrayList<ParticipanteCohorteFamiliaCaso>();
+    private List<VisitaSeguimientoCaso> mVisitaSeguimientoCasos = new ArrayList<VisitaSeguimientoCaso>();
+    
+    private List<VisitaFallidaCaso> mVisitaFallidaCasos = new ArrayList<VisitaFallidaCaso>();
+    private List<VisitaSeguimientoCasoSintomas> mVisitaSeguimientoSintomasCasos = new ArrayList<VisitaSeguimientoCasoSintomas>();
+    private List<FormularioContactoCaso> mFormularioContactoCasos = new ArrayList<FormularioContactoCaso>();
+    private List<InformacionNoCompletaCaso> mInformacionNoCompletaCasos = new ArrayList<InformacionNoCompletaCaso>();
 
 	private String url = null;
 	private String username = null;
@@ -105,7 +120,15 @@ public class UploadAllTask extends UploadTask {
     public static final String ENCUESTA_CASASA = "25";
     public static final String TELEFONOS = "26";
     public static final String RECEPCION_MUESTRA = "27";
-	private static final String TOTAL_TASK = "27";
+    public static final String CASAS_CASOS = "28";
+    public static final String PART_CASOS = "29";
+    public static final String VISITAS_CASOS = "30";
+    public static final String VISITAS_FALLIDAS_CASOS = "31";
+    public static final String SINTOMAS_CASOS = "32";
+    public static final String CONTACTOS_CASOS = "33";
+    public static final String NODATA_CASOS = "34";
+    
+	private static final String TOTAL_TASK = "34";
 	
 
 	@Override
@@ -153,6 +176,14 @@ public class UploadAllTask extends UploadTask {
             mEncuestasParticipanteSA = estudioAdapter.getEncuestasParticipanteSA(filtro,null);
             mTelefonos = estudioAdapter.getTelefonosContacto(filtro, null);
             mRecepcionMuestras = estudioAdapter.getRecepcionMuestras(filtro, null);
+            mCasaCohorteFamiliaCasos = estudioAdapter.getCasaCohorteFamiliaCasos(filtro, null);
+            mParticipanteCohorteFamiliaCasos = estudioAdapter.getParticipanteCohorteFamiliaCasos(filtro, null);
+            mVisitaSeguimientoCasos = estudioAdapter.getVisitaSeguimientoCasos(filtro, null);
+            
+            mVisitaFallidaCasos = estudioAdapter.getVisitaFallidaCasos(filtro, null);
+            mVisitaSeguimientoSintomasCasos = estudioAdapter.getVisitaSeguimientoCasosSintomas(filtro, null);
+            mFormularioContactoCasos = estudioAdapter.getFormularioContactoCasos(filtro, null);
+            mInformacionNoCompletaCasos = estudioAdapter.getInformacionNoCompletaCasos(filtro, null);
 
 			publishProgress("Datos completos!", "2", "2");
 			
@@ -317,6 +348,48 @@ public class UploadAllTask extends UploadTask {
             error = cargarRecepcionMuestras(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCION_MUESTRA);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CASAS_CASOS);
+            error = cargarCasasCasos(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CASAS_CASOS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PART_CASOS);
+            error = cargarPartCasos(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PART_CASOS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_CASOS);
+            error = cargarVisitasCasos(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_CASOS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FALLIDAS_CASOS);
+            error = cargarVisitasFallidasCasos(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_FALLIDAS_CASOS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, SINTOMAS_CASOS);
+            error = cargarVisitasSeguimientoCasoSintomas(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINTOMAS_CASOS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CONTACTOS_CASOS);
+            error = cargarFormularioContactoCasos(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CONTACTOS_CASOS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, NODATA_CASOS);
+            error = cargarInformacionNoCompletaCasos(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, NODATA_CASOS);
                 return error;
             }
 		} catch (Exception e1) {
@@ -633,6 +706,119 @@ public class UploadAllTask extends UploadTask {
                 }
             }
         }
+        
+        if(opcion.equalsIgnoreCase(CASAS_CASOS)){
+            c = mCasaCohorteFamiliaCasos.size();
+            if(c>0){
+                for (CasaCohorteFamiliaCaso casaCaso : mCasaCohorteFamiliaCasos) {
+                	casaCaso.setEstado(estado.charAt(0));
+                    try {
+                        estudioAdapter.editarCasaCohorteFamiliaCaso(casaCaso);
+                        publishProgress("Actualizando casas con casos en base de datos local", Integer.valueOf(mCasaCohorteFamiliaCasos.indexOf(casaCaso)).toString(), Integer
+                                .valueOf(c).toString());
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+        
+        if(opcion.equalsIgnoreCase(PART_CASOS)){
+            c = mParticipanteCohorteFamiliaCasos.size();
+            if(c>0){
+                for (ParticipanteCohorteFamiliaCaso partCaso : mParticipanteCohorteFamiliaCasos) {
+                	partCaso.setEstado(estado.charAt(0));
+                    try {
+                        estudioAdapter.editarParticipanteCohorteFamiliaCaso(partCaso);
+                        publishProgress("Actualizando participantes de casas con casos en base de datos local", Integer.valueOf(mParticipanteCohorteFamiliaCasos.indexOf(partCaso)).toString(), Integer
+                                .valueOf(c).toString());
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+        
+        if(opcion.equalsIgnoreCase(VISITAS_CASOS)){
+            c = mVisitaSeguimientoCasos.size();
+            if(c>0){
+                for (VisitaSeguimientoCaso visitaCaso : mVisitaSeguimientoCasos) {
+                	visitaCaso.setEstado(estado.charAt(0));
+                    try {
+                        estudioAdapter.editarVisitaSeguimientoCaso(visitaCaso);
+                        publishProgress("Actualizando visitas de los participantes de casas con casos en base de datos local", Integer.valueOf(mVisitaSeguimientoCasos.indexOf(visitaCaso)).toString(), Integer
+                                .valueOf(c).toString());
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+        
+        if(opcion.equalsIgnoreCase(VISITAS_FALLIDAS_CASOS)){
+            c = mVisitaFallidaCasos.size();
+            if(c>0){
+                for (VisitaFallidaCaso visitaFallida : mVisitaFallidaCasos) {
+                	visitaFallida.setEstado(estado.charAt(0));
+                    try {
+                        estudioAdapter.editarVisitaFallidaCaso(visitaFallida);
+                        publishProgress("Actualizando visitas fallidas de los participantes de casas con casos en base de datos local", Integer.valueOf(mVisitaFallidaCasos.indexOf(visitaFallida)).toString(), Integer
+                                .valueOf(c).toString());
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+        
+        if(opcion.equalsIgnoreCase(SINTOMAS_CASOS)){
+            c = mVisitaSeguimientoSintomasCasos.size();
+            if(c>0){
+                for (VisitaSeguimientoCasoSintomas sintomas : mVisitaSeguimientoSintomasCasos) {
+                	sintomas.setEstado(estado.charAt(0));
+                    try {
+                        estudioAdapter.editarVisitaSeguimientoCasoSintomas(sintomas);
+                        publishProgress("Actualizando sintomas de los participantes de casas con casos en base de datos local", Integer.valueOf(mVisitaSeguimientoSintomasCasos.indexOf(sintomas)).toString(), Integer
+                                .valueOf(c).toString());
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+        
+        if(opcion.equalsIgnoreCase(CONTACTOS_CASOS)){
+            c = mFormularioContactoCasos.size();
+            if(c>0){
+                for (FormularioContactoCaso contactos : mFormularioContactoCasos) {
+                	contactos.setEstado(estado.charAt(0));
+                    try {
+                        estudioAdapter.editarFormularioContactoCaso(contactos);
+                        publishProgress("Actualizando contactos de los participantes de casas con casos en base de datos local", Integer.valueOf(mFormularioContactoCasos.indexOf(contactos)).toString(), Integer
+                                .valueOf(c).toString());
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+        
+        if(opcion.equalsIgnoreCase(NODATA_CASOS)){
+            c = mInformacionNoCompletaCasos.size();
+            if(c>0){
+                for (InformacionNoCompletaCaso nodata : mInformacionNoCompletaCasos) {
+                	nodata.setEstado(estado.charAt(0));
+                    try {
+                        estudioAdapter.editarInformacionNoCompletaCaso(nodata);
+                        publishProgress("Actualizando falta de info de los participantes de casas con casos en base de datos local", Integer.valueOf(mInformacionNoCompletaCasos.indexOf(nodata)).toString(), Integer
+                                .valueOf(c).toString());
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+        
 
 	}
 	
@@ -1576,4 +1762,217 @@ public class UploadAllTask extends UploadTask {
             return e.getMessage();
         }
     }
+    
+    protected String cargarCasasCasos(String url, String username,String password) throws Exception {
+        try {
+            if(mCasaCohorteFamiliaCasos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando Casas con casos!", CASAS_CASOS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/casascasos";
+                CasaCohorteFamiliaCaso[] envio = mCasaCohorteFamiliaCasos.toArray(new CasaCohorteFamiliaCaso[mCasaCohorteFamiliaCasos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<CasaCohorteFamiliaCaso[]> requestEntity =
+                        new HttpEntity<CasaCohorteFamiliaCaso[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    
+    protected String cargarPartCasos(String url, String username,String password) throws Exception {
+        try {
+            if(mParticipanteCohorteFamiliaCasos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando participantes de Casas con casos!", PART_CASOS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/participantescasos";
+                ParticipanteCohorteFamiliaCaso[] envio = mParticipanteCohorteFamiliaCasos.toArray(new ParticipanteCohorteFamiliaCaso[mParticipanteCohorteFamiliaCasos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ParticipanteCohorteFamiliaCaso[]> requestEntity =
+                        new HttpEntity<ParticipanteCohorteFamiliaCaso[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    
+    protected String cargarVisitasCasos(String url, String username,String password) throws Exception {
+        try {
+            if(mVisitaSeguimientoCasos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando visitas de los participantes de Casas con casos!", VISITAS_CASOS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/visitascasos";
+                VisitaSeguimientoCaso[] envio = mVisitaSeguimientoCasos.toArray(new VisitaSeguimientoCaso[mVisitaSeguimientoCasos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<VisitaSeguimientoCaso[]> requestEntity =
+                        new HttpEntity<VisitaSeguimientoCaso[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    
+    
+    protected String cargarVisitasFallidasCasos(String url, String username,String password) throws Exception {
+        try {
+            if(mVisitaFallidaCasos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando visitas fallidas de los participantes de Casas con casos!", VISITAS_FALLIDAS_CASOS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/visitasfallidascasos";
+                VisitaFallidaCaso[] envio = mVisitaFallidaCasos.toArray(new VisitaFallidaCaso[mVisitaFallidaCasos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<VisitaFallidaCaso[]> requestEntity =
+                        new HttpEntity<VisitaFallidaCaso[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    
+    
+    protected String cargarVisitasSeguimientoCasoSintomas(String url, String username,String password) throws Exception {
+        try {
+            if(mVisitaSeguimientoSintomasCasos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando sintomas de los participantes de Casas con casos!", SINTOMAS_CASOS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/sintomascasos";
+                VisitaSeguimientoCasoSintomas[] envio = mVisitaSeguimientoSintomasCasos.toArray(new VisitaSeguimientoCasoSintomas[mVisitaSeguimientoSintomasCasos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<VisitaSeguimientoCasoSintomas[]> requestEntity =
+                        new HttpEntity<VisitaSeguimientoCasoSintomas[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    
+    protected String cargarFormularioContactoCasos(String url, String username,String password) throws Exception {
+        try {
+            if(mFormularioContactoCasos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando contactos de los participantes de Casas con casos!", CONTACTOS_CASOS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/contactoscasos";
+                FormularioContactoCaso[] envio = mFormularioContactoCasos.toArray(new FormularioContactoCaso[mFormularioContactoCasos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<FormularioContactoCaso[]> requestEntity =
+                        new HttpEntity<FormularioContactoCaso[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    
+    protected String cargarInformacionNoCompletaCasos(String url, String username,String password) throws Exception {
+        try {
+            if(mInformacionNoCompletaCasos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando informacion no completa de los participantes de Casas con casos!", CONTACTOS_CASOS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/visitasnodatacasos";
+                InformacionNoCompletaCaso[] envio = mInformacionNoCompletaCasos.toArray(new InformacionNoCompletaCaso[mInformacionNoCompletaCasos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<InformacionNoCompletaCaso[]> requestEntity =
+                        new HttpEntity<InformacionNoCompletaCaso[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    
 }

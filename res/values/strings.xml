@@ -9,6 +9,7 @@
     <string name="error">Ha ocurrido un error!</string>
     <string name="errordb">Ha ocurrido un error, base de datos no existe!</string>
     <string name="loading">Cargando.....</string>
+    <string name="pleasewait">Por favor espere..</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
     <string name="confirm">Confirmar</string>

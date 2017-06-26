@@ -71,7 +71,6 @@ public class NuevaRecepcionMuestraRojoActivity extends AbstractAsyncActivity {
     private DeviceInfo infoMovil;
 
 	public static final int BARCODE_CAPTURE = 2;
-	private static final int MENU_VIEW = Menu.FIRST + 2;
 
 	private AlertDialog mAlertDialog;
 	private boolean mAlertShowing;

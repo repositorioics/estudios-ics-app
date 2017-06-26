@@ -2,7 +2,6 @@ package ni.org.ics.estudios.appmovil;
 
 
 import ni.org.ics.estudios.appmovil.adapters.MainActivityAdapter;
-import ni.org.ics.estudios.appmovil.bluetooth.activity.ChatActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCohorteFamiliaActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 

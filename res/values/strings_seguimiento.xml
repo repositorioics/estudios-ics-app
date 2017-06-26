@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+	<string name="follow_up">Seguimientos</string>
+	<string name="follow_up_list">Lista de casas en seguimiento</string>
+	<string name="follow_up_list_par">Lista de participantes en seguimiento</string>
+	<string name="follow_up_list_visit">Lista de visitas realizadas</string>
+	<string name="follow_up_list_sint">Formulario de sintomas realizados</string>
+	
+	<string name="visit">Visita</string>
+	<string name="sick">Enfermo</string>
+	<string name="sick_date">Fecha que enfermó</string>
+	
+	<string name="new_visit">Agregar Visita</string>
+	<string name="new_sint">Agregar Sintomas</string>
+	<string name="new_cont">Agregar Contacto</string>
+	
+
+	<string name="codigoParticipanteCaso">Participante</string>
+    <string name="fecha_visita">Fecha visita</string>
+    <string name="wrong_fecha_visita">Error en la fecha visita</string>
+    <string name="horaProbableVisita">Hora probable para siguiente visita</string>
+    <string name="wrongHoraProbableVisita">Error en la hora probable para siguiente visita</string>
+    <string name="expCS">Expediente en el CS</string>
+    <string name="wrongExpCS">Selección inválida en la pregunta expediente en el CS</string>
+    <string name="temp">Temperatura</string>
+	<string name="wrongTemp">Temperatura inválida. Debe ser entre <xliff:g id="temp1">%1$s</xliff:g> y <xliff:g id="temp2">%2$s</xliff:g></string>
+	<string name="wrongTime">Hora inválida</string>
+	<string name="wrongSelect">La respuesta para <xliff:g id="variable">%1$s</xliff:g> es requerida</string>
+	
+	
+	<string name="fecha_sintoma">Fecha sintoma</string>
+	<string name="fiebre">Fiebre</string>
+	<string name="fif">Fecha Inicio Fiebre</string>
+	<string name="fiebreCuantificada">Fiebre Cuantificada</string>
+	<string name="valorFiebreCuantificada">Valor</string>
+	<string name="dolorCabeza">Dolor de cabeza</string>
+	<string name="dolorArticular">Dolor Articular</string>
+	<string name="dolorMuscular">Dolor muscular</string>
+	<string name="dificultadRespiratoria">Dificultad Respiratoria</string>
+	<string name="secrecionNasal">Secreción Nasal</string>
+	<string name="tos">Tos</string>
+	<string name="pocoApetito">Poco Apetito</string>
+	<string name="dolorGarganta">Dolor de Garganta</string>
+	<string name="diarrea">Diarrea</string>
+	<string name="quedoCama">Quedó en Cama</string>
+	<string name="respiracionRuidosa">Respiración Ruidosa</string>
+	<string name="oseltamivir">Toma Oseltamivir</string>
+	<string name="antibiotico">Toma Antibiótico</string>
+	<string name="prescritoMedico">Fue prescrito por medico</string>
+	<string name="cualAntibiotico">Cual Antibiótico</string>
+	
+	<string name="sint">Sintomas</string>
+	<string name="contacts">Contacto miembros del hogar</string>
+	
+</resources>

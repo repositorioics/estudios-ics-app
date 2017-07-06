@@ -135,7 +135,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (anios >= 18 && encuesta.getEsAlfabeto() != null) {
+                if (anios >= 18 && tieneValor(encuesta.getEsAlfabeto())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getEsAlfabeto());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getEsAlfabeto()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -144,7 +144,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (anios >= 18 && encuesta.getNivelEducacion() != null) {
+                if (anios >= 18 && tieneValor(encuesta.getNivelEducacion())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getNivelEducacion());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getNivelEducacion()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NIV_EDU'", null);
@@ -153,7 +153,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (anios >= 18 && encuesta.getTrabaja() != null) {
+                if (anios >= 18 && tieneValor(encuesta.getTrabaja())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTrabaja());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTrabaja()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -162,7 +162,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getTipoTrabajo() != null) {
+                if (tieneValor(encuesta.getTipoTrabajo())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipoTrabajo());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTipoTrabajo()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TRABAJO'", null);
@@ -178,7 +178,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getVaNinoEscuela() != null) {
+                if (tieneValor(encuesta.getVaNinoEscuela())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getVaNinoEscuela());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getVaNinoEscuela()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -187,7 +187,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getGradoCursa() != null) {
+                if (tieneValor(encuesta.getGradoCursa())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getGradoCursa());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getGradoCursa()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_GRD_EDU'", null);
@@ -196,7 +196,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getTurno() != null) {
+                if (tieneValor(encuesta.getTurno())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTurno());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTurno()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TURNO'", null);
@@ -205,7 +205,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getCentroEstudio() != null) {
+                if (tieneValor(encuesta.getCentroEstudio())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCentroEstudio());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getCentroEstudio()
                             + "' and " + CatalogosDBConstants.catRoot + "='CENTRO_EST'", null);
@@ -214,14 +214,14 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getNombreCentroEstudio() != null) {
+                if (tieneValor(encuesta.getNombreCentroEstudio())) {
                     modifPage = (TextPage) mWizardModel.findByKey(labels.getNombreCentroEstudio());
                     dato = new Bundle();
                     dato.putString(SIMPLE_DATA_KEY, encuesta.getNombreCentroEstudio());
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getDondeCuidanNino() != null) {
+                if (tieneValor(encuesta.getDondeCuidanNino())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getDondeCuidanNino());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getDondeCuidanNino()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_CUIDAN_NINO'", null);
@@ -230,7 +230,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (anios >= 14 && anios < 18 && encuesta.getNinoTrabaja() != null) {
+                if (anios >= 14 && anios < 18 && tieneValor(encuesta.getNinoTrabaja())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getNinoTrabaja());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getNinoTrabaja()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -253,7 +253,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getConQuienViveNino() != null) {
+                if (tieneValor(encuesta.getConQuienViveNino())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getConQuienViveNino());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getConQuienViveNino()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_VIVE_NINO'", null);
@@ -269,7 +269,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getPadreEnEstudio() != null) {
+                if (tieneValor(encuesta.getPadreEnEstudio())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getPadreEnEstudio());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getPadreEnEstudio()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -285,7 +285,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getPadreAlfabeto() != null) {
+                if (tieneValor(encuesta.getPadreAlfabeto())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getPadreAlfabeto());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getPadreAlfabeto()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -294,7 +294,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getNivelEducacionPadre() != null) {
+                if (tieneValor(encuesta.getNivelEducacionPadre())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getNivelEducacionPadre());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getNivelEducacionPadre()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NIV_EDU'", null);
@@ -303,7 +303,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getTrabajaPadre() != null) {
+                if (tieneValor(encuesta.getTrabajaPadre())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTrabajaPadre());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTrabajaPadre()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -312,7 +312,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getTipoTrabajoPadre() != null) {
+                if (tieneValor(encuesta.getTipoTrabajoPadre())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipoTrabajoPadre());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTipoTrabajoPadre()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TRABAJO'", null);
@@ -321,7 +321,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getMadreEnEstudio() != null) {
+                if (tieneValor(encuesta.getMadreEnEstudio())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getMadreEnEstudio());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getMadreEnEstudio()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -337,7 +337,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getMadreAlfabeto() != null) {
+                if (tieneValor(encuesta.getMadreAlfabeto())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getMadreAlfabeto());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getMadreAlfabeto()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -346,7 +346,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getNivelEducacionMadre() != null) {
+                if (tieneValor(encuesta.getNivelEducacionMadre())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getNivelEducacionMadre());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getNivelEducacionMadre()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NIV_EDU'", null);
@@ -355,7 +355,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getTrabajaMadre() != null) {
+                if (tieneValor(encuesta.getTrabajaMadre())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTrabajaMadre());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTrabajaMadre()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -364,7 +364,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getTipoTrabajoMadre() != null) {
+                if (tieneValor(encuesta.getTipoTrabajoMadre())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipoTrabajoMadre());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTipoTrabajoMadre()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TRABAJO'", null);
@@ -373,7 +373,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (anios >= 12 && encuesta.getFuma() != null) {
+                if (anios >= 12 && tieneValor(encuesta.getFuma())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getFuma());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getFuma()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -400,7 +400,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getFumaDentroCasa() != null) {
+                if (tieneValor(encuesta.getFumaDentroCasa())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getFumaDentroCasa());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getFumaDentroCasa()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -409,7 +409,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getTuberculosisPulmonarActual() != null) {
+                if (tieneValor(encuesta.getTuberculosisPulmonarActual())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTuberculosisPulmonarActual());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTuberculosisPulmonarActual()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -435,7 +435,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                         modifPage.setmVisible(true);
                     }
                 }
-                if (encuesta.getTomaTratamientoTubPulActual() != null) {
+                if (tieneValor(encuesta.getTomaTratamientoTubPulActual())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTomaTratamientoTubPulActual());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTomaTratamientoTubPulActual()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -444,7 +444,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getCompletoTratamientoTubPulActual() != null) {
+                if (tieneValor(encuesta.getCompletoTratamientoTubPulActual())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCompletoTratamientoTubPulActual());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getCompletoTratamientoTubPulActual()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -453,7 +453,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getTuberculosisPulmonarPasado() != null) {
+                if (tieneValor(encuesta.getTuberculosisPulmonarPasado())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTuberculosisPulmonarPasado());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTuberculosisPulmonarPasado()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -491,7 +491,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                         modifPage.setmVisible(true);
                     }
                 }
-                if (encuesta.getTomaTratamientoTubPulPasado() != null) {
+                if (tieneValor(encuesta.getTomaTratamientoTubPulPasado())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTomaTratamientoTubPulPasado());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTomaTratamientoTubPulPasado()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -500,7 +500,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getCompletoTratamientoTubPulPasado() != null) {
+                if (tieneValor(encuesta.getCompletoTratamientoTubPulPasado())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCompletoTratamientoTubPulPasado());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getCompletoTratamientoTubPulPasado()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -509,7 +509,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getAlergiaRespiratoria() != null) {
+                if (tieneValor(encuesta.getAlergiaRespiratoria())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAlergiaRespiratoria());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getAlergiaRespiratoria()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -518,7 +518,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getCardiopatia() != null) {
+                if (tieneValor(encuesta.getCardiopatia())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCardiopatia());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getCardiopatia()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -527,7 +527,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getEnfermedadPulmonarOC() != null) {
+                if (tieneValor(encuesta.getEnfermedadPulmonarOC())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getEnfermedadPulmonarOC());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getEnfermedadPulmonarOC()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -536,7 +536,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getDiabetes() != null) {
+                if (tieneValor(encuesta.getDiabetes())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getDiabetes());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getDiabetes()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -545,7 +545,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getPresionAlta() != null) {
+                if (tieneValor(encuesta.getPresionAlta())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getPresionAlta());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getPresionAlta()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -554,7 +554,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getAsma() != null) {
+                if (tieneValor(encuesta.getAsma())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAsma());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getAsma()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -563,7 +563,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getSilbidoRespirarPechoApretado() != null) {
+                if (tieneValor(encuesta.getSilbidoRespirarPechoApretado())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getSilbidoRespirarPechoApretado());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getSilbidoRespirarPechoApretado()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -572,7 +572,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getTosSinFiebreResfriado() != null) {
+                if (tieneValor(encuesta.getTosSinFiebreResfriado())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTosSinFiebreResfriado());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTosSinFiebreResfriado()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -581,7 +581,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getUsaInhaladoresSpray() != null) {
+                if (tieneValor(encuesta.getUsaInhaladoresSpray())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getUsaInhaladoresSpray());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getUsaInhaladoresSpray()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -590,7 +590,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getCrisisAsma() != null) {
+                if (tieneValor(encuesta.getCrisisAsma())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCrisisAsma());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getCrisisAsma()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -606,14 +606,14 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getVecesEnfermoEnfermedadesRes() != null) {
+                //if (encuesta.getVecesEnfermoEnfermedadesRes() != null) {
                     modifPage = (NumberPage) mWizardModel.findByKey(labels.getVecesEnfermoEnfermedadesRes());
                     dato = new Bundle();
-                    dato.putString(SIMPLE_DATA_KEY, String.valueOf(encuesta.getVecesEnfermoEnfermedadesRes()));
+                    dato.putString(SIMPLE_DATA_KEY, (encuesta.getVecesEnfermoEnfermedadesRes()!=null?String.valueOf(encuesta.getVecesEnfermoEnfermedadesRes()):"0"));
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
-                }
-                if (encuesta.getOtrasEnfermedades() != null) {
+
+                if (tieneValor(encuesta.getOtrasEnfermedades())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getOtrasEnfermedades());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getOtrasEnfermedades()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -629,7 +629,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.resetData(dato);
                     modifPage.setmVisible(true);
                 }
-                if (encuesta.getVacunaInfluenza() != null) {
+                if (tieneValor(encuesta.getVacunaInfluenza())) {
                     modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getVacunaInfluenza());
                     MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getVacunaInfluenza()
                             + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);

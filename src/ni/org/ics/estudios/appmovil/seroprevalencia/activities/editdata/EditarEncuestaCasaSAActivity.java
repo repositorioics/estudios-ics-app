@@ -96,7 +96,7 @@ public class EditarEncuestaCasaSAActivity extends FragmentActivity implements
         if (encuestaCasaSA != null) {
             Bundle dato = null;
             Page modifPage;
-            if(encuestaCasaSA.getSedazoPuertasVentanas()!= null){
+            if(tieneValor(encuestaCasaSA.getSedazoPuertasVentanas())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getSedazoPuertasVentanas());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuestaCasaSA.getSedazoPuertasVentanas() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
@@ -104,35 +104,35 @@ public class EditarEncuestaCasaSAActivity extends FragmentActivity implements
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if(encuestaCasaSA.getCompraProdEvitarZancudos()!= null){
+            if(tieneValor(encuestaCasaSA.getCompraProdEvitarZancudos())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCompraProdEvitarZancudos());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuestaCasaSA.getCompraProdEvitarZancudos() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
                 dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
                 modifPage.resetData(dato);
             }
-            if(encuestaCasaSA.getTienePatioJardin()!= null){
+            if(tieneValor(encuestaCasaSA.getTienePatioJardin())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTienePatioJardin());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuestaCasaSA.getTienePatioJardin() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
                 dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
                 modifPage.resetData(dato);
             }
-            if(encuestaCasaSA.getUtilizaAbate()!= null){
+            if(tieneValor(encuestaCasaSA.getUtilizaAbate())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getUtilizaAbate());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuestaCasaSA.getUtilizaAbate() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
                 dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
                 modifPage.resetData(dato);
             }
-            if(encuestaCasaSA.getFumiga()!= null){
+            if(tieneValor(encuestaCasaSA.getFumiga())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getFumiga());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuestaCasaSA.getFumiga() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
                 dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
                 modifPage.resetData(dato);
             }
-            if(encuestaCasaSA.getCadaCuantoFumiga()!= null){
+            if(tieneValor(encuestaCasaSA.getCadaCuantoFumiga())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCadaCuantoFumiga());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuestaCasaSA.getCadaCuantoFumiga() + "' and " + CatalogosDBConstants.catRoot + "='SA_CAT_FUMIGA'", null);
                 dato = new Bundle();
@@ -140,7 +140,7 @@ public class EditarEncuestaCasaSAActivity extends FragmentActivity implements
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if(encuestaCasaSA.getMiembroFamConZikaSn()!= null){
+            if(tieneValor(encuestaCasaSA.getMiembroFamConZikaSn())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getMiembroFamConZikaSn());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuestaCasaSA.getMiembroFamConZikaSn() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
@@ -161,7 +161,7 @@ public class EditarEncuestaCasaSAActivity extends FragmentActivity implements
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if(encuestaCasaSA.getRelacionFamZika()!= null){
+            if(tieneValor(encuestaCasaSA.getRelacionFamZika())) {
                 modifPage = (MultipleFixedChoicePage) mWizardModel.findByKey(labels.getRelacionFamZika());
                 String codigos = encuestaCasaSA.getRelacionFamZika().replaceAll("," , "','");
                 List<String> descripciones = new ArrayList<String>();
@@ -181,7 +181,7 @@ public class EditarEncuestaCasaSAActivity extends FragmentActivity implements
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if(encuestaCasaSA.getMiembroFamConDengueSn()!= null){
+            if(tieneValor(encuestaCasaSA.getMiembroFamConDengueSn())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getMiembroFamConDengueSn());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuestaCasaSA.getMiembroFamConDengueSn() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
@@ -202,7 +202,7 @@ public class EditarEncuestaCasaSAActivity extends FragmentActivity implements
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if(encuestaCasaSA.getRelacionFamDengue()!= null){
+            if(tieneValor(encuestaCasaSA.getRelacionFamDengue())) {
                 modifPage = (MultipleFixedChoicePage) mWizardModel.findByKey(labels.getRelacionFamDengue());
                 String codigos = encuestaCasaSA.getRelacionFamDengue().replaceAll("," , "','");
                 List<String> descripciones = new ArrayList<String>();
@@ -222,7 +222,7 @@ public class EditarEncuestaCasaSAActivity extends FragmentActivity implements
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if(encuestaCasaSA.getMiembroFamConChikSn()!= null){
+            if(tieneValor(encuestaCasaSA.getMiembroFamConChikSn())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getMiembroFamConChikSn());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuestaCasaSA.getMiembroFamConChikSn() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
@@ -243,7 +243,7 @@ public class EditarEncuestaCasaSAActivity extends FragmentActivity implements
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if(encuestaCasaSA.getRelacionFamChik()!= null){
+            if(tieneValor(encuestaCasaSA.getRelacionFamChik())) {
                 modifPage = (MultipleFixedChoicePage) mWizardModel.findByKey(labels.getRelacionFamChik());
                 String codigos = encuestaCasaSA.getRelacionFamChik().replaceAll("," , "','");
                 List<String> descripciones = new ArrayList<String>();

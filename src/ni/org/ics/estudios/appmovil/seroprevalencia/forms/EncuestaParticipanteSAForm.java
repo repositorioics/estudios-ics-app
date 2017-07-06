@@ -88,7 +88,7 @@ public class EncuestaParticipanteSAForm  extends AbstractWizardModel {
         Page dpFechaTransfusionSangre = new NewDatePage(this, labels.getFechaTransfusionSangre(), "", Constants.WIZARD, false).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
         Page scUsaRepelentes = new SingleFixedChoicePage(this,labels.getUsaRepelentes(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scConoceLarvas = new SingleFixedChoicePage(this,labels.getConoceLarvas(), "",Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-        Page scLugaresLarvas = new MultipleFixedChoicePage(this,labels.getLugaresLarvas(), "",Constants.WIZARD, true).setChoices(catLugares).setRequired(true);
+        Page scLugaresLarvas = new MultipleFixedChoicePage(this,labels.getLugaresLarvas(), "",Constants.WIZARD, false).setChoices(catLugares).setRequired(true);
         Page tpOtrosLugaresLarvas = new TextPage(this, labels.getOtrosLugaresLarvas(), labels.getOtrosLugaresLarvasHint(), Constants.WIZARD, false).setRequired(true);
         Page scTenidoHijos = new SingleFixedChoicePage(this,labels.getTenidoHijos(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scUsaPlanificacionFam = new SingleFixedChoicePage(this,labels.getUsaPlanificacionFam(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);

@@ -91,7 +91,7 @@ public class EditarAreaActivity extends FragmentActivity implements
         if (areaCasa != null) {
         	Bundle dato = null;
         	Page modifPage;
-            if (areaCasa.getTipo()!=null){
+            if (tieneValor(areaCasa.getTipo())){
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipo());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + areaCasa.getTipo() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_AREA'", null);
                 dato = new Bundle();

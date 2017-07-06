@@ -110,7 +110,7 @@ public class EditarBanioActivity extends FragmentActivity implements
                 modifPage.setHint(String.valueOf(banio.getAncho() * banio.getLargo()));
                 modifPage.setmVisible(true);
             }
-            if(banio.getConVentana()!= null){
+            if(tieneValor(banio.getConVentana())){
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getConVentana());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + banio.getConVentana() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();

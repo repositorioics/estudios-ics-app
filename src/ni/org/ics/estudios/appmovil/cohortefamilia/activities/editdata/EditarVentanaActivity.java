@@ -114,7 +114,7 @@ public class EditarVentanaActivity extends FragmentActivity implements
                 modifPage.setHint(String.valueOf(ventana.getAncho() * ventana.getLargo()));
                 modifPage.setmVisible(true);
             }
-            if(ventana.getAbierta()!= null){
+            if(tieneValor(ventana.getAbierta())){
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAbierta());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + ventana.getAbierta() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();

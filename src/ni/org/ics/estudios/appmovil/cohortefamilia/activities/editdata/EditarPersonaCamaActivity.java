@@ -110,14 +110,14 @@ public class EditarPersonaCamaActivity extends FragmentActivity implements
         if (pc != null) {
         	Bundle dato = null;
         	Page modifPage;
-	        if(pc.getEstaEnEstudio()!= null){
+	        if(tieneValor(pc.getEstaEnEstudio())){
 	        	modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getEstaEnEstudio());
 	        	MessageResource catEstaEnEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + pc.getEstaEnEstudio() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
 	        	dato = new Bundle();
 	        	dato.putString(SIMPLE_DATA_KEY, catEstaEnEstudio.getSpanish());
 	        	modifPage.resetData(dato);
 	        }	
-	        if(pc.getSexo()!= null){
+	        if(tieneValor(pc.getSexo())){
 	        	modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getSexo());
 	        	MessageResource catSexo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + pc.getSexo() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SEXO'", null);
 		        dato = new Bundle();

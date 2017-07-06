@@ -94,14 +94,14 @@ public class EditarTelefonoContactoActivity extends FragmentActivity implements
         if (telefonoContacto != null) {
         	Bundle dato = null;
         	Page modifPage;
-            if(telefonoContacto.getTipo()!= null){
+            if(tieneValor(telefonoContacto.getTipo())){
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipo());
                 MessageResource catTipo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + telefonoContacto.getTipo() + "' and " + CatalogosDBConstants.catRoot + "='CAT_TIPO_TEL'", null);
                 dato = new Bundle();
                 dato.putString(SIMPLE_DATA_KEY, catTipo.getSpanish());
                 modifPage.resetData(dato);
             }
-            if(telefonoContacto.getOperadora()!= null){
+            if(tieneValor(telefonoContacto.getOperadora())){
 	        	modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getOperadora());
 	        	MessageResource catOpera = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + telefonoContacto.getOperadora() + "' and " + CatalogosDBConstants.catRoot + "='CAT_OPER_TEL'", null);
 	        	dato = new Bundle();

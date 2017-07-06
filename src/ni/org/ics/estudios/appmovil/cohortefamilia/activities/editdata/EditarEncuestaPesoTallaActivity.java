@@ -89,7 +89,7 @@ public class EditarEncuestaPesoTallaActivity extends FragmentActivity implements
         if (encuesta != null) {
             Bundle dato = null;
             Page modifPage;
-            if (encuesta.getTomoMedidaSn() != null) {
+            if (tieneValor(encuesta.getTomoMedidaSn())){
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTomoMedidaSn());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTomoMedidaSn() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();

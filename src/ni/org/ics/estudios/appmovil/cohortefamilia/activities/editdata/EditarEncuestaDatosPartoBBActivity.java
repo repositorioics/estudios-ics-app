@@ -92,7 +92,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
         if (encuesta != null) {
             Bundle dato = null;
             Page modifPage;
-            if (encuesta.getTipoParto() != null) {
+            if (tieneValor(encuesta.getTipoParto())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipoParto());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTipoParto() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_PARTO'", null);
                 dato = new Bundle();
@@ -100,7 +100,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if (encuesta.getTiempoEmb_sndr() != null) {
+            if (tieneValor(encuesta.getTiempoEmb_sndr())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTiempoEmbSndr());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getTiempoEmb_sndr() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SNDR'", null);
                 dato = new Bundle();
@@ -115,7 +115,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if (encuesta.getDocMedTiempoEmb_sn() != null) {
+            if (tieneValor(encuesta.getDocMedTiempoEmb_sn())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getDocMedTiempoEmbSn());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getDocMedTiempoEmb_sn() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
@@ -123,7 +123,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if (encuesta.getDocMedTiempoEmb() != null) {
+            if (tieneValor(encuesta.getDocMedTiempoEmb())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getDocMedTiempoEmb());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getDocMedTiempoEmb() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_DOC_MEDICO'", null);
                 dato = new Bundle();
@@ -145,7 +145,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if (encuesta.getFumFueraRango_sn() != null) {
+            if (tieneValor(encuesta.getFumFueraRango_sn())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getFumFueraRangoSn());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getFumFueraRango_sn() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
@@ -165,7 +165,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
                 modifPage.setmVisible(true);
             }
 
-            if (encuesta.getDocMedEdadGest_sn() != null) {
+            if (tieneValor(encuesta.getDocMedEdadGest_sn())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getDocMedEdadGestSn());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getDocMedEdadGest_sn() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
@@ -180,7 +180,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if (encuesta.getDocMedEdadGest() != null) {
+            if (tieneValor(encuesta.getDocMedEdadGest())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getDocMedEdadGest());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getDocMedEdadGest() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_DOC_MEDICO'", null);
                 dato = new Bundle();
@@ -195,7 +195,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if (encuesta.getPrematuro_sndr() != null) {
+            if (tieneValor(encuesta.getPrematuro_sndr())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getPrematuroSndr());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getPrematuro_sndr() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SNDR'", null);
                 dato = new Bundle();
@@ -203,7 +203,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if (encuesta.getPesoBB_sndr() != null) {
+            if (tieneValor(encuesta.getPesoBB_sndr())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getPesoBBSndr());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getPesoBB_sndr() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SNDR'", null);
                 dato = new Bundle();
@@ -218,7 +218,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if (encuesta.getDocMedPesoBB_sn() != null) {
+            if (tieneValor(encuesta.getDocMedPesoBB_sn())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getDocMedPesoBBSn());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getDocMedPesoBB_sn() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
@@ -226,7 +226,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if (encuesta.getDocMedPesoBB() != null) {
+            if (tieneValor(encuesta.getDocMedPesoBB())) {
                 modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getDocMedPesoBB());
                 MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + encuesta.getDocMedPesoBB() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_DOC_MEDICO'", null);
                 dato = new Bundle();

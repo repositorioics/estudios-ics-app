@@ -61,6 +61,7 @@ public class CasosDBConstants {
     public static final String codigoCasoContacto = "codigoCasoContacto";
     public static final String codigoVisitaCaso = "codigoVisitaCaso";
     public static final String partContacto = "partContacto";
+    public static final String fechaContacto = "fechaContacto";
     public static final String tiempoInteraccion = "tiempoInteraccion";
     public static final String tipoInteraccion = "tipoInteraccion";
 
@@ -70,6 +71,7 @@ public class CasosDBConstants {
             + codigoCasoContacto + " text not null, "
             + codigoVisitaCaso + " text not null, "
             + partContacto + " integer, "
+            + fechaContacto + " date, "
             + tiempoInteraccion + " text, "
             + tipoInteraccion + " text, "
             + MainDBConstants.recordDate + " date, "

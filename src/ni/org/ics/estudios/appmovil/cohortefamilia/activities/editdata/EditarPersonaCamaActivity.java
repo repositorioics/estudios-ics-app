@@ -142,6 +142,8 @@ public class EditarPersonaCamaActivity extends FragmentActivity implements
         }
         estudiosAdapter.close();
         mWizardModel.registerListener(this);
+        Page pagePart = mWizardModel.findByKey(labels.getParticipante());
+        pagePart.setCasaCHF(cama.getCuarto().getCasa().getCodigoCHF());
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);

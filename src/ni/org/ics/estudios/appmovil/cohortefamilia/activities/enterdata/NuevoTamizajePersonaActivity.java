@@ -90,7 +90,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
 	private Integer edadAnios = 0;
     private Integer edadMeses = 0;
-    private Integer edadDias = 0;
+    //private Integer edadDias = 0;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -367,7 +367,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 				String[] edad = new CalcularEdad(fechaNacimiento).getEdad().split("/");
 				edadAnios = Integer.parseInt(edad[0]);
                 edadMeses = Integer.parseInt(edad[1]);
-                edadDias = Integer.parseInt(edad[2]);
+                //edadDias = Integer.parseInt(edad[2]);
 				if(mWizardModel.findByKey(labels.getAceptaParticipar()).getData().getString(TextPage.SIMPLE_DATA_KEY)!=null){
 					visible = mWizardModel.findByKey(labels.getAceptaParticipar()).getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
 	    			if(edadAnios>5 && edadAnios<18){

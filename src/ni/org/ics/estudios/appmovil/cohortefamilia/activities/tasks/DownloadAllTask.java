@@ -100,12 +100,12 @@ public class DownloadAllTask extends DownloadTask {
     public static final String CUARTOS = "10";
     public static final String CAMAS = "11";
     public static final String PERSONAS_CAMA = "12";
-    public static final String ENCUESTA_PARTICIPANTECHF = "13";
-    public static final String ENCUESTA_DATOSPBB = "14";
-    public static final String ENCUESTA_PESOTALLA = "15";
-    public static final String ENCUESTA_LACTMAT = "16";
-    public static final String MUESTRAS = "17";
-    public static final String TELEFONOS = "18";
+    public static final String ENCUESTA_PARTICIPANTECHF = "1";
+    public static final String ENCUESTA_DATOSPBB = "2";
+    public static final String ENCUESTA_PESOTALLA = "3";
+    public static final String ENCUESTA_LACTMAT = "4";
+    public static final String MUESTRAS = "5";
+    public static final String TELEFONOS = "6";
     public static final String PARTICIPANTESA = "1";
     public static final String ENCUESTA_CASASA = "2";
     public static final String ENCUESTA_PARTICIPANTESA = "3";
@@ -120,7 +120,8 @@ public class DownloadAllTask extends DownloadTask {
     public static final String NODATA_CASOS = "7";
 
     private static final String TOTAL_TASK_GENERALES = "4";
-    private static final String TOTAL_TASK_RECLUTAMIENTO = "18";
+    private static final String TOTAL_TASK_RECLUTAMIENTO = "12";
+    private static final String TOTAL_TASK_RECLUTAMIENTO_CHF = "6";
     private static final String TOTAL_TASK_SERO = "3";
     private static final String TOTAL_TASK_CASOS = "7";
 
@@ -217,13 +218,6 @@ public class DownloadAllTask extends DownloadTask {
         estudioAdapter.borrarCuartos();
         estudioAdapter.borrarCamas();
         estudioAdapter.borrarPersonasCama();
-        estudioAdapter.borrarEncuestasParticipantes();
-        estudioAdapter.borrarEncuestasDatosPartoBBs();
-        estudioAdapter.borrarEncuestasPesoTallas();
-        estudioAdapter.borrarEncuestasLactanciaMaternas();
-        estudioAdapter.borrarMuestras();
-        estudioAdapter.borrarVisitasTerreno();
-        estudioAdapter.borrarTelefonoContacto();
         try {
             if (mCasasCHF != null){
                 v = mCasasCHF.size();
@@ -345,6 +339,34 @@ public class DownloadAllTask extends DownloadTask {
                 }
                 mPersonaCamas = null;
             }
+		} catch (Exception e) {
+			// Regresa error al insertar
+			e.printStackTrace();
+			estudioAdapter.close();
+			return e.getLocalizedMessage();
+		}
+        
+        
+        
+        
+        try {
+			error = descargarDatosReclutamientoCHF();
+			if (error!=null) return error;
+		} catch (Exception e) {
+			// Regresa error al descargar
+			e.printStackTrace();
+			return e.getLocalizedMessage();
+		}
+		publishProgress("Abriendo base de datos...","1","1");
+		//Borrar los datos de la base de datos
+        estudioAdapter.borrarEncuestasParticipantes();
+        estudioAdapter.borrarEncuestasDatosPartoBBs();
+        estudioAdapter.borrarEncuestasPesoTallas();
+        estudioAdapter.borrarEncuestasLactanciaMaternas();
+        estudioAdapter.borrarMuestras();
+        estudioAdapter.borrarVisitasTerreno();
+        estudioAdapter.borrarTelefonoContacto();
+        try {
             if (mEncuestasParticipante != null){
                 v = mEncuestasParticipante.size();
                 ListIterator<EncuestaParticipante> iter = mEncuestasParticipante.listIterator();
@@ -758,9 +780,34 @@ public class DownloadAllTask extends DownloadTask {
             // convert the array to a list and return it
             mPersonaCamas = Arrays.asList(responseEntityPerCamas.getBody());
             responseEntityPerCamas = null;
+            return null;
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getLocalizedMessage();
+        }
+    }
+    
+    
+ // url, username, password
+    protected String descargarDatosReclutamientoCHF() throws Exception {
+        try {
+            // The URL for making the GET request
+            String urlRequest;
+            // Set the Accept header for "application/json"
+            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+            HttpHeaders requestHeaders = new HttpHeaders();
+            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+            requestHeaders.setAccept(acceptableMediaTypes);
+            requestHeaders.setAuthorization(authHeader);
+            // Populate the headers in an HttpEntity object to use for the request
+            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
             //Descargar encuestasParticipante
             urlRequest = url + "/movil/encuestasParticipante/";
-            publishProgress("Solicitando Encuestas de Participantes",ENCUESTA_PARTICIPANTECHF,TOTAL_TASK_RECLUTAMIENTO);
+            publishProgress("Solicitando Encuestas de Participantes",ENCUESTA_PARTICIPANTECHF,TOTAL_TASK_RECLUTAMIENTO_CHF);
             // Perform the HTTP GET request
             ResponseEntity<EncuestaParticipante[]> responseEntityEncPar = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     EncuestaParticipante[].class);
@@ -769,7 +816,7 @@ public class DownloadAllTask extends DownloadTask {
             responseEntityEncPar = null;
             //Descargar encuestas datos parto bb
             urlRequest = url + "/movil/encuestasDatosPartoBB/";
-            publishProgress("Solicitando Encuestas de datos parto BB",ENCUESTA_DATOSPBB,TOTAL_TASK_RECLUTAMIENTO);
+            publishProgress("Solicitando Encuestas de datos parto BB",ENCUESTA_DATOSPBB,TOTAL_TASK_RECLUTAMIENTO_CHF);
             // Perform the HTTP GET request
             ResponseEntity<EncuestaDatosPartoBB[]> responseEntityEncParto = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     EncuestaDatosPartoBB[].class);
@@ -778,7 +825,7 @@ public class DownloadAllTask extends DownloadTask {
             responseEntityEncParto = null;
             //Descargar encuestas peso y talla
             urlRequest = url + "/movil/encuestasPesoTalla/";
-            publishProgress("Solicitando Encuestas de peso y talla",ENCUESTA_PESOTALLA,TOTAL_TASK_RECLUTAMIENTO);
+            publishProgress("Solicitando Encuestas de peso y talla",ENCUESTA_PESOTALLA,TOTAL_TASK_RECLUTAMIENTO_CHF);
             // Perform the HTTP GET request
             ResponseEntity<EncuestaPesoTalla[]> responseEntityEncPT = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     EncuestaPesoTalla[].class);
@@ -787,7 +834,7 @@ public class DownloadAllTask extends DownloadTask {
             responseEntityEncPT = null;
             //Descargar encuestas peso y talla
             urlRequest = url + "/movil/encuestasLactanciaMaterna/";
-            publishProgress("Solicitando Encuestas de lactancia materna",ENCUESTA_LACTMAT,TOTAL_TASK_RECLUTAMIENTO);
+            publishProgress("Solicitando Encuestas de lactancia materna",ENCUESTA_LACTMAT,TOTAL_TASK_RECLUTAMIENTO_CHF);
             // Perform the HTTP GET request
             ResponseEntity<EncuestaLactanciaMaterna[]> responseEntityEncLactMat = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     EncuestaLactanciaMaterna[].class);
@@ -796,7 +843,7 @@ public class DownloadAllTask extends DownloadTask {
             responseEntityEncLactMat = null;
             //Descargar muestras
             urlRequest = url + "/movil/muestras/";
-            publishProgress("Solicitando Muestras",MUESTRAS,TOTAL_TASK_RECLUTAMIENTO);
+            publishProgress("Solicitando Muestras",MUESTRAS,TOTAL_TASK_RECLUTAMIENTO_CHF);
             // Perform the HTTP GET request
             ResponseEntity<Muestra[]> responseEntityMuestras = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     Muestra[].class);
@@ -805,7 +852,7 @@ public class DownloadAllTask extends DownloadTask {
             responseEntityMuestras = null;
             //Descargar telefonos
             urlRequest = url + "/movil/telefonos/";
-            publishProgress("Solicitando telefonos",TELEFONOS,TOTAL_TASK_RECLUTAMIENTO);
+            publishProgress("Solicitando telefonos",TELEFONOS,TOTAL_TASK_RECLUTAMIENTO_CHF);
             // Perform the HTTP GET request
             ResponseEntity<TelefonoContacto[]> responseEntityTelefonos = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
             		TelefonoContacto[].class);

@@ -2,6 +2,8 @@ package ni.org.ics.estudios.appmovil.wizard.ui;
 
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.BuscarParticipanteActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaParticipantesCasaActivity;
+import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.wizard.model.Page;
 import android.app.Activity;
 import android.content.Intent;
@@ -68,8 +70,15 @@ public class SelectParticipantFragment extends Fragment {
 		mButtonBarcode.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(getActivity().getApplicationContext(),BuscarParticipanteActivity.class);
-				startActivityForResult(i, PART_CAPTURE);
+				if (mPage.getCasaCHF()==null){
+					Intent i = new Intent(getActivity().getApplicationContext(),BuscarParticipanteActivity.class);
+					startActivityForResult(i, PART_CAPTURE);
+				}
+				else{
+					Intent i = new Intent(getActivity().getApplicationContext(),ListaParticipantesCasaActivity.class);
+					i.putExtra(Constants.CASA, mPage.getCasaCHF());
+					startActivityForResult(i, PART_CAPTURE);
+				}
 			}
 		});
 		return rootView;

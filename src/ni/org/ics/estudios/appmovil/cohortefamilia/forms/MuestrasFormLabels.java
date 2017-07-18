@@ -39,6 +39,9 @@ public class MuestrasFormLabels {
     protected String bhc2ml14;
     protected String realizaPaxgene;
     protected String realizaPaxgeneHint;
+    
+    protected String volMedio;
+    protected String volMem;
 
     public MuestrasFormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
@@ -71,6 +74,8 @@ public class MuestrasFormLabels {
         bhc2ml14 = res.getString(R.string.bhc2ml14);
         realizaPaxgene = res.getString(R.string.realizaPaxgene);
         realizaPaxgeneHint = res.getString(R.string.realizaPaxgeneHint);
+        volMedio = res.getString(R.string.volMedio);
+        volMem = res.getString(R.string.volMem);
     }
 
     public String getTomaMxSn() {
@@ -304,4 +309,22 @@ public class MuestrasFormLabels {
     public void setRealizaPaxgeneHint(String realizaPaxgeneHint) {
         this.realizaPaxgeneHint = realizaPaxgeneHint;
     }
+
+	public String getVolMedio() {
+		return volMedio;
+	}
+
+	public void setVolMedio(String volMedio) {
+		this.volMedio = volMedio;
+	}
+
+	public String getVolMem() {
+		return volMem;
+	}
+
+	public void setVolMem(String volMem) {
+		this.volMem = volMem;
+	}
+    
+    
 }

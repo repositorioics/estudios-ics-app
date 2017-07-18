@@ -12,6 +12,8 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +90,32 @@ public class NewDateFragment extends Fragment {
 			}
 		});
 		return rootView;
+	}
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		mEditTextInput.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable != null && editable.length() >= 0 && isResumed()) {
+                    mPage.getData().putString(Page.SIMPLE_DATA_KEY, editable.toString());
+                    mPage.notifyDataChanged();
+                }
+            }
+
+		});
 	}
 
 	@Override

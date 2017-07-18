@@ -55,6 +55,9 @@ public class Constants {
     public static final String ACCION = "accion";
     public static final String SENDING = "enviando";
     public static final String RECEIVING = "recibiendo";
+    public static final String REVIEWING = "revisando";
+    public static final String ENTERING = "ingresando";
+    public static final String DESDE_CASOS = "desde_form_casos";
 
     public static final int COD_EST_SEROPREVALENCIA = 2;
     public static final int COD_EST_COHORTEDENGUE = 3;
@@ -69,10 +72,19 @@ public class Constants {
     public static final String PARTICIPANTE_SA = "participanteSA";
 
     public static final String CODIGO_PROPOSITO_MA = "1";
+    public static final String CODIGO_PROPOSITO_TX = "3";
     public static final String CODIGO_TIPO_SANGRE = "1";
+    public static final String CODIGO_TIPO_RESP = "9";
+    public static final String CODIGO_TIPO_HF = "2";
+    public static final String CODIGO_TIPO_HN = "3";
+    public static final String CODIGO_TIPO_LN = "4";
     public static final String CODIGO_TUBO_ROJO = "1";
     public static final String CODIGO_TUBO_BHC = "2";
-
-
-
+    public static final String CODIGO_TUBO_PBMC = "3";
+    public static final String CODIGO_MEDIO = "4";
+    public static final String CODIGO_MEM = "5";
+    public static final String FEC_VISITA = "fecha_visita";
+    
 }
+
+    

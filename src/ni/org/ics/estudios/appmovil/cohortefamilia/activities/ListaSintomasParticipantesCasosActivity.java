@@ -35,10 +35,11 @@ public class ListaSintomasParticipantesCasosActivity extends AbstractAsyncListAc
 	private TextView textView;
 	private Drawable img = null;
 	private Button mAddButton;
+	private Button mButton;
 	//Viene de la actividad principal
 	private static VisitaSeguimientoCaso visitaCaso = new VisitaSeguimientoCaso();
 	//Tipo de lista
-    private VisitaSeguimientoCasoSintomas visitaSintomasCaso = new VisitaSeguimientoCasoSintomas();
+    //private VisitaSeguimientoCasoSintomas visitaSintomasCaso = new VisitaSeguimientoCasoSintomas();
     //Adaptador del objeto de la lista
 	private ArrayAdapter<VisitaSeguimientoCasoSintomas> mVisitaSeguimientoCasoSintomasAdapter;
 	//Lista de objetos 
@@ -48,7 +49,7 @@ public class ListaSintomasParticipantesCasosActivity extends AbstractAsyncListAc
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_add);
+		setContentView(R.layout.list_add_casos);
 		//Obtener objeto que viene del menú 
 		visitaCaso = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
 		textView = (TextView) findViewById(R.id.label);
@@ -59,7 +60,37 @@ public class ListaSintomasParticipantesCasosActivity extends AbstractAsyncListAc
 		//Obtener objetos para llenar la lista
 		new FetchDataSintomasCasosTask().execute();
 		
-		mAddButton = (Button) findViewById(R.id.add_button);
+		mButton = (Button) findViewById(R.id.add_part_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.datos_casa_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.add_visit_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_cont_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_bhc_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_rojo_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_pbmc_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_resp_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.fail_visit_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.view_samp_button);
+		mButton.setVisibility(View.GONE);
+		
+		mAddButton = (Button) findViewById(R.id.new_sint_button);
 		//Poner texto en el botón de agregar
 		mAddButton.setText(getString(R.string.new_sint));
 
@@ -110,7 +141,7 @@ public class ListaSintomasParticipantesCasosActivity extends AbstractAsyncListAc
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
-        visitaSintomasCaso = (VisitaSeguimientoCasoSintomas)this.getListAdapter().getItem(position);
+        //visitaSintomasCaso = (VisitaSeguimientoCasoSintomas)this.getListAdapter().getItem(position);
         // Opcion de menu seleccionada tiene que editar o quitar
         
        

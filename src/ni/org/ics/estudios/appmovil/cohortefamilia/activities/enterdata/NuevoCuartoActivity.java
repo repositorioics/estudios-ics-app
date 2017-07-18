@@ -30,6 +30,7 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.forms.CuartoForm;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
@@ -66,12 +67,14 @@ public class NuevoCuartoActivity extends FragmentActivity implements
     private StepPagerStrip mStepPagerStrip;
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
+    private static CasaCohorteFamiliaCaso casaCaso = new CasaCohorteFamiliaCaso();
     private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
 	private String username;
 	private SharedPreferences settings;
 	private static final int EXIT = 1;
 	private AlertDialog alertDialog;
 	private boolean notificarCambios = true;
+	private boolean fromCasos;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -88,7 +91,15 @@ public class NuevoCuartoActivity extends FragmentActivity implements
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 		infoMovil = new DeviceInfo(NuevoCuartoActivity.this);
-		casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+		
+		fromCasos = getIntent().getBooleanExtra(Constants.DESDE_CASOS, false);
+		if(fromCasos){
+			casaCaso = (CasaCohorteFamiliaCaso) getIntent().getExtras().getSerializable(Constants.CASA);
+			casaCHF=casaCaso.getCasa();
+		}
+		else{
+			casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+		}
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new CuartoForm(this,mPass);
         if (savedInstanceState != null) {
@@ -188,11 +199,17 @@ public class NuevoCuartoActivity extends FragmentActivity implements
 					// Finish app
 					Bundle arguments = new Bundle();
 					Intent i;
-					if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+					if(fromCasos){
+						if (casaCaso!=null) arguments.putSerializable(Constants.CASA , casaCaso);
+					}
+					else{
+						if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+					}
 					i = new Intent(getApplicationContext(),
 							ListaCuartosActivity.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					i.putExtras(arguments);
+					i.putExtra(Constants.DESDE_CASOS, fromCasos);
 					startActivity(i);
 					Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.err_cancel),Toast.LENGTH_LONG);
 					toast.show();
@@ -410,11 +427,17 @@ public class NuevoCuartoActivity extends FragmentActivity implements
 		estudiosAdapter.crearCuarto(c);
 		Bundle arguments = new Bundle();
 		Intent i;
-		if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+		if(fromCasos){
+			if (casaCaso!=null) arguments.putSerializable(Constants.CASA , casaCaso);
+		}
+		else{
+			if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+		}
 		i = new Intent(getApplicationContext(),
 				ListaCuartosActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);
+		i.putExtra(Constants.DESDE_CASOS, fromCasos);
 		startActivity(i);
 		Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
 		toast.show();

@@ -26,7 +26,6 @@ import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
-import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
 import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
@@ -279,7 +278,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.setmVisible(true);
                 }
                 if (encuesta.getCodigoPadreEstudio() != null) {
-                    modifPage = (BarcodePage) mWizardModel.findByKey(labels.getCodigoPadreEstudio());
+                    modifPage = (SelectParticipantPage) mWizardModel.findByKey(labels.getCodigoPadreEstudio());
                     dato = new Bundle();
                     dato.putString(SIMPLE_DATA_KEY, encuesta.getCodigoPadreEstudio());
                     modifPage.resetData(dato);
@@ -331,7 +330,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                     modifPage.setmVisible(true);
                 }
                 if (encuesta.getCodigoMadreEstudio() != null) {
-                    modifPage = (BarcodePage) mWizardModel.findByKey(labels.getCodigoMadreEstudio());
+                    modifPage = (SelectParticipantPage) mWizardModel.findByKey(labels.getCodigoMadreEstudio());
                     dato = new Bundle();
                     dato.putString(SIMPLE_DATA_KEY, encuesta.getCodigoMadreEstudio());
                     modifPage.resetData(dato);
@@ -652,7 +651,10 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
         }
         estudiosAdapter.close();
         mWizardModel.registerListener(this);
-
+        Page pagePart = mWizardModel.findByKey(labels.getCodigoMadreEstudio());
+        pagePart.setCasaCHF(encuesta.getParticipante().getCasaCHF().getCodigoCHF());
+        Page pagePart2 = mWizardModel.findByKey(labels.getCodigoPadreEstudio());
+        pagePart2.setCasaCHF(encuesta.getParticipante().getCasaCHF().getCodigoCHF());
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
@@ -1079,6 +1081,12 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.DatePage")){
             DatePage modifPage = (DatePage) page; modifPage.setValue("").setmVisible(visible);
         }
+        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage")){
+    		SelectParticipantPage modifPage = (SelectParticipantPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NewDatePage")){
+    		NewDatePage modifPage = (NewDatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
     }
 
     private boolean tieneValor(String entrada){

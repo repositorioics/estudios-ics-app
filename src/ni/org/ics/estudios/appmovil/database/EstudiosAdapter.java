@@ -23,6 +23,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamil
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.FormularioContactoCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.InformacionNoCompletaCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCasoData;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFallidaCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCasoSintomas;
@@ -44,6 +45,7 @@ import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.EncuestaCasaSAHelper
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.EncuestaParticipanteSAHelper;
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.ParticipanteSeroprevalenciaHelper;
 import ni.org.ics.estudios.appmovil.utils.*;
+
 
 
 import android.content.ContentValues;
@@ -1133,6 +1135,10 @@ public class EstudiosAdapter {
     public boolean borrarMuestras() {
         return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, null, null) > 0;
     }
+    //Limpiar la tabla de Muestras Transmision de la base de datos
+    public boolean borrarMuestrasTx() {
+        return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, MuestrasDBConstants.proposito + "='3'" , null) > 0;
+    }
     //Obtener una Muestra de la base de datos
     public Muestra getMuestra(String filtro, String orden) throws SQLException {
         Muestra mMuestras = null;
@@ -2087,6 +2093,33 @@ public class EstudiosAdapter {
         if (!cursor.isClosed()) cursor.close();
         return mParticipanteCohorteFamiliaCasos;
     }
+    //Obtener una lista de datos con ParticipanteCohorteFamiliaCaso de la base de datos
+    public List<ParticipanteCohorteFamiliaCasoData> getParticipanteCohorteFamiliaCasosDatos(String filtro, String orden) throws SQLException {
+    	List<ParticipanteCohorteFamiliaCasoData> mParticipanteCohorteFamiliaCasosDatos = new ArrayList<ParticipanteCohorteFamiliaCasoData>();
+        Cursor cursor = crearCursor(CasosDBConstants.PARTICIPANTES_CASOS_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mParticipanteCohorteFamiliaCasosDatos.clear();
+            do{
+            	ParticipanteCohorteFamiliaCasoData pd = new ParticipanteCohorteFamiliaCasoData();
+            	ParticipanteCohorteFamiliaCaso mParticipanteCohorteFamiliaCaso = null;
+                mParticipanteCohorteFamiliaCaso = ParticipanteCohorteFamiliaCasoHelper.crearParticipanteCohorteFamiliaCaso(cursor);
+                CasaCohorteFamiliaCaso caso = this.getCasaCohorteFamiliaCaso(CasosDBConstants.codigoCaso + "='" +cursor.getString(cursor.getColumnIndex(CasosDBConstants.codigoCaso))+"'", null);
+                mParticipanteCohorteFamiliaCaso.setCodigoCaso(caso);
+                ParticipanteCohorteFamilia participante = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" +cursor.getInt(cursor.getColumnIndex(CasosDBConstants.participante)), null);
+                mParticipanteCohorteFamiliaCaso.setParticipante(participante);
+                pd.setParticipante(mParticipanteCohorteFamiliaCaso);
+                List<VisitaSeguimientoCaso> mVisitaSeguimientoCasos = new ArrayList<VisitaSeguimientoCaso>();
+                mVisitaSeguimientoCasos = getVisitaSeguimientoCasos(CasosDBConstants.codigoCasoParticipante +" = '" + mParticipanteCohorteFamiliaCaso.getCodigoCasoParticipante() +"'", MainDBConstants.fechaVisita);
+                pd.setNumVisitas(mVisitaSeguimientoCasos.size());
+                if(mVisitaSeguimientoCasos.size()>0) pd.setFechaUltimaVisita(mVisitaSeguimientoCasos.get(mVisitaSeguimientoCasos.size()-1).getFechaVisita());
+                mParticipanteCohorteFamiliaCasosDatos.add(pd);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        
+        return mParticipanteCohorteFamiliaCasosDatos;
+    }
     
     //Crear nuevo VisitaSeguimientoCaso en la base de datos
     public void crearVisitaSeguimientoCaso(VisitaSeguimientoCaso visitacaso) throws Exception {
@@ -2350,5 +2383,64 @@ public class EstudiosAdapter {
         if (!cursor.isClosed()) cursor.close();
         return mInformacionNoCompletaCasos;
     }
+    
+    public Boolean verificarData() throws SQLException{
+		Cursor c = null;
+		c = crearCursor(MainDBConstants.CASA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.PARTICIPANTE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.CASA_CHF_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.PARTICIPANTE_CHF_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(EncuestasDBConstants.ENCUESTA_CASA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.CUARTO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.CAMA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.PERSONACAMA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(EncuestasDBConstants.ENCUESTA_PARTOBB_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(EncuestasDBConstants.ENCUESTA_PESOTALLA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(EncuestasDBConstants.ENCUESTA_LACTANCIAMAT_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MuestrasDBConstants.MUESTRA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.VISITA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(MainDBConstants.TELEFONO_CONTACTO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(SeroprevalenciaDBConstants.PARTICIPANTESA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(SeroprevalenciaDBConstants.ENCUESTA_CASASA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(SeroprevalenciaDBConstants.ENCUESTA_PARTICIPANTESA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(CasosDBConstants.CASAS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(CasosDBConstants.PARTICIPANTES_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(CasosDBConstants.VISITAS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(CasosDBConstants.VISITAS_FALLIDAS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(CasosDBConstants.NO_DATA_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(CasosDBConstants.SINTOMAS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(CasosDBConstants.CONTACTOS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+		return false;
+	}
+    
     
 }

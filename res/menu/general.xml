@@ -6,9 +6,6 @@
         android:showAsAction="ifRoom|withText"
         android:icon="@drawable/ic_menu_home"></item>
     
-    <item android:id="@+id/MENU_BACK" 
-        android:title="@string/back" 
-        android:showAsAction="always|withText"
-        android:icon="@drawable/ic_menu_revert"></item>
+
 
 </menu>

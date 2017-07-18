@@ -17,12 +17,14 @@ import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestraBHCForm;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasParticipantesCasosActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestraRespiratoriaForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestrasFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -41,7 +43,7 @@ import java.util.Map;
  * Created by Miguel Salinas on 5/17/2017.
  * V1.0
  */
-public class NuevaMuestraBHCActivity extends FragmentActivity implements
+public class NuevaMuestraRespActivity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -61,12 +63,15 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
     private static ParticipanteCohorteFamilia participanteCHF = new ParticipanteCohorteFamilia();
+    private static VisitaSeguimientoCaso visitaCaso = new VisitaSeguimientoCaso();
     private String username;
     private SharedPreferences settings;
     private static final int EXIT = 1;
     private AlertDialog alertDialog;
     private boolean notificarCambios = true;
+    private Double volumenMaximoPermitido = 0D;
     private String horaTomaMx;
+    private String accion;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,11 +82,20 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
         username =
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
-        infoMovil = new DeviceInfo(NuevaMuestraBHCActivity.this);
-        participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        infoMovil = new DeviceInfo(NuevaMuestraRespActivity.this);
+        accion = getIntent().getStringExtra(Constants.ACCION);
+        if(accion.equals(Constants.CODIGO_PROPOSITO_TX)){
+        	visitaCaso = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
+        	participanteCHF = visitaCaso.getCodigoParticipanteCaso().getParticipante();
+        	volumenMaximoPermitido = 512D;
+        }else{
+        	participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        	volumenMaximoPermitido = (Double) getIntent().getExtras().getSerializable(Constants.VOLUMEN);
+        }
+        
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        mWizardModel = new MuestraBHCForm(this,mPass);
+        mWizardModel = new MuestraRespiratoriaForm(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
@@ -160,7 +174,10 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
-        changeStatus(mWizardModel.findByKey(labels.getBhc2ml()), false);
+        //seter el máximo permitido para el volumen de la muestra
+        NumberPage vol = (NumberPage)mWizardModel.findByKey(labels.getVolumen());
+        vol.setRangeValidation(true, 0, volumenMaximoPermitido.intValue());
+
         onPageTreeChanged();
         updateBottomBar();
     }
@@ -185,13 +202,12 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
 
     @Override
     public void onPageDataChanged(Page page) {
-        if (recalculateCutOffPage()) {
-            if (notificarCambios)
-                mPagerAdapter.notifyDataSetChanged();
-            updateBottomBar();
-        }
         updateModel(page);
         updateConstrains();
+        if (recalculateCutOffPage()) {
+            if (notificarCambios) mPagerAdapter.notifyDataSetChanged();
+            updateBottomBar();
+        }
         notificarCambios = true;
     }
 
@@ -267,6 +283,7 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
             TypedValue v = new TypedValue();
             getTheme().resolveAttribute(android.R.attr.textAppearanceMedium, v, true);
             mNextButton.setTextAppearance(this, v.resourceId);
+            // || ( position == 0 && mWizardModel.getCurrentPageSequence().get(0) instanceof LabelPage)
             mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
         }
         mPrevButton.setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);
@@ -322,18 +339,35 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
         }*/
     }
 
+    /**
+     * Convierte una Date a String, según el formato indicado
+     * @param dtFecha Fecha a convertir
+     * @param format formato solicitado
+     * @return String
+     */
+    public static String DateToString(Date dtFecha, String format)  {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        if(dtFecha!=null)
+            return simpleDateFormat.format(dtFecha);
+        else
+            return null;
+    }
+
     public void updateModel(Page page){
         try {
             boolean visible = false;
             if (page.getTitle().equals(labels.getTomaMxSn())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
-                changeStatus(mWizardModel.findByKey(labels.getCodigoMx()), visible);
-                //changeStatus(mWizardModel.findByKey(labels.getHora()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getNumPinchazos()), visible);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getCodigoMx()), visible, null);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getTipoMuestra()), visible, null);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible, null);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible, null);
+                notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
-                changeStatus(mWizardModel.findByKey(labels.getRazonNoToma()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoToma()), visible, null);
                 if (visible) horaTomaMx = null;
                 notificarCambios = false;
                 onPageTreeChanged();
@@ -344,14 +378,14 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getObservacion())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
-                changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), visible);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
+                changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), visible, null);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRazonNoToma())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
-                changeStatus(mWizardModel.findByKey(labels.getDescOtraRazonNoToma()), visible);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
+                changeStatus(mWizardModel.findByKey(labels.getDescOtraRazonNoToma()), visible, null);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -360,7 +394,7 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
         }
     }
 
-    public void changeStatus(Page page, boolean visible){
+    public void changeStatus(Page page, boolean visible, String hint){
         String clase = page.getClass().toString();
         if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SingleFixedChoicePage")){
             SingleFixedChoicePage modifPage = (SingleFixedChoicePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
@@ -369,7 +403,11 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
             BarcodePage modifPage = (BarcodePage) page; modifPage.setValue("").setmVisible(visible);
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.LabelPage")){
-            LabelPage modifPage = (LabelPage) page; modifPage.setmVisible(visible);
+            LabelPage modifPage = (LabelPage) page;
+            if (hint!=null)
+                modifPage.setHint(hint);
+            modifPage.setmVisible(visible);
+
         }
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
             TextPage modifPage = (TextPage) page; modifPage.setValue("").setmVisible(visible);
@@ -389,19 +427,6 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
         return (entrada != null && !entrada.isEmpty());
     }
 
-    /**
-     * Convierte una Date a String, según el formato indicado
-     * @param dtFecha Fecha a convertir
-     * @param format formato solicitado
-     * @return String
-     */
-    public static String DateToString(Date dtFecha, String format)  {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-        if(dtFecha!=null)
-            return simpleDateFormat.format(dtFecha);
-        else
-            return null;
-    }
 
     public void saveData() {
         try {
@@ -413,14 +438,12 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
 
             String tomaMxSn = datos.getString(this.getString(R.string.tomaMxSn));
             String codigoMx = datos.getString(this.getString(R.string.codigoMx));
-            //String hora = datos.getString(this.getString(R.string.hora));
+            String tipoMx = datos.getString(this.getString(R.string.tipoMuestra));
             String volumen = datos.getString(this.getString(R.string.volumen));
             String observacion = datos.getString(this.getString(R.string.observacion));
             String descOtraObservacion = datos.getString(this.getString(R.string.descOtraObservacion));
-            String numPinchazos = datos.getString(this.getString(R.string.numPinchazos));
             String razonNoToma = datos.getString(this.getString(R.string.razonNoToma));
             String descOtraRazonNoToma = datos.getString(this.getString(R.string.descOtraRazonNoToma));
-
             String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
             estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
             estudiosAdapter.open();
@@ -428,28 +451,38 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
             Muestra muestra = new Muestra();
             muestra.setCodigo(infoMovil.getId());
             muestra.setParticipante(participanteCHF.getParticipante());
-            muestra.setTipoMuestra("1"); //Sangre
-            muestra.setTubo("2"); //BHC
-            muestra.setProposito("1");//Muestreo anual
-            muestra.setRealizaPaxgene("N");
+            
+            muestra.setProposito(accion);//Muestreo anual
             //listas
             if (tieneValor(tomaMxSn)){
                 MessageResource mstomaMxSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaMxSn + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (mstomaMxSn != null) {
                     muestra.setTomaMxSn(mstomaMxSn.getCatKey());
-                    if (mstomaMxSn.getMessageKey().matches("CHF_CAT_SINO_NO")) muestra.setRealizaPaxgene(null);
                 }
             }
+            if (tieneValor(tipoMx)){
+                MessageResource mstipoMx = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipoMx + "' and "
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_TIP0_MX_RESP'", null);
+                if (mstipoMx != null) {
+                   muestra.setTipoMuestra(mstipoMx.getCatKey());
+                   if (muestra.getTipoMuestra().equals("Lavado Nasal")){
+                   	muestra.setTubo(Constants.CODIGO_MEM);
+                   }
+                   else{
+                   	muestra.setTubo(Constants.CODIGO_MEDIO);
+                   }
+                }
+            }
+            else{
+            	 muestra.setTipoMuestra("9");
+            	 muestra.setTubo("9");
+            }
+            
             if (tieneValor(observacion)){
                 MessageResource msobservacion = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + observacion + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_OBSERV_MX'", null);
                 if (msobservacion != null) muestra.setObservacion(msobservacion.getCatKey());
-            }
-            if (tieneValor(numPinchazos)){
-                MessageResource msnumPinchazos = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + numPinchazos + "' and "
-                        + CatalogosDBConstants.catRoot + "='CHF_CAT_PINCH_MX'", null);
-                if (msnumPinchazos != null) muestra.setNumPinchazos(msnumPinchazos.getCatKey());
             }
             if (tieneValor(razonNoToma)){
                 MessageResource msrazonNoToma = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoToma + "' and "
@@ -463,24 +496,33 @@ public class NuevaMuestraBHCActivity extends FragmentActivity implements
             muestra.setCodigoMx(codigoMx);
             muestra.setDescOtraRazonNoToma(descOtraRazonNoToma);
             muestra.setDescOtraObservacion(descOtraObservacion);
+            muestra.setHoraFin(DateToString(new Date(), "HH:mm:ss"));
             //Metadata
-            muestra.setRecordDate(new Date());
+            if(accion.equals(Constants.CODIGO_PROPOSITO_TX)){
+            	muestra.setRecordDate(visitaCaso.getFechaVisita());
+            }
+            else{
+            	muestra.setRecordDate(new Date());
+            }
             muestra.setRecordUser(username);
             muestra.setDeviceid(infoMovil.getDeviceId());
             muestra.setEstado('0');
             muestra.setPasive('0');
-            try {
-                estudiosAdapter.crearMuestras(muestra);
-            }catch (Exception ex){
-                ex.printStackTrace();
-                Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error),Toast.LENGTH_LONG);
-                toast.show();
-            }
-             estudiosAdapter.close();
+            estudiosAdapter.crearMuestras(muestra);
+            estudiosAdapter.close();
+            Intent i;
             Bundle arguments = new Bundle();
-            arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
-            Intent i = new Intent(getApplicationContext(),
-                    MenuParticipanteActivity.class);
+            if(accion.equals(Constants.CODIGO_PROPOSITO_TX)){
+            	arguments.putSerializable(Constants.VISITA, visitaCaso);
+	            i = new Intent(getApplicationContext(),
+	            		ListaMuestrasParticipantesCasosActivity.class);
+            }
+            else{
+	            arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
+	            i = new Intent(getApplicationContext(),
+	                    ListaMuestrasActivity.class);
+	            i.putExtra(Constants.ACCION, Constants.ENTERING);
+            }
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);

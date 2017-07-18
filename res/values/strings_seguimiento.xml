@@ -4,19 +4,33 @@
 	<string name="follow_up_list">Lista de casas en seguimiento</string>
 	<string name="follow_up_list_par">Lista de participantes en seguimiento</string>
 	<string name="follow_up_list_visit">Lista de visitas realizadas</string>
+	<string name="follow_up_list_fail_visit">Lista de visitas fallidas</string>
 	<string name="follow_up_list_sint">Formulario de sintomas realizados</string>
+	<string name="follow_up_list_cont">Formulario de contactos realizados</string>
+	<string name="follow_up_list_samp">Muestras realizadas</string>
+	<string name="follow_up_update">Actualizar seguimientos</string>
 	
 	<string name="visit">Visita</string>
 	<string name="sick">Enfermo</string>
 	<string name="sick_date">Fecha que enfermó</string>
 	
+	<string name="new_part">Agregar Participante</string>
 	<string name="new_visit">Agregar Visita</string>
+	<string name="new_fail_visit">Agregar Visita Fallida</string>
 	<string name="new_sint">Agregar Sintomas</string>
 	<string name="new_cont">Agregar Contacto</string>
+	<string name="new_samp">Agregar muestra</string>
+	<string name="view_samp">Revisar</string>
+	<string name="visit_back">Regresar</string>
+	
+	<string name="datos_casa">Datos Casa</string>
+	<string name="datos_part">Datos part</string>
+	<string name="visit_fail">Visita Fallida</string>
 	
 
 	<string name="codigoParticipanteCaso">Participante</string>
     <string name="fecha_visita">Fecha visita</string>
+    <string name="fechaInicio">Fecha de inicio monitoreo intensivo</string>
     <string name="wrong_fecha_visita">Error en la fecha visita</string>
     <string name="horaProbableVisita">Hora probable para siguiente visita</string>
     <string name="wrongHoraProbableVisita">Error en la hora probable para siguiente visita</string>
@@ -26,8 +40,9 @@
 	<string name="wrongTemp">Temperatura inválida. Debe ser entre <xliff:g id="temp1">%1$s</xliff:g> y <xliff:g id="temp2">%2$s</xliff:g></string>
 	<string name="wrongTime">Hora inválida</string>
 	<string name="wrongSelect">La respuesta para <xliff:g id="variable">%1$s</xliff:g> es requerida</string>
+	<string name="duplicateDate">Fecha ya está registrada</string>
 	
-	
+	<string name="sint">Sintomas</string>
 	<string name="fecha_sintoma">Fecha sintoma</string>
 	<string name="fiebre">Fiebre</string>
 	<string name="fif">Fecha Inicio Fiebre</string>
@@ -49,7 +64,28 @@
 	<string name="prescritoMedico">Fue prescrito por medico</string>
 	<string name="cualAntibiotico">Cual Antibiótico</string>
 	
-	<string name="sint">Sintomas</string>
+	
 	<string name="contacts">Contacto miembros del hogar</string>
+	<string name="partContacto">Nombre miembro del hogar</string>
+	<string name="fechaContacto">Fecha del contacto</string>
+	<string name="tiempoInteraccion">Tiempo interacción</string>
+	<string name="tipoInteraccion">Tipo de interacción</string>
+	<string name="tiempoInteraccionHint">¿Cuánto tiempo interactuó con esta persona hoy (minutos)?</string>
+	<string name="tipoInteraccionHint">¿Qué tipo de interacción tuvo con esta persona? (marque todos los que correspondan)</string>
+	
+	<string name="samples_caso">Muestras de visita</string>
+	<string name="new_samp_bhc">BHC</string>
+	<string name="new_samp_rojo">Rojo</string>
+	<string name="new_samp_pbmc">PBMC</string>
+	<string name="new_samp_resp">Respiratoria</string>
+	
+	<string name="razonVisitaFallida">Razon visita fallida</string>
+	<string name="otraRazon">Otra razón</string>
+	
+	<string name="numVisits">Total visitas:</string>
+	<string name="ultVisit">Ultima visita:</string>
+	
+	<string name="fecBefRegistro">La <xliff:g id="variable">%1$s</xliff:g> seleccionada es menor que la <xliff:g id="variable2">%2$s</xliff:g></string>
+	<string name="fecAftRegistro">La <xliff:g id="variable">%1$s</xliff:g> seleccionada es mayor que la <xliff:g id="variable2">%2$s</xliff:g></string>
 	
 </resources>

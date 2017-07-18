@@ -27,7 +27,6 @@ import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
-import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
 import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
@@ -86,8 +85,12 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
         mWizardModel.registerListener(this);
+        
         labels = new EncuestaParticipanteFormLabels();
-
+        Page pagePart = mWizardModel.findByKey(labels.getCodigoMadreEstudio());
+        pagePart.setCasaCHF(participanteCHF.getCasaCHF().getCodigoCHF());
+        Page pagePart2 = mWizardModel.findByKey(labels.getCodigoPadreEstudio());
+        pagePart2.setCasaCHF(participanteCHF.getCasaCHF().getCodigoCHF());
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
@@ -533,6 +536,12 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
         else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.DatePage")){
             DatePage modifPage = (DatePage) page; modifPage.setValue("").setmVisible(visible);
         }
+        else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.SelectParticipantPage")){
+    		SelectParticipantPage modifPage = (SelectParticipantPage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
+    	else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NewDatePage")){
+    		NewDatePage modifPage = (NewDatePage) page; modifPage.resetData(new Bundle()); modifPage.setmVisible(visible);
+    	}
     }
 
     private boolean tieneValor(String entrada){
@@ -890,11 +899,7 @@ public class NuevaEncuestaParticipanteActivity extends FragmentActivity implemen
             encuesta.setDeviceid(infoMovil.getDeviceId());
             encuesta.setEstado('0');
             encuesta.setPasive('0');
-            boolean actualizada = false;
-            EncuestaParticipante encuestaExiste = estudiosAdapter.getEncuestasParticipante(EncuestasDBConstants.participante + "=" + participanteCHF.getParticipante().getCodigo(), EncuestasDBConstants.participante);
-            if (encuestaExiste != null && encuestaExiste.getParticipante() != null && encuestaExiste.getParticipante().getParticipante() != null)
-                actualizada = estudiosAdapter.editarEncuestasParticipante(encuesta);
-            else estudiosAdapter.crearEncuestasParticipante(encuesta);
+            estudiosAdapter.crearEncuestasParticipante(encuesta);
             estudiosAdapter.close();
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);

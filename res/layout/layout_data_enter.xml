@@ -28,6 +28,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/save"
+            android:drawableTop="@drawable/ic_menu_save"
             style="?android:attr/buttonBarStyle" />
         
         <Button
@@ -37,6 +38,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
+            android:drawableTop="@drawable/ic_menu_close_clear_cancel"
             style="?android:attr/buttonBarStyle" />
 
     </LinearLayout>

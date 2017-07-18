@@ -8,7 +8,7 @@ import android.text.TextUtils;
 
 public class SelectParticipantPage extends Page {
 	
-
+	
 	public SelectParticipantPage(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean isVisible) {
 		super(callbacks, title, hintText, textColor, isVisible, true);
 	}
@@ -36,4 +36,5 @@ public class SelectParticipantPage extends Page {
 		mData.putString(SIMPLE_DATA_KEY, value);
 		return this;
 	}
+
 }

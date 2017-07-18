@@ -101,7 +101,8 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
         mWizardModel.registerListener(this);
-
+        Page pagePart = mWizardModel.findByKey(labels.getParticipante());
+        pagePart.setCasaCHF(casaCHF.getCodigoCHF());
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);

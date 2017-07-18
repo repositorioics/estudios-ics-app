@@ -24,6 +24,8 @@
     <string name="proposito">Propósito de la muestra</string>
     <string name="horaInicioPax">Hora de inicio proceso paxgene</string>
     <string name="horaFinPax">Hora de fin proceso paxgene</string>
+    <string name="volMedio">Volumen del medio</string>
+    <string name="volMem">Volumen del MEM</string>
     <string name="rojo3ml">6 meses y menos de 2 años. Rojo: 3 ml es el volumen requerido</string>
     <string name="rojo6ml">2 años a 13 años. Rojo: 6 ml es el volumen requerido</string>
     <string name="bhc2ml">2 años a 13 años. BHC : 2 ml es el volumen requerido</string>

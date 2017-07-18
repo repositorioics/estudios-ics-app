@@ -15,7 +15,7 @@ import java.util.List;
 
 public class VisitaSeguimientoCasoAdapter extends ArrayAdapter<VisitaSeguimientoCaso> {
 
-	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm");
 	
 	public VisitaSeguimientoCasoAdapter(Context context, int textViewResourceId,
                           List<VisitaSeguimientoCaso> items) {

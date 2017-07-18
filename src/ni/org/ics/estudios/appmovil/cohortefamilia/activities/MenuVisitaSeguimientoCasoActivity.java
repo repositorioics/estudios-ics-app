@@ -81,6 +81,15 @@ public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
 					startActivity(i);
 					finish();
 		        	break;
+                case 2:
+                	arguments.putSerializable(Constants.VISITA , visitaCaso);
+					i = new Intent(getApplicationContext(),
+							ListaMuestrasParticipantesCasosActivity.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					i.putExtras(arguments);
+					startActivity(i);
+					finish();
+		        	break;
                 default:
                         break;
                 }

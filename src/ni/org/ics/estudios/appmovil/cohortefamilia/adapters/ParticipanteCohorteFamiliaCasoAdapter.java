@@ -9,17 +9,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCasoData;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class ParticipanteCohorteFamiliaCasoAdapter extends ArrayAdapter<ParticipanteCohorteFamiliaCaso> {
+public class ParticipanteCohorteFamiliaCasoAdapter extends ArrayAdapter<ParticipanteCohorteFamiliaCasoData> {
 
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
 	
 	public ParticipanteCohorteFamiliaCasoAdapter(Context context, int textViewResourceId,
-                          List<ParticipanteCohorteFamiliaCaso> items) {
+                          List<ParticipanteCohorteFamiliaCasoData> items) {
 		super(context, textViewResourceId, items);
 	}
 
@@ -31,34 +31,43 @@ public class ParticipanteCohorteFamiliaCasoAdapter extends ArrayAdapter<Particip
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.complex_list_item, null);
 		}
-		ParticipanteCohorteFamiliaCaso p = getItem(position);
+		ParticipanteCohorteFamiliaCasoData p = getItem(position);
 		if (p != null) {
 
 			TextView textView = (TextView) v.findViewById(R.id.identifier_text);
 			textView.setTextColor(Color.BLACK);
 			if (textView != null) {
-				textView.setText(this.getContext().getString(R.string.code) + ": " + p.getParticipante().getParticipante().getCodigo());
+				textView.setText(this.getContext().getString(R.string.code) + ": " + p.getParticipante().getParticipante().getParticipante().getCodigo());
 			}
 			
 			textView = (TextView) v.findViewById(R.id.der_text);
 			textView.setTextColor(Color.BLACK);
 			if (textView != null) {
-				textView.setText(mDateFormat.format(p.getParticipante().getParticipante().getFechaNac()));
+				textView.setText(mDateFormat.format(p.getParticipante().getParticipante().getParticipante().getFechaNac()));
 			}
 
 			textView = (TextView) v.findViewById(R.id.name_text);
 			textView.setTextColor(Color.BLACK);
-			String nameCompleto = p.getParticipante().getParticipante().getNombreCompleto();
+			String nameCompleto = p.getParticipante().getParticipante().getParticipante().getNombreCompleto();
 			if (textView != null) {
 				textView.setText(nameCompleto);
 			}
 			
 			ImageView imageView = (ImageView) v.findViewById(R.id.image);
 			if (imageView != null) {
-				if (p.getParticipante().getParticipante().getSexo().equals("M")) {
+				if (p.getParticipante().getParticipante().getParticipante().getSexo().equals("M")) {
 					imageView.setImageResource(R.drawable.male);
-				} else if (p.getParticipante().getParticipante().getSexo().equals("F")) {
+				} else if (p.getParticipante().getParticipante().getParticipante().getSexo().equals("F")) {
 					imageView.setImageResource(R.drawable.female);
+				}
+			}
+			textView = (TextView) v.findViewById(R.id.infoc_text);
+			textView.setTextColor(Color.GRAY);
+			if (textView != null) {
+				textView.setText(this.getContext().getString(R.string.numVisits) + String.valueOf(p.getNumVisitas()));
+				if(p.getFechaUltimaVisita()!=null){
+					mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+					textView.setText(textView.getText().toString()	+ " " + this.getContext().getString(R.string.ultVisit) + mDateFormat.format(p.getFechaUltimaVisita()));
 				}
 			}
 		}

@@ -28,6 +28,13 @@
         <item>@string/new_house_sa_survey</item>
         <item>@string/send_house</item>
     </string-array>
+    
+    <string-array name="menu_casa_caso">
+        <item>@string/new_survey_1</item>
+        <item>@string/rooms</item>
+        <item>@string/environments</item>
+        <item>@string/phones</item>
+    </string-array>
 
     <string-array name="menu_participante">
         <item>@string/new_survey_2</item>
@@ -38,10 +45,17 @@
         <item>@string/new_participant_sa_survey</item>
     </string-array>
     
+    <string-array name="menu_participante_caso">
+        <item>@string/new_survey_2</item>
+        <item>@string/new_survey_3</item>
+        <item>@string/new_survey_4</item>
+        <item>@string/new_survey_5</item>
+    </string-array>
+    
     <string-array name="menu_visitas">
         <item>@string/sint</item>
         <item>@string/contacts</item>
-        <item>@string/samples</item>
+        <item>@string/samples_caso</item>
     </string-array>
 
 </resources>

@@ -17,17 +17,13 @@ import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaPersonasCamaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaTelefonosActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PersonaCamaForm;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.PersonaCamaFormLabels;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.TelefonoContactoForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.TelefonoContactoFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.TelefonoContacto;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PersonaCama;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
@@ -126,6 +122,8 @@ public class EditarTelefonoContactoActivity extends FragmentActivity implements
         }
         estudiosAdapter.close();
         mWizardModel.registerListener(this);
+        Page pagePart = mWizardModel.findByKey(labels.getParticipante());
+        pagePart.setCasaCHF(casaCHF.getCodigoCHF());
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);

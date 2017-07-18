@@ -87,13 +87,13 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         Page scConQuienViveNino = new SingleFixedChoicePage(this, labels.getConQuienViveNino(), "", Constants.WIZARD, false).setChoices(catViveNino).setRequired(true);
         Page tpDescOtroViveNino = new TextPage(this, labels.getDescOtroViveNino(), "", Constants.WIZARD, false).setRequired(true);
         Page scPadreEnEstudio = new SingleFixedChoicePage(this, labels.getPadreEnEstudio(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page bpCodigoPadreEstudio = new BarcodePage(this, labels.getCodigoPadreEstudio(), "", Constants.WIZARD, false).setRequired(true);
+        Page bpCodigoPadreEstudio = new SelectParticipantPage(this, labels.getCodigoPadreEstudio(), "", Constants.WIZARD, false).setRequired(true);
         Page scPadreAlfabeto = new SingleFixedChoicePage(this, labels.getPadreAlfabeto(), "", Constants.WIZARD, false).setChoices(catSiNoDe).setRequired(true);
         Page scNivelEducacionPadre = new SingleFixedChoicePage(this, labels.getNivelEducacionPadre(), "", Constants.WIZARD, false).setChoices(catNivelEdu).setRequired(true);
         Page scTrabajaPadre = new SingleFixedChoicePage(this, labels.getTrabajaPadre(), "", Constants.WIZARD, false).setChoices(catSiNoDe).setRequired(true);
         Page scTipoTrabajoPadre = new SingleFixedChoicePage(this, labels.getTipoTrabajoPadre(), "", Constants.WIZARD, false).setChoices(catTipoTrab).setRequired(true);
         Page scMadreEnEstudio = new SingleFixedChoicePage(this, labels.getMadreEnEstudio(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page bpCodigoMadreEstudio = new BarcodePage(this, labels.getCodigoMadreEstudio(), "", Constants.WIZARD, false).setRequired(true);
+        Page bpCodigoMadreEstudio = new SelectParticipantPage(this, labels.getCodigoMadreEstudio(), "", Constants.WIZARD, false).setRequired(true);
         Page scMadreAlfabeto = new SingleFixedChoicePage(this, labels.getMadreAlfabeto(), "", Constants.WIZARD, false).setChoices(catSiNoDe).setRequired(true);
         Page scNivelEducacionMadre = new SingleFixedChoicePage(this, labels.getNivelEducacionMadre(), "", Constants.WIZARD, false).setChoices(catNivelEdu).setRequired(true);
         Page scTrabajaMadre = new SingleFixedChoicePage(this, labels.getTrabajaMadre(), "", Constants.WIZARD, false).setChoices(catSiNoDe).setRequired(true);

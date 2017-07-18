@@ -1,0 +1,145 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/label"
+        style="?android:textAppearanceMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_family"
+        android:drawableStart="@drawable/ic_family"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1.0"/>
+    
+    <View android:id="@+id/divider"
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="?android:attr/dividerHorizontal" />
+    
+    <LinearLayout
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="?android:attr/buttonBarStyle">
+        
+        <Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/add_part_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_part"
+            android:drawableTop="@drawable/ic_menu_add"
+            style="?android:attr/buttonBarStyle" />
+        
+        <Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/datos_casa_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/datos_casa"
+            android:drawableTop="@drawable/ic_menu_home"
+            style="?android:attr/buttonBarStyle" />
+
+        <Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/add_visit_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_visit"
+            android:drawableTop="@drawable/ic_menu_mark"
+            style="?android:attr/buttonBarStyle" />
+        
+        <Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/fail_visit_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/visit_fail"
+            android:drawableTop="@drawable/ic_menu_end_conversation"
+            style="?android:attr/buttonBarStyle" />
+        
+        <Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/new_sint_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_sint"
+            android:drawableTop="@drawable/ic_menu_invite"
+            style="?android:attr/buttonBarStyle" />
+        
+		<Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/new_cont_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_cont"
+            android:drawableTop="@drawable/ic_menu_share"
+            style="?android:attr/buttonBarStyle" />
+		
+		<Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/new_bhc_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_samp_bhc"
+            android:drawableTop="@drawable/ic_bhc"
+            style="?android:attr/buttonBarStyle" />
+		
+		<Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/new_rojo_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_samp_rojo"
+            android:drawableTop="@drawable/ic_rojo"
+            style="?android:attr/buttonBarStyle" />
+		
+		<Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/new_pbmc_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_samp_pbmc"
+            android:drawableTop="@drawable/ic_pbmc"
+            style="?android:attr/buttonBarStyle" />
+		
+		<Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/new_resp_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_samp_resp"
+            android:drawableTop="@drawable/ic_resp"
+            style="?android:attr/buttonBarStyle" />
+		
+		<Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/view_samp_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/view_samp"
+            android:drawableTop="@drawable/ic_menu_search"
+            style="?android:attr/buttonBarStyle" />
+
+    </LinearLayout>
+</LinearLayout>

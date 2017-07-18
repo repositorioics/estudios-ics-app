@@ -9,6 +9,7 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadCasosActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.CasaCohorteFamiliaCasoAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
@@ -16,6 +17,8 @@ import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -32,16 +35,22 @@ public class ListaCasasCasosActivity extends AbstractAsyncListActivity {
 	
 	private TextView textView;
 	private Drawable img = null;
-	private Button mAddButton;
+	private Button mButton;
+	private Button mDatosCasaButton;
 	private ArrayAdapter<CasaCohorteFamiliaCaso> mCasaCohorteFamiliaCasoAdapter;
 	private CasaCohorteFamiliaCaso casaCaso;
 	private List<CasaCohorteFamiliaCaso> mCasaCohorteFamiliaCasos = new ArrayList<CasaCohorteFamiliaCaso>();
 	private EstudiosAdapter estudiosAdapter;
 
+	private static final int DOWNLOAD = 1;
+	private static final int VERIFY = 3;
+	private static final int UPDATE_EQUIPO = 11;
+	
+	private AlertDialog alertDialog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_add);
+		setContentView(R.layout.list_add_casos);
 		
 		textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_menu_today);
@@ -50,8 +59,46 @@ public class ListaCasasCasosActivity extends AbstractAsyncListActivity {
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		new FetchDataCasasCasosTask().execute();
 		
-		mAddButton = (Button) findViewById(R.id.add_button);
-		mAddButton.setVisibility(View.GONE);
+		mButton = (Button) findViewById(R.id.add_part_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.add_visit_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.fail_visit_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_sint_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_cont_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_bhc_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_rojo_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_pbmc_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_resp_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.view_samp_button);
+		mButton.setVisibility(View.GONE);
+		
+		mDatosCasaButton = (Button) findViewById(R.id.datos_casa_button);
+		mDatosCasaButton.setText(getString(R.string.follow_up_update));
+		mDatosCasaButton.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_menu_refresh), null, null);
+		
+		mDatosCasaButton.setOnClickListener(new View.OnClickListener()  {
+			@Override
+			public void onClick(View v) {
+				createDialog(DOWNLOAD);
+			}
+		});
 		
 	}
 
@@ -126,6 +173,92 @@ public class ListaCasasCasosActivity extends AbstractAsyncListActivity {
 		super.onPause();
 	}
 	
+	private void createDialog(int dialog) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		switch(dialog){
+		case DOWNLOAD:
+			builder.setTitle(this.getString(R.string.confirm));
+			builder.setMessage(this.getString(R.string.downloading));
+			builder.setIcon(android.R.drawable.ic_menu_help);
+			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+					estudiosAdapter.open();
+					if(estudiosAdapter.verificarData()){
+						createDialog(VERIFY);
+					}
+					else{
+						Intent ie = new Intent(getApplicationContext(), DownloadCasosActivity.class);
+						startActivityForResult(ie, UPDATE_EQUIPO);
+					}
+					estudiosAdapter.close();
+				}
+			});
+			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do nothing
+					dialog.dismiss();
+				}
+			});
+			break;
+		case VERIFY:
+			builder.setTitle(this.getString(R.string.confirm));
+			builder.setMessage(this.getString(R.string.data_not_sent));
+			builder.setIcon(android.R.drawable.ic_menu_help);
+			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+					Intent ie = new Intent(getApplicationContext(), DownloadCasosActivity.class);
+					startActivityForResult(ie, UPDATE_EQUIPO);
+				}
+			});
+			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do nothing
+					dialog.dismiss();
+				}
+			});
+			break;	
+		default:
+			break;
+		}
+		alertDialog = builder.create();
+		alertDialog.show();
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent) {	
+		super.onActivityResult(requestCode, resultCode, intent);
+		if (requestCode == UPDATE_EQUIPO){
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			String mensaje = "";
+			if (resultCode == RESULT_CANCELED) {
+				builder.setTitle(getApplicationContext().getString(R.string.error));
+				builder.setIcon(R.drawable.ic_menu_close_clear_cancel);
+				mensaje = intent.getStringExtra("resultado");
+			}
+			else{
+				builder.setTitle(getApplicationContext().getString(R.string.confirm));
+				builder.setIcon(R.drawable.ic_menu_info_details);
+				mensaje = getApplicationContext().getString(R.string.success);
+                new FetchDataCasasCasosTask().execute();
+			}
+
+			builder.setMessage(mensaje)
+			.setCancelable(false)
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					//do things
+				}
+			});
+			AlertDialog alert = builder.create();
+			alert.show();
+			return;
+		}
+	}
 	
 	private class FetchDataCasasCasosTask extends AsyncTask<String, Void, String> {
 		@Override

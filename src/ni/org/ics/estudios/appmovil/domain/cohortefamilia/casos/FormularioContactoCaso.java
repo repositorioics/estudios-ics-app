@@ -1,5 +1,7 @@
 package ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos;
 
+import java.util.Date;
+
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 
@@ -19,6 +21,7 @@ public class FormularioContactoCaso extends BaseMetaData {
 	private String codigoCasoContacto;
 	private VisitaSeguimientoCaso codigoVisitaCaso;
 	private ParticipanteCohorteFamilia partContacto;
+	private Date fechaContacto;
 	private String tiempoInteraccion;
 	private String tipoInteraccion;
     
@@ -45,6 +48,15 @@ public class FormularioContactoCaso extends BaseMetaData {
 
 	public void setPartContacto(ParticipanteCohorteFamilia partContacto) {
 		this.partContacto = partContacto;
+	}
+	
+
+	public Date getFechaContacto() {
+		return fechaContacto;
+	}
+
+	public void setFechaContacto(Date fechaContacto) {
+		this.fechaContacto = fechaContacto;
 	}
 
 	public String getTiempoInteraccion() {

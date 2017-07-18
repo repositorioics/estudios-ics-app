@@ -17,6 +17,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cama;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PersonaCama;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import android.os.AsyncTask;
@@ -43,6 +44,7 @@ public class ListaCuartosActivity extends AbstractAsyncListActivity {
 	private TextView textView;
 	private Drawable img = null;
 	private Button mAddButton;
+	private static CasaCohorteFamiliaCaso casaCaso = new CasaCohorteFamiliaCaso();
 	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
     private Cuarto cuarto = new Cuarto();
 	private ArrayAdapter<Cuarto> mCuartoAdapter;
@@ -51,6 +53,7 @@ public class ListaCuartosActivity extends AbstractAsyncListActivity {
 
     private static final int EDITAR_CUARTO = 1;
 	private static final int BORRAR_CUARTO = 2;
+	private boolean fromCasos;
 
 	private AlertDialog alertDialog;
 
@@ -61,7 +64,15 @@ public class ListaCuartosActivity extends AbstractAsyncListActivity {
 		
 		registerForContextMenu(getListView());
 		
-		casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+		
+		fromCasos = getIntent().getBooleanExtra(Constants.DESDE_CASOS, false);
+		if(fromCasos){
+			casaCaso = (CasaCohorteFamiliaCaso) getIntent().getExtras().getSerializable(Constants.CASA);
+			casaCHF=casaCaso.getCasa();
+		}
+		else{
+			casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+		}
 		textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_menu_share);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
@@ -198,9 +209,16 @@ public class ListaCuartosActivity extends AbstractAsyncListActivity {
 	public void onBackPressed (){
 		Bundle arguments = new Bundle();
 		Intent i;
-		if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
-		i = new Intent(getApplicationContext(),
+		if(fromCasos){
+			if (casaCaso!=null) arguments.putSerializable(Constants.CASA , casaCaso);
+			i = new Intent(getApplicationContext(),
+					MenuCasaCasoActivity.class);
+		}
+		else{
+			if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+			i = new Intent(getApplicationContext(),
 				MenuCasaActivity.class);
+		}
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);
 		startActivity(i);
@@ -243,10 +261,16 @@ public class ListaCuartosActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {
 			try {
 				Bundle arguments = new Bundle();
-		        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+				if(fromCasos){
+					if (casaCaso!=null) arguments.putSerializable(Constants.CASA , casaCaso);
+				}
+				else{
+					if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+				}
 				Intent i = new Intent(getApplicationContext(),
 						NuevoCuartoActivity.class);
 				i.putExtras(arguments);
+				i.putExtra(Constants.DESDE_CASOS, fromCasos);
 		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
 				finish();

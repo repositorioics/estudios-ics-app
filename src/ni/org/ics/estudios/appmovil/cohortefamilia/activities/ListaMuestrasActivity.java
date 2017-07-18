@@ -48,10 +48,10 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
     private Double volumenTotalPermitido = 0D;
     private int anios = 0;
     private int meses = 0;
-    private int dias = 0;
     private boolean habilitarBhc;
     private boolean habilitarRojo;
     private AlertDialog alertDialog;
+    private String accion;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
 		setContentView(R.layout.list_add_sample);
 		registerForContextMenu(getListView());
 		participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+		accion = getIntent().getStringExtra(Constants.ACCION);
 		textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_samples);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
@@ -70,7 +71,6 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
         if (edad.length > 0) {
             anios = Integer.valueOf(edad[0]);
             meses = Integer.valueOf(edad[1]);
-            dias = Integer.valueOf(edad[2]);
         }
 
         //BHC y Paxgene (2 años a 13 años y 14 años y mas)
@@ -98,6 +98,11 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
                 createDialogMuestras(getString(R.string.new_mx_rojo));
             }
         });
+        if(accion.matches(Constants.REVIEWING)){
+        	mAddBHCButton.setVisibility(View.GONE);
+        	mAddRojoCButton.setVisibility(View.GONE);
+        }
+        
 	}
 
 	@Override
@@ -146,12 +151,14 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
 	public void onBackPressed (){
 		Bundle arguments = new Bundle();
 		Intent i;
-		if (participanteCHF !=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
-		i = new Intent(getApplicationContext(),
-				MenuParticipanteActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		i.putExtras(arguments);
-		startActivity(i);
+		if(!accion.matches(Constants.REVIEWING)){
+			if (participanteCHF !=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
+			i = new Intent(getApplicationContext(),
+					MenuParticipanteActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			i.putExtras(arguments);
+			startActivity(i);
+		}
 		finish();
 	}
 
@@ -319,12 +326,14 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
                             NuevaMuestraBHCPaxgeneActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtras(arguments);
+                    i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_MA);
                     startActivity(i);
                 }else if (tipoMx.equalsIgnoreCase(getString(R.string.new_mx_rojo))) {
 
                     i = new Intent(getApplicationContext(),
                             NuevaMuestraTuboRojoActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_MA);
                     i.putExtras(arguments);
                     startActivity(i);
                 }

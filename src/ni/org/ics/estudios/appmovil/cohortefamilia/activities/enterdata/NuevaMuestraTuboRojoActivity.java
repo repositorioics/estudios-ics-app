@@ -18,11 +18,13 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasParticipantesCasosActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestraTuboRojoForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestrasFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
@@ -59,6 +61,7 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
     private static ParticipanteCohorteFamilia participanteCHF = new ParticipanteCohorteFamilia();
+    private static VisitaSeguimientoCaso visitaCaso = new VisitaSeguimientoCaso();
     private String username;
     private SharedPreferences settings;
     private static final int EXIT = 1;
@@ -66,6 +69,7 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
     private boolean notificarCambios = true;
     private String horaTomaMx;
     private Double volumenMaximoPermitido = 0D;
+    private String accion;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,8 +81,15 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
         infoMovil = new DeviceInfo(NuevaMuestraTuboRojoActivity.this);
-        participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
-        volumenMaximoPermitido = (Double) getIntent().getExtras().getSerializable(Constants.VOLUMEN);
+        accion = getIntent().getStringExtra(Constants.ACCION);
+        if(accion.equals(Constants.CODIGO_PROPOSITO_TX)){
+        	visitaCaso = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
+        	participanteCHF = visitaCaso.getCodigoParticipanteCaso().getParticipante();
+        	volumenMaximoPermitido = 8D;
+        }else{
+        	participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        	volumenMaximoPermitido = (Double) getIntent().getExtras().getSerializable(Constants.VOLUMEN);
+        }
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new MuestraTuboRojoForm(this,mPass);
@@ -443,7 +454,7 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
             muestra.setParticipante(participanteCHF.getParticipante());
             muestra.setTipoMuestra(Constants.CODIGO_TIPO_SANGRE); //Sangre
             muestra.setTubo(Constants.CODIGO_TUBO_ROJO); //Rojo
-            muestra.setProposito(Constants.CODIGO_PROPOSITO_MA);//Muestreo anual
+            muestra.setProposito(accion);//Muestreo anual o transmision
             //listas
             if (tieneValor(tomaMxSn)){
                 MessageResource mstomaMxSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaMxSn + "' and "
@@ -473,17 +484,31 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
             muestra.setDescOtraRazonNoToma(descOtraRazonNoToma);
             muestra.setDescOtraObservacion(descOtraObservacion);
             //Metadata
-            muestra.setRecordDate(new Date());
+            if(accion.equals(Constants.CODIGO_PROPOSITO_TX)){
+            	muestra.setRecordDate(visitaCaso.getFechaVisita());
+            }
+            else{
+            	muestra.setRecordDate(new Date());
+            }
             muestra.setRecordUser(username);
             muestra.setDeviceid(infoMovil.getDeviceId());
             muestra.setEstado('0');
             muestra.setPasive('0');
             estudiosAdapter.crearMuestras(muestra);
             estudiosAdapter.close();
+            Intent i;
             Bundle arguments = new Bundle();
-            arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
-            Intent i = new Intent(getApplicationContext(),
-                    ListaMuestrasActivity.class);
+            if(accion.equals(Constants.CODIGO_PROPOSITO_TX)){
+            	arguments.putSerializable(Constants.VISITA, visitaCaso);
+	            i = new Intent(getApplicationContext(),
+	            		ListaMuestrasParticipantesCasosActivity.class);
+            }
+            else{
+	            arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
+	            i = new Intent(getApplicationContext(),
+	                    ListaMuestrasActivity.class);
+	            i.putExtra(Constants.ACCION, Constants.ENTERING);
+            }
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);

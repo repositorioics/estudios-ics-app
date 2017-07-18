@@ -114,7 +114,9 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
         mNameView.setEnabled(false);
         inputFechaVisita = (TextView) rootView.findViewById(R.id.inputFechaVisita);
         inputFechaVisita.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)<10? "0"+c.get(Calendar.DAY_OF_MONTH):c.get(Calendar.DAY_OF_MONTH))+"/"+
-        							String.valueOf((c.get(Calendar.MONTH)+1)<10? "0"+(c.get(Calendar.MONTH)+1):(c.get(Calendar.MONTH)+1))+"/"+String.valueOf(c.get(Calendar.YEAR)));
+        							String.valueOf((c.get(Calendar.MONTH)+1)<10? "0"+(c.get(Calendar.MONTH)+1):(c.get(Calendar.MONTH)+1))+"/"+String.valueOf(c.get(Calendar.YEAR))+" "+
+        							String.valueOf(c.get(Calendar.HOUR_OF_DAY)<10? "0"+c.get(Calendar.HOUR_OF_DAY):c.get(Calendar.HOUR_OF_DAY))+":"+
+        							String.valueOf(c.get(Calendar.MINUTE)<10? "0"+c.get(Calendar.MINUTE):c.get(Calendar.MINUTE)));
         inputFechaVisita.setEnabled(false);
         fechaVisita = inputFechaVisita.getText().toString();
         mButtonChangeDate = (ImageButton) rootView.findViewById(R.id.changedate_button);
@@ -124,6 +126,7 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
 				createDialog(DATE_DIALOG_ID);
 			}
 		});
+        mButtonChangeDate.setEnabled(false);
         inputHoraProbableVisita = (TextView) rootView.findViewById(R.id.inputHoraProbableVisita);
         inputHoraProbableVisita.setEnabled(false);
         mButtonChangeTime = (ImageButton) rootView.findViewById(R.id.changetime_button);
@@ -232,6 +235,15 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
     
     private boolean validarEntrada() {
         //Valida la entrada
+    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+    	Date dVis = null;
+		try {
+			dVis = formatter.parse(fechaVisita);
+		} catch (ParseException e) {
+			Toast.makeText(getActivity(), e.toString() ,Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+			return false;
+		}
         if (fechaVisita == null || fechaVisita.equals("")){
         	inputFechaVisita.setError(getActivity().getString(R.string.wrong_fecha_visita));
         	inputFechaVisita.requestFocus();
@@ -256,18 +268,14 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
         	mTempView.requestFocus();
             return false;
         }
+        else if(dVis.before(mParticipanteCaso.getCodigoCaso().getFechaInicio())){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_fecha_visita),Toast.LENGTH_LONG).show();
+        	return false;
+        }
         else{
+        	
         	vsc.setCodigoCasoVisita(infoMovil.getId());
         	vsc.setCodigoParticipanteCaso(mParticipanteCaso);
-        	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        	Date dVis = null;
-			try {
-				dVis = formatter.parse(fechaVisita);
-			} catch (ParseException e) {
-				Toast.makeText(getActivity(), e.toString() ,Toast.LENGTH_LONG).show();
-				e.printStackTrace();
-				return false;
-			}
         	vsc.setFechaVisita(dVis);
         	vsc.setVisita(visita.toString());
         	vsc.setHoraProbableVisita(horaProbableVisita);
@@ -321,7 +329,7 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
 			spinExpCS.setAdapter(dataAdapter);
 		}
 
-	}	
+	}
     
     
     private class SaveDataTask extends AsyncTask<String, Void, String> {

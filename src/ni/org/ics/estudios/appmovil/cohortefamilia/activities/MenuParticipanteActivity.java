@@ -245,6 +245,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     ListaMuestrasActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtras(arguments);
+            i.putExtra(Constants.ACCION, Constants.ENTERING);
             startActivity(i);
         }else {
             new OpenDataEnterActivityTask().execute(String.valueOf(position));

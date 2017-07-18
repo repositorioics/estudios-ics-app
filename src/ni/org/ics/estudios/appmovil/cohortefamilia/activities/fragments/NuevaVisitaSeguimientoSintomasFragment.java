@@ -3,6 +3,7 @@ package ni.org.ics.estudios.appmovil.cohortefamilia.activities.fragments;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -18,14 +19,19 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCasoSintomas;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -59,6 +65,8 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	private VisitaSeguimientoCasoSintomas vscs = new VisitaSeguimientoCasoSintomas();
 	//Catalogos
 	private List<MessageResource> mCatalogoSnd;
+	private List<VisitaSeguimientoCaso> mVisitaSeguimientoCasos = new ArrayList<VisitaSeguimientoCaso>();
+	private List<VisitaSeguimientoCasoSintomas> mVisitasSeguimientoCasoSintomas = new ArrayList<VisitaSeguimientoCasoSintomas>();
 	//Widgets en el View
 	private TextView mTitleView;
 	private EditText mNameView;
@@ -85,7 +93,9 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	private Spinner spinRespiracionRuidosa;
 	private Spinner spinOseltamivir;
 	private Spinner spinAntibiotico;
+	private TextView textPrescritoMedico;
 	private Spinner spinPrescritoMedico;
+	private TextView textCualAntibiotico;
 	private EditText inputCualAntibiotico;
 	
 	private Button mSaveView;
@@ -173,6 +183,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	        		textFif.setVisibility(View.VISIBLE);
 	        		inputFif.setVisibility(View.VISIBLE);
 	        		mButtonChangeFif.setVisibility(View.VISIBLE);
+	        		spinFiebre.setBackgroundColor(Color.RED);
 	        	}
 	        	else{
 	        		textFif.setVisibility(View.GONE);
@@ -180,6 +191,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	        		mButtonChangeFif.setVisibility(View.GONE);
 	        		inputFif.setText("");
 	        		fif = "";
+	        		spinFiebre.setBackgroundColor(Color.WHITE);
 	        	}
 	        }
 			@Override
@@ -255,6 +267,12 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	                int arg2, long arg3) {
 	        	MessageResource mr = (MessageResource) spinner.getSelectedItem();
 	        	dolorCabeza = mr.getCatKey();
+	        	if(dolorCabeza.equals(Constants.YESKEYSND)){
+	        		spinDolorCabeza.setBackgroundColor(Color.RED);
+	        	}
+	        	else{
+	        		spinDolorCabeza.setBackgroundColor(Color.WHITE);
+	        	}
 	        }
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -267,6 +285,12 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	                int arg2, long arg3) {
 	        	MessageResource mr = (MessageResource) spinner.getSelectedItem();
 	        	dolorArticular = mr.getCatKey();
+	        	if(dolorArticular.equals(Constants.YESKEYSND)){
+	        		spinDolorArticular.setBackgroundColor(Color.RED);
+	        	}
+	        	else{
+	        		spinDolorArticular.setBackgroundColor(Color.WHITE);
+	        	}
 	        }
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -279,6 +303,12 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	                int arg2, long arg3) {
 	        	MessageResource mr = (MessageResource) spinner.getSelectedItem();
 	        	dolorMuscular = mr.getCatKey();
+	        	if(dolorMuscular.equals(Constants.YESKEYSND)){
+	        		spinDolorMuscular.setBackgroundColor(Color.RED);
+	        	}
+	        	else{
+	        		spinDolorMuscular.setBackgroundColor(Color.WHITE);
+	        	}
 	        }
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -291,6 +321,12 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	                int arg2, long arg3) {
 	        	MessageResource mr = (MessageResource) spinner.getSelectedItem();
 	        	dificultadRespiratoria = mr.getCatKey();
+	        	if(dificultadRespiratoria.equals(Constants.YESKEYSND)){
+	        		spinDificultadRespiratoria.setBackgroundColor(Color.RED);
+	        	}
+	        	else{
+	        		spinDificultadRespiratoria.setBackgroundColor(Color.WHITE);
+	        	}
 	        }
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -304,6 +340,12 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	                int arg2, long arg3) {
 	        	MessageResource mr = (MessageResource) spinner.getSelectedItem();
 	        	secrecionNasal = mr.getCatKey();
+	        	if(secrecionNasal.equals(Constants.YESKEYSND)){
+	        		spinSecrecionNasal.setBackgroundColor(Color.RED);
+	        	}
+	        	else{
+	        		spinSecrecionNasal.setBackgroundColor(Color.WHITE);
+	        	}
 	        }
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -316,6 +358,12 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	                int arg2, long arg3) {
 	        	MessageResource mr = (MessageResource) spinner.getSelectedItem();
 	        	tos = mr.getCatKey();
+	        	if(tos.equals(Constants.YESKEYSND)){
+	        		spinTos.setBackgroundColor(Color.RED);
+	        	}
+	        	else{
+	        		spinTos.setBackgroundColor(Color.WHITE);
+	        	}
 	        }
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -328,6 +376,12 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	                int arg2, long arg3) {
 	        	MessageResource mr = (MessageResource) spinner.getSelectedItem();
 	        	pocoApetito = mr.getCatKey();
+	        	if(pocoApetito.equals(Constants.YESKEYSND)){
+	        		spinPocoApetito.setBackgroundColor(Color.RED);
+	        	}
+	        	else{
+	        		spinPocoApetito.setBackgroundColor(Color.WHITE);
+	        	}
 	        }
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -340,6 +394,12 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	                int arg2, long arg3) {
 	        	MessageResource mr = (MessageResource) spinner.getSelectedItem();
 	        	dolorGarganta = mr.getCatKey();
+	        	if(dolorGarganta.equals(Constants.YESKEYSND)){
+	        		spinDolorGarganta.setBackgroundColor(Color.RED);
+	        	}
+	        	else{
+	        		spinDolorGarganta.setBackgroundColor(Color.WHITE);
+	        	}
 	        }
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -352,6 +412,12 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	                int arg2, long arg3) {
 	        	MessageResource mr = (MessageResource) spinner.getSelectedItem();
 	        	diarrea = mr.getCatKey();
+	        	if(diarrea.equals(Constants.YESKEYSND)){
+	        		spinDiarrea.setBackgroundColor(Color.RED);
+	        	}
+	        	else{
+	        		spinDiarrea.setBackgroundColor(Color.WHITE);
+	        	}
 	        }
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -364,6 +430,12 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	                int arg2, long arg3) {
 	        	MessageResource mr = (MessageResource) spinner.getSelectedItem();
 	        	quedoCama = mr.getCatKey();
+	        	if(quedoCama.equals(Constants.YESKEYSND)){
+	        		spinQuedoCama.setBackgroundColor(Color.RED);
+	        	}
+	        	else{
+	        		spinQuedoCama.setBackgroundColor(Color.WHITE);
+	        	}
 	        }
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -376,6 +448,12 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	                int arg2, long arg3) {
 	        	MessageResource mr = (MessageResource) spinner.getSelectedItem();
 	        	respiracionRuidosa = mr.getCatKey();
+	        	if(respiracionRuidosa.equals(Constants.YESKEYSND)){
+	        		spinRespiracionRuidosa.setBackgroundColor(Color.RED);
+	        	}
+	        	else{
+	        		spinRespiracionRuidosa.setBackgroundColor(Color.WHITE);
+	        	}
 	        }
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -400,11 +478,28 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	                int arg2, long arg3) {
 	        	MessageResource mr = (MessageResource) spinner.getSelectedItem();
 	        	antibiotico = mr.getCatKey();
+	        	if(antibiotico.equals(Constants.YESKEYSND)){
+	        		textCualAntibiotico.setVisibility(View.VISIBLE);
+	        		inputCualAntibiotico.setVisibility(View.VISIBLE);
+	        		textPrescritoMedico.setVisibility(View.VISIBLE);
+	        		spinPrescritoMedico.setVisibility(View.VISIBLE);
+	        	}
+	        	else{
+	        		textCualAntibiotico.setVisibility(View.GONE);
+	        		inputCualAntibiotico.setVisibility(View.GONE);
+	        		inputCualAntibiotico.setText("");
+	        		textPrescritoMedico.setVisibility(View.GONE);
+	        		spinPrescritoMedico.setVisibility(View.GONE);
+	        		cualAntibiotico = null;
+	        		prescritoMedico = null;
+	        	}
 	        }
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 	    });
+        textPrescritoMedico = (TextView) rootView.findViewById(R.id.textPrescritoMedico);
+        textPrescritoMedico.setVisibility(View.GONE);
         spinPrescritoMedico = (Spinner) rootView.findViewById(R.id.spinPrescritoMedico);
         spinPrescritoMedico.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 	        @Override
@@ -417,7 +512,26 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 	    });
+        spinPrescritoMedico.setVisibility(View.GONE);
+        textCualAntibiotico = (TextView) rootView.findViewById(R.id.textCualAntibiotico);
+        textCualAntibiotico.setVisibility(View.GONE);
         inputCualAntibiotico = (EditText) rootView.findViewById(R.id.inputCualAntibiotico);
+        inputCualAntibiotico.setVisibility(View.GONE);
+        inputCualAntibiotico.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+			@Override
+			public void afterTextChanged(Editable editable) {
+				cualAntibiotico = inputCualAntibiotico.getText().toString();
+			}
+
+		});
         
         mSaveView = (Button) getActivity().findViewById(R.id.save_button);
 		mSaveView.setOnClickListener(new View.OnClickListener()  {
@@ -460,7 +574,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
                 	inputFechaSintoma.setText(fechaSintoma);
 		        }
 		    },c.get(Calendar.YEAR), c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
-			minDate = DateMidnight.now().minusDays(3);
+			minDate = new DateMidnight(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
 			maxDate = DateMidnight.now();
 			dpD.getDatePicker().setMinDate(minDate.getMillis());
 			dpD.getDatePicker().setMaxDate(maxDate.getMillis());
@@ -474,7 +588,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
                 	inputFif.setText(fif);
 		        }
 		    },c.get(Calendar.YEAR), c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
-			minDate = DateMidnight.now().minusDays(6);
+			minDate = new DateMidnight(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
 			maxDate = DateMidnight.now();
 			dpD.getDatePicker().setMinDate(minDate.getMillis());
 			dpD.getDatePicker().setMaxDate(maxDate.getMillis());
@@ -487,6 +601,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
     
     private boolean validarEntrada() throws ParseException {
         //Valida la entrada
+    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         if (fechaSintoma == null || fechaSintoma.equals("")){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.fecha_sintoma)),Toast.LENGTH_LONG).show();
         	inputFechaSintoma.setError(getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.fecha_sintoma))); 
@@ -526,10 +641,61 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.dificultadRespiratoria)),Toast.LENGTH_LONG).show();
             return false;
         }
+        else if (secrecionNasal == null || secrecionNasal.equals("")){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.secrecionNasal)),Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (tos == null || tos.equals("")){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.tos)),Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (pocoApetito == null || pocoApetito.equals("")){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.pocoApetito)),Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (dolorGarganta == null || dolorGarganta.equals("")){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.dolorGarganta)),Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (diarrea == null || diarrea.equals("")){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.diarrea)),Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (quedoCama == null || quedoCama.equals("")){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.quedoCama)),Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (respiracionRuidosa == null || respiracionRuidosa.equals("")){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.respiracionRuidosa)),Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (oseltamivir == null || oseltamivir.equals("")){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.oseltamivir)),Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (antibiotico == null || antibiotico.equals("")){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.antibiotico)),Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (antibiotico.equals(Constants.YESKEYSND) && (prescritoMedico == null || prescritoMedico.equals(""))){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.prescritoMedico)),Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (antibiotico.equals(Constants.YESKEYSND) && (cualAntibiotico == null || cualAntibiotico.equals(""))){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.cualAntibiotico)),Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (formatter.parse(fechaSintoma).before(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio())){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.fecBefRegistro,getActivity().getString(R.string.fecha_sintoma),getActivity().getString(R.string.fechaInicio)),Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (fiebre.equals(Constants.YESKEYSND) && (formatter.parse(fif).after(formatter.parse(fechaSintoma)))){
+        	Toast.makeText(getActivity(), getActivity().getString(R.string.fecAftRegistro,getActivity().getString(R.string.fif),getActivity().getString(R.string.fecha_sintoma)),Toast.LENGTH_LONG).show();
+            return false;
+        }
         else{
         	vscs.setCodigoCasoSintoma(infoMovil.getId());
         	vscs.setCodigoVisitaCaso(mVisitaSeguimientoCaso);
-        	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         	vscs.setFechaSintomas(formatter.parse(fechaSintoma));
         	vscs.setFiebre(fiebre);
         	if (fiebre.equals(Constants.YESKEYSND)) vscs.setFif(formatter.parse(fif));
@@ -539,6 +705,18 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 			vscs.setDolorArticular(dolorArticular);
 			vscs.setDolorMuscular(dolorMuscular);
 			vscs.setDificultadRespiratoria(dificultadRespiratoria);
+			vscs.setSecrecionNasal(secrecionNasal);
+			vscs.setTos(tos);
+			vscs.setPocoApetito(pocoApetito);
+			vscs.setDolorGarganta(dolorGarganta);
+			vscs.setDiarrea(diarrea);
+			vscs.setQuedoCama(quedoCama);
+			vscs.setRespiracionRuidosa(respiracionRuidosa);
+			vscs.setOseltamivir(oseltamivir);
+			vscs.setAntibiotico(antibiotico);
+			vscs.setPrescritoMedico(prescritoMedico);
+			vscs.setCualAntibiotico(cualAntibiotico);
+			
 			vscs.setRecordDate(new Date());
 			vscs.setRecordUser(username);
 			vscs.setDeviceid(infoMovil.getDeviceId());
@@ -567,6 +745,13 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 			try {
 				estudiosAdapter.open();
 				mCatalogoSnd = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", CatalogosDBConstants.order);
+				mVisitaSeguimientoCasos = estudiosAdapter.getVisitaSeguimientoCasos(CasosDBConstants.codigoCasoParticipante +" = '" + mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCasoParticipante() +"'", MainDBConstants.fechaVisita);
+				String filtro = "";
+				for (VisitaSeguimientoCaso vsc: mVisitaSeguimientoCasos){
+					if (filtro.equals("")){ filtro = CasosDBConstants.codigoCasoVisita + "='" + vsc.getCodigoCasoVisita()+"'";} else{
+					if (!filtro.equals("")) filtro = filtro + " or " + CasosDBConstants.codigoCasoVisita + "='" + vsc.getCodigoCasoVisita()+"'";}
+				}
+				mVisitasSeguimientoCasoSintomas = estudiosAdapter.getVisitaSeguimientoCasosSintomas(filtro, CasosDBConstants.fechaSintomas);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -607,6 +792,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
     
     private class SaveDataTask extends AsyncTask<String, Void, String> {
     	private ProgressDialog nDialog;
+    	private AlertDialog alertDialog;
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -623,6 +809,11 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 		protected String doInBackground(String... values) {
 			try {
 				estudiosAdapter.open();
+				for (VisitaSeguimientoCasoSintomas vscc:mVisitasSeguimientoCasoSintomas){
+					if(vscc.getFechaSintomas().equals(vscs.getFechaSintomas())){
+						return getActivity().getString(R.string.duplicateDate) + " - " + fechaSintoma + " / " + getActivity().getString(R.string.visit) + " - " + vscc.getCodigoVisitaCaso().getVisita();
+					}
+				}
 				estudiosAdapter.crearVisitaSeguimientoCasoSintomas(vscs);
 				estudiosAdapter.close();
 			} catch (Exception e) {
@@ -635,15 +826,30 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 		protected void onPostExecute(String resultado) {
 			// after the request completes, hide the progress indicator
 			nDialog.dismiss();
-			Bundle arguments = new Bundle();
-			Intent i;
-			arguments.putSerializable(Constants.VISITA , mVisitaSeguimientoCaso);
-			i = new Intent(getActivity(),
-					ListaSintomasParticipantesCasosActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	        i.putExtras(arguments);
-			startActivity(i);
-			getActivity().finish();
+			if(!resultado.equals("exito")){
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle(getActivity().getString(R.string.error));
+				builder.setMessage(resultado);
+				builder.setPositiveButton(getActivity().getString(R.string.ok), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						// Finish app
+						dialog.dismiss();
+					}
+				});
+				alertDialog = builder.create();
+				alertDialog.show();
+			}
+			else{
+				Bundle arguments = new Bundle();
+				Intent i;
+				arguments.putSerializable(Constants.VISITA , mVisitaSeguimientoCaso);
+				i = new Intent(getActivity(),
+						ListaSintomasParticipantesCasosActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		        i.putExtras(arguments);
+				startActivity(i);
+				getActivity().finish();
+			}
 		}
 
 	}	

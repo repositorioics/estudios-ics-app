@@ -59,6 +59,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
     private boolean existeencuestaCasa = false;
     private boolean habilitarencuestaCasaSA = false;
     private boolean existeencuestaCasaSA = false;
+    private boolean fromCasos = false;
 
     private final int OPCION_LISTA_PARTICIPANTES = 0;
     private final int OPCION_ENCUESTA_CASA = 1;
@@ -117,6 +118,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
     							ListaCuartosActivity.class);
     					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     					i.putExtras(arguments);
+    					i.putExtra(Constants.DESDE_CASOS, fromCasos);
     					startActivity(i);break;
                     case OPCION_LISTA_AREAS:
                     	if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);

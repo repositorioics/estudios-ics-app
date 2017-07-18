@@ -44,6 +44,7 @@ public abstract class Page implements PageTreeNode {
     protected String mParentKey;
     protected boolean mVisible = false;
     protected boolean mEnabled = true;
+    private String casaCHF;
 
     protected Page(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean visible, boolean enabled) {
         mCallbacks = callbacks;
@@ -146,4 +147,15 @@ public abstract class Page implements PageTreeNode {
     public void setmEnabled(boolean mEnabled) {
         this.mEnabled = mEnabled;
     }
+
+	public String getCasaCHF() {
+		return casaCHF;
+	}
+
+	public void setCasaCHF(String casaCHF) {
+		this.casaCHF = casaCHF;
+	}
+
+    
+    
 }

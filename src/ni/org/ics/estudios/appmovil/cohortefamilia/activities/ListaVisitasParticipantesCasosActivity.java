@@ -1,7 +1,9 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
@@ -30,12 +32,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListActivity {
 	
 	private TextView textView;
 	private Drawable img = null;
-	private Button mAddButton;
+	private Button mButton;
+	private Button mAddVisitButton;
+	private Button mFailVisitsButton;
+	private Button mDatosPartButton;
 	private static ParticipanteCohorteFamiliaCaso partCaso = new ParticipanteCohorteFamiliaCaso();
     private VisitaSeguimientoCaso visitaCaso = new VisitaSeguimientoCaso();
 	private ArrayAdapter<VisitaSeguimientoCaso> mVisitaSeguimientoCasoAdapter;
@@ -45,7 +51,7 @@ public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListAct
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_add);
+		setContentView(R.layout.list_add_casos);
 		
 		partCaso = (ParticipanteCohorteFamiliaCaso) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
 		textView = (TextView) findViewById(R.id.label);
@@ -55,12 +61,45 @@ public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListAct
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		new FetchDataVisitasCasosTask().execute(partCaso.getCodigoCasoParticipante());
 		
-		mAddButton = (Button) findViewById(R.id.add_button);
-		mAddButton.setText(getString(R.string.new_visit));
+		mButton = (Button) findViewById(R.id.add_part_button);
+		mButton.setVisibility(View.GONE);
+		
+		
+		
+		mButton = (Button) findViewById(R.id.new_sint_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_cont_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_bhc_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_rojo_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_pbmc_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.new_resp_button);
+		mButton.setVisibility(View.GONE);
+		
+		mButton = (Button) findViewById(R.id.view_samp_button);
+		mButton.setVisibility(View.GONE);
+		
+		mAddVisitButton = (Button) findViewById(R.id.add_visit_button);
 
-		mAddButton.setOnClickListener(new View.OnClickListener()  {
+		mAddVisitButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
+				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+				String today = formatter.format(new Date());
+				for (VisitaSeguimientoCaso vsc:mVisitaSeguimientoCasos ){
+					 if(today.equals(formatter.format(vsc.getFechaVisita()))){
+						 Toast.makeText(getApplicationContext(),getString(R.string.duplicateDate) , Toast.LENGTH_LONG).show();
+						 return;
+					 }
+				}
 				Bundle arguments = new Bundle();
 				arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
 				Intent i = new Intent(getApplicationContext(),
@@ -68,6 +107,41 @@ public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListAct
 				i.putExtras(arguments);
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
+				finish();
+			}
+		});
+		
+		mFailVisitsButton = (Button) findViewById(R.id.fail_visit_button);
+		mFailVisitsButton.setOnClickListener(new View.OnClickListener()  {
+			@Override
+			public void onClick(View v) {
+				Bundle arguments = new Bundle();
+				arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
+				Intent i = new Intent(getApplicationContext(),
+						ListaVisitasFallidasCasosActivity.class);
+				i.putExtras(arguments);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				finish();
+			}
+		});
+		
+		mDatosPartButton = (Button) findViewById(R.id.datos_casa_button);
+		mDatosPartButton.setText(getString(R.string.datos_part));
+		mDatosPartButton.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_menu_friendslist), null, null);
+		mDatosPartButton.setOnClickListener(new View.OnClickListener()  {
+			@Override
+			public void onClick(View v) {
+				Bundle arguments = new Bundle();
+				Intent i;
+				arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
+				i = new Intent(getApplicationContext(),
+						MenuParticipanteCasoActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		        i.putExtras(arguments);
+				startActivity(i);
+				finish();
+				
 			}
 		});
 		

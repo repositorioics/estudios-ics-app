@@ -271,7 +271,7 @@ public class ListaCasasCasosActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {
 			try {
 				estudiosAdapter.open();
-				mCasaCohorteFamiliaCasos = estudiosAdapter.getCasaCohorteFamiliaCasos("", CasosDBConstants.fechaInicio);
+				mCasaCohorteFamiliaCasos = estudiosAdapter.getCasaCohorteFamiliaCasos("", "CAST("+CasosDBConstants.casa+" AS INTEGER)");
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

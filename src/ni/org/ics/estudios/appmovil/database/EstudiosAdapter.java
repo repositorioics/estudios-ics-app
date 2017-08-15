@@ -25,6 +25,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.InformacionNoCom
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCasoData;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFallidaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCasoSintomas;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
@@ -39,6 +40,7 @@ import ni.org.ics.estudios.appmovil.helpers.chf.casos.FormularioContactoCasoHelp
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.InformacionNoCompletaCasoHelper;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.ParticipanteCohorteFamiliaCasoHelper;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaFallidaCasoHelper;
+import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaFinalCasoHelper;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaSeguimientoCasoHelper;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaSeguimientoCasoSintomasHelper;
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.EncuestaCasaSAHelper;
@@ -116,6 +118,7 @@ public class EstudiosAdapter {
             db.execSQL(CasosDBConstants.CREATE_CONTACTOS_CASOS_TABLE);
             db.execSQL(CasosDBConstants.CREATE_SINTOMAS_CASOS_TABLE);
             db.execSQL(CasosDBConstants.CREATE_VISITAS_FALLIDAS_CASOS_TABLE);
+            db.execSQL(CasosDBConstants.CREATE_VISITAS_FINALES_CASOS_TABLE);
             db.execSQL(CasosDBConstants.CREATE_NO_DATA_CASOS_TABLE);
         }
 
@@ -2384,6 +2387,55 @@ public class EstudiosAdapter {
         return mInformacionNoCompletaCasos;
     }
     
+    //Crear nuevo VisitaFinalCaso en la base de datos
+    public void crearVisitaFinalCaso(VisitaFinalCaso visitaFinal) throws Exception {
+        ContentValues cv = VisitaFinalCasoHelper.crearVisitaFinalCasoContentValues(visitaFinal);
+        mDb.insertOrThrow(CasosDBConstants.VISITAS_FINALES_CASOS_TABLE, null, cv);
+    }
+
+    //Editar VisitaFinalCaso existente en la base de datos
+    public boolean editarVisitaFinalCaso(VisitaFinalCaso visitaFinal) throws Exception{
+        ContentValues cv = VisitaFinalCasoHelper.crearVisitaFinalCasoContentValues(visitaFinal);
+        return mDb.update(CasosDBConstants.VISITAS_FINALES_CASOS_TABLE , cv, CasosDBConstants.codigoParticipanteCaso + "='"
+                + visitaFinal.getCodigoParticipanteCaso().getCodigoCasoParticipante() + "'", null) > 0;
+    }
+    //Limpiar la tabla de VisitaFinalCaso de la base de datos
+    public boolean borrarVisitaFinalCaso() {
+        return mDb.delete(CasosDBConstants.VISITAS_FINALES_CASOS_TABLE, null, null) > 0;
+    }
+    
+    //Obtener un VisitaFinalCaso de la base de datos
+    public VisitaFinalCaso getVisitaFinalCaso(String filtro, String orden) throws SQLException {
+    	VisitaFinalCaso mVisitaFinalCaso = null;
+        Cursor cursor = crearCursor(CasosDBConstants.VISITAS_FINALES_CASOS_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mVisitaFinalCaso=VisitaFinalCasoHelper.crearVisitaFinalCaso(cursor);
+            ParticipanteCohorteFamiliaCaso caso = this.getParticipanteCohorteFamiliaCaso(CasosDBConstants.codigoCasoParticipante + "='" +cursor.getString(cursor.getColumnIndex(CasosDBConstants.codigoParticipanteCaso)) +"'", null);
+            mVisitaFinalCaso.setCodigoParticipanteCaso(caso);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mVisitaFinalCaso;
+    }
+    //Obtener una lista de VisitaFinalCaso de la base de datos
+    public List<VisitaFinalCaso> getVisitaFinalCasos(String filtro, String orden) throws SQLException {
+        List<VisitaFinalCaso> mVisitaFinalCasos = new ArrayList<VisitaFinalCaso>();
+        Cursor cursor = crearCursor(CasosDBConstants.VISITAS_FINALES_CASOS_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mVisitaFinalCasos.clear();
+            do{
+            	VisitaFinalCaso mVisitaFinalCaso = null;
+                mVisitaFinalCaso = VisitaFinalCasoHelper.crearVisitaFinalCaso(cursor);
+                ParticipanteCohorteFamiliaCaso caso = this.getParticipanteCohorteFamiliaCaso(CasosDBConstants.codigoCasoParticipante + "='" +cursor.getString(cursor.getColumnIndex(CasosDBConstants.codigoParticipanteCaso)) +"'", null);
+                mVisitaFinalCaso.setCodigoParticipanteCaso(caso);
+                mVisitaFinalCasos.add(mVisitaFinalCaso);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mVisitaFinalCasos;
+    }
+    
     public Boolean verificarData() throws SQLException{
 		Cursor c = null;
 		c = crearCursor(MainDBConstants.CASA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
@@ -2437,6 +2489,8 @@ public class EstudiosAdapter {
 		c = crearCursor(CasosDBConstants.SINTOMAS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c = crearCursor(CasosDBConstants.CONTACTOS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c = crearCursor(CasosDBConstants.VISITAS_FINALES_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
 		return false;

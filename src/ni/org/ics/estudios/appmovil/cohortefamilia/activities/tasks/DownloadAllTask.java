@@ -850,6 +850,7 @@ public class DownloadAllTask extends DownloadTask {
             // convert the array to a list and return it
             mMuestras = Arrays.asList(responseEntityMuestras.getBody());
             responseEntityMuestras = null;
+            
             //Descargar telefonos
             urlRequest = url + "/movil/telefonos/";
             publishProgress("Solicitando telefonos",TELEFONOS,TOTAL_TASK_RECLUTAMIENTO_CHF);

@@ -57,11 +57,12 @@ public class DownloadCasosTask extends DownloadTask {
     public static final String VISITAS_CASOS = "3";
     public static final String VISITAS_FALLIDAS_CASOS = "4";
     public static final String SINTOMAS_CASOS = "5";
-    public static final String CONTACTOS_CASOS = "6";
-    public static final String MUESTRAS = "7";
-    public static final String NODATA_CASOS = "8";
+    public static final String CONTACTOS_CASOS = "1";
+    public static final String MUESTRAS = "2";
+    public static final String NODATA_CASOS = "3";
 
-    private static final String TOTAL_TASK_CASOS = "8";
+    private static final String TOTAL_TASK_CASOS = "5";
+    private static final String TOTAL_TASK_CASOS_CONTACTO = "3";
 
 	private String error = null;
 	private String url = null;
@@ -92,9 +93,9 @@ public class DownloadCasosTask extends DownloadTask {
         estudioAdapter.borrarVisitaSeguimientoCaso();
         estudioAdapter.borrarVisitaFallidaCaso();
         estudioAdapter.borrarVisitaSeguimientoCasoSintomas();
-        estudioAdapter.borrarInformacionNoCompletaCaso();
+        /*estudioAdapter.borrarInformacionNoCompletaCaso();
         estudioAdapter.borrarFormularioContactoCaso();
-        estudioAdapter.borrarMuestrasTx();
+        estudioAdapter.borrarMuestrasTx();*/
         
 		try {
             if (mCasaCohorteFamiliaCasos != null){
@@ -139,7 +140,7 @@ public class DownloadCasosTask extends DownloadTask {
                 }
                 mVisitaFallidaCasos = null;
             }
-            
+
             if (mVisitaSeguimientoSintomasCasos != null){
                 v = mVisitaSeguimientoSintomasCasos.size();
                 ListIterator<VisitaSeguimientoCasoSintomas> iter = mVisitaSeguimientoSintomasCasos.listIterator();
@@ -150,7 +151,7 @@ public class DownloadCasosTask extends DownloadTask {
                 }
                 mVisitaSeguimientoSintomasCasos = null;
             }
-            
+            /*
             if (mFormularioContactoCasos != null){
                 v = mFormularioContactoCasos.size();
                 ListIterator<FormularioContactoCaso> iter = mFormularioContactoCasos.listIterator();
@@ -181,14 +182,69 @@ public class DownloadCasosTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mInformacionNoCompletaCasos = null;
+            }*/
+        } catch (Exception e) {
+            // Regresa error al insertar
+            e.printStackTrace();
+            estudioAdapter.close();
+            return e.getLocalizedMessage();
+        }
+
+        //PARTE 2
+        try {
+            error = descargarDatosCasosContactos();
+            if (error!=null) return error;
+        } catch (Exception e) {
+            // Regresa error al descargar
+            e.printStackTrace();
+            return e.getLocalizedMessage();
+        }
+        publishProgress("Abriendo base de datos...","1","1");
+        //Borrar los datos de la base de datos
+        estudioAdapter.borrarInformacionNoCompletaCaso();
+        estudioAdapter.borrarFormularioContactoCaso();
+        estudioAdapter.borrarMuestrasTx();
+
+        try {
+
+            if (mFormularioContactoCasos != null){
+                v = mFormularioContactoCasos.size();
+                ListIterator<FormularioContactoCaso> iter = mFormularioContactoCasos.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearFormularioContactoCaso(iter.next());
+                    publishProgress("Insertando contactos de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mFormularioContactoCasos = null;
             }
-            
-		} catch (Exception e) {
-			// Regresa error al insertar
-			e.printStackTrace();
-			estudioAdapter.close();
-			return e.getLocalizedMessage();
-		}
+
+            if (mInformacionNoCompletaCasos != null){
+                v = mInformacionNoCompletaCasos.size();
+                ListIterator<InformacionNoCompletaCaso> iter = mInformacionNoCompletaCasos.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearInformacionNoCompletaCaso(iter.next());
+                    publishProgress("Insertando no data de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mInformacionNoCompletaCasos = null;
+            }
+            if (mMuestras != null){
+                v = mMuestras.size();
+                ListIterator<Muestra> iter = mMuestras.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearMuestras(iter.next());
+                    publishProgress("Insertando muestras de transmision de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mInformacionNoCompletaCasos = null;
+            }
+
+        } catch (Exception e) {
+            // Regresa error al insertar
+            e.printStackTrace();
+            estudioAdapter.close();
+            return e.getLocalizedMessage();
+        }
 		
 		estudioAdapter.close();
 		return error;
@@ -235,7 +291,7 @@ public class DownloadCasosTask extends DownloadTask {
             
             //Descargar visitas de casas con casos
             urlRequest = url + "/movil/visitascasos/";
-            publishProgress("Solicitando visitas de los participantes de casas de casos",PART_CASOS,TOTAL_TASK_CASOS);
+            publishProgress("Solicitando visitas de los participantes de casas de casos",VISITAS_CASOS,TOTAL_TASK_CASOS);
             // Perform the HTTP GET request
             ResponseEntity<VisitaSeguimientoCaso[]> responseEntityVisitaSeguimientoCasos = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
             		VisitaSeguimientoCaso[].class);
@@ -252,7 +308,7 @@ public class DownloadCasosTask extends DownloadTask {
             // convert the array to a list and return it
             mVisitaFallidaCasos = Arrays.asList(responseEntityVisitaFallidaCasos.getBody());
             responseEntityVisitaFallidaCasos = null;
-            
+
             //Descargar sintomas de casas con casos
             urlRequest = url + "/movil/sintomascasos/";
             publishProgress("Solicitando sintomas de los participantes de casas de casos",SINTOMAS_CASOS,TOTAL_TASK_CASOS);
@@ -262,7 +318,7 @@ public class DownloadCasosTask extends DownloadTask {
             // convert the array to a list and return it
             mVisitaSeguimientoSintomasCasos = Arrays.asList(responseEntityVisitaSeguimientoCasoSintomas.getBody());
             responseEntityVisitaSeguimientoCasoSintomas = null;
-            
+            /*
             //Descargar contactos de casas con casos
             urlRequest = url + "/movil/contactoscasos/";
             publishProgress("Solicitando contactos de los participantes de casas de casos",CONTACTOS_CASOS,TOTAL_TASK_CASOS);
@@ -292,7 +348,62 @@ public class DownloadCasosTask extends DownloadTask {
             // convert the array to a list and return it
             mMuestras = Arrays.asList(responseEntityMuestraCaso.getBody());
             responseEntityMuestraCaso = null;
-            
+            */
+            return null;
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getLocalizedMessage();
+        }
+    }
+
+    // url, username, password
+    protected String descargarDatosCasosContactos() throws Exception {
+        try {
+            // The URL for making the GET request
+            String urlRequest;
+            // Set the Accept header for "application/json"
+            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+            HttpHeaders requestHeaders = new HttpHeaders();
+            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+            requestHeaders.setAccept(acceptableMediaTypes);
+            requestHeaders.setAuthorization(authHeader);
+            // Populate the headers in an HttpEntity object to use for the request
+            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+
+            //Descargar contactos de casas con casos
+            urlRequest = url + "/movil/contactoscasos/";
+            publishProgress("Solicitando contactos de los participantes de casas de casos",CONTACTOS_CASOS, TOTAL_TASK_CASOS_CONTACTO);
+            // Perform the HTTP GET request
+            ResponseEntity<FormularioContactoCaso[]> responseEntityFormularioContactoCaso = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    FormularioContactoCaso[].class);
+            // convert the array to a list and return it
+            mFormularioContactoCasos = Arrays.asList(responseEntityFormularioContactoCaso.getBody());
+            responseEntityFormularioContactoCaso = null;
+
+            //Descargar info de no data de casas con casos
+            urlRequest = url + "/movil/visitasnodatacasos/";
+            publishProgress("Solicitando registros sin datos de los participantes de casas de casos",NODATA_CASOS, TOTAL_TASK_CASOS_CONTACTO);
+            // Perform the HTTP GET request
+            ResponseEntity<InformacionNoCompletaCaso[]> responseEntityInformacionNoCompletaCaso = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    InformacionNoCompletaCaso[].class);
+            // convert the array to a list and return it
+            mInformacionNoCompletaCasos = Arrays.asList(responseEntityInformacionNoCompletaCaso.getBody());
+            responseEntityInformacionNoCompletaCaso = null;
+
+            //Descargar muestras de tx de casas con casos
+            urlRequest = url + "/movil/mxstx/";
+            publishProgress("Solicitando muestras de tx de los participantes de casas de casos",MUESTRAS, TOTAL_TASK_CASOS_CONTACTO);
+            // Perform the HTTP GET request
+            ResponseEntity<Muestra[]> responseEntityMuestraCaso = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Muestra[].class);
+            // convert the array to a list and return it
+            mMuestras = Arrays.asList(responseEntityMuestraCaso.getBody());
+            responseEntityMuestraCaso = null;
+
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

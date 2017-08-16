@@ -12,8 +12,13 @@ import ni.org.ics.estudios.appmovil.bluetooth.activity.ConstantsBT;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaRecepcionMuestraBHCActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaRecepcionMuestraRojoActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadAllActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadCasosGeneral2Activity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadCasosGeneralActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadCatalogosActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadChfActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadChfEncuestasActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadNewActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadSeroActivity;
 //import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.UploadTamizajesActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.UploadAllActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuCohorteFamiliaAdapter;
@@ -45,9 +50,16 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 	private TextView textView;
 	private String[] menu_cohorte_familia;
 	
-	private static final int UPDATE_EQUIPO = 11;
+	//private static final int UPDATE_EQUIPO = 11;
 	private static final int UPDATE_SERVER = 12;
 	private static final int UPDATE_CATALOG = 13;
+	
+	private static final int UPDATE_EQUIPO_BASE = 101;
+	private static final int UPDATE_EQUIPO_CHF = 102;
+	private static final int UPDATE_EQUIPO_CHF_ENC = 103;
+	private static final int UPDATE_EQUIPO_SERO = 104;
+	private static final int UPDATE_EQUIPO_CASOS = 105;
+	private static final int UPDATE_EQUIPO_CASOS_2 = 106;
 
 	
 	private static final int DOWNLOAD = 1;
@@ -226,14 +238,15 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
 					estudiosAdapter.open();
-					if(estudiosAdapter.verificarData()){
+					boolean hayDatos = estudiosAdapter.verificarData();
+					estudiosAdapter.close();
+					if(hayDatos){
 						createDialog(VERIFY);
 					}
 					else{
-						Intent ie = new Intent(getApplicationContext(), DownloadAllActivity.class);
-						startActivityForResult(ie, UPDATE_EQUIPO);
+						Intent ie = new Intent(getApplicationContext(), DownloadNewActivity.class);
+						startActivityForResult(ie, UPDATE_EQUIPO_BASE);
 					}
-					estudiosAdapter.close();
 				}
 			});
 			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -270,8 +283,8 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
-					Intent ie = new Intent(getApplicationContext(), DownloadAllActivity.class);
-					startActivityForResult(ie, UPDATE_EQUIPO);
+					Intent ie = new Intent(getApplicationContext(), DownloadNewActivity.class);
+					startActivityForResult(ie, UPDATE_EQUIPO_BASE);
 				}
 			});
 			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -312,9 +325,9 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {	
 		super.onActivityResult(requestCode, resultCode, intent);
-		if (requestCode == UPDATE_EQUIPO||requestCode == UPDATE_SERVER||requestCode == UPDATE_CATALOG){
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			String mensaje = "";
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		String mensaje = "";
+		if (requestCode == UPDATE_EQUIPO_CASOS_2||requestCode == UPDATE_SERVER||requestCode == UPDATE_CATALOG){
 			if (resultCode == RESULT_CANCELED) {
 				builder.setTitle(getApplicationContext().getString(R.string.error));
 				builder.setIcon(R.drawable.ic_menu_close_clear_cancel);
@@ -328,18 +341,77 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
                     new FetchDataCasaTask().execute();
                 }
 			}
-
-			builder.setMessage(mensaje)
-			.setCancelable(false)
-			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					//do things
-				}
-			});
-			AlertDialog alert = builder.create();
-			alert.show();
-			return;
 		}
+		if (requestCode == UPDATE_EQUIPO_BASE){
+			if (resultCode == RESULT_CANCELED) {
+				builder.setTitle(getApplicationContext().getString(R.string.error));
+				builder.setIcon(R.drawable.ic_menu_close_clear_cancel);
+				mensaje = intent.getStringExtra("resultado");
+			}
+			else{
+				Intent ie = new Intent(getApplicationContext(), DownloadChfActivity.class);
+				startActivityForResult(ie, UPDATE_EQUIPO_CHF);
+				return;
+			}
+		}
+		if (requestCode == UPDATE_EQUIPO_CHF){
+			if (resultCode == RESULT_CANCELED) {
+				builder.setTitle(getApplicationContext().getString(R.string.error));
+				builder.setIcon(R.drawable.ic_menu_close_clear_cancel);
+				mensaje = intent.getStringExtra("resultado");
+			}
+			else{
+				Intent ie = new Intent(getApplicationContext(), DownloadChfEncuestasActivity.class);
+				startActivityForResult(ie, UPDATE_EQUIPO_CHF_ENC);
+				return;
+			}
+		}
+		if (requestCode == UPDATE_EQUIPO_CHF_ENC){
+			if (resultCode == RESULT_CANCELED) {
+				builder.setTitle(getApplicationContext().getString(R.string.error));
+				builder.setIcon(R.drawable.ic_menu_close_clear_cancel);
+				mensaje = intent.getStringExtra("resultado");
+			}
+			else{
+				Intent ie = new Intent(getApplicationContext(), DownloadSeroActivity.class);
+				startActivityForResult(ie, UPDATE_EQUIPO_SERO);
+				return;
+			}
+		}
+		if (requestCode == UPDATE_EQUIPO_SERO){
+			if (resultCode == RESULT_CANCELED) {
+				builder.setTitle(getApplicationContext().getString(R.string.error));
+				builder.setIcon(R.drawable.ic_menu_close_clear_cancel);
+				mensaje = intent.getStringExtra("resultado");
+			}
+			else{
+				Intent ie = new Intent(getApplicationContext(), DownloadCasosGeneralActivity.class);
+				startActivityForResult(ie, UPDATE_EQUIPO_CASOS);
+				return;
+			}
+		}
+		if (requestCode == UPDATE_EQUIPO_CASOS){
+			if (resultCode == RESULT_CANCELED) {
+				builder.setTitle(getApplicationContext().getString(R.string.error));
+				builder.setIcon(R.drawable.ic_menu_close_clear_cancel);
+				mensaje = intent.getStringExtra("resultado");
+			}
+			else{
+				Intent ie = new Intent(getApplicationContext(), DownloadCasosGeneral2Activity.class);
+				startActivityForResult(ie, UPDATE_EQUIPO_CASOS_2);
+				return;
+			}
+		}
+		builder.setMessage(mensaje)
+		.setCancelable(false)
+		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				//do things
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+		return;
 	}
 
     private class FetchDataCasaTask extends AsyncTask<String, Void, String> {

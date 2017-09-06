@@ -199,7 +199,7 @@ public class NuevaVisitaFallidaFragment extends Fragment {
         	
         	vfc.setCodigoFallaVisita(infoMovil.getId());
         	vfc.setCodigoParticipanteCaso(mParticipanteCaso);
-        	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         	Date dVis = null;
 			try {
 				dVis = formatter.parse(fechaVisita);

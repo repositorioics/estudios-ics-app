@@ -271,7 +271,7 @@ public class NuevaVisitaFallidaCasaFragment extends Fragment {
 				for(ParticipanteCohorteFamiliaCaso part: mParticipanteCohorteFamiliaCasos){
 					VisitaFallidaCaso vfc = new VisitaFallidaCaso();
 					vfc.setCodigoFallaVisita(infoMovil.getId());
-		        	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		        	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		        	Date dVis = null;
 					try {
 						dVis = formatter.parse(fechaVisita);

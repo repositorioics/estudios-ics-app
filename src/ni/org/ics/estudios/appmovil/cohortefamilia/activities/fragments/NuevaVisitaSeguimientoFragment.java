@@ -235,7 +235,7 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
     
     private boolean validarEntrada() {
         //Valida la entrada
-    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     	Date dVis = null;
 		try {
 			dVis = formatter.parse(fechaVisita);

@@ -40,14 +40,11 @@ import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
-import ni.org.ics.estudios.appmovil.utils.CalcularEdad;
-import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
-import ni.org.ics.estudios.appmovil.utils.FileUtils;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
 import ni.org.ics.estudios.appmovil.wizard.model.DatePage;
@@ -1178,6 +1175,25 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         cc.setAceptaParteC(valorParteC);
                         cc.setAceptaParteD(null);
                         estudiosAdapter.crearCartaConsentimiento(cc);
+                    }
+                }
+                //Validar si la casa a la que pertenece esta actualmente en seguimiento.. si es asi, agregar el participante al seguimiento
+                CasaCohorteFamiliaCaso casaCaso = estudiosAdapter.getCasaCohorteFamiliaCaso(CasosDBConstants.casa + "='" + pchf.getCasaCHF().getCodigoCHF() + "'", null);
+                if (casaCaso!=null){
+                    ParticipanteCohorteFamiliaCaso pCaso = new ParticipanteCohorteFamiliaCaso();
+                    pCaso.setCodigoCasoParticipante(infoMovil.getId());
+                    pCaso.setParticipante(pchf);
+                    pCaso.setCodigoCaso(casaCaso);
+                    pCaso.setEnfermo("N");
+                    pCaso.setRecordDate(new Date());
+                    pCaso.setRecordUser(username);
+                    pCaso.setDeviceid(infoMovil.getDeviceId());
+                    pCaso.setEstado('0');
+                    pCaso.setPasive('0');
+                    try {
+                        estudiosAdapter.crearParticipanteCohorteFamiliaCaso(pCaso);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
 	        	//Cierra la base de datos

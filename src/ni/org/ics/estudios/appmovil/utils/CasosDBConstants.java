@@ -187,7 +187,7 @@ public class CasosDBConstants {
     public static final String codigoParticipanteCaso = "codigoParticipanteCaso";
     public static final String razonVisitaFallida = "razonVisitaFallida";
     public static final String otraRazon = "otraRazon";
-    
+
 
     //Crear VisitaFallidaCaso
     public static final String CREATE_VISITAS_FALLIDAS_CASOS_TABLE = "create table if not exists "
@@ -197,6 +197,7 @@ public class CasosDBConstants {
             + fechaVisita + " date, "
             + razonVisitaFallida + " text, "
             + otraRazon + " text, "
+            + visita + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

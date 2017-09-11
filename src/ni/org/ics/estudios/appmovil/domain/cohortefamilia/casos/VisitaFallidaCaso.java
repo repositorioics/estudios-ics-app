@@ -20,6 +20,7 @@ public class VisitaFallidaCaso extends BaseMetaData {
 	private Date fechaVisita;
 	private String razonVisitaFallida;
 	private String otraRazon;
+    private String visita;
 	
 	public String getCodigoFallaVisita() {
 		return codigoFallaVisita;
@@ -61,7 +62,15 @@ public class VisitaFallidaCaso extends BaseMetaData {
 		this.otraRazon = otraRazon;
 	}
 
-	@Override
+    public String getVisita() {
+        return visita;
+    }
+
+    public void setVisita(String visita) {
+        this.visita = visita;
+    }
+
+    @Override
 	public String toString(){
 		return codigoParticipanteCaso.getCodigoCaso().getCasa().getCodigoCHF() + "-" + codigoParticipanteCaso.getParticipante().getParticipante().getCodigo() + "-" + codigoParticipanteCaso.getCodigoCaso().getFechaInicio();
 	}

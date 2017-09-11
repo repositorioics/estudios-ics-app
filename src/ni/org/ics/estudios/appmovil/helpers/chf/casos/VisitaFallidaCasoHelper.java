@@ -21,6 +21,7 @@ public class VisitaFallidaCasoHelper {
         if (visitaFallida.getFechaVisita() != null) cv.put(CasosDBConstants.fechaVisita, visitaFallida.getFechaVisita().getTime());
         cv.put(CasosDBConstants.razonVisitaFallida, visitaFallida.getRazonVisitaFallida());
         cv.put(CasosDBConstants.otraRazon, visitaFallida.getOtraRazon());
+        cv.put(CasosDBConstants.visita, visitaFallida.getVisita());
         
         if (visitaFallida.getRecordDate() != null) cv.put(MainDBConstants.recordDate, visitaFallida.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, visitaFallida.getRecordUser());
@@ -38,7 +39,7 @@ public class VisitaFallidaCasoHelper {
     	if(cursor.getLong(cursor.getColumnIndex(CasosDBConstants.fechaVisita))>0) mVisitaFallidaCaso.setFechaVisita(new Date(cursor.getLong(cursor.getColumnIndex(CasosDBConstants.fechaVisita))));
     	mVisitaFallidaCaso.setRazonVisitaFallida(cursor.getString(cursor.getColumnIndex(CasosDBConstants.razonVisitaFallida)));
     	mVisitaFallidaCaso.setOtraRazon(cursor.getString(cursor.getColumnIndex(CasosDBConstants.otraRazon)));
-
+        mVisitaFallidaCaso.setVisita(cursor.getString(cursor.getColumnIndex(CasosDBConstants.visita)));
         
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mVisitaFallidaCaso.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mVisitaFallidaCaso.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

@@ -54,9 +54,12 @@ public class VisitaFallidaCasoAdapter extends ArrayAdapter<VisitaFallidaCaso> {
 			textView = (TextView) v.findViewById(R.id.name_text);
 			textView.setTextColor(Color.BLACK);
 			if (textView != null) {
-				textView.setText(getDescripcionCatalogo(p.getRazonVisitaFallida()));
-			}
-			
+                if (p.getVisita() != null && !p.getVisita().isEmpty()) {
+                    textView.setText(this.getContext().getString(R.string.visit) + ": " + p.getVisita() + " - " + getDescripcionCatalogo(p.getRazonVisitaFallida()));
+                } else {
+                    textView.setText(getDescripcionCatalogo(p.getRazonVisitaFallida()));
+                }
+            }
 			
 		}
 		return v;

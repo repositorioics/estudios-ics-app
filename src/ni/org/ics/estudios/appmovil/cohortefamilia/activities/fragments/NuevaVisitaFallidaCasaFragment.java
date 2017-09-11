@@ -56,11 +56,13 @@ public class NuevaVisitaFallidaCasaFragment extends Fragment {
 	private CasaCohorteFamiliaCaso casaCaso;
 	private List<ParticipanteCohorteFamiliaCaso> mParticipanteCohorteFamiliaCasos = new ArrayList<ParticipanteCohorteFamiliaCaso>();
 	private List<MessageResource> mCatalogoRazonNoVisita;
+    private List<MessageResource> mVisitas;
 	private TextView mTitleView;
 	private TextView mNameView;
 	private TextView textNameView;
 	private TextView inputFechaVisita;
 	protected ImageButton mButtonChangeDate;
+    private Spinner spinVisita;
 	private Spinner spinRazonVisitaFallida;
 	private TextView textOtraRazon;
 	private EditText inputOtraRazon;
@@ -70,6 +72,7 @@ public class NuevaVisitaFallidaCasaFragment extends Fragment {
 	private String fechaVisita;
 	private String razonVisitaFallida;
 	private String otraRazon;
+    private String visita;
 	final Calendar c = Calendar.getInstance();
 	
 	private DeviceInfo infoMovil;
@@ -118,6 +121,18 @@ public class NuevaVisitaFallidaCasaFragment extends Fragment {
         fechaVisita = inputFechaVisita.getText().toString();
         mButtonChangeDate = (ImageButton) rootView.findViewById(R.id.changedate_button);
         mButtonChangeDate.setEnabled(false);
+        spinVisita = (Spinner) rootView.findViewById(R.id.spinVisita);
+        spinVisita.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                visita = mr.getCatKey();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
         spinRazonVisitaFallida = (Spinner) rootView.findViewById(R.id.spinRazonVisitaFallida);
 		spinRazonVisitaFallida.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 	        @Override
@@ -191,6 +206,11 @@ public class NuevaVisitaFallidaCasaFragment extends Fragment {
         	inputFechaVisita.requestFocus();
             return false;
         }
+        else if (visita == null || visita.equals("")){
+            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongSelect,getActivity().getString(R.string.visit)),Toast.LENGTH_LONG).show();
+            spinVisita.requestFocus();
+            return false;
+        }
         else if (razonVisitaFallida == null || razonVisitaFallida.equals("")){
         	Toast.makeText(getActivity(), getActivity().getString( R.string.wrongSelect,getActivity().getString(R.string.razonVisitaFallida)),Toast.LENGTH_LONG).show();
         	spinRazonVisitaFallida.requestFocus();
@@ -228,6 +248,7 @@ public class NuevaVisitaFallidaCasaFragment extends Fragment {
 				estudiosAdapter.open();
 				mParticipanteCohorteFamiliaCasos = estudiosAdapter.getParticipanteCohorteFamiliaCasos(CasosDBConstants.codigoCaso +" = '" + codigoCaso +"'", MainDBConstants.participante);
 				mCatalogoRazonNoVisita = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_VISITA_NO_C'", CatalogosDBConstants.order);
+                mVisitas = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_VIS_MI'", CatalogosDBConstants.order);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -240,6 +261,13 @@ public class NuevaVisitaFallidaCasaFragment extends Fragment {
 			// after the request completes, hide the progress indicator
 			nDialog.dismiss();
 			mTitleView.setText(getActivity().getString(R.string.new_fail_visit));
+
+            mVisitas.add(new MessageResource("",0,getActivity().getString(R.string.select)));
+            Collections.sort(mVisitas);
+            ArrayAdapter<MessageResource> dataAdapterVisit = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, mVisitas);
+            dataAdapterVisit.setDropDownViewResource(R.layout.spinner_item);
+            spinVisita.setAdapter(dataAdapterVisit);
+
 			mCatalogoRazonNoVisita.add(new MessageResource("",0,getActivity().getString(R.string.select)));
 			Collections.sort(mCatalogoRazonNoVisita);
 			ArrayAdapter<MessageResource> dataAdapter = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, mCatalogoRazonNoVisita);
@@ -280,6 +308,7 @@ public class NuevaVisitaFallidaCasaFragment extends Fragment {
 						e.printStackTrace();
 					}
 		        	vfc.setFechaVisita(dVis);
+                    vfc.setVisita(visita);
 		        	vfc.setRazonVisitaFallida(razonVisitaFallida);
 		        	vfc.setOtraRazon(otraRazon);
 		        	vfc.setRecordDate(new Date());

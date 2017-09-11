@@ -52,10 +52,12 @@ public class NuevaVisitaFallidaFragment extends Fragment {
 	private ParticipanteCohorteFamiliaCaso mParticipanteCaso;
 	private VisitaFallidaCaso vfc = new VisitaFallidaCaso();
 	private List<MessageResource> mCatalogoRazonNoVisita;
+    private List<MessageResource> mVisitas;
 	private TextView mTitleView;
 	private TextView mNameView;
 	private TextView inputFechaVisita;
 	protected ImageButton mButtonChangeDate;
+    private Spinner spinVisita;
 	private Spinner spinRazonVisitaFallida;
 	private TextView textOtraRazon;
 	private EditText inputOtraRazon;
@@ -65,6 +67,7 @@ public class NuevaVisitaFallidaFragment extends Fragment {
 	private String fechaVisita;
 	private String razonVisitaFallida;
 	private String otraRazon;
+    private String visita;
 	final Calendar c = Calendar.getInstance();
 	
 	private DeviceInfo infoMovil;
@@ -112,6 +115,18 @@ public class NuevaVisitaFallidaFragment extends Fragment {
         fechaVisita = inputFechaVisita.getText().toString();
         mButtonChangeDate = (ImageButton) rootView.findViewById(R.id.changedate_button);
         mButtonChangeDate.setEnabled(false);
+        spinVisita = (Spinner) rootView.findViewById(R.id.spinVisita);
+        spinVisita.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                visita = mr.getCatKey();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
         spinRazonVisitaFallida = (Spinner) rootView.findViewById(R.id.spinRazonVisitaFallida);
 		spinRazonVisitaFallida.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 	        @Override
@@ -185,6 +200,11 @@ public class NuevaVisitaFallidaFragment extends Fragment {
         	inputFechaVisita.requestFocus();
             return false;
         }
+        else if (visita == null || visita.equals("")){
+            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongSelect,getActivity().getString(R.string.visit)),Toast.LENGTH_LONG).show();
+            spinVisita.requestFocus();
+            return false;
+        }
         else if (razonVisitaFallida == null || razonVisitaFallida.equals("")){
         	Toast.makeText(getActivity(), getActivity().getString( R.string.wrongSelect,getActivity().getString(R.string.razonVisitaFallida)),Toast.LENGTH_LONG).show();
         	spinRazonVisitaFallida.requestFocus();
@@ -211,6 +231,7 @@ public class NuevaVisitaFallidaFragment extends Fragment {
         	vfc.setFechaVisita(dVis);
         	vfc.setRazonVisitaFallida(razonVisitaFallida);
         	vfc.setOtraRazon(otraRazon);
+            vfc.setVisita(visita);
         	vfc.setRecordDate(new Date());
         	vfc.setRecordUser(username);
         	vfc.setDeviceid(infoMovil.getDeviceId());
@@ -239,6 +260,7 @@ public class NuevaVisitaFallidaFragment extends Fragment {
 			try {
 				estudiosAdapter.open();
 				mCatalogoRazonNoVisita = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_VISITA_NO_P'", CatalogosDBConstants.order);
+                mVisitas = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_VIS_MI'", CatalogosDBConstants.order);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -251,11 +273,20 @@ public class NuevaVisitaFallidaFragment extends Fragment {
 			// after the request completes, hide the progress indicator
 			nDialog.dismiss();
 			mTitleView.setText(getActivity().getString(R.string.new_fail_visit));
+
+            mVisitas.add(new MessageResource("",0,getActivity().getString(R.string.select)));
+            Collections.sort(mVisitas);
+            ArrayAdapter<MessageResource> dataAdapterVisit = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, mVisitas);
+            dataAdapterVisit.setDropDownViewResource(R.layout.spinner_item);
+            spinVisita.setAdapter(dataAdapterVisit);
+
 			mCatalogoRazonNoVisita.add(new MessageResource("",0,getActivity().getString(R.string.select)));
 			Collections.sort(mCatalogoRazonNoVisita);
 			ArrayAdapter<MessageResource> dataAdapter = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, mCatalogoRazonNoVisita);
 			dataAdapter.setDropDownViewResource(R.layout.spinner_item);
 			spinRazonVisitaFallida.setAdapter(dataAdapter);
+
+
 		}
 
 	}

@@ -130,6 +130,9 @@ public class EstudiosAdapter {
                 db.execSQL("ALTER TABLE " + MainDBConstants.VISITA_TABLE + " ADD COLUMN " + MainDBConstants.otraRazonVisitaNoExitosa + " text");
                 db.execSQL("ALTER TABLE " + MainDBConstants.PRETAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.otraRazonNoAceptaTamizajeCasa + " text");
 			}
+            if(oldVersion==3){
+                db.execSQL("ALTER TABLE " + CasosDBConstants.VISITAS_FALLIDAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.visita + " text");
+            }
 		}	
 	}
 

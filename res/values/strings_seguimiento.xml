@@ -41,6 +41,7 @@
 	<string name="wrongTime">Hora inválida</string>
 	<string name="wrongSelect">La respuesta para <xliff:g id="variable">%1$s</xliff:g> es requerida</string>
 	<string name="duplicateDate">Fecha ya está registrada</string>
+    <string name="duplicateVisit">Visita ya está registrada</string>
 	
 	<string name="sint">Sintomas</string>
 	<string name="fecha_sintoma">Fecha sintoma</string>

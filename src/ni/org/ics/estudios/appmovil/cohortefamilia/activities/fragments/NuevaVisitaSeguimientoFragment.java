@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import org.joda.time.DateMidnight;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
@@ -58,19 +59,21 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
 	private ParticipanteCohorteFamiliaCaso mParticipanteCaso;
 	private VisitaSeguimientoCaso vsc = new VisitaSeguimientoCaso();
 	private List<MessageResource> mCatalogoSn;
+    private List<MessageResource> mVisitas;
 	private TextView mTitleView;
 	private TextView mNameView;
 	private TextView inputFechaVisita;
 	protected ImageButton mButtonChangeDate;
 	private TextView inputHoraProbableVisita;
 	protected ImageButton mButtonChangeTime;
+    private Spinner spinVisita;
 	private Spinner spinExpCS;
 	private TextView mTempView;
 	private Button mSaveView;
 	
 	
 	private String fechaVisita;
-	private Integer visita;
+	private String visita;
 	private String horaProbableVisita;
 	private String expCs;
 	private float temp;
@@ -112,6 +115,18 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
         mNameView = ((TextView) rootView.findViewById(R.id.inputCodigoParticipanteCaso));
         mNameView.setText(mParticipanteCaso.getParticipante().getParticipante().getNombreCompleto());
         mNameView.setEnabled(false);
+        spinVisita = (Spinner) rootView.findViewById(R.id.spinVisita);
+        spinVisita.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                visita = mr.getCatKey();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
         inputFechaVisita = (TextView) rootView.findViewById(R.id.inputFechaVisita);
         inputFechaVisita.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)<10? "0"+c.get(Calendar.DAY_OF_MONTH):c.get(Calendar.DAY_OF_MONTH))+"/"+
         							String.valueOf((c.get(Calendar.MONTH)+1)<10? "0"+(c.get(Calendar.MONTH)+1):(c.get(Calendar.MONTH)+1))+"/"+String.valueOf(c.get(Calendar.YEAR))+" "+
@@ -249,8 +264,9 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
         	inputFechaVisita.requestFocus();
             return false;
         }
-        else if (visita == null || visita < 1){
-            Toast.makeText(getActivity(), getActivity().getString( R.string.error),Toast.LENGTH_LONG).show();
+        else if (visita == null || visita.isEmpty()){
+            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongSelect,getActivity().getString(R.string.visit)),Toast.LENGTH_LONG).show();
+            spinVisita.requestFocus();
             return false;
         }
         else if (horaProbableVisita == null || horaProbableVisita.equals("")){
@@ -264,7 +280,7 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
             return false;
         }
         else if (mTempView.getText().toString().equals("")){
-        	mTempView.setError(getActivity().getString(R.string.wrongTemp,34,44));
+        	mTempView.setError(getActivity().getString(R.string.wrongTemp, 34, 44));
         	mTempView.requestFocus();
             return false;
         }
@@ -273,11 +289,24 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
         	return false;
         }
         else{
-        	
+            if (visita != null || !visita.isEmpty()){
+                try {
+                    estudiosAdapter.open();
+                    VisitaSeguimientoCaso visitaExiste = estudiosAdapter.getVisitaSeguimientoCaso(CasosDBConstants.codigoCasoParticipante+"='"+mParticipanteCaso.getCodigoCasoParticipante()+"' and "+CasosDBConstants.visita + "='"+visita+"'", null);
+                    if (visitaExiste!=null) {
+                        Toast.makeText(getActivity(), getActivity().getString(R.string.duplicateVisit), Toast.LENGTH_LONG).show();
+                        return false;
+                    }
+                }catch (Exception e){
+                    Log.e(TAG, e.getLocalizedMessage(), e);
+                }finally {
+                    estudiosAdapter.close();
+                }
+            }
         	vsc.setCodigoCasoVisita(infoMovil.getId());
         	vsc.setCodigoParticipanteCaso(mParticipanteCaso);
         	vsc.setFechaVisita(dVis);
-        	vsc.setVisita(visita.toString());
+        	vsc.setVisita(visita);
         	vsc.setHoraProbableVisita(horaProbableVisita);
         	vsc.setExpCS(expCs);
         	vsc.setTemp(temp);
@@ -309,7 +338,8 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
 			try {
 				estudiosAdapter.open();
 				mCatalogoSn = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", CatalogosDBConstants.order);
-				visita = estudiosAdapter.selectUltimaVisitaSeguimientoCaso(mParticipanteCaso.getCodigoCasoParticipante())+1;
+                mVisitas = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_VIS_MI'", CatalogosDBConstants.order);
+				//visita = estudiosAdapter.selectUltimaVisitaSeguimientoCaso(mParticipanteCaso.getCodigoCasoParticipante())+1;
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -321,7 +351,14 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
 		protected void onPostExecute(String resultado) {
 			// after the request completes, hide the progress indicator
 			nDialog.dismiss();
-			mTitleView.setText(getActivity().getString(R.string.new_visit)+ " " + visita);
+			mTitleView.setText(getActivity().getString(R.string.new_visit));
+
+            mVisitas.add(new MessageResource("",0,getActivity().getString(R.string.select)));
+            Collections.sort(mVisitas);
+            ArrayAdapter<MessageResource> dataAdapterVisit = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, mVisitas);
+            dataAdapterVisit.setDropDownViewResource(R.layout.spinner_item);
+            spinVisita.setAdapter(dataAdapterVisit);
+
 			mCatalogoSn.add(new MessageResource("",0,getActivity().getString(R.string.select)));
 			Collections.sort(mCatalogoSn);
 			ArrayAdapter<MessageResource> dataAdapter = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, mCatalogoSn);

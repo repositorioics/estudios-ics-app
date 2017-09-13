@@ -11,13 +11,7 @@ import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.domain.TelefonoContacto;
 import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.FormularioContactoCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.InformacionNoCompletaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFallidaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCasoSintomas;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
@@ -87,6 +81,8 @@ public class UploadAllTask extends UploadTask {
     private List<FormularioContactoCaso> mFormularioContactoCasos = new ArrayList<FormularioContactoCaso>();
     private List<InformacionNoCompletaCaso> mInformacionNoCompletaCasos = new ArrayList<InformacionNoCompletaCaso>();
 
+    private List<VisitaFinalCaso> mVisitaFinalCasos = null;
+
 	private String url = null;
 	private String username = null;
 	private String password = null;
@@ -127,8 +123,9 @@ public class UploadAllTask extends UploadTask {
     public static final String SINTOMAS_CASOS = "32";
     public static final String CONTACTOS_CASOS = "33";
     public static final String NODATA_CASOS = "34";
+    public static final String VISITAS_FINALES = "35";
     
-	private static final String TOTAL_TASK = "34";
+	private static final String TOTAL_TASK = "35";
 	
 
 	@Override
@@ -184,6 +181,8 @@ public class UploadAllTask extends UploadTask {
             mVisitaSeguimientoSintomasCasos = estudioAdapter.getVisitaSeguimientoCasosSintomas(filtro, null);
             mFormularioContactoCasos = estudioAdapter.getFormularioContactoCasos(filtro, null);
             mInformacionNoCompletaCasos = estudioAdapter.getInformacionNoCompletaCasos(filtro, null);
+
+            mVisitaFinalCasos = estudioAdapter.getVisitaFinalCasos(filtro, null);
 
 			publishProgress("Datos completos!", "2", "2");
 			
@@ -390,6 +389,12 @@ public class UploadAllTask extends UploadTask {
             error = cargarInformacionNoCompletaCasos(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, NODATA_CASOS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FINALES);
+            error = cargarVisitasFinalesCasos(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_FINALES);
                 return error;
             }
 		} catch (Exception e1) {
@@ -818,8 +823,22 @@ public class UploadAllTask extends UploadTask {
                 }
             }
         }
-        
 
+        if(opcion.equalsIgnoreCase(VISITAS_FINALES)){
+            c = mVisitaFinalCasos.size();
+            if(c>0){
+                for (VisitaFinalCaso visitaFinalCaso : mVisitaFinalCasos) {
+                    visitaFinalCaso.setEstado(estado.charAt(0));
+                    try {
+                        estudioAdapter.editarVisitaFinalCaso(visitaFinalCaso);
+                        publishProgress("Actualizando visitas finales de los participantes de casas con casos en base de datos local", Integer.valueOf(mVisitaFinalCasos.indexOf(visitaFinalCaso)).toString(), Integer
+                                .valueOf(c).toString());
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
 	}
 	
 	
@@ -1958,6 +1977,36 @@ public class UploadAllTask extends UploadTask {
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<InformacionNoCompletaCaso[]> requestEntity =
                         new HttpEntity<InformacionNoCompletaCaso[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    protected String cargarVisitasFinalesCasos(String url, String username,String password) throws Exception {
+        try {
+            if(mVisitaFinalCasos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando visitas finales de los participantes de Casas con casos!", VISITAS_FINALES, TOTAL_TASK);
+                final String urlRequest = url + "/movil/visitasfinalescasos";
+                VisitaFinalCaso[] envio = mVisitaFinalCasos.toArray(new VisitaFinalCaso[mVisitaFinalCasos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<VisitaFinalCaso[]> requestEntity =
+                        new HttpEntity<VisitaFinalCaso[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

@@ -70,6 +70,16 @@
             android:text="@string/visit_fail"
             android:drawableTop="@drawable/ic_menu_end_conversation"
             style="?android:attr/buttonBarStyle" />
+
+        <Button
+                android:background="@drawable/selectable_item_background"
+                android:id="@+id/final_visit_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/visit_final"
+                android:drawableTop="@drawable/ic_final"
+                style="?android:attr/buttonBarStyle" />
         
         <Button
             android:background="@drawable/selectable_item_background"

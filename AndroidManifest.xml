@@ -97,6 +97,12 @@
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaVisitasFallidasCasosActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaVisitaFinalCasosActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuVisitaFinalCasoActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVisitaFinalActivity"
+                  android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVisitaSeguimientoActivity"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden" />

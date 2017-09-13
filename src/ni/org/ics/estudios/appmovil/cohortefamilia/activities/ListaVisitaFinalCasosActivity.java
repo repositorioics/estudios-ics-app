@@ -1,29 +1,11 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
-import ni.org.ics.estudios.appmovil.MainActivity;
-import ni.org.ics.estudios.appmovil.MyIcsApplication;
-import ni.org.ics.estudios.appmovil.R;
-
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVisitaSeguimientoActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.VisitaSeguimientoCasoAdapter;
-import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
-import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,21 +14,36 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
+import ni.org.ics.estudios.appmovil.MainActivity;
+import ni.org.ics.estudios.appmovil.MyIcsApplication;
+import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVisitaFallidaActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVisitaFinalActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.VisitaFinalCasoAdapter;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFallidaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
+import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
+import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
-public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ListaVisitaFinalCasosActivity extends AbstractAsyncListActivity {
 	
 	private TextView textView;
 	private Drawable img = null;
 	private Button mButton;
 	private Button mAddVisitButton;
-	private Button mFailVisitsButton;
-    private Button mFinalVisitsButton;
-	private Button mDatosPartButton;
+	private Button mFinalVisitsButton;
 	private static ParticipanteCohorteFamiliaCaso partCaso = new ParticipanteCohorteFamiliaCaso();
-    private VisitaSeguimientoCaso visitaCaso = new VisitaSeguimientoCaso();
-	private ArrayAdapter<VisitaSeguimientoCaso> mVisitaSeguimientoCasoAdapter;
-	private List<VisitaSeguimientoCaso> mVisitaSeguimientoCasos = new ArrayList<VisitaSeguimientoCaso>();
+    private VisitaFinalCaso visitaFinalCaso = new VisitaFinalCaso();
+	private ArrayAdapter<VisitaFinalCaso> mVisitaFinalCasoAdapter;
+	private List<VisitaFinalCaso> mVisitaFinalCaso = new ArrayList<VisitaFinalCaso>();
+	//private List<MessageResource> mRazonNoVisita = new ArrayList<MessageResource>();
 	private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -65,7 +62,8 @@ public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListAct
 		mButton = (Button) findViewById(R.id.add_part_button);
 		mButton.setVisibility(View.GONE);
 		
-		
+		mButton = (Button) findViewById(R.id.datos_casa_button);
+		mButton.setVisibility(View.GONE);
 		
 		mButton = (Button) findViewById(R.id.new_sint_button);
 		mButton.setVisibility(View.GONE);
@@ -88,39 +86,19 @@ public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListAct
 		mButton = (Button) findViewById(R.id.view_samp_button);
 		mButton.setVisibility(View.GONE);
 
+        mButton = (Button) findViewById(R.id.fail_visit_button);
+        mButton.setVisibility(View.GONE);
 
 		mAddVisitButton = (Button) findViewById(R.id.add_visit_button);
-
+		mAddVisitButton.setText(getString(R.string.new_final_visit));
+		mAddVisitButton.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_menu_btn_add), null, null);
 		mAddVisitButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
-				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-				String today = formatter.format(new Date());
-				for (VisitaSeguimientoCaso vsc:mVisitaSeguimientoCasos ){
-					 if(today.equals(formatter.format(vsc.getFechaVisita()))){
-						 Toast.makeText(getApplicationContext(),getString(R.string.duplicateDate) , Toast.LENGTH_LONG).show();
-						 return;
-					 }
-				}
 				Bundle arguments = new Bundle();
 				arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
 				Intent i = new Intent(getApplicationContext(),
-						NuevaVisitaSeguimientoActivity.class);
-				i.putExtras(arguments);
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(i);
-				finish();
-			}
-		});
-		
-		mFailVisitsButton = (Button) findViewById(R.id.fail_visit_button);
-		mFailVisitsButton.setOnClickListener(new View.OnClickListener()  {
-			@Override
-			public void onClick(View v) {
-				Bundle arguments = new Bundle();
-				arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
-				Intent i = new Intent(getApplicationContext(),
-						ListaVisitasFallidasCasosActivity.class);
+						NuevaVisitaFinalActivity.class);
 				i.putExtras(arguments);
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
@@ -129,38 +107,21 @@ public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListAct
 		});
 
         mFinalVisitsButton = (Button) findViewById(R.id.final_visit_button);
+        mFinalVisitsButton.setText(getString(R.string.visit_back));
+        mFinalVisitsButton.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_menu_back), null, null);
         mFinalVisitsButton.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
                 Bundle arguments = new Bundle();
                 arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
                 Intent i = new Intent(getApplicationContext(),
-                        ListaVisitaFinalCasosActivity.class);
+                        ListaVisitasParticipantesCasosActivity.class);
                 i.putExtras(arguments);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 finish();
             }
         });
-
-		mDatosPartButton = (Button) findViewById(R.id.datos_casa_button);
-		mDatosPartButton.setText(getString(R.string.datos_part));
-		mDatosPartButton.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_menu_friendslist), null, null);
-		mDatosPartButton.setOnClickListener(new View.OnClickListener()  {
-			@Override
-			public void onClick(View v) {
-				Bundle arguments = new Bundle();
-				Intent i;
-				arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
-				i = new Intent(getApplicationContext(),
-						MenuParticipanteCasoActivity.class);
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		        i.putExtras(arguments);
-				startActivity(i);
-				finish();
-				
-			}
-		});
 		
 	}
 
@@ -196,13 +157,13 @@ public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListAct
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
-        visitaCaso = (VisitaSeguimientoCaso)this.getListAdapter().getItem(position);
+        visitaFinalCaso = (VisitaFinalCaso)this.getListAdapter().getItem(position);
         // Opcion de menu seleccionada
         Bundle arguments = new Bundle();
 		Intent i;
-		arguments.putSerializable(Constants.VISITA , visitaCaso);
+		arguments.putSerializable(Constants.VISITA_FINAL , visitaFinalCaso);
 		i = new Intent(getApplicationContext(),
-				MenuVisitaSeguimientoCasoActivity.class);
+				MenuVisitaFinalCasoActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.putExtras(arguments);
 		startActivity(i);
@@ -212,12 +173,11 @@ public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListAct
 	@Override
 	public void onBackPressed (){
 		Bundle arguments = new Bundle();
-		Intent i;
-		arguments.putSerializable(Constants.CASA , partCaso.getCodigoCaso());
-		i = new Intent(getApplicationContext(),
-				ListaParticipantesCasosActivity.class);
+		arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
+		Intent i = new Intent(getApplicationContext(),
+				ListaVisitasParticipantesCasosActivity.class);
+		i.putExtras(arguments);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.putExtras(arguments);
 		startActivity(i);
 		finish();
 	}
@@ -257,7 +217,8 @@ public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListAct
 			codigoCaso = values[0];
 			try {
 				estudiosAdapter.open();
-				mVisitaSeguimientoCasos = estudiosAdapter.getVisitaSeguimientoCasos(CasosDBConstants.codigoCasoParticipante +" = '" + codigoCaso +"'", MainDBConstants.fechaVisita);
+				mVisitaFinalCaso = estudiosAdapter.getVisitaFinalCasos(CasosDBConstants.codigoParticipanteCaso + " = '" + codigoCaso + "'", MainDBConstants.fechaVisita);
+			    //mRazonNoVisita = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_VISITA_NO_P' or " +CatalogosDBConstants.catRoot + "='CHF_CAT_VISITA_NO_C'" , null);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -270,9 +231,9 @@ public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListAct
 			// after the request completes, hide the progress indicator
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.follow_up_list_visit)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.participant)+ ": "+partCaso.getParticipante().getParticipante().getCodigo());
-			mVisitaSeguimientoCasoAdapter = new VisitaSeguimientoCasoAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mVisitaSeguimientoCasos);
-			setListAdapter(mVisitaSeguimientoCasoAdapter);
+			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.visit_final)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.participant)+ ": "+partCaso.getParticipante().getParticipante().getCodigo());
+			mVisitaFinalCasoAdapter = new VisitaFinalCasoAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item, mVisitaFinalCaso);
+			setListAdapter(mVisitaFinalCasoAdapter);
 			dismissProgressDialog();
 		}
 

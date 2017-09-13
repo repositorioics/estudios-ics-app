@@ -11,13 +11,7 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.*;
 
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.FormularioContactoCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.InformacionNoCompletaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFallidaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCasoSintomas;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
@@ -83,6 +77,7 @@ public class DownloadAllTask extends DownloadTask {
     private List<VisitaSeguimientoCasoSintomas> mVisitaSeguimientoSintomasCasos = null;
     private List<FormularioContactoCaso> mFormularioContactoCasos = null;
     private List<InformacionNoCompletaCaso> mInformacionNoCompletaCasos = null;
+    private List<VisitaFinalCaso> mVisitaFinalCasos = null;
 	
 	public static final String ESTUDIO = "1";
 	public static final String BARRIO = "2";
@@ -118,12 +113,13 @@ public class DownloadAllTask extends DownloadTask {
     public static final String SINTOMAS_CASOS = "5";
     public static final String CONTACTOS_CASOS = "6";
     public static final String NODATA_CASOS = "7";
+    public static final String VISITAS_FINALES = "8";
 
     private static final String TOTAL_TASK_GENERALES = "4";
     private static final String TOTAL_TASK_RECLUTAMIENTO = "12";
     private static final String TOTAL_TASK_RECLUTAMIENTO_CHF = "6";
     private static final String TOTAL_TASK_SERO = "3";
-    private static final String TOTAL_TASK_CASOS = "7";
+    private static final String TOTAL_TASK_CASOS = "8";
 
 	private String error = null;
 	private String url = null;
@@ -504,7 +500,7 @@ public class DownloadAllTask extends DownloadTask {
         estudioAdapter.borrarVisitaSeguimientoCasoSintomas();
         estudioAdapter.borrarInformacionNoCompletaCaso();
         estudioAdapter.borrarFormularioContactoCaso();
-        
+        estudioAdapter.borrarVisitaFinalCaso();
 		try {
             if (mCasaCohorteFamiliaCasos != null){
                 v = mCasaCohorteFamiliaCasos.size();
@@ -580,6 +576,16 @@ public class DownloadAllTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mInformacionNoCompletaCasos = null;
+            }
+            if (mVisitaFinalCasos != null){
+                v = mVisitaFinalCasos.size();
+                ListIterator<VisitaFinalCaso> iter = mVisitaFinalCasos.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearVisitaFinalCaso(iter.next());
+                    publishProgress("Insertando visitas finales de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mVisitaFinalCasos = null;
             }
             
 		} catch (Exception e) {
@@ -1007,7 +1013,16 @@ public class DownloadAllTask extends DownloadTask {
             // convert the array to a list and return it
             mInformacionNoCompletaCasos = Arrays.asList(responseEntityInformacionNoCompletaCaso.getBody());
             responseEntityInformacionNoCompletaCaso = null;
-            
+
+            //Descargar visitas finales de casas con casos
+            urlRequest = url + "/movil/visitasfinalescasos/";
+            publishProgress("Solicitando visitas finales de los participantes de casas de casos", VISITAS_FINALES,TOTAL_TASK_CASOS);
+            // Perform the HTTP GET request
+            ResponseEntity<VisitaFinalCaso[]> responseEntityVisitasFinales = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    VisitaFinalCaso[].class);
+            // convert the array to a list and return it
+            mVisitaFinalCasos = Arrays.asList(responseEntityVisitasFinales.getBody());
+            responseEntityVisitasFinales = null;
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

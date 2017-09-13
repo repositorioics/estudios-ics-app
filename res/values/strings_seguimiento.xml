@@ -26,7 +26,6 @@
 	<string name="datos_casa">Datos Casa</string>
 	<string name="datos_part">Datos part</string>
 	<string name="visit_fail">Visita Fallida</string>
-	
 
 	<string name="codigoParticipanteCaso">Participante</string>
     <string name="fecha_visita">Fecha visita</string>
@@ -88,5 +87,22 @@
 	
 	<string name="fecBefRegistro">La <xliff:g id="variable">%1$s</xliff:g> seleccionada es menor que la <xliff:g id="variable2">%2$s</xliff:g></string>
 	<string name="fecAftRegistro">La <xliff:g id="variable">%1$s</xliff:g> seleccionada es mayor que la <xliff:g id="variable2">%2$s</xliff:g></string>
+
+    <string name="visit_final">Visita Final</string>
+    <string name="new_final_visit">Agregar Visita Final</string>
+
+    <string name="enfermo">¿Actualmente está enfermo?</string>
+    <string name="consTerreno">Consulta médica en terreno</string>
+    <string name="referidoCs">Referido a centro de salud</string>
+    <string name="tratamiento">Si está enfermo que tratamiento tomó</string>
+    <string name="sintResp">Síntomas respiratorios</string>
+    <string name="sintRespHint">¿El participante presento síntomas respiratorios en el periodo que no fue visitado por el personal del CSSFV?</string>
+    <string name="fff">Fecha Termina Fiebre</string>
+    <string name="fitos">Fecha Inicia Tos</string>
+    <string name="fftos">Fecha Termina Tos</string>
+    <string name="figg">Fecha Inicia Dolor Garganta</string>
+    <string name="ffgg">Fecha Termina Dolor Garganta</string>
+    <string name="fisn">Fecha Inicia Secreción Nasal</string>
+    <string name="ffsn">Fecha Termina Secreción Nasal</string>
 	
 </resources>

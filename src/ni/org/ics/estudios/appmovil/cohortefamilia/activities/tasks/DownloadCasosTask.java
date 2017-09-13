@@ -7,13 +7,7 @@ import java.util.ListIterator;
 
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.FormularioContactoCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.InformacionNoCompletaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFallidaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCasoSintomas;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -49,7 +43,7 @@ public class DownloadCasosTask extends DownloadTask {
     private List<FormularioContactoCaso> mFormularioContactoCasos = null;
     private List<InformacionNoCompletaCaso> mInformacionNoCompletaCasos = null;
     private List<Muestra> mMuestras = null;
-	
+	private List<VisitaFinalCaso> mVisitaFinalCasos = null;
     
     
     public static final String CASAS_CASOS = "1";
@@ -57,11 +51,12 @@ public class DownloadCasosTask extends DownloadTask {
     public static final String VISITAS_CASOS = "3";
     public static final String VISITAS_FALLIDAS_CASOS = "4";
     public static final String SINTOMAS_CASOS = "5";
+    public static final String VISITAS_FINALES = "6";
     public static final String CONTACTOS_CASOS = "1";
     public static final String MUESTRAS = "2";
     public static final String NODATA_CASOS = "3";
 
-    private static final String TOTAL_TASK_CASOS = "5";
+    private static final String TOTAL_TASK_CASOS = "6";
     private static final String TOTAL_TASK_CASOS_CONTACTO = "3";
 
 	private String error = null;
@@ -93,6 +88,7 @@ public class DownloadCasosTask extends DownloadTask {
         estudioAdapter.borrarVisitaSeguimientoCaso();
         estudioAdapter.borrarVisitaFallidaCaso();
         estudioAdapter.borrarVisitaSeguimientoCasoSintomas();
+        estudioAdapter.borrarVisitaFinalCaso();
         /*estudioAdapter.borrarInformacionNoCompletaCaso();
         estudioAdapter.borrarFormularioContactoCaso();
         estudioAdapter.borrarMuestrasTx();*/
@@ -150,6 +146,16 @@ public class DownloadCasosTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mVisitaSeguimientoSintomasCasos = null;
+            }
+            if (mVisitaFinalCasos != null){
+                v = mVisitaFinalCasos.size();
+                ListIterator<VisitaFinalCaso> iter = mVisitaFinalCasos.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearVisitaFinalCaso(iter.next());
+                    publishProgress("Insertando visitas finales de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mVisitaFinalCasos = null;
             }
             /*
             if (mFormularioContactoCasos != null){
@@ -318,6 +324,17 @@ public class DownloadCasosTask extends DownloadTask {
             // convert the array to a list and return it
             mVisitaSeguimientoSintomasCasos = Arrays.asList(responseEntityVisitaSeguimientoCasoSintomas.getBody());
             responseEntityVisitaSeguimientoCasoSintomas = null;
+
+            //Descargar visitas finales de casas con casos
+            urlRequest = url + "/movil/visitasfinalescasos/";
+            publishProgress("Solicitando visitas finales de los participantes de casas de casos", VISITAS_FINALES,TOTAL_TASK_CASOS);
+            // Perform the HTTP GET request
+            ResponseEntity<VisitaFinalCaso[]> responseEntityVisitasFinales = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    VisitaFinalCaso[].class);
+            // convert the array to a list and return it
+            mVisitaFinalCasos = Arrays.asList(responseEntityVisitasFinales.getBody());
+            responseEntityVisitasFinales = null;
+
             /*
             //Descargar contactos de casas con casos
             urlRequest = url + "/movil/contactoscasos/";

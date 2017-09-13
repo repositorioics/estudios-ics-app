@@ -30,6 +30,7 @@ public class Constants {
     public static final String TELEFONO = "telefono";
     public static final String VOLUMEN = "volumen";
     public static final String ENCUESTA = "encuesta";
+    public static final String VISITA_FINAL = "visita_final";
     
     //Form wizard
     public static final String FORM_NAME = "form";

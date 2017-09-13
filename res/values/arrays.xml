@@ -58,4 +58,7 @@
         <item>@string/samples_caso</item>
     </string-array>
 
+    <string-array name="menu_visita_final">
+        <item>@string/samples_caso</item>
+    </string-array>
 </resources>

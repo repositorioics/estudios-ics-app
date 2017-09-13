@@ -24,6 +24,7 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestrasFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
@@ -62,6 +63,7 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
     private DeviceInfo infoMovil;
     private static ParticipanteCohorteFamilia participanteCHF = new ParticipanteCohorteFamilia();
     private static VisitaSeguimientoCaso visitaCaso = new VisitaSeguimientoCaso();
+    private static VisitaFinalCaso visitaFinalCaso = new VisitaFinalCaso();
     private String username;
     private SharedPreferences settings;
     private static final int EXIT = 1;
@@ -83,8 +85,15 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
         infoMovil = new DeviceInfo(NuevaMuestraTuboRojoActivity.this);
         accion = getIntent().getStringExtra(Constants.ACCION);
         if(accion.equals(Constants.CODIGO_PROPOSITO_TX)){
-        	visitaCaso = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
-        	participanteCHF = visitaCaso.getCodigoParticipanteCaso().getParticipante();
+            if (getIntent().getExtras().getSerializable(Constants.VISITA) instanceof VisitaSeguimientoCaso){
+                visitaCaso = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
+                visitaFinalCaso = null;
+                participanteCHF = visitaCaso.getCodigoParticipanteCaso().getParticipante();
+            }else if (getIntent().getExtras().getSerializable(Constants.VISITA) instanceof VisitaFinalCaso) {
+                visitaCaso = null;
+                visitaFinalCaso = (VisitaFinalCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
+                participanteCHF = visitaFinalCaso.getCodigoParticipanteCaso().getParticipante();
+            }
         	volumenMaximoPermitido = 8D;
         }else{
         	participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
@@ -485,7 +494,10 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
             muestra.setDescOtraObservacion(descOtraObservacion);
             //Metadata
             if(accion.equals(Constants.CODIGO_PROPOSITO_TX)){
-            	muestra.setRecordDate(visitaCaso.getFechaVisita());
+                if (visitaCaso!=null)
+                    muestra.setRecordDate(visitaCaso.getFechaVisita());
+                if (visitaFinalCaso!=null)
+                    muestra.setRecordDate(visitaFinalCaso.getFechaVisita());
             }
             else{
             	muestra.setRecordDate(new Date());
@@ -499,9 +511,15 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
             Intent i;
             Bundle arguments = new Bundle();
             if(accion.equals(Constants.CODIGO_PROPOSITO_TX)){
-            	arguments.putSerializable(Constants.VISITA, visitaCaso);
-	            i = new Intent(getApplicationContext(),
-	            		ListaMuestrasParticipantesCasosActivity.class);
+                if (visitaCaso!=null) {
+                    arguments.putSerializable(Constants.VISITA, visitaCaso);
+                    i = new Intent(getApplicationContext(),
+                            ListaMuestrasParticipantesCasosActivity.class);
+                }else{
+                    arguments.putSerializable(Constants.VISITA_FINAL, visitaFinalCaso);
+                    i = new Intent(getApplicationContext(),
+                            ListaMuestrasParticipantesCasosActivity.class);
+                }
             }
             else{
 	            arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);

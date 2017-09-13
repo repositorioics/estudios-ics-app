@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
@@ -16,7 +17,10 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaMue
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaMuestraTuboRojoActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MuestraAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -48,8 +52,10 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
 	private Button mButton;
 	//Viene de la actividad principal
 	private static VisitaSeguimientoCaso visitaCaso = new VisitaSeguimientoCaso();
+    private static VisitaFinalCaso visitaFinalCaso = new VisitaFinalCaso();
 	//Tipo de lista
-	
+    private static ParticipanteCohorteFamilia participantechf = new ParticipanteCohorteFamilia();
+    private static Date fechaVisita = new Date();
     //Adaptador del objeto de la lista
 	private ArrayAdapter<Muestra> mMuestraAdapter;
 	//Lista de objetos 
@@ -62,9 +68,18 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_add_casos);
-		//Obtener objeto que viene del menú 
-		visitaCaso = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
-		textView = (TextView) findViewById(R.id.label);
+		//Obtener objeto que viene del menú
+        visitaCaso = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
+        visitaFinalCaso = (VisitaFinalCaso) getIntent().getExtras().getSerializable(Constants.VISITA_FINAL);
+        if (visitaCaso!=null) {
+            participantechf = visitaCaso.getCodigoParticipanteCaso().getParticipante();
+            fechaVisita = visitaCaso.getFechaVisita();
+        }
+        if (visitaFinalCaso!=null) {
+            participantechf= visitaFinalCaso.getCodigoParticipanteCaso().getParticipante();
+            fechaVisita = visitaFinalCaso.getFechaVisita();
+        }
+        textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_samples_seg);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
@@ -89,7 +104,10 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
 		
 		mButton = (Button) findViewById(R.id.fail_visit_button);
 		mButton.setVisibility(View.GONE);
-		
+
+        mButton = (Button) findViewById(R.id.final_visit_button);
+        mButton.setVisibility(View.GONE);
+
 		mAddBhcButton = (Button) findViewById(R.id.new_bhc_button);
 		mAddRojoButton = (Button) findViewById(R.id.new_rojo_button);
 		mAddPbmcButton = (Button) findViewById(R.id.new_pbmc_button);
@@ -128,7 +146,7 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
 			@Override
 			public void onClick(View v) {
 				Bundle arguments = new Bundle();
-				if (visitaCaso.getCodigoParticipanteCaso().getParticipante() != null) arguments.putSerializable(Constants.PARTICIPANTE, visitaCaso.getCodigoParticipanteCaso().getParticipante());
+				if (participantechf != null) arguments.putSerializable(Constants.PARTICIPANTE, participantechf);
 	            Intent i = new Intent(getApplicationContext(),
 	                    ListaMuestrasActivity.class);
 	            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -137,6 +155,11 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
 	            startActivity(i);
 			}
 		});
+
+        if (visitaFinalCaso!=null){
+            mAddBhcButton.setVisibility(View.GONE);
+            mAddRespButton.setVisibility(View.GONE);
+        }
 		
 	}
 
@@ -182,9 +205,15 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
 		//Llamar al menu anterior
 		Bundle arguments = new Bundle();
 		Intent i;
-		arguments.putSerializable(Constants.VISITA , visitaCaso);
-		i = new Intent(getApplicationContext(),
-				MenuVisitaSeguimientoCasoActivity.class);
+        if (visitaCaso!=null) {
+            arguments.putSerializable(Constants.VISITA, visitaCaso);
+            i = new Intent(getApplicationContext(),
+                    MenuVisitaSeguimientoCasoActivity.class);
+        }else{
+            arguments.putSerializable(Constants.VISITA_FINAL, visitaFinalCaso);
+            i = new Intent(getApplicationContext(),
+                    MenuVisitaFinalCasoActivity.class);
+        }
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.putExtras(arguments);
 		startActivity(i);
@@ -225,9 +254,9 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
 			try {
 				estudiosAdapter.open();
 				//Llenar el objeto de lista de esta View
-				mMuestras = estudiosAdapter.getMuestras(MuestrasDBConstants.participante + " = " + visitaCaso.getCodigoParticipanteCaso().getParticipante().getParticipante().getCodigo() 
+				mMuestras = estudiosAdapter.getMuestras(MuestrasDBConstants.participante + " = " + participantechf.getParticipante().getCodigo()
 						+" and " + MainDBConstants.pasive + " ='0' and " + MuestrasDBConstants.proposito + " ='" + Constants.CODIGO_PROPOSITO_TX + "'" +
-								" and " + MainDBConstants.recordDate + "= " + visitaCaso.getFechaVisita().getTime(), MuestrasDBConstants.tipoMuestra);
+								" and " + MainDBConstants.recordDate + "= " + fechaVisita.getTime(), MuestrasDBConstants.tipoMuestra);
 				mTiposMuestra = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TUBO_MX'" + " or " + CatalogosDBConstants.catRoot + "='CHF_CAT_RAZON_NO_MX'", null);
 				estudiosAdapter.close();
 			} catch (Exception e) {
@@ -242,8 +271,13 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
 			//Actualizar el encabezado de esta view y enlazar el adapter
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.follow_up_list_samp)+"\n"+ 
-					getString(R.string.code)+ ": "+visitaCaso.getCodigoParticipanteCaso().getParticipante().getParticipante().getCodigo() + " - "+ getString(R.string.visit)+ ": "+visitaCaso.getVisita());
+            if (visitaFinalCaso==null) {
+                textView.setText(getString(R.string.main_1) + "\n" + getString(R.string.follow_up_list_samp) + "\n" +
+                        getString(R.string.code) + ": " + participantechf.getParticipante().getCodigo() + " - " + getString(R.string.visit) + ": " + visitaCaso.getVisita());
+            }else{
+                textView.setText(getString(R.string.main_1) + "\n" + getString(R.string.follow_up_list_samp) + "\n" +
+                        getString(R.string.code) + ": " + participantechf.getParticipante().getCodigo() + " - " + getString(R.string.visit_final));
+            }
 			mMuestraAdapter = new MuestraAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item, mMuestras, mTiposMuestra);
 			setListAdapter(mMuestraAdapter);
 			dismissProgressDialog();
@@ -268,6 +302,7 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
 				opcion = values[0];
 				Bundle arguments = new Bundle();				
 				if (visitaCaso != null) arguments.putSerializable(Constants.VISITA, visitaCaso);
+                if (visitaFinalCaso != null) arguments.putSerializable(Constants.VISITA, visitaFinalCaso);
 				Intent i;
 				if(opcion.equals(Constants.CODIGO_TUBO_BHC)){
 					i = new Intent(getApplicationContext(),

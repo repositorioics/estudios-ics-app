@@ -86,6 +86,9 @@ public class ListaVisitasFallidasCasosActivity extends AbstractAsyncListActivity
 		
 		mButton = (Button) findViewById(R.id.view_samp_button);
 		mButton.setVisibility(View.GONE);
+
+        mButton = (Button) findViewById(R.id.final_visit_button);
+        mButton.setVisibility(View.GONE);
 		
 		mAddVisitButton = (Button) findViewById(R.id.add_visit_button);
 		mAddVisitButton.setText(getString(R.string.new_fail_visit));

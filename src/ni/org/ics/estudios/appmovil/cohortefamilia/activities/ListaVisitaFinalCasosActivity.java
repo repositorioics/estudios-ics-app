@@ -92,7 +92,7 @@ public class ListaVisitaFinalCasosActivity extends AbstractAsyncListActivity {
 		mAddVisitButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
-                if (mVisitaFinalCaso!=null){
+                if (mVisitaFinalCaso!=null && mVisitaFinalCaso.size()>0){
                     Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.duplicateVisit),Toast.LENGTH_LONG);
                     toast.show();
                 }else {

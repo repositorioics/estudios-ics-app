@@ -52,6 +52,10 @@ public class EncuestaParticipanteSA extends BaseMetaData {
     private String usaPlanificacionFam;
     private String usaCondon;
     private String usaOtroMetodo;
+    //MA 2018
+    private String sabeZika;
+    private String usaRopa;
+    private String embarazadaUltAnio;
 
 
     public ParticipanteSeroprevalencia getParticipanteSA() {
@@ -284,6 +288,30 @@ public class EncuestaParticipanteSA extends BaseMetaData {
 
     public void setUsaOtroMetodo(String usaOtroMetodo) {
         this.usaOtroMetodo = usaOtroMetodo;
+    }
+
+    public String getSabeZika() {
+        return sabeZika;
+    }
+
+    public void setSabeZika(String sabeZika) {
+        this.sabeZika = sabeZika;
+    }
+
+    public String getUsaRopa() {
+        return usaRopa;
+    }
+
+    public void setUsaRopa(String usaRopa) {
+        this.usaRopa = usaRopa;
+    }
+
+    public String getEmbarazadaUltAnio() {
+        return embarazadaUltAnio;
+    }
+
+    public void setEmbarazadaUltAnio(String embarazadaUltAnio) {
+        this.embarazadaUltAnio = embarazadaUltAnio;
     }
 
     @Override

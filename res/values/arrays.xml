@@ -3,7 +3,7 @@
 
     <string-array name="menu_main">
         <item>@string/main_1</item>
-		
+        <item>@string/main_2</item>
     </string-array>
     
     <string-array name="menu_cohorte_familia">
@@ -43,6 +43,7 @@
         <item>@string/new_survey_5</item>
         <item>@string/samples</item>
         <item>@string/new_participant_sa_survey</item>
+        <item>@string/go_home</item>
     </string-array>
     
     <string-array name="menu_participante_caso">
@@ -60,5 +61,52 @@
 
     <string-array name="menu_visita_final">
         <item>@string/samples_caso</item>
+    </string-array>
+
+    <!-- Muestreo anual-->
+    <string-array name="menu_main_ma">
+        <item>@string/main_info</item>
+        <item>@string/main_report</item>
+        <item>@string/main_super</item>
+        <item>@string/main_survey</item>
+    </string-array>
+
+    <string-array name="menu_info">
+        <item>@string/info_participante</item>
+        <item>@string/info_reconflu</item>
+        <item>@string/info_visit</item>
+        <item>@string/info_weight</item>
+        <item>@string/info_survey2</item>
+        <item>@string/info_survey1</item>
+        <item>@string/info_survey3</item>
+        <item>@string/info_vacc</item>
+        <item>@string/info_codscasa</item>
+        <item>@string/info_recon</item>
+        <item>@string/info_sample</item>
+        <item>@string/info_gift</item>
+        <item>@string/info_zika</item>
+        <item>@string/datos_parto</item>
+        <item>@string/datos_casa</item>
+        <item>@string/info_docs</item>
+        <item>@string/info_casachf</item>
+        <item>@string/info_casasa</item>
+        <item>@string/info_participantesa</item>
+    </string-array>
+    <string-array name="menu_review">
+        <item>@string/info_reconflu</item>
+        <item>@string/info_visit</item>
+        <item>@string/info_weight</item>
+        <item>@string/info_survey2</item>
+        <item>@string/info_survey1</item>
+        <item>@string/info_survey3</item>
+        <item>@string/info_vacc</item>
+        <item>@string/main_survey</item>
+        <item>@string/info_recon</item>
+        <item>@string/info_sample</item>
+        <item>@string/info_gift</item>
+        <item>@string/info_zika</item>
+        <item>@string/datos_parto</item>
+        <item>@string/datos_casa</item>
+        <item>@string/info_docs</item>
     </string-array>
 </resources>

@@ -41,6 +41,10 @@ public class EncuestaParticipanteSAFormLabels {
     protected String usaPlanificacionFam;
     protected String usaCondon;
     protected String usaOtroMetodo;
+    //MA 2018
+    protected String sabeZika;
+    protected String usaRopa;
+    protected String embarazadaUltAnio;
 
     public EncuestaParticipanteSAFormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
@@ -75,6 +79,9 @@ public class EncuestaParticipanteSAFormLabels {
         usaPlanificacionFam = res.getString(R.string.usaPlanificacionFam);
         usaCondon = res.getString(R.string.usaCondon);
         usaOtroMetodo = res.getString(R.string.usaOtroMetodo);
+        sabeZika = res.getString(R.string.sabeZika);
+        usaRopa = res.getString(R.string.usaRopa);
+        embarazadaUltAnio = res.getString(R.string.embarazadaUltAnio);
     }
 
     public String getEscuchadoZikaSn() {
@@ -323,5 +330,29 @@ public class EncuestaParticipanteSAFormLabels {
 
     public void setUsaOtroMetodo(String usaOtroMetodo) {
         this.usaOtroMetodo = usaOtroMetodo;
+    }
+
+    public String getSabeZika() {
+        return sabeZika;
+    }
+
+    public void setSabeZika(String sabeZika) {
+        this.sabeZika = sabeZika;
+    }
+
+    public String getUsaRopa() {
+        return usaRopa;
+    }
+
+    public void setUsaRopa(String usaRopa) {
+        this.usaRopa = usaRopa;
+    }
+
+    public String getEmbarazadaUltAnio() {
+        return embarazadaUltAnio;
+    }
+
+    public void setEmbarazadaUltAnio(String embarazadaUltAnio) {
+        this.embarazadaUltAnio = embarazadaUltAnio;
     }
 }

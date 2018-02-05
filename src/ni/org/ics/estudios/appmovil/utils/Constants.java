@@ -1,6 +1,8 @@
 package ni.org.ics.estudios.appmovil.utils;
 
 
+import android.net.Uri;
+
 /**
  * Constantes usadas en multiples clases de la aplicacion
  * 
@@ -17,6 +19,7 @@ public class Constants {
 	//nombres de objetos
 	public static final String TITLE = "titulo";
 	public static final String CASA = "casa";
+    public static final String CASACHF = "casaChf";
 	public static final String PARTICIPANTES = "participantes";
     public static final String PARTICIPANTE = "participante";
     public static final String HABITACION = "habitacion";
@@ -85,7 +88,22 @@ public class Constants {
     public static final String CODIGO_MEDIO = "4";
     public static final String CODIGO_MEM = "5";
     public static final String FEC_VISITA = "fecha_visita";
-    
+
+    //MUESTREO ANUAL
+    //nombres de extras
+    public static final String OBJECTO = "objeto";
+
+    //Opciones de la actividad de seleccionar participante
+    public static final String MENU_INFO = "menu_info";
+    public static final String MENU_ZIKA = "menu_zika";
+
+    //Providers
+    public static final String AUTHORITY = "org.odk.collect.android.provider.odk.forms";
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/forms");
+    public static final String AUTHORITY_I = "org.odk.collect.android.provider.odk.instances";
+    public static final Uri CONTENT_URI_I = Uri.parse("content://" + AUTHORITY_I + "/instances");
+
+    public static final String PERTENECE_CHF = "esChf";
 }
 
     

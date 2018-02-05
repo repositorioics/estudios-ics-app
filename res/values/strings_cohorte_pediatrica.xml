@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Muestreo anual-->
+    <string name="main_header_pdcs">Muestreo Estudio de Cohorte</string>
+    <string name="selec_part">Seleccionar participante</string>
+    <string name="enter_code">Ingresar código</string>
+    <string name="enter_name">Ingresar nombre</string>
+    <string name="enter_lastname">Ingresar apellido</string>
+    <string name="perm_error">No tiene permiso en esta opción!</string>
+    <string name="download_user">Usuarios</string>
+    <string name="download_par">Participante</string>
+    <string name="update_cat">Actualizando datos en el equipo..</string>
+
+    <string name="info_casa">Casa</string>
+    <string name="info_participante">Participante</string>
+    <string name="info_codscasa">Códigos en Casa</string>
+    <string name="info_survey1">Encuesta de participante</string>
+    <string name="info_survey2">Encuesta de casa</string>
+    <string name="info_survey3">Encuesta de lactancia</string>
+    <string name="info_weight">Peso y talla</string>
+    <string name="info_sample">Muestras</string>
+    <string name="info_gift">Obsequios</string>
+    <string name="info_zika">Consentimiento Zika</string>
+    <string name="info_vacc">Vacunas</string>
+    <string name="info_visit">Visitas</string>
+    <string name="info_recon">Consentimiento Dengue</string>
+    <string name="info_conschik">Consentimiento Chikv</string>
+    <string name="info_chgest">Cambio de estudio</string>
+    <string name="info_reconflu">Re-Consentimiento Influenza</string>
+    <string name="datos_parto">Datos Parto BB</string>
+    <string name="info_docs">Documentos</string>
+    <string name="info_casachf">Encuesta Casa CHF</string>
+    <string name="info_casasa">Encuesta Casa SA</string>
+    <string name="info_participantesa">Participante SA</string>
+
+    <string name="house_survey_missing">Realizar encuesta de casa</string>
+    <string name="part_survey_missing">Realizar encuesta de participante</string>
+    <string name="maternal_survey_missing">Realizar encuesta de lactancia</string>
+    <string name="weigth_heigth_missing">Realizar peso y talla</string>
+    <string name="sample_missing">Tomar muestra</string>
+    <string name="sample_bhc_missing">Tomar muestra para BHC</string>
+    <string name="sample_sero_missing">Tomar muestra tubo Rojo</string>
+    <string name="gift_missing">Entregar obsequio</string>
+    <string name="vaccines_missing">Registrar vacunas</string>
+    <string name="visitas_missing">No tiene visitas</string>
+    <string name="recons_missing">Realizar consentimiento Dengue</string>
+    <string name="zika_missing">Realizar consentimiento Zika</string>
+    <string name="cons_missing_chik">Realizar consentimiento de Chikungunya</string>
+    <string name="cest_missing">Realizar cambio de estudio</string>
+    <string name="sample_pbmc_missing">Tomar muestra PBMC</string>
+    <string name="sample_paxgene_missing">Tomar muestra Paxgene</string>
+    <string name="retoma">Es retoma de muestra, volumen requerido</string>
+    <string name="confirm_pendiente">Hay datos pendientes, confirma que desea salir?</string>
+    <string name="convless14">Convalesciente con menos de 14 días. No tomar muestra</string>
+    <string name="convmore14">Tomar muestra de convalesciente.</string>
+    <string name="reconsflu_missing">Realizar Reconsentimiento Influenza</string>
+    <string name="retired_error">El participante está retirado. Anote el código para reportar al supervisor en caso de ser necesario.</string>
+    <string name="housechf_survey_missing">Realizar encuesta de casa Chf</string>
+    <string name="housesa_survey_missing">Realizar encuesta de casa SA</string>
+    <string name="partsa_survey_missing">Realizar encuesta de participante SA</string>
+
+    <string name="header_rnd">Por favor ingrese porque razón no ingreso la información debida.</string>
+    <string name="orazon">Otra razón..</string>
+    <string name="error_rnd">Ingreso no válido..</string>
+
+    <string name="add_part">Agregar participante</string>
+
+    <string name="obs">Observaciones</string>
+    <string name="lugarMx">Lugar de toma de muestra</string>
+    <string name="header_pin">Pinchazos Autorizados</string>
+    <string name="num_pin">Número de pinchazos</string>
+    <string name="list">Listar registros</string>
+
+    <string name="error_temp">Temperatura inválida</string>
+    <string name="error_recurso">Recurso inválido</string>
+    <string name="error_pin">Número de pinchazos inválido</string>
+
+    <string name="pax">Paxgene?</string>
+    <string name="header_red2">Recepción Serología</string>
+    <string name="header_pbmc2">Temperatura PBMC</string>
+    <string name="temp_pbmc">Temperatura (ambiente)</string>
+    <string name="header_rojo">Temperatura Rojos y BHC</string>
+    <string name="temp_rojo">Temperatura (refrigerados)</string>
+    <string name="lugar_temp">Lugar dónde toma la temperatura</string>
+
+    <string name="quitar_part">Quitar de esta vivienda</string>
+
+    <string name="e_error">Esta indicado no entrar información. Es posible que ya se hizo el registro por favor verifique.</string>
+
+    <string name="verify_ec">Agregar encuesta de casa a este participante?</string>
+    <string name="verify_ep">Agregar encuesta de participante?</string>
+    <string name="verify_el">Agregar encuesta de lactancia materna?</string>
+    <string name="verify_pt">Agregar peso y talla?</string>
+    <string name="verify_sm">Agregar muestra?</string>
+    <string name="verify_gt">Entregar obsequio?</string>
+    <string name="verify_vc">Registrar vacunas?</string>
+    <string name="verify_vt">Registrar visita?</string>
+    <string name="verify_rc">Registrar Consentimiento de Dengue?</string>
+    <string name="verify_cz">Registrar Consentimiento de Zika?</string>
+    <string name="verify_cc">Registrar Consentimiento de ChikV?</string>
+    <string name="verify_ce">Registrar Cambio de Estudio?</string>
+    <string name="verify_es">Agregar encuesta de satisfacción?</string>
+    <string name="verify_rcflu">Registrar Consentimiento de Influenza?</string>
+    <string name="verify_dp">Agregar datos de parto de BB?</string>
+
+    <string name="begin_gift">Iniciar entrega de obsequio</string>
+    <string name="begin_sample">Iniciar toma de muestra</string>
+
+    <string name="hello">Hello World!</string>
+    <string name="btnIntend">Tomar foto</string>
+    <string name="btnSave">Guardar</string>
+    <string name="btnExit">Salir</string>
+    <string name="cannot">No puede</string>
+    <string name="album_name">DocumentosCohorte</string>
+    <string name="tipoDoc">Tipo de Documento</string>
+    <string name="required">Todos los datos son requeridos!</string>
+
+    <string name="upload_docs">Subir documentos</string>
+    <string name="action_settings">Settings</string>
+    <string name="uploading_docs">Enviar todos los documentos al servidor?</string>
+    <string name="consflu_missing">Realizar Consentimiento Influenza</string>
+    <string name="consden_missing">Realizar Consentimiento Dengue</string>
+    <string name="parto_missing">Realizar Datos Parto BB</string>
+
+</resources>

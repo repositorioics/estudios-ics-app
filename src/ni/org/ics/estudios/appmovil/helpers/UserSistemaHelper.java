@@ -4,11 +4,13 @@ import java.util.Date;
 
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.AuthorityId;
+import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 public class UserSistemaHelper {
 	
@@ -64,5 +66,68 @@ public class UserSistemaHelper {
 		mRol.setAuthId(new AuthorityId(cursorRol.getString(cursorRol.getColumnIndex(MainDBConstants.username)),cursorRol.getString(cursorRol.getColumnIndex(MainDBConstants.role))));
 		return mRol;
 	}
-	
+
+    /**
+     * Inserta un usuario en la base de datos
+     *
+     * @param userPermissions
+     *            Objeto UserPermissions que contiene la informacion
+     *
+     */
+    public static ContentValues crearPermisosUsuario(UserPermissions userPermissions) {
+        ContentValues cv = new ContentValues();
+        cv.put(ConstantsDB.USERNAME, userPermissions.getUsername());
+        cv.put(ConstantsDB.U_ECASA, userPermissions.getEncuestaCasa());
+        cv.put(ConstantsDB.U_EPART, userPermissions.getEncuestaParticipante());
+        cv.put(ConstantsDB.U_ELACT, userPermissions.getEncuestaLactancia());
+        cv.put(ConstantsDB.U_ESAT, userPermissions.getEncuestaSatisfaccion());
+        cv.put(ConstantsDB.U_MUESTRA, userPermissions.getMuestra());
+        cv.put(ConstantsDB.U_OBSEQUIO, userPermissions.getObsequio());
+        cv.put(ConstantsDB.U_PYT, userPermissions.getPesoTalla());
+        cv.put(ConstantsDB.U_VAC, userPermissions.getVacunas());
+        cv.put(ConstantsDB.U_VISITA, userPermissions.getVisitas());
+        cv.put(ConstantsDB.U_RECEPCION, userPermissions.getRecepcion());
+        cv.put(ConstantsDB.U_CONS, userPermissions.getConsentimiento());
+        cv.put(ConstantsDB.U_CASAZIKA, userPermissions.getCasazika());
+        cv.put(ConstantsDB.U_TAMZIKA, userPermissions.getTamizajezika());
+        cv.put(ConstantsDB.U_PARTO, userPermissions.getDatosparto());
+        return cv;
+    }
+
+    /**
+     * Obtiene un usuario
+     *
+     * @return User
+     */
+    public static UserPermissions crearUserPermissions(Cursor usuarios) {
+        UserPermissions mUser = new UserPermissions();
+        mUser.setUsername(usuarios.getString(usuarios.getColumnIndex(MainDBConstants.username)));
+        Boolean enCasa = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_ECASA)) > 0;
+        Boolean enPart = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_EPART)) > 0;
+        Boolean enLact = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_ELACT)) > 0;
+        Boolean pesoTalla = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_PYT)) > 0;
+        Boolean muestra = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_MUESTRA)) > 0;
+        Boolean obsequio = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_OBSEQUIO)) > 0;
+        Boolean vacuna = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_VAC)) > 0;
+        Boolean terreno = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_VISITA)) > 0;
+        Boolean recepcion = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_RECEPCION)) > 0;
+        Boolean consentimiento = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_CONS)) > 0;
+        Boolean tamizajezika = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_TAMZIKA)) > 0;
+        Boolean casazika = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_CASAZIKA)) > 0;
+        Boolean parto = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_PARTO)) > 0;
+        mUser.setEncuestaCasa(enCasa);
+        mUser.setEncuestaParticipante(enPart);
+        mUser.setEncuestaLactancia(enLact);
+        mUser.setPesoTalla(pesoTalla);
+        mUser.setMuestra(muestra);
+        mUser.setObsequio(obsequio);
+        mUser.setVacunas(vacuna);
+        mUser.setVisitas(terreno);
+        mUser.setRecepcion(recepcion);
+        mUser.setConsentimiento(consentimiento);
+        mUser.setTamizajezika(tamizajezika);
+        mUser.setCasazika(casazika);
+        mUser.setDatosparto(parto);
+        return mUser;
+    }
 }

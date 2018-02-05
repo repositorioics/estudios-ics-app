@@ -3,6 +3,9 @@ package ni.org.ics.estudios.appmovil;
 
 import ni.org.ics.estudios.appmovil.adapters.MainActivityAdapter;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCohorteFamiliaActivity;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.muestreoanual.activities.DownloadBaseActivity;
+import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 
 import android.os.Bundle;
@@ -29,13 +32,18 @@ public class MainActivity extends ListActivity {
 	
 	private AlertDialog alertDialog;
 
-	@Override
+    private EstudiosAdapter estudiosAdapter;
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		String[] menu_main = getResources().getStringArray(R.array.menu_main);
 		setListAdapter(new MainActivityAdapter(this, R.layout.menu_item, menu_main));
-	}
+
+        String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,6 +85,12 @@ public class MainActivity extends ListActivity {
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			break;
+            case 1:
+                i = new Intent(getApplicationContext(),
+                        MenuMuestreoAnualActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                break;
 		default: 
 			String s = (String) getListAdapter().getItem(position);
 			Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
@@ -134,14 +148,55 @@ public class MainActivity extends ListActivity {
 			});
 			break;
 		case DOWNLOAD:
-			
+            builder.setTitle(this.getString(R.string.confirm));
+            builder.setMessage(this.getString(R.string.downloading));
+            builder.setIcon(android.R.drawable.ic_menu_help);
+            builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    estudiosAdapter.open();
+                    boolean hayDatos = estudiosAdapter.verificarData();
+                    estudiosAdapter.close();
+                    if(hayDatos){
+                        createDialog(VERIFY);
+                    }
+                    else{
+                        Intent ie = new Intent(getApplicationContext(), DownloadBaseActivity.class);
+                        startActivityForResult(ie, UPDATE_EQUIPO);
+                    }
+                }
+            });
+            builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing
+                    dialog.dismiss();
+                }
+            });
 			break;
 		case UPLOAD:
 			
 			break;
 		case VERIFY:
-			
-			break;			
+            builder.setTitle(this.getString(R.string.confirm));
+            builder.setMessage(this.getString(R.string.data_not_sent));
+            builder.setIcon(android.R.drawable.ic_menu_help);
+            builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    Intent ie = new Intent(getApplicationContext(), DownloadBaseActivity.class);
+                    startActivityForResult(ie, UPDATE_EQUIPO);
+                }
+            });
+            builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing
+                    dialog.dismiss();
+                }
+            });
+
+            break;
 		default:
 			break;
 		}

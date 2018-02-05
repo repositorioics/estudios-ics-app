@@ -20,6 +20,7 @@ import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
@@ -485,6 +486,10 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             String usaPlanificacionFam = datos.getString(this.getString(R.string.usaPlanificacionFam));
             String usaCondon = datos.getString(this.getString(R.string.usaCondon));
             String usaOtroMetodo = datos.getString(this.getString(R.string.usaOtroMetodo));
+            //MA 2018
+            String sabeZika = datos.getString(this.getString(R.string.sabeZika));
+            String usaRopa = datos.getString(this.getString(R.string.usaRopa));
+            String embarazadaUltAnio = datos.getString(this.getString(R.string.embarazadaUltAnio));
 
             String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
             if (estudiosAdapter == null)
@@ -630,6 +635,21 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msusaOtroMetodo != null) encuesta.setUsaOtroMetodo(msusaOtroMetodo.getCatKey());
             }
+            if (tieneValor(sabeZika)){
+                MessageResource msabeZika = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + sabeZika + "' and "
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                if (msabeZika != null) encuesta.setSabeZika(msabeZika.getCatKey());
+            }
+            if (tieneValor(usaRopa)){
+                MessageResource musaRopa = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + usaRopa + "' and "
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                if (musaRopa != null) encuesta.setUsaRopa(musaRopa.getCatKey());
+            }
+            if (tieneValor(embarazadaUltAnio)){
+                MessageResource membarazadaUltAnio = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + embarazadaUltAnio + "' and "
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                if (membarazadaUltAnio != null) encuesta.setEmbarazadaUltAnio(membarazadaUltAnio.getCatKey());
+            }
 
             encuesta.setFechaZika(fechaZika);
             encuesta.setFechaDengue(fechaDengue);
@@ -649,10 +669,19 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             encuesta.setEstado('0');
             encuesta.setPasive('0');
             boolean actualizada = false;
-            EncuestaParticipanteSA encuestaExiste = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + participanteSA.getParticipante().getCodigo() , SeroprevalenciaDBConstants.participante);
-            if (encuestaExiste != null && encuestaExiste.getParticipanteSA() != null && encuestaExiste.getParticipanteSA().getParticipante() != null)
-                actualizada = estudiosAdapter.editarEncuestaParticipanteSA(encuesta);
-            else estudiosAdapter.crearEncuestaParticipanteSA(encuesta);
+            //EncuestaParticipanteSA encuestaExiste = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + participanteSA.getParticipante().getCodigo() , SeroprevalenciaDBConstants.participante);
+            //if (encuestaExiste != null && encuestaExiste.getParticipanteSA() != null && encuestaExiste.getParticipanteSA().getParticipante() != null)
+                //actualizada = estudiosAdapter.editarEncuestaParticipanteSA(encuesta);
+            //else
+            estudiosAdapter.crearEncuestaParticipanteSA(encuesta);
+            participanteCHF.getParticipante().getProcesos().setEncPartSa("No");
+            MovilInfo movilInfo = participanteCHF.getParticipante().getProcesos().getMovilInfo();
+            movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+            movilInfo.setDeviceid(infoMovil.getDeviceId());
+            movilInfo.setUsername(username);
+            participanteCHF.getParticipante().getProcesos().setMovilInfo(movilInfo);
+            boolean nose = estudiosAdapter.actualizarParticipanteProcesos(participanteCHF.getParticipante().getProcesos());
+            nose = false;
             estudiosAdapter.close();
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);

@@ -1,5 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-   	<item android:id="@+id/MENU_PREFERENCES" 
+    <item android:id="@+id/MENU_DESCARGA"
+          android:title="@string/download"
+          android:showAsAction="ifRoom|withText"
+          android:icon="@drawable/ic_menu_download"></item>
+   	<item android:id="@+id/MENU_PREFERENCES"
         android:title="@string/preferences" 
         android:showAsAction="ifRoom|withText"
         android:icon="@drawable/ic_menu_preferences"></item>

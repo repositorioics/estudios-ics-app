@@ -1,5 +1,6 @@
 package ni.org.ics.estudios.appmovil.domain;
 
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.io.Serializable;
@@ -37,6 +38,7 @@ public class Participante extends BaseMetaData implements Serializable{
     private String apellido1Madre;
     private String apellido2Madre;
     private Casa casa;
+    private ParticipanteProcesos procesos;
 
 	public Integer getCodigo() {
 		return codigo;
@@ -166,6 +168,14 @@ public class Participante extends BaseMetaData implements Serializable{
         this.casa = casa;
     }
 
+    public ParticipanteProcesos getProcesos(){
+        return procesos;
+    }
+
+    public void setProcesos(ParticipanteProcesos procesos){
+        this.procesos = procesos;
+    }
+
     /*
     Calcular edad del participante según su fecha de nacimiento y fecha actual del sistema
      */
@@ -222,6 +232,16 @@ public class Participante extends BaseMetaData implements Serializable{
         }else{
             return "ND";
         }
+    }
+
+    @JsonIgnore
+    public Integer getEdadMeses(){
+        Calendar inicio = Calendar.getInstance();
+        Calendar fin = Calendar.getInstance();
+        inicio.setTime(this.getFechaNac());
+        fin.setTime(new Date());
+        int difA = fin.get(Calendar.YEAR) - inicio.get(Calendar.YEAR);
+        return difA * 12 + fin.get(Calendar.MONTH) - inicio.get(Calendar.MONTH);
     }
 
     @JsonIgnore

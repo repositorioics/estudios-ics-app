@@ -60,10 +60,11 @@ public class EncuestaParticipanteSAForm  extends AbstractWizardModel {
         Calendar calendarToday = Calendar.getInstance();
         calendarToday.setTime(new Date());
         int anioInicio = calendarToday.get(Calendar.YEAR)-2;
+        int anioInicio2 = calendarToday.get(Calendar.YEAR)-100;
         int anioFin = calendarToday.get(Calendar.YEAR);
 
         DateMidnight dmHasta = new DateMidnight(calendarToday.getTime());
-        calendarToday.add(Calendar.MONTH, -18);
+        calendarToday.add(Calendar.YEAR, -100);
         DateMidnight dmDesde = new DateMidnight(calendarToday.getTime());
 
         Page scEscuchadoZikaSn = new SingleFixedChoicePage(this,labels.getEscuchadoZikaSn(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
@@ -77,10 +78,10 @@ public class EncuestaParticipanteSAForm  extends AbstractWizardModel {
         Page scSintomasZika = new MultipleFixedChoicePage(this,labels.getSintomasZika(), "",Constants.WIZARD, false).setChoices(catSintomasZika).setRequired(true);
         Page scZikaConfirmadoMedico = new SingleFixedChoicePage(this,labels.getZikaConfirmadoMedico(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scTenidoDengueSn = new SingleFixedChoicePage(this,labels.getTenidoDengueSn(), "",Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-        Page npFechaDengue = new NumberPage(this, labels.getFechaDengue(), "", Constants.WIZARD, false).setRangeValidation(true, anioInicio, anioFin).setRequired(true);
+        Page npFechaDengue = new NumberPage(this, labels.getFechaDengue(), "", Constants.WIZARD, false).setRangeValidation(true, anioInicio2, anioFin).setRequired(true);
         Page scDengueConfirmadoMedico = new SingleFixedChoicePage(this,labels.getDengueConfirmadoMedico(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scTenidoChikSn = new SingleFixedChoicePage(this,labels.getTenidoChikSn(), "",Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-        Page npFechaChik = new NumberPage(this, labels.getFechaChik(), "", Constants.WIZARD, false).setRangeValidation(true, anioInicio, anioFin).setRequired(true);
+        Page npFechaChik = new NumberPage(this, labels.getFechaChik(), "", Constants.WIZARD, false).setRangeValidation(true, anioInicio2, anioFin).setRequired(true);
         Page scChikConfirmadoMedico = new SingleFixedChoicePage(this,labels.getChikConfirmadoMedico(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scVacunaFiebreAmarillaSn = new SingleFixedChoicePage(this,labels.getVacunaFiebreAmarillaSn(), "",Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page npFechaVacunaFiebreAmar = new NumberPage(this, labels.getFechaVacunaFiebreAmar(), "", Constants.WIZARD, false).setRequired(true);
@@ -94,9 +95,14 @@ public class EncuestaParticipanteSAForm  extends AbstractWizardModel {
         Page scUsaPlanificacionFam = new SingleFixedChoicePage(this,labels.getUsaPlanificacionFam(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scUsaCondon = new SingleFixedChoicePage(this,labels.getUsaCondon(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scUsaOtroMetodo = new SingleFixedChoicePage(this,labels.getUsaOtroMetodo(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        //MA 2018
+        Page scSabeZika = new SingleFixedChoicePage(this,labels.getSabeZika(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+        Page scUsaRopa = new SingleFixedChoicePage(this,labels.getUsaRopa(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+        Page scEmbarazadaUltAnio = new SingleFixedChoicePage(this,labels.getEmbarazadaUltAnio(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 
-        return new PageList(scEscuchadoZikaSn,scQueEsSika,tpOtroQueEsSika,scTransmiteZika,tpOtroTransmiteZika,scSintomas,scTenidoZikaSn,npFechaZika,scSintomasZika,scZikaConfirmadoMedico,scTenidoDengueSn,npFechaDengue,scDengueConfirmadoMedico,
-                scTenidoChikSn,npFechaChik,scChikConfirmadoMedico,scVacunaFiebreAmarillaSn,npFechaVacunaFiebreAmar,scTransfusionSangreSn,dpFechaTransfusionSangre,scUsaRepelentes,scConoceLarvas,scLugaresLarvas,tpOtrosLugaresLarvas,scTenidoHijos,
+        return new PageList(scEscuchadoZikaSn,scQueEsSika,tpOtroQueEsSika,scTransmiteZika, scSabeZika,tpOtroTransmiteZika,scSintomas,scTenidoZikaSn,npFechaZika,scSintomasZika,scZikaConfirmadoMedico,scTenidoDengueSn,npFechaDengue,scDengueConfirmadoMedico,
+                scTenidoChikSn,npFechaChik,scChikConfirmadoMedico,scVacunaFiebreAmarillaSn,npFechaVacunaFiebreAmar,scTransfusionSangreSn,dpFechaTransfusionSangre,scUsaRepelentes,scConoceLarvas,scLugaresLarvas,tpOtrosLugaresLarvas,
+                scUsaRopa, scEmbarazadaUltAnio,scTenidoHijos,
                 scUsaPlanificacionFam,scUsaCondon,scUsaOtroMetodo);
     }
 }

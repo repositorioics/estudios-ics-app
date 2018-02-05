@@ -43,6 +43,8 @@ public class PreferencesActivity extends PreferenceActivity implements
     public static String KEY_SERVER_URL = "server_url";
     public static String KEY_USERNAME = "username";
     public static String KEY_BARCODE = "barcode";
+    public static String KEY_ACTIVOS = "activos";
+    public static String KEY_TERRENO = "terreno";
 
 
     private EditTextPreference mServerUrlPreference;

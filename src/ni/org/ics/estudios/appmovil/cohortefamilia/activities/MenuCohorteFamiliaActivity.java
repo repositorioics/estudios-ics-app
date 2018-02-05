@@ -354,7 +354,7 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 				return;
 			}
 		}
-		if (requestCode == UPDATE_EQUIPO_CHF){
+		/*if (requestCode == UPDATE_EQUIPO_CHF){
 			if (resultCode == RESULT_CANCELED) {
 				builder.setTitle(getApplicationContext().getString(R.string.error));
 				builder.setIcon(R.drawable.ic_menu_close_clear_cancel);
@@ -365,7 +365,7 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 				startActivityForResult(ie, UPDATE_EQUIPO_CHF_ENC);
 				return;
 			}
-		}
+		}*/
 		if (requestCode == UPDATE_EQUIPO_CHF_ENC){
 			if (resultCode == RESULT_CANCELED) {
 				builder.setTitle(getApplicationContext().getString(R.string.error));

@@ -19,15 +19,16 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCasaActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.forms.EncuestaCasaSAForm;
 import ni.org.ics.estudios.appmovil.seroprevalencia.forms.EncuestaCasaSAFormLabels;
-import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
-import ni.org.ics.estudios.appmovil.utils.SeroprevalenciaDBConstants;
+import ni.org.ics.estudios.appmovil.utils.*;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
 import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
@@ -556,11 +557,23 @@ public class NuevaEncuestaCasaSAActivity extends FragmentActivity implements
             encuestaCasa.setDeviceid(infoMovil.getDeviceId());
             encuestaCasa.setEstado('0');
             encuestaCasa.setPasive('0');
-            boolean actualizada = false;
-            EncuestaCasaSA encuestaExiste = estudiosAdapter.getEncuestaCasaSA(SeroprevalenciaDBConstants.casaCHF + "=" + casaCHF.getCodigoCHF(), SeroprevalenciaDBConstants.casaCHF);
-            if (encuestaExiste != null && encuestaExiste.getCasaCHF() != null && encuestaExiste.getCasaCHF().getCodigoCHF() != null)
-                actualizada = estudiosAdapter.editarEncuestaCasaSA(encuestaCasa);
-            else estudiosAdapter.crearEncuestaCasaSA(encuestaCasa);
+            //boolean actualizada = false;
+            //EncuestaCasaSA encuestaExiste = estudiosAdapter.getEncuestaCasaSA(SeroprevalenciaDBConstants.casaCHF + "=" + casaCHF.getCodigoCHF(), SeroprevalenciaDBConstants.casaCHF);
+            //if (encuestaExiste != null && encuestaExiste.getCasaCHF() != null && encuestaExiste.getCasaCHF().getCodigoCHF() != null)
+                //actualizada = estudiosAdapter.editarEncuestaCasaSA(encuestaCasa);
+            //else
+            estudiosAdapter.crearEncuestaCasaSA(encuestaCasa);
+            List<ParticipanteProcesos> mParticipantes = estudiosAdapter.getParticipantesProc(ConstantsDB.casaCHF + "='" + casaCHF.getCodigoCHF() + "'", null);
+            for(ParticipanteProcesos proceso :mParticipantes) {
+                proceso.setEnCasaSa("No");
+                MovilInfo movilInfo = proceso.getMovilInfo();
+                movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+                movilInfo.setDeviceid(infoMovil.getDeviceId());
+                movilInfo.setUsername(username);
+                proceso.setMovilInfo(movilInfo);
+                estudiosAdapter.actualizarParticipanteProcesos(proceso);
+            }
+
             estudiosAdapter.close();
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.CASA, casaCHF);

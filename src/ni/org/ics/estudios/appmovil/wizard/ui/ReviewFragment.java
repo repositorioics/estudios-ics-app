@@ -168,8 +168,8 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
             if (TextUtils.isEmpty(value)) {
                 value = getString(R.string.is_null);
             }
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(reviewItem.getTitle());
-            ((TextView) rootView.findViewById(android.R.id.text2)).setText(value);
+            ((TextView) rootView.findViewById(R.id.text1)).setText(reviewItem.getTitle());
+            ((TextView) rootView.findViewById(R.id.text2)).setText(value);
             return rootView;
         }
 

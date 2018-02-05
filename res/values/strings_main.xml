@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="main_1">Estudio Cohorte Familia</string>
+    <string name="main_2">Estudio Cohorte Pediatrica</string>
     <string name="barrio">Barrio</string>
     <string name="manzana">Manzana</string>
     <string name="casa_search">Buscar Casa</string>
@@ -9,5 +10,12 @@
     <string name="casa_jefe_familia_nombre">Nombre jefe de familia</string>
     <string name="casa_jefe_familia_apellido">Apellido jefe de familia</string>
     <string name="casa">Casa</string>
+
+    <string name="main_info">Buscar Participante</string>
+    <string name="main_recepcion">Recepción</string>
+    <string name="main_report">Revisar Datos</string>
+    <string name="main_super">Supervisor</string>
+    <string name="main_mapa">Ver Mapa</string>
+    <string name="main_survey">Encuesta Satisfacción</string>
     
 </resources>

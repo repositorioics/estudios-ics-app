@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="menu_sup">
+        <item>Recepción BHC..</item>
+		<item>Recepción Rojo..</item>
+		<item>Temp PBMC..</item>
+		<item>Temp Rojo y BHC..</item>
+		<item>Pinchazos..</item>
+    </string-array>
+</resources>

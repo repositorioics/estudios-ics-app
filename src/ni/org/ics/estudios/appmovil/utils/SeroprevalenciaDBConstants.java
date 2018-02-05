@@ -123,6 +123,10 @@ public class SeroprevalenciaDBConstants {
     public static final String usaPlanificacionFam= "usaPlanificacionFam";
     public static final String usaCondon= "usaCondon";
     public static final String usaOtroMetodo= "usaOtroMetodo";
+    //MA 2018
+    public static final String sabeZika= "sabeZika";
+    public static final String usaRopa= "usaRopa";
+    public static final String embarazadaUltAnio= "embarazadaUltAnio";
 
     //Crear tabla EncuestaParticipanteSA
     public static final String CREATE_ENCUESTA_PARTICIPANTESA_TABLE = "create table if not exists "
@@ -161,6 +165,9 @@ public class SeroprevalenciaDBConstants {
             + usaPlanificacionFam + " text, "
             + usaCondon + " text, "
             + usaOtroMetodo + " text, "
+            + sabeZika + " text, "
+            + usaRopa + " text, "
+            + embarazadaUltAnio + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

@@ -29,10 +29,12 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCasoSintomas;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
+import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.helpers.*;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.CasaCohorteFamiliaCasoHelper;
@@ -56,6 +58,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteQueryBuilder;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 public class EstudiosAdapter {
 
@@ -120,6 +123,37 @@ public class EstudiosAdapter {
             db.execSQL(CasosDBConstants.CREATE_VISITAS_FALLIDAS_CASOS_TABLE);
             db.execSQL(CasosDBConstants.CREATE_VISITAS_FINALES_CASOS_TABLE);
             db.execSQL(CasosDBConstants.CREATE_NO_DATA_CASOS_TABLE);
+
+            //Muestreo anual
+            db.execSQL(ConstantsDB.CREATE_ENCCASA_TABLE);
+            db.execSQL(ConstantsDB.CREATE_ENCPART_TABLE);
+            db.execSQL(ConstantsDB.CREATE_ENCLAC_TABLE);
+            db.execSQL(ConstantsDB.CREATE_PT_TABLE);
+            db.execSQL(ConstantsDB.CREATE_MUESTRA_TABLE);
+            db.execSQL(ConstantsDB.CREATE_OB_TABLE);
+            db.execSQL(ConstantsDB.CREATE_VAC_TABLE);
+            db.execSQL(ConstantsDB.CREATE_VIS_TABLE);
+            db.execSQL(ConstantsDB.CREATE_RECONS_TABLE);
+            db.execSQL(ConstantsDB.CREATE_CONSCHIK_TABLE);
+            db.execSQL(ConstantsDB.CREATE_CEST_TABLE);
+            db.execSQL(ConstantsDB.CREATE_BHC_TABLE);
+            db.execSQL(ConstantsDB.CREATE_SERO_TABLE);
+            db.execSQL(ConstantsDB.CREATE_TPBMC_TABLE);
+            db.execSQL(ConstantsDB.CREATE_TRB_TABLE);
+            db.execSQL(ConstantsDB.CREATE_PIN_TABLE);
+            db.execSQL(ConstantsDB.CREATE_RND_TABLE);
+            db.execSQL(ConstantsDB.CREATE_ENCSAT_TABLE);
+            db.execSQL(ConstantsDB.CREATE_RECONS_TABLE_2015);
+            db.execSQL(ConstantsDB.CREATE_ZIKA_TABLE);
+            db.execSQL(ConstantsDB.CREATE_RECONSFLU_TABLE_2015);
+            db.execSQL(ConstantsDB.CREATE_CC_TABLE);
+            db.execSQL(ConstantsDB.CREATE_CAMBCASA_TABLE);
+            db.execSQL(ConstantsDB.CREATE_PARTPROC_TABLE);
+            db.execSQL(ConstantsDB.CREATE_USER_PERM_TABLE);
+            db.execSQL(ConstantsDB.CREATE_DAT_VIS_TABLE);
+            db.execSQL(ConstantsDB.CREATE_DATOSPARTOBB_TABLE);
+            db.execSQL(ConstantsDB.CREATE_NEWVAC_TABLE);
+            db.execSQL(ConstantsDB.CREATE_DOCS_TABLE);
         }
 
 		@Override
@@ -237,7 +271,18 @@ public class EstudiosAdapter {
 		c.close();
 		return result;
 	}
-	
+
+    //Obtener los permisos de un usuario de la base de datos
+    public UserPermissions getPermisosUsuario(String filtro, String orden) throws SQLException {
+        UserPermissions mUser = null;
+        Cursor cursorUser = crearCursor(ConstantsDB.USER_PERM_TABLE, filtro, null, orden);
+        if (cursorUser != null && cursorUser.getCount() > 0) {
+            cursorUser.moveToFirst();
+            mUser=UserSistemaHelper.crearUserPermissions(cursorUser);
+        }
+        if (!cursorUser.isClosed()) cursorUser.close();
+        return mUser;
+    }
 	
 	/**
 	 * Metodos para barrios en la base de datos
@@ -615,6 +660,21 @@ public class EstudiosAdapter {
 		if (!cursorCasaCohorteFamilia.isClosed()) cursorCasaCohorteFamilia.close();
 		return mCasaCohorteFamilias;
 	}
+
+    /**
+     * C
+     * @param codCasa
+     * @return
+     */
+    public Integer countCasasChfByCasa(Integer codCasa) {
+        int total = 0;
+        Cursor c = crearCursor(MainDBConstants.CASA_CHF_TABLE,MainDBConstants.casa + "=" + codCasa,null,null);
+        if (c != null) {
+            total = c.getCount();
+        }
+        if (c!=null && !c.isClosed()) c.close();
+        return total;
+    }
 	
 	/**
 	 * Metodos para participantes en la base de datos
@@ -650,6 +710,10 @@ public class EstudiosAdapter {
 			cursorParticipante.moveToFirst();
 			mParticipante=ParticipanteHelper.crearParticipante(cursorParticipante);
 			Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.casa)), null);
+
+            ParticipanteProcesos procesos = this.getParticipanteProcesos(ConstantsDB.CODIGO+"="+mParticipante.getCodigo().toString(), null);
+            mParticipante.setProcesos(procesos);
+
 			mParticipante.setCasa(casa);
 		}
 		if (!cursorParticipante.isClosed()) cursorParticipante.close();
@@ -667,12 +731,122 @@ public class EstudiosAdapter {
 				mParticipante = ParticipanteHelper.crearParticipante(cursorParticipante);
 				Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.casa)), null);
 				mParticipante.setCasa(casa);
+
+                ParticipanteProcesos procesos = this.getParticipanteProcesos(ConstantsDB.CODIGO+"="+mParticipante.getCodigo().toString(), null);
+                mParticipante.setProcesos(procesos);
+
 				mParticipantes.add(mParticipante);
 			} while (cursorParticipante.moveToNext());
 		}
 		if (!cursorParticipante.isClosed()) cursorParticipante.close();
 		return mParticipantes;
 	}
+
+    /**
+     * Obtiene Lista todas las participantes buscando por nombre
+     *
+     * @return lista con participantes
+     */
+    public List<Participante> getListaParticipantesName(String name) throws SQLException {
+        Cursor participantes = null;
+        List<Participante> mParticipantes = new ArrayList<Participante>();
+        participantes = crearCursor(MainDBConstants.PARTICIPANTE_TABLE, MainDBConstants.nombre1 + " LIKE '%" + name + "%' OR "+ ConstantsDB.nombre2 + " LIKE '%" + name + "%'", null, null);
+        //participantes = mDb.query(true, ConstantsDB.PART_TABLE, null,
+                //MainDBConstants.nombre1 + " LIKE '%" + name + "%' OR "+ ConstantsDB.nombre2 + " LIKE '%" + name + "%'", null, null, null, null, null);
+
+        if (participantes != null && participantes.getCount() > 0) {
+            participantes.moveToFirst();
+            mParticipantes.clear();
+            do{
+                Participante mParticipante = null;
+                mParticipante = ParticipanteHelper.crearParticipante(participantes);
+
+                Casa casa = this.getCasa(MainDBConstants.codigo + "=" +participantes.getInt(participantes.getColumnIndex(MainDBConstants.casa)), null);
+                mParticipante.setCasa(casa);
+
+                ParticipanteProcesos procesos = this.getParticipanteProcesos(ConstantsDB.CODIGO+"="+mParticipante.getCodigo().toString(), null);
+                mParticipante.setProcesos(procesos);
+
+                mParticipantes.add(mParticipante);
+            } while (participantes.moveToNext());
+        }
+        if (!participantes.isClosed()) participantes.close();
+        return mParticipantes;
+    }
+
+    /**
+     * Obtiene Lista todas las participantes buscando por nombre
+     *
+     * @return lista con participantes
+     */
+    public List<Participante> getListaParticipantesLastName(String lastname) throws SQLException {
+        Cursor participantes = null;
+        List<Participante> mParticipantes = new ArrayList<Participante>();
+        participantes = crearCursor(MainDBConstants.PARTICIPANTE_TABLE, MainDBConstants.apellido1 + " LIKE '%" + lastname + "%' OR "+ MainDBConstants.apellido2 + " LIKE '%" + lastname + "%'", null, null);
+        //participantes = mDb.query(true, ConstantsDB.PART_TABLE, null,
+        //MainDBConstants.nombre1 + " LIKE '%" + name + "%' OR "+ ConstantsDB.nombre2 + " LIKE '%" + name + "%'", null, null, null, null, null);
+
+        if (participantes != null && participantes.getCount() > 0) {
+            participantes.moveToFirst();
+            mParticipantes.clear();
+            do{
+                Participante mParticipante = null;
+                mParticipante = ParticipanteHelper.crearParticipante(participantes);
+
+                Casa casa = this.getCasa(MainDBConstants.codigo + "=" +participantes.getInt(participantes.getColumnIndex(MainDBConstants.casa)), null);
+                mParticipante.setCasa(casa);
+
+                ParticipanteProcesos procesos = this.getParticipanteProcesos(ConstantsDB.CODIGO+"="+mParticipante.getCodigo().toString(), null);
+                mParticipante.setProcesos(procesos);
+
+                mParticipantes.add(mParticipante);
+            } while (participantes.moveToNext());
+        }
+        if (!participantes.isClosed()) participantes.close();
+        return mParticipantes;
+    }
+
+    /**
+     * Actualiza un participante en la base de datos.
+     *
+     * @param participante
+     *            Objeto que contiene la info
+     * @return verdadero o falso
+     */
+    public boolean actualizarParticipanteProcesos(ParticipanteProcesos participante) {
+        ContentValues cv = ParticipanteHelper.crearParticipanteProcesos(participante);
+        return mDb.update(ConstantsDB.PART_PROCESOS_TABLE, cv, ConstantsDB.CODIGO + "="
+                + participante.getCodigo(), null) > 0;
+    }
+
+    //Obtener un participante procesos de la base de datos
+    public ParticipanteProcesos getParticipanteProcesos(String filtro, String orden) throws SQLException {
+        ParticipanteProcesos mPartProc = null;
+        Cursor cursor = crearCursor(ConstantsDB.PART_PROCESOS_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mPartProc=ParticipanteHelper.crearParticipanteProcesos(cursor);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mPartProc;
+    }
+
+    //Obtener una lista de Participante de la base de datos
+    public List<ParticipanteProcesos> getParticipantesProc(String filtro, String orden) throws SQLException {
+        List<ParticipanteProcesos> mParticipantesProc = new ArrayList<ParticipanteProcesos>();
+        Cursor cursorParticipante = crearCursor(ConstantsDB.PART_PROCESOS_TABLE, filtro, null, orden);
+        if (cursorParticipante != null && cursorParticipante.getCount() > 0) {
+            cursorParticipante.moveToFirst();
+            mParticipantesProc.clear();
+            do{
+                ParticipanteProcesos mParticipante = null;
+                mParticipante = ParticipanteHelper.crearParticipanteProcesos(cursorParticipante);
+                mParticipantesProc.add(mParticipante);
+            } while (cursorParticipante.moveToNext());
+        }
+        if (cursorParticipante!=null && !cursorParticipante.isClosed()) cursorParticipante.close();
+        return mParticipantesProc;
+    }
 	
 	/**
 	 * Metodos para ParticipanteCohorteFamilia en la base de datos

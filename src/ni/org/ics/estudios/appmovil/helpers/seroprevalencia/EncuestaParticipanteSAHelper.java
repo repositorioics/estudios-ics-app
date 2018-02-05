@@ -46,6 +46,10 @@ public class EncuestaParticipanteSAHelper {
         cv.put(SeroprevalenciaDBConstants.usaPlanificacionFam, encuesta.getUsaPlanificacionFam());
         cv.put(SeroprevalenciaDBConstants.usaCondon, encuesta.getUsaCondon());
         cv.put(SeroprevalenciaDBConstants.usaOtroMetodo, encuesta.getUsaOtroMetodo());
+        //MA 2018
+        cv.put(SeroprevalenciaDBConstants.sabeZika, encuesta.getSabeZika());
+        cv.put(SeroprevalenciaDBConstants.usaRopa, encuesta.getUsaRopa());
+        cv.put(SeroprevalenciaDBConstants.embarazadaUltAnio, encuesta.getEmbarazadaUltAnio());
 
         if (encuesta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, encuesta.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, encuesta.getRecordUser());
@@ -88,6 +92,10 @@ public class EncuestaParticipanteSAHelper {
         mEncuesta.setUsaPlanificacionFam(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.usaPlanificacionFam)));
         mEncuesta.setUsaCondon(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.usaCondon)));
         mEncuesta.setUsaOtroMetodo(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.usaOtroMetodo)));
+        //MA 2018
+        mEncuesta.setSabeZika(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.sabeZika)));
+        mEncuesta.setUsaRopa(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.usaRopa)));
+        mEncuesta.setEmbarazadaUltAnio(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.embarazadaUltAnio)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mEncuesta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mEncuesta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

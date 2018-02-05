@@ -33,14 +33,18 @@ public class MainActivityAdapter extends ArrayAdapter<String> {
 		// Change icon based on position
 		Drawable img = null;
 		switch (position){
-		case 0: 
-			img=getContext().getResources().getDrawable( R.drawable.ic_family);
-			textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-			break;
-		default:
-			img=getContext().getResources().getDrawable( R.drawable.ic_launcher);
-			textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-			break;
+            case 0:
+                img=getContext().getResources().getDrawable( R.drawable.ic_family);
+                textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+                break;
+            case 1:
+                img=getContext().getResources().getDrawable( R.drawable.ic_cohorte);
+                textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+                break;
+            default:
+                img=getContext().getResources().getDrawable( R.drawable.ic_launcher);
+                textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+                break;
 		}
 		return v;
 	}

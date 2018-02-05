@@ -64,6 +64,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private final int OPCION_ENCUESTA_LACTANCIA = 3;
     private final int OPCION_ENCUESTA_MUESTRAS = 4;
     private final int OPCION_ENCUESTA_PARTICIPANTESA = 5;
+    private final int OPCION_IR_CASA = 6;
 
     private AlertDialog alertDialog;
 
@@ -111,6 +112,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         existeEncuesta = existeencuestaLact;
                         break;
                     case OPCION_ENCUESTA_MUESTRAS:
+                    case OPCION_IR_CASA:
                         crearFomulario(position); break;
                     case OPCION_ENCUESTA_PARTICIPANTESA:
                         tituloEncuesta = getString(R.string.new_participant_sa_survey);
@@ -280,7 +282,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             i.putExtras(arguments);
                             startActivity(i);
-                        }else{
+                        }/*else{
                             EncuestaParticipante encuesta = estudiosAdapter.getEncuestasParticipante(filtro, EncuestasDBConstants.participante);
                             if (encuesta!=null)
                                 arguments.putSerializable(Constants.ENCUESTA, encuesta);
@@ -289,7 +291,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             i.putExtras(arguments);
                             startActivity(i);
-                        }
+                        }*/
                         break;
                     case OPCION_ENCUESTA_DATOSPARTO:
                         if (!existeencuestaParto) {
@@ -300,7 +302,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             i.putExtras(arguments);
                             startActivity(i);
-                        }else{
+                        }/*else{
                             EncuestaDatosPartoBB encuestaDatosPartoBB = estudiosAdapter.getEncuestasDatosPartoBB(filtro, EncuestasDBConstants.participante);
                             if (encuestaDatosPartoBB!=null)
                                 arguments.putSerializable(Constants.ENCUESTA, encuestaDatosPartoBB);
@@ -309,7 +311,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             i.putExtras(arguments);
                             startActivity(i);
-                        }
+                        }*/
                         break;
                     case OPCION_ENCUESTA_PESOTALLA:
                         if (!existeencuestaPeso) {
@@ -320,7 +322,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             i.putExtras(arguments);
                             startActivity(i);
-                        }else{
+                        }/*else{
                             EncuestaPesoTalla encuestaPesoTalla = estudiosAdapter.getEncuestasPesoTalla(filtro, EncuestasDBConstants.participante);
                             if (encuestaPesoTalla!=null)
                                 arguments.putSerializable(Constants.ENCUESTA, encuestaPesoTalla);
@@ -329,7 +331,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             i.putExtras(arguments);
                             startActivity(i);
-                        }
+                        }*/
                         break;
                     case OPCION_ENCUESTA_LACTANCIA:
                         if (!existeencuestaLact) {
@@ -340,7 +342,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             i.putExtras(arguments);
                             startActivity(i);
-                        }else{
+                        }/*else{
                             EncuestaLactanciaMaterna encuestaLactanciaMaterna = estudiosAdapter.getEncuestasLactanciaMaterna(filtro, EncuestasDBConstants.participante);
                             if (encuestaLactanciaMaterna!=null)
                                 arguments.putSerializable(Constants.ENCUESTA, encuestaLactanciaMaterna);
@@ -349,7 +351,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             i.putExtras(arguments);
                             startActivity(i);
-                        }
+                        }*/
                         break;
                     /*case OPCION_ENCUESTA_MUESTRAS:
                         if (participanteCHF!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
@@ -382,6 +384,13 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             startActivity(i);
                         }
                         break;
+                    case OPCION_IR_CASA:
+                        arguments.putSerializable(Constants.CASA, participanteCHF.getCasaCHF());
+                        i = new Intent(getApplicationContext(),
+                                MenuCasaActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
                     default:
                         break;
 

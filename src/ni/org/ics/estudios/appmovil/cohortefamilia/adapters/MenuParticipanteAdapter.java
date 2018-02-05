@@ -30,6 +30,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
     private final int OPCION_ENCUESTA_LACTANCIA = 3;
     private final int OPCION_ENCUESTA_MUESTRAS = 4;
     private final int OPCION_ENCUESTA_PARTICIPANTESA = 5;
+    private final int OPCION_IR_CASA = 6;
 
     private final Context context;
     private final ParticipanteCohorteFamilia participanteCHF;
@@ -98,6 +99,8 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
             case OPCION_ENCUESTA_PARTICIPANTESA :
                 habilitado = habilitarEncuestaParticipSA;
                 break;
+            case OPCION_IR_CASA:
+                habilitado = true; break;
             default: break;
         }
         return habilitado;
@@ -186,6 +189,10 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                     }
                 }
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_friendslist);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+            case OPCION_IR_CASA:
+                img=getContext().getResources().getDrawable(R.drawable.ic_menu_home);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
 		default:

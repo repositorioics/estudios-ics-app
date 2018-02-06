@@ -24,6 +24,7 @@ public class EncuestaParticipanteSAForm  extends AbstractWizardModel {
     private String[] catSintomas;
     private String[] catSintomasZika;
     private String[] catLugares;
+    private String[] catMeses;
     private EstudiosAdapter estudiosAdapter;
     private EncuestaParticipanteSAFormLabels labels;
 
@@ -55,6 +56,7 @@ public class EncuestaParticipanteSAForm  extends AbstractWizardModel {
         catSintomas = fillCatalog("SA_CAT_SINTOMAS");
         catSintomasZika = fillCatalog("SA_CAT_SINT_ZIKA");
         catLugares = fillCatalog("SA_CAT_LUG_LARVA");
+        catMeses = fillCatalog("CHF_CAT_MESES");
         estudiosAdapter.close();
 
         Calendar calendarToday = Calendar.getInstance();
@@ -96,13 +98,17 @@ public class EncuestaParticipanteSAForm  extends AbstractWizardModel {
         Page scUsaCondon = new SingleFixedChoicePage(this,labels.getUsaCondon(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scUsaOtroMetodo = new SingleFixedChoicePage(this,labels.getUsaOtroMetodo(), "",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         //MA 2018
-        Page scSabeZika = new SingleFixedChoicePage(this,labels.getSabeZika(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+        Page scSabeZika = new SingleFixedChoicePage(this,labels.getSabeZika(), labels.getSabeZikaHint(), Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scUsaRopa = new SingleFixedChoicePage(this,labels.getUsaRopa(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-        Page scEmbarazadaUltAnio = new SingleFixedChoicePage(this,labels.getEmbarazadaUltAnio(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+        Page scEmbarazadaUltAnio = new SingleFixedChoicePage(this,labels.getEmbarazadaUltAnio(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page scVisitaCementerio = new SingleFixedChoicePage(this,labels.getVisitaCementerio(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+        Page npVecesVisita = new NumberPage(this, labels.getCadaCuantoVisitaCem(), labels.getCadaCuantoVisitaCemHint(), Constants.WIZARD, false).setRequired(true);
+        Page scMesesVisita = new MultipleFixedChoicePage(this,labels.getMesesVisitaCementerio(), "", Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page tpDescOtroMetodo = new TextPage(this, labels.getDescOtroMetodo(), "", Constants.WIZARD, false).setRequired(true);
 
         return new PageList(scEscuchadoZikaSn,scQueEsSika,tpOtroQueEsSika,scTransmiteZika, scSabeZika,tpOtroTransmiteZika,scSintomas,scTenidoZikaSn,npFechaZika,scSintomasZika,scZikaConfirmadoMedico,scTenidoDengueSn,npFechaDengue,scDengueConfirmadoMedico,
                 scTenidoChikSn,npFechaChik,scChikConfirmadoMedico,scVacunaFiebreAmarillaSn,npFechaVacunaFiebreAmar,scTransfusionSangreSn,dpFechaTransfusionSangre,scUsaRepelentes,scConoceLarvas,scLugaresLarvas,tpOtrosLugaresLarvas,
-                scUsaRopa, scEmbarazadaUltAnio,scTenidoHijos,
-                scUsaPlanificacionFam,scUsaCondon,scUsaOtroMetodo);
+                scUsaRopa, scVisitaCementerio, npVecesVisita, scMesesVisita, scEmbarazadaUltAnio,scTenidoHijos,
+                scUsaPlanificacionFam,scUsaCondon,scUsaOtroMetodo, tpDescOtroMetodo);
     }
 }

@@ -893,9 +893,9 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     	//Inserta un Nuevo Registro de Tamizaje
     	estudiosAdapter.crearTamizaje(t);
     	//Pregunta si acepta realizar el tamizaje
-    	if (t.getAceptaTamizajePersona().equals("S")) {
+    	if (t.getAceptaTamizajePersona().equals(Constants.YESKEYSND)) {
 	    	//Pregunta si es elegible y acepta participar
-	    	if (t.getAceptaParticipar().equals("S")) {
+	    	if (t.getAceptaParticipar().equals(Constants.YESKEYSND)) {
 	        	//Si la respuesta es si crea o busca un participante
 	    		//Obtener datos del bundle para el participante
 	    		
@@ -925,7 +925,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	    		MessageResource catParticipadoCohortePediatrica = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participadoCohortePediatrica + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
 	    		//Pregunta si es de la cohorte pediatrica
 	    		Integer codigo = 0;
-	    		if(catParticipadoCohortePediatrica.getCatKey().matches("S")){
+	    		if(catParticipadoCohortePediatrica.getCatKey().matches(Constants.YESKEYSND)){
 	    			//Si la respuesta es si, buscamos al participante
 	    			if (tieneValor(codigoCohorte)) codigo = Integer.parseInt(codigoCohorte);
 	    			participante = estudiosAdapter.getParticipante(MainDBConstants.codigo +" = "+ codigo , null);
@@ -1184,7 +1184,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     pCaso.setCodigoCasoParticipante(infoMovil.getId());
                     pCaso.setParticipante(pchf);
                     pCaso.setCodigoCaso(casaCaso);
-                    pCaso.setEnfermo("N");
+                    pCaso.setEnfermo(Constants.NOKEYSND);
                     pCaso.setRecordDate(new Date());
                     pCaso.setRecordUser(username);
                     pCaso.setDeviceid(infoMovil.getDeviceId());

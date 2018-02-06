@@ -36,9 +36,9 @@ public class DownloadBaseTask extends DownloadTask {
 	protected static final String TAG = DownloadBaseTask.class.getSimpleName();
 	private EstudiosAdapter estudioAdapter = null;
 	private List<Estudio> mEstudios = null;
-	private List<Barrio> mBarrios = null;
-	private List<Casa> mCasas = null;
-	private List<Participante> mParticipantes = null;
+	//private List<Barrio> mBarrios = null;
+	//private List<Casa> mCasas = null;
+	//private List<Participante> mParticipantes = null;
 	
 	
 	public static final String ESTUDIO = "1";
@@ -72,9 +72,9 @@ public class DownloadBaseTask extends DownloadTask {
 		estudioAdapter.open();
 		//Borrar los datos de la base de datos
 		estudioAdapter.borrarEstudios();
-		estudioAdapter.borrarBarrios();
-		estudioAdapter.borrarCasas();
-		estudioAdapter.borrarParticipantes();
+		//estudioAdapter.borrarBarrios();
+		//estudioAdapter.borrarCasas();
+		//estudioAdapter.borrarParticipantes();
 		try {
 			if (mEstudios != null){
 				v = mEstudios.size();
@@ -86,7 +86,7 @@ public class DownloadBaseTask extends DownloadTask {
 				}
 				mEstudios = null;
 			}
-			if (mBarrios != null){
+			/*if (mBarrios != null){
 				v = mBarrios.size();
 				ListIterator<Barrio> iter = mBarrios.listIterator();
 				while (iter.hasNext()){
@@ -115,7 +115,7 @@ public class DownloadBaseTask extends DownloadTask {
 							.valueOf(v).toString());
 				}
 				mParticipantes = null;
-			}
+			}*/
             
 		} catch (Exception e) {
 			// Regresa error al insertar
@@ -153,6 +153,7 @@ public class DownloadBaseTask extends DownloadTask {
             // convert the array to a list and return it
             mEstudios = Arrays.asList(responseEntityEstudio.getBody());
             responseEntityEstudio = null;
+            /*
             //Descargar barrios
             urlRequest = url + "/movil/barrios/";
             publishProgress("Solicitando barrios",BARRIO,TOTAL_TASK_GENERALES);
@@ -180,6 +181,7 @@ public class DownloadBaseTask extends DownloadTask {
             // convert the array to a list and return it
             mParticipantes = Arrays.asList(responseEntityParticipante.getBody());
             responseEntityParticipante = null;
+            */
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

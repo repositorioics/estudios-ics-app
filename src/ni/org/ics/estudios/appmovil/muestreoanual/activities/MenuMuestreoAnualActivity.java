@@ -257,7 +257,7 @@ public class MenuMuestreoAnualActivity extends ListActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         switch(dialog){
             case EXIT:
-                builder.setTitle(this.getString(R.string.confirm));
+                /*builder.setTitle(this.getString(R.string.confirm));
                 builder.setMessage(this.getString(R.string.exiting));
                 builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -276,7 +276,9 @@ public class MenuMuestreoAnualActivity extends ListActivity {
                         mExitShowing=false;
                     }
                 });
-                mExitShowing=true;
+                mExitShowing=true;*/
+                mExitShowing=false;
+                finish();
                 break;
             case DOWNLOAD:
                 builder.setTitle(this.getString(R.string.confirm));

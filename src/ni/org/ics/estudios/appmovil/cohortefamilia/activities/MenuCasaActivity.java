@@ -43,6 +43,7 @@ import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.SeroprevalenciaDBConstants;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 
 public class MenuCasaActivity extends AbstractAsyncActivity {
@@ -335,6 +336,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaCasaSAActivity.class);
                         i.putExtras(arguments);
+                        i.putExtra(Constants.MENU_INFO, false);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
 
@@ -384,7 +386,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                         startActivity(i);
                         break;
                     case OPCION_ENCUESTA_CASASA:
-                        EncuestaCasaSA encuestaCasaSA = estudiosAdapter.getEncuestaCasaSA(SeroprevalenciaDBConstants.casaCHF + " = '" + casaCHF.getCodigoCHF() + "'", null);
+                        EncuestaCasaSA encuestaCasaSA = estudiosAdapter.getEncuestaCasaSA(SeroprevalenciaDBConstants.casa + " = " + casaCHF.getCasa().getCodigo(), null);
                         if (encuestaCasaSA != null) arguments.putSerializable(Constants.ENCUESTA, encuestaCasaSA);
                         i = new Intent(getApplicationContext(),
                                 EditarEncuestaCasaSAActivity.class);
@@ -434,7 +436,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                 if (encuestaExiste != null)
                     existeencuestaCasa = true;
 
-                EncuestaCasaSA encuestaCasaSA = estudiosAdapter.getEncuestaCasaSA(SeroprevalenciaDBConstants.casaCHF + " = '" + casaCHF.getCodigoCHF() + "'", null);
+                EncuestaCasaSA encuestaCasaSA = estudiosAdapter.getEncuestaCasaSA(SeroprevalenciaDBConstants.casa + " = " + casaCHF.getCasa().getCodigo(), null);
                 if (encuestaCasaSA != null) {
                     existeencuestaCasaSA = true;
                     habilitarencuestaCasaSA = true;

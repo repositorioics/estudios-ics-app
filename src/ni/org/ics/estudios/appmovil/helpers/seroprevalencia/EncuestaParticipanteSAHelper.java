@@ -17,7 +17,8 @@ public class EncuestaParticipanteSAHelper {
     public static ContentValues crearEncuestaParticipanteSAContentValues(EncuestaParticipanteSA encuesta){
         ContentValues cv = new ContentValues();
 
-        cv.put(SeroprevalenciaDBConstants.participante, encuesta.getParticipanteSA().getParticipante().getCodigo());
+        cv.put(SeroprevalenciaDBConstants.codigo, encuesta.getCodigo());
+        cv.put(SeroprevalenciaDBConstants.participante, encuesta.getParticipante().getCodigo());
         cv.put(SeroprevalenciaDBConstants.escuchadoZikaSn, encuesta.getEscuchadoZikaSn());
         cv.put(SeroprevalenciaDBConstants.queEsSika, encuesta.getQueEsSika());
         cv.put(SeroprevalenciaDBConstants.otroQueEsSika, encuesta.getOtroQueEsSika());
@@ -50,6 +51,10 @@ public class EncuestaParticipanteSAHelper {
         cv.put(SeroprevalenciaDBConstants.sabeZika, encuesta.getSabeZika());
         cv.put(SeroprevalenciaDBConstants.usaRopa, encuesta.getUsaRopa());
         cv.put(SeroprevalenciaDBConstants.embarazadaUltAnio, encuesta.getEmbarazadaUltAnio());
+        cv.put(SeroprevalenciaDBConstants.visitaCemeneterio, encuesta.getVisitaCemeneterio());
+        cv.put(SeroprevalenciaDBConstants.cadaCuantoVisitaCem, encuesta.getCadaCuantoVisitaCem());
+        cv.put(SeroprevalenciaDBConstants.mesesVisitaCementerio, encuesta.getMesesVisitaCementerio());
+        cv.put(SeroprevalenciaDBConstants.descOtroMetodo, encuesta.getDescOtroMetodo());
 
         if (encuesta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, encuesta.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, encuesta.getRecordUser());
@@ -63,7 +68,8 @@ public class EncuestaParticipanteSAHelper {
     public static EncuestaParticipanteSA crearEncuestaParticipanteSA(Cursor cursor){
         EncuestaParticipanteSA mEncuesta = new EncuestaParticipanteSA();
 
-        mEncuesta.setParticipanteSA(null);
+        mEncuesta.setCodigo(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.codigo)));
+        mEncuesta.setParticipante(null);
         mEncuesta.setEscuchadoZikaSn(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.escuchadoZikaSn)));
         mEncuesta.setQueEsSika(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.queEsSika)));
         mEncuesta.setOtroQueEsSika(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.otroQueEsSika)));
@@ -96,6 +102,10 @@ public class EncuestaParticipanteSAHelper {
         mEncuesta.setSabeZika(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.sabeZika)));
         mEncuesta.setUsaRopa(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.usaRopa)));
         mEncuesta.setEmbarazadaUltAnio(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.embarazadaUltAnio)));
+        mEncuesta.setVisitaCemeneterio(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.visitaCemeneterio)));
+        mEncuesta.setCadaCuantoVisitaCem(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.cadaCuantoVisitaCem)));
+        mEncuesta.setMesesVisitaCementerio(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.mesesVisitaCementerio)));
+        mEncuesta.setDescOtroMetodo(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.descOtroMetodo)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mEncuesta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mEncuesta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

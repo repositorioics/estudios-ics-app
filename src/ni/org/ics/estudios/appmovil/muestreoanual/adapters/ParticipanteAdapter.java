@@ -82,6 +82,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 				//if (participante.getCand().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante candidato a CHF</b></font><br />";
 				if (procesos.getConsFlu().matches("Si")|| procesos.getPesoTalla().matches("Si")
 						|| procesos.getEnCasa().matches("Si")||procesos.getEncPart().matches("Si")
+                        || procesos.getEnCasaChf().matches("Si") || procesos.getEnCasaSa().matches("Si") || procesos.getEncPartSa().matches("Si")
 						|| procesos.getEncLacMat().matches("Si")||procesos.getInfoVacuna().matches("Si")
 						|| procesos.getConsDeng().matches("Si") || procesos.getObsequio().matches("Si")
 						|| procesos.getConmx().matches("No") || procesos.getConmxbhc().matches("No")|| procesos.getZika().matches("Si")
@@ -250,7 +251,10 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 					//Nuevo orden
 					
 					if (procesos.getEnCasa().matches("Si")) labelHeader = labelHeader + "Encuesta de Casa<br />";
-					if (procesos.getEncPart().matches("Si")) labelHeader = labelHeader + "Encuesta de Participante<br />";
+                    if (procesos.getEnCasaChf().matches("Si")) labelHeader = labelHeader + this.getContext().getString(R.string.housechf_survey_missing) + "<br />";
+                    if (procesos.getEnCasaSa().matches("Si")) labelHeader = labelHeader +  this.getContext().getString(R.string.housesa_survey_missing) + "<br />";
+                    if (procesos.getEncPartSa().matches("Si")) labelHeader = labelHeader + this.getContext().getString(R.string.partsa_survey_missing) + "<br />";
+                    if (procesos.getEncPart().matches("Si")) labelHeader = labelHeader + "Encuesta de Participante<br />";
 					if (procesos.getConsFlu().matches("Si")) labelHeader = labelHeader + "Consentimiento Influenza <br />";
 					if (procesos.getConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue<br />";
 					if (procesos.getZika().matches("Si")) labelHeader = labelHeader + "Consentimiento Zika<br />";

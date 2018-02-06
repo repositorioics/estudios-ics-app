@@ -1,19 +1,22 @@
 package ni.org.ics.estudios.appmovil.domain.seroprevalencia;
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.Casa;
+
+import java.io.Serializable;
 
 /**
  * Created by Miguel Salinas on 5/25/2017.
  * V1.0
  */
-public class EncuestaCasaSA extends BaseMetaData {
+public class EncuestaCasaSA extends BaseMetaData implements Serializable {
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private CasaCohorteFamilia casaCHF;
+    private String codigo;
+	private Casa casa;
     private String sedazoPuertasVentanas;
     private String compraProdEvitarZancudos;
     private String tienePatioJardin;
@@ -39,12 +42,20 @@ public class EncuestaCasaSA extends BaseMetaData {
     private String relacionFamChik;
     private String otraRelacionFamChik;
 
-    public CasaCohorteFamilia getCasaCHF() {
-        return casaCHF;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setCasaCHF(CasaCohorteFamilia casaCHF) {
-        this.casaCHF = casaCHF;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Casa getCasa() {
+        return casa;
+    }
+
+    public void setCasa(Casa casa) {
+        this.casa = casa;
     }
 
     public String getSedazoPuertasVentanas() {
@@ -217,7 +228,7 @@ public class EncuestaCasaSA extends BaseMetaData {
 
     @Override
     public String toString() {
-        return "EncuestaCasa{" + casaCHF.getCodigoCHF() +
+        return "EncuestaCasa{" + codigo +
                 '}';
     }
 
@@ -228,13 +239,13 @@ public class EncuestaCasaSA extends BaseMetaData {
 
         EncuestaCasaSA that = (EncuestaCasaSA) o;
 
-        if (!casaCHF.equals(that.casaCHF)) return false;
+        if (!codigo.equals(that.codigo)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return casaCHF.hashCode();
+        return codigo.hashCode();
     }
 }

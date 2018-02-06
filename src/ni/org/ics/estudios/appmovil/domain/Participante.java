@@ -168,6 +168,7 @@ public class Participante extends BaseMetaData implements Serializable{
         this.casa = casa;
     }
 
+    @JsonIgnore
     public ParticipanteProcesos getProcesos(){
         return procesos;
     }

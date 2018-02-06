@@ -1389,8 +1389,8 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                 MessageResource msfechaDiagnosticoTubPulPasadoSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + fechaDiagnosticoTubPulPasadoSn + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (msfechaDiagnosticoTubPulPasadoSn != null){
-                    if (msfechaDiagnosticoTubPulPasadoSn.getCatKey().equalsIgnoreCase("S")) {
-                        encuesta.setFechaDiagnosticoTubPulPasadoDes("N");
+                    if (msfechaDiagnosticoTubPulPasadoSn.getCatKey().equalsIgnoreCase(Constants.YESKEYSND)) {
+                        encuesta.setFechaDiagnosticoTubPulPasadoDes(Constants.NOKEYSND);
                         //setear fechaDiagnosticoTubPulPasado
                         String fechaDiagnosticoCompuestaPas = anioFechaDiagnosticoTubPulPasado;
                         if (tieneValor(mesFechaDiagnosticoTubPulPasado)){
@@ -1403,7 +1403,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
                         encuesta.setFechaDiagnosticoTubPulPasado(fechaDiagnosticoCompuestaPas);
                     }
                     else
-                        encuesta.setFechaDiagnosticoTubPulPasadoDes("S");
+                        encuesta.setFechaDiagnosticoTubPulPasadoDes(Constants.YESKEYSND);
 
                 }
             } else {

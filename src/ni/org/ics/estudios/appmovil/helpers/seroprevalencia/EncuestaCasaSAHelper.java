@@ -16,7 +16,8 @@ public class EncuestaCasaSAHelper {
     public static ContentValues crearEncuestaCasaSAContentValues(EncuestaCasaSA encuesta){
         ContentValues cv = new ContentValues();
 
-        cv.put(SeroprevalenciaDBConstants.casaCHF, encuesta.getCasaCHF().getCodigoCHF());
+        cv.put(SeroprevalenciaDBConstants.codigo, encuesta.getCodigo());
+        cv.put(SeroprevalenciaDBConstants.casa, encuesta.getCasa().getCodigo());
         cv.put(SeroprevalenciaDBConstants.sedazoPuertasVentanas, encuesta.getSedazoPuertasVentanas());
         cv.put(SeroprevalenciaDBConstants.compraProdEvitarZancudos, encuesta.getCompraProdEvitarZancudos());
         cv.put(SeroprevalenciaDBConstants.tienePatioJardin, encuesta.getTienePatioJardin());
@@ -53,7 +54,8 @@ public class EncuestaCasaSAHelper {
     public static EncuestaCasaSA crearEncuestaCasaSA(Cursor cursor){
         EncuestaCasaSA mEncuesta = new EncuestaCasaSA();
 
-        mEncuesta.setCasaCHF(null);
+        mEncuesta.setCodigo(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.codigo)));
+        mEncuesta.setCasa(null);
         mEncuesta.setSedazoPuertasVentanas(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.sedazoPuertasVentanas)));
         mEncuesta.setCompraProdEvitarZancudos(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.compraProdEvitarZancudos)));
         mEncuesta.setTienePatioJardin(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.tienePatioJardin)));

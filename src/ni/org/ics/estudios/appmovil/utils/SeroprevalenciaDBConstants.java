@@ -13,11 +13,11 @@ public class SeroprevalenciaDBConstants {
     //public static final String participanteSA = "participanteSA";
     public static final String participante = "participante";
     public static final String casaCHF = "casaCHF";
+    public static final String casa = "casa";
 
     //crear tabla ParticipanteSeroprevalencia
     public static final String CREATE_PARTICIPANTESA_TABLE = "create table if not exists "
             + PARTICIPANTESA_TABLE + " ("
-            //+ participanteSA + " text not null, "
             + participante + " integer not null, "
             + casaCHF + " text not null, "
             + MainDBConstants.recordDate + " date, "
@@ -28,6 +28,7 @@ public class SeroprevalenciaDBConstants {
             + "primary key (" + participante + "));";
 
     //Tabla EncuestaCasaSA
+    public static final String codigo = "codigo";
     public static final String ENCUESTA_CASASA_TABLE = "sa_encuestas_casa";
 
     //Campos EncuestaCasaSA
@@ -57,7 +58,8 @@ public class SeroprevalenciaDBConstants {
     //Crear tabla EncuestaCasaSA
     public static final String CREATE_ENCUESTA_CASASA_TABLE = "create table if not exists "
             + ENCUESTA_CASASA_TABLE + " ("
-            + casaCHF + " text not null, "
+            + codigo + " text not null, "
+            + casa + " integer not null, "
             + sedazoPuertasVentanas + " text, "
             + compraProdEvitarZancudos + " text, "
             + tienePatioJardin + " text, "
@@ -84,7 +86,7 @@ public class SeroprevalenciaDBConstants {
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
-            + "primary key (" + casaCHF + "));";
+            + "primary key (" + codigo + "));";
 
     //Tabla EncuestaParticipanteSA
     public static final String ENCUESTA_PARTICIPANTESA_TABLE = "sa_encuestas_participante";
@@ -116,9 +118,9 @@ public class SeroprevalenciaDBConstants {
     public static final String conoceFechaTransfusion= "conoceFechaTransfusion";
     public static final String fechaTransfusionSangre= "fechaTransfusionSangre";
     public static final String usaRepelentes= "usaRepelentes";
-    public static final  String conoceLarvas="conoceLarvas";
-    public static final  String lugaresLarvas="lugaresLarvas";
-    public static final  String otrosLugaresLarvas="otrosLugaresLarvas";
+    public static final String conoceLarvas="conoceLarvas";
+    public static final String lugaresLarvas="lugaresLarvas";
+    public static final String otrosLugaresLarvas="otrosLugaresLarvas";
     public static final String tenidoHijos= "tenidoHijos";
     public static final String usaPlanificacionFam= "usaPlanificacionFam";
     public static final String usaCondon= "usaCondon";
@@ -127,10 +129,14 @@ public class SeroprevalenciaDBConstants {
     public static final String sabeZika= "sabeZika";
     public static final String usaRopa= "usaRopa";
     public static final String embarazadaUltAnio= "embarazadaUltAnio";
-
+    public static final String visitaCemeneterio = "visitaCemeneterio";
+    public static final String cadaCuantoVisitaCem = "cadaCuantoVisitaCem";
+    public static final String mesesVisitaCementerio = "mesesVisitaCementerio";
+    public static final String descOtroMetodo = "descOtroMetodo";
     //Crear tabla EncuestaParticipanteSA
     public static final String CREATE_ENCUESTA_PARTICIPANTESA_TABLE = "create table if not exists "
             + ENCUESTA_PARTICIPANTESA_TABLE + " ("
+            + codigo + " text not null, "
             + participante + " integer not null, "
             + escuchadoZikaSn + " text, "
             + queEsSika + " text, "
@@ -168,11 +174,15 @@ public class SeroprevalenciaDBConstants {
             + sabeZika + " text, "
             + usaRopa + " text, "
             + embarazadaUltAnio + " text, "
+            + visitaCemeneterio + " text, "
+            + cadaCuantoVisitaCem + " text, "
+            + mesesVisitaCementerio + " text, "
+            + descOtroMetodo + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
-            + "primary key (" + participante + "));";
+            + "primary key (" + codigo + "));";
 
 }

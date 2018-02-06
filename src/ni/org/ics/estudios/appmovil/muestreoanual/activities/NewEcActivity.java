@@ -199,7 +199,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
 			//ecId.setCodCasa(casaId);
 			//ecId.setFechaEncCasa(new Date());
 			//mEC.setEncCasaId(ecId);
-            mEC.setCodigo(infoMovil.getDeviceId());
+            mEC.setCodigo(infoMovil.getId());
             if (casaId!=null && casaId > 0) mEC.setCodCasa(casaId);
             mEC.setCodCasaChf(casaChfId);
             mEC.setFechaEncCasa(new Date());
@@ -322,11 +322,15 @@ public class NewEcActivity extends AbstractAsyncActivity {
 			//Guarda en la base de datos local
 
 			ca.open();
-			ca.crearEncuestaCasa(mEC);
-			estudiosAdapter.open();
-			mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
+            estudiosAdapter.open();
             int totalCasasChf = estudiosAdapter.countCasasChfByCasa(mParticipante.getCasa().getCodigo());
-			for(Participante participante:mParticipantes){
+            if (totalCasasChf == 1){
+                mEC.setCodCasaChf(mParticipante.getProcesos().getCasaCHF());
+                mEC.setCodCasa(mParticipante.getCasa().getCodigo());
+            }
+            ca.crearEncuestaCasa(mEC);
+            if (mParticipante.getCasa().getCodigo()!=9999) mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
+            for(Participante participante:mParticipantes){
 				if (participante.getCasa().getCodigo()!=9999) {
                     ParticipanteProcesos procesos = participante.getProcesos();
                     if (totalCasasChf == 1){ // es una unica casa cohorte pediatrica y una unica casa cohorte familia, solo realizar encuesta de casa una vez

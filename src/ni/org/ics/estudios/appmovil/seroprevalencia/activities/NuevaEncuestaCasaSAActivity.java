@@ -19,11 +19,13 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCasaActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
+import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuInfoActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.forms.EncuestaCasaSAForm;
 import ni.org.ics.estudios.appmovil.seroprevalencia.forms.EncuestaCasaSAFormLabels;
@@ -34,6 +36,7 @@ import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
 import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +56,6 @@ public class NuevaEncuestaCasaSAActivity extends FragmentActivity implements
     private Button mNextButton;
     private Button mPrevButton;
 
-    private List<String> valoresSeleccionados = null;
-
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
 
@@ -62,11 +63,15 @@ public class NuevaEncuestaCasaSAActivity extends FragmentActivity implements
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
     private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
+    private static Casa casa = new Casa();
     private String username;
     private SharedPreferences settings;
     private static final int EXIT = 1;
     private AlertDialog alertDialog;
     private boolean notificarCambios = true;
+    private static boolean desdeMA = false;
+    private boolean visExitosa = false;
+    private static Integer codigo = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,7 +83,11 @@ public class NuevaEncuestaCasaSAActivity extends FragmentActivity implements
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
         infoMovil = new DeviceInfo(NuevaEncuestaCasaSAActivity.this);
-        casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+        casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASACHF);
+        casa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
+        codigo = getIntent().getIntExtra(ConstantsDB.CODIGO,-1);
+        desdeMA = getIntent().getBooleanExtra(Constants.MENU_INFO, false);
+        visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new EncuestaCasaSAForm(this,mPass);
@@ -456,7 +465,8 @@ public class NuevaEncuestaCasaSAActivity extends FragmentActivity implements
 
 
             EncuestaCasaSA encuestaCasa = new EncuestaCasaSA();
-            encuestaCasa.setCasaCHF(casaCHF);
+            encuestaCasa.setCodigo(infoMovil.getId());
+            encuestaCasa.setCasa(casa);
             if (tieneValor(sedazoPuertasVentanas)) {
                 MessageResource mssedazoPuertasVentanas = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + sedazoPuertasVentanas + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -563,28 +573,43 @@ public class NuevaEncuestaCasaSAActivity extends FragmentActivity implements
                 //actualizada = estudiosAdapter.editarEncuestaCasaSA(encuestaCasa);
             //else
             estudiosAdapter.crearEncuestaCasaSA(encuestaCasa);
-            List<ParticipanteProcesos> mParticipantes = estudiosAdapter.getParticipantesProc(ConstantsDB.casaCHF + "='" + casaCHF.getCodigoCHF() + "'", null);
-            for(ParticipanteProcesos proceso :mParticipantes) {
-                proceso.setEnCasaSa("No");
-                MovilInfo movilInfo = proceso.getMovilInfo();
-                movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
-                movilInfo.setDeviceid(infoMovil.getDeviceId());
-                movilInfo.setUsername(username);
-                proceso.setMovilInfo(movilInfo);
-                estudiosAdapter.actualizarParticipanteProcesos(proceso);
+            List<Participante> mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + casa.getCodigo(), null);
+            for(Participante participante:mParticipantes){
+                if (participante.getCasa().getCodigo()!=9999) {
+                    ParticipanteProcesos procesos = participante.getProcesos();
+                    procesos.setEnCasaSa("No");
+                    MovilInfo movilInfo = procesos.getMovilInfo();
+                    movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+                    movilInfo.setDeviceid(infoMovil.getDeviceId());
+                    movilInfo.setUsername(username);
+                    procesos.setMovilInfo(movilInfo);
+                    estudiosAdapter.actualizarParticipanteProcesos(procesos);
+                }
             }
 
             estudiosAdapter.close();
-            Bundle arguments = new Bundle();
-            arguments.putSerializable(Constants.CASA, casaCHF);
-            Intent i = new Intent(getApplicationContext(),
-                    MenuCasaActivity.class);
-            i.putExtras(arguments);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
+            if (desdeMA){
+                Intent i = new Intent(getApplicationContext(),
+                        MenuInfoActivity.class);
+                i.putExtra(ConstantsDB.COD_CASA, casa.getCodigo());
+                i.putExtra(ConstantsDB.CODIGO, codigo);
+                i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+            }else {
+                Bundle arguments = new Bundle();
+                arguments.putSerializable(Constants.CASA, casaCHF);
+                Intent i = new Intent(getApplicationContext(),
+                        MenuCasaActivity.class);
+                i.putExtras(arguments);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+            }
             Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
             toast.show();
-            finish();
+
         }catch (Exception ex){
             ex.printStackTrace();
             Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error),Toast.LENGTH_LONG);

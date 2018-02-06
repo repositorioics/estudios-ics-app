@@ -152,7 +152,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
                 dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
-                if (encuesta.getFumFueraRango_sn().equalsIgnoreCase("N")){
+                if (encuesta.getFumFueraRango_sn().equalsIgnoreCase(Constants.NOKEYSND)){
                     modifPage = (LabelPage) mWizardModel.findByKey(labels.getReingresarFUM());
                     modifPage.setmVisible(true);
                 }

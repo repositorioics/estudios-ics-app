@@ -34,12 +34,12 @@ public class DownloadAllTask extends DownloadTask {
     private String password = null;
     private String activos = null;
     private String terreno = null;
-    private List<UserSistema> mUsuarios = null;
-    private List<Authority> mRoles = null;
-    private List<UserPermissions> permisos = null;
-    private List<Casa> mCasas = null;
+    //private List<UserSistema> mUsuarios = null;
+    //private List<Authority> mRoles = null;
+    //private List<UserPermissions> permisos = null;
+    //private List<Casa> mCasas = null;
     //private List<Participante> mParticipantes = null;
-    private List<ParticipanteProcesos> mParticipantesProc = null;
+    //private List<ParticipanteProcesos> mParticipantesProc = null;
     private List<EncuestaCasa> mEncuestasCasas = null;
     private List<EncuestaParticipante> mEncuestasParticipantes = null;
     private List<LactanciaMaterna> mEncuestasLactancias = null;
@@ -90,7 +90,7 @@ public class DownloadAllTask extends DownloadTask {
                 e.printStackTrace();
                 return e.getLocalizedMessage();
             }
-
+/*
             try {
                 error = descargarCasas();
                 if (error != null) {
@@ -102,7 +102,7 @@ public class DownloadAllTask extends DownloadTask {
                 return e.getLocalizedMessage();
             }
 
-
+/
             if (mCasas != null) {
                 // open db and clean entries
                 ////ca.open();
@@ -198,7 +198,7 @@ public class DownloadAllTask extends DownloadTask {
                 //ca.close();
             }
 
-            /*try {
+            try {
                 error = descargarParticipantes();
                 if (error != null) {
                     return error;
@@ -223,7 +223,7 @@ public class DownloadAllTask extends DownloadTask {
                 }
                 // close db and stream
                 //ca.close();
-            }*/
+            }
 
             try {
                 error = descargarParticipantesProcesos();
@@ -251,7 +251,7 @@ public class DownloadAllTask extends DownloadTask {
                 // close db and stream
                 //ca.close();
             }
-
+*/
             if (!terreno.matches("Si")) {
                 try {
                     error = descargarEncCasas();
@@ -927,7 +927,7 @@ public class DownloadAllTask extends DownloadTask {
             return e.getLocalizedMessage();
         }
     }
-
+/*
     private void addUsuarios(List<UserSistema> usuarios) throws Exception {
 
         int v = usuarios.size();
@@ -946,7 +946,6 @@ public class DownloadAllTask extends DownloadTask {
                     .valueOf(v).toString());
         }
     }
-
     // url, username, password
     protected String descargarUsuarios() throws Exception {
         try {
@@ -1145,7 +1144,7 @@ public class DownloadAllTask extends DownloadTask {
     }
 
     // url, username, password
-	/*protected String descargarParticipantes() throws Exception {
+	protected String descargarParticipantes() throws Exception {
 		try {
 			// The URL for making the GET request
 			final String urlRequest;
@@ -1184,7 +1183,7 @@ public class DownloadAllTask extends DownloadTask {
 			Log.e(TAG, e.getMessage(), e);
 			return e.getLocalizedMessage();
 		}
-	}*/
+	}
 
     private void addParticipantesProcesos(List<ParticipanteProcesos> participantes) throws Exception {
 
@@ -1234,7 +1233,7 @@ public class DownloadAllTask extends DownloadTask {
             return e.getLocalizedMessage();
         }
     }
-
+*/
     private void addEncCasas(List<EncuestaCasa> encuestasc) throws Exception {
 
         int v = encuestasc.size();

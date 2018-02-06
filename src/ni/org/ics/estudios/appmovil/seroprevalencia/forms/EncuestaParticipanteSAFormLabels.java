@@ -43,8 +43,14 @@ public class EncuestaParticipanteSAFormLabels {
     protected String usaOtroMetodo;
     //MA 2018
     protected String sabeZika;
+    protected String sabeZikaHint;
     protected String usaRopa;
     protected String embarazadaUltAnio;
+    protected String visitaCementerio;
+    protected String cadaCuantoVisitaCem;
+    protected String cadaCuantoVisitaCemHint;
+    protected String mesesVisitaCementerio;
+    protected String descOtroMetodo;
 
     public EncuestaParticipanteSAFormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
@@ -80,8 +86,14 @@ public class EncuestaParticipanteSAFormLabels {
         usaCondon = res.getString(R.string.usaCondon);
         usaOtroMetodo = res.getString(R.string.usaOtroMetodo);
         sabeZika = res.getString(R.string.sabeZika);
+        sabeZikaHint = res.getString(R.string.sabeZikaHint);
         usaRopa = res.getString(R.string.usaRopa);
         embarazadaUltAnio = res.getString(R.string.embarazadaUltAnio);
+        visitaCementerio = res.getString(R.string.visitaCemeneterio);
+        cadaCuantoVisitaCem = res.getString(R.string.cadaCuantoVisitaCem);
+        cadaCuantoVisitaCemHint = res.getString(R.string.cadaCuantoVisitaCemHint);
+        mesesVisitaCementerio = res.getString(R.string.mesesVisitaCementerio);
+        descOtroMetodo = res.getString(R.string.descOtroMetodo);
     }
 
     public String getEscuchadoZikaSn() {
@@ -354,5 +366,53 @@ public class EncuestaParticipanteSAFormLabels {
 
     public void setEmbarazadaUltAnio(String embarazadaUltAnio) {
         this.embarazadaUltAnio = embarazadaUltAnio;
+    }
+
+    public String getVisitaCementerio() {
+        return visitaCementerio;
+    }
+
+    public void setVisitaCementerio(String visitaCementerio) {
+        this.visitaCementerio = visitaCementerio;
+    }
+
+    public String getCadaCuantoVisitaCem() {
+        return cadaCuantoVisitaCem;
+    }
+
+    public void setCadaCuantoVisitaCem(String cadaCuantoVisitaCem) {
+        this.cadaCuantoVisitaCem = cadaCuantoVisitaCem;
+    }
+
+    public String getMesesVisitaCementerio() {
+        return mesesVisitaCementerio;
+    }
+
+    public void setMesesVisitaCementerio(String mesesVisitaCementerio) {
+        this.mesesVisitaCementerio = mesesVisitaCementerio;
+    }
+
+    public String getDescOtroMetodo() {
+        return descOtroMetodo;
+    }
+
+    public void setDescOtroMetodo(String descOtroMetodo) {
+        this.descOtroMetodo = descOtroMetodo;
+    }
+
+    public String getSabeZikaHint() {
+        return sabeZikaHint;
+    }
+
+    public void setSabeZikaHint(String sabeZikaHint) {
+        this.sabeZikaHint = sabeZikaHint;
+    }
+
+    public String getCadaCuantoVisitaCemHint() {
+        return cadaCuantoVisitaCemHint;
+    }
+
+    public void setCadaCuantoVisitaCemHint(String cadaCuantoVisitaCemHint) {
+        this.cadaCuantoVisitaCemHint = cadaCuantoVisitaCemHint;
     }
 }

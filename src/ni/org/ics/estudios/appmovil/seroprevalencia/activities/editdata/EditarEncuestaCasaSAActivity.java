@@ -19,6 +19,7 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCasaActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.forms.EncuestaCasaSAForm;
@@ -61,6 +62,7 @@ public class EditarEncuestaCasaSAActivity extends FragmentActivity implements
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
     private static EncuestaCasaSA encuestaCasaSA = new EncuestaCasaSA();
+    private static CasaCohorteFamilia casaChf = null;
     private String username;
     private SharedPreferences settings;
     private static final int EXIT = 1;
@@ -84,6 +86,7 @@ public class EditarEncuestaCasaSAActivity extends FragmentActivity implements
                         null);
         infoMovil = new DeviceInfo(EditarEncuestaCasaSAActivity.this);
         encuestaCasaSA = (EncuestaCasaSA) getIntent().getExtras().getSerializable(Constants.ENCUESTA);
+        casaChf = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new EncuestaCasaSAForm(this,mPass);
@@ -793,7 +796,7 @@ public class EditarEncuestaCasaSAActivity extends FragmentActivity implements
             encuestaCasaSA.setPasive('0');
             estudiosAdapter.editarEncuestaCasaSA(encuestaCasaSA);
             Bundle arguments = new Bundle();
-            arguments.putSerializable(Constants.CASA, encuestaCasaSA.getCasaCHF());
+            arguments.putSerializable(Constants.CASA, casaChf);
             Intent i = new Intent(getApplicationContext(),
                     MenuCasaActivity.class);
             i.putExtras(arguments);

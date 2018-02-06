@@ -4,7 +4,7 @@
     <string name="preferences">Configuración</string>
     
     <string name="server_preferences">Configuración Servidor</string>
-    <string name="default_server_url">http://192.168.1.98:8080/estudios-ics</string>
+    <string name="default_server_url">http://192.168.1.245:8086/estudios-ics</string>
     <string name="server_url">URL de servidor</string>
     <string name="check_server">Verificar en el servidor</string>
     <string name="check_wipe">Limpiar base de datos</string>
@@ -14,6 +14,6 @@
     <string name="app_preferences">Configuración Aplicación</string>
     <string name="update_app_preferences">Actualizar Aplicación</string>
     <string name="version_app_preferences">Versión 3.0</string>
-    <string name="versiondate_app_preferences">Febrero 01, 2018</string>
+    <string name="versiondate_app_preferences">Febrero 05, 2018</string>
   
 </resources>

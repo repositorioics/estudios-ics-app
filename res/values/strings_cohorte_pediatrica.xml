@@ -31,7 +31,7 @@
     <string name="info_docs">Documentos</string>
     <string name="info_casachf">Encuesta Casa CHF</string>
     <string name="info_casasa">Encuesta Casa SA</string>
-    <string name="info_participantesa">Participante SA</string>
+    <string name="info_participantesa">Enc Participante SA</string>
 
     <string name="house_survey_missing">Realizar encuesta de casa</string>
     <string name="part_survey_missing">Realizar encuesta de participante</string>
@@ -121,5 +121,6 @@
     <string name="consflu_missing">Realizar Consentimiento Influenza</string>
     <string name="consden_missing">Realizar Consentimiento Dengue</string>
     <string name="parto_missing">Realizar Datos Parto BB</string>
-
+    <string name="activos">Descargar solo activos</string>
+    <string name="terreno">Descargar solo participantes</string>
 </resources>

@@ -30,10 +30,13 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
 	private final int numDatosCasa;
 	private final int numDocs;
     private final int numEncCasaChf;
+    private final int numEncCasaSa;
+    private final int numEncPartSa;
 	public MenuInfoAdapter(Context context, int textViewResourceId,
 			String[] values, int recFlu, int visitas, int pyts
 			, int ecasa, int epart, int elact, int vacunas, int recDen
-			, int muestras, int obsequios, int zikas, int partos, int datoscasas, int docs, int ecasachf) {
+			, int muestras, int obsequios, int zikas, int partos, int datoscasas, int docs
+            , int ecasachf, int numEncCasaSa, int numEncPartSa) {
 		super(context, textViewResourceId, values);
 		this.values = values;
 		this.numRecFlu=recFlu;
@@ -51,6 +54,8 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
 		this.numDatosCasa=datoscasas;
 		this.numDocs = docs;
         this.numEncCasaChf = ecasachf;
+        this.numEncCasaSa = numEncCasaSa;
+        this.numEncPartSa = numEncPartSa;
 	}
 
 	@Override
@@ -190,7 +195,7 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
 			}
 			break;
             case 16:
-                img=getContext().getResources().getDrawable( R.drawable.ic_casa);
+                img=getContext().getResources().getDrawable( R.drawable.ic_survey_casa);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numEncCasaChf + ")");
                 if (numEncCasaChf < 1){
@@ -200,16 +205,16 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
             case 17:
                 img=getContext().getResources().getDrawable( R.drawable.ic_survey_casa);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                textView.setText(values[position] + "(" + numEncCasaChf + ")");
-                if (numEncCasaChf < 1){
+                textView.setText(values[position] + "(" + numEncCasaSa + ")");
+                if (numEncCasaSa < 1){
                     textView.setTextColor(Color.RED);
                 }
                 break;
             case 18:
                 img=getContext().getResources().getDrawable( R.drawable.ic_survey_persona);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                textView.setText(values[position] + "(" + numEncCasaChf + ")");
-                if (numEncCasaChf < 1){
+                textView.setText(values[position] + "(" + numEncPartSa + ")");
+                if (numEncPartSa < 1){
                     textView.setTextColor(Color.RED);
                 }
                 break;

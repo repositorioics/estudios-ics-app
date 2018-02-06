@@ -271,7 +271,7 @@ public class SelecPartActivity extends ListActivity {
 					//CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
 					//ca.open();
                     estudiosAdapter.open();
-					Participante mParticipante = estudiosAdapter.getParticipante(String.valueOf(codigoScanned), null);
+					Participante mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo+ " = "+String.valueOf(codigoScanned), null);
                     ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos(); //ca.getParticipanteProceso(codigoScanned);
 
 					if (mParticipante.getCodigo() != null){
@@ -384,26 +384,6 @@ public class SelecPartActivity extends ListActivity {
 
                 ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos();
                 if (mParticipanteProc != null && (mParticipanteProc.getEstudio() != null && !mParticipanteProc.getEstudio().isEmpty())) {
-                    /*if (mParticipanteProc.getEstudio().contains("CH Familia")) {
-                        ParticipanteCohorteFamilia participanteCHF = estudiosAdapter.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" + String.valueOf(codigo), null);
-                        Bundle arguments = new Bundle();
-                        Intent i;
-                        arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
-                        i = new Intent(getApplicationContext(),
-                                MenuParticipanteActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtras(arguments);
-                        startActivity(i);
-                        finish();
-
-                    } else {
-                        Intent i = new Intent(getApplicationContext(),
-                                MenuInfoActivity.class);
-                        i.putExtra(ConstantsDB.CODIGO, codigo);
-                        i.putExtra(ConstantsDB.VIS_EXITO, false);
-                        i.putExtra(Constants.PERTENECE_CHF, "No");
-                        startActivity(i);
-                    }*/
                     Intent i = new Intent(getApplicationContext(),
                             MenuInfoActivity.class);
                     i.putExtra(ConstantsDB.CODIGO, codigo);

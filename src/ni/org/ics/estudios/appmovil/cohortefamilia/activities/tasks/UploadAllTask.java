@@ -13,6 +13,7 @@ import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
@@ -50,6 +51,7 @@ public class UploadAllTask extends UploadTask {
 	private List<CasaCohorteFamilia> mCasasCHF = new ArrayList<CasaCohorteFamilia>();
     private List<Tamizaje> mTamizajes = new ArrayList<Tamizaje>();
     private List<Participante> mParticipantes = new ArrayList<Participante>();
+    private List<ParticipanteProcesos> mParticipantesProc = new ArrayList<ParticipanteProcesos>();
     private List<ParticipanteCohorteFamilia> mParticipantesCHF = new ArrayList<ParticipanteCohorteFamilia>();
     private List<CartaConsentimiento> mCartasConsent = new ArrayList<CartaConsentimiento>();
     private List<EncuestaCasa> mEncuestasCasas = new ArrayList<EncuestaCasa>();
@@ -94,38 +96,39 @@ public class UploadAllTask extends UploadTask {
     public static final String CASACHF = "3";
     public static final String TAMIZAJE = "4";
     public static final String PARTICIPANTE = "5";
-    public static final String PARTICIPANTECHF = "6";
-    public static final String CARTAS_CONSENT = "7";
-    public static final String ENCUESTA_CASACHF = "8";
-    public static final String COCINA = "9";
-    public static final String COMEDOR = "10";
-    public static final String SALA = "11";
-    public static final String HABITACION = "12";
-    public static final String BANIOS = "13";
-    public static final String VENTANAS = "14";
-    public static final String CUARTOS = "15";
-    public static final String CAMAS = "16";
-    public static final String PERSONAS_CAMA = "17";
-    public static final String ENCUESTA_PARTICIPANTECHF = "18";
-    public static final String ENCUESTA_DATOSPBB = "19";
-    public static final String ENCUESTA_PESOTALLA = "20";
-    public static final String ENCUESTA_LACTMAT = "21";
-    public static final String MUESTRAS = "22";
-    public static final String PARTICIPANTESA = "23";
-    public static final String ENCUESTA_PARTICIPANTESA = "24";
-    public static final String ENCUESTA_CASASA = "25";
-    public static final String TELEFONOS = "26";
-    public static final String RECEPCION_MUESTRA = "27";
-    public static final String CASAS_CASOS = "28";
-    public static final String PART_CASOS = "29";
-    public static final String VISITAS_CASOS = "30";
-    public static final String VISITAS_FALLIDAS_CASOS = "31";
-    public static final String SINTOMAS_CASOS = "32";
-    public static final String CONTACTOS_CASOS = "33";
-    public static final String NODATA_CASOS = "34";
-    public static final String VISITAS_FINALES = "35";
+    public static final String PARTICIPANTE_PRC = "6";
+    public static final String PARTICIPANTECHF = "7";
+    public static final String CARTAS_CONSENT = "8";
+    public static final String ENCUESTA_CASACHF = "9";
+    public static final String COCINA = "10";
+    public static final String COMEDOR = "11";
+    public static final String SALA = "12";
+    public static final String HABITACION = "13";
+    public static final String BANIOS = "14";
+    public static final String VENTANAS = "15";
+    public static final String CUARTOS = "16";
+    public static final String CAMAS = "17";
+    public static final String PERSONAS_CAMA = "18";
+    public static final String ENCUESTA_PARTICIPANTECHF = "19";
+    public static final String ENCUESTA_DATOSPBB = "20";
+    public static final String ENCUESTA_PESOTALLA = "21";
+    public static final String ENCUESTA_LACTMAT = "22";
+    public static final String MUESTRAS = "23";
+    public static final String PARTICIPANTESA = "24";
+    public static final String ENCUESTA_PARTICIPANTESA = "25";
+    public static final String ENCUESTA_CASASA = "26";
+    public static final String TELEFONOS = "27";
+    public static final String RECEPCION_MUESTRA = "28";
+    public static final String CASAS_CASOS = "29";
+    public static final String PART_CASOS = "30";
+    public static final String VISITAS_CASOS = "31";
+    public static final String VISITAS_FALLIDAS_CASOS = "32";
+    public static final String SINTOMAS_CASOS = "33";
+    public static final String CONTACTOS_CASOS = "34";
+    public static final String NODATA_CASOS = "35";
+    public static final String VISITAS_FINALES = "36";
     
-	private static final String TOTAL_TASK = "35";
+	private static final String TOTAL_TASK = "36";
 	
 
 	@Override
@@ -144,6 +147,7 @@ public class UploadAllTask extends UploadTask {
 			mCasasCHF = estudioAdapter.getCasaCohorteFamilias(filtro, MainDBConstants.codigoCHF);
             mTamizajes = estudioAdapter.getTamizajes(filtro, MainDBConstants.codigo);
             mParticipantes = estudioAdapter.getParticipantes(filtro, MainDBConstants.codigo);
+            mParticipantesProc = estudioAdapter.getParticipantesProc(filtro, null);
             mParticipantesCHF = estudioAdapter.getParticipanteCohorteFamilias(filtro, null);
             mCartasConsent = estudioAdapter.getCartasConsentimientos(filtro, MainDBConstants.codigo);
             mEncuestasCasas = estudioAdapter.getEncuestaCasas(filtro, null);
@@ -215,6 +219,12 @@ public class UploadAllTask extends UploadTask {
             error = cargarParticipantes(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE_PRC);
+            error = cargarParticipantesProc(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE_PRC);
                 return error;
             }
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTECHF);
@@ -460,6 +470,17 @@ public class UploadAllTask extends UploadTask {
                     participante.setEstado(estado.charAt(0));
                     estudioAdapter.editarParticipante(participante);
                     publishProgress("Actualizando participantes en base de datos local", Integer.valueOf(mParticipantes.indexOf(participante)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(PARTICIPANTE_PRC)){
+            c = mParticipantesProc.size();
+            if(c>0){
+                for (ParticipanteProcesos participanteprc : mParticipantesProc) {
+                    participanteprc.getMovilInfo().setEstado(estado);
+                    estudioAdapter.actualizarParticipanteProcesos(participanteprc);
+                    publishProgress("Actualizando procesos participantes en base de datos local", Integer.valueOf(mParticipantesProc.indexOf(participanteprc)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
@@ -1006,6 +1027,42 @@ public class UploadAllTask extends UploadTask {
                 // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
                 ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
                         String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /*********** Participantes procesos ****************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarParticipantesProc(String url, String username,
+                                             String password) throws Exception {
+        try {
+            if(mParticipantesProc.size()>0){
+                publishProgress("Enviando participantes procesos!", PARTICIPANTE_PRC, TOTAL_TASK);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/participantesprocesos";
+                ParticipanteProcesos[] envio = mParticipantesProc.toArray(new ParticipanteProcesos[mParticipantesProc.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ParticipanteProcesos[]> requestEntity =
+                        new HttpEntity<ParticipanteProcesos[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
                 return response.getBody();
             }
             else{
@@ -1657,7 +1714,7 @@ public class UploadAllTask extends UploadTask {
         try {
             if(mEncuestasCasaSA.size()>0){
                 // La URL de la solicitud POST
-                publishProgress("Enviando enguestas de casa seroprevalencia!", ENCUESTA_CASASA, TOTAL_TASK);
+                publishProgress("Enviando encuestas de casa seroprevalencia!", ENCUESTA_CASASA, TOTAL_TASK);
                 final String urlRequest = url + "/movil/encuestasCasaSA";
                 EncuestaCasaSA[] envio = mEncuestasCasaSA.toArray(new EncuestaCasaSA[mEncuestasCasaSA.size()]);
                 HttpHeaders requestHeaders = new HttpHeaders();

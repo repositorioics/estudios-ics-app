@@ -426,9 +426,9 @@ public class EditarEncuestaParticipanteSAActivity extends FragmentActivity imple
             }
         });
 
-        if (encuesta.getParticipanteSA().getParticipante()!=null){
+        if (encuesta.getParticipante()!=null){
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(encuesta.getParticipanteSA().getParticipante().getFechaNac());
+            calendar.setTime(encuesta.getParticipante().getFechaNac());
             int anioNac = calendar.get(Calendar.YEAR);
             calendar.setTime(new Date());
             int anioActual = calendar.get(Calendar.YEAR);

@@ -43,7 +43,7 @@
         <item>@string/new_survey_5</item>
         <item>@string/samples</item>
         <item>@string/new_participant_sa_survey</item>
-        <item>@string/go_home</item>
+        <!--<item>@string/go_home</item>-->
     </string-array>
     
     <string-array name="menu_participante_caso">

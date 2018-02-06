@@ -34,8 +34,8 @@ public class DownloadChfTask extends DownloadTask {
 	protected static final String TAG = DownloadChfTask.class.getSimpleName();
 	private EstudiosAdapter estudioAdapter = null;
 	
-    private List<CasaCohorteFamilia> mCasasCHF = null;
-    private List<ParticipanteCohorteFamilia> mParticipantesCHF = null;
+    //private List<CasaCohorteFamilia> mCasasCHF = null;
+    //private List<ParticipanteCohorteFamilia> mParticipantesCHF = null;
     private List<EncuestaCasa> mEncuestasCasas = null;
     private List<Cocina> mCocinas = null;
     private List<Comedor> mComedores = null;
@@ -88,15 +88,15 @@ public class DownloadChfTask extends DownloadTask {
 		estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
 		estudioAdapter.open();
 		//Borrar los datos de la base de datos
-        estudioAdapter.borrarCasaCohorteFamilias();
-        estudioAdapter.borrarParticipanteCohorteFamilias();
+        //estudioAdapter.borrarCasaCohorteFamilias();
+        //estudioAdapter.borrarParticipanteCohorteFamilias();
         estudioAdapter.borrarEncuestaCasas();
         estudioAdapter.borrarAreasAmbiente();
         estudioAdapter.borrarCuartos();
         estudioAdapter.borrarCamas();
         estudioAdapter.borrarPersonasCama();
         try {
-            if (mCasasCHF != null){
+            /*if (mCasasCHF != null){
                 v = mCasasCHF.size();
                 ListIterator<CasaCohorteFamilia> iter = mCasasCHF.listIterator();
                 while (iter.hasNext()){
@@ -115,7 +115,7 @@ public class DownloadChfTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mParticipantesCHF = null;
-            }
+            }*/
             if (mEncuestasCasas != null){
                 v = mEncuestasCasas.size();
                 ListIterator<EncuestaCasa> iter = mEncuestasCasas.listIterator();
@@ -244,7 +244,7 @@ public class DownloadChfTask extends DownloadTask {
             // Create a new RestTemplate instance
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-            
+            /*
             //Descargar casascohorte familia
             urlRequest = url + "/movil/casasCHF/";
             publishProgress("Solicitando casas cohorte familia",CASACHF,TOTAL_TASK_RECLUTAMIENTO);
@@ -263,7 +263,7 @@ public class DownloadChfTask extends DownloadTask {
             // convert the array to a list and return it
             mParticipantesCHF = Arrays.asList(responseEntityParticipantesCHF.getBody());
             responseEntityParticipantesCHF = null;
-
+            */
             //Descargar encuestas de casa
             urlRequest = url + "/movil/encuestasCasa/";
             publishProgress("Solicitando encuestas de casas",ENCUESTA_CASACHF,TOTAL_TASK_RECLUTAMIENTO);

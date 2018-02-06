@@ -48,10 +48,7 @@ public class Constants {
     public static final String YES = "Si";
     public static final String OTRO = "Otro";
     public static final String NO = "No";
-    
-    public static final String YESKEY = "S";
-    public static final String NOKEY = "N";
-    
+
     public static final String YESKEYSND = "1";
     public static final String OTROKEYSND = "999";
     public static final String NOKEYSND = "0";

@@ -42,12 +42,12 @@ public class DownloadAllTask extends DownloadTask {
 	protected static final String TAG = DownloadAllTask.class.getSimpleName();
 	private EstudiosAdapter estudioAdapter = null;
 	private List<Estudio> mEstudios = null;
-	private List<Barrio> mBarrios = null;
-	private List<Casa> mCasas = null;
-	private List<Participante> mParticipantes = null;
+	//private List<Barrio> mBarrios = null;
+	//private List<Casa> mCasas = null;
+	//private List<Participante> mParticipantes = null;
 	
-    private List<CasaCohorteFamilia> mCasasCHF = null;
-    private List<ParticipanteCohorteFamilia> mParticipantesCHF = null;
+    //private List<CasaCohorteFamilia> mCasasCHF = null;
+    //private List<ParticipanteCohorteFamilia> mParticipantesCHF = null;
     private List<EncuestaCasa> mEncuestasCasas = null;
     private List<Cocina> mCocinas = null;
     private List<Comedor> mComedores = null;
@@ -65,7 +65,7 @@ public class DownloadAllTask extends DownloadTask {
     private List<Muestra> mMuestras = null;
     private List<TelefonoContacto> mTelefonos = null;
     
-    private List<ParticipanteSeroprevalencia> mParticipantesSA = null;
+    //private List<ParticipanteSeroprevalencia> mParticipantesSA = null;
     private List<EncuestaCasaSA> mEncuestasCasaSA = null;
     private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = null;
     
@@ -146,9 +146,9 @@ public class DownloadAllTask extends DownloadTask {
 		estudioAdapter.open();
 		//Borrar los datos de la base de datos
 		estudioAdapter.borrarEstudios();
-		estudioAdapter.borrarBarrios();
-		estudioAdapter.borrarCasas();
-		estudioAdapter.borrarParticipantes();
+		//estudioAdapter.borrarBarrios();
+		//estudioAdapter.borrarCasas();
+		//estudioAdapter.borrarParticipantes();
 		try {
 			if (mEstudios != null){
 				v = mEstudios.size();
@@ -160,7 +160,7 @@ public class DownloadAllTask extends DownloadTask {
 				}
 				mEstudios = null;
 			}
-			if (mBarrios != null){
+			/*if (mBarrios != null){
 				v = mBarrios.size();
 				ListIterator<Barrio> iter = mBarrios.listIterator();
 				while (iter.hasNext()){
@@ -189,7 +189,7 @@ public class DownloadAllTask extends DownloadTask {
 							.valueOf(v).toString());
 				}
 				mParticipantes = null;
-			}
+			}*/
             
 		} catch (Exception e) {
 			// Regresa error al insertar
@@ -215,7 +215,7 @@ public class DownloadAllTask extends DownloadTask {
         estudioAdapter.borrarCamas();
         estudioAdapter.borrarPersonasCama();
         try {
-            if (mCasasCHF != null){
+            /*if (mCasasCHF != null){
                 v = mCasasCHF.size();
                 ListIterator<CasaCohorteFamilia> iter = mCasasCHF.listIterator();
                 while (iter.hasNext()){
@@ -234,7 +234,7 @@ public class DownloadAllTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mParticipantesCHF = null;
-            }
+            }*/
             if (mEncuestasCasas != null){
                 v = mEncuestasCasas.size();
                 ListIterator<EncuestaCasa> iter = mEncuestasCasas.listIterator();
@@ -445,7 +445,7 @@ public class DownloadAllTask extends DownloadTask {
         estudioAdapter.borrarEncuestaCasaSA();
         estudioAdapter.borrarEncuestaParticipanteSA();
 		try {
-            if (mParticipantesSA != null){
+            /*if (mParticipantesSA != null){
                 v = mParticipantesSA.size();
                 ListIterator<ParticipanteSeroprevalencia> iter = mParticipantesSA.listIterator();
                 while (iter.hasNext()){
@@ -454,7 +454,7 @@ public class DownloadAllTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mParticipantesSA = null;
-            }
+            }*/
             if (mEncuestasCasaSA != null){
                 v = mEncuestasCasaSA.size();
                 ListIterator<EncuestaCasaSA> iter = mEncuestasCasaSA.listIterator();
@@ -625,6 +625,7 @@ public class DownloadAllTask extends DownloadTask {
             // convert the array to a list and return it
             mEstudios = Arrays.asList(responseEntityEstudio.getBody());
             responseEntityEstudio = null;
+            /*
             //Descargar barrios
             urlRequest = url + "/movil/barrios/";
             publishProgress("Solicitando barrios",BARRIO,TOTAL_TASK_GENERALES);
@@ -651,7 +652,7 @@ public class DownloadAllTask extends DownloadTask {
             		Participante[].class);
             // convert the array to a list and return it
             mParticipantes = Arrays.asList(responseEntityParticipante.getBody());
-            responseEntityParticipante = null;
+            responseEntityParticipante = null;*/
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
@@ -676,7 +677,7 @@ public class DownloadAllTask extends DownloadTask {
             // Create a new RestTemplate instance
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-            
+            /*
             //Descargar casascohorte familia
             urlRequest = url + "/movil/casasCHF/";
             publishProgress("Solicitando casas cohorte familia",CASACHF,TOTAL_TASK_RECLUTAMIENTO);
@@ -695,7 +696,7 @@ public class DownloadAllTask extends DownloadTask {
             // convert the array to a list and return it
             mParticipantesCHF = Arrays.asList(responseEntityParticipantesCHF.getBody());
             responseEntityParticipantesCHF = null;
-
+*/
             //Descargar encuestas de casa
             urlRequest = url + "/movil/encuestasCasa/";
             publishProgress("Solicitando encuestas de casas",ENCUESTA_CASACHF,TOTAL_TASK_RECLUTAMIENTO);
@@ -890,8 +891,7 @@ public class DownloadAllTask extends DownloadTask {
             // Create a new RestTemplate instance
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-            
-
+            /*
             //Descargar participantes seroprevalencia
             urlRequest = url + "/movil/participantesSA/";
             publishProgress("Solicitando participantes seroprevalencia",PARTICIPANTESA,TOTAL_TASK_SERO);
@@ -901,6 +901,7 @@ public class DownloadAllTask extends DownloadTask {
             // convert the array to a list and return it
             mParticipantesSA = Arrays.asList(responseEntityPartiSa.getBody());
             responseEntityPartiSa = null;
+            */
             //Descargar encuestas casas seroprevalencia
             urlRequest = url + "/movil/encuestasCasaSA/";
             publishProgress("Solicitando encuestas de casas seroprevalencia",ENCUESTA_CASASA,TOTAL_TASK_SERO);

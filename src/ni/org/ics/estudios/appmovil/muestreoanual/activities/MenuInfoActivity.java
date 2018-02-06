@@ -22,24 +22,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaEncuestaCasaActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterEnvio;
 import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterGetObjects;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
-import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.MenuInfoAdapter;
-import ni.org.ics.estudios.appmovil.muestreoanual.ui.GridViewWithHeaderAndFooter;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaCasaSAActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaParticipanteSAActivity;
@@ -68,10 +67,12 @@ public class MenuInfoActivity extends Activity {
     private ArrayList<DatosVisitaTerreno> mDatosVisitaTerreno = new ArrayList<DatosVisitaTerreno>();
     private ArrayList<Documentos> mDocumentos = new ArrayList<Documentos>();
     private ArrayList<EncuestaCasa> mEncuestasCasasChf = new ArrayList<EncuestaCasa>();
+    private ArrayList<EncuestaCasaSA> mEncuestasCasasSa = new ArrayList<EncuestaCasaSA>();
+    private ArrayList<EncuestaParticipanteSA> mEncuestasParticipantesSa = new ArrayList<EncuestaParticipanteSA>();
 
     private String username;
     private SharedPreferences settings;
-    private GridViewWithHeaderAndFooter gridView;
+    private GridView gridView;
     private TextView textView;
     private AlertDialog alertDialog;
     private static final int EXIT = 1;
@@ -133,10 +134,10 @@ public class MenuInfoActivity extends Activity {
         visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
 
         String[] menu_info = getResources().getStringArray(R.array.menu_info);
-        gridView = (GridViewWithHeaderAndFooter) findViewById(R.id.gridView1);
+        gridView = (GridView) findViewById(R.id.gridView1);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View headerView = layoutInflater.inflate(R.layout.test_header_view, null);
-        gridView.addHeaderView(headerView);
+        //gridView.addHeaderView(headerView);
         textView = (TextView) findViewById(R.id.label);
         getParticipanteData();
 
@@ -144,7 +145,7 @@ public class MenuInfoActivity extends Activity {
         gridView.setAdapter(new MenuInfoAdapter(this, R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
                 ,mVisitasTerreno.size(),mPyTs.size(),mEncuestasCasas.size(),mEncuestasParticipantes.size(),
                 mEncuestasLactancias.size(),mVacunas.size(),mReConsentimientoDen.size(),mMuestras.size(),mObsequios.size(),mConsentimientoZikas.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()
-        ,mEncuestasCasasChf.size()));
+        ,mEncuestasCasasChf.size(), mEncuestasCasasSa.size(), mEncuestasParticipantesSa.size()));
         gridView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
@@ -256,6 +257,18 @@ public class MenuInfoActivity extends Activity {
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
+                    case 17:
+                        arguments.putString(Constants.TITLE, getString(R.string.info_casasa));
+                        if (mEncuestasCasasSa!=null) arguments.putSerializable(Constants.OBJECTO , mEncuestasCasasSa);
+                        i = new Intent(getApplicationContext(),
+                                ListReviewActivity.class);
+                        break;
+                    case 18:
+                        arguments.putString(Constants.TITLE, getString(R.string.info_participantesa));
+                        if (mEncuestasParticipantesSa!=null) arguments.putSerializable(Constants.OBJECTO , mEncuestasParticipantesSa);
+                        i = new Intent(getApplicationContext(),
+                                ListReviewActivity.class);
+                        break;
                     default:
                         arguments.putString(Constants.TITLE, getString(R.string.info_participante));
                         if (mParticipante!=null) arguments.putSerializable(Constants.OBJECTO , mParticipante);
@@ -292,7 +305,11 @@ public class MenuInfoActivity extends Activity {
         mDatosPartoBBs = ca.getDatosPartoBBs(filtro, null);
         mVacunas=ca.getNewVacunas(filtro, null);
         mDocumentos =ca.getDocumentoss(filtro, null);
-        if(mParticipante.getCasa().getCodigo()!=9999) mEncuestasCasasChf = cat.getListaEncuestaCasasChf(mParticipante.getProcesos().getCasaCHF());
+        if(mParticipante.getCasa().getCodigo()!=9999){
+            mEncuestasCasasChf = cat.getListaEncuestaCasasChf(mParticipante.getProcesos().getCasaCHF());
+            mEncuestasCasasSa = (ArrayList)estudiosAdapter.getEncuestasCasaSA(SeroprevalenciaDBConstants.casa + "=" + mParticipante.getCasa().getCodigo() , null);
+        }
+        mEncuestasParticipantesSa = (ArrayList)estudiosAdapter.getEncuestasParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo() , null);
         ca.close();
         cat.close();
         estudiosAdapter.close();
@@ -1016,9 +1033,13 @@ public class MenuInfoActivity extends Activity {
                         estudiosAdapter.open();
                         mCasasCHF = estudiosAdapter.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" + mParticipante.getProcesos().getCasaCHF(), MainDBConstants.codigoCHF);
                         estudiosAdapter.close();
-                        if (mCasasCHF != null) arguments.putSerializable(Constants.CASA, mCasasCHF);
+                        if (mCasasCHF != null) arguments.putSerializable(Constants.CASACHF, mCasasCHF);
+                        arguments.putSerializable(Constants.CASA, mParticipante.getCasa());
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
+                        i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());
+                        i.putExtra(Constants.MENU_INFO, true);
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
                         startActivity(i);
                     }
                     else{
@@ -1036,16 +1057,18 @@ public class MenuInfoActivity extends Activity {
                     if(mParticipante.getProcesos().getEncPartSa().matches("Si")) {
                         estudiosAdapter.open();
                         ParticipanteCohorteFamilia participanteCHF = estudiosAdapter.getParticipanteCohorteFamilia(MainDBConstants.participante + " = " + mParticipante.getCodigo(), null);
-                        ParticipanteSeroprevalencia participanteSA = estudiosAdapter.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + mParticipante.getCodigo(), null);
+                        //ParticipanteSeroprevalencia participanteSA = estudiosAdapter.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + mParticipante.getCodigo(), null);
                         estudiosAdapter.close();
                         if (participanteCHF != null)
                             arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
-                        if (participanteSA != null)
-                            arguments.putSerializable(Constants.PARTICIPANTE_SA, participanteSA);
+                        //if (participanteSA != null)
+                            arguments.putSerializable(Constants.PARTICIPANTE_SA, mParticipante);
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaParticipanteSAActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
+                        i.putExtra(Constants.MENU_INFO, true);
+                        i.putExtra(ConstantsDB.VIS_EXITO,visExitosa);
                         startActivity(i);
                     }
                     else{

@@ -19,14 +19,16 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
+import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuInfoActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.forms.EncuestaParticipanteSAForm;
 import ni.org.ics.estudios.appmovil.seroprevalencia.forms.EncuestaParticipanteSAFormLabels;
 import ni.org.ics.estudios.appmovil.utils.*;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
 import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
@@ -61,12 +63,14 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
     private static ParticipanteCohorteFamilia participanteCHF = new ParticipanteCohorteFamilia();
-    private static ParticipanteSeroprevalencia participanteSA = new ParticipanteSeroprevalencia();
+    private static Participante participante = new Participante();
     private String username;
     private SharedPreferences settings;
     private static final int EXIT = 1;
     private AlertDialog alertDialog;
     private boolean notificarCambios = true;
+    private static boolean desdeMA = false;
+    private boolean visExitosa = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,7 +83,9 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
                         null);
         infoMovil = new DeviceInfo(NuevaEncuestaParticipanteSAActivity.this);
         participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
-        participanteSA = (ParticipanteSeroprevalencia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE_SA);
+        participante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE_SA);
+        desdeMA = getIntent().getBooleanExtra(Constants.MENU_INFO, false);
+        visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new EncuestaParticipanteSAForm(this,mPass);
@@ -162,8 +168,8 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             }
         });
 
-        if (participanteSA.getParticipante()!=null){
-            String edad[] = participanteSA.getParticipante().getEdad().split("/");
+        if (participante!=null){
+            String edad[] = participante.getEdad().split("/");
 
             int anios = 0;
             if (edad.length > 0)
@@ -173,10 +179,13 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
                 changeStatus(mWizardModel.findByKey(labels.getUsaPlanificacionFam()), true);
                 changeStatus(mWizardModel.findByKey(labels.getUsaCondon()), true);
                 changeStatus(mWizardModel.findByKey(labels.getUsaOtroMetodo()), true);
+                if (participante.getSexo().equalsIgnoreCase("F")){
+                    changeStatus(mWizardModel.findByKey(labels.getEmbarazadaUltAnio()), true);
+                }
 
             }
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(participanteSA.getParticipante().getFechaNac());
+            calendar.setTime(participante.getFechaNac());
             int anioNac = calendar.get(Calendar.YEAR);
             calendar.setTime(new Date());
             int anioActual = calendar.get(Calendar.YEAR);
@@ -346,6 +355,8 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTransmiteZika()), visible);
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getSabeZika()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getQueEsSika())) {
@@ -410,6 +421,20 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
                 notificarCambios = false;
                 onPageTreeChanged();
             }
+            if (page.getTitle().equals(labels.getVisitaCementerio())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).contains(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getCadaCuantoVisitaCem()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getMesesVisitaCementerio()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getUsaOtroMetodo())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).contains(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getDescOtroMetodo()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+
 
         }catch (Exception ex){
             ex.printStackTrace();
@@ -490,6 +515,10 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             String sabeZika = datos.getString(this.getString(R.string.sabeZika));
             String usaRopa = datos.getString(this.getString(R.string.usaRopa));
             String embarazadaUltAnio = datos.getString(this.getString(R.string.embarazadaUltAnio));
+            String visitaCemeneterio = datos.getString(this.getString(R.string.visitaCemeneterio));
+            String cadaCuantoVisitaCem = datos.getString(this.getString(R.string.cadaCuantoVisitaCem));
+            String mesesVisitaCementerio = datos.getString(this.getString(R.string.mesesVisitaCementerio));
+            String descOtroMetodo = datos.getString(this.getString(R.string.descOtroMetodo));
 
             String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
             if (estudiosAdapter == null)
@@ -497,7 +526,8 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             estudiosAdapter.open();
 
             EncuestaParticipanteSA encuesta = new EncuestaParticipanteSA();
-            encuesta.setParticipanteSA(participanteSA);
+            encuesta.setCodigo(infoMovil.getId());
+            encuesta.setParticipante(participante);
             //listas
             if (tieneValor(escuchadoZikaSn)){
                 MessageResource msescuchadoZikaSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + escuchadoZikaSn + "' and "
@@ -651,6 +681,26 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
                 if (membarazadaUltAnio != null) encuesta.setEmbarazadaUltAnio(membarazadaUltAnio.getCatKey());
             }
 
+            if (tieneValor(visitaCemeneterio)){
+                MessageResource mVisitaC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + visitaCemeneterio + "' and "
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                if (mVisitaC != null) encuesta.setVisitaCemeneterio(mVisitaC.getCatKey());
+            }
+
+            if (tieneValor(mesesVisitaCementerio)){
+                String keys = "";
+                mesesVisitaCementerio = mesesVisitaCementerio.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
+                List<MessageResource> mMesesList = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + mesesVisitaCementerio + "') and "
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                for(MessageResource ms : mMesesList) {
+                    keys += ms.getCatKey() + ",";
+                }
+                if (!keys.isEmpty())
+                    keys = keys.substring(0, keys.length() - 1);
+                encuesta.setMesesVisitaCementerio(keys);
+            }
+
+
             encuesta.setFechaZika(fechaZika);
             encuesta.setFechaDengue(fechaDengue);
             encuesta.setFechaChik(fechaChik);
@@ -660,7 +710,8 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             encuesta.setOtroQueEsSika(otroQueEsSika);
             encuesta.setOtroTransmiteZika(otroTransmiteZika);
             encuesta.setOtrosLugaresLarvas(otrosLugaresLarvas);
-
+            encuesta.setCadaCuantoVisitaCem(cadaCuantoVisitaCem);
+            encuesta.setDescOtroMetodo(descOtroMetodo);
 
             //Metadata
             encuesta.setRecordDate(new Date());
@@ -669,30 +720,42 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             encuesta.setEstado('0');
             encuesta.setPasive('0');
             boolean actualizada = false;
-            //EncuestaParticipanteSA encuestaExiste = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + participanteSA.getParticipante().getCodigo() , SeroprevalenciaDBConstants.participante);
+            //EncuestaParticipanteSA encuestaExiste = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + participante.getParticipante().getCodigo() , SeroprevalenciaDBConstants.participante);
             //if (encuestaExiste != null && encuestaExiste.getParticipanteSA() != null && encuestaExiste.getParticipanteSA().getParticipante() != null)
                 //actualizada = estudiosAdapter.editarEncuestaParticipanteSA(encuesta);
             //else
             estudiosAdapter.crearEncuestaParticipanteSA(encuesta);
-            participanteCHF.getParticipante().getProcesos().setEncPartSa("No");
+            participante.getProcesos().setEncPartSa("No");
             MovilInfo movilInfo = participanteCHF.getParticipante().getProcesos().getMovilInfo();
             movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
             movilInfo.setDeviceid(infoMovil.getDeviceId());
             movilInfo.setUsername(username);
-            participanteCHF.getParticipante().getProcesos().setMovilInfo(movilInfo);
-            boolean nose = estudiosAdapter.actualizarParticipanteProcesos(participanteCHF.getParticipante().getProcesos());
+            participante.getProcesos().setMovilInfo(movilInfo);
+            boolean nose = estudiosAdapter.actualizarParticipanteProcesos(participante.getProcesos());
             nose = false;
             estudiosAdapter.close();
-            Bundle arguments = new Bundle();
-            arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
-            Intent i = new Intent(getApplicationContext(),
-                    MenuParticipanteActivity.class);
-            i.putExtras(arguments);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
             Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
             toast.show();
-            finish();
+            if (desdeMA){
+                Intent i = new Intent(getApplicationContext(),
+                        MenuInfoActivity.class);
+                i.putExtra(ConstantsDB.COD_CASA, participante.getCasa().getCodigo());
+                i.putExtra(ConstantsDB.CODIGO, participante.getCodigo());
+                i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+            }else {
+                Bundle arguments = new Bundle();
+                arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
+                Intent i = new Intent(getApplicationContext(),
+                        MenuParticipanteActivity.class);
+                i.putExtras(arguments);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+            }
+
         } catch (Exception ex) {
             ex.printStackTrace();
             Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error),Toast.LENGTH_LONG);

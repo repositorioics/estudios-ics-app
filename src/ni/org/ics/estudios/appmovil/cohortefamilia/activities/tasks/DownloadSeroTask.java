@@ -35,7 +35,7 @@ public class DownloadSeroTask extends DownloadTask {
 	protected static final String TAG = DownloadSeroTask.class.getSimpleName();
 	private EstudiosAdapter estudioAdapter = null;
 	
-	private List<ParticipanteSeroprevalencia> mParticipantesSA = null;
+	//private List<ParticipanteSeroprevalencia> mParticipantesSA = null;
     private List<EncuestaCasaSA> mEncuestasCasaSA = null;
     private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = null;
     
@@ -70,11 +70,11 @@ public class DownloadSeroTask extends DownloadTask {
 		estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
 		estudioAdapter.open();
 		//Borrar los datos de la base de datos
-        estudioAdapter.borrarParticipanteSeroprevalencia();
+        //estudioAdapter.borrarParticipanteSeroprevalencia();
         estudioAdapter.borrarEncuestaCasaSA();
         estudioAdapter.borrarEncuestaParticipanteSA();
 		try {
-            if (mParticipantesSA != null){
+            /*if (mParticipantesSA != null){
                 v = mParticipantesSA.size();
                 ListIterator<ParticipanteSeroprevalencia> iter = mParticipantesSA.listIterator();
                 while (iter.hasNext()){
@@ -83,7 +83,7 @@ public class DownloadSeroTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mParticipantesSA = null;
-            }
+            }*/
             if (mEncuestasCasaSA != null){
                 v = mEncuestasCasaSA.size();
                 ListIterator<EncuestaCasaSA> iter = mEncuestasCasaSA.listIterator();
@@ -135,7 +135,7 @@ public class DownloadSeroTask extends DownloadTask {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
             
-
+/*
             //Descargar participantes seroprevalencia
             urlRequest = url + "/movil/participantesSA/";
             publishProgress("Solicitando participantes seroprevalencia",PARTICIPANTESA,TOTAL_TASK_SERO);
@@ -145,6 +145,7 @@ public class DownloadSeroTask extends DownloadTask {
             // convert the array to a list and return it
             mParticipantesSA = Arrays.asList(responseEntityPartiSa.getBody());
             responseEntityPartiSa = null;
+            */
             //Descargar encuestas casas seroprevalencia
             urlRequest = url + "/movil/encuestasCasaSA/";
             publishProgress("Solicitando encuestas de casas seroprevalencia",ENCUESTA_CASASA,TOTAL_TASK_SERO);

@@ -466,7 +466,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
 		//Guarda la visita de terreno
 		estudiosAdapter.crearVisitaTereno(vt);
 		
-		if (vt.getVisitaExitosa().equals("S")){
+		if (vt.getVisitaExitosa().equals(Constants.YESKEYSND)){
 			//Obtener datos del bundle para el pretamizaje
 			String aceptaTamizajeCasa = datos.getString(this.getString(R.string.aceptaTamizajeCasa));
 			String razonNoAceptaTamizajeCasa = datos.getString(this.getString(R.string.razonNoAceptaTamizajeCasa));
@@ -495,7 +495,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
 	    	//Inserta un Nuevo Registro de Pretamizaje
 	    	estudiosAdapter.crearPreTamizaje(pt);
 	    	//Pregunta si acepta el tamizaje
-	    	if (pt.getAceptaTamizajeCasa()=='S') {
+	    	if (pt.getAceptaTamizajeCasa()==Constants.YESKEYSND.charAt(0)) {
 	    		//Si la respuesta es si crea un nuevo registro de casa CHF
 	    		//Obtener datos del bundle para la nueva casa
 	    		String codigoCHF = datos.getString(this.getString(R.string.codigoCHF));
@@ -507,7 +507,7 @@ public class NuevoTamizajeCasaActivity extends FragmentActivity implements
 	        	//Pregunta si es el mismo jefe de familia que la casa de cohorte
 	        	if (tieneValor(mismoJefe)) {
 					MessageResource catMismoJefe = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + mismoJefe + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-					if(catMismoJefe.getCatKey().matches("S")){
+					if(catMismoJefe.getCatKey().matches(Constants.YESKEYSND)){
 		        		cchf.setNombre1JefeFamilia(casa.getNombre1JefeFamilia());
 		        		cchf.setNombre2JefeFamilia(casa.getNombre2JefeFamilia());
 		        		cchf.setApellido1JefeFamilia(casa.getApellido1JefeFamilia());

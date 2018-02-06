@@ -1,6 +1,7 @@
 package ni.org.ics.estudios.appmovil.domain.seroprevalencia;
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
+import ni.org.ics.estudios.appmovil.domain.Participante;
 
 /**
  * Created by Miguel Salinas on 5/25/2017.
@@ -12,7 +13,8 @@ public class EncuestaParticipanteSA extends BaseMetaData {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ParticipanteSeroprevalencia participanteSA;
+    private String codigo;
+	private Participante participante;
     //Aspectos Educacionales
     private String escuchadoZikaSn;
     private String queEsSika;
@@ -56,14 +58,25 @@ public class EncuestaParticipanteSA extends BaseMetaData {
     private String sabeZika;
     private String usaRopa;
     private String embarazadaUltAnio;
+    private String visitaCemeneterio;
+    private String cadaCuantoVisitaCem;
+    private String mesesVisitaCementerio;
+    private String descOtroMetodo;
 
-
-    public ParticipanteSeroprevalencia getParticipanteSA() {
-        return participanteSA;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setParticipanteSA(ParticipanteSeroprevalencia participanteSA) {
-        this.participanteSA = participanteSA;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Participante getParticipante() {
+        return participante;
+    }
+
+    public void setParticipante(Participante participante) {
+        this.participante = participante;
     }
 
     public String getEscuchadoZikaSn() {
@@ -314,9 +327,41 @@ public class EncuestaParticipanteSA extends BaseMetaData {
         this.embarazadaUltAnio = embarazadaUltAnio;
     }
 
+    public String getVisitaCemeneterio() {
+        return visitaCemeneterio;
+    }
+
+    public void setVisitaCemeneterio(String visitaCemeneterio) {
+        this.visitaCemeneterio = visitaCemeneterio;
+    }
+
+    public String getCadaCuantoVisitaCem() {
+        return cadaCuantoVisitaCem;
+    }
+
+    public void setCadaCuantoVisitaCem(String cadaCuantoVisitaCem) {
+        this.cadaCuantoVisitaCem = cadaCuantoVisitaCem;
+    }
+
+    public String getMesesVisitaCementerio() {
+        return mesesVisitaCementerio;
+    }
+
+    public void setMesesVisitaCementerio(String mesesVisitaCementerio) {
+        this.mesesVisitaCementerio = mesesVisitaCementerio;
+    }
+
+    public String getDescOtroMetodo() {
+        return descOtroMetodo;
+    }
+
+    public void setDescOtroMetodo(String descOtroMetodo) {
+        this.descOtroMetodo = descOtroMetodo;
+    }
+
     @Override
     public String toString() {
-        return "EncuestaParticipanteSA{" + participanteSA +
+        return "EncuestaParticipanteSA{" + codigo +
                 '}';
     }
 
@@ -327,13 +372,13 @@ public class EncuestaParticipanteSA extends BaseMetaData {
 
         EncuestaParticipanteSA that = (EncuestaParticipanteSA) o;
 
-        if (!participanteSA.equals(that.participanteSA)) return false;
+        if (!codigo.equals(that.codigo)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return participanteSA.hashCode();
+        return codigo.hashCode();
     }
 }

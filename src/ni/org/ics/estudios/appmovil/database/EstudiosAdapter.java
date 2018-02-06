@@ -1978,8 +1978,8 @@ public class EstudiosAdapter {
     //Editar EncuestaCasaSA existente en la base de datos
     public boolean editarEncuestaCasaSA(EncuestaCasaSA encuestaCasaSA) {
         ContentValues cv = EncuestaCasaSAHelper.crearEncuestaCasaSAContentValues(encuestaCasaSA);
-        return mDb.update(SeroprevalenciaDBConstants.ENCUESTA_CASASA_TABLE, cv, SeroprevalenciaDBConstants.casaCHF + "='"
-                + encuestaCasaSA.getCasaCHF().getCodigoCHF() + "'", null) > 0;
+        return mDb.update(SeroprevalenciaDBConstants.ENCUESTA_CASASA_TABLE, cv, SeroprevalenciaDBConstants.codigo + "='"
+                + encuestaCasaSA.getCodigo() + "'", null) > 0;
     }
     //Limpiar la tabla de EncuestaCasaSA de la base de datos
     public boolean borrarEncuestaCasaSA() {
@@ -1992,8 +1992,8 @@ public class EstudiosAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mEncuestaCasaSA= EncuestaCasaSAHelper.crearEncuestaCasaSA(cursor);
-            CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" + cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.casaCHF)), null);
-            mEncuestaCasaSA.setCasaCHF(cchf);
+            Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.casa)), null);
+            mEncuestaCasaSA.setCasa(casa);
         }
         if (!cursor.isClosed()) cursor.close();
         return mEncuestaCasaSA;
@@ -2008,8 +2008,8 @@ public class EstudiosAdapter {
             do{
                 EncuestaCasaSA mEncuestaCasaSA = null;
                 mEncuestaCasaSA = EncuestaCasaSAHelper.crearEncuestaCasaSA(cursor);
-                CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" + cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.casaCHF)), null);
-                mEncuestaCasaSA.setCasaCHF(cchf);
+                Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.casa)), null);
+                mEncuestaCasaSA.setCasa(casa);
                 mEncuestaCasaSAs.add(mEncuestaCasaSA);
             } while (cursor.moveToNext());
         }
@@ -2032,8 +2032,8 @@ public class EstudiosAdapter {
     //Editar EncuestaParticipanteSA existente en la base de datos
     public boolean editarEncuestaParticipanteSA(EncuestaParticipanteSA encuestaParticipanteSA) {
         ContentValues cv = EncuestaParticipanteSAHelper.crearEncuestaParticipanteSAContentValues(encuestaParticipanteSA);
-        return mDb.update(SeroprevalenciaDBConstants.ENCUESTA_PARTICIPANTESA_TABLE, cv, SeroprevalenciaDBConstants.participante + "="
-                + encuestaParticipanteSA.getParticipanteSA().getParticipante().getCodigo(), null) > 0;
+        return mDb.update(SeroprevalenciaDBConstants.ENCUESTA_PARTICIPANTESA_TABLE, cv, SeroprevalenciaDBConstants.codigo + "='"
+                + encuestaParticipanteSA.getCodigo() + "'", null) > 0;
     }
     //Limpiar la tabla de EncuestaParticipanteSA de la base de datos
     public boolean borrarEncuestaParticipanteSA() {
@@ -2046,8 +2046,8 @@ public class EstudiosAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mEncuestaParticipanteSA= EncuestaParticipanteSAHelper.crearEncuestaParticipanteSA(cursor);
-            ParticipanteSeroprevalencia participante = this.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.participante)), null);
-            mEncuestaParticipanteSA.setParticipanteSA(participante);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.participante)), null);
+            mEncuestaParticipanteSA.setParticipante(participante);
         }
         if (!cursor.isClosed()) cursor.close();
         return mEncuestaParticipanteSA;
@@ -2062,8 +2062,8 @@ public class EstudiosAdapter {
             do{
                 EncuestaParticipanteSA mEncuestaParticipanteSA = null;
                 mEncuestaParticipanteSA = EncuestaParticipanteSAHelper.crearEncuestaParticipanteSA(cursor);
-                ParticipanteSeroprevalencia participante = this.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.participante)), null);
-                mEncuestaParticipanteSA.setParticipanteSA(participante);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.participante)), null);
+                mEncuestaParticipanteSA.setParticipante(participante);
                 mEncuestasParticipanteSA.add(mEncuestaParticipanteSA);
             } while (cursor.moveToNext());
         }
@@ -2627,9 +2627,9 @@ public class EstudiosAdapter {
 		c = crearCursor(MainDBConstants.PARTICIPANTE_CHF_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
-		c = crearCursor(EncuestasDBConstants.ENCUESTA_CASA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		/*c = crearCursor(EncuestasDBConstants.ENCUESTA_CASA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
-		c.close();
+		c.close();*/
 		c = crearCursor(MainDBConstants.AREA_AMBIENTE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
@@ -2642,7 +2642,7 @@ public class EstudiosAdapter {
 		c = crearCursor(MainDBConstants.PERSONACAMA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
-		c = crearCursor(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		/*c = crearCursor(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
 		c = crearCursor(EncuestasDBConstants.ENCUESTA_PARTOBB_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
@@ -2653,6 +2653,7 @@ public class EstudiosAdapter {
 		c.close();
 		c = crearCursor(EncuestasDBConstants.ENCUESTA_LACTANCIAMAT_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
+		*/
 		c.close();
 		c = crearCursor(MuestrasDBConstants.MUESTRA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
@@ -2696,6 +2697,91 @@ public class EstudiosAdapter {
 		c = crearCursor(CasosDBConstants.VISITAS_FINALES_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
+        //MA 2018
+        c = crearCursor(ConstantsDB.ENC_CASA_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.ENC_PART_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.ENC_SAT_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.MUESTRA_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.PART_PROCESOS_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.LACT_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.PT_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.OB_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.VAC_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.VIS_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.RECONS_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.RECONS_TABLE_2015, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.RECONSFLU_TABLE_2015, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.CONSCHIK_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.BHC_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.SERO_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.PIN_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.NO_DATA_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.COD_REL_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.TPBMC_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.TRB_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.ENC_SAT_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.COD_REL_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.CAMB_CASA_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.NEWVAC_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.DATOSPARTOBB_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.DOCS_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(ConstantsDB.DAT_VIS_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
 		return false;
 	}
     

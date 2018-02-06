@@ -19,7 +19,8 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.domain.Participante;
-import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.*;
 import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
@@ -27,6 +28,8 @@ import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterEnvio;
 import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterGetObjects;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+import ni.org.ics.estudios.appmovil.seroprevalencia.adapters.EncuestaCasaSaAdapter;
+import ni.org.ics.estudios.appmovil.seroprevalencia.adapters.EncuestaParticipanteSaAdapter;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
@@ -57,7 +60,8 @@ public class ListReviewActivity extends ListActivity {
     ArrayAdapter<DatosPartoBB> mDatosPartoBBAdapter=null;
     ArrayAdapter<DatosVisitaTerreno> mDatosVisitaTerrenoAdapter=null;
     ArrayAdapter<Documentos> mDocumentosAdapter=null;
-
+    ArrayAdapter<EncuestaCasaSA> mEncuestasCasasSaAdapter =null;
+    ArrayAdapter<EncuestaParticipanteSA> mEncuestasParticipantesSaAdapter = null;
 	public static final int BARCODE_CAPTURE = 2;
 	
 	private Integer codigo;
@@ -162,6 +166,12 @@ public class ListReviewActivity extends ListActivity {
                 if (mDocumentosAdapter != null) {
                     mDocumentosAdapter.getFilter().filter(s);
                 }
+                if (mEncuestasParticipantesSaAdapter != null) {
+                    mEncuestasParticipantesSaAdapter.getFilter().filter(s);
+                }
+                if (mEncuestasCasasSaAdapter != null) {
+                    mEncuestasCasasSaAdapter.getFilter().filter(s);
+                }
 			}
 
 			@Override
@@ -213,9 +223,25 @@ public class ListReviewActivity extends ListActivity {
 					(ArrayList<EncuestaCasa>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
 			setListAdapter(mEncuestaCasaAdapter);
 			showToast("Total = "+ mEncuestaCasaAdapter.getCount());
-		} 
+		}
 
-		if (titulo.matches(getString(R.string.info_survey3))){
+        if (titulo.matches(getString(R.string.info_participantesa))){
+
+            mEncuestasParticipantesSaAdapter = new EncuestaParticipanteSaAdapter(this, R.layout.list_item_review,
+                    (ArrayList<EncuestaParticipanteSA>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
+            setListAdapter(mEncuestasParticipantesSaAdapter);
+            showToast("Total = "+ mEncuestasParticipantesSaAdapter.getCount());
+        }
+
+        if (titulo.matches(getString(R.string.info_casasa))){
+
+            mEncuestasCasasSaAdapter = new EncuestaCasaSaAdapter(this, R.layout.list_item_review,
+                    (ArrayList<EncuestaCasaSA>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
+            setListAdapter(mEncuestasCasasSaAdapter);
+            showToast("Total = "+ mEncuestasCasasSaAdapter.getCount());
+        }
+
+        if (titulo.matches(getString(R.string.info_survey3))){
 			
 			mLactanciaMaternaAdapter = new LactanciaMaternaAdapter(this, R.layout.list_item_review,
 					(ArrayList<LactanciaMaterna>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
@@ -390,11 +416,18 @@ public class ListReviewActivity extends ListActivity {
 		Intent i = null;
 		if (titulo.matches(getString(R.string.info_survey2)) || titulo.matches(getString(R.string.info_casachf))){
 			EncuestaCasa encuestacasa = (EncuestaCasa) getListAdapter().getItem(position);
-			arguments.putString(Constants.TITLE, getString(R.string.info_survey2));
+			arguments.putString(Constants.TITLE, (titulo.matches(getString(R.string.info_survey2))?getString(R.string.info_survey2):getString(R.string.info_casachf)));
 			if (encuestacasa!=null) arguments.putSerializable(Constants.OBJECTO , encuestacasa);
 			i = new Intent(getApplicationContext(),
 					ReviewActivity.class);
 		}
+        if (titulo.matches(getString(R.string.info_casasa))){
+            EncuestaCasaSA encuestacasa = (EncuestaCasaSA) getListAdapter().getItem(position);
+            arguments.putString(Constants.TITLE, getString(R.string.info_casasa));
+            if (encuestacasa!=null) arguments.putSerializable(Constants.OBJECTO , encuestacasa);
+            i = new Intent(getApplicationContext(),
+                    ReviewActivity.class);
+        }
 		if (titulo.matches(getString(R.string.info_survey1))){
 			EncuestaParticipante encuestapart = (EncuestaParticipante) getListAdapter().getItem(position);
 			arguments.putString(Constants.TITLE, getString(R.string.info_survey1));
@@ -402,6 +435,13 @@ public class ListReviewActivity extends ListActivity {
 			i = new Intent(getApplicationContext(),
 					ReviewActivity.class);
 		}
+        if (titulo.matches(getString(R.string.info_participantesa))){
+            EncuestaParticipanteSA encuestapart = (EncuestaParticipanteSA) getListAdapter().getItem(position);
+            arguments.putString(Constants.TITLE, getString(R.string.info_participantesa));
+            if (encuestapart!=null) arguments.putSerializable(Constants.OBJECTO , encuestapart);
+            i = new Intent(getApplicationContext(),
+                    ReviewActivity.class);
+        }
 		if (titulo.matches(getString(R.string.info_survey3))){
 			LactanciaMaterna lactanciamat = (LactanciaMaterna) getListAdapter().getItem(position);
 			arguments.putString(Constants.TITLE, getString(R.string.info_survey3));

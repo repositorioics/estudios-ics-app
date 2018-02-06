@@ -11,6 +11,8 @@
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/app_preferences">
 		<CheckBoxPreference android:id="@+id/barcode" android:key="barcode" android:defaultValue="true" android:title="@string/desc_barcode" />
+        <CheckBoxPreference android:id="@+id/activos" android:key="activos" android:title="@string/activos" />
+        <CheckBoxPreference android:id="@+id/terreno" android:key="terreno" android:title="@string/terreno" />
 		<Preference android:title="@string/update_app_preferences" >
 		    <intent android:action="android.intent.action.VIEW"
 		            android:data="http://192.168.1.98:8080/estudios-ics/resources/apk/estudios-ics-app.apk" />

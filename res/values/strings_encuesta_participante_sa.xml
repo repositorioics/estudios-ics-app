@@ -34,7 +34,13 @@
     <string name="usaOtroMetodo">¿Usa otro método para protejerse de enfermedades de transmisión sexual?</string>
     <!-- MA 2018-->
     <string name="sabeZika">¿Sabe que sucede si una mujer embarazada se infecta con Zika?</string>
+    <string name="sabeZikaHint">Si - el bebe/niño puede ser afectado, microcefalia, etc. No - si dice que no sabe o si dice algo que no es verdad.</string>
     <string name="usaRopa">¿Usted usa ropa (pantalón largo, camisa manga larga) para protegerse de piquete de zancudo?</string>
     <string name="embarazadaUltAnio">¿Estuvo embarazada en el ultimo año?</string>
+    <string name="visitaCemeneterio">¿Visita el cementerio?</string>
+    <string name="cadaCuantoVisitaCem">¿Cada cuanto visita el cementerio al año?</string>
+    <string name="cadaCuantoVisitaCemHint">Indicar la cantidad de veces que visita el cementerio al año</string>
+    <string name="mesesVisitaCementerio">¿En qué meses visita el cementerio? </string>
+    <string name="descOtroMetodo">Si dice que si, ¿Qué otro metodo?</string>
 
 </resources>

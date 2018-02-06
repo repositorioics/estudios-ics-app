@@ -99,9 +99,9 @@ public class MenuMuestreoAnualActivity extends ListActivity {
             case R.id.MENU_DESCARGA:
                 //CohorteAdapterGetObjects cat = new CohorteAdapterGetObjects();
                 cat.open();
-                Boolean esSuperV = cat.buscarRol(username, "ROLE_SUPER");
+                //Boolean esSuperV = cat.buscarRol(username, "ROLE_SUPER");
                 cat.close();
-                if (esSuperV){
+                //if (esSuperV){
                     cae.open();
                     Boolean verificar = cae.verificarData();
                     cae.close();
@@ -111,10 +111,10 @@ public class MenuMuestreoAnualActivity extends ListActivity {
                     else{
                         createDialog(DOWNLOAD);
                     }
-                }
+                /*}
                 else{
                     showToast(getApplicationContext().getString(R.string.perm_error), 1);
-                }
+                }*/
                 return true;
             case R.id.MENU_CARGA:
                 createDialog(UPLOAD);

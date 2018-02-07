@@ -19,7 +19,6 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.EncuestaCasaId;
@@ -59,7 +58,6 @@ public class NewEcActivity extends AbstractAsyncActivity {
 	Dialog dialogInit;
     private DeviceInfo infoMovil;
 
-    private CohorteAdapter ca;
     private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -77,7 +75,6 @@ public class NewEcActivity extends AbstractAsyncActivity {
 						null);
         infoMovil = new DeviceInfo(NewEcActivity.this);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
 //        if (getIntent().getExtras().get(ConstantsDB.COD_CASA) instanceof String){
@@ -321,14 +318,13 @@ public class NewEcActivity extends AbstractAsyncActivity {
 					false, em.getRecurso1(), em.getRecurso2()));
 			//Guarda en la base de datos local
 
-			ca.open();
-            estudiosAdapter.open();
+			estudiosAdapter.open();
             int totalCasasChf = estudiosAdapter.countCasasChfByCasa(mParticipante.getCasa().getCodigo());
             if (totalCasasChf == 1){
                 mEC.setCodCasaChf(mParticipante.getProcesos().getCasaCHF());
                 mEC.setCodCasa(mParticipante.getCasa().getCodigo());
             }
-            ca.crearEncuestaCasa(mEC);
+            estudiosAdapter.crearEncuestaCasa(mEC);
             if (mParticipante.getCasa().getCodigo()!=9999) mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
             for(Participante participante:mParticipantes){
 				if (participante.getCasa().getCodigo()!=9999) {
@@ -376,7 +372,6 @@ public class NewEcActivity extends AbstractAsyncActivity {
                     false, em.getRecurso1(), em.getRecurso2()));
             estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());*/
             estudiosAdapter.close();
-			ca.close();
 			showToast(getApplicationContext().getString(R.string.success),0);
 			Intent i = new Intent(getApplicationContext(),
 					MenuInfoActivity.class);

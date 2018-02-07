@@ -3,7 +3,7 @@ package ni.org.ics.estudios.appmovil.muestreoanual.tasks;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import org.springframework.http.*;
@@ -27,7 +27,7 @@ public class DownloadParticipanteTask extends DownloadTask {
 	private List<Casa> casas = null;
 	private List<Participante> participantes = null;
 
-    private CohorteAdapter ca = null;
+    private EstudiosAdapter ca = null;
 
     private final Context mContext;
 
@@ -47,7 +47,7 @@ public class DownloadParticipanteTask extends DownloadTask {
 			codCasa = checkCasa();
 			if (codCasa>0){
 
-                ca = new CohorteAdapter(mContext, password, false, false);
+                ca = new EstudiosAdapter(mContext, password, false, false);
                 ca.open();
 				try {
 					error = descargarCasas();

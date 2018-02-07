@@ -18,7 +18,7 @@ import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.EncuestaSatisfaccion;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.muestreoanual.parsers.EncuestaSatisfaccionXml;
@@ -193,7 +193,7 @@ public class NewEsActivity extends AbstractAsyncActivity {
 					false, es.getRecurso1(), es.getRecurso1()));
 			//Guarda en la base de datos local
             String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-			CohorteAdapter ca = new CohorteAdapter(this.getApplicationContext(), mPass, false, false);
+			EstudiosAdapter ca = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
 			ca.open();
 			ca.crearEncuestaSatisfaccion(mEncSat);
 			ca.close();

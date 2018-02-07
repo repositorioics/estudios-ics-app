@@ -18,8 +18,8 @@ import android.widget.*;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.PinchazoAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.Pinchazo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.PinchazoId;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
@@ -150,7 +150,7 @@ public class ListPinchazosActivity extends ListActivity{
 
 	private void getPinchazos() {
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-		CohorteAdapter ca = new CohorteAdapter(this.getApplicationContext(), mPass, false, false);
+		EstudiosAdapter ca = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
 		
 		ca.open();
 		Cursor pinchos = null;

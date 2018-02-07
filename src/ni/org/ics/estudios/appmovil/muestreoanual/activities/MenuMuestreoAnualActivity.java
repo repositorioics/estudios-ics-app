@@ -16,11 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.muestreoanual.activities.*;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.MenuPrincipalAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterEnvio;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterGetObjects;
-import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
@@ -51,8 +48,7 @@ public class MenuMuestreoAnualActivity extends ListActivity {
     private String username;
     private SharedPreferences settings;
 
-    private CohorteAdapterGetObjects cat;
-    private CohorteAdapterEnvio cae;
+    private EstudiosAdapter cae;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +63,7 @@ public class MenuMuestreoAnualActivity extends ListActivity {
                         null);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        cat = new CohorteAdapterGetObjects(this.getApplicationContext(),mPass,false,false);
-        cae = new CohorteAdapterEnvio(this.getApplicationContext(),mPass,false,false);
+        cae = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(EXIT_SHOWING)) {
@@ -98,9 +93,9 @@ public class MenuMuestreoAnualActivity extends ListActivity {
         switch (item.getItemId()) {
             case R.id.MENU_DESCARGA:
                 //CohorteAdapterGetObjects cat = new CohorteAdapterGetObjects();
-                cat.open();
+                //cae.open();
                 //Boolean esSuperV = cat.buscarRol(username, "ROLE_SUPER");
-                cat.close();
+                //cae.close();
                 //if (esSuperV){
                     cae.open();
                     Boolean verificar = cae.verificarData();
@@ -169,9 +164,9 @@ public class MenuMuestreoAnualActivity extends ListActivity {
                 break;
             case 2:
                 //CohorteAdapterGetObjects cat = new CohorteAdapterGetObjects();
-                cat.open();
-                Boolean esSuperV = cat.buscarRol(username, "ROLE_SUPER");
-                cat.close();
+                cae.open();
+                Boolean esSuperV = cae.buscarRol(username, "ROLE_SUPER");
+                cae.close();
                 if (esSuperV){
                     i = new Intent(getApplicationContext(),
                             MenuSupervisorActivity.class);

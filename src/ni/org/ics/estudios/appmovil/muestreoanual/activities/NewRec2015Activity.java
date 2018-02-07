@@ -19,7 +19,6 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ReConsentimientoDen2015;
@@ -51,7 +50,6 @@ public class NewRec2015Activity extends AbstractAsyncActivity {
 	private static ReConsentimientoDen2015 mReConsentimiento = new ReConsentimientoDen2015();
 	Dialog dialogInit;
 
-    private CohorteAdapter ca;
     private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -69,7 +67,6 @@ public class NewRec2015Activity extends AbstractAsyncActivity {
 						null);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
 		casaId = getIntent().getIntExtra(ConstantsDB.COD_CASA,-1);
@@ -295,9 +292,9 @@ public class NewRec2015Activity extends AbstractAsyncActivity {
 					false, em.getRecurso1(), em.getRecurso2()));
 			
 			//Guarda en la base de datos local
-			ca.open();
-			ca.crearReConsentimiento2015(mReConsentimiento);
-            ca.close();
+			estudiosAdapter.open();
+			estudiosAdapter.crearReConsentimiento2015(mReConsentimiento);
+            estudiosAdapter.close();
 			if (em.getVisExit().matches("1")){
 				mParticipante.getProcesos().setConsDeng("No");
 				mParticipante.getProcesos().setMovilInfo(new MovilInfo(idInstancia,

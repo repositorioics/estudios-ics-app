@@ -18,14 +18,12 @@ import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.*;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterEnvio;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterGetObjects;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.adapters.EncuestaCasaSaAdapter;
@@ -71,9 +69,7 @@ public class ListReviewActivity extends ListActivity {
 	private String username;
 	private SharedPreferences settings;
 
-    private CohorteAdapter ca;
-    private CohorteAdapterGetObjects cat;
-    private CohorteAdapterEnvio cae;
+    private EstudiosAdapter ca;
 
 	@SuppressWarnings("unchecked")
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -97,9 +93,7 @@ public class ListReviewActivity extends ListActivity {
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
-        cat = new CohorteAdapterGetObjects(this.getApplicationContext(),mPass,false,false);
-        cae = new CohorteAdapterEnvio(this.getApplicationContext(),mPass,false,false);
+        ca = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		//TextView titleView = (TextView) findViewById(R.id.title);
 		//titleView.setText(titulo);
 		//titleView.setTextColor(getResources().getColor(R.color.text_light));
@@ -577,29 +571,27 @@ public class ListReviewActivity extends ListActivity {
 
 				try{
 					codigoScanned = Integer.parseInt(sb);
-					cat.open();
-					Participante mParticipante = cat.getParticipante(codigoScanned);
-                    cat.close();
+					ca.open();
+					Participante mParticipante = ca.getParticipante(codigoScanned);
+
 					if (mParticipante.getCodigo() != null){
 						codigo = mParticipante.getCodigo();
 						if (codigo.intValue() == codComun.intValue()){
 							showToast("Es el mismo codigo");
 							return;
 						}
-						cae.open();
-						if(cae.checkCodigosCasas(codigoScanned)) {
+						if(ca.checkCodigosCasas(codigoScanned)) {
 							showToast("Ya existe relacionado a otro codigo");
 						}
 						else{
 							createConfirmDialog();
 						}
-						cae.close();
 					}
 					else {
 						//mSearchText.setText(sb);
 						showToast("("+codigoScanned+") - " + getString(R.string.code_notfound));
 					}
-					
+                    ca.close();
 				}
 				catch(Exception e){
 					showToast(getString(R.string.scan_error));

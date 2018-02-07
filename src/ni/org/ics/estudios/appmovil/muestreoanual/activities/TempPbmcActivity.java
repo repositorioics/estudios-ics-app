@@ -31,7 +31,7 @@ import android.widget.*;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.TempPbmc;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.TempPbmcId;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
@@ -74,7 +74,7 @@ public class TempPbmcActivity extends AbstractAsyncActivity {
 	private static final String ALERT_EXIT_SHOWING = "alertexitshowing";
 	private static final String KEEP_CODIGO = "keepcodigo";
 
-    private CohorteAdapter ca = null;
+    private EstudiosAdapter ca = null;
 
 	// ***************************************
 	// Activity methods
@@ -121,7 +121,7 @@ public class TempPbmcActivity extends AbstractAsyncActivity {
 						null);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
+        ca = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		
 		if (savedInstanceState != null) {
 			if (savedInstanceState.containsKey(ALERT_SHOWING)) {

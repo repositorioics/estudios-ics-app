@@ -7,7 +7,6 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.NewVacuna;
@@ -57,7 +56,6 @@ public class NewNewVaccActivity extends AbstractAsyncActivity {
 	private static NewVacuna mVacuna = new NewVacuna();
 	Dialog dialogInit;
 
-    private CohorteAdapter ca;
     private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -74,7 +72,6 @@ public class NewNewVaccActivity extends AbstractAsyncActivity {
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
 		casaId = getIntent().getIntExtra(ConstantsDB.COD_CASA,-1);
@@ -209,8 +206,8 @@ public class NewNewVaccActivity extends AbstractAsyncActivity {
 					false, em.getRecurso1(), em.getRecurso1()));
 			
 			//Guarda en la base de datos local
-			ca.open();
-			ca.crearNewVacuna(mVacuna);
+            estudiosAdapter.open();
+			estudiosAdapter.crearNewVacuna(mVacuna);
 			mParticipante.getProcesos().setInfoVacuna("No");
 			mParticipante.getProcesos().setMovilInfo(new MovilInfo(idInstancia,
                     instanceFilePath,
@@ -224,10 +221,9 @@ public class NewNewVaccActivity extends AbstractAsyncActivity {
                     em.getToday(),
                     username,
                     false, em.getRecurso1(), em.getRecurso1()));
-            estudiosAdapter.open();
+
 			estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());
             estudiosAdapter.close();
-			ca.close();
 			showToast(getApplicationContext().getString(R.string.success),0);
 			Intent i = new Intent(getApplicationContext(),
 					MenuInfoActivity.class);

@@ -726,7 +726,7 @@ public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implem
             //else
             estudiosAdapter.crearEncuestaParticipanteSA(encuesta);
             participante.getProcesos().setEncPartSa("No");
-            MovilInfo movilInfo = participanteCHF.getParticipante().getProcesos().getMovilInfo();
+            MovilInfo movilInfo = participante.getProcesos().getMovilInfo();
             movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
             movilInfo.setDeviceid(infoMovil.getDeviceId());
             movilInfo.setUsername(username);

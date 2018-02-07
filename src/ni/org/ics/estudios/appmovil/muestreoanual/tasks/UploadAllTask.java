@@ -3,8 +3,6 @@ package ni.org.ics.estudios.appmovil.muestreoanual.tasks;
 import android.content.Context;
 import android.util.Log;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterEnvio;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterGetObjects;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
@@ -28,8 +26,6 @@ public class UploadAllTask extends UploadTask {
         mContext = context;
     }
 
-    private CohorteAdapterGetObjects ca = null;
-    private CohorteAdapterEnvio actualizar = null;
     private EstudiosAdapter estudioAdapter = null;
 
     protected static final String TAG = UploadAllTask.class.getSimpleName();
@@ -77,12 +73,6 @@ public class UploadAllTask extends UploadTask {
         password = values[2];
 
         try {
-            ca = new CohorteAdapterGetObjects(mContext, password, false, false);
-            ca.open();
-
-            actualizar = new CohorteAdapterEnvio(mContext, password, false, false);
-            actualizar.open();
-
             estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
             estudioAdapter.open();
 
@@ -394,8 +384,6 @@ public class UploadAllTask extends UploadTask {
             e1.printStackTrace();
             return e1.getLocalizedMessage();
         }finally {
-            ca.close();
-            actualizar.close();
             estudioAdapter.close();
         }
         return error;
@@ -480,7 +468,7 @@ public class UploadAllTask extends UploadTask {
         int c = mParticipantes.size();
         for (Participante participante : mParticipantes) {
             participante.setEstado(estado.charAt(0));
-            actualizar.updateParticipantesSent(participante);
+            estudioAdapter.updateParticipantesSent(participante);
             publishProgress("Actualizando participantes", Integer.valueOf(mParticipantes.indexOf(participante)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -491,19 +479,19 @@ public class UploadAllTask extends UploadTask {
 
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mParticipantes = ca.getListaParticipantes(Constants.STATUS_NOT_SUBMITTED);
+        mParticipantes = estudioAdapter.getParticipantes(MainDBConstants.estado + "= '" + Constants.STATUS_NOT_SUBMITTED+ "'", null);
         //ca.close();
     }
 
     private void getParticipantesProc() {
-        mParticipantesProc =  ca.getListaParticipantesProc(Constants.STATUS_NOT_SUBMITTED);
+        mParticipantesProc =  estudioAdapter.getListaParticipantesProc(Constants.STATUS_NOT_SUBMITTED);
     }
 
     private void saveParticipantesProc(String estado) {
         int c = mParticipantesProc.size();
         for (ParticipanteProcesos participanteProc : mParticipantesProc) {
             participanteProc.getMovilInfo().setEstado(estado);
-            actualizar.updateParticipanteProcSent(participanteProc);
+            estudioAdapter.updateParticipanteProcSent(participanteProc);
             publishProgress("Actualizando procesos participantes", Integer.valueOf(mParticipantesProc.indexOf(participanteProc)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -555,7 +543,7 @@ public class UploadAllTask extends UploadTask {
         int c = mEncuestasCasas.size();
         for (EncuestaCasa enccasa : mEncuestasCasas) {
             enccasa.getMovilInfo().setEstado(estado);
-            actualizar.updateEncuestasCasasSent(enccasa);
+            estudioAdapter.updateEncuestasCasasSent(enccasa);
             publishProgress("Actualizando encuestas casas", Integer.valueOf(mEncuestasCasas.indexOf(enccasa)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -566,7 +554,7 @@ public class UploadAllTask extends UploadTask {
 
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mEncuestasCasas= ca.getListaEncuestaCasasSinEnviar();
+        mEncuestasCasas= estudioAdapter.getListaEncuestaCasasSinEnviar();
         //ca.close();
     }
 
@@ -612,7 +600,7 @@ public class UploadAllTask extends UploadTask {
     private void getEncParticipantes() {
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mEncuestasParticipantes = ca.getListaEncuestaParticipantesSinEnviar();
+        mEncuestasParticipantes = estudioAdapter.getListaEncuestaParticipantesSinEnviar();
         //ca.close();
     }
 
@@ -622,7 +610,7 @@ public class UploadAllTask extends UploadTask {
         int c = mEncuestasParticipantes.size();
         for (EncuestaParticipante encparticipante : mEncuestasParticipantes) {
             encparticipante.getMovilInfo().setEstado(estado);
-            actualizar.updateEncPartSent(encparticipante);
+            estudioAdapter.updateEncPartSent(encparticipante);
             publishProgress("Actualizando encuestas participantes", Integer.valueOf(mEncuestasParticipantes.indexOf(encparticipante)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -673,7 +661,7 @@ public class UploadAllTask extends UploadTask {
 
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mLactanciasMaternas = ca.getListaLactanciaMaternasSinEnviar();
+        mLactanciasMaternas = estudioAdapter.getListaLactanciaMaternasSinEnviar();
         //ca.close();
     }
 
@@ -683,7 +671,7 @@ public class UploadAllTask extends UploadTask {
         int c = mLactanciasMaternas.size();
         for (LactanciaMaterna enclactancia : mLactanciasMaternas) {
             enclactancia.getMovilInfo().setEstado(estado);
-            actualizar.updateLacMatSent(enclactancia);
+            estudioAdapter.updateLacMatSent(enclactancia);
             publishProgress("Actualizando encuestas lactancia", Integer.valueOf(mLactanciasMaternas.indexOf(enclactancia)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -737,7 +725,7 @@ public class UploadAllTask extends UploadTask {
         int c = mPyTs.size();
         for (PesoyTalla pyt : mPyTs) {
             pyt.getMovilInfo().setEstado(estado);
-            actualizar.updatePTsSent(pyt);
+            estudioAdapter.updatePTsSent(pyt);
             publishProgress("Actualizando peso y talla", Integer.valueOf(mPyTs.indexOf(pyt)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -747,7 +735,7 @@ public class UploadAllTask extends UploadTask {
     private void getPTs(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mPyTs = ca.getListaPesoyTallasSinEnviar();
+        mPyTs = estudioAdapter.getListaPesoyTallasSinEnviar();
         //ca.close();
     }
 
@@ -797,7 +785,7 @@ public class UploadAllTask extends UploadTask {
         int c = mMuestras.size();
         for (Muestra muestra : mMuestras) {
             muestra.getMovilInfo().setEstado(estado);
-            actualizar.updateMuestraSent(muestra);
+            estudioAdapter.updateMuestraSent(muestra);
             publishProgress("Actualizando muestras", Integer.valueOf(mMuestras.indexOf(muestra)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -807,7 +795,7 @@ public class UploadAllTask extends UploadTask {
     private void getMuestras(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mMuestras = ca.getListaMuestrasSinEnviar();
+        mMuestras = estudioAdapter.getListaMuestrasSinEnviar();
         //ca.close();
     }
 
@@ -858,7 +846,7 @@ public class UploadAllTask extends UploadTask {
         int c = mObsequios.size();
         for (Obsequio obsequio : mObsequios) {
             obsequio.getMovilInfo().setEstado(estado);
-            actualizar.updateObsequioSent(obsequio);
+            estudioAdapter.updateObsequioSent(obsequio);
             publishProgress("Actualizando Obsequios", Integer.valueOf(mObsequios.indexOf(obsequio)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -868,7 +856,7 @@ public class UploadAllTask extends UploadTask {
     private void getObsequios(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mObsequios = ca.getListaObsequiosSinEnviar();
+        mObsequios = estudioAdapter.getListaObsequiosSinEnviar();
         //ca.close();
     }
 
@@ -923,7 +911,7 @@ public class UploadAllTask extends UploadTask {
         int c = mVacunas.size();
         for (Vacuna vacuna : mVacunas) {
             vacuna.getMovilInfo().setEstado(estado);
-            actualizar.updateVacSent(vacuna);
+            estudioAdapter.updateVacSent(vacuna);
             publishProgress("Actualizando Vacunas", Integer.valueOf(mVacunas.indexOf(vacuna)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -933,7 +921,7 @@ public class UploadAllTask extends UploadTask {
     private void getVacunas(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mVacunas = ca.getListaVacunasSinEnviar();
+        mVacunas = estudioAdapter.getListaVacunasSinEnviar();
         //ca.close();
     }
 
@@ -984,7 +972,7 @@ public class UploadAllTask extends UploadTask {
         int c = mNewVacunas.size();
         for (NewVacuna vacuna : mNewVacunas) {
             vacuna.getMovilInfo().setEstado(estado);
-            actualizar.updateNewVacSent(vacuna);
+            estudioAdapter.updateNewVacSent(vacuna);
             publishProgress("Actualizando Vacunas", Integer.valueOf(mNewVacunas.indexOf(vacuna)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -994,7 +982,7 @@ public class UploadAllTask extends UploadTask {
     private void getNewVacunas(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mNewVacunas = ca.getListaNewVacunasSinEnviar();
+        mNewVacunas = estudioAdapter.getListaNewVacunasSinEnviar();
         //ca.close();
     }
 
@@ -1045,7 +1033,7 @@ public class UploadAllTask extends UploadTask {
         int c = mDatosPartoBB.size();
         for (DatosPartoBB datosParto : mDatosPartoBB) {
             datosParto.getMovilInfo().setEstado(estado);
-            actualizar.updateDatosPartoBB(datosParto);
+            estudioAdapter.updateDatosPartoBB(datosParto);
             publishProgress("Actualizando DatosPartoBB", Integer.valueOf(mDatosPartoBB.indexOf(datosParto)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1055,7 +1043,7 @@ public class UploadAllTask extends UploadTask {
     private void getDatosPartoBB(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mDatosPartoBB = ca.getListaDatosPartoBBSinEnviar();
+        mDatosPartoBB = estudioAdapter.getListaDatosPartoBBSinEnviar();
         //ca.close();
     }
 
@@ -1069,7 +1057,7 @@ public class UploadAllTask extends UploadTask {
             if(mVisitasTerreno.size()>0){
                 saveVisitas(Constants.STATUS_SUBMITTED);
                 // La URL de la solicitud POST
-                final String urlRequest = url + "/movil/visitas";
+                final String urlRequest = url + "/movil/visitasMA";
                 VisitaTerreno[] envio = mVisitasTerreno.toArray(new VisitaTerreno[mVisitasTerreno.size()]);
                 HttpHeaders requestHeaders = new HttpHeaders();
                 HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
@@ -1106,7 +1094,7 @@ public class UploadAllTask extends UploadTask {
         int c = mVisitasTerreno.size();
         for (VisitaTerreno visita : mVisitasTerreno) {
             visita.getMovilInfo().setEstado(estado);
-            actualizar.updateVisitasSent(visita);
+            estudioAdapter.updateVisitasSent(visita);
             publishProgress("Actualizando Visitas", Integer.valueOf(mVisitasTerreno.indexOf(visita)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1116,7 +1104,7 @@ public class UploadAllTask extends UploadTask {
     private void getVisitas(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mVisitasTerreno = ca.getListaVisitaTerrenosSinEnviar();
+        mVisitasTerreno = estudioAdapter.getListaVisitaTerrenosSinEnviar();
         //ca.close();
     }
     // url, username, password
@@ -1164,7 +1152,7 @@ public class UploadAllTask extends UploadTask {
         int c = mDatosVisitasTerreno.size();
         for (DatosVisitaTerreno visita : mDatosVisitasTerreno) {
             visita.getMovilInfo().setEstado(estado);
-            actualizar.updateDatosVisitasSent(visita);
+            estudioAdapter.updateDatosVisitasSent(visita);
             publishProgress("Actualizando Datos Visitas", Integer.valueOf(mDatosVisitasTerreno.indexOf(visita)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1174,7 +1162,7 @@ public class UploadAllTask extends UploadTask {
     private void getDatosVisitasTerreno(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mDatosVisitasTerreno = ca.getListaDatosVisitaTerrenosSinEnviar();
+        mDatosVisitasTerreno = estudioAdapter.getListaDatosVisitaTerrenosSinEnviar();
         //ca.close();
     }
 
@@ -1224,7 +1212,7 @@ public class UploadAllTask extends UploadTask {
         int c = mReconsentimientos.size();
         for (ReConsentimientoDen recons : mReconsentimientos) {
             recons.getMovilInfo().setEstado(estado);
-            actualizar.updateReconsSent(recons);
+            estudioAdapter.updateReconsSent(recons);
             publishProgress("Actualizando ReConsentimientoDen", Integer.valueOf(mReconsentimientos.indexOf(recons)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1234,7 +1222,7 @@ public class UploadAllTask extends UploadTask {
     private void getReconsentimientos(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mReconsentimientos = ca.getListaReConsentimientoDensSinEnviar();
+        mReconsentimientos = estudioAdapter.getListaReConsentimientoDensSinEnviar();
         //ca.close();
     }
 
@@ -1285,7 +1273,7 @@ public class UploadAllTask extends UploadTask {
         int c = mConsentimientoChiks.size();
         for (ConsentimientoChik cons : mConsentimientoChiks) {
             cons.getMovilInfo().setEstado(estado);
-            actualizar.updateConsChikSent(cons);
+            estudioAdapter.updateConsChikSent(cons);
             publishProgress("Actualizando ConsentimientoChik", Integer.valueOf(mConsentimientoChiks.indexOf(cons)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1295,7 +1283,7 @@ public class UploadAllTask extends UploadTask {
     private void getConsentimientoChik(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mConsentimientoChiks = ca.getListaConsentimientoChikSinEnviar();
+        mConsentimientoChiks = estudioAdapter.getListaConsentimientoChikSinEnviar();
         //ca.close();
     }
 
@@ -1346,7 +1334,7 @@ public class UploadAllTask extends UploadTask {
         int c = mReconsentimientos2015.size();
         for (ReConsentimientoDen2015 cons : mReconsentimientos2015) {
             cons.getMovilInfo().setEstado(estado);
-            actualizar.updateRecons2015Sent(cons);
+            estudioAdapter.updateRecons2015Sent(cons);
             publishProgress("Actualizando ReConsentimientoDen2015", Integer.valueOf(mReconsentimientos2015.indexOf(cons)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1356,7 +1344,7 @@ public class UploadAllTask extends UploadTask {
     private void getReConsentimiento2015(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mReconsentimientos2015 = ca.getListaReConsentimientoDen2015sSinEnviar();
+        mReconsentimientos2015 = estudioAdapter.getListaReConsentimientoDen2015sSinEnviar();
         //ca.close();
     }
 
@@ -1407,7 +1395,7 @@ public class UploadAllTask extends UploadTask {
         int c = mConsentimientosZika.size();
         for (ConsentimientoZika cons : mConsentimientosZika) {
             cons.getMovilInfo().setEstado(estado);
-            actualizar.updateConsZikaSent(cons);
+            estudioAdapter.updateConsZikaSent(cons);
             publishProgress("Actualizando ConsentimientoZika", Integer.valueOf(mConsentimientosZika.indexOf(cons)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1417,7 +1405,7 @@ public class UploadAllTask extends UploadTask {
     private void getConsentimientoZika(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mConsentimientosZika = ca.getListaConsentimientoZikasSinEnviar();
+        mConsentimientosZika = estudioAdapter.getListaConsentimientoZikasSinEnviar();
         //ca.close();
     }
 
@@ -1467,7 +1455,7 @@ public class UploadAllTask extends UploadTask {
         int c = mCodigosCasas.size();
         for (CodigosCasas cons : mCodigosCasas) {
             cons.setEstado(estado);
-            actualizar.updateCodigosCasasSent(cons);
+            estudioAdapter.updateCodigosCasasSent(cons);
             publishProgress("Actualizando CodigosCasas", Integer.valueOf(mCodigosCasas.indexOf(cons)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1477,7 +1465,7 @@ public class UploadAllTask extends UploadTask {
     private void getCodigosCasas(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mCodigosCasas = ca.getListaCodigosCasasSinEnviar();
+        mCodigosCasas = estudioAdapter.getListaCodigosCasasSinEnviar();
         //ca.close();
     }
 
@@ -1528,7 +1516,7 @@ public class UploadAllTask extends UploadTask {
         int c = mCambiosCasas.size();
         for (CambiosCasas cons : mCambiosCasas) {
             cons.setEstado(estado);
-            actualizar.updateCambiosCasasSent(cons);
+            estudioAdapter.updateCambiosCasasSent(cons);
             publishProgress("Actualizando CambiosCasas", Integer.valueOf(mCambiosCasas.indexOf(cons)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1538,7 +1526,7 @@ public class UploadAllTask extends UploadTask {
     private void getCambiosCasas(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mCambiosCasas = ca.getListaCambiosCasasSinEnviar();
+        mCambiosCasas = estudioAdapter.getListaCambiosCasasSinEnviar();
         //ca.close();
     }
 
@@ -1589,7 +1577,7 @@ public class UploadAllTask extends UploadTask {
         int c = mCambiosEstudio.size();
         for (CambioEstudio cons : mCambiosEstudio) {
             cons.getMovilInfo().setEstado(estado);
-            actualizar.updateCambiosEstudioSent(cons);
+            estudioAdapter.updateCambiosEstudioSent(cons);
             publishProgress("Actualizando CambioEstudio", Integer.valueOf(mCambiosEstudio.indexOf(cons)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1599,7 +1587,7 @@ public class UploadAllTask extends UploadTask {
     private void getCambiosEstudio(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mCambiosEstudio = ca.getListaCambiosEstudioSinEnviar();
+        mCambiosEstudio = estudioAdapter.getListaCambiosEstudioSinEnviar();
         //ca.close();
     }
 
@@ -1651,7 +1639,7 @@ public class UploadAllTask extends UploadTask {
         int c = mRecepcionBHCs.size();
         for (RecepcionBHC bhc : mRecepcionBHCs) {
             bhc.setEstado(estado);
-            actualizar.updateBHCsSent(bhc);
+            estudioAdapter.updateBHCsSent(bhc);
             publishProgress("Actualizando RecepcionBHC", Integer.valueOf(mRecepcionBHCs.indexOf(bhc)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1661,7 +1649,7 @@ public class UploadAllTask extends UploadTask {
     private void getRecepcionBHCs(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mRecepcionBHCs = ca.getListaRecepcionBHCSinEnviar();
+        mRecepcionBHCs = estudioAdapter.getListaRecepcionBHCSinEnviar();
         //ca.close();
     }
 
@@ -1712,7 +1700,7 @@ public class UploadAllTask extends UploadTask {
         int c = mRecepcionSeros.size();
         for (RecepcionSero rojo : mRecepcionSeros) {
             rojo.setEstado(estado);
-            actualizar.updateSerosSent(rojo);
+            estudioAdapter.updateSerosSent(rojo);
             publishProgress("Actualizando RecepcionSero", Integer.valueOf(mRecepcionSeros.indexOf(rojo)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1722,7 +1710,7 @@ public class UploadAllTask extends UploadTask {
     private void getRecepcionSeros(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mRecepcionSeros = ca.getListaRecepcionSeroSinEnviar();
+        mRecepcionSeros = estudioAdapter.getListaRecepcionSeroSinEnviar();
         //ca.close();
     }
 
@@ -1773,7 +1761,7 @@ public class UploadAllTask extends UploadTask {
         int c = mPinchazos.size();
         for (Pinchazo pinchazo : mPinchazos) {
             pinchazo.setEstado(estado);
-            actualizar.updatePinchazosSent(pinchazo);
+            estudioAdapter.updatePinchazosSent(pinchazo);
             publishProgress("Actualizando Pinchazos", Integer.valueOf(mPinchazos.indexOf(pinchazo)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1783,7 +1771,7 @@ public class UploadAllTask extends UploadTask {
     private void getPinchazos(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mPinchazos = ca.getListaPinchazosSinEnviar();
+        mPinchazos = estudioAdapter.getListaPinchazosSinEnviar();
         //ca.close();
     }
 
@@ -1833,7 +1821,7 @@ public class UploadAllTask extends UploadTask {
         int c = mTempRojoBhcs.size();
         for (TempRojoBhc temp : mTempRojoBhcs) {
             temp.setEstado(estado);
-            actualizar.updateTrojosSent(temp);
+            estudioAdapter.updateTrojosSent(temp);
             publishProgress("Actualizando TempRojoBhc", Integer.valueOf(mTempRojoBhcs.indexOf(temp)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1843,7 +1831,7 @@ public class UploadAllTask extends UploadTask {
     private void getTempRojoBhcs(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mTempRojoBhcs = ca.getListaTempRojoBhcSinEnviar();
+        mTempRojoBhcs = estudioAdapter.getListaTempRojoBhcSinEnviar();
         //ca.close();
     }
 
@@ -1893,7 +1881,7 @@ public class UploadAllTask extends UploadTask {
         int c = mTempPbmcs.size();
         for (TempPbmc temp : mTempPbmcs) {
             temp.setEstado(estado);
-            actualizar.updateTpbmcsSent(temp);
+            estudioAdapter.updateTpbmcsSent(temp);
             publishProgress("Actualizando TempPbmcs", Integer.valueOf(mTempPbmcs.indexOf(temp)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1903,7 +1891,7 @@ public class UploadAllTask extends UploadTask {
     private void getTempPbmcs(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mTempPbmcs = ca.getListaTempPbmcSinEnviar();
+        mTempPbmcs = estudioAdapter.getListaTempPbmcSinEnviar();
         //ca.close();
     }
 
@@ -1954,7 +1942,7 @@ public class UploadAllTask extends UploadTask {
         int c = mEncuestaSatisfaccions.size();
         for (EncuestaSatisfaccion encuesta : mEncuestaSatisfaccions) {
             encuesta.getMovilInfo().setEstado(estado);
-            actualizar.updateEncSatSent(encuesta);
+            estudioAdapter.updateEncSatSent(encuesta);
             publishProgress("Actualizando Encuestas Satisfaccion", Integer.valueOf(mEncuestaSatisfaccions.indexOf(encuesta)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -1964,7 +1952,7 @@ public class UploadAllTask extends UploadTask {
     private void getEncuestaSatisfaccions(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mEncuestaSatisfaccions = ca.getEncuestaSatisfaccionSinEnviar();
+        mEncuestaSatisfaccions = estudioAdapter.getEncuestaSatisfaccionSinEnviar();
         //ca.close();
     }
 
@@ -2015,7 +2003,7 @@ public class UploadAllTask extends UploadTask {
         int c = mRazonNoData.size();
         for (RazonNoData rnd : mRazonNoData) {
             rnd.setEstado(estado);
-            actualizar.updateRazonNoDataSent(rnd);
+            estudioAdapter.updateRazonNoDataSent(rnd);
             publishProgress("Actualizando Razones No Datos", Integer.valueOf(mRazonNoData.indexOf(rnd)).toString(), Integer
                     .valueOf(c).toString());
         }
@@ -2025,7 +2013,7 @@ public class UploadAllTask extends UploadTask {
     private void getRazonNoData(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mRazonNoData = ca.getListaRazonNoDataSinEnviar();
+        mRazonNoData = estudioAdapter.getListaRazonNoDataSinEnviar();
         //ca.close();
     }
 
@@ -2076,17 +2064,17 @@ public class UploadAllTask extends UploadTask {
         int c = mReconsentimientosFlu2015.size();
         for (ReConsentimientoFlu2015 cons : mReconsentimientosFlu2015) {
             cons.getMovilInfo().setEstado(estado);
-            actualizar.updateReconsFlu2015Sent(cons);
+            estudioAdapter.updateReconsFlu2015Sent(cons);
             publishProgress("Actualizando ReConsentimientoFlu2015", Integer.valueOf(mReconsentimientosFlu2015.indexOf(cons)).toString(), Integer
                     .valueOf(c).toString());
         }
-        actualizar.close();
+        //actualizar.close();
     }
 
     private void getReConsentimientoFlu2015(){
         //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
         //ca.open();
-        mReconsentimientosFlu2015 = ca.getListaReConsentimientoFlu2015sSinEnviar();
+        mReconsentimientosFlu2015 = estudioAdapter.getListaReConsentimientoFlu2015sSinEnviar();
         //ca.close();
     }
 

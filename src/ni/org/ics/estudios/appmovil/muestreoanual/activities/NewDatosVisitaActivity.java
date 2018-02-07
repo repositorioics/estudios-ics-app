@@ -19,8 +19,6 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterGetObjects;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.DatosVisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.DatosVisitaTerrenoId;
@@ -56,7 +54,6 @@ public class NewDatosVisitaActivity extends AbstractAsyncActivity {
 	Dialog dialogInit;
 	private boolean visExitosa = false;
 
-    private CohorteAdapter ca;
     private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -74,7 +71,6 @@ public class NewDatosVisitaActivity extends AbstractAsyncActivity {
 						null);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
 		casaId = getIntent().getIntExtra(ConstantsDB.COD_CASA,-1);
@@ -260,9 +256,8 @@ public class NewDatosVisitaActivity extends AbstractAsyncActivity {
 
 
 			//Guarda en la base de datos local
-			ca.open();
-			ca.crearDatosVisita(mVisitaTerreno);
             estudiosAdapter.open();
+			estudiosAdapter.crearDatosVisita(mVisitaTerreno);
             mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
 			for(Participante participante:mParticipantes){
 				if (participante.getCasa().getCodigo()!=9999){
@@ -278,8 +273,6 @@ public class NewDatosVisitaActivity extends AbstractAsyncActivity {
                 estudiosAdapter.editarCasa(mParticipante.getCasa());
 			}
             estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());
-
-			ca.close();
             estudiosAdapter.close();
 			showToast(getApplicationContext().getString(R.string.success),0);
 			

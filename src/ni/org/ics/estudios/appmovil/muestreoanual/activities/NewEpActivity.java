@@ -19,7 +19,6 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.EncuestaParticipante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.EncuestaParticipanteId;
@@ -51,7 +50,6 @@ public class NewEpActivity extends AbstractAsyncActivity {
 	private static EncuestaParticipante mEncuestaParticipante = new EncuestaParticipante();
 	Dialog dialogInit;
     private String esChf=Constants.NO;
-    private CohorteAdapter ca;
     private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -68,7 +66,6 @@ public class NewEpActivity extends AbstractAsyncActivity {
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
 		casaId = getIntent().getIntExtra(ConstantsDB.COD_CASA,-1);
@@ -369,8 +366,8 @@ public class NewEpActivity extends AbstractAsyncActivity {
 					false, em.getRecurso1(), em.getRecurso2()));
 			
 			//Guarda en la base de datos local
-			ca.open();
-			ca.crearEncuestaParticipante(mEncuestaParticipante);
+            estudiosAdapter.open();
+			estudiosAdapter.crearEncuestaParticipante(mEncuestaParticipante);
 			mParticipante.getProcesos().setEncPart("No");
 			mParticipante.getProcesos().setMovilInfo(new MovilInfo(idInstancia,
                     instanceFilePath,
@@ -384,10 +381,9 @@ public class NewEpActivity extends AbstractAsyncActivity {
                     em.getToday(),
                     username,
                     false, em.getRecurso1(), em.getRecurso2()));
-            estudiosAdapter.open();
+
 			estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());
             estudiosAdapter.close();
-			ca.close();
 			showToast(getApplicationContext().getString(R.string.success),0);
 			Intent i = new Intent(getApplicationContext(),
 					MenuInfoActivity.class);

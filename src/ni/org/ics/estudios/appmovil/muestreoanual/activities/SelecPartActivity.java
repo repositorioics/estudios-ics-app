@@ -21,8 +21,6 @@ import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.ParticipanteAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterEnvio;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterGetObjects;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -55,7 +53,6 @@ public class SelecPartActivity extends ListActivity {
 	private Integer codigoCasaAnt;
 
     private EstudiosAdapter estudiosAdapter;
-    private CohorteAdapterEnvio cae;
 
 	private ArrayAdapter<Participante> mParticipanteAdapter;
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
@@ -82,7 +79,6 @@ public class SelecPartActivity extends ListActivity {
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        cae = new CohorteAdapterEnvio(this.getApplicationContext(),mPass,false,false);
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
 		desdeMenuPrincipal = getIntent().getBooleanExtra(Constants.MENU_INFO, true);
@@ -271,12 +267,12 @@ public class SelecPartActivity extends ListActivity {
 					//CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
 					//ca.open();
                     estudiosAdapter.open();
-					Participante mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo+ " = "+String.valueOf(codigoScanned), null);
-                    ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos(); //ca.getParticipanteProceso(codigoScanned);
+					Participante mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo+ " = "+codigoScanned, null);
 
-					if (mParticipante.getCodigo() != null){
+					if (mParticipante!= null && mParticipante.getCodigo() != null){
 						codigo = mParticipante.getCodigo();
 						if (desdeMenuPrincipal){
+                            ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos(); //ca.getParticipanteProceso(codigoScanned);
                             if (mParticipanteProc!=null && (mParticipanteProc.getEstudio()!=null && !mParticipanteProc.getEstudio().isEmpty())) {
                                 Intent i = new Intent(getApplicationContext(),
                                         MenuInfoActivity.class);
@@ -321,7 +317,7 @@ public class SelecPartActivity extends ListActivity {
         estudiosAdapter.open();
 		Participante mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo+ " = "+codigoScanned, null); //ca.getParticipante(codigoScanned);
         estudiosAdapter.close();
-		if (mParticipante.getCodigo() != null){
+		if (mParticipante != null && mParticipante.getCodigo() != null){
 			mParticipantes.add(mParticipante);
 		}
 		else {
@@ -336,7 +332,11 @@ public class SelecPartActivity extends ListActivity {
         estudiosAdapter.open();
 		mParticipantes = estudiosAdapter.getListaParticipantesName(name);
         estudiosAdapter.close();
-		refreshView();
+        if (mParticipantes.size()<=0) {
+            showToast("("+name+") - " + getString(R.string.text_notfound));
+        }
+
+        refreshView();
 	}
 	
 	public void buscarParticipanteApellidos(String lastname){
@@ -344,13 +344,18 @@ public class SelecPartActivity extends ListActivity {
         estudiosAdapter.open();
 		mParticipantes = estudiosAdapter.getListaParticipantesLastName(lastname);
         estudiosAdapter.close();
-		refreshView();
+        if (mParticipantes.size()<=0) {
+            showToast("("+lastname+") - " + getString(R.string.text_notfound));
+        }
+
+        refreshView();
 	}
 	
 	private void refreshView() {
-		mParticipanteAdapter = new ParticipanteAdapter(this, R.layout.complex_list_item,
-				mParticipantes);
-		setListAdapter(mParticipanteAdapter);
+
+            mParticipanteAdapter = new ParticipanteAdapter(this, R.layout.complex_list_item,
+                    mParticipantes);
+            setListAdapter(mParticipanteAdapter);
 	}
 
 	private void showToast(String mensaje){
@@ -413,14 +418,13 @@ public class SelecPartActivity extends ListActivity {
 				// Finish app
 				dialog.dismiss();
 
-				cae.open();
-				cae.createCambioCasa(codigo, codigoCasaAnt, codigoCasa, username);
                 estudiosAdapter.open();
+                estudiosAdapter.createCambioCasa(codigo, codigoCasaAnt, codigoCasa, username);
 				participanteComun = estudiosAdapter.getParticipanteProcesos(ConstantsDB.CODIGO+"="+codigoComun.toString(), null);
+                estudiosAdapter.updateCasaParticipante(codigoCasa, codigo, username, participanteComun.getEnCasa());
                 estudiosAdapter.close();
-				cae.updateCasaParticipante(codigoCasa, codigo, username, participanteComun.getEnCasa());
-				cae.close();
-				finish();
+
+                finish();
 			}
 		});
 		builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {

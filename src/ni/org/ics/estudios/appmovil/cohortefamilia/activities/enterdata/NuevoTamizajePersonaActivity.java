@@ -42,9 +42,13 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
+import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuInfoActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
 import ni.org.ics.estudios.appmovil.wizard.model.DatePage;
@@ -920,8 +924,13 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 String otraRazonNoAceptaInfluenza = datos.getString(this.getString(R.string.otraRazonNoAceptaInfluenza));
                 String razonNoAceptaDengue = datos.getString(this.getString(R.string.razonNoAceptaDengue));
                 String otraRazonNoAceptaDengue = datos.getString(this.getString(R.string.otraRazonNoAceptaDengue));
-	    		
+
+                String tutor = "";
+                Boolean aceptaInfluenza = false;
+                Boolean aceptaDengue = false;
+                String estudios = "CH Familia";
 	    		Participante participante;
+                ParticipanteProcesos procesos;
 	    		MessageResource catParticipadoCohortePediatrica = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participadoCohortePediatrica + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
 	    		//Pregunta si es de la cohorte pediatrica
 	    		Integer codigo = 0;
@@ -929,10 +938,12 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	    			//Si la respuesta es si, buscamos al participante
 	    			if (tieneValor(codigoCohorte)) codigo = Integer.parseInt(codigoCohorte);
 	    			participante = estudiosAdapter.getParticipante(MainDBConstants.codigo +" = "+ codigo , null);
+                    procesos = participante.getProcesos();
 	    		}
 	    		else{
 	    			//Creamos un nuevo participante
 	    			participante = new Participante();
+                    procesos = new ParticipanteProcesos();
 	    			if (tieneValor(codigoNuevoParticipante)) codigo = Integer.parseInt(codigoNuevoParticipante);
 	    			participante.setCodigo(codigo);
 	    			if (tieneValor(nombre1)) participante.setNombre1(nombre1);
@@ -969,7 +980,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	    			participante.setPasive('0');
 	    			//Guarda nuevo participante
 	    			estudiosAdapter.crearParticipante(participante);
-	    		}
+                }
 	    		
 	    		//Obtener datos del bundle para el consentimiento
 	    		
@@ -999,7 +1010,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 String valorContactoFuturo = null;
 	    	    
 	        	//Inserta un nuevo consentimiento
-	    		CartaConsentimiento cc = new CartaConsentimiento();
+                CartaConsentimiento cc = new CartaConsentimiento();
 	    		cc.setCodigo(id);
 	    		cc.setFechaFirma(new Date());
 	    		cc.setTamizaje(t);
@@ -1008,10 +1019,22 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	    			MessageResource catEmancipado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + emancipado + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
 	    			if (catEmancipado!=null) cc.setEmancipado(catEmancipado.getCatKey());
 	    		}
-	    		if (tieneValor(nombre1Tutor)) cc.setNombre1Tutor(nombre1Tutor);
-	    		if (tieneValor(nombre2Tutor)) cc.setNombre2Tutor(nombre2Tutor);
-	    		if (tieneValor(apellido1Tutor)) cc.setApellido1Tutor(apellido1Tutor);
-	    		if (tieneValor(apellido2Tutor)) cc.setApellido2Tutor(apellido2Tutor);
+	    		if (tieneValor(nombre1Tutor)) {
+                    cc.setNombre1Tutor(nombre1Tutor);
+                    tutor += nombre1Tutor;
+                }
+	    		if (tieneValor(nombre2Tutor)) {
+                    cc.setNombre2Tutor(nombre2Tutor);
+                    tutor += " " +nombre2Tutor;
+                }
+	    		if (tieneValor(apellido1Tutor)) {
+                    cc.setApellido1Tutor(apellido1Tutor);
+                    tutor += " " +apellido1Tutor;
+                }
+	    		if (tieneValor(apellido2Tutor)) {
+                    cc.setApellido2Tutor(apellido2Tutor);
+                    tutor += " " +apellido2Tutor;
+                }
 	    		if (tieneValor(relacionFamiliarTutor)) {
 	    			MessageResource catRelacionFamiliarTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + relacionFamiliarTutor + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_RFTUTOR'", null);
 	    			if (catRelacionFamiliarTutor!=null) cc.setRelacionFamiliarTutor(catRelacionFamiliarTutor.getCatKey());
@@ -1146,6 +1169,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         }
                         cc.setAceptaContactoFuturo(null);
                         estudiosAdapter.crearCartaConsentimiento(cc);
+                        aceptaDengue = true;
                     }
                 }
                 //Si acepta participar estudio influenza dengue guardar tamizaje y carta de consentimiento para estudio cohorte influenza
@@ -1175,6 +1199,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         cc.setAceptaParteC(valorParteC);
                         cc.setAceptaParteD(null);
                         estudiosAdapter.crearCartaConsentimiento(cc);
+                        aceptaInfluenza = true;
                     }
                 }
                 //Validar si la casa a la que pertenece esta actualmente en seguimiento.. si es asi, agregar el participante al seguimiento
@@ -1196,17 +1221,75 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         e.printStackTrace();
                     }
                 }
+
+                if(catParticipadoCohortePediatrica.getCatKey().matches(Constants.NOKEYSND)){
+                    procesos.setCodigo(participante.getCodigo());
+                    procesos.setEstPart(1);
+                    procesos.setRetoma(Constants.NO);
+                    procesos.setAdn(Constants.NO);
+                    procesos.setConmx(Constants.YES);
+                    procesos.setConmx(Constants.YES);
+                    procesos.setConmxbhc(Constants.YES);
+                    procesos.setPbmc(Constants.NO);
+                    procesos.setPaxgene(Constants.NO);
+                    procesos.setConPto(Constants.YES);
+                    procesos.setConsDeng(Constants.NO);
+                    procesos.setObsequio(Constants.NO);
+                    procesos.setConsChik(Constants.NO);
+                    procesos.setConsFlu(Constants.NO);
+                    procesos.setReConsDeng(Constants.NO);
+                    procesos.setConvalesciente(Constants.NO);
+                    procesos.setMi(Constants.NO);
+                    procesos.setZika(Constants.NO);
+                    procesos.setPosZika(Constants.NO);
+
+                    procesos.setEnCasa(Constants.YES);
+                    procesos.setEnCasaSa(Constants.YES);
+                    procesos.setEncPart(Constants.YES);
+                    procesos.setEncPartSa(Constants.YES);
+                    procesos.setEncLacMat(Constants.YES);
+                    procesos.setPesoTalla(Constants.YES);
+                    procesos.setDatosParto(Constants.YES);
+                    procesos.setDatosVisita(Constants.YES);
+                    procesos.setInfoVacuna(Constants.YES);
+                }
+
+                procesos.setCasaCHF(casaCHF.getCodigoCHF());
+                procesos.setEnCasaChf(Constants.YES);
+
+                if (tieneValor(cc.getRelacionFamiliarTutor()))
+                    procesos.setRelacionFam(Integer.valueOf(cc.getRelacionFamiliarTutor()));
+                procesos.setTutor(tutor);
+                procesos.setCuantasPers(0);
+                procesos.setVolRetoma(0.0);
+                if (aceptaDengue)
+                    estudios += " " + "Dengue";
+                if (aceptaInfluenza)
+                    estudios += " " + "Influenza";
+                procesos.setEstudio(estudios);
+                MovilInfo movilInfo = new MovilInfo();
+                movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+                movilInfo.setDeviceid(infoMovil.getDeviceId());
+                movilInfo.setUsername(username);
+                movilInfo.setToday(new Date());
+                procesos.setMovilInfo(movilInfo);
+                estudiosAdapter.crearParticipanteProcesos(procesos);
 	        	//Cierra la base de datos
 	        	estudiosAdapter.close();
 	        	
 	        	//Abre el menu para este participante
-	        	Bundle arguments = new Bundle();
+	        	/*Bundle arguments = new Bundle();
 	            if (pchf!=null) arguments.putSerializable(Constants.PARTICIPANTE , pchf);
 	            Intent i = new Intent(getApplicationContext(),
 	            		MenuParticipanteActivity.class);
 	            i.putExtras(arguments);
 	            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	            startActivity(i);
+	            startActivity(i);*/
+                Intent i = new Intent(getApplicationContext(),
+                        MenuInfoActivity.class);
+                i.putExtra(ConstantsDB.CODIGO, codigo);
+                i.putExtra(ConstantsDB.VIS_EXITO, false);
+                startActivity(i);
 	            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
 	    		toast.show();
 	            finish();

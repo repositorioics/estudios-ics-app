@@ -22,9 +22,6 @@ import android.widget.*;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterEnvio;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterGetObjects;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.ParticipanteAdapter;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
@@ -56,7 +53,6 @@ public class ListParticipantesCasaActivity extends ListActivity{
 	private SharedPreferences settings;
 
     private EstudiosAdapter cat = null;
-    private CohorteAdapterEnvio cae = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +77,6 @@ public class ListParticipantesCasaActivity extends ListActivity{
 						null);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         cat = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-        cae = new CohorteAdapterEnvio(this.getApplicationContext(),mPass,false,false);
 		codCasa = getIntent().getIntExtra(ConstantsDB.COD_CASA,-1);
 		codComun = getIntent().getIntExtra("codComun",-1);
 
@@ -268,10 +263,10 @@ public class ListParticipantesCasaActivity extends ListActivity{
 			public void onClick(DialogInterface dialog, int which) {
 				// Finish app
 				dialog.dismiss();
-				cae.open();
-				cae.createCambioCasa(mParticipante.getCodigo(), mParticipante.getCasa().getCodigo(), 9999, username);
-				cae.updateCasaParticipante(9999,mParticipante.getCodigo(),username, "Si");
-				cae.close();
+				cat.open();
+                cat.createCambioCasa(mParticipante.getCodigo(), mParticipante.getCasa().getCodigo(), 9999, username);
+                cat.updateCasaParticipante(9999,mParticipante.getCodigo(),username, "Si");
+                cat.close();
 				getParticipantes();
 				Toast toast = Toast.makeText(getApplicationContext(),"Actualizado!!!!!",Toast.LENGTH_LONG);
 				toast.show();

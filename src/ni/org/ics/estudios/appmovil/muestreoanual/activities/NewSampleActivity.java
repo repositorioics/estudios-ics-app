@@ -19,7 +19,6 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra;
@@ -51,7 +50,6 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 	private static Muestra mMuestra = new Muestra();
 	Dialog dialogInit;
 
-    private CohorteAdapter ca;
     private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -69,7 +67,6 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 						null);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
 		casaId = getIntent().getIntExtra(ConstantsDB.COD_CASA,-1);
@@ -225,8 +222,8 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 					username,
 					false, em.getRecurso1(), em.getRecurso2()));
 			//Guarda en la base de datos local
-			ca.open();
-			ca.crearMuestra(mMuestra);
+            estudiosAdapter.open();
+			estudiosAdapter.crearMuestra(mMuestra);
 			String mxSer = "";
 			if (em.getTuboRojo()!=null){
 				if(em.getTuboRojo().toString().matches("1")){
@@ -275,10 +272,9 @@ public class NewSampleActivity extends AbstractAsyncActivity {
                     em.getToday(),
                     username,
                     false, em.getRecurso1(), em.getRecurso2()));
-            estudiosAdapter.open();
+
 			estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());
             estudiosAdapter.close();
-			ca.close();
 			showToast(getApplicationContext().getString(R.string.success),0);
 			Intent i = new Intent(getApplicationContext(),
 					MenuInfoActivity.class);

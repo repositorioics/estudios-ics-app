@@ -1,15 +1,9 @@
 package ni.org.ics.estudios.appmovil.muestreoanual.tasks;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.util.Log;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
-import ni.org.ics.estudios.appmovil.domain.Casa;
-import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
-import ni.org.ics.estudios.appmovil.domain.users.Authority;
-import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
-import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -63,7 +57,7 @@ public class DownloadAllTask extends DownloadTask {
     private List<TempPbmc> mTempPbmcs = null;
     private List<EncuestaSatisfaccion> mEncuestaSatisfaccions = null;
 
-    private CohorteAdapter ca = null;
+    private EstudiosAdapter ca = null;
 
     private static final String NO_PERMISSION="No tiene acceso a esta opción";
 
@@ -77,7 +71,7 @@ public class DownloadAllTask extends DownloadTask {
         terreno = values[5];
 
         try {
-            ca = new CohorteAdapter(mContext, password, false, false);
+            ca = new EstudiosAdapter(mContext, password, false, false);
             ca.open();
 
             try {

@@ -17,7 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.TempRojoBhc;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.TempRojoBhcId;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.Temp2Adapter;
@@ -150,7 +150,7 @@ public class ListTempRojoBhcActivity extends ListActivity{
 	private void getTemps() {
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        CohorteAdapter ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
+        EstudiosAdapter ca = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		
 		ca.open();
 		Cursor temppbmcs = null;

@@ -18,7 +18,7 @@ import android.widget.*;
 
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.RecepcionSero;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.RecepcionSeroId;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.RojoAdapter;
@@ -151,7 +151,7 @@ public class ListRojosActivity extends ListActivity{
 	private void getMuestras() {
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        CohorteAdapter ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
+        EstudiosAdapter ca = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		
 		ca.open();
 		Cursor tubossero = null;

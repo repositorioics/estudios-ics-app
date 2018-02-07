@@ -2,7 +2,7 @@ package ni.org.ics.estudios.appmovil.muestreoanual.tasks;
 
 import android.content.Context;
 import android.util.Log;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
@@ -27,7 +27,7 @@ public class DownloadUsersRolesTask extends DownloadTask {
 	private List<Authority> roles = null;
     private List<UserPermissions> permisos = null;
 
-    private CohorteAdapter ca = null;
+    private EstudiosAdapter ca = null;
 
     private final Context mContext;
 
@@ -46,7 +46,7 @@ public class DownloadUsersRolesTask extends DownloadTask {
 			permiso = checkRole();
 			if(permiso){
 
-                ca = new CohorteAdapter(mContext, password, false, false);
+                ca = new EstudiosAdapter(mContext, password, false, false);
                 ca.open();
 
 				try {

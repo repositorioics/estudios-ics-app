@@ -35,6 +35,7 @@
     <string name="search_hint">Ingresar texto de búsqueda</string>
     <string name="code_error">Identificador inválido!</string>
     <string name="code_notfound">Identificador no encontrado!</string>
+    <string name="text_notfound">Valor no encontrado!</string>
     <string name="scan_error">Esta lectura es inválida!</string>
     <string name="no_items">No hay registros!</string>
     <string name="today_items">Registros de hoy</string>

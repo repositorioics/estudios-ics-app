@@ -19,7 +19,6 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.VisitaTerreno;
@@ -51,7 +50,6 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 	private static VisitaTerreno mVisitaTerreno = new VisitaTerreno();
 	Dialog dialogInit;
 
-    private CohorteAdapter ca;
     private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -69,7 +67,6 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 						null);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
 		casaId = getIntent().getIntExtra(ConstantsDB.COD_CASA,-1);
@@ -213,10 +210,10 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 
 
 			//Guarda en la base de datos local
-			ca.open();
+			estudiosAdapter.open();
 			if (modPart) estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());
-			ca.crearVisita(mVisitaTerreno);
-			ca.close();
+			estudiosAdapter.crearVisita(mVisitaTerreno);
+			estudiosAdapter.close();
 			showToast(getApplicationContext().getString(R.string.success),0);
 			if (mVisitaTerreno.getVisitaSN()==0){
 				Intent i = new Intent(getApplicationContext(),

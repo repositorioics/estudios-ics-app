@@ -2,8 +2,7 @@ package ni.org.ics.estudios.appmovil.muestreoanual.tasks;
 
 import android.content.Context;
 import android.util.Log;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterEnvio;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterGetObjects;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.Documentos;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -26,8 +25,7 @@ public class UploadDocsTask extends UploadTask {
 	protected static final String TAG = UploadDocsTask.class.getSimpleName();
 	private List<Documentos> mDocumentos = new ArrayList<Documentos>();
 
-    private CohorteAdapterGetObjects cAdap = null;
-    private CohorteAdapterEnvio actualizar = null;
+    private EstudiosAdapter actualizar = null;
 
 	private String url = null;
 	private String username = null;
@@ -42,10 +40,7 @@ public class UploadDocsTask extends UploadTask {
 		username = values[1];
 		password = values[2];
         try {
-            cAdap = new CohorteAdapterGetObjects(mContext, password, false, false);
-            cAdap.open();
-
-            actualizar = new CohorteAdapterEnvio(mContext, password, false, false);
+            actualizar = new EstudiosAdapter(mContext, password, false, false);
             actualizar.open();
             try {
                 getDocumentos();
@@ -55,7 +50,7 @@ public class UploadDocsTask extends UploadTask {
                     c = mDocumentos.size();
                     for (Documentos documento : mDocumentos) {
                         String filtro = "codigo = " + documento.getDocsId().getCodigo() + " and fechaDocumento = " + documento.getDocsId().getFechaDocumento().getTime();
-                        Documentos aEnviar = cAdap.getDocumentos(filtro);
+                        Documentos aEnviar = actualizar.getDocumentos(filtro);
                         saveDocumento(Constants.STATUS_SUBMITTED, documento);
                         error = cargarDocumento(url, username, password, aEnviar);
                         if (!error.matches("Datos recibidos!")) {
@@ -78,7 +73,6 @@ public class UploadDocsTask extends UploadTask {
             e1.printStackTrace();
             return e1.getLocalizedMessage();
         }finally {
-            cAdap.close();
             actualizar.close();
         }
 	}
@@ -112,18 +106,15 @@ public class UploadDocsTask extends UploadTask {
 	}	
 	
 	private void saveDocumento(String estado, Documentos doc) {
-		//CohorteAdapterEnvio actualizar = new CohorteAdapterEnvio();
-		//actualizar.open();
 		doc.setEstado(estado);
 		doc.setFechaRecepcion(new Date());
 		actualizar.updateDocumentosSent(doc);
 		publishProgress("Actualizando documentos", Integer.valueOf(mDocumentos.indexOf(doc)).toString(), Integer
 					.valueOf(c).toString());
-		//actualizar.close();
 	}
 
 	private void getDocumentos(){
-		mDocumentos = cAdap.getDocumentosSinEnviar();
+		mDocumentos = actualizar.getDocumentosSinEnviar();
 	}
 
 }

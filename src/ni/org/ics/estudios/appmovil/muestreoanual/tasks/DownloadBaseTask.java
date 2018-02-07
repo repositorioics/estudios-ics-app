@@ -7,14 +7,11 @@ import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.tasks.DownloadTask;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
@@ -39,8 +36,6 @@ public class DownloadBaseTask extends DownloadTask {
 	
 	protected static final String TAG = DownloadBaseTask.class.getSimpleName();
 	private EstudiosAdapter estudioAdapter = null;
-    private CohorteAdapter ca = null;
-
 
     private List<UserSistema> usuarios = null;
     private List<Authority> roles = null;
@@ -96,19 +91,16 @@ public class DownloadBaseTask extends DownloadTask {
 		publishProgress("Abriendo base de datos...","1","1");
 		estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
 		estudioAdapter.open();
-        ca = new CohorteAdapter(mContext, password, false, false);
-        ca.open();
-
         //Borrar los datos de la base de datos
         estudioAdapter.borrarMessageResource();
-        ca.borrarTodosUsuarios();
-        ca.borrarTodosRoles();
-        ca.borrarTodosPermisos();
+        estudioAdapter.borrarTodosUsuarios();
+        estudioAdapter.borrarTodosRoles();
+        estudioAdapter.borrarTodosPermisos();
 		estudioAdapter.borrarEstudios();
 		estudioAdapter.borrarBarrios();
 		estudioAdapter.borrarCasas();
 		estudioAdapter.borrarParticipantes();
-        ca.borrarTodosParticipantesProcesos();
+        estudioAdapter.borrarTodosParticipantesProcesos();
         estudioAdapter.borrarCasaCohorteFamilias();
         estudioAdapter.borrarParticipanteCohorteFamilias();
         estudioAdapter.borrarParticipanteSeroprevalencia();
@@ -240,7 +232,6 @@ public class DownloadBaseTask extends DownloadTask {
 			e.printStackTrace();
 			return e.getLocalizedMessage();
 		}finally {
-            ca.close();
             estudioAdapter.close();
 
         }
@@ -505,11 +496,11 @@ public class DownloadBaseTask extends DownloadTask {
 
         while (iter.hasNext()){
             UserSistema usuario = iter.next();
-            if (!ca.existeUsuario(usuario.getUsername())){
-                ca.crearUsuario(usuario);
+            if (!estudioAdapter.existeUsuario(usuario.getUsername())){
+                estudioAdapter.crearUsuario(usuario);
             }
             else{
-                ca.actualizarUsuario(usuario);
+                estudioAdapter.actualizarUsuario(usuario);
             }
             publishProgress("Insertando Usuarios", Integer.valueOf(iter.nextIndex()).toString(), Integer
                     .valueOf(v).toString());
@@ -523,7 +514,7 @@ public class DownloadBaseTask extends DownloadTask {
         ListIterator<Authority> iter = roles.listIterator();
 
         while (iter.hasNext()){
-            ca.crearRol(iter.next());
+            estudioAdapter.crearRol(iter.next());
             publishProgress("Insertando Roles", Integer.valueOf(iter.nextIndex()).toString(), Integer
                     .valueOf(v).toString());
         }
@@ -535,7 +526,7 @@ public class DownloadBaseTask extends DownloadTask {
         ListIterator<UserPermissions> iter = permisos.listIterator();
 
         while (iter.hasNext()){
-            ca.crearPermisosUsuario(iter.next());
+            estudioAdapter.crearPermisosUsuario(iter.next());
             publishProgress("Insertando Permisos", Integer.valueOf(iter.nextIndex()).toString(), Integer
                     .valueOf(v).toString());
         }
@@ -545,7 +536,7 @@ public class DownloadBaseTask extends DownloadTask {
         int v = participantes.size();
         ListIterator<ParticipanteProcesos> iter = participantes.listIterator();
         while (iter.hasNext()){
-            ca.crearParticipanteProcesos(iter.next());
+            estudioAdapter.crearParticipanteProcesos(iter.next());
             publishProgress("Participantes Procesos", Integer.valueOf(iter.nextIndex()).toString(), Integer
                     .valueOf(v).toString());
         }

@@ -15,10 +15,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.MenuReviewAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterGetObjects;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 
@@ -44,7 +44,7 @@ public class MenuReviewActivity extends Activity {
 	private GridView gridView;
 	private TextView textView;
 
-    private CohorteAdapterGetObjects ca;
+    private EstudiosAdapter ca;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -58,7 +58,7 @@ public class MenuReviewActivity extends Activity {
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapterGetObjects(this.getApplicationContext(),mPass,false,false);
+        ca = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		getData();
 		String[] menu_info = getResources().getStringArray(R.array.menu_review);
 		textView = (TextView) findViewById(R.id.label);

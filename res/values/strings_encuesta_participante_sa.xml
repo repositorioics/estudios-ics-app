@@ -38,7 +38,7 @@
     <string name="usaRopa">¿Usted usa ropa (pantalón largo, camisa manga larga) para protegerse de piquete de zancudo?</string>
     <string name="embarazadaUltAnio">¿Estuvo embarazada en el ultimo año?</string>
     <string name="visitaCemeneterio">¿Visita el cementerio?</string>
-    <string name="cadaCuantoVisitaCem">¿Cada cuanto visita el cementerio al año?</string>
+    <string name="cadaCuantoVisitaCem">¿Cuántas veces visita el cementerio al año?</string>
     <string name="cadaCuantoVisitaCemHint">Indicar la cantidad de veces que visita el cementerio al año</string>
     <string name="mesesVisitaCementerio">¿En qué meses visita el cementerio? </string>
     <string name="descOtroMetodo">Si dice que si, ¿Qué otro metodo?</string>

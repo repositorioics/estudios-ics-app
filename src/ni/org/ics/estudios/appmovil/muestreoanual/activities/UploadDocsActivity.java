@@ -14,7 +14,6 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.muestreoanual.tasks.UploadDocsTask;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;

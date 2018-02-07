@@ -28,15 +28,12 @@ import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterGetObjects;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.MenuInfoAdapter;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
@@ -98,8 +95,6 @@ public class MenuInfoActivity extends Activity {
     private MenuItem encCasaSaItem;
     private MenuItem encPartSaItem;
 
-    private CohorteAdapter ca;
-    private CohorteAdapterGetObjects cat;
     private EstudiosAdapter estudiosAdapter;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -120,8 +115,6 @@ public class MenuInfoActivity extends Activity {
                         null);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
-        cat = new CohorteAdapterGetObjects(this.getApplicationContext(),mPass,false,false);
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
         if (savedInstanceState != null) {
@@ -284,34 +277,29 @@ public class MenuInfoActivity extends Activity {
     }
 
     private void getParticipanteData() {
-        //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
-        ca.open();
-        cat.open();
         estudiosAdapter.open();
         mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo  + "="+codigo, null);
-        mReConsentimientoFlu = cat.getListaReConsentimientoFlu2015(codigo);
-        mVisitasTerreno=cat.getListaVisitaTerreno(codigo);
-        mPyTs = cat.getListaPesoyTallas(codigo);
-        if(mParticipante.getCasa().getCodigo()!=9999) mEncuestasCasas = cat.getListaEncuestaCasas(mParticipante.getCasa().getCodigo());
-        mEncuestasParticipantes = cat.getListaEncuestaParticipantes(codigo);
-        mEncuestasLactancias = cat.getListaLactanciaMaternas(codigo);
-        mReConsentimientoDen=cat.getListaReConsentimientoDen2015(codigo);
-        mMuestras=cat.getListaMuestras(codigo);
-        mObsequios=cat.getListaObsequios(codigo);
-        mConsentimientoZikas=cat.getListaConsentimientoZika(codigo);
-        mDatosVisitaTerreno = cat.getListaDatosVisitaTerreno(codigo);
+        mReConsentimientoFlu = estudiosAdapter.getListaReConsentimientoFlu2015(codigo);
+        mVisitasTerreno=estudiosAdapter.getListaVisitaTerreno(codigo);
+        mPyTs = estudiosAdapter.getListaPesoyTallas(codigo);
+        if(mParticipante.getCasa().getCodigo()!=9999) mEncuestasCasas = estudiosAdapter.getListaEncuestaCasas(mParticipante.getCasa().getCodigo());
+        mEncuestasParticipantes = estudiosAdapter.getListaEncuestaParticipantes(codigo);
+        mEncuestasLactancias = estudiosAdapter.getListaLactanciaMaternas(codigo);
+        mReConsentimientoDen=estudiosAdapter.getListaReConsentimientoDen2015(codigo);
+        mMuestras=estudiosAdapter.getListaMuestras(codigo);
+        mObsequios=estudiosAdapter.getListaObsequios(codigo);
+        mConsentimientoZikas=estudiosAdapter.getListaConsentimientoZika(codigo);
+        mDatosVisitaTerreno = estudiosAdapter.getListaDatosVisitaTerreno(codigo);
         mUser = estudiosAdapter.getPermisosUsuario(ConstantsDB.USERNAME + "='" +username+"'", null);
         String filtro = ConstantsDB.CODIGO + "=" + codigo;
-        mDatosPartoBBs = ca.getDatosPartoBBs(filtro, null);
-        mVacunas=ca.getNewVacunas(filtro, null);
-        mDocumentos =ca.getDocumentoss(filtro, null);
+        mDatosPartoBBs = estudiosAdapter.getDatosPartoBBs(filtro, null);
+        mVacunas=estudiosAdapter.getNewVacunas(filtro, null);
+        mDocumentos =estudiosAdapter.getDocumentoss(filtro, null);
         if(mParticipante.getCasa().getCodigo()!=9999){
-            mEncuestasCasasChf = cat.getListaEncuestaCasasChf(mParticipante.getProcesos().getCasaCHF());
+            mEncuestasCasasChf = estudiosAdapter.getListaEncuestaCasasChf(mParticipante.getProcesos().getCasaCHF());
             mEncuestasCasasSa = (ArrayList)estudiosAdapter.getEncuestasCasaSA(SeroprevalenciaDBConstants.casa + "=" + mParticipante.getCasa().getCodigo() , null);
         }
         mEncuestasParticipantesSa = (ArrayList)estudiosAdapter.getEncuestasParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo() , null);
-        ca.close();
-        cat.close();
         estudiosAdapter.close();
         refreshView();
     }
@@ -1006,7 +994,7 @@ public class MenuInfoActivity extends Activity {
                 return true;
             case R.id.ENCASA_CHF:
                 if(mUser.getEncuestaCasa()){
-                    if(mParticipante.getProcesos().getEnCasaChf().matches("Si")){
+                    if(mParticipante.getProcesos().getEnCasaChf().matches("Si") && (mParticipante.getProcesos().getCasaCHF()!=null && !mParticipante.getProcesos().getCasaCHF().isEmpty())){
                         i = new Intent(getApplicationContext(),
                                 NewEcActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

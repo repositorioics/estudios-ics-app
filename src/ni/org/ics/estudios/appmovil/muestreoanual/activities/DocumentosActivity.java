@@ -36,7 +36,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.Documentos;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.DocumentosId;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
@@ -419,7 +419,7 @@ public class DocumentosActivity extends Activity {
 		documento.setFechaRecepcion(new Date());
 		documento.setToday(todayWithZeroTime);
         String password = ((MyIcsApplication) this.getApplication()).getPassApp();
-		CohorteAdapter ca = new CohorteAdapter(this.getApplicationContext(), password,false, false);
+		EstudiosAdapter ca = new EstudiosAdapter(this.getApplicationContext(), password,false, false);
 		ca.open();
 		ca.crearDocumentos(documento);
 		ca.close();

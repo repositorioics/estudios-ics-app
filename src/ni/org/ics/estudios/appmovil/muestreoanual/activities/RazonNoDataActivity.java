@@ -23,10 +23,10 @@ import android.view.View;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapter;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.RazonNoData;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.RazonNoDataId;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
@@ -53,7 +53,7 @@ public class RazonNoDataActivity extends AbstractAsyncActivity{
 	private SharedPreferences settings;
 	private String username;
 
-    private CohorteAdapter ca;
+    private EstudiosAdapter ca;
 
 	// ***************************************
 	// Activity methods
@@ -69,7 +69,7 @@ public class RazonNoDataActivity extends AbstractAsyncActivity{
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapter(this.getApplicationContext(),mPass,false,false);
+        ca = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		codigo = getIntent().getIntExtra(ConstantsDB.CODIGO,-1);
 		rndSpinner = (Spinner) findViewById(R.id.razon);
 		List<String> rnds = new ArrayList<String>();

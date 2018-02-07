@@ -17,9 +17,8 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.adapters.ParticipanteAdapter;
-import ni.org.ics.estudios.appmovil.database.muestreoanual.CohorteAdapterGetObjects;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
-import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class SelecPartRecepcionActivity extends ListActivity {
 	private ArrayAdapter<Participante> mParticipanteAdapter;
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
 
-    private CohorteAdapterGetObjects ca;
+    private EstudiosAdapter ca;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -52,7 +51,7 @@ public class SelecPartRecepcionActivity extends ListActivity {
 		setContentView(R.layout.selec_part_pdcs_list);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new CohorteAdapterGetObjects(this.getApplicationContext(),mPass,false,false);
+        ca = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);

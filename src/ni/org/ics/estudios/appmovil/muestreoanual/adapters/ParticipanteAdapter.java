@@ -71,13 +71,13 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 			labelHeader = labelHeader + "Barrio: " + parti.getCasa().getBarrio().getNombre()+"<br />";
 			labelHeader = labelHeader + "Dirección: " + parti.getCasa().getDireccion()+"<br />";
 			labelHeader = labelHeader + "Manzana: " + parti.getCasa().getManzana()+"<br />";
-			//labelHeader = labelHeader + "Personas en la casa: " + parti.getCuantasPers()+"<br />";
+			labelHeader = labelHeader + "Personas en la casa: " + procesos.getCuantasPers()+"<br />";
 			labelHeader = labelHeader + "------------<br />";
 			if (procesos.getEstPart().equals(0)){
 				labelHeader = labelHeader + "<br /><font color='red'>Participante retirado</font>";
 			}
 			else{
-				//if (participante.getPosZika().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante positivo a ZIKA</b></font><br />";
+				if (procesos.getPosZika().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante positivo a ZIKA</b></font><br />";
 				if (procesos.getMi().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante en monitoreo intensivo CHF</b></font><br />";
 				//if (participante.getCand().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante candidato a CHF</b></font><br />";
 				if (procesos.getConsFlu().matches("Si")|| procesos.getPesoTalla().matches("Si")

@@ -357,7 +357,7 @@ public class MenuInfoActivity extends Activity {
             default:
                 relacion = "Sin Relación Familiar";
         }
-        //labelHeader = labelHeader + "<small><font color='black'>"+mParticipante.getNombrePt1();
+        labelHeader = labelHeader + "<small><font color='black'>"+mParticipante.getProcesos().getTutor();
         labelHeader = labelHeader +" - ("+ relacion +")" +"</font></small><br />";
         labelHeader = labelHeader + "<small><font color='black'>Personas en casa: "+mParticipante.getProcesos().getCuantasPers()+"</font></small><br />";
 

@@ -148,6 +148,7 @@ public class ConstantsDB {
     public static final String enCasaChf = "enCasaChf";
     public static final String enCasaSa = "enCasaSa";
     public static final String encPartSa = "encPartSa";
+    public static final String tutor = "tutor";
 
     //Campos encuesta casa
     public static final String FECHA_ENC_CASA = "fecha_encuesta";
@@ -926,6 +927,7 @@ public class ConstantsDB {
             + enCasaChf  + " text, "
             + enCasaSa  + " text, "
             + encPartSa  + " text, "
+            + tutor  + " text, "
             + ID_INSTANCIA + " integer,"
             + FILE_PATH + " text,"
             + STATUS + " text, "

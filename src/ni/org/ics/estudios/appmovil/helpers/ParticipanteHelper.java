@@ -111,6 +111,7 @@ public class ParticipanteHelper {
         mPart.setEnCasaChf(participantes.getString(participantes.getColumnIndex(ConstantsDB.enCasaChf)));
         mPart.setEnCasaSa(participantes.getString(participantes.getColumnIndex(ConstantsDB.enCasaSa)));
         mPart.setEncPartSa(participantes.getString(participantes.getColumnIndex(ConstantsDB.encPartSa)));
+        mPart.setTutor(participantes.getString(participantes.getColumnIndex(ConstantsDB.tutor)));
 
         Boolean borrado = participantes.getInt(participantes.getColumnIndex(ConstantsDB.DELETED))>0;
 		mPart.setMovilInfo(new MovilInfo(participantes.getInt(participantes.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
@@ -172,6 +173,7 @@ public class ParticipanteHelper {
         cv.put(ConstantsDB.enCasaChf, participante.getEnCasaChf());
         cv.put(ConstantsDB.enCasaSa, participante.getEnCasaSa());
         cv.put(ConstantsDB.encPartSa, participante.getEncPartSa());
+        cv.put(ConstantsDB.tutor, participante.getTutor());
 
         cv.put(ConstantsDB.ID_INSTANCIA, participante.getMovilInfo().getIdInstancia());
         cv.put(ConstantsDB.FILE_PATH, participante.getMovilInfo().getInstancePath());

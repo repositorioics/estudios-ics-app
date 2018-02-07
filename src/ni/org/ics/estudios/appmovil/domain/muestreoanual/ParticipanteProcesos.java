@@ -45,6 +45,7 @@ public class ParticipanteProcesos implements Serializable {
     private String enCasaChf;
     private String enCasaSa;
     private String encPartSa;
+    private String tutor;
 
     private MovilInfo movilInfo;
 
@@ -318,5 +319,13 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setEncPartSa(String encPartSa) {
         this.encPartSa = encPartSa;
+    }
+
+    public String getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(String tutor) {
+        this.tutor = tutor;
     }
 }

@@ -54,6 +54,10 @@ public class PyTXml {
 	private Double difPeso;
 	@Element(required=false)
 	private Double difTalla;
+    @Element(required=false)
+    private String TOMA_MEDIDAS;
+    @Element(required=false)
+    private String RAZON_NO_TOMA_MEDIDAS;
 	
 	@Element(required=false)
 	private Integer otrorecurso1;
@@ -349,6 +353,19 @@ public class PyTXml {
 		this.otrorecurso2 = otrorecurso2;
 	}
 
+    public String getTOMA_MEDIDAS() {
+        return TOMA_MEDIDAS;
+    }
 
+    public void setTOMA_MEDIDAS(String TOMA_MEDIDAS) {
+        this.TOMA_MEDIDAS = TOMA_MEDIDAS;
+    }
 
+    public String getRAZON_NO_TOMA_MEDIDAS() {
+        return RAZON_NO_TOMA_MEDIDAS;
+    }
+
+    public void setRAZON_NO_TOMA_MEDIDAS(String RAZON_NO_TOMA_MEDIDAS) {
+        this.RAZON_NO_TOMA_MEDIDAS = RAZON_NO_TOMA_MEDIDAS;
+    }
 }

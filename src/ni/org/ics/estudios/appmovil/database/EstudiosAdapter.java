@@ -2820,8 +2820,8 @@ public class EstudiosAdapter {
 
     public Cursor buscarCasa(Integer cod_casa) throws SQLException {
         Cursor c = null;
-        c = mDb.query(true, ConstantsDB.CASA_TABLE, null,
-                ConstantsDB.COD_CASA + "=" + cod_casa, null, null, null, null, null);
+        c = mDb.query(true, MainDBConstants.CASA_TABLE, null,
+                MainDBConstants.codigo + "=" + cod_casa, null, null, null, null, null);
 
         if (c != null) {
             c.moveToFirst();
@@ -2838,8 +2838,8 @@ public class EstudiosAdapter {
 
     public Cursor buscarParticipante(Integer codigo) throws SQLException {
         Cursor c = null;
-        c = mDb.query(true, ConstantsDB.PART_TABLE, null,
-                ConstantsDB.CODIGO + "=" + codigo, null, null, null, null, null);
+        c = mDb.query(true, MainDBConstants.PARTICIPANTE_TABLE, null,
+                MainDBConstants.codigo + "=" + codigo, null, null, null, null, null);
 
         if (c != null) {
             c.moveToFirst();
@@ -3273,6 +3273,8 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.IMC3, pt.getImc3());
         cv.put(ConstantsDB.DIFPESO, pt.getDifPeso());
         cv.put(ConstantsDB.DIFTALLA, pt.getDifTalla());
+        cv.put(ConstantsDB.tomoMedidaSn, pt.getTomoMedidaSn());
+        cv.put(ConstantsDB.razonNoTomoMedidas, pt.getRazonNoTomoMedidas());
         cv.put(ConstantsDB.otrorecurso1, pt.getOtrorecurso1());
         cv.put(ConstantsDB.otrorecurso2, pt.getOtrorecurso2());
         cv.put(ConstantsDB.ID_INSTANCIA, pt.getMovilInfo().getIdInstancia());
@@ -5809,6 +5811,8 @@ public class EstudiosAdapter {
 
         if(!pesajes.isNull(pesajes.getColumnIndex(ConstantsDB.DIFPESO))) mPyT.setDifPeso(pesajes.getDouble(pesajes.getColumnIndex(ConstantsDB.DIFPESO)));
         if(!pesajes.isNull(pesajes.getColumnIndex(ConstantsDB.DIFTALLA))) mPyT.setDifTalla(pesajes.getDouble(pesajes.getColumnIndex(ConstantsDB.DIFTALLA)));
+        mPyT.setTomoMedidaSn(pesajes.getString(pesajes.getColumnIndex(ConstantsDB.tomoMedidaSn)));
+        mPyT.setRazonNoTomoMedidas(pesajes.getString(pesajes.getColumnIndex(ConstantsDB.razonNoTomoMedidas)));
 
         if(!pesajes.isNull(pesajes.getColumnIndex(ConstantsDB.otrorecurso1))) mPyT.setOtrorecurso1(pesajes.getInt(pesajes.getColumnIndex(ConstantsDB.otrorecurso1)));
         if(!pesajes.isNull(pesajes.getColumnIndex(ConstantsDB.otrorecurso2))) mPyT.setOtrorecurso2(pesajes.getInt(pesajes.getColumnIndex(ConstantsDB.otrorecurso2)));

@@ -35,8 +35,11 @@ public class PesoyTalla implements Serializable {
 	private MovilInfo movilInfo;
 	private Integer otrorecurso1;
 	private Integer otrorecurso2;
+    private String tomoMedidaSn;
+    private String razonNoTomoMedidas;
 
-	public Integer getOtrorecurso1() {
+
+    public Integer getOtrorecurso1() {
 		return otrorecurso1;
 	}
 
@@ -155,8 +158,24 @@ public class PesoyTalla implements Serializable {
 	public void setPtId(PesoyTallaId ptId) {
 		this.ptId = ptId;
 	}
-	
-	@Override
+
+    public String getTomoMedidaSn() {
+        return tomoMedidaSn;
+    }
+
+    public void setTomoMedidaSn(String tomoMedidaSn) {
+        this.tomoMedidaSn = tomoMedidaSn;
+    }
+
+    public String getRazonNoTomoMedidas() {
+        return razonNoTomoMedidas;
+    }
+
+    public void setRazonNoTomoMedidas(String razonNoTomoMedidas) {
+        this.razonNoTomoMedidas = razonNoTomoMedidas;
+    }
+
+    @Override
 	public String toString() {
 		return this.getPtId().getCodigo().toString();
 	}

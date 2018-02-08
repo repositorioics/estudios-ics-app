@@ -441,6 +441,8 @@ public class ConstantsDB {
     public static final String IMC3 = "imc3";
     public static final String DIFPESO = "difpeso";
     public static final String DIFTALLA = "diftalla";
+    public static final String tomoMedidaSn = "tomoMedidaSn";
+    public static final String razonNoTomoMedidas = "razonNoTomoMedidas";
 
     //Campos muestras
     public static final String FECHA_MUESTRA = "fecha_muestra";
@@ -1296,6 +1298,8 @@ public class ConstantsDB {
             + IMC3 + " real, "
             + DIFPESO + " real, "
             + DIFTALLA + " real, "
+            + tomoMedidaSn  + " text, "
+            + razonNoTomoMedidas  + " text, "
             + otrorecurso1  + " integer, "
             + otrorecurso2  + " integer, "
             + ID_INSTANCIA + " integer not null,"

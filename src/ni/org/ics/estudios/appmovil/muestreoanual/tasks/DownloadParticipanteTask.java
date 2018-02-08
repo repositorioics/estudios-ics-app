@@ -6,6 +6,8 @@ import android.util.Log;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -26,6 +28,7 @@ public class DownloadParticipanteTask extends DownloadTask {
 	private String password = null;
 	private List<Casa> casas = null;
 	private List<Participante> participantes = null;
+    private List<ParticipanteProcesos> participantesProcesos = null;
 
     private EstudiosAdapter ca = null;
 
@@ -105,6 +108,27 @@ public class DownloadParticipanteTask extends DownloadTask {
 
 					//ca.close();
 				}
+
+                try {
+                    error = descargarParticipantesProcesos();
+                } catch (Exception e) {
+                    // Regresa error al descargar
+                    e.printStackTrace();
+                    return e.getLocalizedMessage();
+                }
+
+                if (participantesProcesos != null){
+                    ParticipanteProcesos procesos = ca.getParticipanteProcesos(ConstantsDB.CODIGO + "="+codigo, null);
+                    if (procesos==null){
+                        try {
+                            addParticipantesProc(participantesProcesos);
+                        } catch (Exception e) {
+                            // Regresa error al insertar
+                            e.printStackTrace();
+                            return e.getLocalizedMessage();
+                        }
+                    }
+                }
 			}
 			else{
 				error = "No encontrado..";
@@ -250,5 +274,54 @@ public class DownloadParticipanteTask extends DownloadTask {
 			return e.getLocalizedMessage();	
 		}
 	}
+
+    // url, username, password
+    protected String descargarParticipantesProcesos() throws Exception {
+        try {
+            // The URL for making the GET request
+            final String urlRequest = url + "/movil/participanteprocesos/{codigo}";
+
+            // Set the Accept header for "application/json"
+            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+            HttpHeaders requestHeaders = new HttpHeaders();
+            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+            requestHeaders.setAccept(acceptableMediaTypes);
+            requestHeaders.setAuthorization(authHeader);
+
+            // Populate the headers in an HttpEntity object to use for the request
+            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+
+            // Perform the HTTP GET request
+            ResponseEntity<ParticipanteProcesos[]> responseEntity = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ParticipanteProcesos[].class, codigo);
+
+            // convert the array to a list and return it
+            participantesProcesos = Arrays.asList(responseEntity.getBody());
+            return null;
+
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getLocalizedMessage();
+        }
+    }
+
+    private void addParticipantesProc(List<ParticipanteProcesos> participantes) throws Exception {
+
+        int v = participantes.size();
+
+        ListIterator<ParticipanteProcesos> iter = participantes.listIterator();
+
+        while (iter.hasNext()){
+            ca.crearParticipanteProcesos(iter.next());
+            publishProgress("Participantes Procesos", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                    .valueOf(v).toString());
+        }
+
+    }
 
 }

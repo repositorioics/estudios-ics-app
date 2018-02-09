@@ -108,5 +108,8 @@
         <item>@string/datos_parto</item>
         <item>@string/datos_casa</item>
         <item>@string/info_docs</item>
+        <item>@string/info_casachf</item>
+        <item>@string/info_casasa</item>
+        <item>@string/info_participantesa</item>
     </string-array>
 </resources>

@@ -42,13 +42,11 @@ public class DownloadUsersRolesTask extends DownloadTask {
 		username = values[1];
 		password = values[2];
 
+        ca = new EstudiosAdapter(mContext, password, false, false);
+        ca.open();
 		try {
 			permiso = checkRole();
 			if(permiso){
-
-                ca = new EstudiosAdapter(mContext, password, false, false);
-                ca.open();
-
 				try {
 					error = descargarUsuarios();
 				} catch (Exception e) {
@@ -58,10 +56,7 @@ public class DownloadUsersRolesTask extends DownloadTask {
 				}
 
 				if (usuarios != null){
-					// open db and clean entries
-					//ca.open();
-					//ca.borrarTodosUsuarios();
-					// download and insert barrios
+					ca.borrarTodosUsuarios();
 					try {
 						addUsuarios(usuarios);
 					} catch (Exception e) {
@@ -69,8 +64,6 @@ public class DownloadUsersRolesTask extends DownloadTask {
 						e.printStackTrace();
 						return e.getLocalizedMessage();
 					}
-					// close db and stream
-					//ca.close();
 				}
 
 				try {
@@ -82,10 +75,7 @@ public class DownloadUsersRolesTask extends DownloadTask {
 				}
 
 				if (roles != null){
-					// open db and clean entries
-					//ca.open();
 					ca.borrarTodosRoles();
-					// download and insert barrios
 					try {
 						addRoles(roles);
 					} catch (Exception e) {
@@ -93,16 +83,7 @@ public class DownloadUsersRolesTask extends DownloadTask {
 						e.printStackTrace();
 						return e.getLocalizedMessage();
 					}
-					// close db and stream
-					//ca.close();
 				}
-                try {
-                    error = descargarRoles();
-                } catch (Exception e) {
-                    // Regresa error al descargar
-                    e.printStackTrace();
-                    return e.getLocalizedMessage();
-                }
 
                 try {
                     error = descargarPermisosUsuarios();

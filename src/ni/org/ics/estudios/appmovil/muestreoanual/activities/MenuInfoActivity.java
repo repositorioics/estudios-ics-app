@@ -4,7 +4,10 @@ package ni.org.ics.estudios.appmovil.muestreoanual.activities;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,7 +19,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.Html;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +28,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
+import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
@@ -39,12 +44,13 @@ import ni.org.ics.estudios.appmovil.muestreoanual.adapters.MenuInfoAdapter;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaCasaSAActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaParticipanteSAActivity;
+import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.SeroprevalenciaDBConstants;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
-public class MenuInfoActivity extends Activity {
+public class MenuInfoActivity extends AbstractAsyncActivity {
 
     private Integer codigo;
     private static Participante mParticipante = new Participante();
@@ -66,6 +72,7 @@ public class MenuInfoActivity extends Activity {
     private ArrayList<EncuestaCasa> mEncuestasCasasChf = new ArrayList<EncuestaCasa>();
     private ArrayList<EncuestaCasaSA> mEncuestasCasasSa = new ArrayList<EncuestaCasaSA>();
     private ArrayList<EncuestaParticipanteSA> mEncuestasParticipantesSa = new ArrayList<EncuestaParticipanteSA>();
+    private List<MessageResource> catRelacionFamiliar = new ArrayList<MessageResource>();
 
     private String username;
     private SharedPreferences settings;
@@ -125,20 +132,19 @@ public class MenuInfoActivity extends Activity {
         }
         codigo = getIntent().getIntExtra(ConstantsDB.CODIGO,-1);
         visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
-
-        String[] menu_info = getResources().getStringArray(R.array.menu_info);
-        gridView = (GridView) findViewById(R.id.gridView1);
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-        View headerView = layoutInflater.inflate(R.layout.test_header_view, null);
-        //gridView.addHeaderView(headerView);
+        mParticipante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         textView = (TextView) findViewById(R.id.label);
-        getParticipanteData();
+        gridView = (GridView) findViewById(R.id.gridView1);
+
+        if (mParticipante == null){
+            estudiosAdapter.open();
+            mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo  + "="+codigo, null);
+            estudiosAdapter.close();
+        }
 
 
-        gridView.setAdapter(new MenuInfoAdapter(this, R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
-                ,mVisitasTerreno.size(),mPyTs.size(),mEncuestasCasas.size(),mEncuestasParticipantes.size(),
-                mEncuestasLactancias.size(),mVacunas.size(),mReConsentimientoDen.size(),mMuestras.size(),mObsequios.size(),mConsentimientoZikas.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()
-        ,mEncuestasCasasChf.size(), mEncuestasCasasSa.size(), mEncuestasParticipantesSa.size()));
+        new FetchDataTask().execute();
+
         gridView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
@@ -274,342 +280,6 @@ public class MenuInfoActivity extends Activity {
             }
         });
 
-    }
-
-    private void getParticipanteData() {
-        estudiosAdapter.open();
-        mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo  + "="+codigo, null);
-        mReConsentimientoFlu = estudiosAdapter.getListaReConsentimientoFlu2015(codigo);
-        mVisitasTerreno=estudiosAdapter.getListaVisitaTerreno(codigo);
-        mPyTs = estudiosAdapter.getListaPesoyTallas(codigo);
-        if(mParticipante.getCasa().getCodigo()!=9999) mEncuestasCasas = estudiosAdapter.getListaEncuestaCasas(mParticipante.getCasa().getCodigo());
-        mEncuestasParticipantes = estudiosAdapter.getListaEncuestaParticipantes(codigo);
-        mEncuestasLactancias = estudiosAdapter.getListaLactanciaMaternas(codigo);
-        mReConsentimientoDen=estudiosAdapter.getListaReConsentimientoDen2015(codigo);
-        mMuestras=estudiosAdapter.getListaMuestras(codigo);
-        mObsequios=estudiosAdapter.getListaObsequios(codigo);
-        mConsentimientoZikas=estudiosAdapter.getListaConsentimientoZika(codigo);
-        mDatosVisitaTerreno = estudiosAdapter.getListaDatosVisitaTerreno(codigo);
-        mUser = estudiosAdapter.getPermisosUsuario(ConstantsDB.USERNAME + "='" +username+"'", null);
-        String filtro = ConstantsDB.CODIGO + "=" + codigo;
-        mDatosPartoBBs = estudiosAdapter.getDatosPartoBBs(filtro, null);
-        mVacunas=estudiosAdapter.getNewVacunas(filtro, null);
-        mDocumentos =estudiosAdapter.getDocumentoss(filtro, null);
-        if(mParticipante.getCasa().getCodigo()!=9999){
-            mEncuestasCasasChf = estudiosAdapter.getListaEncuestaCasasChf(mParticipante.getProcesos().getCasaCHF());
-            mEncuestasCasasSa = (ArrayList)estudiosAdapter.getEncuestasCasaSA(SeroprevalenciaDBConstants.casa + "=" + mParticipante.getCasa().getCodigo() , null);
-        }
-        mEncuestasParticipantesSa = (ArrayList)estudiosAdapter.getEncuestasParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo() , null);
-        estudiosAdapter.close();
-        refreshView();
-    }
-
-    private void refreshView() {
-        pendiente = false;
-        Integer edad = getAge(mParticipante.getFechaNac());
-        String labelHeader = "<b>"+mParticipante.getCodigo()+" - "+ mParticipante.getNombre1();
-        if (mParticipante.getNombre2()!=null) labelHeader = labelHeader + " "+  mParticipante.getNombre2();
-        labelHeader = labelHeader +" "+ mParticipante.getApellido1();
-        if (mParticipante.getApellido2()!=null) labelHeader = labelHeader + " "+  mParticipante.getApellido2();
-        labelHeader = labelHeader +" - ("+ mParticipante.getProcesos().getEstudio()+")";
-        if (edad==0){
-            edad = mParticipante.getEdadMeses();
-            labelHeader = labelHeader +" - "+ edad +"M</b><br />";
-        }
-        else{
-            labelHeader = labelHeader +" - "+ edad +"A</b><br />";
-        }
-
-
-        Integer relacionFam = mParticipante.getProcesos().getRelacionFam();
-        String relacion = null;
-        switch(relacionFam){
-            case 1:
-                relacion = "Madre";
-                break;
-            case 2:
-                relacion = "Padre";
-                break;
-            case 3:
-                relacion = "Abuelo (a)";
-                break;
-            case 4:
-                relacion = "Tío (a)";
-                break;
-            case 5:
-                relacion = "Hermano (a)";
-                break;
-            case 6:
-                relacion = "Otra relación familiar";
-                break;
-            default:
-                relacion = "Sin Relación Familiar";
-        }
-        labelHeader = labelHeader + "<small><font color='black'>"+mParticipante.getProcesos().getTutor();
-        labelHeader = labelHeader +" - ("+ relacion +")" +"</font></small><br />";
-        labelHeader = labelHeader + "<small><font color='black'>Personas en casa: "+mParticipante.getProcesos().getCuantasPers()+"</font></small><br />";
-
-        if (mParticipante.getProcesos().getEstPart().equals(0)){
-            labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.retired_error) + "</font></small><br />";
-        }
-        else{
-            if (mParticipante.getProcesos().getPosZika().matches("Si")) labelHeader = labelHeader + "<small><font color='red'>Participante positivo a ZIKA</font></small><br />";
-
-            if (mParticipante.getProcesos().getConsFlu().matches("Si")|| mParticipante.getProcesos().getPesoTalla().matches("Si")
-                    || mParticipante.getProcesos().getEnCasa().matches("Si")||mParticipante.getProcesos().getEncPart().matches("Si")
-                    || mParticipante.getProcesos().getEnCasaChf().matches("Si")|| mParticipante.getProcesos().getEnCasaSa().matches("Si")||mParticipante.getProcesos().getEncPartSa().matches("Si")
-                    || mParticipante.getProcesos().getEncLacMat().matches("Si")||mParticipante.getProcesos().getInfoVacuna().matches("Si")
-                    || mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getObsequio().matches("Si")
-                    || mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No")|| mParticipante.getProcesos().getZika().matches("Si")
-                    || mParticipante.getProcesos().getAdn().matches("Si")|| mParticipante.getProcesos().getDatosParto().matches("Si")|| mParticipante.getProcesos().getDatosVisita().matches("Si")){
-                labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
-
-                //Primero muestras
-                //'#B941E0'purple
-                //'#11BDF7' blue
-                //'#32B507' green
-                if(mUser.getMuestra()){
-                    if (mParticipante.getProcesos().getConvalesciente().matches("Na")){
-                        labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.convless14) + "</font></small><br />";
-                    }
-                    else{
-                        if(mParticipante.getProcesos().getEstudio().equals("Cohorte BB")){
-                            if (mParticipante.getEdadMeses()>=6){
-                                if (mParticipante.getProcesos().getConmx().matches("No")){
-                                    if (mParticipante.getProcesos().getPbmc().matches("Si")){
-                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font></small>";
-                                    }
-                                    else{
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
-                                    }
-                                    pendiente =true;
-                                }
-                                if (mParticipante.getProcesos().getConmxbhc().matches("No")){
-                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")){
-                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                    }
-                                    else{
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                    }
-                                    pendiente =true;
-                                }
-                            }
-                        }
-                        else if(mParticipante.getProcesos().getEstudio().equals("Influenza")){
-                            if(mParticipante.getEdadMeses()>=6 && mParticipante.getEdadMeses()<24){
-                                if (mParticipante.getProcesos().getConmx().matches("No")){
-                                    if (mParticipante.getProcesos().getPbmc().matches("Si")){
-                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>No tomar BHC<br /></font></small>";
-                                    }
-                                    else{
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
-                                    }
-                                    pendiente =true;
-                                }
-                                if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")){
-                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")){
-                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                    }
-                                    else{
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                    }
-                                    pendiente =true;
-                                }
-                            }
-                            else {
-                                if (mParticipante.getProcesos().getConmx().matches("No")){
-                                    if (mParticipante.getProcesos().getPbmc().matches("Si")){
-                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
-                                    }
-                                    else{
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
-                                    }
-                                    pendiente =true;
-                                }
-                                if (mParticipante.getProcesos().getConmxbhc().matches("No")){
-                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")){
-                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                    }
-                                    else{
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                    }
-                                    pendiente =true;
-                                }
-                            }
-                        }
-                        else if(mParticipante.getProcesos().getEstudio().equals("Influenza  Cohorte BB")){
-                            if(mParticipante.getEdadMeses()>=6 && mParticipante.getEdadMeses()<24){
-                                if (mParticipante.getProcesos().getConmx().matches("No")){
-                                    if (mParticipante.getProcesos().getPbmc().matches("Si")){
-                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>No tomar BHC<br /></font></small>";
-                                    }
-                                    else{
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
-                                    }
-                                    pendiente =true;
-                                }
-                                if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")){
-                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")){
-                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                    }
-                                    else{
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                    }
-                                    pendiente =true;
-                                }
-                            }
-                            else {
-                                if (mParticipante.getProcesos().getConmx().matches("No")){
-                                    if (mParticipante.getProcesos().getPbmc().matches("Si")){
-                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
-                                    }
-                                    else{
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
-                                    }
-                                    pendiente =true;
-                                }
-                                if (mParticipante.getProcesos().getConmxbhc().matches("No")){
-                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")){
-                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                    }
-                                    else{
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                    }
-                                    pendiente =true;
-                                }
-                            }
-                        }
-                        else if(mParticipante.getProcesos().getEstudio().equals("Dengue")){
-                            if (mParticipante.getProcesos().getConmx().matches("No")){
-                                if (mParticipante.getProcesos().getPbmc().matches("Si")){
-                                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                                }
-                                else{
-                                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
-                                }
-                                pendiente =true;
-                            }
-                            if (mParticipante.getProcesos().getConmxbhc().matches("No")){
-                                if (mParticipante.getProcesos().getPaxgene().matches("Si")){
-                                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                }
-                                else{
-                                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                }
-                                pendiente =true;
-                            }
-                        }
-                        else if(mParticipante.getProcesos().getEstudio().equals("Dengue  Influenza")){
-                            if (mParticipante.getProcesos().getConmx().matches("No")){
-                                if (mParticipante.getProcesos().getPbmc().matches("Si")){
-                                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                                    labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
-                                }
-                                else{
-                                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
-                                }
-                                pendiente =true;
-                            }
-                            if (mParticipante.getProcesos().getConmxbhc().matches("No")){
-                                if (mParticipante.getProcesos().getPaxgene().matches("Si")){
-                                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                }
-                                else{
-                                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                }
-                                pendiente =true;
-                            }
-                        }
-                        if (mParticipante.getProcesos().getConvalesciente().matches("Si")&& mParticipante.getEdadMeses()>=24){
-                            if (mParticipante.getProcesos().getConmx().matches("No")){
-                                if (mParticipante.getProcesos().getPbmc().matches("Si")){
-                                    labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
-                                }
-                                else{
-                                    labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
-                                }
-                            }
-                        }
-                        if ((mParticipante.getProcesos().getRetoma()!=null && mParticipante.getProcesos().getVolRetoma()!=null)){
-                            if ((mParticipante.getProcesos().getRetoma().matches("Si")) && mUser.getMuestra()){
-                                labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.retoma) +": " + mParticipante.getProcesos().getVolRetoma() + "cc </font></small><br />";
-                            }
-                        }
-                    }
-                }
-
-                //Nuevo orden
-
-                if (mParticipante.getProcesos().getEnCasa().matches("Si") && mUser.getEncuestaCasa()) {
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.house_survey_missing) + "</font></small><br />";
-                    pendiente=true;
-                }
-                if (mParticipante.getProcesos().getEnCasaChf().matches("Si") && mUser.getEncuestaCasa()) {
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.housechf_survey_missing) + "</font></small><br />";
-                    pendiente=true;
-                }
-                if (mParticipante.getProcesos().getEnCasaSa().matches("Si") && mUser.getEncuestaCasa()) {
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.housesa_survey_missing) + "</font></small><br />";
-                    pendiente=true;
-                }
-                if (mParticipante.getProcesos().getEncPart().matches("Si") && mUser.getEncuestaParticipante()) {
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.part_survey_missing) + "</font></small><br />";
-                    pendiente=true;
-                }
-                if (mParticipante.getProcesos().getEncPartSa().matches("Si") && mUser.getEncuestaParticipante()) {
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.partsa_survey_missing) + "</font></small><br />";
-                    pendiente=true;
-                }
-                if (mParticipante.getProcesos().getConsFlu().matches("Si") && mUser.getConsentimiento()){
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consflu_missing) + "</font></small><br />";
-                    pendiente=true;
-                }
-                if (mParticipante.getProcesos().getConsDeng().matches("Si") && mUser.getConsentimiento()) {
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consden_missing) + "</font></small><br />";
-                    pendiente=true;
-                }
-                if (mParticipante.getProcesos().getZika().matches("Si") && mUser.getConsentimiento()) {
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.zika_missing) + "</font></small><br />";
-                    pendiente=true;
-                }
-                if (mParticipante.getProcesos().getEncLacMat().matches("Si") && mUser.getEncuestaLactancia()){
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.maternal_survey_missing) + "</font></small><br />";
-                    pendiente=true;
-                }
-                if (mParticipante.getProcesos().getPesoTalla().matches("Si") && mUser.getPesoTalla()){
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.weigth_heigth_missing) + "</font></small><br />";
-                    pendiente=true;
-                }
-                if (mParticipante.getProcesos().getDatosParto().matches("Si") && mUser.getDatosparto()){
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.parto_missing) + "</font></small><br />";
-                    pendiente=true;
-                }
-                if (mParticipante.getProcesos().getInfoVacuna().matches("Si") && mUser.getVacunas()){
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.vaccines_missing) + "</font></small><br />";
-                    pendiente=true;
-                }
-                if (mParticipante.getProcesos().getDatosVisita().matches("Si") && mUser.getVisitas()){
-                    labelHeader = labelHeader + "<small><font color='blue'>Pediente datos casa</font></small><br />";
-                    pendiente=true;
-                }
-                if ((mParticipante.getProcesos().getObsequio().matches("Si"))){
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.gift_missing) + "</font></small><br />";
-                }
-                if (mParticipante.getProcesos().getAdn().matches("Si")) {
-                    labelHeader = labelHeader + "<small><font color='red'>Pendiente de ADN, Informar a LAB para toma.</font></small><br />";
-                }
-            }
-            else{
-                labelHeader = labelHeader + "<small><font color='blue'>No tiene procedimientos pendientes<br /></font></small>";
-            }
-        }
-        textView.setText(Html.fromHtml(labelHeader));
     }
 
     @Override
@@ -1119,26 +789,7 @@ public class MenuInfoActivity extends Activity {
         alertDialog.show();
     }
 
-    public int getAge(Date dateOfBirth) {
-        int age = 0;
-        Calendar born = Calendar.getInstance();
-        Calendar now = Calendar.getInstance();
-        if(dateOfBirth!= null) {
-            now.setTime(new Date());
-            born.setTime(dateOfBirth);
-            if(born.after(now)) {
-                throw new IllegalArgumentException("Can't be born in the future");
-            }
-            age = now.get(Calendar.YEAR) - born.get(Calendar.YEAR);
-            if(now.get(Calendar.DAY_OF_YEAR) < born.get(Calendar.DAY_OF_YEAR))  {
-                age-=1;
-            }
-        }
-        return age;
-    }
-
-    public boolean onPrepareOptionsMenu(Menu menu)
-    {
+    public boolean onPrepareOptionsMenu() {
         reConsFluItem.setVisible(false);
         pesoTallaItem.setVisible(false);
         encCasaItem.setVisible(false);
@@ -1177,6 +828,391 @@ public class MenuInfoActivity extends Activity {
             visitaItem.setVisible(false);
         }
         return true;
+    }
+
+    public int getAge(Date dateOfBirth) {
+        int age = 0;
+        Calendar born = Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
+        if(dateOfBirth!= null) {
+            now.setTime(new Date());
+            born.setTime(dateOfBirth);
+            if(born.after(now)) {
+                throw new IllegalArgumentException("Can't be born in the future");
+            }
+            age = now.get(Calendar.YEAR) - born.get(Calendar.YEAR);
+            if(now.get(Calendar.DAY_OF_YEAR) < born.get(Calendar.DAY_OF_YEAR))  {
+                age-=1;
+            }
+        }
+        return age;
+    }
+
+    public String getRelacionFamiliar(Integer codigo) {
+        String relacionFamiliar = this.getApplicationContext().getString(R.string.sinRelacFam);
+        try {
+            for (MessageResource message : catRelacionFamiliar) {
+                if (message.getCatKey().equalsIgnoreCase(String.valueOf(codigo))) {
+                    relacionFamiliar = message.getSpanish();
+                    break;
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return relacionFamiliar;
+    }
+
+    private void getParticipanteData() {
+        estudiosAdapter.open();
+        if (mParticipante == null)
+            mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo  + "="+codigo, null);
+        mReConsentimientoFlu = estudiosAdapter.getListaReConsentimientoFlu2015(codigo);
+        mVisitasTerreno=estudiosAdapter.getListaVisitaTerreno(codigo);
+        mPyTs = estudiosAdapter.getListaPesoyTallas(codigo);
+        if(mParticipante.getCasa().getCodigo()!=9999) mEncuestasCasas = estudiosAdapter.getListaEncuestaCasas(mParticipante.getCasa().getCodigo());
+        mEncuestasParticipantes = estudiosAdapter.getListaEncuestaParticipantes(codigo);
+        mEncuestasLactancias = estudiosAdapter.getListaLactanciaMaternas(codigo);
+        mReConsentimientoDen=estudiosAdapter.getListaReConsentimientoDen2015(codigo);
+        mMuestras=estudiosAdapter.getListaMuestras(codigo);
+        mObsequios=estudiosAdapter.getListaObsequios(codigo);
+        mConsentimientoZikas=estudiosAdapter.getListaConsentimientoZika(codigo);
+        mDatosVisitaTerreno = estudiosAdapter.getListaDatosVisitaTerreno(codigo);
+        mUser = estudiosAdapter.getPermisosUsuario(ConstantsDB.USERNAME + "='" +username+"'", null);
+        String filtro = ConstantsDB.CODIGO + "=" + codigo;
+        mDatosPartoBBs = estudiosAdapter.getDatosPartoBBs(filtro, null);
+        mVacunas=estudiosAdapter.getNewVacunas(filtro, null);
+        mDocumentos =estudiosAdapter.getDocumentoss(filtro, null);
+        if(mParticipante.getCasa().getCodigo()!=9999){
+            mEncuestasCasasChf = estudiosAdapter.getListaEncuestaCasasChf(mParticipante.getProcesos().getCasaCHF());
+            mEncuestasCasasSa = (ArrayList)estudiosAdapter.getEncuestasCasaSA(SeroprevalenciaDBConstants.casa + "=" + mParticipante.getCasa().getCodigo() , null);
+        }
+        mEncuestasParticipantesSa = (ArrayList)estudiosAdapter.getEncuestasParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo() , null);
+        catRelacionFamiliar = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", null);
+        estudiosAdapter.close();
+    }
+
+    private void refreshView() {
+        pendiente = false;
+        Integer edad = getAge(mParticipante.getFechaNac());
+        String labelHeader = "<b>"+mParticipante.getCodigo()+" - "+ mParticipante.getNombre1();
+        if (mParticipante.getNombre2()!=null) labelHeader = labelHeader + " "+  mParticipante.getNombre2();
+        labelHeader = labelHeader +" "+ mParticipante.getApellido1();
+        if (mParticipante.getApellido2()!=null) labelHeader = labelHeader + " "+  mParticipante.getApellido2();
+        labelHeader = labelHeader +" - ("+ mParticipante.getProcesos().getEstudio()+")";
+        if (edad==0){
+            edad = mParticipante.getEdadMeses();
+            labelHeader = labelHeader +" - "+ edad +"M</b><br />";
+        }
+        else{
+            labelHeader = labelHeader +" - "+ edad +"A</b><br />";
+        }
+
+
+        Integer relacionFam = mParticipante.getProcesos().getRelacionFam();
+        String relacion = getRelacionFamiliar(relacionFam);
+
+        labelHeader = labelHeader + "<small><font color='black'>"+mParticipante.getProcesos().getTutor();
+        labelHeader = labelHeader +" - ("+ relacion +")" +"</font></small><br />";
+        labelHeader = labelHeader + "<small><font color='black'>Personas en casa: "+mParticipante.getProcesos().getCuantasPers()+"</font></small><br />";
+
+        if (mParticipante.getProcesos().getEstPart().equals(0)){
+            labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.retired_error) + "</font></small><br />";
+        }
+        else{
+            if (mParticipante.getProcesos().getPosZika().matches("Si")) labelHeader = labelHeader + "<small><font color='red'>Participante positivo a ZIKA</font></small><br />";
+
+            if (mParticipante.getProcesos().getConsFlu().matches("Si")|| mParticipante.getProcesos().getPesoTalla().matches("Si")
+                    || mParticipante.getProcesos().getEnCasa().matches("Si")||mParticipante.getProcesos().getEncPart().matches("Si")
+                    || mParticipante.getProcesos().getEnCasaChf().matches("Si")|| mParticipante.getProcesos().getEnCasaSa().matches("Si")||mParticipante.getProcesos().getEncPartSa().matches("Si")
+                    || mParticipante.getProcesos().getEncLacMat().matches("Si")||mParticipante.getProcesos().getInfoVacuna().matches("Si")
+                    || mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getObsequio().matches("Si")
+                    || mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No")|| mParticipante.getProcesos().getZika().matches("Si")
+                    || mParticipante.getProcesos().getAdn().matches("Si")|| mParticipante.getProcesos().getDatosParto().matches("Si")|| mParticipante.getProcesos().getDatosVisita().matches("Si")){
+                labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
+
+                //Primero muestras
+                //'#B941E0'purple
+                //'#11BDF7' blue
+                //'#32B507' green
+                if(mUser.getMuestra()){
+                    if (mParticipante.getProcesos().getConvalesciente().matches("Na")){
+                        labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.convless14) + "</font></small><br />";
+                    }
+                    else{
+                        if(mParticipante.getProcesos().getEstudio().equals("Cohorte BB")){
+                            if (mParticipante.getEdadMeses()>=6){
+                                if (mParticipante.getProcesos().getConmx().matches("No")){
+                                    if (mParticipante.getProcesos().getPbmc().matches("Si")){
+                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font></small>";
+                                    }
+                                    else{
+                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                                    }
+                                    pendiente =true;
+                                }
+                                if (mParticipante.getProcesos().getConmxbhc().matches("No")){
+                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")){
+                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                                    }
+                                    else{
+                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                                    }
+                                    pendiente =true;
+                                }
+                            }
+                        }
+                        else if(mParticipante.getProcesos().getEstudio().equals("Influenza")){
+                            if(mParticipante.getEdadMeses()>=6 && mParticipante.getEdadMeses()<24){
+                                if (mParticipante.getProcesos().getConmx().matches("No")){
+                                    if (mParticipante.getProcesos().getPbmc().matches("Si")){
+                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font></small>";
+                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<small><font color='#B941E0'>No tomar BHC<br /></font></small>";
+                                    }
+                                    else{
+                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                                    }
+                                    pendiente =true;
+                                }
+                                if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")){
+                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")){
+                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                                    }
+                                    else{
+                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                                    }
+                                    pendiente =true;
+                                }
+                            }
+                            else {
+                                if (mParticipante.getProcesos().getConmx().matches("No")){
+                                    if (mParticipante.getProcesos().getPbmc().matches("Si")){
+                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
+                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                                    }
+                                    else{
+                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                                    }
+                                    pendiente =true;
+                                }
+                                if (mParticipante.getProcesos().getConmxbhc().matches("No")){
+                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")){
+                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                                    }
+                                    else{
+                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                                    }
+                                    pendiente =true;
+                                }
+                            }
+                        }
+                        else if(mParticipante.getProcesos().getEstudio().equals("Influenza  Cohorte BB")){
+                            if(mParticipante.getEdadMeses()>=6 && mParticipante.getEdadMeses()<24){
+                                if (mParticipante.getProcesos().getConmx().matches("No")){
+                                    if (mParticipante.getProcesos().getPbmc().matches("Si")){
+                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font></small>";
+                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<small><font color='#B941E0'>No tomar BHC<br /></font></small>";
+                                    }
+                                    else{
+                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                                    }
+                                    pendiente =true;
+                                }
+                                if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")){
+                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")){
+                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                                    }
+                                    else{
+                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                                    }
+                                    pendiente =true;
+                                }
+                            }
+                            else {
+                                if (mParticipante.getProcesos().getConmx().matches("No")){
+                                    if (mParticipante.getProcesos().getPbmc().matches("Si")){
+                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
+                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                                    }
+                                    else{
+                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                                    }
+                                    pendiente =true;
+                                }
+                                if (mParticipante.getProcesos().getConmxbhc().matches("No")){
+                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")){
+                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                                    }
+                                    else{
+                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                                    }
+                                    pendiente =true;
+                                }
+                            }
+                        }
+                        else if(mParticipante.getProcesos().getEstudio().equals("Dengue")){
+                            if (mParticipante.getProcesos().getConmx().matches("No")){
+                                if (mParticipante.getProcesos().getPbmc().matches("Si")){
+                                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
+                                }
+                                else{
+                                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                                }
+                                pendiente =true;
+                            }
+                            if (mParticipante.getProcesos().getConmxbhc().matches("No")){
+                                if (mParticipante.getProcesos().getPaxgene().matches("Si")){
+                                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                                }
+                                else{
+                                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                                }
+                                pendiente =true;
+                            }
+                        }
+                        else if(mParticipante.getProcesos().getEstudio().equals("Dengue  Influenza")){
+                            if (mParticipante.getProcesos().getConmx().matches("No")){
+                                if (mParticipante.getProcesos().getPbmc().matches("Si")){
+                                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
+                                    labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                                }
+                                else{
+                                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                                }
+                                pendiente =true;
+                            }
+                            if (mParticipante.getProcesos().getConmxbhc().matches("No")){
+                                if (mParticipante.getProcesos().getPaxgene().matches("Si")){
+                                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                                }
+                                else{
+                                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                                }
+                                pendiente =true;
+                            }
+                        }
+                        if (mParticipante.getProcesos().getConvalesciente().matches("Si")&& mParticipante.getEdadMeses()>=24){
+                            if (mParticipante.getProcesos().getConmx().matches("No")){
+                                if (mParticipante.getProcesos().getPbmc().matches("Si")){
+                                    labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
+                                }
+                                else{
+                                    labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
+                                }
+                            }
+                        }
+                        if ((mParticipante.getProcesos().getRetoma()!=null && mParticipante.getProcesos().getVolRetoma()!=null)){
+                            if ((mParticipante.getProcesos().getRetoma().matches("Si")) && mUser.getMuestra()){
+                                labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.retoma) +": " + mParticipante.getProcesos().getVolRetoma() + "cc </font></small><br />";
+                            }
+                        }
+                    }
+                }
+
+                //Nuevo orden
+
+                if (mParticipante.getProcesos().getEnCasa().matches("Si") && mUser.getEncuestaCasa()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.house_survey_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getEnCasaChf().matches("Si") && mUser.getEncuestaCasa()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.housechf_survey_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getEnCasaSa().matches("Si") && mUser.getEncuestaCasa()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.housesa_survey_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getEncPart().matches("Si") && mUser.getEncuestaParticipante()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.part_survey_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getEncPartSa().matches("Si") && mUser.getEncuestaParticipante()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.partsa_survey_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getConsFlu().matches("Si") && mUser.getConsentimiento()){
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consflu_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getConsDeng().matches("Si") && mUser.getConsentimiento()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consden_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getZika().matches("Si") && mUser.getConsentimiento()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.zika_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getEncLacMat().matches("Si") && mUser.getEncuestaLactancia()){
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.maternal_survey_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getPesoTalla().matches("Si") && mUser.getPesoTalla()){
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.weigth_heigth_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getDatosParto().matches("Si") && mUser.getDatosparto()){
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.parto_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getInfoVacuna().matches("Si") && mUser.getVacunas()){
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.vaccines_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getDatosVisita().matches("Si") && mUser.getVisitas()){
+                    labelHeader = labelHeader + "<small><font color='blue'>Pediente datos casa</font></small><br />";
+                    pendiente=true;
+                }
+                if ((mParticipante.getProcesos().getObsequio().matches("Si"))){
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.gift_missing) + "</font></small><br />";
+                }
+                if (mParticipante.getProcesos().getAdn().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='red'>Pendiente de ADN, Informar a LAB para toma.</font></small><br />";
+                }
+            }
+            else{
+                labelHeader = labelHeader + "<small><font color='blue'>No tiene procedimientos pendientes<br /></font></small>";
+            }
+        }
+        textView.setText(Html.fromHtml(labelHeader));
+    }
+
+
+    private class FetchDataTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            // before the request begins, show a progress indicator
+            showLoadingProgressDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... values) {
+            try {
+                getParticipanteData();
+            } catch (Exception e) {
+                Log.e(TAG, e.getLocalizedMessage(), e);
+                return "error";
+            }finally {
+                //estudiosAdapter.close();
+            }
+            return "exito";
+        }
+
+        protected void onPostExecute(String resultado) {
+            onPrepareOptionsMenu();
+            String[] menu_info = getResources().getStringArray(R.array.menu_info);
+            textView.setText("");
+            textView.setTextColor(Color.BLACK);
+            textView.setText(getString(R.string.main_1)+"\n"+getString(R.string.header_main));
+            gridView.setAdapter(new MenuInfoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
+                    ,mVisitasTerreno.size(),mPyTs.size(),mEncuestasCasas.size(),mEncuestasParticipantes.size(),
+                    mEncuestasLactancias.size(),mVacunas.size(),mReConsentimientoDen.size(),mMuestras.size(),mObsequios.size(),mConsentimientoZikas.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()
+                    ,mEncuestasCasasChf.size(), mEncuestasCasasSa.size(), mEncuestasParticipantesSa.size()));
+            refreshView();
+            dismissProgressDialog();
+        }
     }
 }
 

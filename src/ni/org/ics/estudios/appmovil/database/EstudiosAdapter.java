@@ -2096,7 +2096,7 @@ public class EstudiosAdapter {
         if (!cursor.isClosed()) cursor.close();
         return mEncuestasParticipanteSA;
     }
-    
+
 	/**
 	 * Metodos para Telefonos en la base de datos
 	 * 
@@ -5134,6 +5134,34 @@ public class EstudiosAdapter {
             } while (enccasas.moveToNext());
         }
         enccasas.close();
+        return mEncuestaCasas;
+    }
+
+    public ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.EncuestaCasa> getListaEncuestaCasasChfHoy() throws SQLException {
+        Cursor encuestas = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateWithoutTime = null;
+        try {
+            dateWithoutTime = sdf.parse(sdf.format(new Date()));
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Timestamp timeStamp = new Timestamp(dateWithoutTime.getTime());
+        ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.EncuestaCasa> mEncuestaCasas = new ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.EncuestaCasa>();
+        encuestas = mDb.query(true, ConstantsDB.ENC_CASA_TABLE, null,
+                ConstantsDB.TODAY + "=" + timeStamp.getTime(), null, null, null, ConstantsDB.codigoCHF + " , " +ConstantsDB.TODAY, null);
+        if (encuestas != null && encuestas.getCount() > 0) {
+            encuestas.moveToFirst();
+            mEncuestaCasas.clear();
+            do{
+                if(!encuestas.isNull(encuestas.getColumnIndex(ConstantsDB.codigoCHF))) {
+                    mEncuestaCasas.add(crearEncuestaCasa(encuestas));
+                }
+
+            } while (encuestas.moveToNext());
+        }
+        encuestas.close();
         return mEncuestaCasas;
     }
 

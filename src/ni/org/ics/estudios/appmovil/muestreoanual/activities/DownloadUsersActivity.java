@@ -54,13 +54,6 @@ public class DownloadUsersActivity extends Activity implements DownloadListener{
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
-		/*CohorteAdapter ca = new CohorteAdapter();
-		ca.open();
-		String pass = ca.buscarPassword(username);
-		ca.close();
-		
-		password =
-				pass;*/
         password =
                 ((MyIcsApplication) this.getApplication()).getPassApp();
 		downloadUsersTask = (DownloadUsersRolesTask) getLastNonConfigurationInstance();

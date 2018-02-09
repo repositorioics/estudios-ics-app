@@ -1203,9 +1203,6 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         protected void onPostExecute(String resultado) {
             onPrepareOptionsMenu();
             String[] menu_info = getResources().getStringArray(R.array.menu_info);
-            textView.setText("");
-            textView.setTextColor(Color.BLACK);
-            textView.setText(getString(R.string.main_1)+"\n"+getString(R.string.header_main));
             gridView.setAdapter(new MenuInfoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
                     ,mVisitasTerreno.size(),mPyTs.size(),mEncuestasCasas.size(),mEncuestasParticipantes.size(),
                     mEncuestasLactancias.size(),mVacunas.size(),mReConsentimientoDen.size(),mMuestras.size(),mObsequios.size(),mConsentimientoZikas.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()

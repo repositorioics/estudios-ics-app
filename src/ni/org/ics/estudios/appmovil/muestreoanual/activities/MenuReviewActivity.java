@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -309,8 +310,6 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
 
         protected void onPostExecute(String resultado) {
             String[] menu_info = getResources().getStringArray(R.array.menu_review);
-            textView.setText("");
-            textView.setText(getString(R.string.main_1) + "\n" + getString(R.string.header_main));
             gridView.setAdapter(new MenuReviewAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
                     , mVisitasTerreno.size(), mPyTs.size(), mEncuestasCasas.size(), mEncuestasParticipantes.size(),
                     mEncuestasLactancias.size(), mVacunas.size(), mEncuestasS.size(), mReConsentimientoDen.size(), mMuestras.size(), mObsequios.size(), mConsentimientoZika.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size(), mDocumentos.size(),

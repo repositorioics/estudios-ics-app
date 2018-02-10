@@ -5,14 +5,17 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.*;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.InputType;
+import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
+import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
@@ -30,7 +33,7 @@ import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelecPartActivity extends ListActivity {
+public class SelecPartActivity extends AbstractAsyncListActivity {
 
 
 	private Spinner mMetodoView;
@@ -161,48 +164,13 @@ public class SelecPartActivity extends ListActivity {
 		mFindButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
-				switch(opcion){
-				case 1:
-					mParticipantes.clear();
-					try{
-						codigo = Integer.valueOf(mCodigoView.getText().toString());
-					}
-					catch(Exception e){
-						mCodigoView.requestFocus();
-						mCodigoView.setError(getString(R.string.code_error));
-						return;
-					}
-
-					if (!(codigo>=1 && codigo<=75000)){
-						mCodigoView.requestFocus();
-						mCodigoView.setError(getString(R.string.code_error));
-						return;
-					}
-					buscarParticipante(codigo);
-					break;
-				case 2:
-					cadenaBusqueda = mCodigoView.getText().toString();
-					if (!(cadenaBusqueda!=null)){
-						mCodigoView.requestFocus();
-						mCodigoView.setError(getString(R.string.search_hint));
-						return;
-					}
-					buscarParticipanteNombres(cadenaBusqueda);
-					break;
-				case 3:
-					cadenaBusqueda = mCodigoView.getText().toString();
-					if (!(cadenaBusqueda!=null)){
-						mCodigoView.requestFocus();
-						mCodigoView.setError(getString(R.string.search_hint));
-						return;
-					}
-					buscarParticipanteApellidos(cadenaBusqueda);
-					break;
-				default:
-					break;
-				}
-				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(mFindButton.getWindowToken(), 0);
+                mParticipantes.clear();
+                if ((mCodigoView.getText().toString()==null) || (mCodigoView.getText().toString().matches(""))){
+                    mCodigoView.requestFocus();
+                    mCodigoView.setError(getString(R.string.search_hint));
+                    return;
+                }
+                buscarParticipante(mCodigoView.getText().toString(),opcion);
 			}
 		});
 
@@ -274,10 +242,13 @@ public class SelecPartActivity extends ListActivity {
 						if (desdeMenuPrincipal){
                             ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos(); //ca.getParticipanteProceso(codigoScanned);
                             if (mParticipanteProc!=null && (mParticipanteProc.getEstudio()!=null && !mParticipanteProc.getEstudio().isEmpty())) {
+                                Bundle arguments = new Bundle();
+                                arguments.putSerializable(Constants.PARTICIPANTE , mParticipante);
                                 Intent i = new Intent(getApplicationContext(),
                                         MenuInfoActivity.class);
                                 i.putExtra(ConstantsDB.CODIGO, codigo);
                                 i.putExtra(ConstantsDB.VIS_EXITO, false);
+                                i.putExtras(arguments);
                                 startActivity(i);
                             }else{
                                 showToast("("+codigoScanned+") - " + getString(R.string.retired_error));
@@ -312,50 +283,10 @@ public class SelecPartActivity extends ListActivity {
 
 	}
 
-	public void buscarParticipante(Integer codigoScanned){
-		//CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
-        estudiosAdapter.open();
-		Participante mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo+ " = "+codigoScanned, null); //ca.getParticipante(codigoScanned);
-        estudiosAdapter.close();
-		if (mParticipante != null && mParticipante.getCodigo() != null){
-			mParticipantes.add(mParticipante);
-		}
-		else {
-			//mSearchText.setText(sb);
-			showToast("("+codigoScanned+") - " + getString(R.string.code_notfound));
-		}
-		refreshView();
-	}
-	
-	public void buscarParticipanteNombres(String name){
-		//CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
-        estudiosAdapter.open();
-		mParticipantes = estudiosAdapter.getListaParticipantesName(name);
-        estudiosAdapter.close();
-        if (mParticipantes.size()<=0) {
-            showToast("("+name+") - " + getString(R.string.text_notfound));
-        }
-
-        refreshView();
-	}
-	
-	public void buscarParticipanteApellidos(String lastname){
-		//CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
-        estudiosAdapter.open();
-		mParticipantes = estudiosAdapter.getListaParticipantesLastName(lastname);
-        estudiosAdapter.close();
-        if (mParticipantes.size()<=0) {
-            showToast("("+lastname+") - " + getString(R.string.text_notfound));
-        }
-
-        refreshView();
-	}
-	
 	private void refreshView() {
-
-            mParticipanteAdapter = new ParticipanteAdapter(this, R.layout.complex_list_item,
-                    mParticipantes);
-            setListAdapter(mParticipanteAdapter);
+        mParticipanteAdapter = new ParticipanteAdapter(this, R.layout.complex_list_item, mParticipantes);
+        setListAdapter(mParticipanteAdapter);
+        if (mParticipantes.isEmpty()) showToast(getString(R.string.no_items));
 	}
 
 	private void showToast(String mensaje){
@@ -389,10 +320,13 @@ public class SelecPartActivity extends ListActivity {
 
                 ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos();
                 if (mParticipanteProc != null && (mParticipanteProc.getEstudio() != null && !mParticipanteProc.getEstudio().isEmpty())) {
+                    Bundle arguments = new Bundle();
+                    arguments.putSerializable(Constants.PARTICIPANTE , mParticipante);
                     Intent i = new Intent(getApplicationContext(),
                             MenuInfoActivity.class);
                     i.putExtra(ConstantsDB.CODIGO, codigo);
                     i.putExtra(ConstantsDB.VIS_EXITO, false);
+                    i.putExtras(arguments);
                     startActivity(i);
                 } else {
                     showToast("(" + codigo + ") - " + getString(R.string.retired_error));
@@ -437,5 +371,57 @@ public class SelecPartActivity extends ListActivity {
 		alertDialog = builder.create();
 		alertDialog.show();
 	}
+
+    public void buscarParticipante(String parametro, int opcion){
+        String filtro = "";
+        switch (opcion) {
+            case 0:
+                filtro = MainDBConstants.codigo + "=" + parametro;
+                break;
+            case 1:
+                filtro = MainDBConstants.codigo + "=" + parametro;
+                break;
+            case 2:
+                filtro = MainDBConstants.nombre1 + " like '%" + parametro + "%' or " + MainDBConstants.nombre2 + " like '%" + parametro + "%'";
+                break;
+            case 3:
+                filtro = MainDBConstants.apellido1 + " like '%" + parametro + "%' or " + MainDBConstants.apellido1 + " like '%" + parametro + "%'";
+                break;
+        }
+        new FetchDataTask().execute(filtro);
+    }
+
+    // ***************************************
+    // Private classes
+    // ***************************************
+    private class FetchDataTask extends AsyncTask<String, Void, String> {
+        private String filtro = null;
+        @Override
+        protected void onPreExecute() {
+            // before the request begins, show a progress indicator
+            showLoadingProgressDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... values) {
+            filtro = values[0];
+            try {
+                estudiosAdapter.open();
+                mParticipantes = estudiosAdapter.getParticipantes(filtro, MainDBConstants.codigo);
+                estudiosAdapter.close();
+            } catch (Exception e) {
+                Log.e(TAG, e.getLocalizedMessage(), e);
+                return "error";
+            }
+            return "exito";
+        }
+
+        protected void onPostExecute(String resultado) {
+            // after the network request completes, hide the progress indicator
+            dismissProgressDialog();
+            refreshView();
+        }
+
+    }
 
 }

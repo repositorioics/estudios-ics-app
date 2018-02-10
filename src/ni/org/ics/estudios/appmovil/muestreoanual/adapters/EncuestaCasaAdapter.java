@@ -35,11 +35,14 @@ public class EncuestaCasaAdapter extends ArrayAdapter<EncuestaCasa> {
 
 			TextView textView = (TextView) v.findViewById(R.id.identifier_text);
 			if (textView != null) {
-                if (encuesta.getCodCasa()!=null && encuesta.getCodCasa()>0) {
-                    textView.setText("Casa "+encuesta.getCodCasa().toString());
-                }else{
-                    textView.setText("Casa CHF " + encuesta.getCodCasaChf());
-                }
+                String text = "";
+                if (encuesta.getCodCasa()!=null && encuesta.getCodCasa()>0)
+                    text = "Casa "+encuesta.getCodCasa().toString();
+
+                if (encuesta.getCodCasaChf()!=null)
+                    text += " - Casa CHF " + encuesta.getCodCasaChf();
+
+                textView.setText(text);
 			}
 
 			textView = (TextView) v.findViewById(R.id.name_text);

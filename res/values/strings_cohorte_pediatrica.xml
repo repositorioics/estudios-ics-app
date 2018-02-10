@@ -123,4 +123,6 @@
     <string name="parto_missing">Realizar Datos Parto BB</string>
     <string name="activos">Descargar solo activos</string>
     <string name="terreno">Descargar solo participantes</string>
+
+    <string name="sinRelacFam">Sin Relación Familiar</string>
 </resources>

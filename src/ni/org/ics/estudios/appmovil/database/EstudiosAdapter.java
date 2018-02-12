@@ -2020,6 +2020,8 @@ public class EstudiosAdapter {
             mEncuestaCasaSA= EncuestaCasaSAHelper.crearEncuestaCasaSA(cursor);
             Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.casa)), null);
             mEncuestaCasaSA.setCasa(casa);
+            CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" + cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.casaCHF)), null);
+            mEncuestaCasaSA.setCasaChf(cchf);
         }
         if (!cursor.isClosed()) cursor.close();
         return mEncuestaCasaSA;
@@ -2036,6 +2038,8 @@ public class EstudiosAdapter {
                 mEncuestaCasaSA = EncuestaCasaSAHelper.crearEncuestaCasaSA(cursor);
                 Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.casa)), null);
                 mEncuestaCasaSA.setCasa(casa);
+                CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" + cursor.getInt(cursor.getColumnIndex(SeroprevalenciaDBConstants.casaCHF)), null);
+                mEncuestaCasaSA.setCasaChf(cchf);
                 mEncuestaCasaSAs.add(mEncuestaCasaSA);
             } while (cursor.moveToNext());
         }

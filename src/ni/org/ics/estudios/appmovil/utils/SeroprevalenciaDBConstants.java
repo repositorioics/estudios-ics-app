@@ -60,6 +60,7 @@ public class SeroprevalenciaDBConstants {
             + ENCUESTA_CASASA_TABLE + " ("
             + codigo + " text not null, "
             + casa + " integer not null, "
+            + casaCHF + " text, "
             + sedazoPuertasVentanas + " text, "
             + compraProdEvitarZancudos + " text, "
             + tienePatioJardin + " text, "

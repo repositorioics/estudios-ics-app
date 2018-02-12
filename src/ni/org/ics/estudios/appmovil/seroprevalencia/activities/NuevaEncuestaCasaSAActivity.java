@@ -467,6 +467,8 @@ public class NuevaEncuestaCasaSAActivity extends FragmentActivity implements
             EncuestaCasaSA encuestaCasa = new EncuestaCasaSA();
             encuestaCasa.setCodigo(infoMovil.getId());
             encuestaCasa.setCasa(casa);
+            encuestaCasa.setCasaChf(casaCHF);
+
             if (tieneValor(sedazoPuertasVentanas)) {
                 MessageResource mssedazoPuertasVentanas = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + sedazoPuertasVentanas + "' and "
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);

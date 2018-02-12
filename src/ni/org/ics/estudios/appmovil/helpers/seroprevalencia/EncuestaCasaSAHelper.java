@@ -18,6 +18,7 @@ public class EncuestaCasaSAHelper {
 
         cv.put(SeroprevalenciaDBConstants.codigo, encuesta.getCodigo());
         cv.put(SeroprevalenciaDBConstants.casa, encuesta.getCasa().getCodigo());
+        if (encuesta.getCasaChf()!=null) cv.put(SeroprevalenciaDBConstants.casaCHF, encuesta.getCasaChf().getCodigoCHF());
         cv.put(SeroprevalenciaDBConstants.sedazoPuertasVentanas, encuesta.getSedazoPuertasVentanas());
         cv.put(SeroprevalenciaDBConstants.compraProdEvitarZancudos, encuesta.getCompraProdEvitarZancudos());
         cv.put(SeroprevalenciaDBConstants.tienePatioJardin, encuesta.getTienePatioJardin());
@@ -56,6 +57,7 @@ public class EncuestaCasaSAHelper {
 
         mEncuesta.setCodigo(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.codigo)));
         mEncuesta.setCasa(null);
+        mEncuesta.setCasaChf(null);
         mEncuesta.setSedazoPuertasVentanas(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.sedazoPuertasVentanas)));
         mEncuesta.setCompraProdEvitarZancudos(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.compraProdEvitarZancudos)));
         mEncuesta.setTienePatioJardin(cursor.getString(cursor.getColumnIndex(SeroprevalenciaDBConstants.tienePatioJardin)));

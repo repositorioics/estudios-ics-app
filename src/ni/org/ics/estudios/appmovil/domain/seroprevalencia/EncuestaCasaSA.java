@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.domain.seroprevalencia;
 
 import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
 import ni.org.ics.estudios.appmovil.domain.Casa;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 
 import java.io.Serializable;
 
@@ -17,6 +18,7 @@ public class EncuestaCasaSA extends BaseMetaData implements Serializable {
 	private static final long serialVersionUID = 1L;
     private String codigo;
 	private Casa casa;
+    private CasaCohorteFamilia casaChf;
     private String sedazoPuertasVentanas;
     private String compraProdEvitarZancudos;
     private String tienePatioJardin;
@@ -224,6 +226,14 @@ public class EncuestaCasaSA extends BaseMetaData implements Serializable {
 
     public void setOtraRelacionFamChik(String otraRelacionFamChik) {
         this.otraRelacionFamChik = otraRelacionFamChik;
+    }
+
+    public CasaCohorteFamilia getCasaChf() {
+        return casaChf;
+    }
+
+    public void setCasaChf(CasaCohorteFamilia casaChf) {
+        this.casaChf = casaChf;
     }
 
     @Override

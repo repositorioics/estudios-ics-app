@@ -132,15 +132,15 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         }
         codigo = getIntent().getIntExtra(ConstantsDB.CODIGO,-1);
         visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
-        mParticipante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        //mParticipante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         textView = (TextView) findViewById(R.id.label);
         gridView = (GridView) findViewById(R.id.gridView1);
 
-        if (mParticipante == null){
+        //if (mParticipante == null){
             estudiosAdapter.open();
             mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo  + "="+codigo, null);
             estudiosAdapter.close();
-        }
+        //}
 
 
         new FetchDataTask().execute();
@@ -940,6 +940,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.convless14) + "</font></small><br />";
                     }
                     else{
+                        if(mParticipante.getEdadMeses()<6){
+                            labelHeader = labelHeader + "<font color='red'>No se toman muestras<br /></font>";
+                        }else
                         if(mParticipante.getProcesos().getEstudio().equals("Cohorte BB")){
                             if (mParticipante.getEdadMeses()>=6){
                                 if (mParticipante.getProcesos().getConmx().matches("No")){
@@ -1093,13 +1096,28 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 pendiente =true;
                             }
                         }
+                        //MA 2018
+                        else if(mParticipante.getProcesos().getEstudio().equals("CH Familia")){
+                            labelHeader += getVolumenCHF();
+
+                        } else if(mParticipante.getProcesos().getEstudio().equals("Influenza  CH Familia")){
+                            labelHeader += getVolumenInfluenzaCHF();
+
+                        } else if(mParticipante.getProcesos().getEstudio().equals("Dengue    CH Familia")){
+                            labelHeader += getVolumenDengueCHF();
+
+                        } else if(mParticipante.getProcesos().getEstudio().equals("Dengue  Influenza  CH Familia")){
+                            labelHeader += getVolumenDengueInfluenzaCHF();
+
+                        }
                         if (mParticipante.getProcesos().getConvalesciente().matches("Si")&& mParticipante.getEdadMeses()>=24){
-                            if (mParticipante.getProcesos().getConmx().matches("No")){
-                                if (mParticipante.getProcesos().getPbmc().matches("Si")){
-                                    labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
-                                }
-                                else{
-                                    labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
+                            if(!mParticipante.getProcesos().getEstudio().equals("Influenza  CH Familia")) {
+                                if (mParticipante.getProcesos().getConmx().matches("No")) {
+                                    if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+                                        labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
+                                    } else {
+                                        labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
+                                    }
                                 }
                             }
                         }
@@ -1179,6 +1197,192 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         textView.setText(Html.fromHtml(labelHeader));
     }
 
+    private String getVolumenCHF(){
+        String labelHeader = "";
+        //De 6 meses a <2 años
+        if(mParticipante.getEdadMeses()>=6 && mParticipante.getEdadMeses()<24){
+            if (mParticipante.getProcesos().getConmx().matches("No")){
+                labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                pendiente =true;
+            }
+            if (mParticipante.getProcesos().getConmxbhc().matches("No")){
+                labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                pendiente =true;
+            }
+        }else //De 2 años - < 13 Años
+            if(mParticipante.getEdadMeses()>=24 && mParticipante.getEdadMeses()<156){
+                if (mParticipante.getProcesos().getConmx().matches("No")){
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                    pendiente =true;
+                }
+                if (mParticipante.getProcesos().getConmxbhc().matches("No")){
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                    pendiente =true;
+                }
+            }else //De 14 años y más
+            {
+                if (mParticipante.getProcesos().getConmx().matches("No")){
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                    pendiente =true;
+                }
+                if (mParticipante.getProcesos().getConmxbhc().matches("No")){
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                    pendiente =true;
+                }
+            }
+        return labelHeader;
+    }
+
+    private String getVolumenInfluenzaCHF(){
+        String labelHeader = "";
+        //De 6 meses a <2 años
+        if(mParticipante.getEdadMeses()>=6 && mParticipante.getEdadMeses()<24){
+            if (mParticipante.getProcesos().getConmx().matches("No")){
+                if (mParticipante.getProcesos().getPbmc().matches("Si")){
+                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
+                }else{
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                }
+                pendiente =true;
+            }
+            if (mParticipante.getProcesos().getConmxbhc().matches("No")){
+                if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                }else{
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                }
+                pendiente =true;
+            } //De 2 años y < 14 Años
+        }else if(mParticipante.getEdadMeses()>=24 && mParticipante.getEdadMeses()<168) {
+            if (mParticipante.getProcesos().getConmx().matches("No")) {
+                if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                }
+                pendiente = true;
+            }
+            if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
+                if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                }
+                pendiente = true;
+            }
+        }else //De 14 años y más
+        {
+            if (mParticipante.getProcesos().getConmx().matches("No")) {
+                if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                }
+                pendiente = true;
+            }
+            if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
+                if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                }
+                pendiente = true;
+            }
+        }
+        return labelHeader;
+    }
+
+    private String getVolumenDengueCHF(){
+        //De 2 años  y < 14 a años
+        String labelHeader = "";
+        if(mParticipante.getEdadMeses()>=24 && mParticipante.getEdadMeses()<168) {
+            if (mParticipante.getProcesos().getConmx().matches("No")) {
+                if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                }
+                pendiente = true;
+            }
+            if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
+                if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                }
+                pendiente = true;
+            }
+        }else //De 14 años y más
+        {
+            if (mParticipante.getProcesos().getConmx().matches("No")) {
+                if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                }
+                pendiente = true;
+            }
+            if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
+                if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                }
+                pendiente = true;
+            }
+        }
+        return labelHeader;
+    }
+
+    private String getVolumenDengueInfluenzaCHF(){
+        String labelHeader = "";
+        //Desde 2 años y < 14 Años
+        if(mParticipante.getEdadMeses()>=24 && mParticipante.getEdadMeses()<168) {
+            if (mParticipante.getProcesos().getConmx().matches("No")) {
+                if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                }
+                pendiente = true;
+            }
+            if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
+                if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                }
+                pendiente = true;
+            }
+        }else //De 14 años y más
+        {
+            if (mParticipante.getProcesos().getConmx().matches("No")) {
+                if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                }
+                pendiente = true;
+            }
+            if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
+                if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                }
+                pendiente = true;
+            }
+        }
+        return labelHeader;
+    }
 
     private class FetchDataTask extends AsyncTask<String, Void, String> {
         @Override

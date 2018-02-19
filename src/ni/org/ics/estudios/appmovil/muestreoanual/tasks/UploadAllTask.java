@@ -748,7 +748,7 @@ public class UploadAllTask extends UploadTask {
             if(mMuestras.size()>0){
                 saveMuestras(Constants.STATUS_SUBMITTED);
                 // La URL de la solicitud POST
-                final String urlRequest = url + "/movil/muestras";
+                final String urlRequest = url + "/movil/muestrasMA";
                 Muestra[] envio = mMuestras.toArray(new Muestra[mMuestras.size()]);
                 HttpHeaders requestHeaders = new HttpHeaders();
                 HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);

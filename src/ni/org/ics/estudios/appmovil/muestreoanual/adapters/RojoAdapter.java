@@ -32,7 +32,7 @@ public class RojoAdapter extends ArrayAdapter<RecepcionSero> {
 		if (tubo != null) {
 			TextView textView = (TextView) v.findViewById(R.id.name_text);
 			if (textView != null) {
-				textView.setText(this.getContext().getString(R.string.code) + " " + tubo.getRecSeroId().getCodigo());
+				textView.setText(this.getContext().getString(R.string.code) + " " + tubo.getCodigo() + " - "+ tubo.getVolumen() + " " + this.getContext().getString(R.string.ml));
 			}
 
 			textView = (TextView) v.findViewById(R.id.identifier_text);

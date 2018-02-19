@@ -36,6 +36,7 @@ import ni.org.ics.estudios.appmovil.domain.muestreoanual.RecepcionSero;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.RecepcionSeroId;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -69,7 +70,8 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 	private AlertDialog mAlertDialog;
 	private boolean mAlertShowing;
 	private static final String ALERT_SHOWING = "alertshowing";
-	
+    private DeviceInfo infoMovil;
+
 	private boolean mAlertExitShowing;
 	private static final String ALERT_EXIT_SHOWING = "alertexitshowing";
 	private static final String KEEP_CODIGO = "keepcodigo";
@@ -113,7 +115,7 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+        infoMovil = new DeviceInfo(RecepcionSeroActivity.this);
 		settings =
 				PreferenceManager.getDefaultSharedPreferences(this);
 		username =
@@ -153,7 +155,7 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 						return;
 					}
 
-					if (!(volumen>=1 && volumen<=7)){
+					if (!(volumen>=0.5 && volumen<=12)){
 						labelVolumen.setText("Volumen Inválido");
 						labelVolumen.setTextColor(Color.RED);
 					}
@@ -191,10 +193,9 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 				lugarText = lugar.getSelectedItem().toString();
 				if(validarEntrada()){
 					RecepcionSero tubo = new RecepcionSero();
-					RecepcionSeroId tuboId = new RecepcionSeroId();
-					tuboId.setCodigo(codigo);
-					tuboId.setFechaRecSero(todayWithZeroTime);
-					tubo.setRecSeroId(tuboId);
+					tubo.setCodigo(codigo);
+                    tubo.setFechaRecSero(todayWithZeroTime);
+					tubo.setId(infoMovil.getId());
 					tubo.setVolumen(volumen);
 					tubo.setObservacion(observacion);
 					tubo.setLugar(lugarText);
@@ -202,7 +203,11 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 					tubo.setEstado(Constants.STATUS_NOT_SUBMITTED);
 					tubo.setFecreg(new Date());
 					ca.open();
-					ca.crearRecepcionSero(tubo);
+                    try {
+                        ca.crearRecepcionSero(tubo);
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
 					ca.close();
 					showToast("Registro Guardado",0);
 					reiniciar();
@@ -283,16 +288,16 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 					return;
 				}
 			}
-			if (codigo>0 && codigo <=10000){
-				ca.open();
+			if (codigo>0 && codigo <=15000){
+				/*ca.open();
 				Cursor c  = null;
 				c = ca.buscarRecepcionSero(codigo, todayWithZeroTime);
 				if (c != null && c.getCount() > 0) {
 					showToast("Ya ingresó este código!!!!",1);
-				}else{
+				}else{*/
 					editCodigo.setText(codigo.toString());
-				}
-				ca.close();
+				/*}
+				ca.close();*/
 			}
 			else
 			{
@@ -317,11 +322,11 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 			showToast(this.getString( R.string.error_lugar),1);
 			return false;
 		}
-		else if (!(volumen>=1 && volumen<=7)){
+		else if (!(volumen>=0.5 && volumen<=12)){
 			showToast(this.getString( R.string.error_volumen),1);
 			return false;
 		}
-		else if (!(codigo>0 && codigo<=10000)){
+		else if (!(codigo>0 && codigo<=15000)){
 			showToast(this.getString( R.string.error_codigo),1);
 			return false;
 		}

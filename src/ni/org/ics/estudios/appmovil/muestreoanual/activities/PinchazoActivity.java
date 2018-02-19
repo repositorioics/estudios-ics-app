@@ -262,7 +262,7 @@ public class PinchazoActivity extends AbstractAsyncActivity{
 					return;
 				}
 			}
-			if (codigo>0 && codigo <=10000){
+			if (codigo>0 && codigo <=15000){
 				ca.open();
 				Cursor c  = null;
 				c = ca.buscarPinchazo(codigo, todayWithZeroTime);
@@ -300,7 +300,7 @@ public class PinchazoActivity extends AbstractAsyncActivity{
 			showToast(this.getString( R.string.error_lugar),1);
 			return false;
 		}
-		else if (!(codigo>0 && codigo<=10000)){
+		else if (!(codigo>0 && codigo<=15000)){
 			showToast(this.getString( R.string.error_codigo),1);
 			return false;
 		}

@@ -3717,8 +3717,9 @@ public class EstudiosAdapter {
      */
     public void crearRecepcionSero(RecepcionSero recsero) {
         ContentValues cv = new ContentValues();
-        cv.put(ConstantsDB.CODIGO, recsero.getRecSeroId().getCodigo());
-        cv.put(ConstantsDB.FECHA_SERO, recsero.getRecSeroId().getFechaRecSero().getTime());
+        cv.put(ConstantsDB.ID, recsero.getId());
+        cv.put(ConstantsDB.CODIGO, recsero.getCodigo());
+        cv.put(ConstantsDB.FECHA_SERO, recsero.getFechaRecSero().getTime());
         cv.put(ConstantsDB.VOLSERO, recsero.getVolumen());
         cv.put(ConstantsDB.LUGAR, recsero.getLugar());
         cv.put(ConstantsDB.OBSSERO, recsero.getObservacion());
@@ -4872,8 +4873,7 @@ public class EstudiosAdapter {
         ContentValues cv = new ContentValues();
         cv.put(ConstantsDB.STATUS, tubo.getEstado());
         return mDb.update(ConstantsDB.SERO_TABLE, cv,
-                ConstantsDB.CODIGO + "=" + tubo.getRecSeroId().getCodigo() + " and " +
-                        ConstantsDB.FECHA_SERO + "=" + tubo.getRecSeroId().getFechaRecSero().getTime(), null) > 0;
+                ConstantsDB.ID + "='" + tubo.getId() + "' ", null) > 0;
     }
 
     /**
@@ -6965,10 +6965,9 @@ public class EstudiosAdapter {
      */
     public RecepcionSero crearRecepcionSero(Cursor tubossero){
         RecepcionSero mTubo = new RecepcionSero();
-        RecepcionSeroId tuboId = new RecepcionSeroId();
-        tuboId.setCodigo(tubossero.getInt(tubossero.getColumnIndex(ConstantsDB.CODIGO)));
-        tuboId.setFechaRecSero(new Date(tubossero.getLong(tubossero.getColumnIndex(ConstantsDB.FECHA_SERO))));
-        mTubo.setRecSeroId(tuboId);
+        mTubo.setCodigo(tubossero.getInt(tubossero.getColumnIndex(ConstantsDB.CODIGO)));
+        mTubo.setFechaRecSero(new Date(tubossero.getLong(tubossero.getColumnIndex(ConstantsDB.FECHA_SERO))));
+        mTubo.setId(tubossero.getString(tubossero.getColumnIndex(ConstantsDB.ID)));
         mTubo.setVolumen(tubossero.getDouble(tubossero.getColumnIndex(ConstantsDB.VOLSERO)));
         mTubo.setLugar(tubossero.getString(tubossero.getColumnIndex(ConstantsDB.LUGAR)));
         mTubo.setObservacion(tubossero.getString(tubossero.getColumnIndex(ConstantsDB.OBSSERO)));

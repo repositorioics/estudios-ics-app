@@ -114,9 +114,9 @@ public class MenuMuestreoAnualActivity extends ListActivity {
             case R.id.MENU_CARGA:
                 createDialog(UPLOAD);
                 return true;
-            case R.id.MENU_CARGA_DOCS:
+            /*case R.id.MENU_CARGA_DOCS:
                 createDialog(UPLOAD_DOCS);
-                return true;
+                return true;*/
             case R.id.MENU_EXIT:
                 createDialog(EXIT);
                 return true;

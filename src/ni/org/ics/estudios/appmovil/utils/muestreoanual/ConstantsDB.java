@@ -596,6 +596,7 @@ public class ConstantsDB {
     public static final String OBSBHC = "observacion";
 
     //Campos recepcion SERO
+    public static final String ID = "id";
     public static final String FECHA_SERO = "fecha_sero";
     public static final String VOLSERO = "volsero";
     public static final String OBSSERO = "observacion";
@@ -1669,6 +1670,7 @@ public class ConstantsDB {
 
     public static final String CREATE_SERO_TABLE = "create table "
             + SERO_TABLE + " ("
+            + ID + " text not null, "
             + CODIGO + " integer not null, "
             + FECHA_SERO  + " date not null, "
             + VOLSERO  + " real, "
@@ -1677,7 +1679,7 @@ public class ConstantsDB {
             + USUARIO  + " text, "
             + STATUS + " text not null, "
             + TODAY  + " date, "
-            + "primary key (" + FECHA_SERO + "," + CODIGO + "));";
+            + "primary key (" + ID + "));";
 
     public static final String CREATE_TPBMC_TABLE = "create table "
             + TPBMC_TABLE + " ("

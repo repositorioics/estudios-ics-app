@@ -172,10 +172,9 @@ public class ListRojosActivity extends ListActivity{
 			RecepcionSero mTubo;
 			do{
 				mTubo = new RecepcionSero();
-				RecepcionSeroId tuboId = new RecepcionSeroId();
-				tuboId.setCodigo(tubossero.getInt(tubossero.getColumnIndex(ConstantsDB.CODIGO)));
-				tuboId.setFechaRecSero(new Date(tubossero.getLong(tubossero.getColumnIndex(ConstantsDB.FECHA_SERO))));
-				mTubo.setRecSeroId(tuboId);
+                mTubo.setCodigo(tubossero.getInt(tubossero.getColumnIndex(ConstantsDB.CODIGO)));
+                mTubo.setFechaRecSero(new Date(tubossero.getLong(tubossero.getColumnIndex(ConstantsDB.FECHA_SERO))));
+				mTubo.setId(tubossero.getString(tubossero.getColumnIndex(ConstantsDB.ID)));
 				mTubo.setVolumen(tubossero.getDouble(tubossero.getColumnIndex(ConstantsDB.VOLSERO)));
 				mTubo.setLugar(tubossero.getString(tubossero.getColumnIndex(ConstantsDB.LUGAR)));
 				mTubo.setObservacion(tubossero.getString(tubossero.getColumnIndex(ConstantsDB.OBSSERO)));

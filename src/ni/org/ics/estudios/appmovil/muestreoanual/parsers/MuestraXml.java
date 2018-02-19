@@ -40,6 +40,8 @@ public class MuestraXml {
 	private String leuco;
 	@Element(required=false)
 	private String bhc;
+    @Element(required=false)
+    private String ed;
 	
 	@Element(required=false)
 	private String titulo1;

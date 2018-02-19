@@ -242,7 +242,11 @@ public class Participante extends BaseMetaData implements Serializable{
         inicio.setTime(this.getFechaNac());
         fin.setTime(new Date());
         int difA = fin.get(Calendar.YEAR) - inicio.get(Calendar.YEAR);
-        return difA * 12 + fin.get(Calendar.MONTH) - inicio.get(Calendar.MONTH);
+        int difM = difA * 12 + fin.get(Calendar.MONTH) - inicio.get(Calendar.MONTH);
+        int difD = fin.get(Calendar.DAY_OF_MONTH) - inicio.get(Calendar.DAY_OF_MONTH);
+        //aun no ha cumplido mes, restar 1
+        if (difD < 0) difM -=1;
+        return difM;
     }
 
     @JsonIgnore

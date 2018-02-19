@@ -304,7 +304,7 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
 					return;
 				}
 			}
-			if (codigo>0 && codigo <=10000){
+			if (codigo>0 && codigo <=15000){
 				ca.open();
 				Cursor c  = null;
 				c = ca.buscarRecepcionBHC(codigo, todayWithZeroTime);
@@ -341,7 +341,7 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
 			showToast(this.getString( R.string.error_volumen),1);
 			return false;
 		}
-		else if (!(codigo>0 && codigo<=10000)){
+		else if (!(codigo>0 && codigo<=15000)){
 			showToast(this.getString( R.string.error_codigo),1);
 			return false;
 		}

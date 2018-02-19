@@ -15,24 +15,42 @@ public class RecepcionSero {
 	/**
 	 * 
 	 */
-	
-	private RecepcionSeroId recSeroId;
-	private Double volumen;
+
+    private String id;
+    private Integer codigo;
+    private Date fechaRecSero;
+    private Double volumen;
 	private String lugar;
 	private String observacion;
 	private String username;
 	private String estado;
 	private Date fecreg;
 
-	public RecepcionSeroId getRecSeroId() {
-		return recSeroId;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setRecSeroId(RecepcionSeroId recSeroId) {
-		this.recSeroId = recSeroId;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public Double getVolumen() {
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+
+    public Date getFechaRecSero() {
+        return fechaRecSero;
+    }
+
+    public void setFechaRecSero(Date fechaRecSero) {
+        this.fechaRecSero = fechaRecSero;
+    }
+
+    public Double getVolumen() {
 		return volumen;
 	}
 
@@ -83,7 +101,7 @@ public class RecepcionSero {
 	@Override
 	public String toString() {
 		SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		return this.recSeroId.getCodigo() + " "+ mDateFormat.format(this.recSeroId.getFechaRecSero());
+		return this.getCodigo() + " "+ mDateFormat.format(this.getFechaRecSero());
 	}
 
 }

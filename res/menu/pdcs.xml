@@ -1,17 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item android:id="@+id/MENU_DESCARGA"
+    <!--<item android:id="@+id/MENU_DESCARGA"
           android:title="@string/download"
           android:showAsAction="ifRoom|withText"
-          android:icon="@drawable/ic_menu_download"></item>
+          android:icon="@drawable/ic_menu_download"></item>-->
     <item android:id="@+id/MENU_CARGA"
           android:title="@string/upload"
           android:showAsAction="ifRoom|withText"
           android:icon="@drawable/ic_menu_upload"></item>
-    <item android:id="@+id/MENU_CARGA_DOCS"
+    <!--<item android:id="@+id/MENU_CARGA_DOCS"
           android:title="@string/upload_docs"
           android:showAsAction="ifRoom|withText"
-          android:icon="@android:drawable/ic_menu_send"></item>
+          android:icon="@android:drawable/ic_menu_send"></item>-->
     <item android:id="@+id/MENU_DOWN_USER"
           android:title="@string/download_user"
           android:showAsAction="ifRoom|withText"

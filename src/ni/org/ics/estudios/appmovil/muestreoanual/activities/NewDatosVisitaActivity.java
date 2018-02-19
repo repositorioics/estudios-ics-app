@@ -266,12 +266,13 @@ public class NewDatosVisitaActivity extends AbstractAsyncActivity {
 				}
 			}
 			mParticipante.getProcesos().setDatosVisita("No");
-			if (em.getCoordenadas()!=null){
+			//no será necesario actualizar casa
+			/*if (em.getCoordenadas()!=null){
 				mParticipante.getCasa().setLatitud(latitud);
 				mParticipante.getCasa().setLongitud(longitud);
                 mParticipante.getCasa().setEstado(Constants.STATUS_NOT_SUBMITTED.charAt(0));
                 estudiosAdapter.editarCasa(mParticipante.getCasa());
-			}
+			}*/
             estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());
             estudiosAdapter.close();
 			showToast(getApplicationContext().getString(R.string.success),0);

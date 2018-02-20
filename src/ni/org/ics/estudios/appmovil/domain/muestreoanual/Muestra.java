@@ -42,6 +42,7 @@ public class Muestra implements Serializable {
 	private MovilInfo movilInfo;
 	private Integer otrorecurso1;
 	private Integer otrorecurso2;
+    private String estudiosAct;
 
 
 	public Integer getOtrorecurso1() {
@@ -223,7 +224,15 @@ public class Muestra implements Serializable {
 		this.terreno = terreno;
 	}
 
-	@Override
+    public String getEstudiosAct() {
+        return estudiosAct;
+    }
+
+    public void setEstudiosAct(String estudiosAct) {
+        this.estudiosAct = estudiosAct;
+    }
+
+    @Override
 	public String toString() {
 		return this.getmId().getCodigo().toString();
 	}

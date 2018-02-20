@@ -1343,6 +1343,7 @@ public class ConstantsDB {
             + terreno  + " text, "
             + otrorecurso1  + " integer, "
             + otrorecurso2  + " integer, "
+            + estudiosAct + " text, "
             + ID_INSTANCIA + " integer not null,"
             + FILE_PATH + " text not null,"
             + STATUS + " text not null, "

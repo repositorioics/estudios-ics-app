@@ -4114,6 +4114,7 @@ public class EstudiosAdapter {
 
         cv.put(ConstantsDB.otrorecurso1, muestra.getOtrorecurso1());
         cv.put(ConstantsDB.otrorecurso2, muestra.getOtrorecurso2());
+        cv.put(ConstantsDB.estudiosAct, muestra.getEstudiosAct());
 
         cv.put(ConstantsDB.PIN, muestra.getPinchazos());
         cv.put(ConstantsDB.ID_INSTANCIA, muestra.getMovilInfo().getIdInstancia());
@@ -6022,6 +6023,7 @@ public class EstudiosAdapter {
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.horaFinPax))) mMuestra.setHoraFinPax(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.horaFinPax)));
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.codPax))) mMuestra.setCodPax(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.codPax)));
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.terreno))) mMuestra.setTerreno(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.terreno)));
+        if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.estudiosAct))) mMuestra.setEstudiosAct(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.estudiosAct)));
 
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.otrorecurso1))) mMuestra.setOtrorecurso1(muestreo.getInt(muestreo.getColumnIndex(ConstantsDB.otrorecurso1)));
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.otrorecurso2))) mMuestra.setOtrorecurso2(muestreo.getInt(muestreo.getColumnIndex(ConstantsDB.otrorecurso2)));

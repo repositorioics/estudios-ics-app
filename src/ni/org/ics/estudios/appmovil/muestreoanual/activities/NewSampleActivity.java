@@ -188,7 +188,7 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 			mMuestra.setTuboBHC(em.getTuboBHC());
 			mMuestra.setTuboLeu(em.getTuboLeu());
 			mMuestra.setTuboRojo(em.getTuboRojo());
-			
+			mMuestra.setEstudiosAct(mParticipante.getProcesos().getEstudio());
 			mMuestra.setBhc_razonNo(em.getBhc_razonNo());
 			mMuestra.setRojo_razonNo(em.getRojo_razonNo());
 			mMuestra.setPbmc_razonNo(em.getPbmc_razonNo());

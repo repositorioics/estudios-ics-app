@@ -345,7 +345,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                     labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
                 }
             }
-            if (mParticipante.getProcesos().getConmxbhc().matches("No")){
+            if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")){
                 if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
                     labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                 }else{

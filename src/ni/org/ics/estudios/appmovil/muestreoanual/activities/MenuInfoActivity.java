@@ -688,9 +688,11 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     if(mParticipante.getProcesos().getEnCasaSa().matches("Si")) {
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaCasaSAActivity.class);
-                        estudiosAdapter.open();
-                        mCasasCHF = estudiosAdapter.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" + mParticipante.getProcesos().getCasaCHF(), MainDBConstants.codigoCHF);
-                        estudiosAdapter.close();
+                        if (mParticipante.getProcesos().getCasaCHF()!=null && !mParticipante.getProcesos().getCasaCHF().isEmpty()) {
+                            estudiosAdapter.open();
+                            mCasasCHF = estudiosAdapter.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" + mParticipante.getProcesos().getCasaCHF(), MainDBConstants.codigoCHF);
+                            estudiosAdapter.close();
+                        }
                         if (mCasasCHF != null) arguments.putSerializable(Constants.CASACHF, mCasasCHF);
                         arguments.putSerializable(Constants.CASA, mParticipante.getCasa());
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -884,7 +886,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         mVacunas=estudiosAdapter.getNewVacunas(filtro, null);
         mDocumentos =estudiosAdapter.getDocumentoss(filtro, null);
         if(mParticipante.getCasa().getCodigo()!=9999){
-            mEncuestasCasasChf = estudiosAdapter.getListaEncuestaCasasChf(mParticipante.getProcesos().getCasaCHF());
+            if (mParticipante.getProcesos().getCasaCHF()!=null && !mParticipante.getProcesos().getCasaCHF().isEmpty())
+                mEncuestasCasasChf = estudiosAdapter.getListaEncuestaCasasChf(mParticipante.getProcesos().getCasaCHF());
             mEncuestasCasasSa = (ArrayList)estudiosAdapter.getEncuestasCasaSA(SeroprevalenciaDBConstants.casa + "=" + mParticipante.getCasa().getCodigo() , null);
         }
         mEncuestasParticipantesSa = (ArrayList)estudiosAdapter.getEncuestasParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo() , null);
@@ -1209,8 +1212,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                 pendiente =true;
             }
-        }else //De 2 años - < 13 Años
-            if(mParticipante.getEdadMeses()>=24 && mParticipante.getEdadMeses()<156){
+        }else //De 2 años - < 14 Años
+            if(mParticipante.getEdadMeses()>=24 && mParticipante.getEdadMeses()<168){
                 if (mParticipante.getProcesos().getConmx().matches("No")){
                     labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
                     pendiente =true;

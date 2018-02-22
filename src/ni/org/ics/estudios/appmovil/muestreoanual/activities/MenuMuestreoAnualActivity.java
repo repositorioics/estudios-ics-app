@@ -33,6 +33,7 @@ public class MenuMuestreoAnualActivity extends ListActivity {
     private static final int UPLOAD_DOCS = 6;
     private static final int VERIFY = 4;
     private static final int DOWNLOAD_USER = 5;
+    private static final int DOWNLOAD_PROC = 7;
     public static final int BARCODE_CAPTURE = 22;
 
     private static final String EXIT_SHOWING = "exitshowing";
@@ -119,6 +120,9 @@ public class MenuMuestreoAnualActivity extends ListActivity {
                 return true;*/
             case R.id.MENU_EXIT:
                 createDialog(EXIT);
+                return true;
+            case R.id.MENU_DOWN_PROC:
+                createDialog(DOWNLOAD_PROC);
                 return true;
             case R.id.MENU_DOWN_USER:
                 createDialog(DOWNLOAD_USER);
@@ -384,6 +388,28 @@ public class MenuMuestreoAnualActivity extends ListActivity {
                     }
                 });
                 mSendShowing=true;
+                break;
+            case DOWNLOAD_PROC:
+                builder.setTitle(this.getString(R.string.confirm));
+                builder.setMessage(this.getString(R.string.downloadingproc));
+                builder.setIcon(android.R.drawable.ic_menu_help);
+                builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        mReceiveShowing=false;
+                        Intent ie = new Intent(getApplicationContext(), DownloadProcessesActivity.class);
+                        startActivityForResult(ie, UPDATE_EQUIPO);
+                    }
+                });
+                builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                        mReceiveShowing=false;
+                    }
+                });
+                mReceiveShowing=true;
                 break;
             default:
                 break;

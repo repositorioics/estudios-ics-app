@@ -312,8 +312,8 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
             if (mParticipante.getProcesos().getConmxbhc().matches("No")){
                 labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
             }
-        }else //De 2 años - < 13 Años
-            if(mParticipante.getEdadMeses()>=24 && mParticipante.getEdadMeses()<156){
+        }else //De 2 años - < 14 Años
+            if(mParticipante.getEdadMeses()>=24 && mParticipante.getEdadMeses()<168){
                 if (mParticipante.getProcesos().getConmx().matches("No")){
                     labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
                 }

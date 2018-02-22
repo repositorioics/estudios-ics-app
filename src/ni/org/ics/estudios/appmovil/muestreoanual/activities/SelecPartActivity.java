@@ -270,7 +270,7 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 					}
 				}
 				catch(Exception e){
-					showToast(getString(R.string.scan_error));
+					showToast(getString(R.string.scan_error)+ "("+codigoScanned+") - " +e.getLocalizedMessage());
 					return;
 				}finally {
                     //ca.close();

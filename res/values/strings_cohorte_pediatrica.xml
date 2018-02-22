@@ -8,8 +8,10 @@
     <string name="enter_lastname">Ingresar apellido</string>
     <string name="perm_error">No tiene permiso en esta opción!</string>
     <string name="download_user">Usuarios</string>
+    <string name="download_proc">Procesos</string>
     <string name="download_par">Participante</string>
     <string name="update_cat">Actualizando datos en el equipo..</string>
+    <string name="downloadingproc">Descargar toda la información de procesos del servidor? Esta operación modifica los procesos actuales en el dispositivo</string>
 
     <string name="info_casa">Casa</string>
     <string name="info_participante">Participante</string>

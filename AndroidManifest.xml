@@ -234,6 +234,8 @@
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.DownloadBaseActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.DownloadProcessesActivity"
+                  android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.ListBHCsActivity"
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.ListRojosActivity"

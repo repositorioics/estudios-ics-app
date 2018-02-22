@@ -12,6 +12,10 @@
           android:title="@string/upload_docs"
           android:showAsAction="ifRoom|withText"
           android:icon="@android:drawable/ic_menu_send"></item>-->
+    <item android:id="@+id/MENU_DOWN_PROC"
+          android:title="@string/download_proc"
+          android:showAsAction="ifRoom|withText"
+          android:icon="@drawable/ic_menu_refresh"></item>
     <item android:id="@+id/MENU_DOWN_USER"
           android:title="@string/download_user"
           android:showAsAction="ifRoom|withText"

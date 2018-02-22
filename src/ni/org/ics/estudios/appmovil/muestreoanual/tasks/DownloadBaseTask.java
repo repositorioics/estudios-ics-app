@@ -537,7 +537,7 @@ public class DownloadBaseTask extends DownloadTask {
         ListIterator<ParticipanteProcesos> iter = participantes.listIterator();
         while (iter.hasNext()){
             estudioAdapter.crearParticipanteProcesos(iter.next());
-            publishProgress("Participantes Procesos", Integer.valueOf(iter.nextIndex()).toString(), Integer
+            publishProgress("Insertando Procesos de Participantes", Integer.valueOf(iter.nextIndex()).toString(), Integer
                     .valueOf(v).toString());
         }
     }

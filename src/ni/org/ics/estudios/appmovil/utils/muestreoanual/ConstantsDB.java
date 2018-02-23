@@ -875,7 +875,7 @@ public class ConstantsDB {
     public static final String fiebre = "fiebre";
     public static final String astenia = "astenia";
 
-    public static final String CREATE_USER_PERM_TABLE = "create table "
+    public static final String CREATE_USER_PERM_TABLE = "create table if not exists "
             + USER_PERM_TABLE + " ("
             + USERNAME + " text not null, "
             + U_MUESTRA + " boolean, "
@@ -894,7 +894,7 @@ public class ConstantsDB {
             + U_PARTO + " boolean, "
             + "primary key (" + USERNAME + "));";
 
-    public static final String CREATE_PARTPROC_TABLE = "create table "
+    public static final String CREATE_PARTPROC_TABLE = "create table if not exists "
             + PART_PROCESOS_TABLE + " ("
             + CODIGO + " integer not null, "
             + ESTADO_PAR  + " integer not null, "
@@ -947,7 +947,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key (" + CODIGO + "));";
 
-    public static final String CREATE_ENCCASA_TABLE = "create table "
+    public static final String CREATE_ENCCASA_TABLE = "create table if not exists "
             + ENC_CASA_TABLE + " ("
             + codigo + " text not null, "
             + COD_CASA + " integer, "
@@ -1072,7 +1072,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key (" + codigo + "));";
 
-    public static final String CREATE_ENCPART_TABLE = "create table "
+    public static final String CREATE_ENCPART_TABLE = "create table if not exists "
             + ENC_PART_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_ENC_PAR  + " date not null, "
@@ -1246,7 +1246,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key (" + FECHA_ENC_PAR + "," + CODIGO + "));";
 
-    public static final String CREATE_ENCLAC_TABLE = "create table "
+    public static final String CREATE_ENCLAC_TABLE = "create table if not exists "
             + LACT_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_ENC_LACT  + " date not null, "
@@ -1284,7 +1284,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key (" + FECHA_ENC_LACT + "," + CODIGO + "));";
 
-    public static final String CREATE_PT_TABLE = "create table "
+    public static final String CREATE_PT_TABLE = "create table if not exists "
             + PT_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_PT  + " date not null, "
@@ -1319,7 +1319,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key (" + FECHA_PT + "," + CODIGO + "));";
 
-    public static final String CREATE_MUESTRA_TABLE = "create table "
+    public static final String CREATE_MUESTRA_TABLE = "create table if not exists "
             + MUESTRA_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_MUESTRA  + " date not null, "
@@ -1360,7 +1360,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key (" + FECHA_MUESTRA + "," + CODIGO + "));";
 
-    public static final String CREATE_OB_TABLE = "create table "
+    public static final String CREATE_OB_TABLE = "create table if not exists "
             + OB_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_OB  + " date not null, "
@@ -1391,7 +1391,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key ("+ FECHA_OB + "," + CODIGO + "));";
 
-    public static final String CREATE_VAC_TABLE = "create table "
+    public static final String CREATE_VAC_TABLE = "create table if not exists "
             + VAC_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_VACUNA  + " date not null, "
@@ -1426,7 +1426,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key (" + FECHA_VACUNA + "," + CODIGO + "));";
 
-    public static final String CREATE_VIS_TABLE = "create table "
+    public static final String CREATE_VIS_TABLE = "create table if not exists "
             + VIS_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_VISITA  + " date not null, "
@@ -1456,7 +1456,7 @@ public class ConstantsDB {
             + "primary key (" + FECHA_VISITA + "," + CODIGO + "));";
 
 
-    public static final String CREATE_DAT_VIS_TABLE = "create table "
+    public static final String CREATE_DAT_VIS_TABLE = "create table if not exists "
             + DAT_VIS_TABLE + " ("
             + CODIGO + " integer not null, "
             + COD_CASA + " integer not null, "
@@ -1518,7 +1518,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key (" + FECHA_VISITA + "," + CODIGO + "));";
 
-    public static final String CREATE_RECONS_TABLE = "create table "
+    public static final String CREATE_RECONS_TABLE = "create table if not exists "
             + RECONS_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_CONS  + " date not null, "
@@ -1567,7 +1567,7 @@ public class ConstantsDB {
             + "primary key (" + FECHA_CONS + "," + CODIGO + "));";
 
 
-    public static final String CREATE_CONSCHIK_TABLE = "create table "
+    public static final String CREATE_CONSCHIK_TABLE = "create table if not exists "
             + CONSCHIK_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_CONS  + " date not null, "
@@ -1611,7 +1611,7 @@ public class ConstantsDB {
             + "primary key (" + FECHA_CONS + "," + CODIGO + "));";
 
 
-    public static final String CREATE_CEST_TABLE = "create table "
+    public static final String CREATE_CEST_TABLE = "create table if not exists "
             + CEST_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_CAMBIO  + " date not null, "
@@ -1656,7 +1656,7 @@ public class ConstantsDB {
             + "primary key (" + FECHA_CAMBIO + "," + CODIGO + "));";
 
 
-    public static final String CREATE_BHC_TABLE = "create table "
+    public static final String CREATE_BHC_TABLE = "create table if not exists "
             + BHC_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_BHC  + " date not null, "
@@ -1669,7 +1669,7 @@ public class ConstantsDB {
             + TODAY  + " date, "
             + "primary key (" + FECHA_BHC + "," + CODIGO + "));";
 
-    public static final String CREATE_SERO_TABLE = "create table "
+    public static final String CREATE_SERO_TABLE = "create table if not exists "
             + SERO_TABLE + " ("
             + ID + " text not null, "
             + CODIGO + " integer not null, "
@@ -1682,7 +1682,7 @@ public class ConstantsDB {
             + TODAY  + " date, "
             + "primary key (" + ID + "));";
 
-    public static final String CREATE_TPBMC_TABLE = "create table "
+    public static final String CREATE_TPBMC_TABLE = "create table if not exists "
             + TPBMC_TABLE + " ("
             + RECURSO + " text not null, "
             + FECHA_TEMP  + " date not null, "
@@ -1694,7 +1694,7 @@ public class ConstantsDB {
             + TODAY  + " date, "
             + "primary key (" + FECHA_TEMP + "," + RECURSO + "));";
 
-    public static final String CREATE_TRB_TABLE = "create table "
+    public static final String CREATE_TRB_TABLE = "create table if not exists "
             + TRB_TABLE + " ("
             + RECURSO + " text not null, "
             + FECHA_TEMP  + " date not null, "
@@ -1706,7 +1706,7 @@ public class ConstantsDB {
             + TODAY  + " date, "
             + "primary key (" + FECHA_TEMP + "," + RECURSO + "));";
 
-    public static final String CREATE_PIN_TABLE = "create table "
+    public static final String CREATE_PIN_TABLE = "create table if not exists "
             + PIN_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_PIN  + " date not null, "
@@ -1719,7 +1719,7 @@ public class ConstantsDB {
             + "primary key (" + FECHA_PIN + "," + CODIGO + "));";
 
 
-    public static final String CREATE_RND_TABLE = "create table "
+    public static final String CREATE_RND_TABLE = "create table if not exists "
             + NO_DATA_TABLE + " ("
             + CODIGO + " integer not null, "
             + TODAY  + " date not null, "
@@ -1729,7 +1729,7 @@ public class ConstantsDB {
             + STATUS + " text not null, "
             + "primary key (" + TODAY + "," + CODIGO + "));";
 
-    public static final String CREATE_CC_TABLE = "create table "
+    public static final String CREATE_CC_TABLE = "create table if not exists "
             + COD_REL_TABLE + " ("
             + TODAY  + " date not null, "
             + COD_CASA_R  + " integer, "
@@ -1739,7 +1739,7 @@ public class ConstantsDB {
             + STATUS + " text not null, "
             + "primary key (" + TODAY + "));";
 
-    public static final String CREATE_CAMBCASA_TABLE = "create table "
+    public static final String CREATE_CAMBCASA_TABLE = "create table if not exists "
             + CAMB_CASA_TABLE + " ("
             + TODAY  + " date not null, "
             + codigo  + " integer, "
@@ -1749,7 +1749,7 @@ public class ConstantsDB {
             + STATUS + " text not null, "
             + "primary key (" + TODAY + "));";
 
-    public static final String CREATE_ENCSAT_TABLE = "create table "
+    public static final String CREATE_ENCSAT_TABLE = "create table if not exists "
             + ENC_SAT_TABLE + " ("
             + FECHA_ENC_SAT  + " date not null, "
             + ESTUDIO + " text, "
@@ -1784,7 +1784,7 @@ public class ConstantsDB {
             + "primary key (" + FECHA_ENC_SAT + "));";
 
 
-    public static final String CREATE_RECONS_TABLE_2015 = "create table "
+    public static final String CREATE_RECONS_TABLE_2015 = "create table if not exists "
             + RECONS_TABLE_2015 + " ("
             + CODIGO + " integer not null, "
             + FECHA_CONS  + " date not null, "
@@ -1898,7 +1898,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key (" + FECHA_CONS + "," + CODIGO + "));";
 
-    public static final String CREATE_ZIKA_TABLE = "create table "
+    public static final String CREATE_ZIKA_TABLE = "create table if not exists "
             + ZIKA_TABLE + " ("
             + CODIGO + " integer not null, "
             + FECHA_CONS  + " date not null, "
@@ -1939,7 +1939,7 @@ public class ConstantsDB {
             + "primary key (" + FECHA_CONS + "," + CODIGO + "));";
 
 
-    public static final String CREATE_RECONSFLU_TABLE_2015 = "create table "
+    public static final String CREATE_RECONSFLU_TABLE_2015 = "create table if not exists "
             + RECONSFLU_TABLE_2015 + " ("
             + CODIGO + " integer not null, "
             + FECHA_CONS  + " date not null, "
@@ -1990,7 +1990,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key (" + FECHA_CONS + "," + CODIGO + "));";
 
-    public static final String CREATE_DATOSPARTOBB_TABLE = "create table "
+    public static final String CREATE_DATOSPARTOBB_TABLE = "create table if not exists "
             + DATOSPARTOBB_TABLE + " ("
             + CODIGO + " integer not null, "
             + fechaDatosParto  + " date not null, "
@@ -2032,7 +2032,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key (" + fechaDatosParto + "," + CODIGO + "));";
 
-    public static final String CREATE_NEWVAC_TABLE = "create table "
+    public static final String CREATE_NEWVAC_TABLE = "create table if not exists "
             + NEWVAC_TABLE + " ("
             + CODIGO + " integer not null, "
             + fechaRegistroVacuna  + " date not null, "
@@ -2056,7 +2056,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + "primary key (" + fechaRegistroVacuna + "," + CODIGO + "));";
 
-    public static final String CREATE_DOCS_TABLE = "create table "
+    public static final String CREATE_DOCS_TABLE = "create table if not exists "
             + DOCS_TABLE + " ("
             + CODIGO + " integer not null, "
             + fechaDocumento  + " date not null, "

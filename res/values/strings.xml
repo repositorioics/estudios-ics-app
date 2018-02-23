@@ -58,6 +58,7 @@
     <string name="verify">Esta acción no se puede deshacer, desea proceder???</string>
     <string name="data_not_sent">Hay datos sin enviar en el equipo, estos datos se borrarán si continúa. Aún desea descargar la información del servidor?</string>
     <string name="wipe_db_confirm">Al marcar esta opción borrará la base de datos del equipo, los datos almacenados se borrarán si continúa. Aún desea marcar esta opción?</string>
+    <string name="error_wipe_db_super">No tiene el rol necesario para limpiar base de datos</string>
     <string name="next">Siguiente</string>
     <string name="prev">Previo</string>
     <string name="finish">Finalizar</string>
@@ -125,5 +126,9 @@
     <string name="secure_connect">Conectar</string>
     <string name="insecure_connect">Conectar (inseguro)..</string>
     <string name="discoverable">Hacer visible</string>
+
+    <!-- Descargar data -->
+    <string name="enter_pin_download">Ingresar PIN de autorización para descargar datos</string>
+    <string name="pin_error">PIN inválido!</string>
     
 </resources>

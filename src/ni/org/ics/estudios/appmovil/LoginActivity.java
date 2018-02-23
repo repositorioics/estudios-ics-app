@@ -10,6 +10,7 @@ import java.util.ListIterator;
 import net.sqlcipher.SQLException;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
+import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -301,20 +302,29 @@ public class LoginActivity extends Activity {
 				urlRequest = url + "/movil/roles/{mUser}";
 				ResponseEntity<Authority[]> userRolesFromServer = restTemplate.exchange(urlRequest, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Authority[].class, mUser);
 				List<Authority> uroles = Arrays.asList(userRolesFromServer.getBody());
-				
-				successLogin=true;	
-				EstudiosAdapter ca = new EstudiosAdapter(getApplicationContext(),mPassword,true, chkWipe.isChecked());
-				ca.open();
-				ca.borrarUsuarios();
-				ca.borrarRoles();
-				ca.crearUsuario(userFromServer.getBody());
-				ListIterator<Authority> iter = uroles.listIterator();
+                urlRequest = url + "/movil/permisos/{mUser}";
+                ResponseEntity<UserPermissions> permisosFromServer = restTemplate.exchange(urlRequest, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), UserPermissions.class, mUser);
+                if(!chkWipe.isChecked() || uroles.toString().contains("ROLE_SUPER")) {
+                    successLogin = true;
+                    EstudiosAdapter ca = new EstudiosAdapter(getApplicationContext(), mPassword, true, chkWipe.isChecked());
+                    ca.open();
+                    ca.borrarUsuarios();
+                    ca.borrarRoles();
+                    ca.borrarTodosPermisos();
+                    ca.crearUsuario(userFromServer.getBody());
+                    ListIterator<Authority> iter = uroles.listIterator();
 
-				while (iter.hasNext()){
-					ca.crearRol(iter.next());
-				}
-				ca.close();	
-				return getString(R.string.success);
+                    while (iter.hasNext()) {
+                        ca.crearRol(iter.next());
+                    }
+                    ca.crearPermisosUsuario(permisosFromServer.getBody());
+                    ca.close();
+                    return getString(R.string.success);
+                }
+                else {
+                    successLogin=false;
+                    return getString(R.string.error_wipe_db_super);
+                }
 			} catch (Exception e) {
 				successLogin=false;
 				Log.e(TAG, e.getLocalizedMessage(), e);

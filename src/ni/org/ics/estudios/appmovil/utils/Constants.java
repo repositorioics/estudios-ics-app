@@ -100,7 +100,7 @@ public class Constants {
     public static final String AUTHORITY_I = "org.odk.collect.android.provider.odk.instances";
     public static final Uri CONTENT_URI_I = Uri.parse("content://" + AUTHORITY_I + "/instances");
 
-    public static final String PERTENECE_CHF = "esChf";
+    public static final String OK = "OK";
 }
 
     

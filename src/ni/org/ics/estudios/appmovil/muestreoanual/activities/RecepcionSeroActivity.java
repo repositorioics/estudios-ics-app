@@ -202,15 +202,17 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 					tubo.setUsername(username);
 					tubo.setEstado(Constants.STATUS_NOT_SUBMITTED);
 					tubo.setFecreg(new Date());
-					ca.open();
                     try {
+                        ca.open();
                         ca.crearRecepcionSero(tubo);
+                        showToast("Registro Guardado",0);
+                        reiniciar();
                     }catch (Exception ex){
                         ex.printStackTrace();
+                        showToast("Error al guardar registro. "+ex.getLocalizedMessage(),0);
+                    }finally {
+                        ca.close();
                     }
-					ca.close();
-					showToast("Registro Guardado",0);
-					reiniciar();
 				}
 			}
 

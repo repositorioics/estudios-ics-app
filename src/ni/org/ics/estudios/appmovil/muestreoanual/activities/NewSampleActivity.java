@@ -177,90 +177,88 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 		Serializer serializer = new Persister();
 		File source = new File(instanceFilePath);
 		try {
-			MuestraXml em = new MuestraXml();
-			em = serializer.read(MuestraXml.class, source);
-			MuestraId mId = new MuestraId();
-			mId.setCodigo(codigo);
-			mId.setFechaMuestra(new Date());
-			mMuestra.setmId(mId);
-			mMuestra.setFiebreM(em.getFiebreM());
-			mMuestra.setConsulta(em.getConsulta());
-			mMuestra.setTuboBHC(em.getTuboBHC());
-			mMuestra.setTuboLeu(em.getTuboLeu());
-			mMuestra.setTuboRojo(em.getTuboRojo());
-			mMuestra.setEstudiosAct(mParticipante.getProcesos().getEstudio());
-			mMuestra.setBhc_razonNo(em.getBhc_razonNo());
-			mMuestra.setRojo_razonNo(em.getRojo_razonNo());
-			mMuestra.setPbmc_razonNo(em.getPbmc_razonNo());
-			
-			mMuestra.setBhc_otraRazonNo(em.getBhc_otraRazonNo());
-			mMuestra.setRojo_otraRazonNo(em.getRojo_otraRazonNo());
-			mMuestra.setPbmc_otraRazonNo(em.getPbmc_otraRazonNo());
-			
-			mMuestra.setHoraBHC(em.getHoraBHC());
-			mMuestra.setHoraPBMC(em.getHoraPBMC());
-			mMuestra.setHoraInicioPax(em.getHoraInicioPax());
-			
-			mMuestra.setHoraFinPax(em.getHoraFinPax());
-			mMuestra.setTerreno(em.getTerreno());
-			mMuestra.setCodPax(em.getCodPax());
-			
-			mMuestra.setPinchazos(em.getPinchazos());
+            MuestraXml em = new MuestraXml();
+            em = serializer.read(MuestraXml.class, source);
+            MuestraId mId = new MuestraId();
+            mId.setCodigo(codigo);
+            mId.setFechaMuestra(new Date());
+            mMuestra.setmId(mId);
+            mMuestra.setFiebreM(em.getFiebreM());
+            mMuestra.setConsulta(em.getConsulta());
+            mMuestra.setTuboBHC(em.getTuboBHC());
+            mMuestra.setTuboLeu(em.getTuboLeu());
+            mMuestra.setTuboRojo(em.getTuboRojo());
+            mMuestra.setEstudiosAct(mParticipante.getProcesos().getEstudio());
+            mMuestra.setBhc_razonNo(em.getBhc_razonNo());
+            mMuestra.setRojo_razonNo(em.getRojo_razonNo());
+            mMuestra.setPbmc_razonNo(em.getPbmc_razonNo());
+
+            mMuestra.setBhc_otraRazonNo(em.getBhc_otraRazonNo());
+            mMuestra.setRojo_otraRazonNo(em.getRojo_otraRazonNo());
+            mMuestra.setPbmc_otraRazonNo(em.getPbmc_otraRazonNo());
+
+            mMuestra.setHoraBHC(em.getHoraBHC());
+            mMuestra.setHoraPBMC(em.getHoraPBMC());
+            mMuestra.setHoraInicioPax(em.getHoraInicioPax());
+
+            mMuestra.setHoraFinPax(em.getHoraFinPax());
+            mMuestra.setTerreno(em.getTerreno());
+            mMuestra.setCodPax(em.getCodPax());
+
+            mMuestra.setPinchazos(em.getPinchazos());
             mMuestra.setOtrorecurso1(em.getOtrorecurso1());
             mMuestra.setOtrorecurso2(em.getOtrorecurso2());
 
             mMuestra.setMovilInfo(new MovilInfo(idInstancia,
-					instanceFilePath,
-					Constants.STATUS_NOT_SUBMITTED,
-					ultimoCambio,
-					em.getStart(),
-					em.getEnd(),
-					em.getDeviceid(),
-					em.getSimserial(),
-					em.getPhonenumber(),
-					em.getToday(),
-					username,
-					false, em.getRecurso1(), em.getRecurso2()));
-			//Guarda en la base de datos local
+                    instanceFilePath,
+                    Constants.STATUS_NOT_SUBMITTED,
+                    ultimoCambio,
+                    em.getStart(),
+                    em.getEnd(),
+                    em.getDeviceid(),
+                    em.getSimserial(),
+                    em.getPhonenumber(),
+                    em.getToday(),
+                    username,
+                    false, em.getRecurso1(), em.getRecurso2()));
+            //Guarda en la base de datos local
             estudiosAdapter.open();
-			estudiosAdapter.crearMuestra(mMuestra);
-			String mxSer = "";
-			if (em.getTuboRojo()!=null){
-				if(em.getTuboRojo().toString().matches("1")){
-					mxSer ="Si";
-				}
-				else{
-					mxSer ="No";
-				}
-				mParticipante.getProcesos().setConmx(mxSer);
-			}
-			if (em.getTuboLeu()!=null){
-				if(em.getTuboLeu().toString().matches("1")){
-					mxSer ="Si";
-				}
-				else{
-					mxSer ="No";
-				}
-				mParticipante.getProcesos().setConmx(mxSer);
-			}
-			String mxBhc = "";
-			if(em.getTuboBHC()!=null){
-				if(em.getTuboBHC().toString().matches("1")){
-					mxBhc ="Si";
-				}
-				else{
-					mxBhc ="No";
-				}
-				mParticipante.getProcesos().setConmxbhc(mxBhc);
-			}
-			if(mParticipante.getProcesos().getEstudio().equals("Influenza")||mParticipante.getProcesos().getEstudio().equals("Influenza  Cohorte BB")){
-				if(mParticipante.getEdadMeses()>=6 && mParticipante.getEdadMeses()<24){
-					if (mParticipante.getProcesos().getPbmc().matches("Si")){
-						mParticipante.getProcesos().setConmxbhc("Si");
-					}
-				}
-			}
-			mParticipante.getProcesos().setMovilInfo(new MovilInfo(idInstancia,
+            estudiosAdapter.crearMuestra(mMuestra);
+
+            String mxSer = "";
+            if (em.getTuboRojo() != null) {
+                if (em.getTuboRojo().toString().matches("1")) {
+                    mxSer = "Si";
+                } else {
+                    mxSer = "No";
+                }
+                mParticipante.getProcesos().setConmx(mxSer);
+            }
+            if (em.getTuboLeu() != null) {
+                if (em.getTuboLeu().toString().matches("1")) {
+                    mxSer = "Si";
+                } else {
+                    mxSer = "No";
+                }
+                mParticipante.getProcesos().setConmx(mxSer);
+            }
+            String mxBhc = "";
+            if (em.getTuboBHC() != null) {
+                if (em.getTuboBHC().toString().matches("1")) {
+                    mxBhc = "Si";
+                } else {
+                    mxBhc = "No";
+                }
+                mParticipante.getProcesos().setConmxbhc(mxBhc);
+            }
+            if (mParticipante.getProcesos().getEstudio().equals("Influenza") || mParticipante.getProcesos().getEstudio().equals("Influenza  Cohorte BB")) {
+                if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
+                    if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+                        mParticipante.getProcesos().setConmxbhc("Si");
+                    }
+                }
+            }
+            mParticipante.getProcesos().setMovilInfo(new MovilInfo(idInstancia,
                     instanceFilePath,
                     Constants.STATUS_NOT_SUBMITTED,
                     ultimoCambio,
@@ -273,24 +271,30 @@ public class NewSampleActivity extends AbstractAsyncActivity {
                     username,
                     false, em.getRecurso1(), em.getRecurso2()));
 
-			estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());
+            estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());
             estudiosAdapter.close();
-			showToast(getApplicationContext().getString(R.string.success),0);
-			Intent i = new Intent(getApplicationContext(),
-					MenuInfoActivity.class);
-			i.putExtra(ConstantsDB.COD_CASA, casaId);
-			i.putExtra(ConstantsDB.CODIGO, codigo);
-			i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
-		} catch (Exception e) {
+            showToast(getApplicationContext().getString(R.string.success), 0);
+            loadMenuInfo();
+        } catch (Exception e) {
 			// Presenta el error al parsear el xml
 			showToast(e.toString(),1);
 			e.printStackTrace();
+            loadMenuInfo();
 		}
 
 	}
+
+    private void loadMenuInfo(){
+        Intent i = new Intent(getApplicationContext(),
+                MenuInfoActivity.class);
+        i.putExtra(ConstantsDB.COD_CASA, casaId);
+        i.putExtra(ConstantsDB.CODIGO, codigo);
+        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        finish();
+
+    }
 
 	/**
 	 * 

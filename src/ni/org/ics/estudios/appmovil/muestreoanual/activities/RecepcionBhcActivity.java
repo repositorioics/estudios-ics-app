@@ -222,11 +222,17 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
 					tubo.setUsername(username);
 					tubo.setEstado(Constants.STATUS_NOT_SUBMITTED);
 					tubo.setFecreg(new Date());
-					ca.open();
-					ca.crearRecepcionBHC(tubo);
-					ca.close();
-					showToast("Registro Guardado",0);
-					reiniciar();
+                    try {
+                        ca.open();
+                        ca.crearRecepcionBHC(tubo);
+                        showToast("Registro Guardado", 0);
+                        reiniciar();
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                        showToast("Error al guardar registro. "+ex.getLocalizedMessage(),0);
+                    }finally {
+                        ca.close();
+                    }
 				}
 			}
 

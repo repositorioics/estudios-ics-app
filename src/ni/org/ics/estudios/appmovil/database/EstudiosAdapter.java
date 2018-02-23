@@ -3661,7 +3661,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.USUARIO, recbhc.getUsername());
         cv.put(ConstantsDB.STATUS, recbhc.getEstado());
         cv.put(ConstantsDB.TODAY, recbhc.getFecreg().getTime());
-        mDb.insert(ConstantsDB.BHC_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.BHC_TABLE, null, cv);
     }
 
     /**
@@ -3726,7 +3726,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.USUARIO, recsero.getUsername());
         cv.put(ConstantsDB.STATUS, recsero.getEstado());
         cv.put(ConstantsDB.TODAY, recsero.getFecreg().getTime());
-        mDb.insert(ConstantsDB.SERO_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.SERO_TABLE, null, cv);
     }
 
     /**
@@ -4131,7 +4131,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, muestra.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, muestra.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, muestra.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.MUESTRA_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.MUESTRA_TABLE, null, cv);
     }
 
     /**
@@ -5925,7 +5925,8 @@ public class EstudiosAdapter {
         Timestamp timeStamp = new Timestamp(dateWithoutTime.getTime());
         ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra> mMuestras = new ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra>();
         muestras = mDb.query(true, ConstantsDB.MUESTRA_TABLE, null,
-                ConstantsDB.TODAY + "=" + timeStamp.getTime(), null, null, null, ConstantsDB.CODIGO + " , " +ConstantsDB.TODAY, null);
+                //ConstantsDB.TODAY + "=" + timeStamp.getTime(),
+                null, null, null, null, ConstantsDB.CODIGO + " , " +ConstantsDB.TODAY, null);
         if (muestras != null && muestras.getCount() > 0) {
             muestras.moveToFirst();
             mMuestras.clear();

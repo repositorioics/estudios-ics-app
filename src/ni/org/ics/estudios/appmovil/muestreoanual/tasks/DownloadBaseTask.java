@@ -78,7 +78,7 @@ public class DownloadBaseTask extends DownloadTask {
 		
 		try {
             error = descargarCatalogos();
-            //error = descargarUsuarios();
+            error = descargarUsuarios();
 			error = descargarDatosGenerales();
             error = descargarChf();
             error = descargarDatosSeroprevalencia();
@@ -93,9 +93,9 @@ public class DownloadBaseTask extends DownloadTask {
 		estudioAdapter.open();
         //Borrar los datos de la base de datos
         estudioAdapter.borrarMessageResource();
-        //estudioAdapter.borrarTodosUsuarios();
-        //estudioAdapter.borrarTodosRoles();
-        //estudioAdapter.borrarTodosPermisos();
+        estudioAdapter.borrarTodosUsuarios();
+        estudioAdapter.borrarTodosRoles();
+        estudioAdapter.borrarTodosPermisos();
 		estudioAdapter.borrarEstudios();
 		estudioAdapter.borrarBarrios();
 		estudioAdapter.borrarCasas();
@@ -115,7 +115,7 @@ public class DownloadBaseTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
             }
-            /*if (usuarios != null){
+            if (usuarios != null){
                 try {
                     addUsuarios(usuarios);
                 } catch (Exception e) {
@@ -142,7 +142,7 @@ public class DownloadBaseTask extends DownloadTask {
                     e.printStackTrace();
                     return e.getLocalizedMessage();
                 }
-            }*/
+            }
 
             if (mEstudios != null){
 				v = mEstudios.size();

@@ -130,5 +130,5 @@
     <!-- Descargar data -->
     <string name="enter_pin_download">Ingresar PIN de autorización para descargar datos</string>
     <string name="pin_error">PIN inválido!</string>
-    
+    <string name="pin_required">Debe ingresar PIN</string>
 </resources>

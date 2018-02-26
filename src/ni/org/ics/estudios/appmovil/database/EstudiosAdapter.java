@@ -5925,8 +5925,7 @@ public class EstudiosAdapter {
         Timestamp timeStamp = new Timestamp(dateWithoutTime.getTime());
         ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra> mMuestras = new ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra>();
         muestras = mDb.query(true, ConstantsDB.MUESTRA_TABLE, null,
-                //ConstantsDB.TODAY + "=" + timeStamp.getTime(),
-                null, null, null, null, ConstantsDB.CODIGO + " , " +ConstantsDB.TODAY, null);
+                ConstantsDB.TODAY + "=" + timeStamp.getTime(), null, null, null, ConstantsDB.CODIGO + " , " +ConstantsDB.TODAY, null);
         if (muestras != null && muestras.getCount() > 0) {
             muestras.moveToFirst();
             mMuestras.clear();

@@ -264,8 +264,13 @@ public class MainActivity extends AbstractAsyncActivity {
                 builder.setPositiveButton(this.getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        String mPin = input.getText().toString();
-                        new VerificarPinTask().execute(mPin);
+                        if (input.getText().toString().length()>0) {
+                            String mPin = input.getText().toString();
+                            new VerificarPinTask().execute(mPin);
+                        }else{
+                            createDialog(VERIFY_DOWNLOAD);
+                            Toast.makeText(getApplicationContext(),	getString(R.string.pin_required), Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
                 builder.setNegativeButton(this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -355,8 +360,6 @@ public class MainActivity extends AbstractAsyncActivity {
                 // Hace la solicitud a la red
                 Log.d(TAG, urlRequest);
                 ResponseEntity<String> pinFromServer = restTemplate.exchange(urlRequest, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), String.class, pinUser);
-                //if (pinFromServer.getBody().equalsIgnoreCase(Constants.OK))
-                    //successLogin=true;
                 return pinFromServer.getBody();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);

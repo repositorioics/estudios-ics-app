@@ -138,7 +138,7 @@ public class DownloadParticipanteTask extends DownloadTask {
 			e.printStackTrace();
 			return e.getLocalizedMessage();
 		}finally {
-            ca.close();
+            if (ca!=null) ca.close();
         }
 		return error;
 	}

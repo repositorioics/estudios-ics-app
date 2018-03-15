@@ -187,19 +187,10 @@ public class MenuMuestreoAnualActivity extends ListActivity {
                 startActivity(i);
                 break;
             case 4:
-                //CohorteAdapterGetObjects cat1 = new CohorteAdapterGetObjects();
-			/*cat1.open();
-			User usuario = cat1.getUser(username);
-			cat1.close();
-			if(usuario.getCasazika()||usuario.getTamizajezika()){
-				i = new Intent(getApplicationContext(),
-						MenuZikaClusterActivity.class);
-				i.putExtra(Constants.MENU_INFO, true);
-				startActivity(i);
-			}
-			else{
-				showToast(getApplicationContext().getString(R.string.perm_error), 1);
-			}*/
+                i = new Intent(getApplicationContext(),
+                        NewTamizajeActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
                 break;
             default:
                 String s = (String) getListAdapter().getItem(position);

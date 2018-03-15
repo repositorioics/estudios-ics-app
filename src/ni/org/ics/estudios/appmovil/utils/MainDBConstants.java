@@ -26,7 +26,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 4;
+	public static final int DATABASE_VERSION = 5;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -349,6 +349,18 @@ public class MainDBConstants {
     public static final String razonNoAceptaParticipar = "razonNoAceptaParticipar";
     public static final String otraRazonNoAceptaParticipar = "otraRazonNoAceptaParticipar";
     public static final String asentimientoVerbal = "asentimientoVerbal"; //Para Niños de 6 a 17 años
+    //nuevo ingreso MA2018
+    public static final String pretermino = "pretermino";
+    public static final String cohorte = "cohorte";
+    public static final String enfermedadInmuno = "enfermedadInmuno";
+    public static final String cualEnfermedad = "cualEnfermedad";
+    public static final String tratamiento = "tratamiento";
+    public static final String cualTratamiento = "cualTratamiento";
+    public static final String diagDengue = "diagDengue";
+    public static final String fechaDiagDengue = "fechaDiagDengue";
+    public static final String hospDengue = "hospDengue";
+    public static final String fechaHospDengue = "fechaHospDengue";
+    public static final String tiempoResidencia = "tiempoResidencia";
     
     //crear tabla tamizaje
     public static final String CREATE_TAMIZAJE_TABLE = "create table if not exists "
@@ -371,6 +383,17 @@ public class MainDBConstants {
             + razonNoAceptaParticipar + " text, "
             + otraRazonNoAceptaParticipar + " text, "
             + asentimientoVerbal + " text, "
+            + pretermino + " text, "         //nuevo ingreso MA2018
+            + cohorte + " text, "
+            + enfermedadInmuno + " text, "
+            + cualEnfermedad + " text, "
+            + tratamiento + " text, "
+            + cualTratamiento + " text, "
+            + diagDengue + " text, "
+            + fechaDiagDengue + " date, "
+            + hospDengue + " text, "
+            + fechaHospDengue + " date, "
+            + tiempoResidencia + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "

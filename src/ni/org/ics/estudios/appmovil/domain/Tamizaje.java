@@ -33,7 +33,19 @@ public class Tamizaje extends BaseMetaData {
     private String razonNoAceptaParticipar;
     private String otraRazonNoAceptaParticipar;
     private String asentimientoVerbal;
- 
+    //nuevo ingreso MA2018
+    private String pretermino;
+    private String cohorte;
+    private String enfermedadInmuno;
+    private String cualEnfermedad;
+    private String tratamiento;
+    private String cualTratamiento;
+    private String diagDengue;
+    private Date fechaDiagDengue;
+    private String hospDengue;
+    private Date fechaHospDengue;
+    private String tiempoResidencia;
+
     public String getCodigo() {
 		return codigo;
 	}
@@ -197,4 +209,92 @@ public class Tamizaje extends BaseMetaData {
 	public void setAsentimientoVerbal(String asentimientoVerbal) {
 		this.asentimientoVerbal = asentimientoVerbal;
 	}
+
+    public String getPretermino() {
+        return pretermino;
+    }
+
+    public void setPretermino(String pretermino) {
+        this.pretermino = pretermino;
+    }
+
+    public String getCohorte() {
+        return cohorte;
+    }
+
+    public void setCohorte(String cohorte) {
+        this.cohorte = cohorte;
+    }
+
+    public String getEnfermedadInmuno() {
+        return enfermedadInmuno;
+    }
+
+    public void setEnfermedadInmuno(String enfermedadInmuno) {
+        this.enfermedadInmuno = enfermedadInmuno;
+    }
+
+    public String getCualEnfermedad() {
+        return cualEnfermedad;
+    }
+
+    public void setCualEnfermedad(String cualEnfermedad) {
+        this.cualEnfermedad = cualEnfermedad;
+    }
+
+    public String getTratamiento() {
+        return tratamiento;
+    }
+
+    public void setTratamiento(String tratamiento) {
+        this.tratamiento = tratamiento;
+    }
+
+    public String getCualTratamiento() {
+        return cualTratamiento;
+    }
+
+    public void setCualTratamiento(String cualTratamiento) {
+        this.cualTratamiento = cualTratamiento;
+    }
+
+    public String getDiagDengue() {
+        return diagDengue;
+    }
+
+    public void setDiagDengue(String diagDengue) {
+        this.diagDengue = diagDengue;
+    }
+
+    public Date getFechaDiagDengue() {
+        return fechaDiagDengue;
+    }
+
+    public void setFechaDiagDengue(Date fechaDiagDengue) {
+        this.fechaDiagDengue = fechaDiagDengue;
+    }
+
+    public String getHospDengue() {
+        return hospDengue;
+    }
+
+    public void setHospDengue(String hospDengue) {
+        this.hospDengue = hospDengue;
+    }
+
+    public Date getFechaHospDengue() {
+        return fechaHospDengue;
+    }
+
+    public void setFechaHospDengue(Date fechaHospDengue) {
+        this.fechaHospDengue = fechaHospDengue;
+    }
+
+    public String getTiempoResidencia() {
+        return tiempoResidencia;
+    }
+
+    public void setTiempoResidencia(String tiempoResidencia) {
+        this.tiempoResidencia = tiempoResidencia;
+    }
 }

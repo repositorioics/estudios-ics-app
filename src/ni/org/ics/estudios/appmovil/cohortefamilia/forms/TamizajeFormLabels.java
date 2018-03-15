@@ -104,10 +104,10 @@ public class TamizajeFormLabels {
 	protected String motivoRechazoParteAHint;
 	protected String aceptaContactoFuturo;
 	protected String aceptaContactoFuturoHint;
-	protected String aceptaParteB;
-	protected String aceptaParteBHint;
-	protected String aceptaParteC;
-	protected String aceptaParteCHint;
+    protected String aceptaParteB;
+    protected String aceptaParteBHint;
+    protected String aceptaParteC;
+    protected String aceptaParteCHint;
 
     protected String aceptaSeroprevalencia;
     protected String aceptaSeroprevalenciaHint;

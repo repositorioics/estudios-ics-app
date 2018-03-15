@@ -177,6 +177,20 @@ public class EstudiosAdapter {
             if(oldVersion==3){
                 db.execSQL("ALTER TABLE " + CasosDBConstants.VISITAS_FALLIDAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.visita + " text");
             }
+            if(oldVersion==4){
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.pretermino + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.cohorte + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.enfermedadInmuno + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.cualEnfermedad + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.tratamiento + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.cualTratamiento + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.diagDengue + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.fechaDiagDengue + " date");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.hospDengue + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.fechaHospDengue + " date");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.tiempoResidencia + " text");
+
+            }
 		}	
 	}
 
@@ -409,7 +423,7 @@ public class EstudiosAdapter {
 	//Crear nuevo Casa en la base de datos
 	public void crearCasa(Casa casa) {
 		ContentValues cv = CasaHelper.crearCasaContentValues(casa);
-		mDb.insert(MainDBConstants.CASA_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.CASA_TABLE, null, cv);
 	}
 	//Editar Casa existente en la base de datos
 	public boolean editarCasa(Casa casa) {
@@ -699,7 +713,7 @@ public class EstudiosAdapter {
 	//Crear nuevo Participante en la base de datos
 	public void crearParticipante(Participante participante) {
 		ContentValues cv = ParticipanteHelper.crearParticipanteContentValues(participante);
-		mDb.insert(MainDBConstants.PARTICIPANTE_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.PARTICIPANTE_TABLE, null, cv);
 	}
 	//Crear nuevo Participante en la base de datos desde otro equipo
 	public void insertarParticipante(String participanteSQL) {
@@ -829,7 +843,7 @@ public class EstudiosAdapter {
     public void crearParticipanteProcesos(ParticipanteProcesos participante) {
         ContentValues cv = new ContentValues();
         cv = ParticipanteHelper.crearParticipanteProcesos(participante);
-        mDb.insert(ConstantsDB.PART_PROCESOS_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.PART_PROCESOS_TABLE, null, cv);
     }
 
     /**
@@ -946,7 +960,7 @@ public class EstudiosAdapter {
 	//Crear nuevo Tamizaje en la base de datos
 	public void crearTamizaje(Tamizaje tamizaje) {
 		ContentValues cv = TamizajeHelper.crearTamizajeContentValues(tamizaje);
-		mDb.insert(MainDBConstants.TAMIZAJE_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.TAMIZAJE_TABLE, null, cv);
 	}
 	//Editar Tamizaje existente en la base de datos
 	public boolean editarTamizaje(Tamizaje tamizaje) {
@@ -4995,6 +5009,21 @@ public class EstudiosAdapter {
                         + codigo, null) > 0;
     }
 
+    /**
+     * Actualiza una casa en la base de datos.
+     *
+     * @param casa
+     *            Objeto que contiene la info
+     * @return verdadero o falso
+     */
+    public boolean updateCasaSent(Casa casa) {
+        ContentValues cv = new ContentValues();
+        cv.put(MainDBConstants.estado, String.valueOf(casa.getEstado()));
+        return mDb.update(MainDBConstants.CASA_TABLE, cv,
+                MainDBConstants.codigo + "="
+                        + casa.getCodigo(), null) > 0;
+    }
+
     public void createCambioCasa(Integer codigo, Integer codigoCasaAnterior, Integer codCasaActual,String username) {
         ContentValues cv = new ContentValues();
         Date hoy = new Date();
@@ -5028,8 +5057,8 @@ public class EstudiosAdapter {
     public Casa getCasa(Integer codCasa) throws SQLException {
         Cursor casas = null;
         Casa casa = new Casa();
-        casas = mDb.query(true, ConstantsDB.CASA_TABLE, null,
-                ConstantsDB.COD_CASA + "=" + codCasa, null, null, null, null, null);
+        casas = mDb.query(true, MainDBConstants.CASA_TABLE, null,
+                MainDBConstants.codigo + "=" + codCasa, null, null, null, null, null);
         if (casas != null && casas.getCount() > 0) {
             casas.moveToFirst();
             casa = CasaHelper.crearCasa(casas);

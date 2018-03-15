@@ -308,6 +308,8 @@
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewDatosVisitaActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewTamizajeActivity"
+                  android:screenOrientation="portrait" />
 
     </application>
 

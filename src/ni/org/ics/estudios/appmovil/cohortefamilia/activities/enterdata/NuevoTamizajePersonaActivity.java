@@ -827,6 +827,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 		//Crea un Nuevo Registro de tamizaje
     	Tamizaje t =  new Tamizaje();
     	t.setCodigo(id);
+        t.setCohorte("CHF");
     	t.setEstudio(estudio);
     	if (tieneValor(sexo)) {
 			MessageResource catSexo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + sexo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SEXO'", null);
@@ -928,7 +929,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 String tutor = "";
                 Boolean aceptaInfluenza = false;
                 Boolean aceptaDengue = false;
-                String estudios = "CH Familia";
+                String estudios = "";
 	    		Participante participante;
                 ParticipanteProcesos procesos;
 	    		MessageResource catParticipadoCohortePediatrica = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participadoCohortePediatrica + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -1227,14 +1228,13 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     procesos.setEstPart(1);
                     procesos.setRetoma(Constants.NO);
                     procesos.setAdn(Constants.NO);
-                    procesos.setConmx(Constants.YES);
-                    procesos.setConmx(Constants.YES);
-                    procesos.setConmxbhc(Constants.YES);
+                    procesos.setConmx(Constants.NO);
+                    procesos.setConmxbhc(Constants.NO);
                     procesos.setPbmc(Constants.NO);
-                    procesos.setPaxgene(Constants.NO);
-                    procesos.setConPto(Constants.YES);
+                    procesos.setPaxgene(Constants.YES);
+                    procesos.setConPto(Constants.NO);
                     procesos.setConsDeng(Constants.NO);
-                    procesos.setObsequio(Constants.NO);
+                    procesos.setObsequio(Constants.YES);
                     procesos.setConsChik(Constants.NO);
                     procesos.setConsFlu(Constants.NO);
                     procesos.setReConsDeng(Constants.NO);
@@ -1247,7 +1247,10 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     procesos.setEnCasaSa(Constants.YES);
                     procesos.setEncPart(Constants.YES);
                     procesos.setEncPartSa(Constants.YES);
-                    procesos.setEncLacMat(Constants.YES);
+                    if (participante.getEdadMeses() <= 36)
+                        procesos.setEncLacMat(Constants.YES);
+                    else
+                        procesos.setEncLacMat(Constants.NO);
                     procesos.setPesoTalla(Constants.YES);
                     procesos.setDatosParto(Constants.YES);
                     procesos.setDatosVisita(Constants.YES);
@@ -1261,11 +1264,16 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     procesos.setRelacionFam(Integer.valueOf(cc.getRelacionFamiliarTutor()));
                 procesos.setTutor(tutor);
                 procesos.setCuantasPers(0);
-                procesos.setVolRetoma(0.0);
+                procesos.setVolRetoma(null);
                 if (aceptaDengue)
-                    estudios += " " + "Dengue";
+                    estudios = "Dengue";
                 if (aceptaInfluenza)
-                    estudios += " " + "Influenza";
+                    if (estudios.isEmpty()) {
+                        estudios = "Influenza";
+                    } else
+                        estudios += "  " + "Influenza";
+                estudios += (estudios.isEmpty()?"CH Familia": "  CH Familia");
+
                 procesos.setEstudio(estudios);
                 MovilInfo movilInfo = new MovilInfo();
                 movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);

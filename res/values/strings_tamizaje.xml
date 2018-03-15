@@ -33,7 +33,15 @@
     <string name="razonNoAceptaParticiparHint"></string>
     <string name="asentimientoVerbal">Dió el niño Asentimiento verbal</string>
     <string name="asentimientoVerbalHint">(Para Niños de 6 a 17 años)</string>
-    
+    <string name="enfermedadInmuno">El niño padece de alguna enfermedad con compromiso inmunologico?</string>
+    <string name="cualEnfermedad">Cuál enfermedad?</string>
+    <string name="tratamientoIngreso">Toma algun tratamiento?</string>
+    <string name="cualTratamiento">Cuál tratamiento?</string>
+    <string name="diagDengue">Se le ha diagnosticado dengue alguna vez?</string>
+    <string name="fechaDiagDengue">Cuándo se diagnóstico?</string>
+    <string name="hospDengue">Ha sido hospitalizado por dengue alguna vez?</string>
+    <string name="fechaHospDengue">Cuándo se hospitalizó?</string>
+    <string name="tiempoResidencia">Tiempo de residencia</string>
     
     <string name="participadoCohortePediatrica">Miembro cohorte</string>
     <string name="participadoCohortePediatricaHint">Usted o su hijo han participado en la cohorte pediatrica?</string>
@@ -131,5 +139,26 @@
 	<string name="noEsElegible">No es elegible para el estudio!</string>
 	<string name="noAceptaParticipar">No acepta participar el estudio!</string>
 	<string name="noDaAsentimiento">No da asentimiento!</string>
-    
+
+    <string name="casaPerteneceCohorte">¿Casa ya pertenece a la cohorte?</string>
+    <string name="codigoCasaCohorte">Código de Casa</string>
+    <string name="pretermino">¿Es bebé Pretermino?</string>
+    <string name="participanteExiste">Código de participante ya está registrado</string>
+    <string name="noRegistraIngreso">No acepta participar o no es elegible. No se realazará el ingreso</string>
+    <string name="jefeFamiliaHint">Nombres y apellidos del jefe de la casa de cohorte pediátrica</string>
+    <string name="direccion">Dirección</string>
+    <string name="direccionHint">Dirección de la casa de cohorte pediátrica</string>
+
+    <string name="aceptaParteBDengue">Parte B Dengue</string>
+    <string name="aceptaParteBDengueHint">¿Acepta Parte B Almacenamiento y uso de Muestras en Estudios Futuros?</string>
+    <string name="aceptaParteCDengue">Parte C Dengue</string>
+    <string name="aceptaParteCDengueHint">¿Acepta Parte C Obtención de muestras ADN?</string>
+    <string name="aceptaParteDDengue">Parte D Dengue</string>
+    <string name="aceptaParteDDengueHint">¿Acepta Parte D-Zika estudio Cohorte pediátrica de Dengue?</string>
+
+    <string name="aceptaParteBInf">Parte B Influenza</string>
+    <string name="aceptaParteBInfHint">¿Acepta Parte B Almacenamiento y uso de Muestras en Estudios Futuros?</string>
+    <string name="aceptaParteCInf">Parte C Influenza</string>
+    <string name="aceptaParteCInfHint">¿Acepta Parte C Estudios Genéticos?</string>
+
 </resources>

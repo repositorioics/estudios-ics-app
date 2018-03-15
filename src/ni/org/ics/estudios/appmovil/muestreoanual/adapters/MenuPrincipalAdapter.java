@@ -49,10 +49,10 @@ public class MenuPrincipalAdapter extends ArrayAdapter<String> {
 			img=getContext().getResources().getDrawable( R.drawable.ic_usersat);
 			textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 			break;
-		/*case 4:
-			img=getContext().getResources().getDrawable( R.drawable.ic_zikacluster);
+		case 4:
+			img=getContext().getResources().getDrawable( R.drawable.ic_ingreso);
 			textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-			break;*/
+			break;
 		default:
 			img=getContext().getResources().getDrawable( R.drawable.ic_launcher);
 			textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);

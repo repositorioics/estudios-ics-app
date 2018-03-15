@@ -3,7 +3,10 @@ package ni.org.ics.estudios.appmovil.muestreoanual.tasks;
 import android.content.Context;
 import android.util.Log;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
+import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.Tamizaje;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
@@ -29,6 +32,7 @@ public class UploadAllTask extends UploadTask {
     private EstudiosAdapter estudioAdapter = null;
 
     protected static final String TAG = UploadAllTask.class.getSimpleName();
+    private List<Casa> mCasas = new ArrayList<Casa>();
     private List<Participante> mParticipantes = new ArrayList<Participante>();
     private List<ParticipanteProcesos> mParticipantesProc = new ArrayList<ParticipanteProcesos>();
     private List<EncuestaCasa> mEncuestasCasas = new ArrayList<EncuestaCasa>();
@@ -59,6 +63,8 @@ public class UploadAllTask extends UploadTask {
     private List<ConsentimientoZika> mConsentimientosZika = new ArrayList<ConsentimientoZika>();
     private List<EncuestaCasaSA> mEncuestasCasaSA = new ArrayList<EncuestaCasaSA>();
     private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = new ArrayList<EncuestaParticipanteSA>();
+    private List<Tamizaje> mTamizajes = new ArrayList<Tamizaje>();
+    private List<CartaConsentimiento> mCartasConsent = new ArrayList<CartaConsentimiento>();
 
     private String url = null;
     private String username = null;
@@ -75,6 +81,16 @@ public class UploadAllTask extends UploadTask {
         try {
             estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
             estudioAdapter.open();
+
+            try {
+                error = cargarCasas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
 
             try {
                 error = cargarParticipantes(url, username, password);
@@ -379,6 +395,31 @@ public class UploadAllTask extends UploadTask {
                 e1.printStackTrace();
                 return e1.getLocalizedMessage();
             }
+            try {
+                getTamizajes();
+                saveTamizajes(Constants.STATUS_SUBMITTED);
+                error = cargarTamizajes(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    saveTamizajes(Constants.STATUS_NOT_SUBMITTED);
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
+            try {
+                getCartasConsent();
+                saveCartasConset(Constants.STATUS_SUBMITTED);
+                error = cargarCartasConsentimientos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    saveCartasConset(Constants.STATUS_NOT_SUBMITTED);
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
+
         } catch (Exception e1) {
 
             e1.printStackTrace();
@@ -387,6 +428,155 @@ public class UploadAllTask extends UploadTask {
             estudioAdapter.close();
         }
         return error;
+    }
+
+    private void getTamizajes(){
+        mTamizajes = estudioAdapter.getTamizajes(MainDBConstants.estado + "= '" + Constants.STATUS_NOT_SUBMITTED+ "'", MainDBConstants.codigo);
+    }
+
+    private void getCartasConsent(){
+        mCartasConsent = estudioAdapter.getCartasConsentimientos(MainDBConstants.estado + "= '" + Constants.STATUS_NOT_SUBMITTED+ "'", MainDBConstants.codigo);
+    }
+
+    private void saveTamizajes(String estado) {
+        int c = mTamizajes.size();
+        for (Tamizaje tamizaje : mTamizajes) {
+            tamizaje.setEstado(estado.charAt(0));
+            estudioAdapter.editarTamizaje(tamizaje);
+            publishProgress("Actualizando tamizajes en base local", Integer.valueOf(mTamizajes.indexOf(tamizaje)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+    }
+
+    private void saveCartasConset(String estado) {
+        int c = mCartasConsent.size();
+        for (CartaConsentimiento carta : mCartasConsent) {
+            carta.setEstado(estado.charAt(0));
+            estudioAdapter.editarCartaConsentimiento(carta);
+            publishProgress("Actualizando cartas consentimiento en base local", Integer.valueOf(mCartasConsent.indexOf(carta)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+    }
+
+    /***************************************************/
+    /********************* Tamizajes participantes ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarTamizajes(String url, String username,
+                                     String password) throws Exception {
+        try {
+            if(mTamizajes.size()>0){
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/tamizajes";
+                Tamizaje[] envio = mTamizajes.toArray(new Tamizaje[mTamizajes.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Tamizaje[]> requestEntity =
+                        new HttpEntity<Tamizaje[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* Cartas de consentimiento ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarCartasConsentimientos(String url, String username,
+                                                 String password) throws Exception {
+        try {
+            if(mCartasConsent.size()>0){
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/cartasConsen";
+                CartaConsentimiento[] envio = mCartasConsent.toArray(new CartaConsentimiento[mCartasConsent.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<CartaConsentimiento[]> requestEntity =
+                        new HttpEntity<CartaConsentimiento[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    // url, username, password
+    protected String cargarCasas(String url, String username,
+                                         String password) throws Exception {
+        try {
+            getCasas();
+            if(mCasas.size()>0){
+                saveCasas(Constants.STATUS_SUBMITTED);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/casas";
+                Casa[] envio = mCasas.toArray(new Casa[mCasas.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Casa[]> requestEntity =
+                        new HttpEntity<Casa[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    saveCasas(Constants.STATUS_NOT_SUBMITTED);
+                }
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            saveCasas(Constants.STATUS_NOT_SUBMITTED);
+            return e.getMessage();
+        }
+
+    }
+
+    private void getCasas() {
+        mCasas = estudioAdapter.getCasas(MainDBConstants.estado + "= '" + Constants.STATUS_NOT_SUBMITTED+ "'", null);
+    }
+
+    private void saveCasas(String estado) {
+        int c = mCasas.size();
+        for (Casa casa : mCasas) {
+            casa.setEstado(estado.charAt(0));
+            estudioAdapter.updateCasaSent(casa);
+            publishProgress("Actualizando casas", Integer.valueOf(mCasas.indexOf(casa)).toString(), Integer
+                    .valueOf(c).toString());
+        }
     }
 
     // url, username, password

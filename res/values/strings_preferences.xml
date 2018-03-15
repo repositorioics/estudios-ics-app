@@ -13,7 +13,7 @@
     
     <string name="app_preferences">Configuración Aplicación</string>
     <string name="update_app_preferences">Actualizar Aplicación</string>
-    <string name="version_app_preferences">Versión 3.5.1</string>
-    <string name="versiondate_app_preferences">Febrero 28, 2018</string>
+    <string name="version_app_preferences">Versión 3.6</string>
+    <string name="versiondate_app_preferences">Marzo 16, 2018</string>
   
 </resources>

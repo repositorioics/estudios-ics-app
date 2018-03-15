@@ -17,5 +17,6 @@
     <string name="main_super">Supervisor</string>
     <string name="main_mapa">Ver Mapa</string>
     <string name="main_survey">Encuesta Satisfacción</string>
+    <string name="main_ingreso">Nuevo Ingreso</string>
     
 </resources>

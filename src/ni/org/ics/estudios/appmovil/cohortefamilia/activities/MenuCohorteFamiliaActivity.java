@@ -102,6 +102,7 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 				case 0:
 					i = new Intent(getApplicationContext(),
 							BuscarCasaActivity.class);
+                    i.putExtra(Constants.NUEVO_INGRESO, false);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);
 		        	break;

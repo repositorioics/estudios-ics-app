@@ -12,7 +12,10 @@ import ni.org.ics.estudios.appmovil.R;
  * 
  */
 public class TamizajeFormLabels {
-	
+
+    protected String tipoIngreso;
+    protected String tipoIngresoHint;
+
 	protected String fechaNacimiento;
 	protected String fechaNacimientoHint;
     protected String sexo;
@@ -75,6 +78,8 @@ public class TamizajeFormLabels {
 
     protected String casaPerteneceCohorte;
     protected String codigoCasaCohorte;
+    protected String codigoCasaCohorteHint;
+    protected String codigoNuevaCasaCohorte;
     protected String nombre1JefeFamilia;
     protected String nombre2JefeFamilia;
     protected String apellido1JefeFamilia;
@@ -136,7 +141,9 @@ public class TamizajeFormLabels {
 
 	public TamizajeFormLabels(){
 		Resources res = MyIcsApplication.getContext().getResources();
-		
+
+        tipoIngreso = res.getString(R.string.tipoIngreso);
+        tipoIngresoHint = res.getString(R.string.tipoIngresoHint);
 		fechaNacimiento = res.getString(R.string.fechaNacimiento);
         sexo = res.getString(R.string.sexo);
 
@@ -199,6 +206,8 @@ public class TamizajeFormLabels {
 
         casaPerteneceCohorte = res.getString(R.string.casaPerteneceCohorte);
         codigoCasaCohorte = res.getString(R.string.codigoCasaCohorte);
+        codigoCasaCohorteHint = res.getString(R.string.codigoCasaCohorteHint);
+        codigoNuevaCasaCohorte = res.getString(R.string.codigoNuevaCasaCohorte);
         nombre1JefeFamilia = res.getString(R.string.nombre1JefeFamilia);
         nombre2JefeFamilia = res.getString(R.string.nombre2JefeFamilia);
         apellido1JefeFamilia = res.getString(R.string.apellido1JefeFamilia);
@@ -259,6 +268,22 @@ public class TamizajeFormLabels {
         finTamizajeLabel = res.getString(R.string.finTamizajeLabel);
 		
 	}
+
+    public String getTipoIngreso() {
+        return tipoIngreso;
+    }
+
+    public void setTipoIngreso(String tipoIngreso) {
+        this.tipoIngreso = tipoIngreso;
+    }
+
+    public String getTipoIngresoHint() {
+        return tipoIngresoHint;
+    }
+
+    public void setTipoIngresoHint(String tipoIngresoHint) {
+        this.tipoIngresoHint = tipoIngresoHint;
+    }
 
     public String getFechaNacimiento() {
         return fechaNacimiento;
@@ -708,8 +733,24 @@ public class TamizajeFormLabels {
         this.codigoCasaCohorte = codigoCasaCohorte;
     }
 
+    public String getCodigoCasaCohorteHint() {
+        return codigoCasaCohorteHint;
+    }
+
+    public void setCodigoCasaCohorteHint(String codigoCasaCohorteHint) {
+        this.codigoCasaCohorteHint = codigoCasaCohorteHint;
+    }
+
     public String getNombre1JefeFamilia() {
         return nombre1JefeFamilia;
+    }
+
+    public String getCodigoNuevaCasaCohorte() {
+        return codigoNuevaCasaCohorte;
+    }
+
+    public void setCodigoNuevaCasaCohorte(String codigoNuevaCasaCohorte) {
+        this.codigoNuevaCasaCohorte = codigoNuevaCasaCohorte;
     }
 
     public void setNombre1JefeFamilia(String nombre1JefeFamilia) {

@@ -39,6 +39,7 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 public class BuscarCasaActivity extends AbstractAsyncListActivity {
 
@@ -55,7 +56,9 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 	private Casa mCasa = new Casa();
 	private List<Casa> mCasas = new ArrayList<Casa>();
 	private static final int HACER_TAMIZAJE = 1;
+    private static final int SELECT_HOUSE = 2;
 	private AlertDialog alertDialog;
+    private Boolean nuevoIngreso;
 	
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -71,7 +74,7 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 	
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		
+        nuevoIngreso = getIntent().getBooleanExtra(Constants.NUEVO_INGRESO,false);
 		mMetodoView = (Spinner) findViewById(R.id.metodo_busqueda);
 		List<String> list = new ArrayList<String>();
 		list.add(getString(R.string.desc_barcode));
@@ -157,7 +160,14 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 		mFindButton.setVisibility(View.GONE);
 
 	}
-	
+
+    private void seleccionarCasa(){
+        Intent intent1 = new Intent();
+        intent1.putExtra("CODE_RESULT", mCasa.getCodigo().toString());
+        setResult(RESULT_OK, intent1);
+        finish();
+    }
+
 	private void createDialog(int dialog) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		switch(dialog){
@@ -177,7 +187,24 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 					dialog.dismiss();
 				}
 			});
-			break;		
+			break;
+            case SELECT_HOUSE:
+                builder.setTitle(this.getString(R.string.confirm));
+                builder.setMessage(getString(R.string.select)+"\n"+getString(R.string.code)+": " + mCasa.getCodigo() + " " + mCasa.getNombre1JefeFamilia() + " " + mCasa.getApellido1JefeFamilia());
+                builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        seleccionarCasa();
+                    }
+                });
+                builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+                break;
 		default:
 			break;
 		}
@@ -205,7 +232,9 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
 		mCasa = (Casa) getListAdapter().getItem(position);
-		createDialog(HACER_TAMIZAJE);
+        if (!nuevoIngreso)
+            createDialog(HACER_TAMIZAJE);
+        else createDialog(SELECT_HOUSE);
 	}
 
     private void crearTamizajeCasa(){

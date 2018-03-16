@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+    <string name="tipoIngreso">Tipo de Ingreso</string>
+    <string name="tipoIngresoHint">Seleccionar el tipo de ingreso que va a realizar</string>
     <string name="sexo">Género</string>
     <string name="sexoHint">Anote el género de la persona que esta tamizando.</string>
 	<string name="fechaNacimiento">Fecha de Nacimiento</string>
@@ -122,17 +123,17 @@
     <string name="aceptaCohorteDengueHint">¿Acepta participar en estudio Cohorte pediátrica de Dengue?</string>
     <string name="aceptaParteD">Acepta Parte D</string>
     <string name="aceptaParteDHint">¿Acepta Parte D-Zika estudio Cohorte pediátrica de Dengue?</string>
-    <string name="razonNoAceptaDengue">Porque no acepta participar en el estudio Cohorte pediátrica de Dengue?</string>
+    <string name="razonNoAceptaDengue">Porque no acepta Dengue?</string>
+    <string name="razonNoAceptaDengueHint">Seleccionar porque no acepta participar en el estudio Cohorte pediátrica de Dengue</string>
     <string name="otraRazonNoAceptaDengue">Otra razón Cohorte pediátrica de Dengue</string>
     <string name="otraRazonNoAceptaDengueHint">Indicar porque otra razón no acepta participar en el estudio Cohorte pediátrica de Dengue</string>
-    <string name="razonNoAceptaDengueHint"></string>
 
     <string name="aceptaCohorteInfluenza">Acepta estudio Cohorte Influeza</string>
     <string name="aceptaCohorteInfluenzaHint">¿Acepta participar en estudio Cohorte pediátrica de Influenza?</string>
-    <string name="razonNoAceptaInfluenza">Porque no acepta participar en el estudio Cohorte pediátrica de Influenza?</string>
+    <string name="razonNoAceptaInfluenza">Porque no acepta participar Influenza?</string>
+    <string name="razonNoAceptaInfluenzaHint">Seleccionar porque no acepta participar en el estudio Cohorte pediátrica de Influenza</string>
     <string name="otraRazonNoAceptaInfluenza">Otra razón estudio Cohorte pediátrica de Influenza</string>
     <string name="otraRazonNoAceptaInfluenzaHint">Indicar porque otra razón no acepta participar en el estudio Cohorte pediátrica de Influenza</string>
-    <string name="razonNoAceptaInfluenzaHint"></string>
 
 	<string name="noAceptaTamizajePersona">No acepta tamizaje!</string>
 	<string name="noCumpleCriteriosInclusion">No cumple los criterios de inclusión!</string>
@@ -142,6 +143,8 @@
 
     <string name="casaPerteneceCohorte">¿Casa ya pertenece a la cohorte?</string>
     <string name="codigoCasaCohorte">Código de Casa</string>
+    <string name="codigoCasaCohorteHint">Código de casa en la cohorte</string>
+    <string name="codigoNuevaCasaCohorte">Código de Nueva Casa</string>
     <string name="pretermino">¿Es bebé Pretermino?</string>
     <string name="participanteExiste">Código de participante ya está registrado</string>
     <string name="noRegistraIngreso">No acepta participar o no es elegible. No se realazará el ingreso</string>

@@ -101,6 +101,8 @@ public class Constants {
     public static final Uri CONTENT_URI_I = Uri.parse("content://" + AUTHORITY_I + "/instances");
 
     public static final String OK = "OK";
+
+    public static final String NUEVO_INGRESO = "nuevo_ngreso";
 }
 
     

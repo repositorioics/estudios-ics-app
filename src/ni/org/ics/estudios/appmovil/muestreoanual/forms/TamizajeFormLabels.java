@@ -137,6 +137,27 @@ public class TamizajeFormLabels {
     protected String apellido2Testigo;
     protected String apellido2TestigoHint;
 
+    protected String nombreContacto;
+    protected String nombreContactoHint;
+    protected String barrioContacto;
+    protected String barrioContactoHint;
+    protected String direccionContacto;
+    protected String direccionContactoHint;
+    protected String numTelefono1;
+    protected String numTelefono1Hint;
+    protected String numTelefono2;
+    protected String numTelefono2Hint;
+    protected String operadoraTelefono1;
+    protected String operadoraTelefono1Hint;
+    protected String operadoraTelefono2;
+    protected String operadoraTelefono2Hint;
+    protected String tipoTelefono1;
+    protected String tipoTelefono1Hint;
+    protected String tipoTelefono2;
+    protected String tipoTelefono2Hint;
+    protected String tieneTelefono;
+    protected String tieneOtroTelefono;
+
     protected String finTamizajeLabel;
 
 	public TamizajeFormLabels(){
@@ -264,6 +285,27 @@ public class TamizajeFormLabels {
         apellido1TestigoHint = res.getString(R.string.apellido1TestigoHint);
         apellido2Testigo = res.getString(R.string.apellido2Testigo);
         apellido2TestigoHint = res.getString(R.string.apellido2TestigoHint);
+
+        nombreContacto = res.getString(R.string.nombreContacto);
+        nombreContactoHint = res.getString(R.string.nombreContactoHint);
+        barrioContacto = res.getString(R.string.barrioContacto);
+        barrioContactoHint = res.getString(R.string.barrioContactoHint);
+        direccionContacto = res.getString(R.string.direccionContacto);
+        direccionContactoHint = res.getString(R.string.direccionContactoHint);
+        numTelefono1 = res.getString(R.string.numTelefono1);
+        numTelefono1Hint = res.getString(R.string.numTelefono1Hint);
+        numTelefono2 = res.getString(R.string.numTelefono2);
+        numTelefono2Hint = res.getString(R.string.numTelefono2Hint);
+        operadoraTelefono1 = res.getString(R.string.operadoraTelefono1);
+        operadoraTelefono1Hint = res.getString(R.string.operadoraTelefono1Hint);
+        operadoraTelefono2 = res.getString(R.string.operadoraTelefono2);
+        operadoraTelefono2Hint = res.getString(R.string.operadoraTelefono2Hint);
+        tipoTelefono1 = res.getString(R.string.tipoTelefono1);
+        tipoTelefono1Hint = res.getString(R.string.tipoTelefono1Hint);
+        tipoTelefono2 = res.getString(R.string.tipoTelefono2);
+        tipoTelefono2Hint = res.getString(R.string.tipoTelefono2Hint);
+        tieneTelefono = res.getString(R.string.tieneTelefono);
+        tieneOtroTelefono = res.getString(R.string.tieneOtroTelefono);
 
         finTamizajeLabel = res.getString(R.string.finTamizajeLabel);
 		
@@ -741,16 +783,16 @@ public class TamizajeFormLabels {
         this.codigoCasaCohorteHint = codigoCasaCohorteHint;
     }
 
-    public String getNombre1JefeFamilia() {
-        return nombre1JefeFamilia;
-    }
-
     public String getCodigoNuevaCasaCohorte() {
         return codigoNuevaCasaCohorte;
     }
 
     public void setCodigoNuevaCasaCohorte(String codigoNuevaCasaCohorte) {
         this.codigoNuevaCasaCohorte = codigoNuevaCasaCohorte;
+    }
+
+    public String getNombre1JefeFamilia() {
+        return nombre1JefeFamilia;
     }
 
     public void setNombre1JefeFamilia(String nombre1JefeFamilia) {
@@ -1187,6 +1229,166 @@ public class TamizajeFormLabels {
 
     public void setApellido2TestigoHint(String apellido2TestigoHint) {
         this.apellido2TestigoHint = apellido2TestigoHint;
+    }
+
+    public String getNombreContacto() {
+        return nombreContacto;
+    }
+
+    public void setNombreContacto(String nombreContacto) {
+        this.nombreContacto = nombreContacto;
+    }
+
+    public String getNombreContactoHint() {
+        return nombreContactoHint;
+    }
+
+    public void setNombreContactoHint(String nombreContactoHint) {
+        this.nombreContactoHint = nombreContactoHint;
+    }
+
+    public String getBarrioContacto() {
+        return barrioContacto;
+    }
+
+    public void setBarrioContacto(String barrioContacto) {
+        this.barrioContacto = barrioContacto;
+    }
+
+    public String getBarrioContactoHint() {
+        return barrioContactoHint;
+    }
+
+    public void setBarrioContactoHint(String barrioContactoHint) {
+        this.barrioContactoHint = barrioContactoHint;
+    }
+
+    public String getDireccionContacto() {
+        return direccionContacto;
+    }
+
+    public void setDireccionContacto(String direccionContacto) {
+        this.direccionContacto = direccionContacto;
+    }
+
+    public String getDireccionContactoHint() {
+        return direccionContactoHint;
+    }
+
+    public void setDireccionContactoHint(String direccionContactoHint) {
+        this.direccionContactoHint = direccionContactoHint;
+    }
+
+    public String getNumTelefono1() {
+        return numTelefono1;
+    }
+
+    public void setNumTelefono1(String numTelefono1) {
+        this.numTelefono1 = numTelefono1;
+    }
+
+    public String getNumTelefono1Hint() {
+        return numTelefono1Hint;
+    }
+
+    public void setNumTelefono1Hint(String numTelefono1Hint) {
+        this.numTelefono1Hint = numTelefono1Hint;
+    }
+
+    public String getNumTelefono2() {
+        return numTelefono2;
+    }
+
+    public void setNumTelefono2(String numTelefono2) {
+        this.numTelefono2 = numTelefono2;
+    }
+
+    public String getNumTelefono2Hint() {
+        return numTelefono2Hint;
+    }
+
+    public void setNumTelefono2Hint(String numTelefono2Hint) {
+        this.numTelefono2Hint = numTelefono2Hint;
+    }
+
+    public String getOperadoraTelefono1() {
+        return operadoraTelefono1;
+    }
+
+    public void setOperadoraTelefono1(String operadoraTelefono1) {
+        this.operadoraTelefono1 = operadoraTelefono1;
+    }
+
+    public String getOperadoraTelefono1Hint() {
+        return operadoraTelefono1Hint;
+    }
+
+    public void setOperadoraTelefono1Hint(String operadoraTelefono1Hint) {
+        this.operadoraTelefono1Hint = operadoraTelefono1Hint;
+    }
+
+    public String getOperadoraTelefono2() {
+        return operadoraTelefono2;
+    }
+
+    public void setOperadoraTelefono2(String operadoraTelefono2) {
+        this.operadoraTelefono2 = operadoraTelefono2;
+    }
+
+    public String getOperadoraTelefono2Hint() {
+        return operadoraTelefono2Hint;
+    }
+
+    public void setOperadoraTelefono2Hint(String operadoraTelefono2Hint) {
+        this.operadoraTelefono2Hint = operadoraTelefono2Hint;
+    }
+
+    public String getTipoTelefono1() {
+        return tipoTelefono1;
+    }
+
+    public void setTipoTelefono1(String tipoTelefono1) {
+        this.tipoTelefono1 = tipoTelefono1;
+    }
+
+    public String getTipoTelefono1Hint() {
+        return tipoTelefono1Hint;
+    }
+
+    public void setTipoTelefono1Hint(String tipoTelefono1Hint) {
+        this.tipoTelefono1Hint = tipoTelefono1Hint;
+    }
+
+    public String getTipoTelefono2() {
+        return tipoTelefono2;
+    }
+
+    public void setTipoTelefono2(String tipoTelefono2) {
+        this.tipoTelefono2 = tipoTelefono2;
+    }
+
+    public String getTipoTelefono2Hint() {
+        return tipoTelefono2Hint;
+    }
+
+    public void setTipoTelefono2Hint(String tipoTelefono2Hint) {
+        this.tipoTelefono2Hint = tipoTelefono2Hint;
+    }
+
+    public String getTieneTelefono() {
+        return tieneTelefono;
+    }
+
+    public void setTieneTelefono(String tieneTelefono) {
+        this.tieneTelefono = tieneTelefono;
+    }
+
+    public String getTieneOtroTelefono() {
+        return tieneOtroTelefono;
+    }
+
+    public void setTieneOtroTelefono(String tieneOtroTelefono) {
+        this.tieneOtroTelefono = tieneOtroTelefono;
     }
 
     public String getFinTamizajeLabel() {

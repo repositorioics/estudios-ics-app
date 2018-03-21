@@ -16,12 +16,7 @@ import java.util.List;
 import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
-import ni.org.ics.estudios.appmovil.domain.Casa;
-import ni.org.ics.estudios.appmovil.domain.Participante;
-import ni.org.ics.estudios.appmovil.domain.Tamizaje;
-import ni.org.ics.estudios.appmovil.domain.TelefonoContacto;
-import ni.org.ics.estudios.appmovil.domain.VisitaTerreno;
+import ni.org.ics.estudios.appmovil.domain.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
@@ -37,6 +32,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
@@ -164,6 +160,8 @@ public class EstudiosAdapter {
             db.execSQL(ConstantsDB.CREATE_DATOSPARTOBB_TABLE);
             db.execSQL(ConstantsDB.CREATE_NEWVAC_TABLE);
             db.execSQL(ConstantsDB.CREATE_DOCS_TABLE);
+
+            db.execSQL(MainDBConstants.CREATE_CONTACTO_PARTICIPANTE_TABLE);
         }
 
 		@Override
@@ -190,6 +188,11 @@ public class EstudiosAdapter {
                 db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.fechaHospDengue + " date");
                 db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.tiempoResidencia + " text");
 
+            }
+            if (oldVersion==5){
+                db.execSQL(MainDBConstants.CREATE_CONTACTO_PARTICIPANTE_TABLE);
+                db.execSQL("DROP TABLE " + ConstantsDB.RECONSFLU_TABLE_2015);
+                db.execSQL(ConstantsDB.CREATE_RECONSFLU_TABLE_2015);
             }
 		}	
 	}
@@ -526,12 +529,12 @@ public class EstudiosAdapter {
 	 *
 	 */
 	//Crear nuevo VisitaTerreno en la base de datos
-	public void crearVisitaTereno(VisitaTerreno visitaTerreno) {
+	public void crearVisitaTereno(ni.org.ics.estudios.appmovil.domain.VisitaTerreno visitaTerreno) {
 		ContentValues cv = VisitaTerrenoHelper.crearVisitaTerrenoContentValues(visitaTerreno);
 		mDb.insert(MainDBConstants.VISITA_TABLE, null, cv);
 	}
 	//Editar VisitaTerreno existente en la base de datos
-	public boolean editarVisitaTerreno(VisitaTerreno visitaTerreno) {
+	public boolean editarVisitaTerreno(ni.org.ics.estudios.appmovil.domain.VisitaTerreno visitaTerreno) {
 		ContentValues cv = VisitaTerrenoHelper.crearVisitaTerrenoContentValues(visitaTerreno);
 		return mDb.update(MainDBConstants.VISITA_TABLE , cv, MainDBConstants.codigoVisita + "='" 
 				+ visitaTerreno.getCodigoVisita()+ "'", null) > 0;
@@ -541,8 +544,8 @@ public class EstudiosAdapter {
 		return mDb.delete(MainDBConstants.VISITA_TABLE, null, null) > 0;
 	}
 	//Obtener un VisitaTerreno de la base de datos
-	public VisitaTerreno getVisitaTerreno(String filtro, String orden) throws SQLException {
-		VisitaTerreno mVisitaTerreno = null;
+	public ni.org.ics.estudios.appmovil.domain.VisitaTerreno getVisitaTerreno(String filtro, String orden) throws SQLException {
+        ni.org.ics.estudios.appmovil.domain.VisitaTerreno mVisitaTerreno = null;
 		Cursor cursorVisitaTerreno = crearCursor(MainDBConstants.VISITA_TABLE , filtro, null, orden);
 		if (cursorVisitaTerreno != null && cursorVisitaTerreno.getCount() > 0) {
 			cursorVisitaTerreno.moveToFirst();
@@ -554,14 +557,14 @@ public class EstudiosAdapter {
 		return mVisitaTerreno;
 	}
 	//Obtener una lista de VisitaTerreno de la base de datos
-	public List<VisitaTerreno> getVisitasTerreno(String filtro, String orden) throws SQLException {
-		List<VisitaTerreno> mVisitasTerreno = new ArrayList<VisitaTerreno>();
+	public List<ni.org.ics.estudios.appmovil.domain.VisitaTerreno> getVisitasTerreno(String filtro, String orden) throws SQLException {
+		List<ni.org.ics.estudios.appmovil.domain.VisitaTerreno> mVisitasTerreno = new ArrayList<ni.org.ics.estudios.appmovil.domain.VisitaTerreno>();
 		Cursor cursorVisitasTerreno = crearCursor(MainDBConstants.VISITA_TABLE, filtro, null, orden);
 		if (cursorVisitasTerreno != null && cursorVisitasTerreno.getCount() > 0) {
 			cursorVisitasTerreno.moveToFirst();
 			mVisitasTerreno.clear();
 			do{
-				VisitaTerreno mVisitaTerreno = null;
+                ni.org.ics.estudios.appmovil.domain.VisitaTerreno mVisitaTerreno = null;
 				mVisitaTerreno = VisitaTerrenoHelper.crearVisitaTerreno(cursorVisitasTerreno);
 				Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorVisitasTerreno.getInt(cursorVisitasTerreno.getColumnIndex(MainDBConstants.casa)), null);
 				mVisitaTerreno.setCasa(casa);
@@ -830,6 +833,49 @@ public class EstudiosAdapter {
             } while (participantes.moveToNext());
         }
         if (!participantes.isClosed()) participantes.close();
+        return mParticipantes;
+    }
+
+    /**
+     * Metodos para ContactoParticipante en la base de datos
+     */
+     //Crear nuevo Participante en la base de datos
+    public void crearContactoParticipante(ContactoParticipante contactoParticipante) {
+        ContentValues cv = ParticipanteHelper.crearContactoParticipanteContentValues(contactoParticipante);
+        mDb.insertOrThrow(MainDBConstants.CONTACTO_PARTICIPANTE_TABLE, null, cv);
+    }
+
+    //Editar Participante existente en la base de datos
+    public boolean editarContactoParticipante(ContactoParticipante contactoParticipante) {
+        ContentValues cv = ParticipanteHelper.crearContactoParticipanteContentValues(contactoParticipante);
+        return mDb.update(MainDBConstants.CONTACTO_PARTICIPANTE_TABLE , cv, MainDBConstants.id + "='"
+                + contactoParticipante.getId() + "'", null) > 0;
+    }
+    //Limpiar la tabla de Participante de la base de datos
+    public boolean borrarContactosParticipantes() {
+        return mDb.delete(MainDBConstants.CONTACTO_PARTICIPANTE_TABLE, null, null) > 0;
+    }
+
+    //Obtener una lista de Participante de la base de datos
+    public List<ContactoParticipante> getContactosParticipantes(String filtro, String orden) throws SQLException {
+        List<ContactoParticipante> mParticipantes = new ArrayList<ContactoParticipante>();
+        Cursor cursorParticipante = crearCursor(MainDBConstants.CONTACTO_PARTICIPANTE_TABLE, filtro, null, orden);
+        if (cursorParticipante != null && cursorParticipante.getCount() > 0) {
+            cursorParticipante.moveToFirst();
+            mParticipantes.clear();
+            do{
+                ContactoParticipante mContacto = null;
+                mContacto = ParticipanteHelper.crearContactoParticipante(cursorParticipante);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.participante)), null);
+                mContacto.setParticipante(participante);
+
+                Barrio barrio = this.getBarrio(CatalogosDBConstants.codigo+"="+cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.barrio)), null);
+                mContacto.setBarrio(barrio);
+
+                mParticipantes.add(mContacto);
+            } while (cursorParticipante.moveToNext());
+        }
+        if (!cursorParticipante.isClosed()) cursorParticipante.close();
         return mParticipantes;
     }
 
@@ -4407,8 +4453,6 @@ public class EstudiosAdapter {
         ContentValues cv = new ContentValues();
         cv.put(ConstantsDB.CODIGO, reconsentimiento.getReconsfluId().getCodigo());
         cv.put(ConstantsDB.FECHA_CONS, reconsentimiento.getReconsfluId().getFechaCons().getTime());
-        cv.put(ConstantsDB.visExit, reconsentimiento.getVisExit());
-        cv.put(ConstantsDB.razonVisNoExit, reconsentimiento.getNoexitosa());
         cv.put(ConstantsDB.nombrept, reconsentimiento.getNombrept());
         cv.put(ConstantsDB.nombrept2, reconsentimiento.getNombrept2());
         cv.put(ConstantsDB.apellidopt, reconsentimiento.getApellidopt());
@@ -4429,13 +4473,13 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.telefonoConv1, reconsentimiento.getTelefonoConv1());
         cv.put(ConstantsDB.telefonoCel1, reconsentimiento.getTelefonoCel1());
         cv.put(ConstantsDB.telefonoCel2, reconsentimiento.getTelefonoCel2());
+        cv.put(ConstantsDB.telefonoCel3, reconsentimiento.getTelefonoCel3());
         cv.put(ConstantsDB.asentimiento, reconsentimiento.getAsentimiento());
         cv.put(ConstantsDB.parteAFlu, reconsentimiento.getParteAFlu());
         cv.put(ConstantsDB.parteBFlu, reconsentimiento.getParteBFlu());
         cv.put(ConstantsDB.parteCFlu, reconsentimiento.getParteCFlu());
         cv.put(ConstantsDB.rechFlu, reconsentimiento.getPorqueno());
         cv.put(ConstantsDB.contacto_futuro, reconsentimiento.getContacto_futuro());
-        cv.put(ConstantsDB.local, reconsentimiento.getLocal());
         cv.put(ConstantsDB.otrorecurso1, reconsentimiento.getOtrorecurso1());
         cv.put(ConstantsDB.otrorecurso2, reconsentimiento.getOtrorecurso2());
         cv.put(ConstantsDB.ID_INSTANCIA, reconsentimiento.getMovilInfo().getIdInstancia());
@@ -7857,8 +7901,6 @@ public class EstudiosAdapter {
         reconsId.setFechaCons(new Date(reconsens.getLong(reconsens.getColumnIndex(ConstantsDB.FECHA_CONS))));
         mReConsentimiento.setReconsfluId(reconsId);
 
-        mReConsentimiento.setVisExit(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.visExit)));
-        mReConsentimiento.setNoexitosa(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.razonVisNoExit)));
         mReConsentimiento.setNombrept(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombrept)));
         mReConsentimiento.setNombrept2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombrept2)));
         mReConsentimiento.setApellidopt(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidopt)));
@@ -7879,6 +7921,7 @@ public class EstudiosAdapter {
         if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoConv1))) mReConsentimiento.setTelefonoConv1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoConv1)));
         if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoCel1))) mReConsentimiento.setTelefonoCel1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoCel1)));
         if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoCel2))) mReConsentimiento.setTelefonoCel2(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoCel2)));
+        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoCel3))) mReConsentimiento.setTelefonoCel3(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoCel3)));
 
 
         if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.asentimiento))) mReConsentimiento.setAsentimiento(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.asentimiento)));
@@ -7887,7 +7930,6 @@ public class EstudiosAdapter {
         if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.parteCFlu))) mReConsentimiento.setParteCFlu(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.parteCFlu)));
         if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.rechFlu))) mReConsentimiento.setPorqueno(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.rechFlu)));
         if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.contacto_futuro))) mReConsentimiento.setContacto_futuro(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.contacto_futuro)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.local))) mReConsentimiento.setLocal(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.local)));
 
         if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.otrorecurso1))) mReConsentimiento.setOtrorecurso1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.otrorecurso1)));
         if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.otrorecurso2))) mReConsentimiento.setOtrorecurso2(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.otrorecurso2)));

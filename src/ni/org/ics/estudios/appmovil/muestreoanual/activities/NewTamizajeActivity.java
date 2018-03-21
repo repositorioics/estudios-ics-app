@@ -20,10 +20,7 @@ import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
-import ni.org.ics.estudios.appmovil.domain.Casa;
-import ni.org.ics.estudios.appmovil.domain.Participante;
-import ni.org.ics.estudios.appmovil.domain.Tamizaje;
+import ni.org.ics.estudios.appmovil.domain.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
@@ -460,7 +457,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
                         notificarCambios = false;
-                        changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), false);
+                        changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true); //aunque sea CSF preguntar si esta dispuesto a ir solamente al CSF
                     } else if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro centro de salud")) {
                         changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), true);
                         notificarCambios = false;
@@ -552,6 +549,24 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCasaPerteneceCohorte()), visible || (visibleInf && !esInmuno && !esPretermino));
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getCodigoNuevaCasaCohorte()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getNombre1JefeFamilia()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getNombre2JefeFamilia()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getApellido1JefeFamilia()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getApellido2JefeFamilia()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getBarrio()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getManzana()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getDireccion()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), visible || (visibleInf && !esInmuno && !esPretermino));
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCodigoNuevoParticipante()), visible || (visibleInf && !esInmuno && !esPretermino));
@@ -590,6 +605,29 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getNombreContacto()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getDireccionContacto()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getTieneTelefono()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getNumTelefono1()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono1()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getTipoTelefono1()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getTieneOtroTelefono()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getNumTelefono2()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
+
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), visible);
                 notificarCambios = false;
@@ -645,6 +683,24 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCasaPerteneceCohorte()), (visible && !esInmuno) || visibleDen);
                     notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCodigoNuevaCasaCohorte()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNombre1JefeFamilia()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNombre2JefeFamilia()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getApellido1JefeFamilia()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getApellido2JefeFamilia()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getBarrio()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getManzana()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDireccion()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCodigoNuevoParticipante()), (visible && !esInmuno) || visibleDen);
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), (visible && !esInmuno) || visibleDen);
@@ -682,6 +738,28 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNombreContacto()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDireccionContacto()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTieneTelefono()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNumTelefono1()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono1()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTipoTelefono1()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTieneOtroTelefono()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNumTelefono2()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), (visible && !esInmuno) || visibleDen);
                     notificarCambios = false;
                 }
                 onPageTreeChanged();
@@ -744,6 +822,47 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
                     notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNombreContacto()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDireccionContacto()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTieneTelefono()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNumTelefono1()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono1()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTipoTelefono1()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTieneOtroTelefono()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNumTelefono2()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCodigoNuevaCasaCohorte()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNombre1JefeFamilia()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNombre2JefeFamilia()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getApellido1JefeFamilia()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getApellido2JefeFamilia()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getBarrio()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getManzana()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDireccion()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
+
                 }
                 onPageTreeChanged();
             }
@@ -754,9 +873,10 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getCasaPerteneceCohorte())){
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
-                changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), !visible);
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), visible);
                 notificarCambios = false;
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoNuevaCasaCohorte()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre1JefeFamilia()), visible);
@@ -787,8 +907,6 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), false);
                 notificarCambios = false;
-
-                notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getTestigoPresente())){
@@ -818,6 +936,35 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), visible && visibleTmp);
                 notificarCambios = false;
 
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getTieneTelefono())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getTipoTelefono1()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono1()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getNumTelefono1()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getTieneOtroTelefono()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), false);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), false);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getNumTelefono2()), false);
+                notificarCambios = false;
+
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getTieneOtroTelefono())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getNumTelefono2()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
     	}catch (Exception ex){
@@ -890,6 +1037,17 @@ public class NewTamizajeActivity extends FragmentActivity implements
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAceptaParteD()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getNombreContacto()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getDireccionContacto()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getTieneTelefono()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getTieneOtroTelefono()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getNumTelefono1()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getTipoTelefono1()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono1()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getNumTelefono2()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), false);
     }
 
     public void changeStatus(Page page, boolean visible){
@@ -1170,6 +1328,16 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 String apellido1Testigo = datos.getString(this.getString(R.string.apellido1Testigo));
                 String apellido2Testigo = datos.getString(this.getString(R.string.apellido2Testigo));
 
+                String nombreContacto = datos.getString(this.getString(R.string.nombreContacto));
+                String barrioContacto = datos.getString(this.getString(R.string.barrioContacto));
+                String direccionContacto = datos.getString(this.getString(R.string.direccionContacto));
+                String numTelefono1 = datos.getString(this.getString(R.string.numTelefono1));
+                String numTelefono2 = datos.getString(this.getString(R.string.numTelefono2));
+                String operadoraTelefono1 = datos.getString(this.getString(R.string.operadoraTelefono1));
+                String operadoraTelefono2 = datos.getString(this.getString(R.string.operadoraTelefono2));
+                String tipoTelefono1 = datos.getString(this.getString(R.string.tipoTelefono1));
+                String tipoTelefono2 = datos.getString(this.getString(R.string.tipoTelefono2));
+
                 Boolean aceptaDengue = tieneValor(aceptaCohorteDengue) && aceptaCohorteDengue.equalsIgnoreCase(Constants.YES);
                 Boolean aceptaInfluenza = tieneValor(aceptaCohorteInfluenza) && aceptaCohorteInfluenza.equalsIgnoreCase(Constants.YES);
                 Boolean esPretermino = tieneValor(pretermino) && pretermino.equalsIgnoreCase(Constants.YES);
@@ -1198,7 +1366,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             casaCohorte = new Casa();
                             casaCohorte.setCodigo(Integer.valueOf(codigoNuevaCasaCohorte));
                             Barrio barrio1 = estudiosAdapter.getBarrio(CatalogosDBConstants.nombre + "= '" + barrio + "'", null);
-                            casaCohorte.setBarrio(barrio1); //por defecto, luego será necesario modificarlo
+                            casaCohorte.setBarrio(barrio1);
                             casaCohorte.setManzana(manzana);
                             casaCohorte.setDireccion(direccion);
                             casaCohorte.setNombre1JefeFamilia(nombre1JefeFamilia);
@@ -1258,6 +1426,41 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         participante.setPasive('0');
                         //Guarda nuevo participante
                         estudiosAdapter.crearParticipante(participante);
+
+                        ContactoParticipante contacto = new ContactoParticipante();
+                        contacto.setId(infoMovil.getId());
+                        contacto.setRecordDate(new Date());
+                        contacto.setRecordUser(username);
+                        contacto.setDeviceid(infoMovil.getDeviceId());
+                        contacto.setEstado('0');
+                        contacto.setPasive('0');
+                        contacto.setParticipante(participante);
+                        contacto.setNombre(nombreContacto);
+                        contacto.setDireccion(direccionContacto);
+                        if (tieneValor(barrioContacto)) {
+                            Barrio barrio1 = estudiosAdapter.getBarrio(CatalogosDBConstants.nombre + "= '" + barrioContacto + "'", null);
+                            contacto.setBarrio(barrio1);
+                        }
+                        contacto.setNumero1(numTelefono1);
+                        contacto.setNumero2(numTelefono2);
+                        if (tieneValor(tipoTelefono1)) {
+                            MessageResource catTipo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipoTelefono1 + "' and " + CatalogosDBConstants.catRoot + "='CAT_TIPO_TEL'", null);
+                            contacto.setTipo1(catTipo.getCatKey());
+                        }
+                        if (tieneValor(operadoraTelefono1)) {
+                            MessageResource catOperadora = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + operadoraTelefono1 + "' and " + CatalogosDBConstants.catRoot + "='CAT_OPER_TEL'", null);
+                            contacto.setOperadora1(catOperadora.getCatKey());
+                        }
+                        if (tieneValor(tipoTelefono2)) {
+                            MessageResource catTipo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipoTelefono2 + "' and " + CatalogosDBConstants.catRoot + "='CAT_TIPO_TEL'", null);
+                            contacto.setTipo2(catTipo.getCatKey());
+                        }
+                        if (tieneValor(operadoraTelefono2)) {
+                            MessageResource catOperadora = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + operadoraTelefono2 + "' and " + CatalogosDBConstants.catRoot + "='CAT_OPER_TEL'", null);
+                            contacto.setOperadora2(catOperadora.getCatKey());
+                        }
+
+                        estudiosAdapter.crearContactoParticipante(contacto);
 
                         procesos.setCodigo(participante.getCodigo());
                         procesos.setEstPart(1);

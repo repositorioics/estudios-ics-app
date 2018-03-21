@@ -164,4 +164,24 @@
     <string name="aceptaParteCInf">Parte C Influenza</string>
     <string name="aceptaParteCInfHint">¿Acepta Parte C Estudios Genéticos?</string>
 
+    <string name="nombreContacto">Nombre del contacto</string>
+    <string name="nombreContactoHint">Nombre completo del contacto</string>
+    <string name="barrioContacto">Barrio contacto</string>
+    <string name="barrioContactoHint">Seleccione el barrio dónde vive el contacto</string>
+    <string name="direccionContacto">Dirección del contacto</string>
+    <string name="direccionContactoHint">Dirección exacta del contacto</string>
+    <string name="numTelefono1">Número Teléfono 1</string>
+    <string name="numTelefono1Hint">Primer Num. teléfono del contacto</string>
+    <string name="numTelefono2">Número Teléfono 2</string>
+    <string name="numTelefono2Hint">Segundo Num. teléfono del contacto</string>
+    <string name="operadoraTelefono1">Operadora Teléfono 1</string>
+    <string name="operadoraTelefono1Hint">Indicar compañia operadora del primer número</string>
+    <string name="operadoraTelefono2">Operadora Teléfono 2</string>
+    <string name="operadoraTelefono2Hint">Indicar compañia operadora del segundo número</string>
+    <string name="tipoTelefono1">Tipo Teléfono 1</string>
+    <string name="tipoTelefono1Hint">Tipo de teléfono del primer número</string>
+    <string name="tipoTelefono2">Tipo Teléfono 2</string>
+    <string name="tipoTelefono2Hint">Tipo de teléfono del segundo número</string>
+    <string name="tieneTelefono">¿Tiene teléfono?</string>
+    <string name="tieneOtroTelefono">¿Tiene otro teléfono?</string>
 </resources>

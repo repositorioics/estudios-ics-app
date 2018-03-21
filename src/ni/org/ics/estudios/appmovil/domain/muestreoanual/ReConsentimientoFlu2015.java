@@ -19,8 +19,6 @@ public class ReConsentimientoFlu2015 implements Serializable{
 	 * 
 	 */
 	private ReConsentimientoFlu2015Id reconsfluId;
-	private String visExit;
-	private String noexitosa;
 	private String nombrept;
 	private String nombrept2;
 	private String apellidopt;
@@ -41,14 +39,14 @@ public class ReConsentimientoFlu2015 implements Serializable{
 	private Integer	telefonoConv1;
 	private Integer	telefonoCel1;
 	private Integer	telefonoCel2;
+    private Integer	telefonoCel3;
 	private Integer asentimiento;
 	private Integer parteAFlu;
 	private Integer contacto_futuro;
 	private Integer porqueno;
 	private Integer parteBFlu;
 	private Integer parteCFlu;
-	private Integer local;
-	
+
 	private MovilInfo movilInfo;	
 	private Integer otrorecurso1;
 	private Integer otrorecurso2;
@@ -64,14 +62,6 @@ public class ReConsentimientoFlu2015 implements Serializable{
 		this.reconsfluId = reconsfluId;
 	}
 	
-	public String getNoexitosa() {
-		return noexitosa;
-	}
-
-	public void setNoexitosa(String noexitosa) {
-		this.noexitosa = noexitosa;
-	}
-
 	public String getNombrept() {
 		return nombrept;
 	}
@@ -273,14 +263,6 @@ public class ReConsentimientoFlu2015 implements Serializable{
 		this.otrorecurso1 = otrorecurso1;
 	}
 	
-	public String getVisExit() {
-		return visExit;
-	}
-
-	public void setVisExit(String visExit) {
-		this.visExit = visExit;
-	}
-
 	public Integer getRelacionFam() {
 		return relacionFam;
 	}
@@ -313,12 +295,11 @@ public class ReConsentimientoFlu2015 implements Serializable{
 		this.otrorecurso2 = otrorecurso2;
 	}
 
-	public Integer getLocal() {
-		return local;
-	}
+    public Integer getTelefonoCel3() {
+        return telefonoCel3;
+    }
 
-	public void setLocal(Integer local) {
-		this.local = local;
-	}
-	
+    public void setTelefonoCel3(Integer telefonoCel3) {
+        this.telefonoCel3 = telefonoCel3;
+    }
 }

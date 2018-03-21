@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import ni.org.ics.estudios.appmovil.domain.ContactoParticipante;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
@@ -190,5 +191,47 @@ public class ParticipanteHelper {
         cv.put(ConstantsDB.REC1, participante.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, participante.getMovilInfo().getRecurso2());
         return cv;
+    }
+
+    public static ContentValues crearContactoParticipanteContentValues(ContactoParticipante contactoParticipante){
+        ContentValues cv = new ContentValues();
+        cv.put(MainDBConstants.id, contactoParticipante.getId());
+        cv.put(MainDBConstants.nombre1, contactoParticipante.getNombre());
+        cv.put(MainDBConstants.direccion, contactoParticipante.getDireccion());
+        if (contactoParticipante.getBarrio() != null) cv.put(MainDBConstants.barrio, contactoParticipante.getBarrio().getCodigo());
+        cv.put(MainDBConstants.numero1, contactoParticipante.getNumero1());
+        cv.put(MainDBConstants.numero2, contactoParticipante.getNumero2());
+        cv.put(MainDBConstants.operadora1, contactoParticipante.getOperadora1());
+        cv.put(MainDBConstants.operadora2, contactoParticipante.getOperadora2());
+        cv.put(MainDBConstants.tipo1, contactoParticipante.getTipo1());
+        cv.put(MainDBConstants.tipo2, contactoParticipante.getTipo2());
+        if (contactoParticipante.getParticipante() != null) cv.put(MainDBConstants.participante, contactoParticipante.getParticipante().getCodigo());
+        if (contactoParticipante.getRecordDate() != null) cv.put(MainDBConstants.recordDate, contactoParticipante.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, contactoParticipante.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(contactoParticipante.getPasive()));
+        cv.put(MainDBConstants.estado, String.valueOf(contactoParticipante.getEstado()));
+        cv.put(MainDBConstants.deviceId, contactoParticipante.getDeviceid());
+        return cv;
+    }
+
+    public static ContactoParticipante crearContactoParticipante(Cursor cursor){
+        ContactoParticipante mContacto = new ContactoParticipante();
+        mContacto.setId(cursor.getString(cursor.getColumnIndex(MainDBConstants.id)));
+        mContacto.setNombre(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre1)));
+        mContacto.setDireccion(cursor.getString(cursor.getColumnIndex(MainDBConstants.direccion)));
+        mContacto.setBarrio(null);
+        mContacto.setNumero1(cursor.getString(cursor.getColumnIndex(MainDBConstants.numero1)));
+        mContacto.setNumero2(cursor.getString(cursor.getColumnIndex(MainDBConstants.numero2)));
+        mContacto.setOperadora1(cursor.getString(cursor.getColumnIndex(MainDBConstants.operadora1)));
+        mContacto.setOperadora2(cursor.getString(cursor.getColumnIndex(MainDBConstants.operadora2)));
+        mContacto.setTipo1(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo1)));
+        mContacto.setTipo2(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo2)));
+        mContacto.setParticipante(null);
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mContacto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        mContacto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        mContacto.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
+        mContacto.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mContacto.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
+        return mContacto;
     }
 }

@@ -184,8 +184,6 @@ public class NewRecFlu2015Activity extends AbstractAsyncActivity {
 			reconsId.setCodigo(codigo);
 			reconsId.setFechaCons(new Date());
 			mReConsentimiento.setReconsfluId(reconsId);
-			mReConsentimiento.setVisExit(em.getVisExit());
-			mReConsentimiento.setNoexitosa(em.getNoexitosa());
 			mReConsentimiento.setNombrept(em.getNombrept());
 			mReConsentimiento.setNombrept2(em.getNombrept2());
 			mReConsentimiento.setApellidopt(em.getApellidopt());
@@ -206,13 +204,13 @@ public class NewRecFlu2015Activity extends AbstractAsyncActivity {
 			mReConsentimiento.setTelefonoConv1(em.getTelefonoConv1());
 			mReConsentimiento.setTelefonoCel1(em.getTelefonoCel1());
 			mReConsentimiento.setTelefonoCel2(em.getTelefonoCel2());
+            mReConsentimiento.setTelefonoCel3(em.getTelefonoCel3());
 			mReConsentimiento.setAsentimiento(em.getAsentimiento());
 			mReConsentimiento.setParteAFlu(em.getParteAFlu());
 			mReConsentimiento.setPorqueno(em.getPorqueno());
 			mReConsentimiento.setContacto_futuro(em.getContacto_futuro());
 			mReConsentimiento.setParteBFlu(em.getParteBFlu());
 			mReConsentimiento.setParteCFlu(em.getParteCFlu());
-			mReConsentimiento.setLocal(em.getLocal());
 			mReConsentimiento.setOtrorecurso1(em.getOtrorecurso1());
 			mReConsentimiento.setOtrorecurso2(em.getOtrorecurso2());
 			
@@ -232,7 +230,7 @@ public class NewRecFlu2015Activity extends AbstractAsyncActivity {
 			//Guarda en la base de datos local
             estudiosAdapter.open();
 			estudiosAdapter.crearReConsentimientoFlu2015(mReConsentimiento);
-			if (em.getVisExit().matches("1")) {
+			//if (em.getVisExit().matches("1")) {
 				mParticipante.getProcesos().setConsFlu("No");
 				mParticipante.getProcesos().setMovilInfo(new MovilInfo(idInstancia,
                         instanceFilePath,
@@ -258,7 +256,7 @@ public class NewRecFlu2015Activity extends AbstractAsyncActivity {
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
 				finish();
-			}
+			/*}
 			else{
 				showToast(getApplicationContext().getString(R.string.success),0);
 				Intent i = new Intent(getApplicationContext(),
@@ -266,7 +264,7 @@ public class NewRecFlu2015Activity extends AbstractAsyncActivity {
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
 				finish();
-			}
+			}*/
 		} catch (Exception e) {
 			// Presenta el error al parsear el xml
 			showToast(e.toString(),1);
@@ -285,7 +283,7 @@ public class NewRecFlu2015Activity extends AbstractAsyncActivity {
 					"_id","jrFormId","displayName"};
 			//cursor que busca el formulario
 			Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
-					"jrFormId = 'ICDR_Recons_FLU2015' and displayName = 'ICDR_Recons_FLU2015'", null, null);
+					"jrFormId = 'FLU_Consentimiento' and displayName = 'FLU_Consentimiento'", null, null);
 			c.moveToFirst();
 			//captura el id del formulario
 			Integer id = Integer.parseInt(c.getString(0));

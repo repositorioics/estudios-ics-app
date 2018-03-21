@@ -26,7 +26,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 5;
+	public static final int DATABASE_VERSION = 6;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -532,5 +532,35 @@ public class MainDBConstants {
             + estado + " text not null, "
             + "primary key (" + codigoPersona + "));";
 
+    //Tabla TelefonoContacto
+    public static final String CONTACTO_PARTICIPANTE_TABLE = "contacto_participante";
 
+    //Campos tabla contacto_participante
+    public static final String numero1 = "numero1";
+    public static final String operadora1 = "operadora1";
+    public static final String tipo1 = "tipo1";
+    public static final String numero2 = "numero2";
+    public static final String operadora2 = "operadora2";
+    public static final String tipo2 = "tipo2";
+
+    //crear tabla contacto_participante
+    public static final String CREATE_CONTACTO_PARTICIPANTE_TABLE = "create table if not exists "
+            + CONTACTO_PARTICIPANTE_TABLE + " ("
+            + id + " text not null, "
+            + nombre1 + " text not null, "
+            + direccion + " text, "
+            + barrio + " text, "
+            + numero1 + " text, "
+            + operadora1 + " text, "
+            + tipo1 + " text, "
+            + numero2 + " text, "
+            + operadora2 + " text, "
+            + tipo2 + " text, "
+            + participante + " integer, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + id + "));";
 }

@@ -8,10 +8,6 @@ import java.util.Date;
 public class ReConsentimientoFlu2015Xml {
 	
 	@Element(required=false)
-	private String visExit;
-	@Element(required=false)
-	private String noexitosa;
-	@Element(required=false)
 	private String nombrept;
 	@Element(required=false)
 	private String nombrept2;
@@ -51,7 +47,9 @@ public class ReConsentimientoFlu2015Xml {
 	private Integer	telefonoCel1;
 	@Element(required=false)
 	private Integer	telefonoCel2;
-	@Element(required=false)
+    @Element(required=false)
+    private Integer	telefonoCel3;
+    @Element(required=false)
 	private Integer asentimiento;
 	@Element(required=false)
 	private Integer parteAFlu;
@@ -63,9 +61,7 @@ public class ReConsentimientoFlu2015Xml {
 	private Integer parteBFlu;
 	@Element(required=false)
 	private Integer parteCFlu;
-	@Element(required=false)
-	private Integer local;
-		
+
 	@Element(required=false)
 	private Integer otrorecurso1;
 	@Element(required=false)
@@ -118,14 +114,6 @@ public class ReConsentimientoFlu2015Xml {
 	
 	public ReConsentimientoFlu2015Xml(){
 		
-	}
-
-	public String getNoexitosa() {
-		return noexitosa;
-	}
-
-	public void setNoexitosa(String noexitosa) {
-		this.noexitosa = noexitosa;
 	}
 
 	public String getNombrept() {
@@ -464,14 +452,6 @@ public class ReConsentimientoFlu2015Xml {
 		this.telefonos = telefonos;
 	}
 
-	public String getVisExit() {
-		return visExit;
-	}
-
-	public void setVisExit(String visExit) {
-		this.visExit = visExit;
-	}
-
 	public Integer getRelacionFam() {
 		return relacionFam;
 	}
@@ -520,13 +500,11 @@ public class ReConsentimientoFlu2015Xml {
 		this.edad = edad;
 	}
 
-	public Integer getLocal() {
-		return local;
-	}
+    public Integer getTelefonoCel3() {
+        return telefonoCel3;
+    }
 
-	public void setLocal(Integer local) {
-		this.local = local;
-	}	
-
-	
+    public void setTelefonoCel3(Integer telefonoCel3) {
+        this.telefonoCel3 = telefonoCel3;
+    }
 }

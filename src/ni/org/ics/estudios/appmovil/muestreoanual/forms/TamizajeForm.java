@@ -66,6 +66,9 @@ public class TamizajeForm extends AbstractWizardModel {
         String[] catTiempoResid = fillCatalog("CP_CAT_TR");
         String[] catRazonNoParticipaPersona = fillCatalog("CHF_CAT_NPP");
         String[] catTipoIngreso = {"Dengue","Influenza","Ambos"};
+        String[] catTipo = fillCatalog("CAT_TIPO_TEL");
+        String[] catOperadora = fillCatalog("CAT_OPER_TEL");
+
         estudiosAdapter.close();
 
         DateMidnight dmDesde = DateMidnight.parse("01/01/1900", DateTimeFormat.forPattern("dd/MM/yyyy"));
@@ -150,6 +153,20 @@ public class TamizajeForm extends AbstractWizardModel {
         Page apellido1Testigo = new TextPage(this,labels.getApellido1Testigo(),labels.getNombre1TestigoHint(),Constants.WIZARD,false).setRequired(true);
         Page apellido2Testigo = new TextPage(this,labels.getApellido2Testigo(),labels.getNombre1TestigoHint(),Constants.WIZARD,false).setRequired(false);
 
+
+        Page nombreContacto = new TextPage(this,labels.getNombreContacto(),labels.getNombreContactoHint(),Constants.WIZARD, false).setRequired(true);
+        Page barrioContacto = new SingleFixedChoicePage(this,labels.getBarrioContacto(), labels.getBarrioContactoHint(), Constants.WIZARD, false).setChoices(barrios).setRequired(true);
+        Page direccionContacto = new TextPage(this,labels.getDireccionContacto(),labels.getDireccionContactoHint(), Constants.WIZARD, false).setRequired(true);
+        Page tieneTelefono = new SingleFixedChoicePage(this,labels.getTieneTelefono(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page tipoTel1 = new SingleFixedChoicePage(this,labels.getTipoTelefono1(),labels.getTipoTelefono1Hint(), Constants.WIZARD, false).setChoices(catTipo).setRequired(true);
+        Page operadoraTel1 = new SingleFixedChoicePage(this,labels.getOperadoraTelefono1(),labels.getOperadoraTelefono1Hint(), Constants.WIZARD, false).setChoices(catOperadora).setRequired(true);
+        Page numeroTel1 = new TextPage(this,labels.getNumTelefono1(),labels.getNumTelefono1Hint(), Constants.WIZARD, false).setPatternValidation(true, "^$|^[8|5|7|2]{1}\\d{7}$").setRequired(true);
+        Page tieneOtroTelefono = new SingleFixedChoicePage(this,labels.getTieneOtroTelefono(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page tipoTel2 = new SingleFixedChoicePage(this,labels.getTipoTelefono2(),labels.getTipoTelefono2Hint(), Constants.WIZARD, false).setChoices(catTipo).setRequired(true);
+        Page operadoraTel2 = new SingleFixedChoicePage(this,labels.getOperadoraTelefono2(),labels.getOperadoraTelefono2Hint(), Constants.WIZARD, false).setChoices(catOperadora).setRequired(true);
+        Page numeroTel2 = new TextPage(this,labels.getNumTelefono2(),labels.getNumTelefono2Hint(), Constants.WIZARD, false).setPatternValidation(true, "^$|^[8|5|7|2]{1}\\d{7}$").setRequired(true);
+
+
         Page finTamizajeLabel = new LabelPage(this,labels.getFinTamizajeLabel(),"", Constants.WIZARD, true).setRequired(false);
 
 		return new PageList(tipoIngreso, sexo, fechaNacimiento, aceptaTamizajePersona, razonNoParticipaPersona, otraRazonNoParticipaPersona,
@@ -163,6 +180,7 @@ public class TamizajeForm extends AbstractWizardModel {
                 nombre1Tutor, nombre2Tutor, apellido1Tutor, apellido2Tutor, relacionFamiliarTutor,
                 participanteOTutorAlfabeto, testigoPresente, nombre1Testigo, nombre2Testigo, apellido1Testigo, apellido2Testigo,
                 aceptaParteB, aceptaParteC, aceptaParteD, aceptaParteBInf, aceptaParteCInf,
+                nombreContacto, barrioContacto, direccionContacto, tieneTelefono, tipoTel1, operadoraTel1, numeroTel1, tieneOtroTelefono, tipoTel2, operadoraTel2, numeroTel2,
                 finTamizajeLabel);
     }
 

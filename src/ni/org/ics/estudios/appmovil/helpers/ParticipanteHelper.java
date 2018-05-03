@@ -102,7 +102,8 @@ public class ParticipanteHelper {
         mPart.setRelacionFam(participantes.getInt(participantes.getColumnIndex(ConstantsDB.RELFAMT)));
         mPart.setPaxgene(participantes.getString(participantes.getColumnIndex(ConstantsDB.PAXGENE)));
         mPart.setRetoma(participantes.getString(participantes.getColumnIndex(ConstantsDB.RETOMA)));
-        mPart.setVolRetoma(participantes.getDouble(participantes.getColumnIndex(ConstantsDB.VOLRETOMA)));
+        if (participantes.getDouble(participantes.getColumnIndex(ConstantsDB.VOLRETOMA))>0) mPart.setVolRetoma(participantes.getDouble(participantes.getColumnIndex(ConstantsDB.VOLRETOMA)));
+        if (participantes.getDouble(participantes.getColumnIndex(ConstantsDB.VOLRETOMAPBMC))>0) mPart.setVolRetomaPbmc(participantes.getDouble(participantes.getColumnIndex(ConstantsDB.VOLRETOMAPBMC)));
         mPart.setCuantasPers(participantes.getInt(participantes.getColumnIndex(ConstantsDB.NUMPERS)));
         mPart.setPosZika(participantes.getString(participantes.getColumnIndex(ConstantsDB.posZika)));
         mPart.setDatosParto(participantes.getString(participantes.getColumnIndex(ConstantsDB.datosParto)));
@@ -113,6 +114,7 @@ public class ParticipanteHelper {
         mPart.setEnCasaSa(participantes.getString(participantes.getColumnIndex(ConstantsDB.enCasaSa)));
         mPart.setEncPartSa(participantes.getString(participantes.getColumnIndex(ConstantsDB.encPartSa)));
         mPart.setTutor(participantes.getString(participantes.getColumnIndex(ConstantsDB.tutor)));
+        mPart.setConsSa(participantes.getString(participantes.getColumnIndex(ConstantsDB.consSa)));
 
         Boolean borrado = participantes.getInt(participantes.getColumnIndex(ConstantsDB.DELETED))>0;
 		mPart.setMovilInfo(new MovilInfo(participantes.getInt(participantes.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
@@ -164,7 +166,8 @@ public class ParticipanteHelper {
         cv.put(ConstantsDB.RELFAMT, participante.getRelacionFam());
         cv.put(ConstantsDB.PAXGENE, participante.getPaxgene());
         cv.put(ConstantsDB.RETOMA, participante.getRetoma());
-        cv.put(ConstantsDB.VOLRETOMA, participante.getVolRetoma());
+        if (participante.getVolRetoma()!=null) cv.put(ConstantsDB.VOLRETOMA, participante.getVolRetoma());
+        if (participante.getVolRetomaPbmc()!=null) cv.put(ConstantsDB.VOLRETOMAPBMC, participante.getVolRetomaPbmc());
         cv.put(ConstantsDB.NUMPERS, participante.getCuantasPers());
         cv.put(ConstantsDB.posZika, participante.getPosZika());
         cv.put(ConstantsDB.datosParto, participante.getDatosParto());
@@ -175,6 +178,7 @@ public class ParticipanteHelper {
         cv.put(ConstantsDB.enCasaSa, participante.getEnCasaSa());
         cv.put(ConstantsDB.encPartSa, participante.getEncPartSa());
         cv.put(ConstantsDB.tutor, participante.getTutor());
+        cv.put(ConstantsDB.consSa, participante.getConsSa());
 
         cv.put(ConstantsDB.ID_INSTANCIA, participante.getMovilInfo().getIdInstancia());
         cv.put(ConstantsDB.FILE_PATH, participante.getMovilInfo().getInstancePath());

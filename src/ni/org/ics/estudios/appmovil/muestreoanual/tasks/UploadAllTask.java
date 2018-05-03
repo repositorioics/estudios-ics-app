@@ -8,6 +8,7 @@ import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -64,6 +65,7 @@ public class UploadAllTask extends UploadTask {
     private List<Tamizaje> mTamizajes = new ArrayList<Tamizaje>();
     private List<CartaConsentimiento> mCartasConsent = new ArrayList<CartaConsentimiento>();
     private List<ContactoParticipante> mContactos = new ArrayList<ContactoParticipante>();
+    private List<ParticipanteSeroprevalencia> mParticipantesSa = new ArrayList<ParticipanteSeroprevalencia>();
 
     private String url = null;
     private String username = null;
@@ -430,6 +432,18 @@ public class UploadAllTask extends UploadTask {
                 e1.printStackTrace();
                 return e1.getLocalizedMessage();
             }
+            try {
+                mParticipantesSa = estudioAdapter.getParticipantesSeroprevalencia(MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'", null);
+                saveParticipantesSa(Constants.STATUS_SUBMITTED);
+                error = cargarParticipantesSA(url, username, password);
+                if (!error.matches("Datos recibidos!")){
+                    saveParticipantesSa(Constants.STATUS_NOT_SUBMITTED);
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
 
         } catch (Exception e1) {
 
@@ -475,6 +489,16 @@ public class UploadAllTask extends UploadTask {
             contacto.setEstado(estado.charAt(0));
             estudioAdapter.editarContactoParticipante(contacto);
             publishProgress("Actualizando contactos en base de datos local", Integer.valueOf(mContactos.indexOf(contacto)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+    }
+
+    private void saveParticipantesSa(String estado){
+        int c = mParticipantesSa.size();
+        for (ParticipanteSeroprevalencia participanteSeroprevalencia : mParticipantesSa) {
+            participanteSeroprevalencia.setEstado(estado.charAt(0));
+            estudioAdapter.editarParticipanteSeroprevalencia(participanteSeroprevalencia);
+            publishProgress("Actualizando participantes SA en base de datos local", Integer.valueOf(mParticipantesSa.indexOf(participanteSeroprevalencia)).toString(), Integer
                     .valueOf(c).toString());
         }
     }
@@ -2406,6 +2430,40 @@ public class UploadAllTask extends UploadTask {
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
                 // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /*************** Participantes SA ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarParticipantesSA(String url, String username,
+                                     String password) throws Exception {
+        try {
+            if(mParticipantesSa.size()>0){
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/participantesSA";
+                ParticipanteSeroprevalencia[] envio = mParticipantesSa.toArray(new ParticipanteSeroprevalencia[mParticipantesSa.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ParticipanteSeroprevalencia[]> requestEntity =
+                        new HttpEntity<ParticipanteSeroprevalencia[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone el registro y espera un mensaje de respuesta del servidor
                 ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
                         String.class);
                 return response.getBody();

@@ -131,6 +131,7 @@ public class ConstantsDB {
     public static final String PAXGENE = "paxgene";
     public static final String RETOMA = "retoma";
     public static final String VOLRETOMA = "vol_retoma";
+    public static final String VOLRETOMAPBMC = "vol_retoma_pbmc";
     public static final String MANZANA_PART = "manzana_participante";
     public static final String BARRIO_PART = "barrio_participante";
     public static final String BARRIO_DESC = "barrio_descripcion";
@@ -149,6 +150,7 @@ public class ConstantsDB {
     public static final String enCasaSa = "enCasaSa";
     public static final String encPartSa = "encPartSa";
     public static final String tutor = "tutor";
+    public static final String consSa = "consSa"; //Consentimiento Seroprevalencia
 
     //Campos encuesta casa
     public static final String FECHA_ENC_CASA = "fecha_encuesta";
@@ -916,7 +918,8 @@ public class ConstantsDB {
             + INFOVAC  + " text, "
             + PAXGENE  + " text, "
             + RETOMA  + " text, "
-            + VOLRETOMA  + " real, "
+            + VOLRETOMA  + " real, " //para rojo
+            + VOLRETOMAPBMC  + " real, " //para pbmc
             + telefono + " text, "
             + ZIKA  + " text, "
             + ADN  + " text, "
@@ -931,6 +934,7 @@ public class ConstantsDB {
             + enCasaSa  + " text, "
             + encPartSa  + " text, "
             + tutor  + " text, "
+            + consSa  + " text, "
             + ID_INSTANCIA + " integer,"
             + FILE_PATH + " text,"
             + STATUS + " text, "

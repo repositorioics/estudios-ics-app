@@ -1265,6 +1265,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 procesos.setTutor(tutor);
                 procesos.setCuantasPers(0);
                 procesos.setVolRetoma(null);
+                procesos.setVolRetomaPbmc(null);
                 if (aceptaDengue)
                     estudios = "Dengue";
                 if (aceptaInfluenza)

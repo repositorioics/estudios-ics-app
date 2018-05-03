@@ -86,7 +86,9 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 						|| procesos.getEncLacMat().matches("Si")||procesos.getInfoVacuna().matches("Si")
 						|| procesos.getConsDeng().matches("Si") || procesos.getObsequio().matches("Si")
 						|| procesos.getConmx().matches("No") || procesos.getConmxbhc().matches("No")|| procesos.getZika().matches("Si")
-						|| procesos.getAdn().matches("Si")|| procesos.getDatosParto().matches("Si")|| procesos.getDatosVisita().matches("Si")){
+						|| procesos.getAdn().matches("Si")|| procesos.getDatosParto().matches("Si")|| procesos.getDatosVisita().matches("Si")
+                        || (procesos.getRetoma()!=null && procesos.getRetoma().matches("Si"))
+                        || procesos.getConsSa().matches("Si")){
 					labelHeader = labelHeader + "<font color='red'>Pendiente: <br /></font>";
 					
 					//Primero muestras
@@ -275,6 +277,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 					if (procesos.getConsFlu().matches("Si")) labelHeader = labelHeader + "Consentimiento Influenza <br />";
 					if (procesos.getConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue<br />";
 					if (procesos.getZika().matches("Si")) labelHeader = labelHeader + "Consentimiento Zika<br />";
+                    if (procesos.getConsSa().matches("Si")) labelHeader = labelHeader + "Consentimiento Seroprevalencia<br />";
 					if (procesos.getEncLacMat().matches("Si")) labelHeader = labelHeader + "Encuesta de Lactancia Materna<br />";
 					if (procesos.getPesoTalla().matches("Si")) labelHeader = labelHeader + "Peso y Talla <br />";
 					if (procesos.getDatosParto().matches("Si")) labelHeader = labelHeader + "Datos Parto BB<br />";
@@ -284,11 +287,14 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 						labelHeader = labelHeader + "<font color='blue'>" + this.getContext().getString(R.string.gift_missing) + "</font><br />";
 					}
 					if (procesos.getAdn().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante pendiente de ADN, Informar a LAB para toma.</b></font><br />";
-					if ((procesos.getRetoma()!=null && procesos.getVolRetoma()!=null)){
-						if ((procesos.getRetoma().matches("Si"))){
-							labelHeader = labelHeader + "<font color='red'>" + this.getContext().getString(R.string.retoma) +": " + procesos.getVolRetoma() + "cc </font><br/>";
-						}
-					}
+                    if (procesos.getRetoma()!=null && procesos.getRetoma().matches("Si")){
+                        if (procesos.getVolRetoma()!=null){
+                            labelHeader = labelHeader + "<small><font color='red'>Retoma tubo Rojo, volumen requerido: " + procesos.getVolRetoma() + "cc </font></small><br />";
+                        }
+                        if (procesos.getVolRetomaPbmc()!=null){
+                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Retoma tubo PBMC, volumen requerido: " + procesos.getVolRetomaPbmc() + "cc </font></small><br />";
+                        }
+                    }
 				}
 				else{
 					labelHeader = labelHeader + "<font color='blue'>No tiene procedimientos pendientes<br /></font>";

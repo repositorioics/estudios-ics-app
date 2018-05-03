@@ -194,6 +194,12 @@ public class EstudiosAdapter {
                 db.execSQL("DROP TABLE " + ConstantsDB.RECONSFLU_TABLE_2015);
                 db.execSQL(ConstantsDB.CREATE_RECONSFLU_TABLE_2015);
             }
+            if (oldVersion==6){
+                db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.VOLRETOMAPBMC + " real");
+                db.execSQL("DROP TABLE " + SeroprevalenciaDBConstants.PARTICIPANTESA_TABLE);
+                db.execSQL(SeroprevalenciaDBConstants.CREATE_PARTICIPANTESA_TABLE);
+                db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.consSa + " text");
+            }
 		}	
 	}
 

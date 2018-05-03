@@ -6,14 +6,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,11 +37,13 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFam
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.MenuInfoAdapter;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaCasaSAActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaParticipanteSAActivity;
+import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevoConsentimientoSAActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -66,6 +66,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private ArrayList<Muestra> mMuestras = new ArrayList<Muestra>();
     private ArrayList<Obsequio> mObsequios = new ArrayList<Obsequio>();
     private ArrayList<ConsentimientoZika> mConsentimientoZikas = new ArrayList<ConsentimientoZika>();
+    private ArrayList<ParticipanteSeroprevalencia> mParticipantesSa = new ArrayList<ParticipanteSeroprevalencia>();
     private ArrayList<DatosPartoBB> mDatosPartoBBs = new ArrayList<DatosPartoBB>();
     private ArrayList<DatosVisitaTerreno> mDatosVisitaTerreno = new ArrayList<DatosVisitaTerreno>();
     private ArrayList<Documentos> mDocumentos = new ArrayList<Documentos>();
@@ -101,6 +102,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private MenuItem encCasaChfItem;
     private MenuItem encCasaSaItem;
     private MenuItem encPartSaItem;
+    private MenuItem consSAItem;
 
     private EstudiosAdapter estudiosAdapter;
 
@@ -227,8 +229,14 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 ListReviewActivity.class);
                         break;
                     case 12:
+                        /*
                         arguments.putString(Constants.TITLE, getString(R.string.info_zika));
                         if (mConsentimientoZikas!=null) arguments.putSerializable(Constants.OBJECTO , mConsentimientoZikas);
+                        i = new Intent(getApplicationContext(),
+                                ListReviewActivity.class);
+                        */
+                        arguments.putString(Constants.TITLE, getString(R.string.info_sa));
+                        if (mParticipantesSa!=null) arguments.putSerializable(Constants.OBJECTO , mParticipantesSa);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
@@ -306,6 +314,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             encCasaChfItem = menu.findItem(R.id.ENCASA_CHF);
             encCasaSaItem = menu.findItem(R.id.ENCASA_SA);
             encPartSaItem = menu.findItem(R.id.ENPART_SA);
+            consSAItem = menu.findItem(R.id.CONSSA);
 
         }
         return true;
@@ -565,7 +574,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 return true;
             case R.id.SAMPLE:
                 if(mUser.getMuestra()){
-                    if(mParticipante.getProcesos().getConmx().matches("No")||mParticipante.getProcesos().getConmxbhc().matches("No")){
+                    if(mParticipante.getProcesos().getConmx().matches("No")||mParticipante.getProcesos().getConmxbhc().matches("No")
+                            || (mParticipante.getProcesos().getRetoma()!=null && mParticipante.getProcesos().getRetoma().matches("Si"))){
                         if (mParticipante.getProcesos().getConvalesciente().matches("Na")){
                             Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.convless14),Toast.LENGTH_LONG);
                             toast.show();
@@ -741,6 +751,26 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     toast.show();
                 }
                 return true;
+            case R.id.CONSSA:
+                if(mUser.getConsentimiento()){
+                    if(mParticipante.getProcesos().getConsSa().matches("Si")) {
+                        arguments.putSerializable(Constants.PARTICIPANTE, mParticipante);
+                        i = new Intent(getApplicationContext(),
+                                NuevoConsentimientoSAActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                    }
+                    else {
+                        Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.e_error), Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -808,11 +838,14 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         encCasaChfItem.setVisible(false);
         encCasaSaItem.setVisible(false);
         encPartSaItem.setVisible(false);
+        consSAItem.setVisible(false);
         if ((mUser.getVisitas()&&!visExitosa)){
             visitaItem.setVisible(true);
         }
         else{
-            if((mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No"))  && mUser.getMuestra() && mParticipante.getEdadMeses()>5) muestraItem.setVisible(true);
+            if((mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No")
+                    || (mParticipante.getProcesos().getRetoma()!=null && mParticipante.getProcesos().getRetoma().matches("Si")))
+                    && mUser.getMuestra() && mParticipante.getEdadMeses()>5) muestraItem.setVisible(true);
             if((mParticipante.getProcesos().getEnCasa().matches("Si") && mUser.getEncuestaCasa())) encCasaItem.setVisible(true);
             if((mParticipante.getProcesos().getEncPart().matches("Si") && mUser.getEncuestaParticipante())) encPartItem.setVisible(true);
             if ((mParticipante.getProcesos().getConsFlu().matches("Si") && mUser.getConsentimiento())) reConsFluItem.setVisible(true);
@@ -827,6 +860,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if((mParticipante.getProcesos().getEnCasaChf().matches("Si") && mUser.getEncuestaCasa())) encCasaChfItem.setVisible(true);
             if((mParticipante.getProcesos().getEnCasaSa().matches("Si") && mUser.getEncuestaCasa())) encCasaSaItem.setVisible(true);
             if((mParticipante.getProcesos().getEncPartSa().matches("Si") && mUser.getEncuestaParticipante())) encPartSaItem.setVisible(true);
+            if((mParticipante.getProcesos().getConsSa().matches("Si") && mUser.getConsentimiento())) consSAItem.setVisible(true);
             visitaItem.setVisible(false);
         }
         return true;
@@ -892,6 +926,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         }
         mEncuestasParticipantesSa = (ArrayList)estudiosAdapter.getEncuestasParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo() , null);
         catRelacionFamiliar = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", null);
+        mParticipantesSa = (ArrayList)estudiosAdapter.getParticipantesSeroprevalencia(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo(), null);
         estudiosAdapter.close();
     }
 
@@ -931,7 +966,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || mParticipante.getProcesos().getEncLacMat().matches("Si")||mParticipante.getProcesos().getInfoVacuna().matches("Si")
                     || mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getObsequio().matches("Si")
                     || mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No")|| mParticipante.getProcesos().getZika().matches("Si")
-                    || mParticipante.getProcesos().getAdn().matches("Si")|| mParticipante.getProcesos().getDatosParto().matches("Si")|| mParticipante.getProcesos().getDatosVisita().matches("Si")){
+                    || mParticipante.getProcesos().getAdn().matches("Si")|| mParticipante.getProcesos().getDatosParto().matches("Si")|| mParticipante.getProcesos().getDatosVisita().matches("Si")
+                    || (mParticipante.getProcesos().getRetoma()!=null && mParticipante.getProcesos().getRetoma().matches("Si"))
+                    || mParticipante.getProcesos().getConsSa().matches("Si")){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
                 //Primero muestras
@@ -1124,9 +1161,12 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 }
                             }
                         }
-                        if ((mParticipante.getProcesos().getRetoma()!=null && mParticipante.getProcesos().getVolRetoma()!=null)){
-                            if ((mParticipante.getProcesos().getRetoma().matches("Si")) && mUser.getMuestra()){
-                                labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.retoma) +": " + mParticipante.getProcesos().getVolRetoma() + "cc </font></small><br />";
+                        if (mParticipante.getProcesos().getRetoma()!=null && mParticipante.getProcesos().getRetoma().matches("Si") && mUser.getMuestra()){
+                            if (mParticipante.getProcesos().getVolRetoma()!=null){
+                                labelHeader = labelHeader + "<small><font color='red'>Retoma tubo Rojo, volumen requerido: " + mParticipante.getProcesos().getVolRetoma() + "cc </font></small><br />";
+                            }
+                            if (mParticipante.getProcesos().getVolRetomaPbmc()!=null){
+                                labelHeader = labelHeader + "<small><font color='#11BDF7'>Retoma tubo PBMC, volumen requerido: " + mParticipante.getProcesos().getVolRetomaPbmc() + "cc </font></small><br />";
                             }
                         }
                     }
@@ -1166,6 +1206,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.zika_missing) + "</font></small><br />";
                     pendiente=true;
                 }
+                if (mParticipante.getProcesos().getConsSa().matches("Si") && mUser.getConsentimiento()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.cons_sa_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
                 if (mParticipante.getProcesos().getEncLacMat().matches("Si") && mUser.getEncuestaLactancia()){
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.maternal_survey_missing) + "</font></small><br />";
                     pendiente=true;
@@ -1192,8 +1236,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 if (mParticipante.getProcesos().getAdn().matches("Si")) {
                     labelHeader = labelHeader + "<small><font color='red'>Pendiente de ADN, Informar a LAB para toma.</font></small><br />";
                 }
-            }
-            else{
+            } else{
                 labelHeader = labelHeader + "<small><font color='blue'>No tiene procedimientos pendientes<br /></font></small>";
             }
         }
@@ -1412,7 +1455,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             String[] menu_info = getResources().getStringArray(R.array.menu_info);
             gridView.setAdapter(new MenuInfoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
                     ,mVisitasTerreno.size(),mPyTs.size(),mEncuestasCasas.size(),mEncuestasParticipantes.size(),
-                    mEncuestasLactancias.size(),mVacunas.size(),mReConsentimientoDen.size(),mMuestras.size(),mObsequios.size(),mConsentimientoZikas.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()
+                    mEncuestasLactancias.size(),mVacunas.size(),mReConsentimientoDen.size(),mMuestras.size(),mObsequios.size(),mParticipantesSa.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()
                     ,mEncuestasCasasChf.size(), mEncuestasCasasSa.size(), mEncuestasParticipantesSa.size()));
             refreshView();
             dismissProgressDialog();

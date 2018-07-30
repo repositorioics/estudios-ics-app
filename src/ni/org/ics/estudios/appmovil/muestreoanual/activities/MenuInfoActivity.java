@@ -931,7 +931,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || mParticipante.getProcesos().getEncLacMat().matches("Si")||mParticipante.getProcesos().getInfoVacuna().matches("Si")
                     || mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getObsequio().matches("Si")
                     || mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No")|| mParticipante.getProcesos().getZika().matches("Si")
-                    || mParticipante.getProcesos().getAdn().matches("Si")|| mParticipante.getProcesos().getDatosParto().matches("Si")|| mParticipante.getProcesos().getDatosVisita().matches("Si")){
+                    || mParticipante.getProcesos().getAdn().matches("Si")|| mParticipante.getProcesos().getDatosParto().matches("Si")|| mParticipante.getProcesos().getDatosVisita().matches("Si")
+                    || !mParticipante.getProcesos().getConvalesciente().matches("No")){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
                 //Primero muestras
@@ -1115,13 +1116,14 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         }
                         if (mParticipante.getProcesos().getConvalesciente().matches("Si")&& mParticipante.getEdadMeses()>=24){
                             if(!mParticipante.getProcesos().getEstudio().equals("Influenza  CH Familia")) {
-                                if (mParticipante.getProcesos().getConmx().matches("No")) {
-                                    if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                                        labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
-                                    } else {
+                                //AL finalizar MA 2018, se solicita siempre muestre mensaje de muestra convasleciente.  28062018
+                                //if (mParticipante.getProcesos().getConmx().matches("No")) {
+                                //if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+                                labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
+                                    /*} else {
                                         labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
                                     }
-                                }
+                                }*/
                             }
                         }
                         if ((mParticipante.getProcesos().getRetoma()!=null && mParticipante.getProcesos().getVolRetoma()!=null)){

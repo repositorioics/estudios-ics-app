@@ -86,7 +86,8 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 						|| procesos.getEncLacMat().matches("Si")||procesos.getInfoVacuna().matches("Si")
 						|| procesos.getConsDeng().matches("Si") || procesos.getObsequio().matches("Si")
 						|| procesos.getConmx().matches("No") || procesos.getConmxbhc().matches("No")|| procesos.getZika().matches("Si")
-						|| procesos.getAdn().matches("Si")|| procesos.getDatosParto().matches("Si")|| procesos.getDatosVisita().matches("Si")){
+						|| procesos.getAdn().matches("Si")|| procesos.getDatosParto().matches("Si")|| procesos.getDatosVisita().matches("Si")
+                        || !procesos.getConvalesciente().matches("No")){
 					labelHeader = labelHeader + "<font color='red'>Pendiente: <br /></font>";
 					
 					//Primero muestras
@@ -252,17 +253,18 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                             labelHeader += getVolumenDengueInfluenzaCHF(participante);
 
                         }
-						if (procesos.getConvalesciente().matches("Si")&& participante.getEdadMeses()>=24){
+                        if (procesos.getConvalesciente().matches("Si")&& participante.getEdadMeses()>=24){
                             if(!procesos.getEstudio().equals("Influenza  CH Familia")){
-                                if (procesos.getConmx().matches("No")) {
-                                    if (procesos.getPbmc().matches("Si")) {
+                                //AL finalizar MA 2018, se solicita siempre muestre mensaje de muestra convasleciente.  28062018
+                                //if (procesos.getConmx().matches("No")) {
+                                //if (procesos.getPbmc().matches("Si")) {
+                                labelHeader = labelHeader + "<font color='#de3163'>Tomar 5cc de convaleciente<br /></font>";
+                                    /*} else {
                                         labelHeader = labelHeader + "<font color='#de3163'>Tomar 5cc de convaleciente<br /></font>";
-                                    } else {
-                                        labelHeader = labelHeader + "<font color='#de3163'>Tomar 5cc de convaleciente<br /></font>";
-                                    }
-                                }
+                                    }*/
+                                //}
                             }
-						}
+                        }
 					}
 					
 					//Nuevo orden

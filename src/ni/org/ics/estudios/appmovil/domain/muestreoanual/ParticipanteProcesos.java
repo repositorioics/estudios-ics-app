@@ -36,6 +36,7 @@ public class ParticipanteProcesos implements Serializable {
     private String adn;
     private String retoma;
     private Double volRetoma;
+    private Double volRetomaPbmc;
     private String datosParto;
     private String mi;
     private String casaCHF;
@@ -46,6 +47,7 @@ public class ParticipanteProcesos implements Serializable {
     private String enCasaSa;
     private String encPartSa;
     private String tutor;
+    private String consSa;
 
     private MovilInfo movilInfo;
 
@@ -327,5 +329,21 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setTutor(String tutor) {
         this.tutor = tutor;
+    }
+
+    public Double getVolRetomaPbmc() {
+        return volRetomaPbmc;
+    }
+
+    public void setVolRetomaPbmc(Double volRetomaPbmc) {
+        this.volRetomaPbmc = volRetomaPbmc;
+    }
+
+    public String getConsSa() {
+        return consSa;
+    }
+
+    public void setConsSa(String consSa) {
+        this.consSa = consSa;
     }
 }

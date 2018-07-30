@@ -19,7 +19,7 @@ public class SeroprevalenciaDBConstants {
     public static final String CREATE_PARTICIPANTESA_TABLE = "create table if not exists "
             + PARTICIPANTESA_TABLE + " ("
             + participante + " integer not null, "
-            + casaCHF + " text not null, "
+            + casaCHF + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

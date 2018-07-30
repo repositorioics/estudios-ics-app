@@ -23,9 +23,11 @@ import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+import ni.org.ics.estudios.appmovil.seroprevalencia.adapters.ConsentimientoSAAdapter;
 import ni.org.ics.estudios.appmovil.seroprevalencia.adapters.EncuestaCasaSaAdapter;
 import ni.org.ics.estudios.appmovil.seroprevalencia.adapters.EncuestaParticipanteSaAdapter;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -60,6 +62,7 @@ public class ListReviewActivity extends ListActivity {
     ArrayAdapter<Documentos> mDocumentosAdapter=null;
     ArrayAdapter<EncuestaCasaSA> mEncuestasCasasSaAdapter =null;
     ArrayAdapter<EncuestaParticipanteSA> mEncuestasParticipantesSaAdapter = null;
+    ArrayAdapter<ParticipanteSeroprevalencia> mParticipantesSAAdapter =null;
 	public static final int BARCODE_CAPTURE = 2;
 	
 	private Integer codigo;
@@ -165,6 +168,9 @@ public class ListReviewActivity extends ListActivity {
                 }
                 if (mEncuestasCasasSaAdapter != null) {
                     mEncuestasCasasSaAdapter.getFilter().filter(s);
+                }
+                if (mParticipantesSAAdapter != null) {
+                    mParticipantesSAAdapter.getFilter().filter(s);
                 }
 			}
 
@@ -370,6 +376,14 @@ public class ListReviewActivity extends ListActivity {
             showToast("Total = "+ mEncuestaCasaAdapter.getCount());
         }
 
+        if (titulo.matches(getString(R.string.info_sa))){
+
+            mParticipantesSAAdapter = new ConsentimientoSAAdapter(this, R.layout.list_item_review,
+                    (ArrayList<ParticipanteSeroprevalencia>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
+            setListAdapter(mParticipantesSAAdapter);
+            showToast("Total = "+ mParticipantesSAAdapter.getCount());
+        }
+
 
         ListView listView = (ListView) findViewById(android.R.id.list);
 		listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
@@ -556,7 +570,13 @@ public class ListReviewActivity extends ListActivity {
             i = new Intent(getApplicationContext(),
                     ReviewActivity.class);
         }
-
+        if (titulo.matches(getString(R.string.info_sa))){
+            ParticipanteSeroprevalencia cons = (ParticipanteSeroprevalencia) getListAdapter().getItem(position);
+            arguments.putString(Constants.TITLE, getString(R.string.info_sa));
+            if (cons!=null) arguments.putSerializable(Constants.OBJECTO , cons);
+            i = new Intent(getApplicationContext(),
+                    ReviewActivity.class);
+        }
 		i.putExtras(arguments);
 		startActivity(i);
 	}

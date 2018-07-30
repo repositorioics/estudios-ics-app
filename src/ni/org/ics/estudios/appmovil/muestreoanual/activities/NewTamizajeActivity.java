@@ -1492,9 +1492,12 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         if (aceptaDengue) {
                             procesos.setEnCasaSa(Constants.YES);
                             procesos.setEncPartSa(Constants.YES);
+                            if (participante.getEdadMeses() >= 24)
+                                procesos.setConsSa(Constants.YES);
                         } else {
                             procesos.setEnCasaSa(Constants.NO);
                             procesos.setEncPartSa(Constants.NO);
+                            procesos.setConsSa(Constants.NO);
                         }
 
                         if (participante.getEdadMeses() <= 36)
@@ -1524,6 +1527,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         }
                         procesos.setCuantasPers(0);
                         procesos.setVolRetoma(null);
+                        procesos.setVolRetomaPbmc(null);
 
                         if (aceptaDengue) {
                             estudios = "Dengue";
@@ -1586,6 +1590,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
                         //crear carta de consentimiento para dengue
                         if (aceptaDengue){
+                            cc.setAceptaParteA(Constants.YESKEYSND);
                             if (tieneValor(aceptaParteB)) {
                                 MessageResource catAceptaParteB = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteB + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                                 if (catAceptaParteB!=null) {

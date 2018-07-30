@@ -34,6 +34,7 @@
     <string name="info_casachf">Encuesta Casa CHF</string>
     <string name="info_casasa">Encuesta Casa SA</string>
     <string name="info_participantesa">Enc Participante SA</string>
+    <string name="info_sa">Consentimiento Seroprevalencia</string>
 
     <string name="house_survey_missing">Realizar encuesta de casa</string>
     <string name="part_survey_missing">Realizar encuesta de participante</string>
@@ -60,6 +61,7 @@
     <string name="housechf_survey_missing">Realizar encuesta de casa Chf</string>
     <string name="housesa_survey_missing">Realizar encuesta de casa SA</string>
     <string name="partsa_survey_missing">Realizar encuesta de participante SA</string>
+    <string name="cons_sa_missing">Realizar consentimiento Seroprevalencia</string>
 
     <string name="header_rnd">Por favor ingrese porque razón no ingreso la información debida.</string>
     <string name="orazon">Otra razón..</string>

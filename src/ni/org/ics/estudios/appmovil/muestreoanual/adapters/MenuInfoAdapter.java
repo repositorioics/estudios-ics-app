@@ -25,7 +25,7 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
 	private final int numRecDengue;
 	private final int numMuestras;
 	private final int numObsequios;
-	private final int numZikas;
+	private final int numSeroprev;
 	private final int numPartos;
 	private final int numDatosCasa;
 	private final int numDocs;
@@ -35,7 +35,7 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
 	public MenuInfoAdapter(Context context, int textViewResourceId,
 			String[] values, int recFlu, int visitas, int pyts
 			, int ecasa, int epart, int elact, int vacunas, int recDen
-			, int muestras, int obsequios, int zikas, int partos, int datoscasas, int docs
+			, int muestras, int obsequios, int seroprev, int partos, int datoscasas, int docs
             , int ecasachf, int numEncCasaSa, int numEncPartSa) {
 		super(context, textViewResourceId, values);
 		this.values = values;
@@ -49,7 +49,7 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
 		this.numRecDengue=recDen;
 		this.numMuestras=muestras;
 		this.numObsequios=obsequios;
-		this.numZikas=zikas;
+		this.numSeroprev =seroprev;
 		this.numPartos=partos;
 		this.numDatosCasa=datoscasas;
 		this.numDocs = docs;
@@ -165,8 +165,8 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
 		case 12: 
 			img=getContext().getResources().getDrawable( R.drawable.ic_consentimiento);
 			textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-			textView.setText(values[position] + "(" + numZikas + ")");
-			if (numZikas < 1){
+			textView.setText(values[position] + "(" + numSeroprev + ")");
+			if (numSeroprev < 1){
 				textView.setTextColor(Color.RED);
 			}
 			break;

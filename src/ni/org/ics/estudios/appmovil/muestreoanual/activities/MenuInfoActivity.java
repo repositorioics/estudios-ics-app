@@ -770,6 +770,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 RazonNoDataActivity.class);
                         i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());
                         startActivity(i);
+                        finish();
                         mExitShowing=false;
                     }
 

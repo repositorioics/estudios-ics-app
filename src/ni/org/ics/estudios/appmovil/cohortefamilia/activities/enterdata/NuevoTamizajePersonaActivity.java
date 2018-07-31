@@ -1238,13 +1238,8 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 
                     if (catParticipadoCohortePediatrica.getCatKey().matches(Constants.NOKEYSND)) {
                         procesos.setCodigo(participante.getCodigo());
-                        procesos.setEstPart(1);
                         procesos.setRetoma(Constants.NO);
                         procesos.setAdn(Constants.NO);
-                        procesos.setConmx(Constants.NO);
-                        procesos.setConmxbhc(Constants.NO);
-                        procesos.setPbmc(Constants.NO);
-                        procesos.setPaxgene(Constants.YES);
                         procesos.setConPto(Constants.NO);
                         procesos.setConsDeng(Constants.NO);
                         procesos.setObsequio(Constants.YES);
@@ -1258,22 +1253,30 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 
                         procesos.setEnCasa(Constants.YES);
                         procesos.setEnCasaSa(Constants.YES);
-                        procesos.setEncPart(Constants.YES);
-                        procesos.setEncPartSa(Constants.YES);
-                        if (participante.getEdadMeses() <= 36)
-                            procesos.setEncLacMat(Constants.YES);
-                        else
-                            procesos.setEncLacMat(Constants.NO);
-                        procesos.setPesoTalla(Constants.YES);
-                        procesos.setDatosParto(Constants.YES);
-                        procesos.setDatosVisita(Constants.YES);
                         procesos.setInfoVacuna(Constants.YES);
                         procesos.setCuantasPers(0);
                         procesos.setVolRetoma(null);
                     }
+                    if (participante.getEdadMeses() < 216)
+                        procesos.setDatosParto(Constants.YES);
+                    else
+                        procesos.setDatosParto(Constants.NO);
 
+                    if (participante.getEdadMeses() <= 36)
+                        procesos.setEncLacMat(Constants.YES);
+                    else
+                        procesos.setEncLacMat(Constants.NO);
+                    procesos.setEncPart(Constants.YES);
+                    procesos.setEncPartSa(Constants.YES);
+                    procesos.setDatosVisita(Constants.YES);
+                    procesos.setPesoTalla(Constants.YES);
+                    procesos.setConmx(Constants.NO);
+                    procesos.setConmxbhc(Constants.NO);
+                    procesos.setPbmc(Constants.NO);
+                    procesos.setPaxgene(Constants.YES);
                     procesos.setCasaCHF(casaCHF.getCodigoCHF());
                     procesos.setEnCasaChf(Constants.YES);
+                    procesos.setEstPart(1);
                     if (tieneValor(cc.getRelacionFamiliarTutor()))
                         procesos.setRelacionFam(Integer.valueOf(cc.getRelacionFamiliarTutor()));
                     else{

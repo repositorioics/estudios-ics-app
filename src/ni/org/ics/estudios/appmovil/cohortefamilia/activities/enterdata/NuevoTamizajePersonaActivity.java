@@ -1042,6 +1042,8 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         MessageResource catRelacionFamiliarTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + relacionFamiliarTutor + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_RFTUTOR'", null);
                         if (catRelacionFamiliarTutor != null)
                             cc.setRelacionFamiliarTutor(catRelacionFamiliarTutor.getCatKey());
+                    }else {
+                        cc.setRelacionFamiliarTutor("8");//El mismo participante
                     }
                     if (tieneValor(participanteOTutorAlfabeto)) {
                         MessageResource catParticipanteOTutorAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participanteOTutorAlfabeto + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -1277,7 +1279,10 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     else{
                         procesos.setRelacionFam(8);//El mismo Participante
                     }
-                    procesos.setTutor(tutor);
+                    if (tieneValor(tutor))
+                        procesos.setTutor(tutor);
+                    else
+                        procesos.setTutor(Constants.NA);
 
                     if (aceptaDengue)
                         estudios = "Dengue";

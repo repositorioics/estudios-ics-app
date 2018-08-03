@@ -60,7 +60,8 @@ public class TamizajeHelper {
         mTamizaje.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         mTamizaje.setEstudio(null);
         mTamizaje.setSexo(cursor.getString(cursor.getColumnIndex(MainDBConstants.sexo)));
-        if (cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaNacimiento)) > 0) mTamizaje.setFechaNacimiento(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaNacimiento))));
+        //Fechas menores a 1 de enero de 1970 se guardan como negativo
+        if (cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaNacimiento)) != 0) mTamizaje.setFechaNacimiento(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaNacimiento))));
         mTamizaje.setAceptaTamizajePersona(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaTamizajePersona)));
         mTamizaje.setRazonNoAceptaTamizajePersona(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonNoAceptaTamizajePersona)));
         mTamizaje.setOtraRazonNoAceptaTamizajePersona(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraRazonNoAceptaTamizajePersona)));

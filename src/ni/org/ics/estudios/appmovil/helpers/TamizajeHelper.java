@@ -45,6 +45,13 @@ public class TamizajeHelper {
         cv.put(MainDBConstants.hospDengue, tamizaje.getHospDengue());
         if (tamizaje.getFechaHospDengue() != null) cv.put(MainDBConstants.fechaHospDengue, tamizaje.getFechaHospDengue().getTime());
         cv.put(MainDBConstants.tiempoResidencia, tamizaje.getTiempoResidencia());
+        //reconsentimiento dengue 2018
+        cv.put(MainDBConstants.tipoVivienda, tamizaje.getTipoVivienda());
+        cv.put(MainDBConstants.otraEnfCronica, tamizaje.getOtraEnfCronica());
+        cv.put(MainDBConstants.enfCronicaAnio, tamizaje.getEnfCronicaAnio());
+        cv.put(MainDBConstants.enfCronicaMes, tamizaje.getEnfCronicaMes());
+        cv.put(MainDBConstants.otroTx, tamizaje.getOtroTx());
+        cv.put(MainDBConstants.autorizaSupervisor, tamizaje.getAutorizaSupervisor());
 
         if (tamizaje.getRecordDate() != null) cv.put(MainDBConstants.recordDate, tamizaje.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, tamizaje.getRecordUser());
@@ -87,6 +94,13 @@ public class TamizajeHelper {
         mTamizaje.setHospDengue(cursor.getString(cursor.getColumnIndex(MainDBConstants.hospDengue)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaHospDengue))>0) mTamizaje.setFechaHospDengue(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaHospDengue))));
         mTamizaje.setTiempoResidencia(cursor.getString(cursor.getColumnIndex(MainDBConstants.tiempoResidencia)));
+        //reconsentimiento dengue 2018
+        mTamizaje.setTipoVivienda(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipoVivienda)));
+        mTamizaje.setOtraEnfCronica(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraEnfCronica)));
+        mTamizaje.setEnfCronicaAnio(cursor.getString(cursor.getColumnIndex(MainDBConstants.enfCronicaAnio)));
+        mTamizaje.setEnfCronicaMes(cursor.getString(cursor.getColumnIndex(MainDBConstants.enfCronicaMes)));
+        mTamizaje.setOtroTx(cursor.getString(cursor.getColumnIndex(MainDBConstants.otroTx)));
+        mTamizaje.setAutorizaSupervisor(cursor.getString(cursor.getColumnIndex(MainDBConstants.autorizaSupervisor)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mTamizaje.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mTamizaje.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

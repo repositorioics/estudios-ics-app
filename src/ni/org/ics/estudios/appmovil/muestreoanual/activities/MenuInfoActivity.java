@@ -285,7 +285,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        if (mParticipante.getProcesos().getEstPart().equals(0)){
+        if (mParticipante.getProcesos().getEstPart().equals(0) && (mParticipante.getProcesos().getReConsDeng()==null || mParticipante.getProcesos().getReConsDeng().matches("No"))){
             getMenuInflater().inflate(R.menu.general, menu);
         }
         else{
@@ -544,12 +544,12 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 return true;
             case R.id.RECONS:
                 if(mUser.getConsentimiento()){
-                    if(mParticipante.getProcesos().getConsDeng().matches("Si")){
+                    if(mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getReConsDeng().matches("Si")){
                         i = new Intent(getApplicationContext(),
-                                NewRec2015Activity.class);
+                                NewReconDengue2018Activity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtra(ConstantsDB.COD_CASA, mParticipante.getCasa().getCodigo());
-                        i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());
+                        i.putExtra(Constants.PARTICIPANTE, mParticipante);
+                        //i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());
                         i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
                         startActivity(i);
                     }
@@ -809,6 +809,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         encCasaChfItem.setVisible(false);
         encCasaSaItem.setVisible(false);
         encPartSaItem.setVisible(false);
+        //la opción de reconsentimiento dengue siempre se va a mostrar
+        if ((mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getReConsDeng().matches("Si")) && mUser.getConsentimiento()) reConsDenItem.setVisible(true);
+
         if ((mUser.getVisitas()&&!visExitosa)){
             visitaItem.setVisible(true);
         }
@@ -817,7 +820,6 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if((mParticipante.getProcesos().getEnCasa().matches("Si") && mUser.getEncuestaCasa())) encCasaItem.setVisible(true);
             if((mParticipante.getProcesos().getEncPart().matches("Si") && mUser.getEncuestaParticipante())) encPartItem.setVisible(true);
             if ((mParticipante.getProcesos().getConsFlu().matches("Si") && mUser.getConsentimiento())) reConsFluItem.setVisible(true);
-            if ((mParticipante.getProcesos().getConsDeng().matches("Si") && mUser.getConsentimiento())) reConsDenItem.setVisible(true);
             if((mParticipante.getProcesos().getPesoTalla().matches("Si") && mUser.getPesoTalla())) pesoTallaItem.setVisible(true);
             if((mParticipante.getProcesos().getEncLacMat().matches("Si") && mUser.getEncuestaLactancia())) encLactItem.setVisible(true);
             if((mParticipante.getProcesos().getInfoVacuna().matches("Si") && mUser.getVacunas())) vacunaItem.setVisible(true);
@@ -920,10 +922,13 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         labelHeader = labelHeader +" - ("+ relacion +")" +"</font></small><br />";
         labelHeader = labelHeader + "<small><font color='black'>Personas en casa: "+mParticipante.getProcesos().getCuantasPers()+"</font></small><br />";
 
-        if (mParticipante.getProcesos().getEstPart().equals(0)){
+        if (mParticipante.getProcesos().getEstPart().equals(0) && (mParticipante.getProcesos().getReConsDeng()==null || mParticipante.getProcesos().getReConsDeng().matches("No"))){
             labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.retired_error) + "</font></small><br />";
         }
         else{
+            if (mParticipante.getProcesos().getEstPart().equals(0) && (mParticipante.getProcesos().getReConsDeng()!=null && mParticipante.getProcesos().getReConsDeng().matches("Si"))){
+                labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.retired_error) + "</font></small><br />";
+            }
             if (mParticipante.getProcesos().getPosZika().matches("Si")) labelHeader = labelHeader + "<small><font color='red'>Participante positivo a ZIKA</font></small><br />";
 
             if (mParticipante.getProcesos().getConsFlu().matches("Si")|| mParticipante.getProcesos().getPesoTalla().matches("Si")
@@ -933,7 +938,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getObsequio().matches("Si")
                     || mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No")|| mParticipante.getProcesos().getZika().matches("Si")
                     || mParticipante.getProcesos().getAdn().matches("Si")|| mParticipante.getProcesos().getDatosParto().matches("Si")|| mParticipante.getProcesos().getDatosVisita().matches("Si")
-                    || !mParticipante.getProcesos().getConvalesciente().matches("No")){
+                    || !mParticipante.getProcesos().getConvalesciente().matches("No")
+                    || (mParticipante.getProcesos().getReConsDeng()!=null && mParticipante.getProcesos().getReConsDeng().matches("Si"))){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
                 //Primero muestras
@@ -1161,7 +1167,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consflu_missing) + "</font></small><br />";
                     pendiente=true;
                 }
-                if (mParticipante.getProcesos().getConsDeng().matches("Si") && mUser.getConsentimiento()) {
+                if ((mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getReConsDeng().matches("Si")) && mUser.getConsentimiento()) {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consden_missing) + "</font></small><br />";
                     pendiente=true;
                 }

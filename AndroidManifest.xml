@@ -312,6 +312,8 @@
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevoConsentimientoSAActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewReconDengue2018Activity"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

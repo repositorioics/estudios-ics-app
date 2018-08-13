@@ -66,6 +66,8 @@ public class UploadAllTask extends UploadTask {
     private List<CartaConsentimiento> mCartasConsent = new ArrayList<CartaConsentimiento>();
     private List<ContactoParticipante> mContactos = new ArrayList<ContactoParticipante>();
     private List<ParticipanteSeroprevalencia> mParticipantesSa = new ArrayList<ParticipanteSeroprevalencia>();
+    private List<CambioDomicilio> mCambiosDom = new ArrayList<CambioDomicilio>();
+    private List<VisitaTerrenoParticipante> mVisitasTerrenoP = new ArrayList<VisitaTerrenoParticipante>();
 
     private String url = null;
     private String username = null;
@@ -444,6 +446,30 @@ public class UploadAllTask extends UploadTask {
                 e1.printStackTrace();
                 return e1.getLocalizedMessage();
             }
+            try {
+                mCambiosDom = estudioAdapter.getCambiosDomicilio(MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'", null);
+                saveCambiosDomicilio(Constants.STATUS_SUBMITTED);
+                error = cargarCambioDomicilio(url, username, password);
+                if (!error.matches("Datos recibidos!")){
+                    saveCambiosDomicilio(Constants.STATUS_NOT_SUBMITTED);
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
+            try {
+                mVisitasTerrenoP = estudioAdapter.getVisitasTerrenoParticipantes(MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'", null);
+                saveVisitaTerrenoParticipante(Constants.STATUS_SUBMITTED);
+                error = cargarVisitaTerrenoParticipante(url, username, password);
+                if (!error.matches("Datos recibidos!")){
+                    saveVisitaTerrenoParticipante(Constants.STATUS_NOT_SUBMITTED);
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
 
         } catch (Exception e1) {
 
@@ -503,6 +529,25 @@ public class UploadAllTask extends UploadTask {
         }
     }
 
+    private void saveCambiosDomicilio(String estado){
+        int c = mCambiosDom.size();
+        for (CambioDomicilio cambioDomicilio : mCambiosDom) {
+            cambioDomicilio.setEstado(estado.charAt(0));
+            estudioAdapter.editarCambioDomicilio(cambioDomicilio);
+            publishProgress("Actualizando cambios de domicilio en base de datos local", Integer.valueOf(mCambiosDom.indexOf(cambioDomicilio)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+    }
+
+    private void saveVisitaTerrenoParticipante(String estado){
+        int c = mVisitasTerrenoP.size();
+        for (VisitaTerrenoParticipante visita : mVisitasTerrenoP) {
+            visita.setEstado(estado.charAt(0));
+            estudioAdapter.editarVisitaTerrenoParticipante(visita);
+            publishProgress("Actualizando visitas a participante en base de datos local", Integer.valueOf(mVisitasTerrenoP.indexOf(visita)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+    }
     /***************************************************/
     /*************** ContactosParticipantes ************/
     /***************************************************/
@@ -2464,6 +2509,74 @@ public class UploadAllTask extends UploadTask {
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
                 // Hace la solicitud a la red, pone el registro y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /*************** CambioDomicilio ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarCambioDomicilio(String url, String username,
+                                     String password) throws Exception {
+        try {
+            if(mCambiosDom.size()>0){
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/cambiosdomicilio";
+                CambioDomicilio[] envio = mCambiosDom.toArray(new CambioDomicilio[mCambiosDom.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<CambioDomicilio[]> requestEntity =
+                        new HttpEntity<CambioDomicilio[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /*************** VisitaTerrenoParticipante ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarVisitaTerrenoParticipante(String url, String username,
+                                           String password) throws Exception {
+        try {
+            if(mVisitasTerrenoP.size()>0){
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/visitasterrenoparti";
+                VisitaTerrenoParticipante[] envio = mVisitasTerrenoP.toArray(new VisitaTerrenoParticipante[mVisitasTerrenoP.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<VisitaTerrenoParticipante[]> requestEntity =
+                        new HttpEntity<VisitaTerrenoParticipante[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
                 ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
                         String.class);
                 return response.getBody();

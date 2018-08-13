@@ -73,10 +73,13 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 			labelHeader = labelHeader + "Manzana: " + participante.getCasa().getManzana()+"<br />";
 			labelHeader = labelHeader + "Personas en la casa: " + procesos.getCuantasPers()+"<br />";
 			labelHeader = labelHeader + "------------<br />";
-			if (procesos.getEstPart().equals(0)){
+            if (procesos.getEstPart().equals(0) && (procesos.getReConsDeng()==null || procesos.getReConsDeng().matches("No"))){
 				labelHeader = labelHeader + "<br /><font color='red'>Participante retirado</font>";
 			}
 			else{
+                if (procesos.getEstPart().equals(0) && (procesos.getReConsDeng()!=null && procesos.getReConsDeng().matches("Si"))){
+                    labelHeader = labelHeader + "<small><font color='red'>Participante retirado</font></small><br />";
+                }
 				if (procesos.getPosZika().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante positivo a ZIKA</b></font><br />";
 				if (procesos.getMi().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante en monitoreo intensivo CHF</b></font><br />";
 				//if (participante.getCand().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante candidato a CHF</b></font><br />";
@@ -87,7 +90,8 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 						|| procesos.getConsDeng().matches("Si") || procesos.getObsequio().matches("Si")
 						|| procesos.getConmx().matches("No") || procesos.getConmxbhc().matches("No")|| procesos.getZika().matches("Si")
 						|| procesos.getAdn().matches("Si")|| procesos.getDatosParto().matches("Si")|| procesos.getDatosVisita().matches("Si")
-                        || !procesos.getConvalesciente().matches("No")){
+                        || !procesos.getConvalesciente().matches("No")
+                        || (procesos.getReConsDeng()!=null && procesos.getReConsDeng().matches("Si"))){
 					labelHeader = labelHeader + "<font color='red'>Pendiente: <br /></font>";
 					
 					//Primero muestras
@@ -275,7 +279,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                     if (procesos.getEncPartSa().matches("Si")) labelHeader = labelHeader + this.getContext().getString(R.string.partsa_survey_missing) + "<br />";
                     if (procesos.getEncPart().matches("Si")) labelHeader = labelHeader + "Encuesta de Participante<br />";
 					if (procesos.getConsFlu().matches("Si")) labelHeader = labelHeader + "Consentimiento Influenza <br />";
-					if (procesos.getConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue<br />";
+                    if (procesos.getConsDeng().matches("Si") || procesos.getReConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue<br />";
 					if (procesos.getZika().matches("Si")) labelHeader = labelHeader + "Consentimiento Zika<br />";
 					if (procesos.getEncLacMat().matches("Si")) labelHeader = labelHeader + "Encuesta de Lactancia Materna<br />";
 					if (procesos.getPesoTalla().matches("Si")) labelHeader = labelHeader + "Peso y Talla <br />";

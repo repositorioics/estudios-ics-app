@@ -1610,6 +1610,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             cc.setAceptaContactoFuturo(null);
                             cc.setCodigo(infoMovil.getId());
                             cc.setTamizaje(tamizaje);
+                            cc.setReconsentimiento(Constants.NOKEYSND);
                             cc.setVersion(Constants.VERSION_CC_CD);
                             estudiosAdapter.crearCartaConsentimiento(cc);
                         }
@@ -1630,6 +1631,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             }
                             cc.setCodigo(infoMovil.getId());
                             cc.setTamizaje(tamizajeInf);
+                            cc.setReconsentimiento(Constants.NOKEYSND);
                             cc.setVersion(Constants.VERSION_CC_CI);
                             cc.setAceptaParteD(null);
                             estudiosAdapter.crearCartaConsentimiento(cc);

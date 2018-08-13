@@ -73,6 +73,9 @@ public class DownloadAllTask extends DownloadTask {
         try {
             ca = new EstudiosAdapter(mContext, password, false, false);
             ca.open();
+            ca.borrarContactosParticipantes();
+            ca.borrarCambiosDomicilio();
+            ca.borrarVisitasTerrenoParticipante();
 
             try {
                 error = checkRole();

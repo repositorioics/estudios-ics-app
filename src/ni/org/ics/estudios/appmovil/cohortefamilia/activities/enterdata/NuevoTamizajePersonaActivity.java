@@ -1017,6 +1017,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     cc.setCodigo(id);
                     cc.setFechaFirma(new Date());
                     cc.setTamizaje(t);
+                    cc.setReconsentimiento(Constants.NOKEYSND);
                     cc.setParticipante(participante);
                     if (tieneValor(emancipado)) {
                         MessageResource catEmancipado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + emancipado + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -1131,6 +1132,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         if (aceptaSeroprevalencia.equalsIgnoreCase(Constants.YES)) {
                             cc.setCodigo(infoMovil.getId());
                             cc.setTamizaje(t);
+                            cc.setReconsentimiento(Constants.NOKEYSND);
                             cc.setVersion(Constants.VERSION_CC_SA);
                             cc.setAceptaParteB(null);
                             cc.setAceptaParteC(null);
@@ -1172,6 +1174,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         if (aceptaCohorteDengue.equalsIgnoreCase(Constants.YES)) {
                             cc.setCodigo(infoMovil.getId());
                             cc.setTamizaje(t);
+                            cc.setReconsentimiento(Constants.NOKEYSND);
                             cc.setVersion(Constants.VERSION_CC_CD);
                             cc.setAceptaParteB(valorParteB);
                             cc.setAceptaParteC(valorParteC);
@@ -1207,6 +1210,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         if (aceptaCohorteInfluenza.equalsIgnoreCase(Constants.YES)) {
                             cc.setCodigo(infoMovil.getId());
                             cc.setTamizaje(t);
+                            cc.setReconsentimiento(Constants.NOKEYSND);
                             cc.setVersion(Constants.VERSION_CC_CI);
                             cc.setAceptaContactoFuturo(valorContactoFuturo);
                             cc.setAceptaParteB(valorParteB);

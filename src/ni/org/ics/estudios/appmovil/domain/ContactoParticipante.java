@@ -24,6 +24,12 @@ public class ContactoParticipante extends BaseMetaData {
     private String numero2;
     private String operadora2;
     private String tipo2;
+    //reconsentimiento 2018
+    private String numero3;
+    private String operadora3;
+    private String tipo3;
+    private String esPropio;
+    private String otroBarrio;
 
     public String getId() {
         return id;
@@ -111,6 +117,46 @@ public class ContactoParticipante extends BaseMetaData {
 
     public void setTipo2(String tipo2) {
         this.tipo2 = tipo2;
+    }
+
+    public String getNumero3() {
+        return numero3;
+    }
+
+    public void setNumero3(String numero3) {
+        this.numero3 = numero3;
+    }
+
+    public String getOperadora3() {
+        return operadora3;
+    }
+
+    public void setOperadora3(String operadora3) {
+        this.operadora3 = operadora3;
+    }
+
+    public String getTipo3() {
+        return tipo3;
+    }
+
+    public void setTipo3(String tipo3) {
+        this.tipo3 = tipo3;
+    }
+
+    public String getEsPropio() {
+        return esPropio;
+    }
+
+    public void setEsPropio(String esPropio) {
+        this.esPropio = esPropio;
+    }
+
+    public String getOtroBarrio() {
+        return otroBarrio;
+    }
+
+    public void setOtroBarrio(String otroBarrio) {
+        this.otroBarrio = otroBarrio;
     }
 
     @Override

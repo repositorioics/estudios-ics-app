@@ -604,6 +604,7 @@ public class NuevoConsentimientoSAActivity extends FragmentActivity implements
                 cc.setAceptaContactoFuturo(null);
                 cc.setCodigo(infoMovil.getId());
                 cc.setTamizaje(tamizaje);
+                cc.setReconsentimiento(Constants.NOKEYSND);
                 cc.setVersion(Constants.VERSION_CC_SA);
                 estudiosAdapter.crearCartaConsentimiento(cc);
 

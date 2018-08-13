@@ -32,7 +32,6 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
-import ni.org.ics.estudios.appmovil.domain.muestreoanual.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
@@ -162,6 +161,9 @@ public class EstudiosAdapter {
             db.execSQL(ConstantsDB.CREATE_DOCS_TABLE);
 
             db.execSQL(MainDBConstants.CREATE_CONTACTO_PARTICIPANTE_TABLE);
+            //reconsentimiento dengue 2018
+            db.execSQL(MainDBConstants.CREATE_VISITAPART_TABLE);
+            db.execSQL(MainDBConstants.CREATE_CAMBIO_DOMICILIO_TABLE);
         }
 
 		@Override
@@ -199,6 +201,30 @@ public class EstudiosAdapter {
                 db.execSQL("DROP TABLE " + SeroprevalenciaDBConstants.PARTICIPANTESA_TABLE);
                 db.execSQL(SeroprevalenciaDBConstants.CREATE_PARTICIPANTESA_TABLE);
                 db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.consSa + " text");
+            }
+            //reconsentimiento dengue 2018
+            if (oldVersion==7){
+                db.execSQL("DROP TABLE " + MainDBConstants.CONTACTO_PARTICIPANTE_TABLE);
+                db.execSQL(MainDBConstants.CREATE_CONTACTO_PARTICIPANTE_TABLE);
+                db.execSQL(MainDBConstants.CREATE_VISITAPART_TABLE);
+                db.execSQL(MainDBConstants.CREATE_CAMBIO_DOMICILIO_TABLE);
+
+                db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.otroMotivoRechazoParteA + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.motivoRechazoParteDExt + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.otroMotivoRechazoParteDExt + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.mismoTutor + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.motivoDifTutor + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.otroMotivoDifTutor + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.otraRelacionFamTutor + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.verifTutor + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.reconsentimiento + " text");
+
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.tipoVivienda + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.otraEnfCronica + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.enfCronicaAnio + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.enfCronicaMes + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.otroTx + " text");
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.autorizaSupervisor + " text");
             }
 		}	
 	}
@@ -2873,6 +2899,16 @@ public class EstudiosAdapter {
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         c = crearCursor(ConstantsDB.DAT_VIS_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        //reconsentimiento dengue 2018
+        c = crearCursor(MainDBConstants.CONTACTO_PARTICIPANTE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.CAMBIO_DOMICILIO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.VISITAPART_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
 		return false;
@@ -7997,5 +8033,116 @@ public class EstudiosAdapter {
         return mCcs;
     }
 
+    //reconsentimiento dengue 2018
+    /**
+     * Metodos para visitas en la base de datos
+     *
+     * @param visitaTerrenoParticipante
+     *            Objeto VisitaTereno que contiene la informacion
+     *
+     */
+    //Crear nuevo VisitaTerrenoParticipante en la base de datos
+    public void crearVisitaTerrenoParticipante(VisitaTerrenoParticipante visitaTerrenoParticipante) {
+        ContentValues cv = VisitaTerrenoHelper.crearVisitaTerrenoPartContentValues(visitaTerrenoParticipante);
+        mDb.insert(MainDBConstants.VISITAPART_TABLE, null, cv);
+    }
+    //Editar VisitaTerrenoParticipante existente en la base de datos
+    public boolean editarVisitaTerrenoParticipante(VisitaTerrenoParticipante visitaTerrenoParticipante) {
+        ContentValues cv = VisitaTerrenoHelper.crearVisitaTerrenoPartContentValues(visitaTerrenoParticipante);
+        return mDb.update(MainDBConstants.VISITAPART_TABLE , cv, MainDBConstants.codigoVisita + "='"
+                + visitaTerrenoParticipante.getCodigoVisita()+ "'", null) > 0;
+    }
+    //Limpiar la tabla de VisitaTerrenoParticipante de la base de datos
+    public boolean borrarVisitasTerrenoParticipante() {
+        return mDb.delete(MainDBConstants.VISITAPART_TABLE, null, null) > 0;
+    }
+    //Obtener un VisitaTerrenoParticipante de la base de datos
+    public VisitaTerrenoParticipante getVisitaTerrenoParticipante(String filtro, String orden) throws SQLException {
+        VisitaTerrenoParticipante mVisitaTerreno = null;
+        Cursor cursorVisitaTerreno = crearCursor(MainDBConstants.VISITAPART_TABLE , filtro, null, orden);
+        if (cursorVisitaTerreno != null && cursorVisitaTerreno.getCount() > 0) {
+            cursorVisitaTerreno.moveToFirst();
+            mVisitaTerreno=VisitaTerrenoHelper.crearVisitaTerrenoPart(cursorVisitaTerreno);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursorVisitaTerreno.getInt(cursorVisitaTerreno.getColumnIndex(MainDBConstants.participante)), null);
+            mVisitaTerreno.setParticipante(participante);
+        }
+        if (!cursorVisitaTerreno.isClosed()) cursorVisitaTerreno.close();
+        return mVisitaTerreno;
+    }
+    //Obtener una lista de VisitaTerrenoParticipante de la base de datos
+    public List<VisitaTerrenoParticipante> getVisitasTerrenoParticipantes(String filtro, String orden) throws SQLException {
+        List<VisitaTerrenoParticipante> mVisitasTerreno = new ArrayList<VisitaTerrenoParticipante>();
+        Cursor cursorVisitasTerreno = crearCursor(MainDBConstants.VISITAPART_TABLE, filtro, null, orden);
+        if (cursorVisitasTerreno != null && cursorVisitasTerreno.getCount() > 0) {
+            cursorVisitasTerreno.moveToFirst();
+            mVisitasTerreno.clear();
+            do{
+                VisitaTerrenoParticipante mVisitaTerreno = null;
+                mVisitaTerreno = VisitaTerrenoHelper.crearVisitaTerrenoPart(cursorVisitasTerreno);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursorVisitasTerreno.getInt(cursorVisitasTerreno.getColumnIndex(MainDBConstants.participante)), null);
+                mVisitaTerreno.setParticipante(participante);
+                mVisitasTerreno.add(mVisitaTerreno);
+            } while (cursorVisitasTerreno.moveToNext());
+        }
+        if (!cursorVisitasTerreno.isClosed()) cursorVisitasTerreno.close();
+        return mVisitasTerreno;
+    }
 
+    /**
+     * Metodos para cambios de domicilio en la base de datos
+     *
+     * @param cambioDomicilio
+     *            Objeto VisitaTereno que contiene la informacion
+     *
+     */
+    //Crear nuevo CambioDomicilio en la base de datos
+    public void crearCambioDomicilio(CambioDomicilio cambioDomicilio) {
+        ContentValues cv = CambioDomicilioHelper.crearCambioDomicilioContentValues(cambioDomicilio);
+        mDb.insert(MainDBConstants.CAMBIO_DOMICILIO_TABLE, null, cv);
+    }
+    //Editar CambioDomicilio existente en la base de datos
+    public boolean editarCambioDomicilio(CambioDomicilio cambioDomicilio) {
+        ContentValues cv = CambioDomicilioHelper.crearCambioDomicilioContentValues(cambioDomicilio);
+        return mDb.update(MainDBConstants.CAMBIO_DOMICILIO_TABLE , cv, MainDBConstants.codigo + "='"
+                + cambioDomicilio.getCodigo()+ "'", null) > 0;
+    }
+    //Limpiar la tabla de CambioDomicilio de la base de datos
+    public boolean borrarCambiosDomicilio() {
+        return mDb.delete(MainDBConstants.CAMBIO_DOMICILIO_TABLE, null, null) > 0;
+    }
+    //Obtener un CambioDomicilio de la base de datos
+    public CambioDomicilio getCambioDomicilio(String filtro, String orden) throws SQLException {
+        CambioDomicilio mCambioDomicilio = null;
+        Cursor cursorCambioDomicilio = crearCursor(MainDBConstants.CAMBIO_DOMICILIO_TABLE , filtro, null, orden);
+        if (cursorCambioDomicilio != null && cursorCambioDomicilio.getCount() > 0) {
+            cursorCambioDomicilio.moveToFirst();
+            mCambioDomicilio=CambioDomicilioHelper.crearCambioDomicilio(cursorCambioDomicilio);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorCambioDomicilio.getInt(cursorCambioDomicilio.getColumnIndex(MainDBConstants.participante)), null);
+            mCambioDomicilio.setParticipante(participante);
+            Barrio barrio = this.getBarrio(CatalogosDBConstants.codigo+"="+cursorCambioDomicilio.getInt(cursorCambioDomicilio.getColumnIndex(MainDBConstants.barrio)), null);
+            mCambioDomicilio.setBarrio(barrio);
+        }
+        if (!cursorCambioDomicilio.isClosed()) cursorCambioDomicilio.close();
+        return mCambioDomicilio;
+    }
+    //Obtener una lista de CambioDomicilio de la base de datos
+    public List<CambioDomicilio> getCambiosDomicilio(String filtro, String orden) throws SQLException {
+        List<CambioDomicilio> mVisitasTerreno = new ArrayList<CambioDomicilio>();
+        Cursor cursorCambiosDomicilio = crearCursor(MainDBConstants.CAMBIO_DOMICILIO_TABLE, filtro, null, orden);
+        if (cursorCambiosDomicilio != null && cursorCambiosDomicilio.getCount() > 0) {
+            cursorCambiosDomicilio.moveToFirst();
+            mVisitasTerreno.clear();
+            do{
+                CambioDomicilio mCambioDomicilio = null;
+                mCambioDomicilio = CambioDomicilioHelper.crearCambioDomicilio(cursorCambiosDomicilio);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorCambiosDomicilio.getInt(cursorCambiosDomicilio.getColumnIndex(MainDBConstants.participante)), null);
+                mCambioDomicilio.setParticipante(participante);
+                Barrio barrio = this.getBarrio(CatalogosDBConstants.codigo+"="+cursorCambiosDomicilio.getInt(cursorCambiosDomicilio.getColumnIndex(MainDBConstants.barrio)), null);
+                mCambioDomicilio.setBarrio(barrio);
+                mVisitasTerreno.add(mCambioDomicilio);
+            } while (cursorCambiosDomicilio.moveToNext());
+        }
+        if (!cursorCambiosDomicilio.isClosed()) cursorCambiosDomicilio.close();
+        return mVisitasTerreno;
+    }
 }

@@ -35,7 +35,16 @@ public class CartaConsentimiento extends BaseMetaData {
     private String aceptaParteC; //Consentimiento adicional para estudios genéticos
     private String aceptaParteD; //Consentimiento adicional para ZIKA (Estudio Cohorte Dengue)
     private String version; //Indicar la versión actual al momento de registrar la carta
-
+    //reconsentimiento dengue 2018
+    private String otroMotivoRechazoParteA;
+    private String motivoRechazoParteDExt;
+    private String otroMotivoRechazoParteDExt;
+    private String mismoTutor;
+    private String motivoDifTutor;
+    private String otroMotivoDifTutor;
+    private String otraRelacionFamTutor;
+    private String verifTutor;
+    private String reconsentimiento; //indica si es carta por reconsentimiento del estudio
 
     public String getCodigo() {
         return codigo;
@@ -219,6 +228,78 @@ public class CartaConsentimiento extends BaseMetaData {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getOtroMotivoRechazoParteA() {
+        return otroMotivoRechazoParteA;
+    }
+
+    public void setOtroMotivoRechazoParteA(String otroMotivoRechazoParteA) {
+        this.otroMotivoRechazoParteA = otroMotivoRechazoParteA;
+    }
+
+    public String getMotivoRechazoParteDExt() {
+        return motivoRechazoParteDExt;
+    }
+
+    public void setMotivoRechazoParteDExt(String motivoRechazoParteDExt) {
+        this.motivoRechazoParteDExt = motivoRechazoParteDExt;
+    }
+
+    public String getOtroMotivoRechazoParteDExt() {
+        return otroMotivoRechazoParteDExt;
+    }
+
+    public void setOtroMotivoRechazoParteDExt(String otroMotivoRechazoParteDExt) {
+        this.otroMotivoRechazoParteDExt = otroMotivoRechazoParteDExt;
+    }
+
+    public String getMismoTutor() {
+        return mismoTutor;
+    }
+
+    public void setMismoTutor(String mismoTutor) {
+        this.mismoTutor = mismoTutor;
+    }
+
+    public String getMotivoDifTutor() {
+        return motivoDifTutor;
+    }
+
+    public void setMotivoDifTutor(String motivoDifTutor) {
+        this.motivoDifTutor = motivoDifTutor;
+    }
+
+    public String getOtroMotivoDifTutor() {
+        return otroMotivoDifTutor;
+    }
+
+    public void setOtroMotivoDifTutor(String otroMotivoDifTutor) {
+        this.otroMotivoDifTutor = otroMotivoDifTutor;
+    }
+
+    public String getOtraRelacionFamTutor() {
+        return otraRelacionFamTutor;
+    }
+
+    public void setOtraRelacionFamTutor(String otraRelacionFamTutor) {
+        this.otraRelacionFamTutor = otraRelacionFamTutor;
+    }
+
+    public String getVerifTutor() {
+        return verifTutor;
+    }
+
+    public void setVerifTutor(String verifTutor) {
+        this.verifTutor = verifTutor;
+    }
+
+    public String getReconsentimiento() {
+        return reconsentimiento;
+    }
+
+    public void setReconsentimiento(String reconsentimiento) {
+        this.reconsentimiento = reconsentimiento;
     }
 
     @Override

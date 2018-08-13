@@ -45,6 +45,13 @@ public class Tamizaje extends BaseMetaData {
     private String hospDengue;
     private Date fechaHospDengue;
     private String tiempoResidencia;
+    //reconsentimiento Dengue 2018
+    private String tipoVivienda;
+    private String otraEnfCronica;
+    private String enfCronicaAnio;
+    private String enfCronicaMes;
+    private String otroTx;
+    private String autorizaSupervisor;
 
     public String getCodigo() {
 		return codigo;
@@ -296,5 +303,53 @@ public class Tamizaje extends BaseMetaData {
 
     public void setTiempoResidencia(String tiempoResidencia) {
         this.tiempoResidencia = tiempoResidencia;
+    }
+
+    public String getTipoVivienda() {
+        return tipoVivienda;
+    }
+
+    public void setTipoVivienda(String tipoVivienda) {
+        this.tipoVivienda = tipoVivienda;
+    }
+
+    public String getOtraEnfCronica() {
+        return otraEnfCronica;
+    }
+
+    public void setOtraEnfCronica(String otraEnfCronica) {
+        this.otraEnfCronica = otraEnfCronica;
+    }
+
+    public String getEnfCronicaAnio() {
+        return enfCronicaAnio;
+    }
+
+    public void setEnfCronicaAnio(String enfCronicaAnio) {
+        this.enfCronicaAnio = enfCronicaAnio;
+    }
+
+    public String getEnfCronicaMes() {
+        return enfCronicaMes;
+    }
+
+    public void setEnfCronicaMes(String enfCronicaMes) {
+        this.enfCronicaMes = enfCronicaMes;
+    }
+
+    public String getOtroTx() {
+        return otroTx;
+    }
+
+    public void setOtroTx(String otroTx) {
+        this.otroTx = otroTx;
+    }
+
+    public String getAutorizaSupervisor() {
+        return autorizaSupervisor;
+    }
+
+    public void setAutorizaSupervisor(String autorizaSupervisor) {
+        this.autorizaSupervisor = autorizaSupervisor;
     }
 }

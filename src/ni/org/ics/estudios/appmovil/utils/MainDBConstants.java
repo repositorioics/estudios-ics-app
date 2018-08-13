@@ -26,7 +26,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 7;
+	public static final int DATABASE_VERSION = 8;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -235,8 +235,44 @@ public class MainDBConstants {
             + pasive + " text, "
             + deviceId + " text, "
             + estado + " text not null, "
-            + "primary key (" + codigoVisita + "));";    
-    
+            + "primary key (" + codigoVisita + "));";
+
+    //reconsentimiento dengue 2018
+    //Tabla Visitas participante
+    public static final String VISITAPART_TABLE = "visitas_participante";
+
+    //campos tabla Visitas participante
+    public static final String dejoCarta = "dejoCarta";
+    public static final String personaDejoCarta = "personaDejoCarta";
+    public static final String relFamPersonaDejoCarta = "relFamPersonaDejoCarta";
+    public static final String personaCasa = "personaCasa";
+    public static final String relacionFamPersonaCasa = "relacionFamPersonaCasa";
+    public static final String otraRelacionPersonaCasa = "otraRelacionPersonaCasa";
+    public static final String telefonoPersonaCasa = "telefonoPersonaCasa";
+
+    //crear tabla Visitas a participantes
+    public static final String CREATE_VISITAPART_TABLE = "create table if not exists "
+            + VISITAPART_TABLE + " ("
+            + codigoVisita + " text not null, "
+            + fechaVisita + " date not null, "
+            + visitaExitosa + " text, "
+            + participante + " integer not null, "
+            + razonVisitaNoExitosa + " text, "
+            + otraRazonVisitaNoExitosa + " text, "
+            + dejoCarta + " text, "
+            + personaDejoCarta + " text, "
+            + relFamPersonaDejoCarta + " text, "
+            + personaCasa + " text, "
+            + relacionFamPersonaCasa + " text, "
+            + otraRelacionPersonaCasa + " text, "
+            + telefonoPersonaCasa + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigoVisita + "));";
+    //Fin reconsentimiento dengue 2018
     //Tabla Pretamizaje
     public static final String PRETAMIZAJE_TABLE = "chf_pre_tamizajes";
 
@@ -286,6 +322,16 @@ public class MainDBConstants {
     public static final String aceptaParteC = "aceptaParteC"; //Consentimiento adicional para estudios genéticos
     public static final String aceptaParteD = "aceptaParteD"; //Consentimiento adicional para ZIKA (Estudio Cohorte Dengue)
     public static final String version = "version"; //Indicar la versión actual al momento de registrar la carta
+    //reconsentimiento dengue 2018
+    public static final String otroMotivoRechazoParteA = "otroMotivoRechazoParteA";
+    public static final String motivoRechazoParteDExt = "motivoRechazoParteDExt";
+    public static final String otroMotivoRechazoParteDExt = "otroMotivoRechazoParteDExt";
+    public static final String mismoTutor = "mismoTutor";
+    public static final String motivoDifTutor = "motivoDifTutor";
+    public static final String otroMotivoDifTutor = "otroMotivoDifTutor";
+    public static final String otraRelacionFamTutor = "otraRelacionFamTutor";
+    public static final String verifTutor = "verifTutor";
+    public static final String reconsentimiento = "reconsentimiento";
 
 
     //crear tabla cartas_consentimientos
@@ -314,6 +360,15 @@ public class MainDBConstants {
             + aceptaParteC + " text, "
             + aceptaParteD + " text, "
             + version + " text, "
+            + otroMotivoRechazoParteA + " text, " //reconsentimiento dengue 2018
+            + motivoRechazoParteDExt + " text, "
+            + otroMotivoRechazoParteDExt + " text, "
+            + mismoTutor + " text, "
+            + motivoDifTutor + " text, "
+            + otroMotivoDifTutor + " text, "
+            + otraRelacionFamTutor + " text, "
+            + verifTutor + " text, "
+            + reconsentimiento + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -321,14 +376,6 @@ public class MainDBConstants {
             + estado + " text not null, "
             + "primary key (" + codigo + "));";
 
-    
-    
-       
- 
-        
-
-
-   
 
     // Tabla Tamizaje
     public static final String TAMIZAJE_TABLE = "tamizajes";
@@ -361,7 +408,14 @@ public class MainDBConstants {
     public static final String hospDengue = "hospDengue";
     public static final String fechaHospDengue = "fechaHospDengue";
     public static final String tiempoResidencia = "tiempoResidencia";
-    
+    //reconsentimiento dengue 2018
+    public static final String tipoVivienda = "tipoVivienda";
+    public static final String otraEnfCronica = "otraEnfCronica";
+    public static final String enfCronicaAnio = "enfCronicaAnio";
+    public static final String enfCronicaMes = "enfCronicaMes";
+    public static final String otroTx = "otroTx";
+    public static final String autorizaSupervisor = "autorizaSupervisor";
+
     //crear tabla tamizaje
     public static final String CREATE_TAMIZAJE_TABLE = "create table if not exists "
             + TAMIZAJE_TABLE + " ("
@@ -394,6 +448,12 @@ public class MainDBConstants {
             + hospDengue + " text, "
             + fechaHospDengue + " date, "
             + tiempoResidencia + " text, "
+            + tipoVivienda + " text, " //reconsentimiento dengue 2018
+            + otraEnfCronica + " text, "
+            + enfCronicaAnio + " text, "
+            + enfCronicaMes + " text, "
+            + otroTx + " text, "
+            + autorizaSupervisor + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -542,12 +602,18 @@ public class MainDBConstants {
     public static final String numero2 = "numero2";
     public static final String operadora2 = "operadora2";
     public static final String tipo2 = "tipo2";
+    //reconsentimiento dengue 2018
+    public static final String numero3 = "numero3";
+    public static final String operadora3 = "operadora3";
+    public static final String tipo3 = "tipo3";
+    public static final String esPropio = "esPropio";
+    public static final String otroBarrio = "otroBarrio";
 
     //crear tabla contacto_participante
     public static final String CREATE_CONTACTO_PARTICIPANTE_TABLE = "create table if not exists "
             + CONTACTO_PARTICIPANTE_TABLE + " ("
             + id + " text not null, "
-            + nombre1 + " text not null, "
+            + nombre1 + " text, "
             + direccion + " text, "
             + barrio + " text, "
             + numero1 + " text, "
@@ -556,6 +622,11 @@ public class MainDBConstants {
             + numero2 + " text, "
             + operadora2 + " text, "
             + tipo2 + " text, "
+            + numero3 + " text, "
+            + operadora3 + " text, "
+            + tipo3 + " text, "
+            + esPropio + " text, "
+            + otroBarrio + " text, "
             + participante + " integer, "
             + recordDate + " date, "
             + recordUser + " text, "
@@ -563,4 +634,33 @@ public class MainDBConstants {
             + deviceId + " text, "
             + estado + " text not null, "
             + "primary key (" + id + "));";
+
+    //Tabla CambioDomicilio
+    public static final String CAMBIO_DOMICILIO_TABLE = "cambio_domicilio";
+
+    //Campos CambioDomicilio
+    public static final String puntoGps = "puntoGps";
+    public static final String razonNoGeoref = "razonNoGeoref";
+    public static final String otraRazonNoGeoref = "otraRazonNoGeoref";
+
+    //Crear tabla casas
+    public static final String CREATE_CAMBIO_DOMICILIO_TABLE = "create table if not exists "
+            + CAMBIO_DOMICILIO_TABLE + " ("
+            + codigo + " text not null, "
+            + participante + " integer, "
+            + barrio + " integer, "
+            + otroBarrio + " text, "
+            + direccion + " text, "
+            + manzana + " text, "
+            + latitud + " real, "
+            + longitud + " real, "
+            + puntoGps + " text, "
+            + razonNoGeoref + " text, "
+            + otraRazonNoGeoref + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigo + "));";
 }

@@ -68,7 +68,7 @@ public class Constants {
     //VERSIONES CARTA DE CONSENTIMIENTO
     public static final String VERSION_CC_CHF = "1"; //COHORTE FAMILIA
     public static final String VERSION_CC_SA = "1"; //SEROPREVALENCIA
-    public static final String VERSION_CC_CD = "11"; //COHORTE DENGUE
+    public static final String VERSION_CC_CD = "12"; //COHORTE DENGUE
     public static final String VERSION_CC_CI = "7"; //COHORTE INFLUENZA
 
     public static final String PARTICIPANTE_SA = "participanteSA";

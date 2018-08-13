@@ -39,6 +39,17 @@ public class CartaConsentimientoHelper {
         cv.put(MainDBConstants.aceptaParteC, carta.getAceptaParteC());
         cv.put(MainDBConstants.aceptaParteD, carta.getAceptaParteD());
         cv.put(MainDBConstants.version, carta.getVersion());
+        //reconsentimiento dengue 2018
+        cv.put(MainDBConstants.otroMotivoRechazoParteA, carta.getOtroMotivoRechazoParteA());
+        cv.put(MainDBConstants.motivoRechazoParteDExt, carta.getMotivoRechazoParteDExt());
+        cv.put(MainDBConstants.otroMotivoRechazoParteDExt, carta.getOtroMotivoRechazoParteDExt());
+        cv.put(MainDBConstants.mismoTutor, carta.getMismoTutor());
+        cv.put(MainDBConstants.motivoDifTutor, carta.getMotivoDifTutor());
+        cv.put(MainDBConstants.otroMotivoDifTutor, carta.getOtroMotivoDifTutor());
+        cv.put(MainDBConstants.otraRelacionFamTutor, carta.getOtraRelacionFamTutor());
+        cv.put(MainDBConstants.verifTutor, carta.getVerifTutor());
+        cv.put(MainDBConstants.reconsentimiento, carta.getReconsentimiento());
+
         if (carta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, carta.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, carta.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(carta.getPasive()));
@@ -73,6 +84,17 @@ public class CartaConsentimientoHelper {
         mCarta.setAceptaParteC(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParteC)));
         mCarta.setAceptaParteD(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParteD)));
         mCarta.setVersion(cursor.getString(cursor.getColumnIndex(MainDBConstants.version)));
+        //reconsentimiento dengue 2018
+        mCarta.setOtroMotivoRechazoParteA(cursor.getString(cursor.getColumnIndex(MainDBConstants.otroMotivoRechazoParteA)));
+        mCarta.setMotivoRechazoParteDExt(cursor.getString(cursor.getColumnIndex(MainDBConstants.motivoRechazoParteDExt)));
+        mCarta.setOtroMotivoRechazoParteDExt(cursor.getString(cursor.getColumnIndex(MainDBConstants.otroMotivoRechazoParteDExt)));
+        mCarta.setMismoTutor(cursor.getString(cursor.getColumnIndex(MainDBConstants.mismoTutor)));
+        mCarta.setMotivoDifTutor(cursor.getString(cursor.getColumnIndex(MainDBConstants.motivoDifTutor)));
+        mCarta.setOtroMotivoDifTutor(cursor.getString(cursor.getColumnIndex(MainDBConstants.otroMotivoDifTutor)));
+        mCarta.setOtraRelacionFamTutor(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraRelacionFamTutor)));
+        mCarta.setVerifTutor(cursor.getString(cursor.getColumnIndex(MainDBConstants.verifTutor)));
+        mCarta.setReconsentimiento(cursor.getString(cursor.getColumnIndex(MainDBConstants.reconsentimiento)));
+
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mCarta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mCarta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         mCarta.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));

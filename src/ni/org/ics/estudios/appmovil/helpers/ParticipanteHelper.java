@@ -6,7 +6,6 @@ import ni.org.ics.estudios.appmovil.domain.ContactoParticipante;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
-import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
@@ -209,6 +208,11 @@ public class ParticipanteHelper {
         cv.put(MainDBConstants.operadora2, contactoParticipante.getOperadora2());
         cv.put(MainDBConstants.tipo1, contactoParticipante.getTipo1());
         cv.put(MainDBConstants.tipo2, contactoParticipante.getTipo2());
+        cv.put(MainDBConstants.numero3, contactoParticipante.getNumero3());
+        cv.put(MainDBConstants.operadora3, contactoParticipante.getOperadora3());
+        cv.put(MainDBConstants.tipo3, contactoParticipante.getTipo3());
+        cv.put(MainDBConstants.esPropio, contactoParticipante.getEsPropio());
+        cv.put(MainDBConstants.otroBarrio, contactoParticipante.getOtroBarrio());
         if (contactoParticipante.getParticipante() != null) cv.put(MainDBConstants.participante, contactoParticipante.getParticipante().getCodigo());
         if (contactoParticipante.getRecordDate() != null) cv.put(MainDBConstants.recordDate, contactoParticipante.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, contactoParticipante.getRecordUser());
@@ -230,6 +234,11 @@ public class ParticipanteHelper {
         mContacto.setOperadora2(cursor.getString(cursor.getColumnIndex(MainDBConstants.operadora2)));
         mContacto.setTipo1(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo1)));
         mContacto.setTipo2(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo2)));
+        mContacto.setNumero3(cursor.getString(cursor.getColumnIndex(MainDBConstants.numero3)));
+        mContacto.setOperadora3(cursor.getString(cursor.getColumnIndex(MainDBConstants.operadora3)));
+        mContacto.setTipo3(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo3)));
+        mContacto.setEsPropio(cursor.getString(cursor.getColumnIndex(MainDBConstants.esPropio)));
+        mContacto.setOtroBarrio(cursor.getString(cursor.getColumnIndex(MainDBConstants.otroBarrio)));
         mContacto.setParticipante(null);
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mContacto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mContacto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

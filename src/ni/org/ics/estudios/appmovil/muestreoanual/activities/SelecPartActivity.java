@@ -241,7 +241,8 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 						codigo = mParticipante.getCodigo();
 						if (desdeMenuPrincipal){
                             ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos(); //ca.getParticipanteProceso(codigoScanned);
-                            if (mParticipanteProc!=null && (mParticipanteProc.getEstudio()!=null && !mParticipanteProc.getEstudio().isEmpty())) {
+                            if (mParticipanteProc != null && (mParticipanteProc.getEstudio() != null && !mParticipanteProc.getEstudio().isEmpty())
+                                    || (mParticipanteProc != null && mParticipanteProc.getReConsDeng()!=null && mParticipanteProc.getReConsDeng().matches("Si"))) {
                                 Bundle arguments = new Bundle();
                                 arguments.putSerializable(Constants.PARTICIPANTE , mParticipante);
                                 Intent i = new Intent(getApplicationContext(),
@@ -319,7 +320,8 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
             if (desdeMenuPrincipal) {
 
                 ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos();
-                if (mParticipanteProc != null && (mParticipanteProc.getEstudio() != null && !mParticipanteProc.getEstudio().isEmpty())) {
+                if (mParticipanteProc != null && (mParticipanteProc.getEstudio() != null && !mParticipanteProc.getEstudio().isEmpty())
+                        || (mParticipanteProc != null && mParticipanteProc.getReConsDeng()!=null && mParticipanteProc.getReConsDeng().matches("Si"))) {
                     Bundle arguments = new Bundle();
                     arguments.putSerializable(Constants.PARTICIPANTE , mParticipante);
                     Intent i = new Intent(getApplicationContext(),

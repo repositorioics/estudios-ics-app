@@ -37,7 +37,7 @@ public class TamizajeHelper {
         cv.put(MainDBConstants.pretermino, tamizaje.getPretermino());
         cv.put(MainDBConstants.cohorte, tamizaje.getCohorte());
         cv.put(MainDBConstants.enfermedadInmuno, tamizaje.getEnfermedadInmuno());
-        cv.put(MainDBConstants.cualEnfermedad, tamizaje.getCualEnfermedad());
+        //cv.put(MainDBConstants.cualEnfermedad, tamizaje.getCualEnfermedad());
         cv.put(MainDBConstants.tratamiento, tamizaje.getTratamiento());
         cv.put(MainDBConstants.cualTratamiento, tamizaje.getCualTratamiento());
         cv.put(MainDBConstants.diagDengue, tamizaje.getDiagDengue());
@@ -47,11 +47,14 @@ public class TamizajeHelper {
         cv.put(MainDBConstants.tiempoResidencia, tamizaje.getTiempoResidencia());
         //reconsentimiento dengue 2018
         cv.put(MainDBConstants.tipoVivienda, tamizaje.getTipoVivienda());
-        cv.put(MainDBConstants.otraEnfCronica, tamizaje.getOtraEnfCronica());
-        cv.put(MainDBConstants.enfCronicaAnio, tamizaje.getEnfCronicaAnio());
-        cv.put(MainDBConstants.enfCronicaMes, tamizaje.getEnfCronicaMes());
+        //cv.put(MainDBConstants.otraEnfCronica, tamizaje.getOtraEnfCronica());
+        //cv.put(MainDBConstants.enfCronicaAnio, tamizaje.getEnfCronicaAnio());
+        //cv.put(MainDBConstants.enfCronicaMes, tamizaje.getEnfCronicaMes());
         cv.put(MainDBConstants.otroTx, tamizaje.getOtroTx());
         cv.put(MainDBConstants.autorizaSupervisor, tamizaje.getAutorizaSupervisor());
+        cv.put(MainDBConstants.emancipado, tamizaje.getEmancipado());
+        cv.put(MainDBConstants.razonEmancipacion, tamizaje.getRazonEmancipacion());
+        cv.put(MainDBConstants.otraRazonEmancipacion, tamizaje.getOtraRazonEmancipacion());
 
         if (tamizaje.getRecordDate() != null) cv.put(MainDBConstants.recordDate, tamizaje.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, tamizaje.getRecordUser());
@@ -87,7 +90,7 @@ public class TamizajeHelper {
         mTamizaje.setPretermino(cursor.getString(cursor.getColumnIndex(MainDBConstants.pretermino)));
         mTamizaje.setCohorte(cursor.getString(cursor.getColumnIndex(MainDBConstants.cohorte)));
         mTamizaje.setEnfermedadInmuno(cursor.getString(cursor.getColumnIndex(MainDBConstants.enfermedadInmuno)));
-        mTamizaje.setCualEnfermedad(cursor.getString(cursor.getColumnIndex(MainDBConstants.cualEnfermedad)));
+        //mTamizaje.setCualEnfermedad(cursor.getString(cursor.getColumnIndex(MainDBConstants.cualEnfermedad)));
         mTamizaje.setTratamiento(cursor.getString(cursor.getColumnIndex(MainDBConstants.tratamiento)));
         mTamizaje.setCualTratamiento(cursor.getString(cursor.getColumnIndex(MainDBConstants.cualTratamiento)));
         mTamizaje.setDiagDengue(cursor.getString(cursor.getColumnIndex(MainDBConstants.diagDengue)));
@@ -97,11 +100,14 @@ public class TamizajeHelper {
         mTamizaje.setTiempoResidencia(cursor.getString(cursor.getColumnIndex(MainDBConstants.tiempoResidencia)));
         //reconsentimiento dengue 2018
         mTamizaje.setTipoVivienda(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipoVivienda)));
-        mTamizaje.setOtraEnfCronica(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraEnfCronica)));
-        mTamizaje.setEnfCronicaAnio(cursor.getString(cursor.getColumnIndex(MainDBConstants.enfCronicaAnio)));
-        mTamizaje.setEnfCronicaMes(cursor.getString(cursor.getColumnIndex(MainDBConstants.enfCronicaMes)));
+        //mTamizaje.setOtraEnfCronica(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraEnfCronica)));
+        //mTamizaje.setEnfCronicaAnio(cursor.getString(cursor.getColumnIndex(MainDBConstants.enfCronicaAnio)));
+        //mTamizaje.setEnfCronicaMes(cursor.getString(cursor.getColumnIndex(MainDBConstants.enfCronicaMes)));
         mTamizaje.setOtroTx(cursor.getString(cursor.getColumnIndex(MainDBConstants.otroTx)));
         mTamizaje.setAutorizaSupervisor(cursor.getString(cursor.getColumnIndex(MainDBConstants.autorizaSupervisor)));
+        mTamizaje.setEmancipado(cursor.getString(cursor.getColumnIndex(MainDBConstants.emancipado)));
+        mTamizaje.setRazonEmancipacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonEmancipacion)));
+        mTamizaje.setOtraRazonEmancipacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraRazonEmancipacion)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mTamizaje.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mTamizaje.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

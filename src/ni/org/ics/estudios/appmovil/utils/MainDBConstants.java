@@ -26,7 +26,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 8;
+	public static final int DATABASE_VERSION = 9;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -303,7 +303,6 @@ public class MainDBConstants {
     //Campos cartas_consentimientos
     public static final String fechaFirma = "fechaFirma";
     public static final String tamizaje = "tamizaje";
-    public static final String emancipado = "emancipado";
     public static final String nombre1Tutor = "nombre1Tutor";
     public static final String nombre2Tutor = "nombre2Tutor";
     public static final String apellido1Tutor = "apellido1Tutor";
@@ -341,7 +340,6 @@ public class MainDBConstants {
             + fechaFirma + " date not null, "
             + tamizaje + " text not null, "
             + participante + " integer not null, "
-            + emancipado + " text, "
             + nombre1Tutor + " text, "
             + nombre2Tutor + " text, "
             + apellido1Tutor + " text, "
@@ -415,6 +413,9 @@ public class MainDBConstants {
     public static final String enfCronicaMes = "enfCronicaMes";
     public static final String otroTx = "otroTx";
     public static final String autorizaSupervisor = "autorizaSupervisor";
+    public static final String emancipado = "emancipado";
+    public static final String razonEmancipacion = "razonEmancipacion";
+    public static final String otraRazonEmancipacion = "otraRazonEmancipacion";
 
     //crear tabla tamizaje
     public static final String CREATE_TAMIZAJE_TABLE = "create table if not exists "
@@ -440,7 +441,7 @@ public class MainDBConstants {
             + pretermino + " text, "         //nuevo ingreso MA2018
             + cohorte + " text, "
             + enfermedadInmuno + " text, "
-            + cualEnfermedad + " text, "
+            //+ cualEnfermedad + " text, "
             + tratamiento + " text, "
             + cualTratamiento + " text, "
             + diagDengue + " text, "
@@ -449,11 +450,14 @@ public class MainDBConstants {
             + fechaHospDengue + " date, "
             + tiempoResidencia + " text, "
             + tipoVivienda + " text, " //reconsentimiento dengue 2018
-            + otraEnfCronica + " text, "
-            + enfCronicaAnio + " text, "
-            + enfCronicaMes + " text, "
+            //+ otraEnfCronica + " text, "
+            //+ enfCronicaAnio + " text, "
+            //+ enfCronicaMes + " text, "
             + otroTx + " text, "
             + autorizaSupervisor + " text, "
+            + emancipado + " text, "
+            + razonEmancipacion + " text, "
+            + otraRazonEmancipacion + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -663,4 +667,22 @@ public class MainDBConstants {
             + deviceId + " text, "
             + estado + " text not null, "
             + "primary key (" + codigo + "));";
+
+    // Tabla Tamizaje
+    public static final String ENFCRONICA_TABLE = "enfermedades_cronicas";
+
+    public static final String CREATE_ENFCRONICA_TABLE = "create table if not exists "
+            + ENFCRONICA_TABLE + " ("
+            + id + " text not null, "
+            + tamizaje + " text, "
+            + enfermedad + " text not null, "
+            + otraEnfCronica + " text, "
+            + enfCronicaAnio + " text, "
+            + enfCronicaMes + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + id + "));";
 }

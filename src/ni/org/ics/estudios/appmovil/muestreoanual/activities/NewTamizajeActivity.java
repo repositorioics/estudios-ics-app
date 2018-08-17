@@ -1186,7 +1186,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 MessageResource catEnfermedad = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfermedad + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (catEnfermedad!=null) tamizaje.setEnfermedad(catEnfermedad.getCatKey());
             }
-            tamizaje.setCualEnfermedad(cualEnfermedad);
+            //TODO tamizaje.setCualEnfermedad(cualEnfermedad);
 
             if (tieneValor(diagDengue)) {
                 MessageResource catDen = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + diagDengue + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -1238,7 +1238,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
             tamizaje.setDeviceid(infoMovil.getDeviceId());
             tamizaje.setEstado('0');
             tamizaje.setPasive('0');
-
+            tamizaje.setEmancipado("0"); //por defecto no es emancipado
             //Registrar tamizaje dengue si aplica
             if (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)){
                 Estudio estudioCDengue = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" +Constants.COD_EST_COHORTEDENGUE, null);
@@ -1556,7 +1556,6 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         cc.setPasive('0');
                         cc.setFechaFirma(new Date());
                         cc.setParticipante(participante);
-                        cc.setEmancipado("0"); //por defecto no es emancipado
                         if (tieneValor(nombre1Tutor)) {
                             cc.setNombre1Tutor(nombre1Tutor);
                         }

@@ -541,6 +541,7 @@ public class NuevoConsentimientoSAActivity extends FragmentActivity implements
                 if (catRazonNoAceptaParticipar!=null) tamizaje.setRazonNoAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
             }
             tamizaje.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaSeroprevalencia);
+            tamizaje.setEmancipado("0");
             estudiosAdapter.crearTamizaje(tamizaje);
 
             //Pregunta si acepta realizar el tamizaje
@@ -567,7 +568,6 @@ public class NuevoConsentimientoSAActivity extends FragmentActivity implements
                 cc.setPasive('0');
                 cc.setFechaFirma(new Date());
                 cc.setParticipante(participante);
-                cc.setEmancipado("0"); //por defecto no es emancipado
                 cc.setAceptaParteA(Constants.YESKEYSND);
                 if (tieneValor(nombre1Tutor)) {
                     cc.setNombre1Tutor(nombre1Tutor);

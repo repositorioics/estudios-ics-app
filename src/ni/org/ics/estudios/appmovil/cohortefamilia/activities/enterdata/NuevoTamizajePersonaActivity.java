@@ -823,7 +823,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
             String razonNoAceptaParticipar = datos.getString(this.getString(R.string.razonNoAceptaParticipar));
             String otraRazonNoAceptaParticipar = datos.getString(this.getString(R.string.otraRazonNoAceptaParticipar));
             String asentimientoVerbal = datos.getString(this.getString(R.string.asentimientoVerbal));
-
+            String emancipado = datos.getString(this.getString(R.string.emancipado));
 
             //Crea un Nuevo Registro de tamizaje
             Tamizaje t = new Tamizaje();
@@ -891,7 +891,10 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 MessageResource catAsentimientoVerbal = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + asentimientoVerbal + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (catAsentimientoVerbal != null) t.setAsentimientoVerbal(catAsentimientoVerbal.getCatKey());
             }
-
+            if (tieneValor(emancipado)) {
+                MessageResource catEmancipado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + emancipado + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                if (catEmancipado != null) t.setEmancipado(catEmancipado.getCatKey());
+            }
             t.setOtraRazonNoAceptaTamizajePersona(otraRazonNoAceptaTamizajePersona);
             t.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaParticipar);
             t.setRecordDate(new Date());
@@ -987,7 +990,6 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 
                     //Obtener datos del bundle para el consentimiento
 
-                    String emancipado = datos.getString(this.getString(R.string.emancipado));
                     String nombre1Tutor = datos.getString(this.getString(R.string.nombre1Tutor));
                     String nombre2Tutor = datos.getString(this.getString(R.string.nombre2Tutor));
                     String apellido1Tutor = datos.getString(this.getString(R.string.apellido1Tutor));
@@ -1019,10 +1021,6 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     cc.setTamizaje(t);
                     cc.setReconsentimiento(Constants.NOKEYSND);
                     cc.setParticipante(participante);
-                    if (tieneValor(emancipado)) {
-                        MessageResource catEmancipado = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + emancipado + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                        if (catEmancipado != null) cc.setEmancipado(catEmancipado.getCatKey());
-                    }
                     if (tieneValor(nombre1Tutor)) {
                         cc.setNombre1Tutor(nombre1Tutor);
                         tutor += nombre1Tutor;

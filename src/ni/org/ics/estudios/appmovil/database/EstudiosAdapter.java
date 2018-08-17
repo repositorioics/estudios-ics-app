@@ -226,6 +226,11 @@ public class EstudiosAdapter {
                 db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.otroTx + " text");
                 db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.autorizaSupervisor + " text");
             }
+            if (oldVersion==8){
+                db.execSQL("DROP TABLE " + MainDBConstants.TAMIZAJE_TABLE);
+                db.execSQL(MainDBConstants.CREATE_TAMIZAJE_TABLE);
+                db.execSQL(MainDBConstants.CREATE_ENFCRONICA_TABLE);
+            }
 		}	
 	}
 
@@ -552,7 +557,25 @@ public class EstudiosAdapter {
 		if (!cursorMessageResources.isClosed()) cursorMessageResources.close();
 		return mMessageResources;
 	}
-	
+
+    //Obtener una lista de MessageResource de la base de datos
+    public String[] getSpanishMessageResources(String filtro, String orden) throws SQLException {
+        Cursor cursorMessageResources = crearCursor(CatalogosDBConstants.MESSAGES_TABLE, filtro, null, orden);
+        String[] mMessageResources = null;
+        if (cursorMessageResources != null && cursorMessageResources.getCount() > 0) {
+            cursorMessageResources.moveToFirst();
+            mMessageResources = new String[cursorMessageResources.getCount()];
+            int indice = 0;
+            do{
+                MessageResource mMessageResource;
+                mMessageResource = MessageResourceHelper.crearMessageResource(cursorMessageResources);
+                mMessageResources[indice]= mMessageResource.getSpanish();
+                indice++;
+            } while (cursorMessageResources.moveToNext());
+        }
+        if (!cursorMessageResources.isClosed()) cursorMessageResources.close();
+        return mMessageResources;
+    }
 	/**
 	 * Metodos para visitas en la base de datos
 	 * 
@@ -8127,11 +8150,11 @@ public class EstudiosAdapter {
     }
     //Obtener una lista de CambioDomicilio de la base de datos
     public List<CambioDomicilio> getCambiosDomicilio(String filtro, String orden) throws SQLException {
-        List<CambioDomicilio> mVisitasTerreno = new ArrayList<CambioDomicilio>();
+        List<CambioDomicilio> mCambiosDomicilio = new ArrayList<CambioDomicilio>();
         Cursor cursorCambiosDomicilio = crearCursor(MainDBConstants.CAMBIO_DOMICILIO_TABLE, filtro, null, orden);
         if (cursorCambiosDomicilio != null && cursorCambiosDomicilio.getCount() > 0) {
             cursorCambiosDomicilio.moveToFirst();
-            mVisitasTerreno.clear();
+            mCambiosDomicilio.clear();
             do{
                 CambioDomicilio mCambioDomicilio = null;
                 mCambioDomicilio = CambioDomicilioHelper.crearCambioDomicilio(cursorCambiosDomicilio);
@@ -8139,10 +8162,65 @@ public class EstudiosAdapter {
                 mCambioDomicilio.setParticipante(participante);
                 Barrio barrio = this.getBarrio(CatalogosDBConstants.codigo+"="+cursorCambiosDomicilio.getInt(cursorCambiosDomicilio.getColumnIndex(MainDBConstants.barrio)), null);
                 mCambioDomicilio.setBarrio(barrio);
-                mVisitasTerreno.add(mCambioDomicilio);
+                mCambiosDomicilio.add(mCambioDomicilio);
             } while (cursorCambiosDomicilio.moveToNext());
         }
         if (!cursorCambiosDomicilio.isClosed()) cursorCambiosDomicilio.close();
+        return mCambiosDomicilio;
+    }
+
+    /**
+     * Metodos para cambios de domicilio en la base de datos
+     *
+     * @param enfermedadCronica
+     *            Objeto VisitaTereno que contiene la informacion
+     *
+     */
+    //Crear nuevo EnfermedadCronica en la base de datos
+    public void crearEnfermedadCronica(EnfermedadCronica enfermedadCronica) {
+        ContentValues cv = EnfermedadCronicaHelper.crearEnfermedadCronicaContentValues(enfermedadCronica);
+        mDb.insertOrThrow(MainDBConstants.ENFCRONICA_TABLE, null, cv);
+    }
+    //Editar EnfermedadCronica existente en la base de datos
+    public boolean editarEnfermedadCronica(EnfermedadCronica enfermedadCronica) {
+        ContentValues cv = EnfermedadCronicaHelper.crearEnfermedadCronicaContentValues(enfermedadCronica);
+        return mDb.update(MainDBConstants.ENFCRONICA_TABLE , cv, MainDBConstants.id + "='"
+                + enfermedadCronica.getId()+ "'", null) > 0;
+    }
+    //Limpiar la tabla de EnfermedadCronica de la base de datos
+    public boolean borrarEnfermedadesCronicas() {
+        return mDb.delete(MainDBConstants.ENFCRONICA_TABLE, null, null) > 0;
+    }
+    //Obtener un EnfermedadCronica de la base de datos
+    public EnfermedadCronica getEnfermedadCronica(String filtro, String orden) throws SQLException {
+        EnfermedadCronica mEnfermedadCronica = null;
+        Cursor cursorEnfermedad = crearCursor(MainDBConstants.ENFCRONICA_TABLE , filtro, null, orden);
+        if (cursorEnfermedad != null && cursorEnfermedad.getCount() > 0) {
+            cursorEnfermedad.moveToFirst();
+            mEnfermedadCronica=EnfermedadCronicaHelper.crearEnfermedadCronica(cursorEnfermedad);
+            Tamizaje tamizaje = this.getTamizaje(MainDBConstants.codigo + "='" + cursorEnfermedad.getString(cursorEnfermedad.getColumnIndex(MainDBConstants.tamizaje)) + "'", null);
+            mEnfermedadCronica.setTamizaje(tamizaje);
+        }
+        if (!cursorEnfermedad.isClosed()) cursorEnfermedad.close();
+        return mEnfermedadCronica;
+    }
+    //Obtener una lista de EnfermedadCronica de la base de datos
+    public List<EnfermedadCronica> getEnfermedadesCronicas(String filtro, String orden) throws SQLException {
+        List<EnfermedadCronica> mVisitasTerreno = new ArrayList<EnfermedadCronica>();
+        Cursor cursorEnfermedades = crearCursor(MainDBConstants.ENFCRONICA_TABLE, filtro, null, orden);
+        if (cursorEnfermedades != null && cursorEnfermedades.getCount() > 0) {
+            cursorEnfermedades.moveToFirst();
+            mVisitasTerreno.clear();
+            do{
+                EnfermedadCronica mEnfermedadCronica = null;
+                mEnfermedadCronica = EnfermedadCronicaHelper.crearEnfermedadCronica(cursorEnfermedades);
+                Tamizaje tamizaje = this.getTamizaje(MainDBConstants.codigo + "='" +cursorEnfermedades.getString(cursorEnfermedades.getColumnIndex(MainDBConstants.tamizaje))+"'", null);
+                mEnfermedadCronica.setTamizaje(tamizaje);
+                mVisitasTerreno.add(mEnfermedadCronica);
+            } while (cursorEnfermedades.moveToNext());
+        }
+        if (!cursorEnfermedades.isClosed()) cursorEnfermedades.close();
         return mVisitasTerreno;
     }
+
 }

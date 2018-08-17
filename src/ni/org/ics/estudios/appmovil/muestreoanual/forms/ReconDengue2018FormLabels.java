@@ -30,6 +30,8 @@ public class ReconDengue2018FormLabels {
     protected String razonNoAceptaDengueHint;
     protected String otraRazonNoAceptaDengueHint;
     private String emancipado;
+    private String razonEmancipacion;
+    private String otraRazonEmancipacion;
     private String incDen;
     private String incDenHint;
     private String noCumpleIncDen;
@@ -43,8 +45,34 @@ public class ReconDengue2018FormLabels {
     private String enfCronSN;
     private String enfCronica;
     private String oEnfCronica;
-    private String enfCronicaAnio;
-    private String enfCronicaMes;
+    private String enfCronicaAnio1;
+    private String enfCronicaMes1;
+    private String enfCronicaAnio2;
+    private String enfCronicaMes2;
+    private String enfCronicaAnio3;
+    private String enfCronicaMes3;
+    private String enfCronicaAnio4;
+    private String enfCronicaMes4;
+    private String enfCronicaAnio5;
+    private String enfCronicaMes5;
+    private String enfCronicaAnio6;
+    private String enfCronicaMes6;
+    private String enfCronicaAnio7;
+    private String enfCronicaMes7;
+    private String enfCronicaAnio8;
+    private String enfCronicaMes8;
+    private String enfCronicaAnio9;
+    private String enfCronicaMes9;
+    private String enfCronicaAnio10;
+    private String enfCronicaMes10;
+    private String enfCronicaAnio11;
+    private String enfCronicaMes11;
+    private String enfCronicaAnio12;
+    private String enfCronicaMes12;
+    private String enfCronicaAnio13;
+    private String enfCronicaMes13;
+    private String enfCronicaAnio14;
+    private String enfCronicaMes14;
     private String tomaTx;
     private String cualesTx;
     private String otroTx;
@@ -54,6 +82,8 @@ public class ReconDengue2018FormLabels {
     private String parteADen;
     private String rechDen;
     private String otroRechDen;
+    private String aceptaContactoFuturo;
+    private String aceptaContactoFuturoHint;
     private String parteBDen;
     private String parteBDenHint;
     private String parteCDen;
@@ -165,6 +195,8 @@ public class ReconDengue2018FormLabels {
         otraRazonNoAceptaDengue = res.getString(R.string.otraRazonNoAceptaDengue);
         otraRazonNoAceptaDengueHint = res.getString(R.string.otraRazonNoAceptaDengueHint);
         emancipado = res.getString(R.string.emancipado2);
+        razonEmancipacion = res.getString(R.string.razonEmancipacion);
+        otraRazonEmancipacion = res.getString(R.string.otraRazonEmancipacion);
         incDen = res.getString(R.string.incDen);
         incDenHint = res.getString(R.string.incDenHint);
         noCumpleIncDen = res.getString(R.string.noCumpleIncDen);
@@ -178,8 +210,35 @@ public class ReconDengue2018FormLabels {
         enfCronSN = res.getString(R.string.enfCronSN);
         enfCronica = res.getString(R.string.enfCronica);
         oEnfCronica = res.getString(R.string.oEnfCronica);
-        enfCronicaAnio = res.getString(R.string.enfCronicaAnio);
-        enfCronicaMes = res.getString(R.string.enfCronicaMes);
+        enfCronicaAnio1 = res.getString(R.string.enfCronicaAnio1);
+        enfCronicaMes1 = res.getString(R.string.enfCronicaMes1);
+        enfCronicaAnio2 = res.getString(R.string.enfCronicaAnio2);
+        enfCronicaMes2 = res.getString(R.string.enfCronicaMes2);
+        enfCronicaAnio3 = res.getString(R.string.enfCronicaAnio3);
+        enfCronicaMes3 = res.getString(R.string.enfCronicaMes3);
+        enfCronicaAnio4 = res.getString(R.string.enfCronicaAnio4);
+        enfCronicaMes4 = res.getString(R.string.enfCronicaMes4);
+        enfCronicaAnio5 = res.getString(R.string.enfCronicaAnio5);
+        enfCronicaMes5 = res.getString(R.string.enfCronicaMes5);
+        enfCronicaAnio6 = res.getString(R.string.enfCronicaAnio6);
+        enfCronicaMes6 = res.getString(R.string.enfCronicaMes6);
+        enfCronicaAnio7 = res.getString(R.string.enfCronicaAnio7);
+        enfCronicaMes7 = res.getString(R.string.enfCronicaMes7);
+        enfCronicaAnio8 = res.getString(R.string.enfCronicaAnio8);
+        enfCronicaMes8 = res.getString(R.string.enfCronicaMes8);
+        enfCronicaAnio9 = res.getString(R.string.enfCronicaAnio9);
+        enfCronicaMes9 = res.getString(R.string.enfCronicaMes9);
+        enfCronicaAnio10 = res.getString(R.string.enfCronicaAnio10);
+        enfCronicaMes10 = res.getString(R.string.enfCronicaMes10);
+        enfCronicaAnio11 = res.getString(R.string.enfCronicaAnio11);
+        enfCronicaMes11 = res.getString(R.string.enfCronicaMes11);
+        enfCronicaAnio12 = res.getString(R.string.enfCronicaAnio12);
+        enfCronicaMes12 = res.getString(R.string.enfCronicaMes12);
+        enfCronicaAnio13 = res.getString(R.string.enfCronicaAnio13);
+        enfCronicaMes13 = res.getString(R.string.enfCronicaMes13);
+        enfCronicaAnio14 = res.getString(R.string.enfCronicaAnio14);
+        enfCronicaMes14 = res.getString(R.string.enfCronicaMes14);
+
         tomaTx = res.getString(R.string.tomaTx);
         cualesTx = res.getString(R.string.cualesTx);
         otroTx = res.getString(R.string.otroTx);
@@ -190,6 +249,8 @@ public class ReconDengue2018FormLabels {
         asentimientoHint = res.getString(R.string.asentimientoHint);
         noAsentimiento = res.getString(R.string.noAsentimiento);
         parteADen = res.getString(R.string.parteADen);
+        aceptaContactoFuturo = res.getString(R.string.aceptaContactoFuturoRC2018);
+        aceptaContactoFuturoHint = res.getString(R.string.aceptaContactoFuturoHint);
         parteBDen = res.getString(R.string.parteBDen);
         parteBDenHint = res.getString(R.string.parteBDenHint);
         parteCDen = res.getString(R.string.parteCDen);
@@ -432,6 +493,22 @@ public class ReconDengue2018FormLabels {
         this.emancipado = emancipado;
     }
 
+    public String getRazonEmancipacion() {
+        return razonEmancipacion;
+    }
+
+    public void setRazonEmancipacion(String razonEmancipacion) {
+        this.razonEmancipacion = razonEmancipacion;
+    }
+
+    public String getOtraRazonEmancipacion() {
+        return otraRazonEmancipacion;
+    }
+
+    public void setOtraRazonEmancipacion(String otraRazonEmancipacion) {
+        this.otraRazonEmancipacion = otraRazonEmancipacion;
+    }
+
     public String getIncDen() {
         return incDen;
     }
@@ -512,20 +589,228 @@ public class ReconDengue2018FormLabels {
         this.oEnfCronica = oEnfCronica;
     }
 
-    public String getEnfCronicaAnio() {
-        return enfCronicaAnio;
+    public String getEnfCronicaAnio1() {
+        return enfCronicaAnio1;
     }
 
-    public void setEnfCronicaAnio(String enfCronicaAnio) {
-        this.enfCronicaAnio = enfCronicaAnio;
+    public void setEnfCronicaAnio1(String enfCronicaAnio1) {
+        this.enfCronicaAnio1 = enfCronicaAnio1;
     }
 
-    public String getEnfCronicaMes() {
-        return enfCronicaMes;
+    public String getEnfCronicaMes1() {
+        return enfCronicaMes1;
     }
 
-    public void setEnfCronicaMes(String enfCronicaMes) {
-        this.enfCronicaMes = enfCronicaMes;
+    public void setEnfCronicaMes1(String enfCronicaMes1) {
+        this.enfCronicaMes1 = enfCronicaMes1;
+    }
+
+    public String getEnfCronicaAnio2() {
+        return enfCronicaAnio2;
+    }
+
+    public void setEnfCronicaAnio2(String enfCronicaAnio2) {
+        this.enfCronicaAnio2 = enfCronicaAnio2;
+    }
+
+    public String getEnfCronicaMes2() {
+        return enfCronicaMes2;
+    }
+
+    public void setEnfCronicaMes2(String enfCronicaMes2) {
+        this.enfCronicaMes2 = enfCronicaMes2;
+    }
+
+    public String getEnfCronicaAnio3() {
+        return enfCronicaAnio3;
+    }
+
+    public void setEnfCronicaAnio3(String enfCronicaAnio3) {
+        this.enfCronicaAnio3 = enfCronicaAnio3;
+    }
+
+    public String getEnfCronicaMes3() {
+        return enfCronicaMes3;
+    }
+
+    public void setEnfCronicaMes3(String enfCronicaMes3) {
+        this.enfCronicaMes3 = enfCronicaMes3;
+    }
+
+    public String getEnfCronicaAnio4() {
+        return enfCronicaAnio4;
+    }
+
+    public void setEnfCronicaAnio4(String enfCronicaAnio4) {
+        this.enfCronicaAnio4 = enfCronicaAnio4;
+    }
+
+    public String getEnfCronicaMes4() {
+        return enfCronicaMes4;
+    }
+
+    public void setEnfCronicaMes4(String enfCronicaMes4) {
+        this.enfCronicaMes4 = enfCronicaMes4;
+    }
+
+    public String getEnfCronicaAnio5() {
+        return enfCronicaAnio5;
+    }
+
+    public void setEnfCronicaAnio5(String enfCronicaAnio5) {
+        this.enfCronicaAnio5 = enfCronicaAnio5;
+    }
+
+    public String getEnfCronicaMes5() {
+        return enfCronicaMes5;
+    }
+
+    public void setEnfCronicaMes5(String enfCronicaMes5) {
+        this.enfCronicaMes5 = enfCronicaMes5;
+    }
+
+    public String getEnfCronicaAnio6() {
+        return enfCronicaAnio6;
+    }
+
+    public void setEnfCronicaAnio6(String enfCronicaAnio6) {
+        this.enfCronicaAnio6 = enfCronicaAnio6;
+    }
+
+    public String getEnfCronicaMes6() {
+        return enfCronicaMes6;
+    }
+
+    public void setEnfCronicaMes6(String enfCronicaMes6) {
+        this.enfCronicaMes6 = enfCronicaMes6;
+    }
+
+    public String getEnfCronicaAnio7() {
+        return enfCronicaAnio7;
+    }
+
+    public void setEnfCronicaAnio7(String enfCronicaAnio7) {
+        this.enfCronicaAnio7 = enfCronicaAnio7;
+    }
+
+    public String getEnfCronicaMes7() {
+        return enfCronicaMes7;
+    }
+
+    public void setEnfCronicaMes7(String enfCronicaMes7) {
+        this.enfCronicaMes7 = enfCronicaMes7;
+    }
+
+    public String getEnfCronicaAnio8() {
+        return enfCronicaAnio8;
+    }
+
+    public void setEnfCronicaAnio8(String enfCronicaAnio8) {
+        this.enfCronicaAnio8 = enfCronicaAnio8;
+    }
+
+    public String getEnfCronicaMes8() {
+        return enfCronicaMes8;
+    }
+
+    public void setEnfCronicaMes8(String enfCronicaMes8) {
+        this.enfCronicaMes8 = enfCronicaMes8;
+    }
+
+    public String getEnfCronicaAnio9() {
+        return enfCronicaAnio9;
+    }
+
+    public void setEnfCronicaAnio9(String enfCronicaAnio9) {
+        this.enfCronicaAnio9 = enfCronicaAnio9;
+    }
+
+    public String getEnfCronicaMes9() {
+        return enfCronicaMes9;
+    }
+
+    public void setEnfCronicaMes9(String enfCronicaMes9) {
+        this.enfCronicaMes9 = enfCronicaMes9;
+    }
+
+    public String getEnfCronicaAnio10() {
+        return enfCronicaAnio10;
+    }
+
+    public void setEnfCronicaAnio10(String enfCronicaAnio10) {
+        this.enfCronicaAnio10 = enfCronicaAnio10;
+    }
+
+    public String getEnfCronicaMes10() {
+        return enfCronicaMes10;
+    }
+
+    public void setEnfCronicaMes10(String enfCronicaMes10) {
+        this.enfCronicaMes10 = enfCronicaMes10;
+    }
+
+    public String getEnfCronicaAnio11() {
+        return enfCronicaAnio11;
+    }
+
+    public void setEnfCronicaAnio11(String enfCronicaAnio11) {
+        this.enfCronicaAnio11 = enfCronicaAnio11;
+    }
+
+    public String getEnfCronicaMes11() {
+        return enfCronicaMes11;
+    }
+
+    public void setEnfCronicaMes11(String enfCronicaMes11) {
+        this.enfCronicaMes11 = enfCronicaMes11;
+    }
+
+    public String getEnfCronicaAnio12() {
+        return enfCronicaAnio12;
+    }
+
+    public void setEnfCronicaAnio12(String enfCronicaAnio12) {
+        this.enfCronicaAnio12 = enfCronicaAnio12;
+    }
+
+    public String getEnfCronicaMes12() {
+        return enfCronicaMes12;
+    }
+
+    public void setEnfCronicaMes12(String enfCronicaMes12) {
+        this.enfCronicaMes12 = enfCronicaMes12;
+    }
+
+    public String getEnfCronicaAnio13() {
+        return enfCronicaAnio13;
+    }
+
+    public void setEnfCronicaAnio13(String enfCronicaAnio13) {
+        this.enfCronicaAnio13 = enfCronicaAnio13;
+    }
+
+    public String getEnfCronicaMes13() {
+        return enfCronicaMes13;
+    }
+
+    public void setEnfCronicaMes13(String enfCronicaMes13) {
+        this.enfCronicaMes13 = enfCronicaMes13;
+    }
+
+    public String getEnfCronicaAnio14() {
+        return enfCronicaAnio14;
+    }
+
+    public void setEnfCronicaAnio14(String enfCronicaAnio14) {
+        this.enfCronicaAnio14 = enfCronicaAnio14;
+    }
+
+    public String getEnfCronicaMes14() {
+        return enfCronicaMes14;
+    }
+
+    public void setEnfCronicaMes14(String enfCronicaMes14) {
+        this.enfCronicaMes14 = enfCronicaMes14;
     }
 
     public String getTomaTx() {
@@ -598,6 +883,22 @@ public class ReconDengue2018FormLabels {
 
     public void setOtroRechDen(String otroRechDen) {
         this.otroRechDen = otroRechDen;
+    }
+
+    public String getAceptaContactoFuturo() {
+        return aceptaContactoFuturo;
+    }
+
+    public void setAceptaContactoFuturo(String aceptaContactoFuturo) {
+        this.aceptaContactoFuturo = aceptaContactoFuturo;
+    }
+
+    public String getAceptaContactoFuturoHint() {
+        return aceptaContactoFuturoHint;
+    }
+
+    public void setAceptaContactoFuturoHint(String aceptaContactoFuturoHint) {
+        this.aceptaContactoFuturoHint = aceptaContactoFuturoHint;
     }
 
     public String getParteBDen() {

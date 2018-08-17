@@ -37,7 +37,7 @@ public class Tamizaje extends BaseMetaData {
     private String pretermino;
     private String cohorte;
     private String enfermedadInmuno;
-    private String cualEnfermedad;
+    //private String cualEnfermedad;
     private String tratamiento;
     private String cualTratamiento;
     private String diagDengue;
@@ -47,11 +47,14 @@ public class Tamizaje extends BaseMetaData {
     private String tiempoResidencia;
     //reconsentimiento Dengue 2018
     private String tipoVivienda;
-    private String otraEnfCronica;
-    private String enfCronicaAnio;
-    private String enfCronicaMes;
+    //private String otraEnfCronica;
+    //private String enfCronicaAnio;
+    //private String enfCronicaMes;
     private String otroTx;
     private String autorizaSupervisor;
+    private String emancipado;
+    private String razonEmancipacion;
+    private String otraRazonEmancipacion;
 
     public String getCodigo() {
 		return codigo;
@@ -241,14 +244,6 @@ public class Tamizaje extends BaseMetaData {
         this.enfermedadInmuno = enfermedadInmuno;
     }
 
-    public String getCualEnfermedad() {
-        return cualEnfermedad;
-    }
-
-    public void setCualEnfermedad(String cualEnfermedad) {
-        this.cualEnfermedad = cualEnfermedad;
-    }
-
     public String getTratamiento() {
         return tratamiento;
     }
@@ -313,30 +308,6 @@ public class Tamizaje extends BaseMetaData {
         this.tipoVivienda = tipoVivienda;
     }
 
-    public String getOtraEnfCronica() {
-        return otraEnfCronica;
-    }
-
-    public void setOtraEnfCronica(String otraEnfCronica) {
-        this.otraEnfCronica = otraEnfCronica;
-    }
-
-    public String getEnfCronicaAnio() {
-        return enfCronicaAnio;
-    }
-
-    public void setEnfCronicaAnio(String enfCronicaAnio) {
-        this.enfCronicaAnio = enfCronicaAnio;
-    }
-
-    public String getEnfCronicaMes() {
-        return enfCronicaMes;
-    }
-
-    public void setEnfCronicaMes(String enfCronicaMes) {
-        this.enfCronicaMes = enfCronicaMes;
-    }
-
     public String getOtroTx() {
         return otroTx;
     }
@@ -351,5 +322,29 @@ public class Tamizaje extends BaseMetaData {
 
     public void setAutorizaSupervisor(String autorizaSupervisor) {
         this.autorizaSupervisor = autorizaSupervisor;
+    }
+
+    public String getEmancipado() {
+        return emancipado;
+    }
+
+    public void setEmancipado(String emancipado) {
+        this.emancipado = emancipado;
+    }
+
+    public String getRazonEmancipacion() {
+        return razonEmancipacion;
+    }
+
+    public void setRazonEmancipacion(String razonEmancipacion) {
+        this.razonEmancipacion = razonEmancipacion;
+    }
+
+    public String getOtraRazonEmancipacion() {
+        return otraRazonEmancipacion;
+    }
+
+    public void setOtraRazonEmancipacion(String otraRazonEmancipacion) {
+        this.otraRazonEmancipacion = otraRazonEmancipacion;
     }
 }

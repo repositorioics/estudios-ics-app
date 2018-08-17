@@ -16,7 +16,7 @@ public class CartaConsentimiento extends BaseMetaData {
     private Date fechaFirma;
     private Tamizaje tamizaje;
     private Participante participante;
-    private String emancipado;
+    //private String emancipado;
     private String nombre1Tutor;
     private String nombre2Tutor;
     private String apellido1Tutor;
@@ -77,7 +77,7 @@ public class CartaConsentimiento extends BaseMetaData {
     public void setParticipante(Participante participante) {
         this.participante = participante;
     }
-
+/*
     public String getEmancipado() {
         return emancipado;
     }
@@ -85,7 +85,7 @@ public class CartaConsentimiento extends BaseMetaData {
     public void setEmancipado(String emancipado) {
         this.emancipado = emancipado;
     }
-
+*/
     public String getNombre1Tutor() {
         return nombre1Tutor;
     }

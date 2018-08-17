@@ -104,6 +104,11 @@ public class DownloadBaseTask extends DownloadTask {
         estudioAdapter.borrarCasaCohorteFamilias();
         estudioAdapter.borrarParticipanteCohorteFamilias();
         estudioAdapter.borrarParticipanteSeroprevalencia();
+        estudioAdapter.borrarTamizajes();
+        estudioAdapter.borrarCartasConsentimiento();
+        estudioAdapter.borrarContactosParticipantes();
+        estudioAdapter.borrarVisitasTerrenoParticipante();
+        estudioAdapter.borrarEnfermedadesCronicas();
 
         try {
             if (mCatalogos != null){

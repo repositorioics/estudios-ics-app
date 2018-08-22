@@ -1417,6 +1417,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         }
 
         protected void onPostExecute(String resultado) {
+            try {
             onPrepareOptionsMenu();
             String[] menu_info = getResources().getStringArray(R.array.menu_info);
             gridView.setAdapter(new MenuInfoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
@@ -1424,7 +1425,14 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     mEncuestasLactancias.size(),mVacunas.size(),mReConsentimientoDen.size(),mMuestras.size(),mObsequios.size(),mConsentimientoZikas.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()
                     ,mEncuestasCasasChf.size(), mEncuestasCasasSa.size(), mEncuestasParticipantesSa.size()));
             refreshView();
-            dismissProgressDialog();
+            }catch (Exception ex){
+                dismissProgressDialog();
+                Toast toast = Toast.makeText(getApplicationContext(),"ERROR: "+ex.getLocalizedMessage(),Toast.LENGTH_LONG);
+                toast.show();
+                finish();
+            }finally {
+                dismissProgressDialog();
+            }
         }
     }
 }

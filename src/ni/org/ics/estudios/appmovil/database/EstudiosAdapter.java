@@ -164,6 +164,7 @@ public class EstudiosAdapter {
             //reconsentimiento dengue 2018
             db.execSQL(MainDBConstants.CREATE_VISITAPART_TABLE);
             db.execSQL(MainDBConstants.CREATE_CAMBIO_DOMICILIO_TABLE);
+            db.execSQL(MainDBConstants.CREATE_ENFCRONICA_TABLE);
         }
 
 		@Override

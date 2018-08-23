@@ -63,6 +63,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
     private boolean retirado;
     private boolean esElegible = true;
     private boolean visExitosa = false;
+    private boolean consentimiento;
+    private boolean reconsentimiento;
     private List<MessageResource> catRelacionFamiliar = new ArrayList<MessageResource>();
     private List<MessageResource> catMeses = new ArrayList<MessageResource>();
     private String[] catRazonEmanFem; //razones de emancipación para mujeres
@@ -171,6 +173,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
 
         retirado = (participante.getProcesos().getEstPart().equals(0) || !participante.getProcesos().getEstudio().contains("Dengue"));
         edadMeses = participante.getEdadMeses();
+        consentimiento = participante.getProcesos().getConsDeng().equalsIgnoreCase(Constants.YES);
+        reconsentimiento = participante.getProcesos().getReConsDeng().equalsIgnoreCase(Constants.YES);
         estudiosAdapter.open();
         catRelacionFamiliar = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", CatalogosDBConstants.order);
         catMeses = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", CatalogosDBConstants.order);
@@ -411,16 +415,16 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 notificarCambios = false;
                 if (visible && edadMeses<168){
                     //de 2 a 14 anio
-                    changeStatus(mWizardModel.findByKey(labels.getParteADen()), (edadMeses >=24 && edadMeses < 180));
+                    changeStatus(mWizardModel.findByKey(labels.getParteADen()), consentimiento);
                     notificarCambios = false;
                     //de 2 a 14 anio
-                    changeStatus(mWizardModel.findByKey(labels.getParteBDen()), (edadMeses >=24 && edadMeses < 180));
+                    changeStatus(mWizardModel.findByKey(labels.getParteBDen()), consentimiento);
                     notificarCambios = false;
                     //de 2 a 14 anio
-                    changeStatus(mWizardModel.findByKey(labels.getParteCDen()), (edadMeses >=24 && edadMeses < 180));
+                    changeStatus(mWizardModel.findByKey(labels.getParteCDen()), consentimiento);
                     notificarCambios = false;
                     //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
-                    changeStatus(mWizardModel.findByKey(labels.getParteDDen()), ((edadMeses >= 168 && edadMeses < 180) || (edadMeses >= 180)));
+                    changeStatus(mWizardModel.findByKey(labels.getParteDDen()), reconsentimiento);
                     notificarCambios = false;
                 }
                 if (!visible){
@@ -456,16 +460,16 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getAsiste()), !visible);
                 notificarCambios = false;
                 //de 2 a 14 anio
-                changeStatus(mWizardModel.findByKey(labels.getParteADen()), !visible && (edadMeses >=24 && edadMeses < 180));
+                changeStatus(mWizardModel.findByKey(labels.getParteADen()), !visible && consentimiento);
                 notificarCambios = false;
                 //de 2 a 14 anio
-                changeStatus(mWizardModel.findByKey(labels.getParteBDen()), !visible && (edadMeses >=24 && edadMeses < 180));
+                changeStatus(mWizardModel.findByKey(labels.getParteBDen()), !visible && consentimiento);
                 notificarCambios = false;
                 //de 2 a 14 anio
-                changeStatus(mWizardModel.findByKey(labels.getParteCDen()), !visible && (edadMeses >=24 && edadMeses < 180));
+                changeStatus(mWizardModel.findByKey(labels.getParteCDen()), !visible && consentimiento);
                 notificarCambios = false;
                 //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
-                changeStatus(mWizardModel.findByKey(labels.getParteDDen()), !visible && ((edadMeses >= 168 && edadMeses < 180) || (edadMeses >= 180)));
+                changeStatus(mWizardModel.findByKey(labels.getParteDDen()), !visible && reconsentimiento);
                 notificarCambios = false;
                 esElegible = !visible;
                 onPageTreeChanged();
@@ -589,16 +593,16 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getAsiste()), visible);
                 notificarCambios = false;
                 //de 2 a 14 anio
-                changeStatus(mWizardModel.findByKey(labels.getParteADen()), visible && (edadMeses >=24 && edadMeses < 180));
+                changeStatus(mWizardModel.findByKey(labels.getParteADen()), visible && consentimiento);
                 notificarCambios = false;
                 //de 2 a 14 anio
-                changeStatus(mWizardModel.findByKey(labels.getParteBDen()), visible && (edadMeses >=24 && edadMeses < 180));
+                changeStatus(mWizardModel.findByKey(labels.getParteBDen()), visible && consentimiento);
                 notificarCambios = false;
                 //de 2 a 14 anio
-                changeStatus(mWizardModel.findByKey(labels.getParteCDen()), visible && (edadMeses >=24 && edadMeses < 180));
+                changeStatus(mWizardModel.findByKey(labels.getParteCDen()), visible && consentimiento);
                 notificarCambios = false;
                 //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
-                changeStatus(mWizardModel.findByKey(labels.getParteDDen()), visible && ((edadMeses >= 168 && edadMeses < 180) || (edadMeses >= 180)));
+                changeStatus(mWizardModel.findByKey(labels.getParteDDen()), visible && reconsentimiento);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -804,7 +808,6 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getCualesTx())) {
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                 visible = test != null && test.contains(Constants.OTRO);
-                //visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroTx()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();

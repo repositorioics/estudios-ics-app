@@ -414,6 +414,10 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), !visible);
                 notificarCambios = false;
                 if (visible && edadMeses<168){
+                    changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAsiste()), visible);
+                    notificarCambios = false;
                     //de 2 a 14 anio
                     changeStatus(mWizardModel.findByKey(labels.getParteADen()), consentimiento);
                     notificarCambios = false;

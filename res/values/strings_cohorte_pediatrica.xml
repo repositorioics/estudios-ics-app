@@ -124,6 +124,8 @@
     <string name="uploading_docs">Enviar todos los documentos al servidor?</string>
     <string name="consflu_missing">Realizar Consentimiento Influenza</string>
     <string name="consden_missing">Realizar Consentimiento Dengue</string>
+    <string name="consden_missing_abc">Realizar Consentimiento Dengue A,B,C</string>
+    <string name="consden_missing_d">Realizar Consentimiento Dengue D</string>
     <string name="parto_missing">Realizar Datos Parto BB</string>
     <string name="activos">Descargar solo activos</string>
     <string name="terreno">Descargar solo participantes</string>

@@ -1167,8 +1167,12 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consflu_missing) + "</font></small><br />";
                     pendiente=true;
                 }
-                if ((mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getReConsDeng().matches("Si")) && mUser.getConsentimiento()) {
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consden_missing) + "</font></small><br />";
+                if (mParticipante.getProcesos().getConsDeng().matches("Si") && mUser.getConsentimiento()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consden_missing_abc) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getReConsDeng().matches("Si") && mUser.getConsentimiento()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consden_missing_d) + "</font></small><br />";
                     pendiente=true;
                 }
                 if (mParticipante.getProcesos().getZika().matches("Si") && mUser.getConsentimiento()) {

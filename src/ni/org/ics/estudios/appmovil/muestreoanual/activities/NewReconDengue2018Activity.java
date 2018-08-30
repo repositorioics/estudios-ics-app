@@ -1780,7 +1780,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 }
                 if (tieneValor(enfCronSN)) {
                     MessageResource catEnfermedad = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronSN + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                    if (catEnfermedad != null) tamizaje.setEnfermedad(catEnfermedad.getCatKey());
+                    if (catEnfermedad != null) tamizaje.setEnfermedadCronica(catEnfermedad.getCatKey());
 
                     if (enfCronSN.equals(Constants.YES))
                         guardarEnfermedadesCronicas(enfCronica.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','"), datos, tamizaje);

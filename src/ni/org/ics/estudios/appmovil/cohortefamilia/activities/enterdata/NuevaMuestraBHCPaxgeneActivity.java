@@ -72,6 +72,7 @@ public class NuevaMuestraBHCPaxgeneActivity extends FragmentActivity implements
     private Double volumenMaximoPermitido = 0D;
     private String horaTomaMx;
     private String accion;
+    private boolean desdeMenuInfo = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class NuevaMuestraBHCPaxgeneActivity extends FragmentActivity implements
                         null);
         infoMovil = new DeviceInfo(NuevaMuestraBHCPaxgeneActivity.this);
         accion = getIntent().getStringExtra(Constants.ACCION);
+        desdeMenuInfo = getIntent().getBooleanExtra(Constants.MENU_INFO,false);
         if(accion.equals(Constants.CODIGO_PROPOSITO_TX)){
         	visitaCaso = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
         	participanteCHF = visitaCaso.getCodigoParticipanteCaso().getParticipante();
@@ -540,6 +542,7 @@ public class NuevaMuestraBHCPaxgeneActivity extends FragmentActivity implements
 	            i = new Intent(getApplicationContext(),
 	                    ListaMuestrasActivity.class);
 	            i.putExtra(Constants.ACCION, Constants.ENTERING);
+                i.putExtra(Constants.MENU_INFO, desdeMenuInfo);
             }
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

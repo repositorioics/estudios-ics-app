@@ -80,24 +80,25 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
     @Override
     public boolean isEnabled(int position) {
         // Disable the first item of GridView
+        //a partir del MA2018 no se deberia ingresar información en la pantalla de Familia
         boolean habilitado = true;
         switch (position){
             case OPCION_ENCUESTA_PARTICIPANTE:
-                habilitado = true;
+                habilitado = false;
                 break;
             case OPCION_ENCUESTA_DATOSPARTO:
-                habilitado = habilitarDatosParto;
+                habilitado = false;
                 break;
             case OPCION_ENCUESTA_PESOTALLA:
-                habilitado = true;
+                habilitado = false;
                 break;
             case OPCION_ENCUESTA_LACTANCIA :
-                habilitado = habilitarLactancia;
+                habilitado = false;
                 break;
             case OPCION_ENCUESTA_MUESTRAS : habilitado = true;
                 break;
             case OPCION_ENCUESTA_PARTICIPANTESA :
-                habilitado = habilitarEncuestaParticipSA;
+                habilitado = false;
                 break;
             case OPCION_IR_CASA:
                 habilitado = true; break;
@@ -121,19 +122,22 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
 
 		// Change icon based on position
 		Drawable img = null;
+        //a partir del MA2018 no se deberia ingresar información en la pantalla de Familia
 		switch (position){
             case OPCION_ENCUESTA_PARTICIPANTE:
-                if (existeencuestaParticip) {
+                textView.setTextColor(Color.GRAY);
+                textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
+                /*if (existeencuestaParticip) {
                     textView.setTextColor(Color.BLUE);
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
                 }else{
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
-                }
+                }*/
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_myplaces);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
             case OPCION_ENCUESTA_DATOSPARTO:
-                if (!habilitarDatosParto) {
+                /*if (!habilitarDatosParto) {
                     textView.setTextColor(Color.GRAY);
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
                 }else {
@@ -143,22 +147,27 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                     } else {
                         textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
                     }
-                }
+                }*/
+                textView.setTextColor(Color.GRAY);
+                textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
                 img=getContext().getResources().getDrawable(R.drawable.ic_baby);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
             case OPCION_ENCUESTA_PESOTALLA:
-                if (existeencuestaPeso) {
+                /*if (existeencuestaPeso) {
                     textView.setTextColor(Color.BLUE);
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.done));
                 }else{
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
                 }
+                */
+                textView.setTextColor(Color.GRAY);
+                textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
                 img=getContext().getResources().getDrawable(R.drawable.ic_weight);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
             case OPCION_ENCUESTA_LACTANCIA:
-                if (!habilitarLactancia) {
+                /*if (!habilitarLactancia) {
                     textView.setTextColor(Color.GRAY);
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
                 }else{
@@ -168,7 +177,9 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                     }else{
                         textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
                     }
-                }
+                }*/
+                textView.setTextColor(Color.GRAY);
+                textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
                 img = getContext().getResources().getDrawable(R.drawable.ic_breastfeeding);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 			break;
@@ -177,7 +188,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
             case OPCION_ENCUESTA_PARTICIPANTESA:
-                if (!habilitarEncuestaParticipSA) {
+                /*if (!habilitarEncuestaParticipSA) {
                     textView.setTextColor(Color.GRAY);
                     textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
                 }else{
@@ -187,7 +198,9 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                     }else{
                         textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.pending));
                     }
-                }
+                }*/
+                textView.setTextColor(Color.GRAY);
+                textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_friendslist);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;

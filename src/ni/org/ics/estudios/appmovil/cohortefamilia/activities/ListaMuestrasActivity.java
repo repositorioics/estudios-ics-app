@@ -50,6 +50,7 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
     private int meses = 0;
     private boolean habilitarBhc;
     private boolean habilitarRojo;
+    private boolean desdeMenuInfo = false;
     private AlertDialog alertDialog;
     private String accion;
 
@@ -60,6 +61,7 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
 		registerForContextMenu(getListView());
 		participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
 		accion = getIntent().getStringExtra(Constants.ACCION);
+        desdeMenuInfo = getIntent().getBooleanExtra(Constants.MENU_INFO,false);
 		textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_samples);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
@@ -151,7 +153,7 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
 	public void onBackPressed (){
 		Bundle arguments = new Bundle();
 		Intent i;
-		if(!accion.matches(Constants.REVIEWING)){
+		if(!accion.matches(Constants.REVIEWING) && !desdeMenuInfo){
 			if (participanteCHF !=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCHF);
 			i = new Intent(getApplicationContext(),
 					MenuParticipanteActivity.class);
@@ -327,6 +329,7 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtras(arguments);
                     i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_MA);
+                    i.putExtra(Constants.MENU_INFO, desdeMenuInfo);
                     startActivity(i);
                 }else if (tipoMx.equalsIgnoreCase(getString(R.string.new_mx_rojo))) {
 
@@ -334,6 +337,7 @@ public class ListaMuestrasActivity extends AbstractAsyncListActivity {
                             NuevaMuestraTuboRojoActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_MA);
+                    i.putExtra(Constants.MENU_INFO, desdeMenuInfo);
                     i.putExtras(arguments);
                     startActivity(i);
                 }

@@ -232,6 +232,10 @@ public class EstudiosAdapter {
                 db.execSQL(MainDBConstants.CREATE_TAMIZAJE_TABLE);
                 db.execSQL(MainDBConstants.CREATE_ENFCRONICA_TABLE);
             }
+            if (oldVersion==9) {
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.enfermedadCronica + " text");
+                db.execSQL("ALTER TABLE " + CasosDBConstants.SINTOMAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.respiracionRapida + " text");
+            }
 		}	
 	}
 
@@ -8207,21 +8211,21 @@ public class EstudiosAdapter {
     }
     //Obtener una lista de EnfermedadCronica de la base de datos
     public List<EnfermedadCronica> getEnfermedadesCronicas(String filtro, String orden) throws SQLException {
-        List<EnfermedadCronica> mVisitasTerreno = new ArrayList<EnfermedadCronica>();
+        List<EnfermedadCronica> mEnfCronica = new ArrayList<EnfermedadCronica>();
         Cursor cursorEnfermedades = crearCursor(MainDBConstants.ENFCRONICA_TABLE, filtro, null, orden);
         if (cursorEnfermedades != null && cursorEnfermedades.getCount() > 0) {
             cursorEnfermedades.moveToFirst();
-            mVisitasTerreno.clear();
+            mEnfCronica.clear();
             do{
                 EnfermedadCronica mEnfermedadCronica = null;
                 mEnfermedadCronica = EnfermedadCronicaHelper.crearEnfermedadCronica(cursorEnfermedades);
                 Tamizaje tamizaje = this.getTamizaje(MainDBConstants.codigo + "='" +cursorEnfermedades.getString(cursorEnfermedades.getColumnIndex(MainDBConstants.tamizaje))+"'", null);
                 mEnfermedadCronica.setTamizaje(tamizaje);
-                mVisitasTerreno.add(mEnfermedadCronica);
+                mEnfCronica.add(mEnfermedadCronica);
             } while (cursorEnfermedades.moveToNext());
         }
         if (!cursorEnfermedades.isClosed()) cursorEnfermedades.close();
-        return mVisitasTerreno;
+        return mEnfCronica;
     }
 
 }

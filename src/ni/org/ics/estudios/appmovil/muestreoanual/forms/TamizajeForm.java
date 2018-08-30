@@ -68,6 +68,10 @@ public class TamizajeForm extends AbstractWizardModel {
         String[] catTipoIngreso = {"Dengue","Influenza","Ambos"};
         String[] catTipo = fillCatalog("CAT_TIPO_TEL");
         String[] catOperadora = fillCatalog("CAT_OPER_TEL");
+        String[] catTipoViv = fillCatalog("CP_CAT_TV");
+        String[] catMeses = fillCatalog("CHF_CAT_MESES");
+        String[] catEnfCron = fillCatalog("ENFERMEDAD_CRN");
+        String[] catTramiento = fillCatalog("CPD_CAT_TRATAMIENTO");
 
         estudiosAdapter.close();
 
@@ -84,6 +88,7 @@ public class TamizajeForm extends AbstractWizardModel {
         Page asentimientoVerbal = new SingleFixedChoicePage(this,labels.getAsentimientoVerbal(), labels.getAsentimientoVerbalHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 
         Page criteriosInclusion = new MultipleFixedChoicePage(this,labels.getCriteriosInclusion(), labels.getCriteriosInclusionHint(), Constants.WIZARD, false).setChoices(catCriteriosInclusion).setRequired(true);
+        Page vivienda = new SingleFixedChoicePage(this,labels.getVivienda(), "", Constants.WIZARD, false).setChoices(catTipoViv).setRequired(true);
         Page tiempoResidencia = new SingleFixedChoicePage(this,labels.getTiempoResidencia(), "", Constants.WIZARD, false).setChoices(catTiempoResid).setRequired(true);
 
         Page dondeAsisteProblemasSalud = new SingleFixedChoicePage(this,labels.getDondeAsisteProblemasSalud(), labels.getDondeAsisteProblemasSaludHint(), Constants.WIZARD, false).setChoices(catDondeAsisteProblemasSalud).setRequired(true);
@@ -92,9 +97,41 @@ public class TamizajeForm extends AbstractWizardModel {
         Page aceptaAtenderCentro = new SingleFixedChoicePage(this,labels.getAceptaAtenderCentro(), labels.getAceptaAtenderCentroHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 
         Page enfermedad = new SingleFixedChoicePage(this,labels.getEnfermedad(), labels.getEnfermedadHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page cualEnfermedad = new TextPage(this,labels.getCualEnfermedad(),"", Constants.WIZARD, false).setRequired(true);
+        Page cualEnfermedad = new MultipleFixedChoicePage(this,labels.getCualEnfermedad(),"", Constants.WIZARD, false).setChoices(catEnfCron).setRequired(true);
+        Page oEnfCronica = new TextPage(this,labels.getOtraEnfCronica(), "", Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaAnio1 = new NumberPage(this,labels.getEnfCronicaAnio1(), catEnfCron[0], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes1 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes1(), catEnfCron[0], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio2 = new NumberPage(this,labels.getEnfCronicaAnio2(), catEnfCron[1], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes2 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes2(), catEnfCron[1], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio3 = new NumberPage(this,labels.getEnfCronicaAnio3(), catEnfCron[2], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes3 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes3(), catEnfCron[2], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio4 = new NumberPage(this,labels.getEnfCronicaAnio4(), catEnfCron[3], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes4 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes4(), catEnfCron[3], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio5 = new NumberPage(this,labels.getEnfCronicaAnio5(), catEnfCron[4], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes5 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes5(), catEnfCron[4], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio6 = new NumberPage(this,labels.getEnfCronicaAnio6(), catEnfCron[5], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes6 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes6(), catEnfCron[5], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio7 = new NumberPage(this,labels.getEnfCronicaAnio7(), catEnfCron[6], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes7 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes7(), catEnfCron[6], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio8 = new NumberPage(this,labels.getEnfCronicaAnio8(), catEnfCron[7], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes8 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes8(), catEnfCron[7], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio9 = new NumberPage(this,labels.getEnfCronicaAnio9(), catEnfCron[8], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes9 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes9(), catEnfCron[8], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio10 = new NumberPage(this,labels.getEnfCronicaAnio10(), catEnfCron[9], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes10 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes10(), catEnfCron[9], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio11 = new NumberPage(this,labels.getEnfCronicaAnio11(), catEnfCron[10], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes11 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes11(), catEnfCron[10], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio12 = new NumberPage(this,labels.getEnfCronicaAnio12(), catEnfCron[11], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes12 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes12(), catEnfCron[11], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio13 = new NumberPage(this,labels.getEnfCronicaAnio13(), catEnfCron[12], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes13 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes13(), catEnfCron[12], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+        Page enfCronicaAnio14 = new NumberPage(this,labels.getEnfCronicaAnio14(), catEnfCron[13], Constants.WIZARD, false).setRequired(true);
+        Page enfCronicaMes14 = new SingleFixedChoicePage(this,labels.getEnfCronicaMes14(), catEnfCron[13], Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
+
         Page tratamiento = new SingleFixedChoicePage(this,labels.getTratamiento(), "", Constants.WIZARD, false).setChoices(catSiNoDes).setRequired(true);
-        Page cualTratamiento = new TextPage(this,labels.getCualTratamiento(),"", Constants.WIZARD, false).setRequired(true);
+        Page cualTratamiento = new MultipleFixedChoicePage(this,labels.getCualTratamiento(),"", Constants.WIZARD, false).setChoices(catTramiento).setRequired(true);
+        Page otroTx = new TextPage(this,labels.getOtroTratamiento(), "", Constants.WIZARD, false).setRequired(true);
+
         Page diagDengue = new SingleFixedChoicePage(this,labels.getDiagDengue(), "", Constants.WIZARD, false).setChoices(catSiNoDes).setRequired(true);
         Page fechaDiagDengue = new NewDatePage(this,labels.getFechaDiagDengue(), "", Constants.WIZARD, false).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
         Page hospDengue = new SingleFixedChoicePage(this,labels.getHospDengue(), "", Constants.WIZARD, false).setChoices(catSiNoDes).setRequired(true);
@@ -170,8 +207,10 @@ public class TamizajeForm extends AbstractWizardModel {
         Page finTamizajeLabel = new LabelPage(this,labels.getFinTamizajeLabel(),"", Constants.WIZARD, true).setRequired(false);
 
 		return new PageList(tipoIngreso, sexo, fechaNacimiento, aceptaTamizajePersona, razonNoParticipaPersona, otraRazonNoParticipaPersona,
-                criteriosInclusion, tiempoResidencia, dondeAsisteProblemasSalud, otroCentroSalud, puestoSalud, aceptaAtenderCentro,
-                enfermedad, cualEnfermedad, tratamiento, cualTratamiento, diagDengue, fechaDiagDengue, hospDengue, fechaHospDengue,
+                criteriosInclusion, vivienda, tiempoResidencia, dondeAsisteProblemasSalud, otroCentroSalud, puestoSalud, aceptaAtenderCentro, enfermedad, cualEnfermedad, oEnfCronica,
+                enfCronicaAnio1, enfCronicaMes1, enfCronicaAnio2, enfCronicaMes2, enfCronicaAnio3, enfCronicaMes3, enfCronicaAnio4, enfCronicaMes4, enfCronicaAnio5, enfCronicaMes5, enfCronicaAnio6, enfCronicaMes6, enfCronicaAnio7, enfCronicaMes7,
+                enfCronicaAnio8, enfCronicaMes8, enfCronicaAnio9, enfCronicaMes9, enfCronicaAnio10, enfCronicaMes10, enfCronicaAnio11, enfCronicaMes11, enfCronicaAnio12, enfCronicaMes12, enfCronicaAnio13, enfCronicaMes13, enfCronicaAnio14, enfCronicaMes14,
+                tratamiento, cualTratamiento, otroTx, diagDengue, fechaDiagDengue, hospDengue, fechaHospDengue,
                 asentimientoVerbal, aceptaCohorteDengue, razonNoAceptaDengue, otraRazonNoAceptaDengue,
                 aceptaCohorteInfluenza, enfermedadInmuno, pretermino, razonNoAceptaInfluenza, otraRazonNoAceptaInfluenza,
                 casaPerteneceCohorte, codigoCasaCohorte, codigoNuevaCasaCohorte, nombre1JefeFamilia, nombre2JefeFamilia, apellido1JefeFamilia, apellido2JefeFamilia, barrio, manzana, direccion,

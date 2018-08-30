@@ -43,6 +43,7 @@ public class VisitaSeguimientoCasoSintomasHelper {
         cv.put(CasosDBConstants.antibiotico, sintomaCaso.getAntibiotico());
         cv.put(CasosDBConstants.cualAntibiotico, sintomaCaso.getCualAntibiotico());
         cv.put(CasosDBConstants.prescritoMedico, sintomaCaso.getPrescritoMedico());
+        cv.put(CasosDBConstants.respiracionRapida, sintomaCaso.getRespiracionRapida());
         
         if (sintomaCaso.getRecordDate() != null) cv.put(MainDBConstants.recordDate, sintomaCaso.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, sintomaCaso.getRecordUser());
@@ -80,7 +81,8 @@ public class VisitaSeguimientoCasoSintomasHelper {
     	mVisitaSeguimientoCasoSintomas.setOseltamivir(cursor.getString(cursor.getColumnIndex(CasosDBConstants.oseltamivir)));
     	mVisitaSeguimientoCasoSintomas.setAntibiotico(cursor.getString(cursor.getColumnIndex(CasosDBConstants.antibiotico)));
     	mVisitaSeguimientoCasoSintomas.setCualAntibiotico(cursor.getString(cursor.getColumnIndex(CasosDBConstants.cualAntibiotico)));
-    	mVisitaSeguimientoCasoSintomas.setPrescritoMedico(cursor.getString(cursor.getColumnIndex(CasosDBConstants.prescritoMedico))); 
+    	mVisitaSeguimientoCasoSintomas.setPrescritoMedico(cursor.getString(cursor.getColumnIndex(CasosDBConstants.prescritoMedico)));
+        mVisitaSeguimientoCasoSintomas.setRespiracionRapida(cursor.getString(cursor.getColumnIndex(CasosDBConstants.respiracionRapida)));
     	
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mVisitaSeguimientoCasoSintomas.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mVisitaSeguimientoCasoSintomas.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

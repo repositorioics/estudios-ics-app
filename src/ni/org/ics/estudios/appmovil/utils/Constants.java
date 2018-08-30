@@ -105,6 +105,7 @@ public class Constants {
     public static final String OK = "OK";
 
     public static final String NUEVO_INGRESO = "nuevo_ngreso";
+    public static final String INGRESO_CHF = "nuevo_ngreso_chf";
 }
 
     

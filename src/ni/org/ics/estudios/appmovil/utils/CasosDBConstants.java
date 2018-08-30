@@ -140,6 +140,7 @@ public class CasosDBConstants {
     public static final String antibiotico = "antibiotico";
     public static final String cualAntibiotico = "cualAntibiotico";
     public static final String prescritoMedico = "prescritoMedico";
+    public static final String respiracionRapida = "respiracionRapida";
 
 
     //Crear VisitaSeguimientoCasoSintomas
@@ -172,6 +173,7 @@ public class CasosDBConstants {
             + antibiotico + " text, "
             + cualAntibiotico + " text, "
             + prescritoMedico + " text, "
+            + respiracionRapida + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

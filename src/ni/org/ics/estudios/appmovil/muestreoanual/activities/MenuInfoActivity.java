@@ -32,6 +32,7 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
@@ -54,6 +55,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
 
     private Integer codigo;
     private static Participante mParticipante = new Participante();
+    private static ParticipanteCohorteFamilia mParticipanteChf = new ParticipanteCohorteFamilia();
     private static UserPermissions mUser = new UserPermissions();
     private static ArrayList<ReConsentimientoFlu2015> mReConsentimientoFlu = new ArrayList<ReConsentimientoFlu2015>();
     private ArrayList<VisitaTerreno> mVisitasTerreno = new ArrayList<VisitaTerreno>();
@@ -82,6 +84,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private static final int EXIT = 1;
     private boolean mExitShowing;
     private boolean visExitosa = false;
+    private boolean ingresoChf = false;
     private boolean pendiente = false;
     private static final String EXIT_SHOWING = "exitshowing";
     public static final int VISITA =100;
@@ -132,6 +135,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         }
         codigo = getIntent().getIntExtra(ConstantsDB.CODIGO,-1);
         visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
+        ingresoChf = getIntent().getBooleanExtra(Constants.INGRESO_CHF,false);
         //mParticipante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         textView = (TextView) findViewById(R.id.label);
         gridView = (GridView) findViewById(R.id.gridView1);
@@ -139,6 +143,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         //if (mParticipante == null){
             estudiosAdapter.open();
             mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo  + "="+codigo, null);
+        mParticipanteChf = estudiosAdapter.getParticipanteCohorteFamilia(MainDBConstants.participante  + "="+codigo, null);
             estudiosAdapter.close();
         //}
 
@@ -565,24 +570,34 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 return true;
             case R.id.SAMPLE:
                 if(mUser.getMuestra()){
-                    if(mParticipante.getProcesos().getConmx().matches("No")||mParticipante.getProcesos().getConmxbhc().matches("No")){
-                        if (mParticipante.getProcesos().getConvalesciente().matches("Na")){
-                            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.convless14),Toast.LENGTH_LONG);
+                    if (!ingresoChf) {
+                        if (mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No")) {
+                            if (mParticipante.getProcesos().getConvalesciente().matches("Na")) {
+                                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.convless14), Toast.LENGTH_LONG);
+                                toast.show();
+                            } else {
+                                i = new Intent(getApplicationContext(),
+                                        NewSampleActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                i.putExtra(ConstantsDB.COD_CASA, mParticipante.getCasa().getCodigo());
+                                i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());
+                                i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                                startActivity(i);
+                            }
+                        } else {
+                            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.e_error), Toast.LENGTH_LONG);
                             toast.show();
                         }
-                        else{
-                            i = new Intent(getApplicationContext(),
-                                    NewSampleActivity.class);
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            i.putExtra(ConstantsDB.COD_CASA, mParticipante.getCasa().getCodigo());
-                            i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());
-                            i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
-                            startActivity(i);
-                        }
-                    }
-                    else{
-                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
-                        toast.show();
+                    }else{
+
+                        if (mParticipanteChf != null) arguments.putSerializable(Constants.PARTICIPANTE, mParticipanteChf);
+                        i = new Intent(getApplicationContext(),
+                                ListaMuestrasActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        i.putExtra(Constants.ACCION, Constants.ENTERING);
+                        i.putExtra(Constants.MENU_INFO, true);
+                        startActivity(i);
                     }
                 }
                 else{
@@ -898,7 +913,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         estudiosAdapter.close();
     }
 
-    private void refreshView() {
+    private void refreshView() throws Exception{
         pendiente = false;
         Integer edad = getAge(mParticipante.getFechaNac());
         String labelHeader = "<b>"+mParticipante.getCodigo()+" - "+ mParticipante.getNombre1();
@@ -1215,37 +1230,42 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
 
     private String getVolumenCHF(){
         String labelHeader = "";
-        //De 6 meses a <2 años
-        if(mParticipante.getEdadMeses()>=6 && mParticipante.getEdadMeses()<24){
-            if (mParticipante.getProcesos().getConmx().matches("No")){
-                labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
-                pendiente =true;
-            }
-            if (mParticipante.getProcesos().getConmxbhc().matches("No")){
-                labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                pendiente =true;
-            }
-        }else //De 2 años - < 14 Años
-            if(mParticipante.getEdadMeses()>=24 && mParticipante.getEdadMeses()<168){
-                if (mParticipante.getProcesos().getConmx().matches("No")){
-                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
-                    pendiente =true;
+        if (!ingresoChf) {
+            //De 6 meses a <2 años
+            if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
+                if (mParticipante.getProcesos().getConmx().matches("No")) {
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                    pendiente = true;
                 }
-                if (mParticipante.getProcesos().getConmxbhc().matches("No")){
+                if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                     labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                    pendiente =true;
+                    pendiente = true;
                 }
-            }else //De 14 años y más
-            {
-                if (mParticipante.getProcesos().getConmx().matches("No")){
-                    labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
-                    pendiente =true;
+            } else //De 2 años - < 14 Años
+                if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
+                    if (mParticipante.getProcesos().getConmx().matches("No")) {
+                        labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                        pendiente = true;
+                    }
+                    if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
+                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                        pendiente = true;
+                    }
+                } else //De 14 años y más
+                {
+                    if (mParticipante.getProcesos().getConmx().matches("No")) {
+                        labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                        pendiente = true;
+                    }
+                    if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
+                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                        pendiente = true;
+                    }
                 }
-                if (mParticipante.getProcesos().getConmxbhc().matches("No")){
-                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                    pendiente =true;
-                }
-            }
+        }else{
+            labelHeader = labelHeader + "<font color='blue'>Tomar muestra<br /></font>";
+            pendiente = true;
+        }
         return labelHeader;
     }
 
@@ -1414,8 +1434,6 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
                 return "error";
-            }finally {
-                //estudiosAdapter.close();
             }
             return "exito";
         }

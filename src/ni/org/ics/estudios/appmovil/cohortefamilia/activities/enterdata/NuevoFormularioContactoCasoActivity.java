@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import ni.org.ics.estudios.appmovil.utils.*;
 import org.joda.time.DateMidnight;
 
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
@@ -39,11 +40,6 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFam
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.FormularioContactoCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
-import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
-import ni.org.ics.estudios.appmovil.utils.FileUtils;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
 import ni.org.ics.estudios.appmovil.wizard.model.DatePage;
@@ -350,6 +346,14 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
     public void updateModel(Page page){
     	try{
     		boolean visible = false;
+            if (page.getTitle().equals(labels.getPartContacto())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(visitaCaso.getCodigoParticipanteCaso().getParticipante().getParticipante().getCodigo().toString());
+                if (visible) {
+                    Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.selfContact), Toast.LENGTH_LONG);
+                    toast.show();
+                    page.resetData(new Bundle());
+                }
+            }
     		if (page.getTitle().equals(labels.getTiempoInteraccion())) {
                 visible = !page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("No tuvo contacto");
                 changeStatus(mWizardModel.findByKey(labels.getTipoInteraccion()), visible);
@@ -417,72 +421,84 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
 		String fechaContacto = datos.getString(this.getString(R.string.fechaContacto));
 		String tiempoInteraccion = datos.getString(this.getString(R.string.tiempoInteraccion));
 		String tipoInteraccion = datos.getString(this.getString(R.string.tipoInteraccion));
-		
-		//Crea un nuevo Contacto
-		FormularioContactoCaso fcc = new FormularioContactoCaso();
-		fcc.setCodigoCasoContacto(id);
-		fcc.setCodigoVisitaCaso(visitaCaso);
-		
-		Integer codigo = 0;
-		if (tieneValor(partContacto)) {
-			codigo = Integer.parseInt(partContacto);
-			ParticipanteCohorteFamilia part = estudiosAdapter.getParticipanteCohorteFamilia(MainDBConstants.participante +" = "+ codigo , null);
-			fcc.setPartContacto(part);
-		}
-		
-		if (tieneValor(fechaContacto)) {
-			DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-			try {
-				fcc.setFechaContacto(mDateFormat.parse(fechaContacto));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		if (tieneValor(tiempoInteraccion)) {
-			MessageResource catTiempo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tiempoInteraccion + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIEMPO_INTERACCION'", null);
-			fcc.setTiempoInteraccion(catTiempo.getCatKey());
-		}
-		
-		if (tieneValor(tipoInteraccion)) {
-    		String catKeys = "";
-    		tipoInteraccion = tipoInteraccion.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
-            List<MessageResource> mCatTipo = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + tipoInteraccion + "') and "
-                    + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_INTERACCION'", null);
-            for(MessageResource ms : mCatTipo) {
-                catKeys += ms.getCatKey() + ",";
-            }
-            if (!catKeys.isEmpty())
-                catKeys = catKeys.substring(0, catKeys.length() - 1);
-            fcc.setTipoInteraccion(catKeys);
-		}
 
-		fcc.setRecordDate(new Date());
-		fcc.setRecordUser(username);
-		fcc.setDeviceid(infoMovil.getDeviceId());
-		fcc.setEstado('0');
-		fcc.setPasive('0');
+        if (tieneValor(partContacto) && tieneValor(fechaContacto)){
+            Date fContacto = new Date();
+            if (tieneValor(fechaContacto)) {
+                DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    fContacto = mDateFormat.parse(fechaContacto);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            List<FormularioContactoCaso> contactoCasos = estudiosAdapter.getFormularioContactoCasos(
+                    CasosDBConstants.codigoVisitaCaso + "='" + visitaCaso.getCodigoCasoVisita()
+                    + "' and "+ CasosDBConstants.partContacto + "="+Integer.parseInt(partContacto)
+                    + " and "+ CasosDBConstants.fechaContacto + "=" +fContacto.getTime() , null);
+            if (contactoCasos != null && contactoCasos.size()>0){
+                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.contactExist, partContacto),Toast.LENGTH_LONG);
+                toast.show();
+            }else{
+                //Crea un nuevo Contacto
+                FormularioContactoCaso fcc = new FormularioContactoCaso();
+                fcc.setCodigoCasoContacto(id);
+                fcc.setCodigoVisitaCaso(visitaCaso);
+
+                Integer codigo = 0;
+                if (tieneValor(partContacto)) {
+                    codigo = Integer.parseInt(partContacto);
+                    ParticipanteCohorteFamilia part = estudiosAdapter.getParticipanteCohorteFamilia(MainDBConstants.participante +" = "+ codigo , null);
+                    fcc.setPartContacto(part);
+                }
+                fcc.setFechaContacto(fContacto);
+                if (tieneValor(tiempoInteraccion)) {
+                    MessageResource catTiempo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tiempoInteraccion + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIEMPO_INTERACCION'", null);
+                    fcc.setTiempoInteraccion(catTiempo.getCatKey());
+                }
+
+                if (tieneValor(tipoInteraccion)) {
+                    String catKeys = "";
+                    tipoInteraccion = tipoInteraccion.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
+                    List<MessageResource> mCatTipo = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + tipoInteraccion + "') and "
+                            + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_INTERACCION'", null);
+                    for(MessageResource ms : mCatTipo) {
+                        catKeys += ms.getCatKey() + ",";
+                    }
+                    if (!catKeys.isEmpty())
+                        catKeys = catKeys.substring(0, catKeys.length() - 1);
+                    fcc.setTipoInteraccion(catKeys);
+                }
+
+                fcc.setRecordDate(new Date());
+                fcc.setRecordUser(username);
+                fcc.setDeviceid(infoMovil.getDeviceId());
+                fcc.setEstado('0');
+                fcc.setPasive('0');
+
+                //Guarda el contacto
+                try {
+                    estudiosAdapter.crearFormularioContactoCaso(fcc);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                estudiosAdapter.close();
+                Bundle arguments = new Bundle();
+                Intent i;
+                if (visitaCaso!=null) arguments.putSerializable(Constants.VISITA , visitaCaso);
+                i = new Intent(getApplicationContext(),
+                        ListaContactosParticipantesCasosActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.putExtras(arguments);
+                startActivity(i);
+                Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
+                toast.show();
+                finish();
+            }
+        }
 		
-		//Guarda el contacto
-		try {
-			estudiosAdapter.crearFormularioContactoCaso(fcc);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        estudiosAdapter.close();
-		Bundle arguments = new Bundle();
-		Intent i;
-		if (visitaCaso!=null) arguments.putSerializable(Constants.VISITA , visitaCaso);
-		i = new Intent(getApplicationContext(),
-				ListaContactosParticipantesCasosActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		i.putExtras(arguments);
-		startActivity(i);
-		Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
-		toast.show();
-		finish();
+
 		
     }
 

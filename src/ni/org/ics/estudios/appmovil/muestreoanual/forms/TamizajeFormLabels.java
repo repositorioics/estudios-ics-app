@@ -35,13 +35,45 @@ public class TamizajeFormLabels {
     protected String criteriosInclusionHint;
     protected String enfermedadInmuno;
     protected String cualEnfermedad;
+    protected String otraEnfCronica;
+    protected String enfCronicaAnio1;
+    protected String enfCronicaMes1;
+    protected String enfCronicaAnio2;
+    protected String enfCronicaMes2;
+    protected String enfCronicaAnio3;
+    protected String enfCronicaMes3;
+    protected String enfCronicaAnio4;
+    protected String enfCronicaMes4;
+    protected String enfCronicaAnio5;
+    protected String enfCronicaMes5;
+    protected String enfCronicaAnio6;
+    protected String enfCronicaMes6;
+    protected String enfCronicaAnio7;
+    protected String enfCronicaMes7;
+    protected String enfCronicaAnio8;
+    protected String enfCronicaMes8;
+    protected String enfCronicaAnio9;
+    protected String enfCronicaMes9;
+    protected String enfCronicaAnio10;
+    protected String enfCronicaMes10;
+    protected String enfCronicaAnio11;
+    protected String enfCronicaMes11;
+    protected String enfCronicaAnio12;
+    protected String enfCronicaMes12;
+    protected String enfCronicaAnio13;
+    protected String enfCronicaMes13;
+    protected String enfCronicaAnio14;
+    protected String enfCronicaMes14;
+
     protected String tratamiento;
     protected String cualTratamiento;
+    protected String otroTratamiento;
     protected String diagDengue;
     protected String fechaDiagDengue;
     protected String hospDengue;
     protected String fechaHospDengue;
     protected String tiempoResidencia;
+    protected String vivienda;
 
     protected String enfermedad;
     protected String enfermedadHint;
@@ -182,16 +214,48 @@ public class TamizajeFormLabels {
 
         enfermedadInmuno = res.getString(R.string.enfermedadInmuno);
         cualEnfermedad = res.getString(R.string.cualEnfermedad);
+        otraEnfCronica = res.getString(R.string.oEnfCronica);
+        enfCronicaAnio1 = res.getString(R.string.enfCronicaAnio1);
+        enfCronicaMes1 = res.getString(R.string.enfCronicaMes1);
+        enfCronicaAnio2 = res.getString(R.string.enfCronicaAnio2);
+        enfCronicaMes2 = res.getString(R.string.enfCronicaMes2);
+        enfCronicaAnio3 = res.getString(R.string.enfCronicaAnio3);
+        enfCronicaMes3 = res.getString(R.string.enfCronicaMes3);
+        enfCronicaAnio4 = res.getString(R.string.enfCronicaAnio4);
+        enfCronicaMes4 = res.getString(R.string.enfCronicaMes4);
+        enfCronicaAnio5 = res.getString(R.string.enfCronicaAnio5);
+        enfCronicaMes5 = res.getString(R.string.enfCronicaMes5);
+        enfCronicaAnio6 = res.getString(R.string.enfCronicaAnio6);
+        enfCronicaMes6 = res.getString(R.string.enfCronicaMes6);
+        enfCronicaAnio7 = res.getString(R.string.enfCronicaAnio7);
+        enfCronicaMes7 = res.getString(R.string.enfCronicaMes7);
+        enfCronicaAnio8 = res.getString(R.string.enfCronicaAnio8);
+        enfCronicaMes8 = res.getString(R.string.enfCronicaMes8);
+        enfCronicaAnio9 = res.getString(R.string.enfCronicaAnio9);
+        enfCronicaMes9 = res.getString(R.string.enfCronicaMes9);
+        enfCronicaAnio10 = res.getString(R.string.enfCronicaAnio10);
+        enfCronicaMes10 = res.getString(R.string.enfCronicaMes10);
+        enfCronicaAnio11 = res.getString(R.string.enfCronicaAnio11);
+        enfCronicaMes11 = res.getString(R.string.enfCronicaMes11);
+        enfCronicaAnio12 = res.getString(R.string.enfCronicaAnio12);
+        enfCronicaMes12 = res.getString(R.string.enfCronicaMes12);
+        enfCronicaAnio13 = res.getString(R.string.enfCronicaAnio13);
+        enfCronicaMes13 = res.getString(R.string.enfCronicaMes13);
+        enfCronicaAnio14 = res.getString(R.string.enfCronicaAnio14);
+        enfCronicaMes14 = res.getString(R.string.enfCronicaMes14);
+
         tratamiento = res.getString(R.string.tratamientoIngreso);
         cualTratamiento = res.getString(R.string.cualTratamiento);
+        otroTratamiento = res.getString(R.string.otroTx);
         diagDengue = res.getString(R.string.diagDengue);
         fechaDiagDengue = res.getString(R.string.fechaDiagDengue);
         hospDengue = res.getString(R.string.hospDengue);
         fechaHospDengue = res.getString(R.string.fechaHospDengue);
         tiempoResidencia = res.getString(R.string.tiempoResidencia);
+        vivienda = res.getString(R.string.tipoVivienda);
 
-        enfermedad = res.getString(R.string.enfermedad);
-        enfermedadHint = res.getString(R.string.enfermedadHint);
+        enfermedad = res.getString(R.string.enfermedadCronica);
+        enfermedadHint = ""; //res.getString(R.string.enfermedadHint);
         dondeAsisteProblemasSalud = res.getString(R.string.dondeAsisteProblemasSalud);
         dondeAsisteProblemasSaludHint = res.getString(R.string.dondeAsisteProblemasSaludHint);
         otroCentroSalud = res.getString(R.string.otroCentroSalud);
@@ -315,1087 +379,667 @@ public class TamizajeFormLabels {
         return tipoIngreso;
     }
 
-    public void setTipoIngreso(String tipoIngreso) {
-        this.tipoIngreso = tipoIngreso;
-    }
-
     public String getTipoIngresoHint() {
         return tipoIngresoHint;
-    }
-
-    public void setTipoIngresoHint(String tipoIngresoHint) {
-        this.tipoIngresoHint = tipoIngresoHint;
     }
 
     public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
     public String getFechaNacimientoHint() {
         return fechaNacimientoHint;
-    }
-
-    public void setFechaNacimientoHint(String fechaNacimientoHint) {
-        this.fechaNacimientoHint = fechaNacimientoHint;
     }
 
     public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
     public String getSexoHint() {
         return sexoHint;
-    }
-
-    public void setSexoHint(String sexoHint) {
-        this.sexoHint = sexoHint;
     }
 
     public String getPretermino() {
         return pretermino;
     }
 
-    public void setPretermino(String pretermino) {
-        this.pretermino = pretermino;
-    }
-
     public String getAceptaTamizajePersona() {
         return aceptaTamizajePersona;
-    }
-
-    public void setAceptaTamizajePersona(String aceptaTamizajePersona) {
-        this.aceptaTamizajePersona = aceptaTamizajePersona;
     }
 
     public String getAceptaTamizajePersonaHint() {
         return aceptaTamizajePersonaHint;
     }
 
-    public void setAceptaTamizajePersonaHint(String aceptaTamizajePersonaHint) {
-        this.aceptaTamizajePersonaHint = aceptaTamizajePersonaHint;
-    }
-
     public String getRazonNoParticipaPersona() {
         return razonNoParticipaPersona;
-    }
-
-    public void setRazonNoParticipaPersona(String razonNoParticipaPersona) {
-        this.razonNoParticipaPersona = razonNoParticipaPersona;
     }
 
     public String getRazonNoParticipaPersonaHint() {
         return razonNoParticipaPersonaHint;
     }
 
-    public void setRazonNoParticipaPersonaHint(String razonNoParticipaPersonaHint) {
-        this.razonNoParticipaPersonaHint = razonNoParticipaPersonaHint;
-    }
-
     public String getOtraRazonNoParticipaPersona() {
         return otraRazonNoParticipaPersona;
-    }
-
-    public void setOtraRazonNoParticipaPersona(String otraRazonNoParticipaPersona) {
-        this.otraRazonNoParticipaPersona = otraRazonNoParticipaPersona;
     }
 
     public String getOtraRazonNoParticipaPersonaHint() {
         return otraRazonNoParticipaPersonaHint;
     }
 
-    public void setOtraRazonNoParticipaPersonaHint(String otraRazonNoParticipaPersonaHint) {
-        this.otraRazonNoParticipaPersonaHint = otraRazonNoParticipaPersonaHint;
-    }
-
     public String getAsentimientoVerbal() {
         return asentimientoVerbal;
-    }
-
-    public void setAsentimientoVerbal(String asentimientoVerbal) {
-        this.asentimientoVerbal = asentimientoVerbal;
     }
 
     public String getAsentimientoVerbalHint() {
         return asentimientoVerbalHint;
     }
 
-    public void setAsentimientoVerbalHint(String asentimientoVerbalHint) {
-        this.asentimientoVerbalHint = asentimientoVerbalHint;
-    }
-
     public String getCriteriosInclusion() {
         return criteriosInclusion;
-    }
-
-    public void setCriteriosInclusion(String criteriosInclusion) {
-        this.criteriosInclusion = criteriosInclusion;
     }
 
     public String getCriteriosInclusionHint() {
         return criteriosInclusionHint;
     }
 
-    public void setCriteriosInclusionHint(String criteriosInclusionHint) {
-        this.criteriosInclusionHint = criteriosInclusionHint;
-    }
-
     public String getEnfermedadInmuno() {
         return enfermedadInmuno;
-    }
-
-    public void setEnfermedadInmuno(String enfermedadInmuno) {
-        this.enfermedadInmuno = enfermedadInmuno;
     }
 
     public String getCualEnfermedad() {
         return cualEnfermedad;
     }
 
-    public void setCualEnfermedad(String cualEnfermedad) {
-        this.cualEnfermedad = cualEnfermedad;
+    public String getOtraEnfCronica() {
+        return otraEnfCronica;
+    }
+
+    public String getEnfCronicaAnio1() {
+        return enfCronicaAnio1;
+    }
+
+    public String getEnfCronicaMes1() {
+        return enfCronicaMes1;
+    }
+
+    public String getEnfCronicaAnio2() {
+        return enfCronicaAnio2;
+    }
+
+    public String getEnfCronicaMes2() {
+        return enfCronicaMes2;
+    }
+
+    public String getEnfCronicaAnio3() {
+        return enfCronicaAnio3;
+    }
+
+    public String getEnfCronicaMes3() {
+        return enfCronicaMes3;
+    }
+
+    public String getEnfCronicaAnio4() {
+        return enfCronicaAnio4;
+    }
+
+    public String getEnfCronicaMes4() {
+        return enfCronicaMes4;
+    }
+
+    public String getEnfCronicaAnio5() {
+        return enfCronicaAnio5;
+    }
+
+    public String getEnfCronicaMes5() {
+        return enfCronicaMes5;
+    }
+
+    public String getEnfCronicaAnio6() {
+        return enfCronicaAnio6;
+    }
+
+    public String getEnfCronicaMes6() {
+        return enfCronicaMes6;
+    }
+
+    public String getEnfCronicaAnio7() {
+        return enfCronicaAnio7;
+    }
+
+    public String getEnfCronicaMes7() {
+        return enfCronicaMes7;
+    }
+
+    public String getEnfCronicaAnio8() {
+        return enfCronicaAnio8;
+    }
+
+    public String getEnfCronicaMes8() {
+        return enfCronicaMes8;
+    }
+
+    public String getEnfCronicaAnio9() {
+        return enfCronicaAnio9;
+    }
+
+    public String getEnfCronicaMes9() {
+        return enfCronicaMes9;
+    }
+
+    public String getEnfCronicaAnio10() {
+        return enfCronicaAnio10;
+    }
+
+    public String getEnfCronicaMes10() {
+        return enfCronicaMes10;
+    }
+
+    public String getEnfCronicaAnio11() {
+        return enfCronicaAnio11;
+    }
+
+    public String getEnfCronicaMes11() {
+        return enfCronicaMes11;
+    }
+
+    public String getEnfCronicaAnio12() {
+        return enfCronicaAnio12;
+    }
+
+    public String getEnfCronicaMes12() {
+        return enfCronicaMes12;
+    }
+
+    public String getEnfCronicaAnio13() {
+        return enfCronicaAnio13;
+    }
+
+    public String getEnfCronicaMes13() {
+        return enfCronicaMes13;
+    }
+
+    public String getEnfCronicaAnio14() {
+        return enfCronicaAnio14;
+    }
+
+    public String getEnfCronicaMes14() {
+        return enfCronicaMes14;
     }
 
     public String getTratamiento() {
         return tratamiento;
     }
 
-    public void setTratamiento(String tratamiento) {
-        this.tratamiento = tratamiento;
-    }
-
     public String getCualTratamiento() {
         return cualTratamiento;
     }
 
-    public void setCualTratamiento(String cualTratamiento) {
-        this.cualTratamiento = cualTratamiento;
+    public String getOtroTratamiento() {
+        return otroTratamiento;
     }
 
     public String getDiagDengue() {
         return diagDengue;
     }
 
-    public void setDiagDengue(String diagDengue) {
-        this.diagDengue = diagDengue;
-    }
-
     public String getFechaDiagDengue() {
         return fechaDiagDengue;
-    }
-
-    public void setFechaDiagDengue(String fechaDiagDengue) {
-        this.fechaDiagDengue = fechaDiagDengue;
     }
 
     public String getHospDengue() {
         return hospDengue;
     }
 
-    public void setHospDengue(String hospDengue) {
-        this.hospDengue = hospDengue;
-    }
-
     public String getFechaHospDengue() {
         return fechaHospDengue;
-    }
-
-    public void setFechaHospDengue(String fechaHospDengue) {
-        this.fechaHospDengue = fechaHospDengue;
     }
 
     public String getTiempoResidencia() {
         return tiempoResidencia;
     }
 
-    public void setTiempoResidencia(String tiempoResidencia) {
-        this.tiempoResidencia = tiempoResidencia;
+    public String getVivienda() {
+        return vivienda;
     }
 
     public String getEnfermedad() {
         return enfermedad;
     }
 
-    public void setEnfermedad(String enfermedad) {
-        this.enfermedad = enfermedad;
-    }
-
     public String getEnfermedadHint() {
         return enfermedadHint;
-    }
-
-    public void setEnfermedadHint(String enfermedadHint) {
-        this.enfermedadHint = enfermedadHint;
     }
 
     public String getDondeAsisteProblemasSalud() {
         return dondeAsisteProblemasSalud;
     }
 
-    public void setDondeAsisteProblemasSalud(String dondeAsisteProblemasSalud) {
-        this.dondeAsisteProblemasSalud = dondeAsisteProblemasSalud;
-    }
-
     public String getDondeAsisteProblemasSaludHint() {
         return dondeAsisteProblemasSaludHint;
-    }
-
-    public void setDondeAsisteProblemasSaludHint(String dondeAsisteProblemasSaludHint) {
-        this.dondeAsisteProblemasSaludHint = dondeAsisteProblemasSaludHint;
     }
 
     public String getOtroCentroSalud() {
         return otroCentroSalud;
     }
 
-    public void setOtroCentroSalud(String otroCentroSalud) {
-        this.otroCentroSalud = otroCentroSalud;
-    }
-
     public String getOtroCentroSaludHint() {
         return otroCentroSaludHint;
-    }
-
-    public void setOtroCentroSaludHint(String otroCentroSaludHint) {
-        this.otroCentroSaludHint = otroCentroSaludHint;
     }
 
     public String getPuestoSalud() {
         return puestoSalud;
     }
 
-    public void setPuestoSalud(String puestoSalud) {
-        this.puestoSalud = puestoSalud;
-    }
-
     public String getPuestoSaludHint() {
         return puestoSaludHint;
-    }
-
-    public void setPuestoSaludHint(String puestoSaludHint) {
-        this.puestoSaludHint = puestoSaludHint;
     }
 
     public String getAceptaAtenderCentro() {
         return aceptaAtenderCentro;
     }
 
-    public void setAceptaAtenderCentro(String aceptaAtenderCentro) {
-        this.aceptaAtenderCentro = aceptaAtenderCentro;
-    }
-
     public String getAceptaAtenderCentroHint() {
         return aceptaAtenderCentroHint;
-    }
-
-    public void setAceptaAtenderCentroHint(String aceptaAtenderCentroHint) {
-        this.aceptaAtenderCentroHint = aceptaAtenderCentroHint;
     }
 
     public String getAceptaCohorteDengue() {
         return aceptaCohorteDengue;
     }
 
-    public void setAceptaCohorteDengue(String aceptaCohorteDengue) {
-        this.aceptaCohorteDengue = aceptaCohorteDengue;
-    }
-
     public String getRazonNoAceptaDengue() {
         return razonNoAceptaDengue;
-    }
-
-    public void setRazonNoAceptaDengue(String razonNoAceptaDengue) {
-        this.razonNoAceptaDengue = razonNoAceptaDengue;
     }
 
     public String getOtraRazonNoAceptaDengue() {
         return otraRazonNoAceptaDengue;
     }
 
-    public void setOtraRazonNoAceptaDengue(String otraRazonNoAceptaDengue) {
-        this.otraRazonNoAceptaDengue = otraRazonNoAceptaDengue;
-    }
-
     public String getRazonNoAceptaDengueHint() {
         return razonNoAceptaDengueHint;
-    }
-
-    public void setRazonNoAceptaDengueHint(String razonNoAceptaDengueHint) {
-        this.razonNoAceptaDengueHint = razonNoAceptaDengueHint;
     }
 
     public String getOtraRazonNoAceptaDengueHint() {
         return otraRazonNoAceptaDengueHint;
     }
 
-    public void setOtraRazonNoAceptaDengueHint(String otraRazonNoAceptaDengueHint) {
-        this.otraRazonNoAceptaDengueHint = otraRazonNoAceptaDengueHint;
-    }
-
     public String getAceptaParteB() {
         return aceptaParteB;
-    }
-
-    public void setAceptaParteB(String aceptaParteB) {
-        this.aceptaParteB = aceptaParteB;
     }
 
     public String getAceptaParteBHint() {
         return aceptaParteBHint;
     }
 
-    public void setAceptaParteBHint(String aceptaParteBHint) {
-        this.aceptaParteBHint = aceptaParteBHint;
-    }
-
     public String getAceptaParteC() {
         return aceptaParteC;
-    }
-
-    public void setAceptaParteC(String aceptaParteC) {
-        this.aceptaParteC = aceptaParteC;
     }
 
     public String getAceptaParteCHint() {
         return aceptaParteCHint;
     }
 
-    public void setAceptaParteCHint(String aceptaParteCHint) {
-        this.aceptaParteCHint = aceptaParteCHint;
-    }
-
     public String getAceptaParteD() {
         return aceptaParteD;
-    }
-
-    public void setAceptaParteD(String aceptaParteD) {
-        this.aceptaParteD = aceptaParteD;
     }
 
     public String getAceptaParteDHint() {
         return aceptaParteDHint;
     }
 
-    public void setAceptaParteDHint(String aceptaParteDHint) {
-        this.aceptaParteDHint = aceptaParteDHint;
-    }
-
     public String getAceptaCohorteInfluenza() {
         return aceptaCohorteInfluenza;
-    }
-
-    public void setAceptaCohorteInfluenza(String aceptaCohorteInfluenza) {
-        this.aceptaCohorteInfluenza = aceptaCohorteInfluenza;
     }
 
     public String getRazonNoAceptaInfluenza() {
         return razonNoAceptaInfluenza;
     }
 
-    public void setRazonNoAceptaInfluenza(String razonNoAceptaInfluenza) {
-        this.razonNoAceptaInfluenza = razonNoAceptaInfluenza;
-    }
-
     public String getOtraRazonNoAceptaInfluenza() {
         return otraRazonNoAceptaInfluenza;
-    }
-
-    public void setOtraRazonNoAceptaInfluenza(String otraRazonNoAceptaInfluenza) {
-        this.otraRazonNoAceptaInfluenza = otraRazonNoAceptaInfluenza;
     }
 
     public String getRazonNoAceptaInfluenzaHint() {
         return razonNoAceptaInfluenzaHint;
     }
 
-    public void setRazonNoAceptaInfluenzaHint(String razonNoAceptaInfluenzaHint) {
-        this.razonNoAceptaInfluenzaHint = razonNoAceptaInfluenzaHint;
-    }
-
     public String getOtraRazonNoAceptaInfluenzaHint() {
         return otraRazonNoAceptaInfluenzaHint;
-    }
-
-    public void setOtraRazonNoAceptaInfluenzaHint(String otraRazonNoAceptaInfluenzaHint) {
-        this.otraRazonNoAceptaInfluenzaHint = otraRazonNoAceptaInfluenzaHint;
     }
 
     public String getAceptaParteBInf() {
         return aceptaParteBInf;
     }
 
-    public void setAceptaParteBInf(String aceptaParteBInf) {
-        this.aceptaParteBInf = aceptaParteBInf;
-    }
-
     public String getAceptaParteBInfHint() {
         return aceptaParteBInfHint;
-    }
-
-    public void setAceptaParteBInfHint(String aceptaParteBInfHint) {
-        this.aceptaParteBInfHint = aceptaParteBInfHint;
     }
 
     public String getAceptaParteCInf() {
         return aceptaParteCInf;
     }
 
-    public void setAceptaParteCInf(String aceptaParteCInf) {
-        this.aceptaParteCInf = aceptaParteCInf;
-    }
-
     public String getAceptaParteCInfHint() {
         return aceptaParteCInfHint;
-    }
-
-    public void setAceptaParteCInfHint(String aceptaParteCInfHint) {
-        this.aceptaParteCInfHint = aceptaParteCInfHint;
     }
 
     public String getCasaPerteneceCohorte() {
         return casaPerteneceCohorte;
     }
 
-    public void setCasaPerteneceCohorte(String casaPerteneceCohorte) {
-        this.casaPerteneceCohorte = casaPerteneceCohorte;
-    }
-
     public String getCodigoCasaCohorte() {
         return codigoCasaCohorte;
-    }
-
-    public void setCodigoCasaCohorte(String codigoCasaCohorte) {
-        this.codigoCasaCohorte = codigoCasaCohorte;
     }
 
     public String getCodigoCasaCohorteHint() {
         return codigoCasaCohorteHint;
     }
 
-    public void setCodigoCasaCohorteHint(String codigoCasaCohorteHint) {
-        this.codigoCasaCohorteHint = codigoCasaCohorteHint;
-    }
-
     public String getCodigoNuevaCasaCohorte() {
         return codigoNuevaCasaCohorte;
-    }
-
-    public void setCodigoNuevaCasaCohorte(String codigoNuevaCasaCohorte) {
-        this.codigoNuevaCasaCohorte = codigoNuevaCasaCohorte;
     }
 
     public String getNombre1JefeFamilia() {
         return nombre1JefeFamilia;
     }
 
-    public void setNombre1JefeFamilia(String nombre1JefeFamilia) {
-        this.nombre1JefeFamilia = nombre1JefeFamilia;
-    }
-
     public String getNombre2JefeFamilia() {
         return nombre2JefeFamilia;
-    }
-
-    public void setNombre2JefeFamilia(String nombre2JefeFamilia) {
-        this.nombre2JefeFamilia = nombre2JefeFamilia;
     }
 
     public String getApellido1JefeFamilia() {
         return apellido1JefeFamilia;
     }
 
-    public void setApellido1JefeFamilia(String apellido1JefeFamilia) {
-        this.apellido1JefeFamilia = apellido1JefeFamilia;
-    }
-
     public String getApellido2JefeFamilia() {
         return apellido2JefeFamilia;
-    }
-
-    public void setApellido2JefeFamilia(String apellido2JefeFamilia) {
-        this.apellido2JefeFamilia = apellido2JefeFamilia;
     }
 
     public String getJefeFamiliaHint() {
         return jefeFamiliaHint;
     }
 
-    public void setJefeFamiliaHint(String jefeFamiliaHint) {
-        this.jefeFamiliaHint = jefeFamiliaHint;
-    }
-
     public String getDireccion() {
         return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public String getDireccionHint() {
         return direccionHint;
     }
 
-    public void setDireccionHint(String direccionHint) {
-        this.direccionHint = direccionHint;
-    }
-
     public String getBarrio() {
         return barrio;
-    }
-
-    public void setBarrio(String barrio) {
-        this.barrio = barrio;
     }
 
     public String getManzana() {
         return manzana;
     }
 
-    public void setManzana(String manzana) {
-        this.manzana = manzana;
-    }
-
     public String getCodigoNuevoParticipante() {
         return codigoNuevoParticipante;
-    }
-
-    public void setCodigoNuevoParticipante(String codigoNuevoParticipante) {
-        this.codigoNuevoParticipante = codigoNuevoParticipante;
     }
 
     public String getNombre1() {
         return nombre1;
     }
 
-    public void setNombre1(String nombre1) {
-        this.nombre1 = nombre1;
-    }
-
     public String getNombre1Hint() {
         return nombre1Hint;
-    }
-
-    public void setNombre1Hint(String nombre1Hint) {
-        this.nombre1Hint = nombre1Hint;
     }
 
     public String getNombre2() {
         return nombre2;
     }
 
-    public void setNombre2(String nombre2) {
-        this.nombre2 = nombre2;
-    }
-
     public String getNombre2Hint() {
         return nombre2Hint;
-    }
-
-    public void setNombre2Hint(String nombre2Hint) {
-        this.nombre2Hint = nombre2Hint;
     }
 
     public String getApellido1() {
         return apellido1;
     }
 
-    public void setApellido1(String apellido1) {
-        this.apellido1 = apellido1;
-    }
-
     public String getApellido1Hint() {
         return apellido1Hint;
-    }
-
-    public void setApellido1Hint(String apellido1Hint) {
-        this.apellido1Hint = apellido1Hint;
     }
 
     public String getApellido2() {
         return apellido2;
     }
 
-    public void setApellido2(String apellido2) {
-        this.apellido2 = apellido2;
-    }
-
     public String getApellido2Hint() {
         return apellido2Hint;
-    }
-
-    public void setApellido2Hint(String apellido2Hint) {
-        this.apellido2Hint = apellido2Hint;
     }
 
     public String getNombre1Padre() {
         return nombre1Padre;
     }
 
-    public void setNombre1Padre(String nombre1Padre) {
-        this.nombre1Padre = nombre1Padre;
-    }
-
     public String getNombre1PadreHint() {
         return nombre1PadreHint;
-    }
-
-    public void setNombre1PadreHint(String nombre1PadreHint) {
-        this.nombre1PadreHint = nombre1PadreHint;
     }
 
     public String getNombre2Padre() {
         return nombre2Padre;
     }
 
-    public void setNombre2Padre(String nombre2Padre) {
-        this.nombre2Padre = nombre2Padre;
-    }
-
     public String getNombre2PadreHint() {
         return nombre2PadreHint;
-    }
-
-    public void setNombre2PadreHint(String nombre2PadreHint) {
-        this.nombre2PadreHint = nombre2PadreHint;
     }
 
     public String getApellido1Padre() {
         return apellido1Padre;
     }
 
-    public void setApellido1Padre(String apellido1Padre) {
-        this.apellido1Padre = apellido1Padre;
-    }
-
     public String getApellido1PadreHint() {
         return apellido1PadreHint;
-    }
-
-    public void setApellido1PadreHint(String apellido1PadreHint) {
-        this.apellido1PadreHint = apellido1PadreHint;
     }
 
     public String getApellido2Padre() {
         return apellido2Padre;
     }
 
-    public void setApellido2Padre(String apellido2Padre) {
-        this.apellido2Padre = apellido2Padre;
-    }
-
     public String getApellido2PadreHint() {
         return apellido2PadreHint;
-    }
-
-    public void setApellido2PadreHint(String apellido2PadreHint) {
-        this.apellido2PadreHint = apellido2PadreHint;
     }
 
     public String getNombre1Madre() {
         return nombre1Madre;
     }
 
-    public void setNombre1Madre(String nombre1Madre) {
-        this.nombre1Madre = nombre1Madre;
-    }
-
     public String getNombre1MadreHint() {
         return nombre1MadreHint;
-    }
-
-    public void setNombre1MadreHint(String nombre1MadreHint) {
-        this.nombre1MadreHint = nombre1MadreHint;
     }
 
     public String getNombre2Madre() {
         return nombre2Madre;
     }
 
-    public void setNombre2Madre(String nombre2Madre) {
-        this.nombre2Madre = nombre2Madre;
-    }
-
     public String getNombre2MadreHint() {
         return nombre2MadreHint;
-    }
-
-    public void setNombre2MadreHint(String nombre2MadreHint) {
-        this.nombre2MadreHint = nombre2MadreHint;
     }
 
     public String getApellido1Madre() {
         return apellido1Madre;
     }
 
-    public void setApellido1Madre(String apellido1Madre) {
-        this.apellido1Madre = apellido1Madre;
-    }
-
     public String getApellido1MadreHint() {
         return apellido1MadreHint;
-    }
-
-    public void setApellido1MadreHint(String apellido1MadreHint) {
-        this.apellido1MadreHint = apellido1MadreHint;
     }
 
     public String getApellido2Madre() {
         return apellido2Madre;
     }
 
-    public void setApellido2Madre(String apellido2Madre) {
-        this.apellido2Madre = apellido2Madre;
-    }
-
     public String getApellido2MadreHint() {
         return apellido2MadreHint;
-    }
-
-    public void setApellido2MadreHint(String apellido2MadreHint) {
-        this.apellido2MadreHint = apellido2MadreHint;
     }
 
     public String getNombre1Tutor() {
         return nombre1Tutor;
     }
 
-    public void setNombre1Tutor(String nombre1Tutor) {
-        this.nombre1Tutor = nombre1Tutor;
-    }
-
     public String getNombre1TutorHint() {
         return nombre1TutorHint;
-    }
-
-    public void setNombre1TutorHint(String nombre1TutorHint) {
-        this.nombre1TutorHint = nombre1TutorHint;
     }
 
     public String getNombre2Tutor() {
         return nombre2Tutor;
     }
 
-    public void setNombre2Tutor(String nombre2Tutor) {
-        this.nombre2Tutor = nombre2Tutor;
-    }
-
     public String getNombre2TutorHint() {
         return nombre2TutorHint;
-    }
-
-    public void setNombre2TutorHint(String nombre2TutorHint) {
-        this.nombre2TutorHint = nombre2TutorHint;
     }
 
     public String getApellido1Tutor() {
         return apellido1Tutor;
     }
 
-    public void setApellido1Tutor(String apellido1Tutor) {
-        this.apellido1Tutor = apellido1Tutor;
-    }
-
     public String getApellido1TutorHint() {
         return apellido1TutorHint;
-    }
-
-    public void setApellido1TutorHint(String apellido1TutorHint) {
-        this.apellido1TutorHint = apellido1TutorHint;
     }
 
     public String getApellido2Tutor() {
         return apellido2Tutor;
     }
 
-    public void setApellido2Tutor(String apellido2Tutor) {
-        this.apellido2Tutor = apellido2Tutor;
-    }
-
     public String getApellido2TutorHint() {
         return apellido2TutorHint;
-    }
-
-    public void setApellido2TutorHint(String apellido2TutorHint) {
-        this.apellido2TutorHint = apellido2TutorHint;
     }
 
     public String getRelacionFamiliarTutor() {
         return relacionFamiliarTutor;
     }
 
-    public void setRelacionFamiliarTutor(String relacionFamiliarTutor) {
-        this.relacionFamiliarTutor = relacionFamiliarTutor;
-    }
-
     public String getParticipanteOTutorAlfabeto() {
         return participanteOTutorAlfabeto;
-    }
-
-    public void setParticipanteOTutorAlfabeto(String participanteOTutorAlfabeto) {
-        this.participanteOTutorAlfabeto = participanteOTutorAlfabeto;
     }
 
     public String getParticipanteOTutorAlfabetoHint() {
         return participanteOTutorAlfabetoHint;
     }
 
-    public void setParticipanteOTutorAlfabetoHint(String participanteOTutorAlfabetoHint) {
-        this.participanteOTutorAlfabetoHint = participanteOTutorAlfabetoHint;
-    }
-
     public String getTestigoPresente() {
         return testigoPresente;
-    }
-
-    public void setTestigoPresente(String testigoPresente) {
-        this.testigoPresente = testigoPresente;
     }
 
     public String getTestigoPresenteHint() {
         return testigoPresenteHint;
     }
 
-    public void setTestigoPresenteHint(String testigoPresenteHint) {
-        this.testigoPresenteHint = testigoPresenteHint;
-    }
-
     public String getNombre1Testigo() {
         return nombre1Testigo;
-    }
-
-    public void setNombre1Testigo(String nombre1Testigo) {
-        this.nombre1Testigo = nombre1Testigo;
     }
 
     public String getNombre1TestigoHint() {
         return nombre1TestigoHint;
     }
 
-    public void setNombre1TestigoHint(String nombre1TestigoHint) {
-        this.nombre1TestigoHint = nombre1TestigoHint;
-    }
-
     public String getNombre2Testigo() {
         return nombre2Testigo;
-    }
-
-    public void setNombre2Testigo(String nombre2Testigo) {
-        this.nombre2Testigo = nombre2Testigo;
     }
 
     public String getNombre2TestigoHint() {
         return nombre2TestigoHint;
     }
 
-    public void setNombre2TestigoHint(String nombre2TestigoHint) {
-        this.nombre2TestigoHint = nombre2TestigoHint;
-    }
-
     public String getApellido1Testigo() {
         return apellido1Testigo;
-    }
-
-    public void setApellido1Testigo(String apellido1Testigo) {
-        this.apellido1Testigo = apellido1Testigo;
     }
 
     public String getApellido1TestigoHint() {
         return apellido1TestigoHint;
     }
 
-    public void setApellido1TestigoHint(String apellido1TestigoHint) {
-        this.apellido1TestigoHint = apellido1TestigoHint;
-    }
-
     public String getApellido2Testigo() {
         return apellido2Testigo;
-    }
-
-    public void setApellido2Testigo(String apellido2Testigo) {
-        this.apellido2Testigo = apellido2Testigo;
     }
 
     public String getApellido2TestigoHint() {
         return apellido2TestigoHint;
     }
 
-    public void setApellido2TestigoHint(String apellido2TestigoHint) {
-        this.apellido2TestigoHint = apellido2TestigoHint;
-    }
-
     public String getNombreContacto() {
         return nombreContacto;
-    }
-
-    public void setNombreContacto(String nombreContacto) {
-        this.nombreContacto = nombreContacto;
     }
 
     public String getNombreContactoHint() {
         return nombreContactoHint;
     }
 
-    public void setNombreContactoHint(String nombreContactoHint) {
-        this.nombreContactoHint = nombreContactoHint;
-    }
-
     public String getBarrioContacto() {
         return barrioContacto;
-    }
-
-    public void setBarrioContacto(String barrioContacto) {
-        this.barrioContacto = barrioContacto;
     }
 
     public String getBarrioContactoHint() {
         return barrioContactoHint;
     }
 
-    public void setBarrioContactoHint(String barrioContactoHint) {
-        this.barrioContactoHint = barrioContactoHint;
-    }
-
     public String getDireccionContacto() {
         return direccionContacto;
-    }
-
-    public void setDireccionContacto(String direccionContacto) {
-        this.direccionContacto = direccionContacto;
     }
 
     public String getDireccionContactoHint() {
         return direccionContactoHint;
     }
 
-    public void setDireccionContactoHint(String direccionContactoHint) {
-        this.direccionContactoHint = direccionContactoHint;
-    }
-
     public String getNumTelefono1() {
         return numTelefono1;
-    }
-
-    public void setNumTelefono1(String numTelefono1) {
-        this.numTelefono1 = numTelefono1;
     }
 
     public String getNumTelefono1Hint() {
         return numTelefono1Hint;
     }
 
-    public void setNumTelefono1Hint(String numTelefono1Hint) {
-        this.numTelefono1Hint = numTelefono1Hint;
-    }
-
     public String getNumTelefono2() {
         return numTelefono2;
-    }
-
-    public void setNumTelefono2(String numTelefono2) {
-        this.numTelefono2 = numTelefono2;
     }
 
     public String getNumTelefono2Hint() {
         return numTelefono2Hint;
     }
 
-    public void setNumTelefono2Hint(String numTelefono2Hint) {
-        this.numTelefono2Hint = numTelefono2Hint;
-    }
-
     public String getOperadoraTelefono1() {
         return operadoraTelefono1;
-    }
-
-    public void setOperadoraTelefono1(String operadoraTelefono1) {
-        this.operadoraTelefono1 = operadoraTelefono1;
     }
 
     public String getOperadoraTelefono1Hint() {
         return operadoraTelefono1Hint;
     }
 
-    public void setOperadoraTelefono1Hint(String operadoraTelefono1Hint) {
-        this.operadoraTelefono1Hint = operadoraTelefono1Hint;
-    }
-
     public String getOperadoraTelefono2() {
         return operadoraTelefono2;
-    }
-
-    public void setOperadoraTelefono2(String operadoraTelefono2) {
-        this.operadoraTelefono2 = operadoraTelefono2;
     }
 
     public String getOperadoraTelefono2Hint() {
         return operadoraTelefono2Hint;
     }
 
-    public void setOperadoraTelefono2Hint(String operadoraTelefono2Hint) {
-        this.operadoraTelefono2Hint = operadoraTelefono2Hint;
-    }
-
     public String getTipoTelefono1() {
         return tipoTelefono1;
-    }
-
-    public void setTipoTelefono1(String tipoTelefono1) {
-        this.tipoTelefono1 = tipoTelefono1;
     }
 
     public String getTipoTelefono1Hint() {
         return tipoTelefono1Hint;
     }
 
-    public void setTipoTelefono1Hint(String tipoTelefono1Hint) {
-        this.tipoTelefono1Hint = tipoTelefono1Hint;
-    }
-
     public String getTipoTelefono2() {
         return tipoTelefono2;
-    }
-
-    public void setTipoTelefono2(String tipoTelefono2) {
-        this.tipoTelefono2 = tipoTelefono2;
     }
 
     public String getTipoTelefono2Hint() {
         return tipoTelefono2Hint;
     }
 
-    public void setTipoTelefono2Hint(String tipoTelefono2Hint) {
-        this.tipoTelefono2Hint = tipoTelefono2Hint;
-    }
-
     public String getTieneTelefono() {
         return tieneTelefono;
-    }
-
-    public void setTieneTelefono(String tieneTelefono) {
-        this.tieneTelefono = tieneTelefono;
     }
 
     public String getTieneOtroTelefono() {
         return tieneOtroTelefono;
     }
 
-    public void setTieneOtroTelefono(String tieneOtroTelefono) {
-        this.tieneOtroTelefono = tieneOtroTelefono;
-    }
-
     public String getFinTamizajeLabel() {
         return finTamizajeLabel;
-    }
-
-    public void setFinTamizajeLabel(String finTamizajeLabel) {
-        this.finTamizajeLabel = finTamizajeLabel;
     }
 }

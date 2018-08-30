@@ -38,6 +38,7 @@ public class TamizajeHelper {
         cv.put(MainDBConstants.cohorte, tamizaje.getCohorte());
         cv.put(MainDBConstants.enfermedadInmuno, tamizaje.getEnfermedadInmuno());
         //cv.put(MainDBConstants.cualEnfermedad, tamizaje.getCualEnfermedad());
+        cv.put(MainDBConstants.enfermedadCronica, tamizaje.getEnfermedadCronica());
         cv.put(MainDBConstants.tratamiento, tamizaje.getTratamiento());
         cv.put(MainDBConstants.cualTratamiento, tamizaje.getCualTratamiento());
         cv.put(MainDBConstants.diagDengue, tamizaje.getDiagDengue());
@@ -91,6 +92,7 @@ public class TamizajeHelper {
         mTamizaje.setCohorte(cursor.getString(cursor.getColumnIndex(MainDBConstants.cohorte)));
         mTamizaje.setEnfermedadInmuno(cursor.getString(cursor.getColumnIndex(MainDBConstants.enfermedadInmuno)));
         //mTamizaje.setCualEnfermedad(cursor.getString(cursor.getColumnIndex(MainDBConstants.cualEnfermedad)));
+        mTamizaje.setEnfermedadCronica(cursor.getString(cursor.getColumnIndex(MainDBConstants.enfermedadCronica)));
         mTamizaje.setTratamiento(cursor.getString(cursor.getColumnIndex(MainDBConstants.tratamiento)));
         mTamizaje.setCualTratamiento(cursor.getString(cursor.getColumnIndex(MainDBConstants.cualTratamiento)));
         mTamizaje.setDiagDengue(cursor.getString(cursor.getColumnIndex(MainDBConstants.diagDengue)));

@@ -1324,6 +1324,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     Intent i = new Intent(getApplicationContext(),
                             MenuInfoActivity.class);
                     i.putExtra(ConstantsDB.CODIGO, codigo);
+                    i.putExtra(Constants.INGRESO_CHF, true);
                     i.putExtra(ConstantsDB.VIS_EXITO, false);
                     startActivity(i);
                     Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_LONG);

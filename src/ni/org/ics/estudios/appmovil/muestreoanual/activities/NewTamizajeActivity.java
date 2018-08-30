@@ -37,10 +37,7 @@ import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class NewTamizajeActivity extends FragmentActivity implements
@@ -73,7 +70,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
     private final String TIPO_DENGUE = "Dengue";
     private final String TIPO_INFLUENZA = "Influenza";
     private final String TIPO_AMBOS = "Ambos";
-
+    private List<MessageResource> catMeses = new ArrayList<MessageResource>();
+    private Date fechaNacimiento = null;
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +90,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
 		infoMovil = new DeviceInfo(NewTamizajeActivity.this);
         gps = new GPSTracker(NewTamizajeActivity.this);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
         mWizardModel = new TamizajeForm(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
@@ -171,9 +170,13 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
-
         onPageTreeChanged();
         updateBottomBar();
+
+        estudiosAdapter.open();
+        catMeses = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", CatalogosDBConstants.order);
+        estudiosAdapter.close();
+
     }
 
     @Override
@@ -344,7 +347,6 @@ public class NewTamizajeActivity extends FragmentActivity implements
             }
             if (page.getTitle().equals(labels.getFechaNacimiento())) {
                 DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                Date fechaNacimiento = null;
                 try {
                     fechaNacimiento = mDateFormat.parse(page.getData().getString(DatePage.SIMPLE_DATA_KEY));
                 } catch (ParseException e) {
@@ -429,6 +431,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
             if(page.getTitle().equals(labels.getCriteriosInclusion())){
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                 visible = test!=null && test.size()==2;
+                changeStatus(mWizardModel.findByKey(labels.getVivienda()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), visible);
@@ -447,6 +451,109 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     resetForm(99);
                     Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noCumpleCriteriosInclusion),Toast.LENGTH_LONG);
                     toast.show();
+                }
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getVivienda())) {
+                visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Propia"));
+                Page pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTiempoResidencia());
+                if (tieneValor(pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY))) {
+                    boolean tiempoValido = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null &&
+                            (pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Seis Meses a Dos Años")
+                                    || pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Dos Años ó Más"));
+                    //propia y con tiempo de residencia válida
+                    if (visible && !tiempoValido) {
+                        Toast toast = Toast.makeText(getApplicationContext(), R.string.noCumpleCriteriosInclusion, Toast.LENGTH_LONG);
+                        toast.show();
+                        resetForm(99);
+                    }
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible && tiempoValido));
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), (visible && tiempoValido));
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), (visible && tiempoValido));
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), (visible && tiempoValido));
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), (visible && tiempoValido) && edadAnios>5 && edadAnios<10); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), (visible && tiempoValido) && (edadAnios >= 2 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), (visible && tiempoValido) && (edadAnios >= 0 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                    notificarCambios = false;
+                    //es alquilada y tiene tiempo valido
+                    if (!visible) {
+                        tiempoValido = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Dos Años ó Más");
+                        if (!tiempoValido) {
+                            Toast toast = Toast.makeText(getApplicationContext(), R.string.noCumpleCriteriosInclusion, Toast.LENGTH_LONG);
+                            toast.show();
+                            resetForm(99);
+                        }
+                        changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), tiempoValido);
+                        notificarCambios = false;
+                        changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), tiempoValido);
+                        notificarCambios = false;
+                        changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), tiempoValido);
+                        notificarCambios = false;
+                        changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), tiempoValido);
+                        notificarCambios = false;
+                        changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), tiempoValido && edadAnios>5 && edadAnios<10); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
+                        notificarCambios = false;
+                        changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), tiempoValido && (edadAnios >= 2 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                        notificarCambios = false;
+                        changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), tiempoValido && (edadAnios >= 0 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                        notificarCambios = false;
+                    }
+                }
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getTiempoResidencia())) {
+                Page pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getVivienda());
+                boolean esPropia = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Propia");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null &&
+                        (page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Seis Meses a Dos Años")
+                                || page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Dos Años ó Más"));
+                if (esPropia && !visible){
+                    Toast toast = Toast.makeText(getApplicationContext(), R.string.noCumpleCriteriosInclusion,Toast.LENGTH_LONG);
+                    toast.show();
+                    resetForm(99);
+                }
+                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (esPropia && visible));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), (esPropia && visible));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), (esPropia && visible));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), (esPropia && visible));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), (esPropia && visible) && edadAnios>5 && edadAnios<10); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), (esPropia && visible) && (edadAnios >= 2 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), (esPropia && visible) && (edadAnios >= 0 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                notificarCambios = false;
+
+                if (!esPropia){
+                    visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Dos Años ó Más");
+                    if (!visible) {
+                        Toast toast = Toast.makeText(getApplicationContext(), R.string.noCumpleCriteriosInclusion, Toast.LENGTH_LONG);
+                        toast.show();
+                        resetForm(99);
+                    }
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible && edadAnios>5 && edadAnios<10); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= 2 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= 0 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                    notificarCambios = false;
                 }
                 onPageTreeChanged();
             }
@@ -493,6 +600,187 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTratamiento()), visible);
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getOtroTratamiento()), false);
+                notificarCambios = false;
+
+                Calendar fechas = Calendar.getInstance();
+                int anioActual = fechas.get(Calendar.YEAR);
+                fechas.setTime(fechaNacimiento);
+                int anioNac = fechas.get(Calendar.YEAR);
+
+                NumberPage pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio1());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio2());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio3());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio4());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio5());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio6());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio7());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio8());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio9());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio10());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio11());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio12());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio13());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                pagetmp = (NumberPage) mWizardModel.findByKey(labels.getEnfCronicaAnio14());
+                pagetmp.setRangeValidation(true, anioNac, anioActual);
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes1())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio1())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes2())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio2())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes3())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio3())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes4())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio4())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes5())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio5())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes6())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio6())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes7())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio7())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes8())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio8())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes9())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio9())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes10())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio10())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes11())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio11())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes12())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio12())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfCronicaMes13())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio13())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }if (page.getTitle().equals(labels.getEnfCronicaMes14())) {
+                if (!esMesValido(page, labels.getEnfCronicaAnio14())) page.resetData(new Bundle());
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getCualEnfermedad())) {
+                ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
+                visible = test != null && test.contains("Cáncer de cualquier tipo");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio1()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes1()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Cardiopatías");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio2()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes2()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Enfermedades hematológicas");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio3()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes3()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Enfermedades Inmunosupresoras");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio4()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes4()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Enfermedades Renales");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio5()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes5()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Epilepsia");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio6()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes6()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Leucemia");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio7()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes7()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Metabólica crónica (Diabetes)");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio8()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes8()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Otra");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio9()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes9()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getOtraEnfCronica()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Trastornos Psiquiatricos/Depresión");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio10()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes10()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Asma");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio11()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes11()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Hipertensión arterial");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio12()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes12()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Artritis Reumatoide");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio13()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes13()), visible);
+                notificarCambios = false;
+
+                visible = test != null && test.contains("Tuberculosis");
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio14()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes14()), visible);
+                notificarCambios = false;
+
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDiagDengue())) {
@@ -512,6 +800,13 @@ public class NewTamizajeActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getTratamiento())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCualTratamiento()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getCualTratamiento())) {
+                ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
+                visible = test != null && test.contains(Constants.OTRO);
+                changeStatus(mWizardModel.findByKey(labels.getOtroTratamiento()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -545,8 +840,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible || (visibleInf && !esInmuno && !esPretermino));
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaParteD()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //En nuevo ingreso ya no se pregunta por parte D. 08/2018
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaParteD()), visible || (visibleInf && !esInmuno && !esPretermino));
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCasaPerteneceCohorte()), visible || (visibleInf && !esInmuno && !esPretermino));
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), visible || (visibleInf && !esInmuno && !esPretermino));
@@ -926,8 +1222,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible && visibleTmp);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaParteD()), visible && visibleTmp);
-                notificarCambios = false;
+                //En nuevo ingreso ya no se pregunta por parte D. 08/2018
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaParteD()), visible && visibleTmp);
+                //notificarCambios = false;
 
                 pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteInfluenza());
                 visibleTmp = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
@@ -974,15 +1271,46 @@ public class NewTamizajeActivity extends FragmentActivity implements
     }
 
     private void resetForm(int preg){
-        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), false);
+        if (preg>99) changeStatus(mWizardModel.findByKey(labels.getVivienda()), false);
+        if (preg>99) changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), false);
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), false);
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), false);
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), false);
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getCualEnfermedad()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getOtraEnfCronica()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio1()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes1()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio2()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes2()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio3()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes3()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio4()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes4()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio5()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes5()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio6()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes6()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio7()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes7()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio8()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes8()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio9()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes9()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio10()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes10()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio11()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes11()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio12()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes12()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio13()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes13()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio14()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes14()), false);
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getTratamiento()), false);
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getCualTratamiento()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getOtroTratamiento()), false);
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), false);
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getFechaDiagDengue()), false);
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getHospDengue()), false);
@@ -1084,6 +1412,41 @@ public class NewTamizajeActivity extends FragmentActivity implements
         }
     }
 
+    private boolean esMesValido(Page page, String labelAnio){
+        boolean esValido = true;
+        NumberPage pagetmp = (NumberPage) mWizardModel.findByKey(labelAnio);
+        Calendar fechas = Calendar.getInstance();
+        int anioActual = fechas.get(Calendar.YEAR);
+        String anio = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY);
+        if (tieneValor(anio) && Integer.valueOf(anio) == anioActual ) {
+            int mesA = fechas.get(Calendar.MONTH);//enero inicia en 0
+            if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null) {
+                Integer mesS = getMes(page.getData().getString(TextPage.SIMPLE_DATA_KEY));
+                if (mesS > mesA+1){
+                    Toast toast = Toast.makeText(getApplicationContext(),R.string.mesInvalido, Toast.LENGTH_LONG);
+                    toast.show();
+                    esValido = false;
+                }
+            }
+        }
+        return esValido;
+    }
+
+    public Integer getMes(String mes) {
+        Integer numMes = null;
+        try {
+            for (MessageResource message : catMeses) {
+                if (message.getSpanish().equalsIgnoreCase(mes)) {
+                    numMes = Integer.valueOf(message.getCatKey());
+                    break;
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return numMes;
+    }
+
     private boolean tieneValor(String entrada){
         return (entrada != null && !entrada.isEmpty());
     }
@@ -1122,8 +1485,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
             String razonNoAceptaTamizajePersona = datos.getString(this.getString(R.string.razonNoParticipaPersona));
             String otraRazonNoAceptaTamizajePersona = datos.getString(this.getString(R.string.otraRazonNoParticipaPersona));
             String criteriosInclusion = datos.getString(this.getString(R.string.criteriosInclusion));
+            String vivienda = datos.getString(this.getString(R.string.tipoVivienda));
             String tiempoResidencia = datos.getString(this.getString(R.string.tiempoResidencia));
-            String enfermedad = datos.getString(this.getString(R.string.enfermedad));
+            String enfermedad = datos.getString(this.getString(R.string.enfermedadCronica));
             String cualEnfermedad = datos.getString(this.getString(R.string.cualEnfermedad));
             String diagDengue = datos.getString(this.getString(R.string.diagDengue));
             String fechaDiagDengue = datos.getString(this.getString(R.string.fechaDiagDengue));
@@ -1131,6 +1495,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
             String fechaHospDengue = datos.getString(this.getString(R.string.fechaHospDengue));
             String tratamientoIngreso = datos.getString(this.getString(R.string.tratamientoIngreso));
             String cualTratamiento = datos.getString(this.getString(R.string.cualTratamiento));
+            String otroTx = datos.getString(this.getString(R.string.otroTx));//agregar en tamizaje
             String dondeAsisteProblemasSalud = datos.getString(this.getString(R.string.dondeAsisteProblemasSalud));
             String otroCentroSalud = datos.getString(this.getString(R.string.otroCentroSalud));
             String puestoSalud = datos.getString(this.getString(R.string.puestoSalud));
@@ -1150,6 +1515,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
             //Crea un Nuevo Registro de tamizaje
             Tamizaje tamizaje =  new Tamizaje();
             Tamizaje tamizajeInf = new Tamizaje();
+            tamizaje.setCodigo(infoMovil.getId());
             tamizaje.setCohorte("CP");
             if (tieneValor(sexo)) {
                 MessageResource catSexo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + sexo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SEXO'", null);
@@ -1178,13 +1544,20 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     keysCriterios = keysCriterios.substring(0, keysCriterios.length() - 1);
                 tamizaje.setCriteriosInclusion(keysCriterios);
             }
+            if (tieneValor(vivienda)) {
+                MessageResource catVivienda = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + vivienda + "' and " + CatalogosDBConstants.catRoot + "='CP_CAT_TV'", null);
+                if (catVivienda != null) tamizaje.setTipoVivienda(catVivienda.getCatKey());
+            }
             if (tieneValor(tiempoResidencia)) {
                 MessageResource cattiempoResidencia = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tiempoResidencia + "' and " + CatalogosDBConstants.catRoot + "='CP_CAT_TR'", null);
                 if (cattiempoResidencia!=null) tamizaje.setTiempoResidencia(cattiempoResidencia.getCatKey());
             }
             if (tieneValor(enfermedad)) {
                 MessageResource catEnfermedad = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfermedad + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (catEnfermedad!=null) tamizaje.setEnfermedad(catEnfermedad.getCatKey());
+                if (catEnfermedad!=null) tamizaje.setEnfermedadCronica(catEnfermedad.getCatKey());
+
+                if (enfermedad.equals(Constants.YES))
+                    guardarEnfermedadesCronicas(cualEnfermedad.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','"), datos, tamizaje);
             }
             //TODO tamizaje.setCualEnfermedad(cualEnfermedad);
 
@@ -1214,7 +1587,19 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 MessageResource catTratami = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tratamientoIngreso + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
                 if (catTratami!=null) tamizaje.setTratamiento(catTratami.getCatKey());
             }
-            tamizaje.setCualTratamiento(cualTratamiento);
+            if (tieneValor(cualTratamiento)) {
+                String keysCriterios = "";
+                cualTratamiento = cualTratamiento.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','");
+                List<MessageResource> catTx = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + cualTratamiento + "') and "
+                        + CatalogosDBConstants.catRoot + "='CPD_CAT_TRATAMIENTO'", null);
+                for (MessageResource ms : catTx) {
+                    keysCriterios += ms.getCatKey() + ",";
+                }
+                if (!keysCriterios.isEmpty())
+                    keysCriterios = keysCriterios.substring(0, keysCriterios.length() - 1);
+                tamizaje.setCualTratamiento(keysCriterios);
+            }
+            tamizaje.setOtroTx(otroTx);
             if (tieneValor(dondeAsisteProblemasSalud)) {
                 MessageResource catDondeAsisteProblemasSalud = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + dondeAsisteProblemasSalud + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_DONDEASISTE'", null);
                 if (catDondeAsisteProblemasSalud!=null) tamizaje.setDondeAsisteProblemasSalud(catDondeAsisteProblemasSalud.getCatKey());
@@ -1242,7 +1627,6 @@ public class NewTamizajeActivity extends FragmentActivity implements
             //Registrar tamizaje dengue si aplica
             if (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)){
                 Estudio estudioCDengue = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" +Constants.COD_EST_COHORTEDENGUE, null);
-                tamizaje.setCodigo(infoMovil.getId());
                 tamizaje.setEstudio(estudioCDengue);
                 //Si acepta o no participar, siempre registrar tamizaje
                 MessageResource catAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaCohorteDengue + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -1278,7 +1662,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     if (catRazonNoAceptaParticipar!=null) tamizajeInf.setRazonNoAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
                 }
                 tamizajeInf.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaInfluenza);
-
+                if (tieneValor(enfermedad) && enfermedad.equals(Constants.YES)){
+                        guardarEnfermedadesCronicas(cualEnfermedad.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','"), datos, tamizajeInf);
+                }
                 estudiosAdapter.crearTamizaje(tamizajeInf);
             }
 
@@ -1674,6 +2060,153 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
     }
 
+    private void guardarEnfermedadesCronicas(String enfCronica, Bundle datos, Tamizaje tamizaje) throws Exception{
+        String oEnfCronica = datos.getString(this.getString(R.string.oEnfCronica));
+        String enfCronicaAnio1 = datos.getString(this.getString(R.string.enfCronicaAnio1));
+        String enfCronicaMes1 = datos.getString(this.getString(R.string.enfCronicaMes1));
+        String enfCronicaAnio2 = datos.getString(this.getString(R.string.enfCronicaAnio2));
+        String enfCronicaMes2 = datos.getString(this.getString(R.string.enfCronicaMes2));
+        String enfCronicaAnio3 = datos.getString(this.getString(R.string.enfCronicaAnio3));
+        String enfCronicaMes3 = datos.getString(this.getString(R.string.enfCronicaMes3));
+        String enfCronicaAnio4 = datos.getString(this.getString(R.string.enfCronicaAnio4));
+        String enfCronicaMes4 = datos.getString(this.getString(R.string.enfCronicaMes4));
+        String enfCronicaAnio5 = datos.getString(this.getString(R.string.enfCronicaAnio5));
+        String enfCronicaMes5 = datos.getString(this.getString(R.string.enfCronicaMes5));
+        String enfCronicaAnio6 = datos.getString(this.getString(R.string.enfCronicaAnio6));
+        String enfCronicaMes6 = datos.getString(this.getString(R.string.enfCronicaMes6));
+        String enfCronicaAnio7 = datos.getString(this.getString(R.string.enfCronicaAnio7));
+        String enfCronicaMes7 = datos.getString(this.getString(R.string.enfCronicaMes7));
+        String enfCronicaAnio8 = datos.getString(this.getString(R.string.enfCronicaAnio8));
+        String enfCronicaMes8 = datos.getString(this.getString(R.string.enfCronicaMes8));
+        String enfCronicaAnio9 = datos.getString(this.getString(R.string.enfCronicaAnio9));
+        String enfCronicaMes9 = datos.getString(this.getString(R.string.enfCronicaMes9));
+        String enfCronicaAnio10 = datos.getString(this.getString(R.string.enfCronicaAnio10));
+        String enfCronicaMes10 = datos.getString(this.getString(R.string.enfCronicaMes10));
+        String enfCronicaAnio11 = datos.getString(this.getString(R.string.enfCronicaAnio11));
+        String enfCronicaMes11 = datos.getString(this.getString(R.string.enfCronicaMes11));
+        String enfCronicaAnio12 = datos.getString(this.getString(R.string.enfCronicaAnio12));
+        String enfCronicaMes12 = datos.getString(this.getString(R.string.enfCronicaMes12));
+        String enfCronicaAnio13 = datos.getString(this.getString(R.string.enfCronicaAnio13));
+        String enfCronicaMes13 = datos.getString(this.getString(R.string.enfCronicaMes13));
+        String enfCronicaAnio14 = datos.getString(this.getString(R.string.enfCronicaAnio14));
+        String enfCronicaMes14 = datos.getString(this.getString(R.string.enfCronicaMes14));
+
+        List<MessageResource> catTx = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + enfCronica + "') and "
+                + CatalogosDBConstants.catRoot + "='ENFERMEDAD_CRN'", null);
+
+        for (MessageResource ms : catTx) {
+            EnfermedadCronica enfermedad = new EnfermedadCronica();
+            enfermedad.setId(infoMovil.getId());
+            enfermedad.setTamizaje(tamizaje);
+            enfermedad.setEnfermedad(ms.getCatKey());
+            if (ms.getCatKey().equals("1")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio1);
+                if (tieneValor(enfCronicaMes1)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes1 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            if (ms.getCatKey().equals("2")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio2);
+                if (tieneValor(enfCronicaMes2)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes2 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            if (ms.getCatKey().equals("3")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio3);
+                if (tieneValor(enfCronicaMes3)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes3 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            if (ms.getCatKey().equals("4")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio4);
+                if (tieneValor(enfCronicaMes4)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes4 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            if (ms.getCatKey().equals("5")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio5);
+                if (tieneValor(enfCronicaMes5)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes5 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            if (ms.getCatKey().equals("6")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio6);
+                if (tieneValor(enfCronicaMes6)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes6 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            if (ms.getCatKey().equals("7")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio7);
+                if (tieneValor(enfCronicaMes7)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes7 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            if (ms.getCatKey().equals("8")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio8);
+                if (tieneValor(enfCronicaMes8)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes8 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            if (ms.getCatKey().equals("9")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio9);
+                if (tieneValor(enfCronicaMes9)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes9 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+                enfermedad.setOtraEnfermedad(oEnfCronica);
+            }
+            if (ms.getCatKey().equals("10")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio10);
+                if (tieneValor(enfCronicaMes10)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes10 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            if (ms.getCatKey().equals("11")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio11);
+                if (tieneValor(enfCronicaMes11)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes11 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            if (ms.getCatKey().equals("12")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio12);
+                if (tieneValor(enfCronicaMes12)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes12 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            if (ms.getCatKey().equals("13")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio13);
+                if (tieneValor(enfCronicaMes13)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes13 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            if (ms.getCatKey().equals("14")) {
+                enfermedad.setAnioEnfermedad(enfCronicaAnio14);
+                if (tieneValor(enfCronicaMes14)) {
+                    MessageResource catEnfermedadMes = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronicaMes14 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", null);
+                    if (catEnfermedadMes != null) enfermedad.setMesEnfermedad(catEnfermedadMes.getCatKey());
+                }
+            }
+            enfermedad.setRecordDate(new Date());
+            enfermedad.setRecordUser(username);
+            enfermedad.setDeviceid(infoMovil.getDeviceId());
+            enfermedad.setEstado('0');
+            enfermedad.setPasive('0');
+
+            estudiosAdapter.crearEnfermedadCronica(enfermedad);
+        }
+    }
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
         private int mCutOffPage;

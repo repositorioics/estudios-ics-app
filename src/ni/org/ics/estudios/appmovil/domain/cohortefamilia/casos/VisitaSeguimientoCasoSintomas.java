@@ -41,6 +41,7 @@ public class VisitaSeguimientoCasoSintomas extends BaseMetaData {
 	private String antibiotico;
 	private String cualAntibiotico;
 	private String prescritoMedico;
+    private String respiracionRapida;
     
 	public String getCodigoCasoSintoma() {
 		return codigoCasoSintoma;
@@ -258,7 +259,15 @@ public class VisitaSeguimientoCasoSintomas extends BaseMetaData {
 		this.prescritoMedico = prescritoMedico;
 	}
 
-	@Override
+    public String getRespiracionRapida() {
+        return respiracionRapida;
+    }
+
+    public void setRespiracionRapida(String respiracionRapida) {
+        this.respiracionRapida = respiracionRapida;
+    }
+
+    @Override
 	public String toString(){
 		return codigoVisitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF() + "-" + codigoVisitaCaso.getCodigoParticipanteCaso().getParticipante().getParticipante().getCodigo() + "-" + codigoVisitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio();
 	}

@@ -63,7 +63,7 @@
 	<string name="antibiotico">Toma Antibiótico</string>
 	<string name="prescritoMedico">Fue prescrito por medico</string>
 	<string name="cualAntibiotico">Cual Antibiótico</string>
-	
+    <string name="respiracionRapida">Respiración Rapida</string>
 	
 	<string name="contacts">Contacto miembros del hogar</string>
 	<string name="partContacto">Nombre miembro del hogar</string>
@@ -72,6 +72,8 @@
 	<string name="tipoInteraccion">Tipo de interacción</string>
 	<string name="tiempoInteraccionHint">¿Cuánto tiempo interactuó con esta persona hoy (minutos)?</string>
 	<string name="tipoInteraccionHint">¿Qué tipo de interacción tuvo con esta persona? (marque todos los que correspondan)</string>
+    <string name="contactExist">Contacto <xliff:g id="codigoCon">%1$s</xliff:g> ya fue agregado en esta fecha para el participante seleccionado</string>
+    <string name="selfContact">No puede seleccionarse al mismo participante como contacto</string>
 	
 	<string name="samples_caso">Muestras de visita</string>
 	<string name="new_samp_bhc">BHC</string>

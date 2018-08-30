@@ -16,6 +16,7 @@
     <string name="criteriosInclusionHint">Verifique cada uno de los Criterios de Inclusión</string>
     <string name="enfermedad">Enfermo</string>
     <string name="enfermedadHint">El participante está enfermo actualmente? (enfermedad aguda y/o crónica)</string>
+    <string name="enfermedadCronica">¿Padece alguna enfermedad crónica?</string>
     <string name="dondeAsisteProblemasSalud">Lugar atención</string>
     <string name="dondeAsisteProblemasSaludHint">¿Dónde asiste cuando tiene problemas de salud el participante?</string>
     <string name="otroCentroSalud">Indique que otro centro de salud</string>
@@ -43,7 +44,8 @@
     <string name="hospDengue">Ha sido hospitalizado por dengue alguna vez?</string>
     <string name="fechaHospDengue">Cuándo se hospitalizó?</string>
     <string name="tiempoResidencia">Tiempo de residencia</string>
-    
+    <string name="tipoVivienda">Tipo de Vivienda</string>
+
     <string name="participadoCohortePediatrica">Miembro cohorte</string>
     <string name="participadoCohortePediatricaHint">Usted o su hijo han participado en la cohorte pediatrica?</string>
 

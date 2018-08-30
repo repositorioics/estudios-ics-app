@@ -112,6 +112,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         existeEncuesta = existeencuestaLact;
                         break;
                     case OPCION_ENCUESTA_MUESTRAS:
+                        crearFomulario(position); break;
                     /*case OPCION_IR_CASA:
                         crearFomulario(position); break;*/
                     case OPCION_ENCUESTA_PARTICIPANTESA:

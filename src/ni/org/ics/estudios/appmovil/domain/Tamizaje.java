@@ -38,6 +38,7 @@ public class Tamizaje extends BaseMetaData {
     private String cohorte;
     private String enfermedadInmuno;
     //private String cualEnfermedad;
+    private String enfermedadCronica;
     private String tratamiento;
     private String cualTratamiento;
     private String diagDengue;
@@ -242,6 +243,14 @@ public class Tamizaje extends BaseMetaData {
 
     public void setEnfermedadInmuno(String enfermedadInmuno) {
         this.enfermedadInmuno = enfermedadInmuno;
+    }
+
+    public String getEnfermedadCronica() {
+        return enfermedadCronica;
+    }
+
+    public void setEnfermedadCronica(String enfermedadCronica) {
+        this.enfermedadCronica = enfermedadCronica;
     }
 
     public String getTratamiento() {

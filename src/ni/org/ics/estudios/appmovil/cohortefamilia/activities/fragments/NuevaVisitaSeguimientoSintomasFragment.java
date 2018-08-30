@@ -91,6 +91,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	private Spinner spinDiarrea;
 	private Spinner spinQuedoCama;
 	private Spinner spinRespiracionRuidosa;
+    private Spinner spinRespiracionRapida;
 	private Spinner spinOseltamivir;
 	private Spinner spinAntibiotico;
 	private TextView textPrescritoMedico;
@@ -117,6 +118,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	private String diarrea;
 	private String quedoCama;
 	private String respiracionRuidosa;
+    private String respiracionRapida;
 	private String oseltamivir;
 	private String antibiotico;
 	private String cualAntibiotico;
@@ -459,6 +461,24 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 	    });
+        spinRespiracionRapida = (Spinner) rootView.findViewById(R.id.spinRespiracionRapida);
+        spinRespiracionRapida.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                respiracionRapida = mr.getCatKey();
+                if(respiracionRapida.equals(Constants.YESKEYSND)){
+                    spinRespiracionRapida.setBackgroundColor(Color.RED);
+                }
+                else{
+                    spinRespiracionRapida.setBackgroundColor(Color.WHITE);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
         spinOseltamivir = (Spinner) rootView.findViewById(R.id.spinOseltamivir);
         spinOseltamivir.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 	        @Override
@@ -669,6 +689,10 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.respiracionRuidosa)),Toast.LENGTH_LONG).show();
             return false;
         }
+        else if (respiracionRapida == null || respiracionRapida.equals("")){
+            Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.respiracionRapida)),Toast.LENGTH_LONG).show();
+            return false;
+        }
         else if (oseltamivir == null || oseltamivir.equals("")){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.oseltamivir)),Toast.LENGTH_LONG).show();
             return false;
@@ -712,6 +736,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 			vscs.setDiarrea(diarrea);
 			vscs.setQuedoCama(quedoCama);
 			vscs.setRespiracionRuidosa(respiracionRuidosa);
+            vscs.setRespiracionRapida(respiracionRapida);
 			vscs.setOseltamivir(oseltamivir);
 			vscs.setAntibiotico(antibiotico);
 			vscs.setPrescritoMedico(prescritoMedico);
@@ -782,6 +807,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 			spinDiarrea.setAdapter(dataAdapter);
 			spinQuedoCama.setAdapter(dataAdapter);
 			spinRespiracionRuidosa.setAdapter(dataAdapter);
+            spinRespiracionRapida.setAdapter(dataAdapter);
 			spinOseltamivir.setAdapter(dataAdapter);
 			spinAntibiotico.setAdapter(dataAdapter);
 			spinPrescritoMedico.setAdapter(dataAdapter);

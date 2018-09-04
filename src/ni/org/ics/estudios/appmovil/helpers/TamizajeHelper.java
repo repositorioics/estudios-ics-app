@@ -56,6 +56,7 @@ public class TamizajeHelper {
         cv.put(MainDBConstants.emancipado, tamizaje.getEmancipado());
         cv.put(MainDBConstants.razonEmancipacion, tamizaje.getRazonEmancipacion());
         cv.put(MainDBConstants.otraRazonEmancipacion, tamizaje.getOtraRazonEmancipacion());
+        if (tamizaje.getCodigoParticipanteRecon()!=null) cv.put(MainDBConstants.codigoParticipanteRecon, tamizaje.getCodigoParticipanteRecon());
 
         if (tamizaje.getRecordDate() != null) cv.put(MainDBConstants.recordDate, tamizaje.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, tamizaje.getRecordUser());
@@ -110,6 +111,7 @@ public class TamizajeHelper {
         mTamizaje.setEmancipado(cursor.getString(cursor.getColumnIndex(MainDBConstants.emancipado)));
         mTamizaje.setRazonEmancipacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonEmancipacion)));
         mTamizaje.setOtraRazonEmancipacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraRazonEmancipacion)));
+        if(cursor.getInt(cursor.getColumnIndex(MainDBConstants.codigoParticipanteRecon))>0) mTamizaje.setCodigoParticipanteRecon(cursor.getInt(cursor.getColumnIndex(MainDBConstants.codigoParticipanteRecon)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mTamizaje.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mTamizaje.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

@@ -56,6 +56,7 @@ public class Tamizaje extends BaseMetaData {
     private String emancipado;
     private String razonEmancipacion;
     private String otraRazonEmancipacion;
+    private Integer codigoParticipanteRecon;
 
     public String getCodigo() {
 		return codigo;
@@ -355,5 +356,13 @@ public class Tamizaje extends BaseMetaData {
 
     public void setOtraRazonEmancipacion(String otraRazonEmancipacion) {
         this.otraRazonEmancipacion = otraRazonEmancipacion;
+    }
+
+    public Integer getCodigoParticipanteRecon() {
+        return codigoParticipanteRecon;
+    }
+
+    public void setCodigoParticipanteRecon(Integer codigoParticipanteRecon) {
+        this.codigoParticipanteRecon = codigoParticipanteRecon;
     }
 }

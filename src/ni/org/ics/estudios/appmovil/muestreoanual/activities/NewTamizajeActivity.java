@@ -1559,7 +1559,6 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 if (enfermedad.equals(Constants.YES))
                     guardarEnfermedadesCronicas(cualEnfermedad.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','"), datos, tamizaje);
             }
-            //TODO tamizaje.setCualEnfermedad(cualEnfermedad);
 
             if (tieneValor(diagDengue)) {
                 MessageResource catDen = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + diagDengue + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
@@ -1579,7 +1578,6 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     tamizaje.setFechaHospDengue(fechaHospitalizado);
                 }
             } catch (ParseException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 

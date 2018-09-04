@@ -236,7 +236,10 @@ public class EstudiosAdapter {
                 db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.enfermedadCronica + " text");
                 db.execSQL("ALTER TABLE " + CasosDBConstants.SINTOMAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.respiracionRapida + " text");
             }
-		}	
+            if (oldVersion==10) {
+                db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.codigoParticipanteRecon + " integer");
+            }
+		}
 	}
 
 	public EstudiosAdapter open() throws SQLException {

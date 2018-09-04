@@ -431,6 +431,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     changeStatus(mWizardModel.findByKey(labels.getParteDDen()), reconsentimiento);
                     notificarCambios = false;
                 }
+                esElegible = visible;
                 if (!visible){
                     Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.noAceptaParticipar),Toast.LENGTH_LONG);
                     toast.show();
@@ -1737,6 +1738,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 tamizaje.setSexo(participante.getSexo());
                 tamizaje.setFechaNacimiento(participante.getFechaNac());
                 tamizaje.setAceptaTamizajePersona(Constants.YESKEYSND);
+                tamizaje.setCodigoParticipanteRecon(participante.getCodigo());
                 //Si acepta o no participar, siempre registrar tamizaje
                 MessageResource catAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParticipar + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (catAceptaParticipar != null) tamizaje.setAceptaParticipar(catAceptaParticipar.getCatKey());
@@ -1974,12 +1976,17 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         //se crea tamizaje de parte D(es otra carta)
                         estudiosAdapter.crearCartaConsentimiento(cc);
                     }
-
+                    MovilInfo movilInfo = new MovilInfo();
+                    movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+                    movilInfo.setDeviceid(infoMovil.getDeviceId());
+                    movilInfo.setUsername(username);
+                    movilInfo.setToday(new Date());
                     ParticipanteProcesos procesos = participante.getProcesos();
                     if (procesos.getReConsDeng() != null) {
                         procesos.setReConsDeng("No");
                     }
                     procesos.setConsDeng("No");
+                    procesos.setMovilInfo(movilInfo);
                     estudiosAdapter.actualizarParticipanteProcesos(procesos);
                     if (esElegible) {
                         int ceroDefaul = 0;
@@ -2077,12 +2084,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         }else if (procesos.getEstudio().equals("Influenza  CH Familia")){
                             procesos.setEstudio("Dengue  Influenza  CH Familiaa");
                         }
-                        MovilInfo movilInfo = new MovilInfo();
-                        movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
-                        movilInfo.setDeviceid(infoMovil.getDeviceId());
-                        movilInfo.setUsername(username);
-                        movilInfo.setToday(new Date());
-                        procesos.setMovilInfo(movilInfo);
+
                         estudiosAdapter.actualizarParticipanteProcesos(procesos);
 
                         Intent i = new Intent(getApplicationContext(),
@@ -2101,6 +2103,25 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     }
 
                 } else {
+                    //Si no acepta participar entonces desactivar el proceso de recon dengue
+                    MovilInfo movilInfo = new MovilInfo();
+                    movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+                    movilInfo.setDeviceid(infoMovil.getDeviceId());
+                    movilInfo.setUsername(username);
+                    movilInfo.setToday(new Date());
+                    ParticipanteProcesos procesos = participante.getProcesos();
+                    if (procesos.getReConsDeng() != null) {
+                        procesos.setReConsDeng("No");
+                    }
+                    procesos.setConsDeng("No");
+                    procesos.setMovilInfo(movilInfo);
+                    estudiosAdapter.actualizarParticipanteProcesos(procesos);
+                    Intent i = new Intent(getApplicationContext(),
+                            MenuInfoActivity.class);
+                    i.putExtra(ConstantsDB.CODIGO, participante.getCodigo());
+                    i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
                     Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noRegistraIngreso), Toast.LENGTH_LONG);
                     toast.show();
                     finish();

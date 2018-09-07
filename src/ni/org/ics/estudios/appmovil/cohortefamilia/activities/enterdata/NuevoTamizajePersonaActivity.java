@@ -388,11 +388,12 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 visible = edadAnios >= 2;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaSeroprevalencia()), visible);
                 //entre 2 y 3 años (excluye iniciando los 4 años)
-                visible = edadAnios >= 2 && edadAnios <4;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible);
+                //05-09-2018. En ingreso de familia ya no preguntar por dengue o influenza
+                //visible = edadAnios >= 2 && edadAnios <4;
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible);
                 //menos de 6 meses
-                visible = edadAnios == 0 && edadMeses <=5;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible);
+                //visible = edadAnios == 0 && edadMeses <=5;
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible);
 
             }
             if(page.getTitle().equals(labels.getAceptaTamizajePersona())){
@@ -574,10 +575,11 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 notificarCambios = false;
                 //si tiene 2 o mas años preguntar si paticipa en estudio seroprevalencia
                 changeStatus(mWizardModel.findByKey(labels.getAceptaSeroprevalencia()), visible && edadAnios >= 2);
+                //05-09-2018. En ingreso de familia ya no preguntar por dengue o influenza
                 //entre 2 y 3 años (excluye iniciando los 4 años)
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= 2 && edadAnios <4));
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= 2 && edadAnios <4));
                 //menos de 6 meses
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios == 0 && edadMeses <=5));
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios == 0 && edadMeses <=5));
 
                 changeStatus(mWizardModel.findByKey(labels.getTestigoPresente()), !visible);
                 notificarCambios = false;
@@ -634,10 +636,11 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
                 //si tiene 2 o mas años preguntar si paticipa en estudio seroprevalencia
                 changeStatus(mWizardModel.findByKey(labels.getAceptaSeroprevalencia()), visible && edadAnios >= 2);
+                //05-09-2018. En ingreso de familia ya no preguntar por dengue o influenza
                 //entre 2 y 3 años (excluye iniciando los 4 años)
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= 2 && edadAnios <4));
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= 2 && edadAnios <4));
                 //menos de 6 meses
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios == 0 && edadMeses <=5));
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios == 0 && edadMeses <=5));
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -654,7 +657,8 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 notificarCambios = false;
                 onPageTreeChanged();
             }
-            if(page.getTitle().equals(labels.getAceptaCohorteDengue())){
+            //05-09-2018. En ingreso de familia ya no preguntar por dengue o influenza
+            /*if(page.getTitle().equals(labels.getAceptaCohorteDengue())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteD()), visible);
                 notificarCambios = false;
@@ -682,7 +686,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenza()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
-            }
+            }*/
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -947,6 +951,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         if (tieneValor(codigoCohorte)) codigo = Integer.parseInt(codigoCohorte);
                         participante = estudiosAdapter.getParticipante(MainDBConstants.codigo + " = " + codigo, null);
                         procesos = participante.getProcesos();
+                        estudios = procesos.getEstudio();
                     } else {
                         //Creamos un nuevo participante
                         participante = new Participante();
@@ -1255,6 +1260,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 
                         procesos.setEnCasa(Constants.YES);
                         procesos.setEnCasaSa(Constants.YES);
+                        procesos.setEnCasaChf(Constants.YES);
                         procesos.setInfoVacuna(Constants.YES);
                         procesos.setCuantasPers(0);
                         procesos.setVolRetoma(null);
@@ -1277,7 +1283,6 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     procesos.setPbmc(Constants.NO);
                     procesos.setPaxgene(Constants.YES);
                     procesos.setCasaCHF(casaCHF.getCodigoCHF());
-                    procesos.setEnCasaChf(Constants.YES);
                     procesos.setEstPart(1);
                     if (tieneValor(cc.getRelacionFamiliarTutor()))
                         procesos.setRelacionFam(Integer.valueOf(cc.getRelacionFamiliarTutor()));
@@ -1289,14 +1294,17 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     else
                         procesos.setTutor(Constants.NA);
 
-                    if (aceptaDengue)
+                    //05-09-2018. En ingreso de familia ya no preguntar por dengue o influenza
+                    /*if (aceptaDengue)
                         estudios = "Dengue";
                     if (aceptaInfluenza)
                         if (estudios.isEmpty()) {
                             estudios = "Influenza";
                         } else
-                            estudios += "  " + "Influenza";
-                    estudios += (estudios.isEmpty() ? "CH Familia" : "  CH Familia");
+                            estudios += "  " + "Influenza";*/
+                    if (estudios.isEmpty()) estudios += "CH Familia";
+                    else if (estudios.equalsIgnoreCase("Dengue"))  estudios += "    CH Familia";
+                    else estudios += "  CH Familia";
 
                     procesos.setEstudio(estudios);
                     MovilInfo movilInfo = new MovilInfo();

@@ -231,15 +231,15 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
 			final TimePickerDialog tmD = new TimePickerDialog(this.getActivity(), android.R.style.Theme_Holo_Dialog, new OnTimeSetListener() {
 		        @Override
 		        public void onTimeSet(TimePicker picker, int hourOfDay, int minute) {
-		        	if(hourOfDay<7||hourOfDay>19){
+		        	/*if(hourOfDay<7||hourOfDay>19){
 		        		horaProbableVisita = null;
 		        		inputHoraProbableVisita.setText("");
 		        		Toast.makeText(getActivity(),getActivity().getString(R.string.wrongTime) , Toast.LENGTH_LONG).show();
 		        	}
-		        	else{
+		        	else{*/
 		        		horaProbableVisita= (picker != null) ? String.valueOf(hourOfDay<10? "0"+hourOfDay:hourOfDay)+":"+String.valueOf(minute<10?"0"+minute:minute) : null;
 		        		inputHoraProbableVisita.setText(horaProbableVisita);
-		        	}
+		        	//}
 		        }
 		    }, 7, 0,true);
 			tmD.show();	

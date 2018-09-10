@@ -92,6 +92,8 @@
         <item>@string/info_casachf</item>
         <item>@string/info_casasa</item>
         <item>@string/info_participantesa</item>
+        <item>@string/info_telefonos</item>
+
     </string-array>
     <string-array name="menu_review">
         <item>@string/info_reconflu</item>

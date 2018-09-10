@@ -250,6 +250,8 @@
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.ListParticipantesCasaActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.ListPhonesActivity"
+                  android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity"
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuInfoActivity"

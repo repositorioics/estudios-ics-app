@@ -35,6 +35,7 @@
     <string name="info_casasa">Encuesta Casa SA</string>
     <string name="info_participantesa">Enc Participante SA</string>
     <string name="info_sa">Consentimiento Seroprevalencia</string>
+    <string name="info_telefonos">Teléfonos</string>
 
     <string name="house_survey_missing">Realizar encuesta de casa</string>
     <string name="part_survey_missing">Realizar encuesta de participante</string>

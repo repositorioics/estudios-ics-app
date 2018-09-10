@@ -8,6 +8,7 @@ import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.tasks.DownloadTask;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Casa;
+import ni.org.ics.estudios.appmovil.domain.ContactoParticipante;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
@@ -49,6 +50,7 @@ public class DownloadBaseTask extends DownloadTask {
     private List<ParticipanteSeroprevalencia> mParticipantesSA = null;
     private List<ParticipanteProcesos> mParticipantesProc = null;
     private List<MessageResource> mCatalogos = null;
+    private List<ContactoParticipante> mContactosParticipante = null;
 
     public static final String CATALOGOS = "1";
     public static final String USUARIOS = "2";
@@ -62,7 +64,8 @@ public class DownloadBaseTask extends DownloadTask {
     public static final String CASA_CHF = "10";
     public static final String PARTICIPANTE_CHF = "11";
     public static final String PARTICIPANTE_SA = "12";
-    private static final String TOTAL_TASK_GENERALES = "12";
+    public static final String CONTACTOS_PART = "13";
+    private static final String TOTAL_TASK_GENERALES = "13";
 	
 	private String error = null;
 	private String url = null;
@@ -82,6 +85,7 @@ public class DownloadBaseTask extends DownloadTask {
 			error = descargarDatosGenerales();
             error = descargarChf();
             error = descargarDatosSeroprevalencia();
+            error = descargarContactosParticipantes();
 			if (error!=null) return error;
 		} catch (Exception e) {
 			// Regresa error al descargar
@@ -109,6 +113,7 @@ public class DownloadBaseTask extends DownloadTask {
         estudioAdapter.borrarContactosParticipantes();
         estudioAdapter.borrarVisitasTerrenoParticipante();
         estudioAdapter.borrarEnfermedadesCronicas();
+        estudioAdapter.borrarContactosParticipantes();
 
         try {
             if (mCatalogos != null){
@@ -230,6 +235,16 @@ public class DownloadBaseTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mParticipantesSA = null;
+            }
+            if (mContactosParticipante != null){
+                v = mContactosParticipante.size();
+                ListIterator<ContactoParticipante> iter = mContactosParticipante.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearContactoParticipante(iter.next());
+                    publishProgress("Insertando teléfonos participantes en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mContactosParticipante = null;
             }
 
         } catch (Exception e) {
@@ -489,6 +504,40 @@ public class DownloadBaseTask extends DownloadTask {
             mParticipantesCHF = Arrays.asList(responseEntityParticipantesCHF.getBody());
             responseEntityParticipantesCHF = null;
 
+            return null;
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getLocalizedMessage();
+        }
+    }
+
+    // url, username, password
+    protected String descargarContactosParticipantes() throws Exception {
+        try {
+            // The URL for making the GET request
+            String urlRequest;
+            // Set the Accept header for "application/json"
+            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+            HttpHeaders requestHeaders = new HttpHeaders();
+            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+            requestHeaders.setAccept(acceptableMediaTypes);
+            requestHeaders.setAuthorization(authHeader);
+            // Populate the headers in an HttpEntity object to use for the request
+            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+
+            //Descargar participantes seroprevalencia
+            urlRequest = url + "/movil/contactosparticipantes/";
+            publishProgress("Solicitando teléfonos participantes",CONTACTOS_PART,TOTAL_TASK_GENERALES);
+            // Perform the HTTP GET request
+            ResponseEntity<ContactoParticipante[]> responseEntityContactos = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ContactoParticipante[].class);
+            // convert the array to a list and return it
+            mContactosParticipante = Arrays.asList(responseEntityContactos.getBody());
+            responseEntityContactos = null;
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

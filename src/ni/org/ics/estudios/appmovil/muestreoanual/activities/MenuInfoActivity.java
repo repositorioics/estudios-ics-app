@@ -273,6 +273,14 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
+                    case 19:
+                        arguments.putString(Constants.TITLE, getString(R.string.info_telefonos));
+
+                        i = new Intent(getApplicationContext(),
+                                ListPhonesActivity.class);
+                        if (mParticipante!=null) i.putExtra(Constants.PARTICIPANTE, mParticipante);
+
+                        break;
                     default:
                         arguments.putString(Constants.TITLE, getString(R.string.info_participante));
                         if (mParticipante!=null) arguments.putSerializable(Constants.OBJECTO , mParticipante);

@@ -5,12 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.widget.*;
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVisitaFallidaCasaActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajePersonaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.ParticipanteCohorteFamiliaCasoAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
@@ -27,18 +29,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 
 public class ListaParticipantesCasosActivity extends AbstractAsyncListActivity {
-	
+
 	private TextView textView;
 	private Drawable img = null;
 	private Button mButton;
 	private Button mDatosCasaButton;
 	private Button mVisitaFallidaButton;
+    private Button mAddPartButton;
 	private static CasaCohorteFamiliaCaso casaCaso = new CasaCohorteFamiliaCaso();
     private ParticipanteCohorteFamiliaCasoData participanteCaso = new ParticipanteCohorteFamiliaCasoData();
 	private ArrayAdapter<ParticipanteCohorteFamiliaCasoData> mParticipanteCohorteFamiliaCasoAdapter;
@@ -49,7 +48,6 @@ public class ListaParticipantesCasosActivity extends AbstractAsyncListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_add_casos);
-		
 		casaCaso = (CasaCohorteFamiliaCaso) getIntent().getExtras().getSerializable(Constants.CASA);
 		textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_menu_today);
@@ -116,6 +114,24 @@ public class ListaParticipantesCasosActivity extends AbstractAsyncListActivity {
 				
 			}
 		});
+
+        mAddPartButton = (Button) findViewById(R.id.add_part_button);
+        mAddPartButton.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v) {
+                Bundle arguments = new Bundle();
+                if (casaCaso!=null) arguments.putSerializable(Constants.CASA , casaCaso.getCasa());
+                Intent i = new Intent(getApplicationContext(),
+                        NuevoTamizajePersonaActivity.class);
+                i.putExtras(arguments);
+                i.putExtra(Constants.DESDE_CASOS, true);
+                i.putExtra(Constants.CASO, casaCaso.getCodigoCaso());
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+
+            }
+        });
 		
 	}
 

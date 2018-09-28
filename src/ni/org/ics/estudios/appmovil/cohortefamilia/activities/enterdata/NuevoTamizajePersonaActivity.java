@@ -31,7 +31,7 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaParticipantesCasosActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.TamizajeForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.TamizajeFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
@@ -91,7 +91,8 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
     private Integer edadAnios = 0;
     private Integer edadMeses = 0;
-    //private Integer edadDias = 0;
+    private boolean fromCasos;
+    private String codigoCaso;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,6 +104,8 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
         }
         setContentView(R.layout.activity_data_enter);
         casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+        fromCasos = getIntent().getBooleanExtra(Constants.DESDE_CASOS, false);
+        codigoCaso = getIntent().getStringExtra(Constants.CASO);
         settings =
                 PreferenceManager.getDefaultSharedPreferences(this);
         username =
@@ -1318,8 +1321,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     }else{
                         estudiosAdapter.actualizarParticipanteProcesos(procesos);
                     }
-                    //Cierra la base de datos
-                    estudiosAdapter.close();
+
 
                     //Abre el menu para este participante
 	        	/*Bundle arguments = new Bundle();
@@ -1329,12 +1331,28 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 	            i.putExtras(arguments);
 	            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	            startActivity(i);*/
-                    Intent i = new Intent(getApplicationContext(),
-                            MenuInfoActivity.class);
-                    i.putExtra(ConstantsDB.CODIGO, codigo);
-                    i.putExtra(Constants.INGRESO_CHF, true);
-                    i.putExtra(ConstantsDB.VIS_EXITO, false);
-                    startActivity(i);
+                    if (!fromCasos) {
+                        Intent i = new Intent(getApplicationContext(),
+                                MenuInfoActivity.class);
+                        i.putExtra(ConstantsDB.CODIGO, codigo);
+                        i.putExtra(Constants.INGRESO_CHF, true);
+                        i.putExtra(ConstantsDB.VIS_EXITO, false);
+                        startActivity(i);
+                    }else{
+                        if (casaCaso==null || !casaCaso.getCodigoCaso().equalsIgnoreCase(codigoCaso)){
+                            casaCaso = estudiosAdapter.getCasaCohorteFamiliaCaso(CasosDBConstants.codigoCaso + "= '"+codigoCaso+"'", null);
+                        }
+                        Bundle arguments = new Bundle();
+                        Intent i;
+                        arguments.putSerializable(Constants.CASA , casaCaso);
+                        i = new Intent(getApplicationContext(),
+                                ListaParticipantesCasosActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                    }
+                    //Cierra la base de datos
+                    estudiosAdapter.close();
                     Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_LONG);
                     toast.show();
                     finish();

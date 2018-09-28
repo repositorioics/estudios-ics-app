@@ -594,7 +594,17 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
                 	inputFechaSintoma.setText(fechaSintoma);
 		        }
 		    },c.get(Calendar.YEAR), c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
-			minDate = new DateMidnight(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
+            if (mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFechaEnfermedad()!=null){
+                Date fechaInicio = mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio();
+                Date fechaEnfermedad = mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFechaEnfermedad();
+                //si la fecha de enfermedad es menor a la fecha de inicio, tomar la fecha de enfermedad
+                if (fechaInicio.compareTo(fechaEnfermedad)>=0)
+                    minDate = new DateMidnight(fechaEnfermedad);
+                else //sino tomar la fecha de inicio
+                    minDate = new DateMidnight(fechaInicio);
+            }else {
+                minDate = new DateMidnight(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
+            }
 			maxDate = DateMidnight.now();
 			dpD.getDatePicker().setMinDate(minDate.getMillis());
 			dpD.getDatePicker().setMaxDate(maxDate.getMillis());
@@ -608,7 +618,17 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
                 	inputFif.setText(fif);
 		        }
 		    },c.get(Calendar.YEAR), c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
-			minDate = new DateMidnight(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
+            if (mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFechaEnfermedad()!=null){
+                Date fechaInicio = mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio();
+                Date fechaEnfermedad = mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFechaEnfermedad();
+                //si la fecha de enfermedad es menor a la fecha de inicio, tomar la fecha de enfermedad
+                if (fechaInicio.compareTo(fechaEnfermedad)>=0)
+                    minDate = new DateMidnight(fechaEnfermedad);
+                else //sino tomar la fecha de inicio
+                    minDate = new DateMidnight(fechaInicio);
+            }else {
+                minDate = new DateMidnight(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
+            }
 			maxDate = DateMidnight.now();
 			dpD.getDatePicker().setMinDate(minDate.getMillis());
 			dpD.getDatePicker().setMaxDate(maxDate.getMillis());
@@ -709,7 +729,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.cualAntibiotico)),Toast.LENGTH_LONG).show();
             return false;
         }
-        else if (formatter.parse(fechaSintoma).before(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio())){
+        else if (mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFechaEnfermedad()==null && formatter.parse(fechaSintoma).before(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio())){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.fecBefRegistro,getActivity().getString(R.string.fecha_sintoma),getActivity().getString(R.string.fechaInicio)),Toast.LENGTH_LONG).show();
             return false;
         }

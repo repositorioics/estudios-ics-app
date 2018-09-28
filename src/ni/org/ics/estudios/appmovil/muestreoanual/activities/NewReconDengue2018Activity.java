@@ -1206,6 +1206,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 }else{
                     pagetmp.setRangeValidation(true, 20000000, 29999999);
                 }
+                changeStatus(mWizardModel.findByKey(labels.getTelefonoOper1()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefono2SN())) {
@@ -1213,8 +1215,6 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif2()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoCel2()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getTelefonoOper2()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono3SN()), visible);
                 notificarCambios = false;
@@ -1228,6 +1228,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 }else{
                     pagetmp.setRangeValidation(true, 20000000, 29999999);
                 }
+                changeStatus(mWizardModel.findByKey(labels.getTelefonoOper2()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefono3SN())) {
@@ -1235,8 +1237,6 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif3()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoCel3()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getTelefonoOper3()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -1248,6 +1248,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 }else{
                     pagetmp.setRangeValidation(true, 20000000, 29999999);
                 }
+                changeStatus(mWizardModel.findByKey(labels.getTelefonoOper3()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCambiarJefe())) {
@@ -1282,6 +1284,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 }else{
                     pagetmp.setRangeValidation(true, 20000000, 29999999);
                 }
+                changeStatus(mWizardModel.findByKey(labels.getTelContactoOper1()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelContacto2SN())) {
@@ -1289,8 +1293,6 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getTelContactoClasif2()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelContactoCel2()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getTelContactoOper2()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -1302,6 +1304,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 }else{
                     pagetmp.setRangeValidation(true, 20000000, 29999999);
                 }
+                changeStatus(mWizardModel.findByKey(labels.getTelContactoOper2()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCambiarPadre())) {

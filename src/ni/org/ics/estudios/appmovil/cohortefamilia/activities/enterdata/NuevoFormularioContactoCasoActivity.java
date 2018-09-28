@@ -105,7 +105,18 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
         Page pagePart = mWizardModel.findByKey(labels.getPartContacto());
         pagePart.setCasaCHF(visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF());
         NewDatePage pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaContacto());
-        DateMidnight minDate = new DateMidnight(visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
+        DateMidnight minDate; //= new DateMidnight(visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
+        if (visitaCaso.getCodigoParticipanteCaso().getFechaEnfermedad()!=null){
+            Date fechaInicio = visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio();
+            Date fechaEnfermedad = visitaCaso.getCodigoParticipanteCaso().getFechaEnfermedad();
+            //si la fecha de enfermedad es menor a la fecha de inicio, tomar la fecha de enfermedad
+            if (fechaInicio.compareTo(fechaEnfermedad)>=0)
+                minDate = new DateMidnight(fechaEnfermedad);
+            else //sino tomar la fecha de inicio
+                minDate = new DateMidnight(fechaInicio);
+        }else {
+            minDate = new DateMidnight(visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
+        }
         pageFecha.setmLaterThan(minDate);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);

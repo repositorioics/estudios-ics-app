@@ -955,6 +955,11 @@ public class EstudiosAdapter {
         mDb.insertOrThrow(ConstantsDB.PART_PROCESOS_TABLE, null, cv);
     }
 
+    //Crear nuevo ParticipanteProceso en la base de datos desde otro equipo
+    public void insertarParticipanteProcesos(String participanteProcesosSQL) {
+        mDb.execSQL(participanteProcesosSQL);
+    }
+
     /**
      * Actualiza un participante en la base de datos.
      *
@@ -2379,6 +2384,11 @@ public class EstudiosAdapter {
     public void crearParticipanteCohorteFamiliaCaso(ParticipanteCohorteFamiliaCaso partcaso) throws Exception {
         ContentValues cv = ParticipanteCohorteFamiliaCasoHelper.crearParticipanteCohorteFamiliaCasoContentValues(partcaso);
         mDb.insertOrThrow(CasosDBConstants.PARTICIPANTES_CASOS_TABLE, null, cv);
+    }
+
+    //Crear nuevo ParticipanteCohorteFamiliaCaso en la base de datos desde otro equipo
+    public void insertarParticipanteCohorteFamiliaCaso(String participanteCohorteFamiliaCasoSQL) {
+        mDb.execSQL(participanteCohorteFamiliaCasoSQL);
     }
 
     //Editar ParticipanteCohorteFamiliaCaso existente en la base de datos

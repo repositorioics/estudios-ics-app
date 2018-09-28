@@ -338,7 +338,7 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
 			try {
 				estudiosAdapter.open();
 				mCatalogoSn = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", CatalogosDBConstants.order);
-                mVisitas = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_VIS_MI'", CatalogosDBConstants.order);
+                mVisitas = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_VIS_MI' and "+CatalogosDBConstants.messageKey + " <> 'CHF_CAT_VIS_MI_F'" , CatalogosDBConstants.order);
 				//visita = estudiosAdapter.selectUltimaVisitaSeguimientoCaso(mParticipanteCaso.getCodigoCasoParticipante())+1;
 				estudiosAdapter.close();
 			} catch (Exception e) {

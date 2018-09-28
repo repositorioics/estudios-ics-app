@@ -109,6 +109,10 @@
     <string name="finished_part">/*Terminado participantes*/</string>
     <string name="start_partsa">/*Enviar participante seroprevalencia*/</string>
     <string name="finished_partsa">/*Terminado participantes seroprevalencia*/</string>
+    <string name="start_partproc">/*Enviar participante procesos*/</string>
+    <string name="finished_partproc">/*Terminado procesos*/</string>
+    <string name="start_partcasos">/*Enviar casos participante*/</string>
+    <string name="finished_partcasos">/*Terminado casos*/</string>
     <string name="select_house">Seleccionar casa</string>
     <string name="house_selected">Casa seleccionada <xliff:g id="codigo_casa">%1$s</xliff:g></string>
     <string name="participant_selected">Participante seleccionado <xliff:g id="codigo_part">%1$s</xliff:g></string>

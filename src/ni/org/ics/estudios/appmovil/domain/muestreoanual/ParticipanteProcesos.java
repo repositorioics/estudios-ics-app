@@ -48,6 +48,7 @@ public class ParticipanteProcesos implements Serializable {
     private String encPartSa;
     private String tutor;
     private String consSa;
+    private String coordenadas; //cambio de domicilio
 
     private MovilInfo movilInfo;
 
@@ -345,5 +346,13 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setConsSa(String consSa) {
         this.consSa = consSa;
+    }
+
+    public String getCoordenadas() {
+        return coordenadas;
+    }
+
+    public void setCoordenadas(String coordenadas) {
+        this.coordenadas = coordenadas;
     }
 }

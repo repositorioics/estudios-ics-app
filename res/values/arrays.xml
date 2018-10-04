@@ -93,6 +93,7 @@
         <item>@string/info_casasa</item>
         <item>@string/info_participantesa</item>
         <item>@string/info_telefonos</item>
+        <item>@string/info_coordenadas</item>
 
     </string-array>
     <string-array name="menu_review">

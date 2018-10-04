@@ -163,7 +163,7 @@ public class EstudiosAdapter {
             db.execSQL(MainDBConstants.CREATE_CONTACTO_PARTICIPANTE_TABLE);
             //reconsentimiento dengue 2018
             db.execSQL(MainDBConstants.CREATE_VISITAPART_TABLE);
-            db.execSQL(MainDBConstants.CREATE_CAMBIO_DOMICILIO_TABLE);
+            db.execSQL(MainDBConstants.CREATE_DATOS_COORDENADAS_TABLE);
             db.execSQL(MainDBConstants.CREATE_ENFCRONICA_TABLE);
         }
 
@@ -239,7 +239,13 @@ public class EstudiosAdapter {
             if (oldVersion==10) {
                 db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.codigoParticipanteRecon + " integer");
             }
-		}
+            if (oldVersion==11){
+                db.execSQL("DROP TABLE " + MainDBConstants.CAMBIO_DOMICILIO_TABLE);
+                db.execSQL(MainDBConstants.CREATE_DATOS_COORDENADAS_TABLE);
+                db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.coordenada + " text");
+            }
+
+        }
 	}
 
 	public EstudiosAdapter open() throws SQLException {
@@ -2946,7 +2952,7 @@ public class EstudiosAdapter {
         c = crearCursor(MainDBConstants.CONTACTO_PARTICIPANTE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
-        c = crearCursor(MainDBConstants.CAMBIO_DOMICILIO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        c = crearCursor(MainDBConstants.DATOS_COORDENADAS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         c = crearCursor(MainDBConstants.VISITAPART_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
@@ -8132,55 +8138,55 @@ public class EstudiosAdapter {
     /**
      * Metodos para cambios de domicilio en la base de datos
      *
-     * @param cambioDomicilio
+     * @param datosCoordenadas
      *            Objeto VisitaTereno que contiene la informacion
      *
      */
-    //Crear nuevo CambioDomicilio en la base de datos
-    public void crearCambioDomicilio(CambioDomicilio cambioDomicilio) {
-        ContentValues cv = CambioDomicilioHelper.crearCambioDomicilioContentValues(cambioDomicilio);
-        mDb.insert(MainDBConstants.CAMBIO_DOMICILIO_TABLE, null, cv);
+    //Crear nuevo DatosCoordenadas en la base de datos
+    public void crearDatosCoordenadas(DatosCoordenadas datosCoordenadas) {
+        ContentValues cv = CambioDomicilioHelper.crearCambioDomicilioContentValues(datosCoordenadas);
+        mDb.insert(MainDBConstants.DATOS_COORDENADAS_TABLE, null, cv);
     }
-    //Editar CambioDomicilio existente en la base de datos
-    public boolean editarCambioDomicilio(CambioDomicilio cambioDomicilio) {
-        ContentValues cv = CambioDomicilioHelper.crearCambioDomicilioContentValues(cambioDomicilio);
-        return mDb.update(MainDBConstants.CAMBIO_DOMICILIO_TABLE , cv, MainDBConstants.codigo + "='"
-                + cambioDomicilio.getCodigo()+ "'", null) > 0;
+    //Editar DatosCoordenadas existente en la base de datos
+    public boolean editarDatosCoordenadas(DatosCoordenadas datosCoordenadas) {
+        ContentValues cv = CambioDomicilioHelper.crearCambioDomicilioContentValues(datosCoordenadas);
+        return mDb.update(MainDBConstants.DATOS_COORDENADAS_TABLE , cv, MainDBConstants.codigo + "='"
+                + datosCoordenadas.getCodigo()+ "'", null) > 0;
     }
-    //Limpiar la tabla de CambioDomicilio de la base de datos
-    public boolean borrarCambiosDomicilio() {
-        return mDb.delete(MainDBConstants.CAMBIO_DOMICILIO_TABLE, null, null) > 0;
+    //Limpiar la tabla de DatosCoordenadas de la base de datos
+    public boolean borrarDatosCoordenadas() {
+        return mDb.delete(MainDBConstants.DATOS_COORDENADAS_TABLE, null, null) > 0;
     }
-    //Obtener un CambioDomicilio de la base de datos
-    public CambioDomicilio getCambioDomicilio(String filtro, String orden) throws SQLException {
-        CambioDomicilio mCambioDomicilio = null;
-        Cursor cursorCambioDomicilio = crearCursor(MainDBConstants.CAMBIO_DOMICILIO_TABLE , filtro, null, orden);
+    //Obtener un DatosCoordenadas de la base de datos
+    public DatosCoordenadas getDatosCoordenada(String filtro, String orden) throws SQLException {
+        DatosCoordenadas mDatosCoordenadas = null;
+        Cursor cursorCambioDomicilio = crearCursor(MainDBConstants.DATOS_COORDENADAS_TABLE , filtro, null, orden);
         if (cursorCambioDomicilio != null && cursorCambioDomicilio.getCount() > 0) {
             cursorCambioDomicilio.moveToFirst();
-            mCambioDomicilio=CambioDomicilioHelper.crearCambioDomicilio(cursorCambioDomicilio);
+            mDatosCoordenadas =CambioDomicilioHelper.crearCambioDomicilio(cursorCambioDomicilio);
             Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorCambioDomicilio.getInt(cursorCambioDomicilio.getColumnIndex(MainDBConstants.participante)), null);
-            mCambioDomicilio.setParticipante(participante);
+            mDatosCoordenadas.setParticipante(participante);
             Barrio barrio = this.getBarrio(CatalogosDBConstants.codigo+"="+cursorCambioDomicilio.getInt(cursorCambioDomicilio.getColumnIndex(MainDBConstants.barrio)), null);
-            mCambioDomicilio.setBarrio(barrio);
+            mDatosCoordenadas.setBarrio(barrio);
         }
         if (!cursorCambioDomicilio.isClosed()) cursorCambioDomicilio.close();
-        return mCambioDomicilio;
+        return mDatosCoordenadas;
     }
-    //Obtener una lista de CambioDomicilio de la base de datos
-    public List<CambioDomicilio> getCambiosDomicilio(String filtro, String orden) throws SQLException {
-        List<CambioDomicilio> mCambiosDomicilio = new ArrayList<CambioDomicilio>();
-        Cursor cursorCambiosDomicilio = crearCursor(MainDBConstants.CAMBIO_DOMICILIO_TABLE, filtro, null, orden);
+    //Obtener una lista de DatosCoordenadas de la base de datos
+    public List<DatosCoordenadas> getDatosCoordenadas(String filtro, String orden) throws SQLException {
+        List<DatosCoordenadas> mCambiosDomicilio = new ArrayList<DatosCoordenadas>();
+        Cursor cursorCambiosDomicilio = crearCursor(MainDBConstants.DATOS_COORDENADAS_TABLE, filtro, null, orden);
         if (cursorCambiosDomicilio != null && cursorCambiosDomicilio.getCount() > 0) {
             cursorCambiosDomicilio.moveToFirst();
             mCambiosDomicilio.clear();
             do{
-                CambioDomicilio mCambioDomicilio = null;
-                mCambioDomicilio = CambioDomicilioHelper.crearCambioDomicilio(cursorCambiosDomicilio);
+                DatosCoordenadas mDatosCoordenadas = null;
+                mDatosCoordenadas = CambioDomicilioHelper.crearCambioDomicilio(cursorCambiosDomicilio);
                 Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorCambiosDomicilio.getInt(cursorCambiosDomicilio.getColumnIndex(MainDBConstants.participante)), null);
-                mCambioDomicilio.setParticipante(participante);
+                mDatosCoordenadas.setParticipante(participante);
                 Barrio barrio = this.getBarrio(CatalogosDBConstants.codigo+"="+cursorCambiosDomicilio.getInt(cursorCambiosDomicilio.getColumnIndex(MainDBConstants.barrio)), null);
-                mCambioDomicilio.setBarrio(barrio);
-                mCambiosDomicilio.add(mCambioDomicilio);
+                mDatosCoordenadas.setBarrio(barrio);
+                mCambiosDomicilio.add(mDatosCoordenadas);
             } while (cursorCambiosDomicilio.moveToNext());
         }
         if (!cursorCambiosDomicilio.isClosed()) cursorCambiosDomicilio.close();

@@ -1,6 +1,7 @@
 package ni.org.ics.estudios.appmovil.domain;
 
 import ni.org.ics.estudios.appmovil.catalogs.Barrio;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 
 import java.io.Serializable;
 
@@ -10,7 +11,7 @@ import java.io.Serializable;
  * @author Miguel Salinas
  **/
 
-public class CambioDomicilio extends BaseMetaData implements Serializable {
+public class DatosCoordenadas implements Serializable {
 
 	/**
 	 * 
@@ -20,16 +21,22 @@ public class CambioDomicilio extends BaseMetaData implements Serializable {
 	 * 
 	 */
 	private String codigo;
+    private Integer codigoCasa;
+    private String estudios;
     private Participante participante;
+    private String motivo;
 	private Barrio barrio;
     private String otroBarrio;
 	private String direccion;
-    private String manzana;
+    private Integer manzana;
+    private String conpunto;
     private String puntoGps;
 	private Double latitud;
 	private Double longitud;
     private String razonNoGeoref;
     private String otraRazonNoGeoref;
+
+    private MovilInfo movilInfo;
 
     public String getCodigo() {
         return codigo;
@@ -39,12 +46,36 @@ public class CambioDomicilio extends BaseMetaData implements Serializable {
         this.codigo = codigo;
     }
 
+    public Integer getCodigoCasa() {
+        return codigoCasa;
+    }
+
+    public void setCodigoCasa(Integer codigoCasa) {
+        this.codigoCasa = codigoCasa;
+    }
+
+    public String getEstudios() {
+        return estudios;
+    }
+
+    public void setEstudios(String estudios) {
+        this.estudios = estudios;
+    }
+
     public Participante getParticipante() {
         return participante;
     }
 
     public void setParticipante(Participante participante) {
         this.participante = participante;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
     }
 
     public Barrio getBarrio() {
@@ -71,12 +102,20 @@ public class CambioDomicilio extends BaseMetaData implements Serializable {
         this.direccion = direccion;
     }
 
-    public String getManzana() {
+    public Integer getManzana() {
         return manzana;
     }
 
-    public void setManzana(String manzana) {
+    public void setManzana(Integer manzana) {
         this.manzana = manzana;
+    }
+
+    public String getConpunto() {
+        return conpunto;
+    }
+
+    public void setConpunto(String conpunto) {
+        this.conpunto = conpunto;
     }
 
     public String getPuntoGps() {
@@ -119,6 +158,14 @@ public class CambioDomicilio extends BaseMetaData implements Serializable {
         this.otraRazonNoGeoref = otraRazonNoGeoref;
     }
 
+    public MovilInfo getMovilInfo() {
+        return movilInfo;
+    }
+
+    public void setMovilInfo(MovilInfo movilInfo) {
+        this.movilInfo = movilInfo;
+    }
+
     @Override
 	public String toString(){
 		return this.codigo + " " + this.latitud+" "+this.longitud;
@@ -127,9 +174,9 @@ public class CambioDomicilio extends BaseMetaData implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CambioDomicilio)) return false;
+        if (!(o instanceof DatosCoordenadas)) return false;
 
-        CambioDomicilio casa = (CambioDomicilio) o;
+        DatosCoordenadas casa = (DatosCoordenadas) o;
 
         return (!codigo.equals(casa.codigo));
     }

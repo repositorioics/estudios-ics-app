@@ -91,7 +91,8 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 						|| procesos.getConmx().matches("No") || procesos.getConmxbhc().matches("No")|| procesos.getZika().matches("Si")
 						|| procesos.getAdn().matches("Si")|| procesos.getDatosParto().matches("Si")|| procesos.getDatosVisita().matches("Si")
                         || !procesos.getConvalesciente().matches("No")
-                        || (procesos.getReConsDeng()!=null && procesos.getReConsDeng().matches("Si"))){
+                        || (procesos.getReConsDeng()!=null && procesos.getReConsDeng().matches("Si"))
+                        || !procesos.getCoordenadas().equals("0")){
 					labelHeader = labelHeader + "<font color='red'>Pendiente: <br /></font>";
 					
 					//Primero muestras
@@ -287,6 +288,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 					if (procesos.getDatosParto().matches("Si")) labelHeader = labelHeader + "Datos Parto BB<br />";
 					if (procesos.getInfoVacuna().matches("Si")) labelHeader = labelHeader + "Vacunas<br />";
 					if (procesos.getDatosVisita().matches("Si")) labelHeader = labelHeader + "Pendiente datos de casa<br />";
+                    if (!procesos.getCoordenadas().equals("0")) labelHeader = labelHeader + this.getContext().getString(R.string.addresschange_missing) + "<br />";
 					if ((procesos.getObsequio().matches("Si"))){
 						labelHeader = labelHeader + "<font color='blue'>" + this.getContext().getString(R.string.gift_missing) + "</font><br />";
 					}

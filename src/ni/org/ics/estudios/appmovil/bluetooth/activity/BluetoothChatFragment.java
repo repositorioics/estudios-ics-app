@@ -617,7 +617,8 @@ public class BluetoothChatFragment extends Fragment {
                 mParticipantesProc.getEnCasaChf()+"','"+
                 mParticipantesProc.getEnCasaSa()+"','"+
                 mParticipantesProc.getEncPartSa()+"','"+
-                mParticipantesProc.getTutor()+"',"+
+                mParticipantesProc.getTutor()+"','"+
+                mParticipantesProc.getCoordenadas()+"',"+
                 (mParticipantesProc.getConsSa()!=null?"'"+mParticipantesProc.getConsSa()+"'":"null")+",0,null,'"+
                 mParticipantesProc.getMovilInfo().getEstado()+"',null,null,null,'"+
                 mParticipantesProc.getMovilInfo().getDeviceid()+"',null,null,"+

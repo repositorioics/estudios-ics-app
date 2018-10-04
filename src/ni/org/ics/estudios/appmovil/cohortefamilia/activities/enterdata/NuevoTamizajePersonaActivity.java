@@ -1310,6 +1310,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     else estudios += "  CH Familia";
 
                     procesos.setEstudio(estudios);
+                    procesos.setCoordenadas("1");
                     MovilInfo movilInfo = new MovilInfo();
                     movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
                     movilInfo.setDeviceid(infoMovil.getDeviceId());

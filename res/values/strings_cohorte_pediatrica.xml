@@ -36,6 +36,7 @@
     <string name="info_participantesa">Enc Participante SA</string>
     <string name="info_sa">Consentimiento Seroprevalencia</string>
     <string name="info_telefonos">Teléfonos</string>
+    <string name="info_coordenadas">Coordenadas</string>
 
     <string name="house_survey_missing">Realizar encuesta de casa</string>
     <string name="part_survey_missing">Realizar encuesta de participante</string>
@@ -63,6 +64,7 @@
     <string name="housesa_survey_missing">Realizar encuesta de casa SA</string>
     <string name="partsa_survey_missing">Realizar encuesta de participante SA</string>
     <string name="cons_sa_missing">Realizar consentimiento Seroprevalencia</string>
+    <string name="addresschange_missing">Registrar coordenadas</string>
 
     <string name="header_rnd">Por favor ingrese porque razón no ingreso la información debida.</string>
     <string name="orazon">Otra razón..</string>
@@ -100,6 +102,7 @@
     <string name="verify_gt">Entregar obsequio?</string>
     <string name="verify_vc">Registrar vacunas?</string>
     <string name="verify_vt">Registrar visita?</string>
+    <string name="verify_coor">Registrar coordenadas?</string>
     <string name="verify_rc">Registrar Consentimiento de Dengue?</string>
     <string name="verify_cz">Registrar Consentimiento de Zika?</string>
     <string name="verify_cc">Registrar Consentimiento de ChikV?</string>

@@ -112,11 +112,11 @@ public class ReconDengue2018FormLabels {
     private String apellidotest1;
     private String apellidotest2;
     private String cmDomicilio;
-    private String barrio;
-    private String otrobarrio;
-    private String dire;
-    private String autsup;
-    private String autsupHint;
+    //private String barrio;
+    //private String otrobarrio;
+    //private String dire;
+    //private String autsup;
+    //private String autsupHint;
     private String telefono1SN;
     private String telefonoClasif1;
     //private String telefonoConv1;
@@ -162,17 +162,18 @@ public class ReconDengue2018FormLabels {
     private String apellidomadre;
     private String apellidomadre2;
     private String verifTutor;
-    private String georef;
-    private String Manzana;
-    private String georef_razon;
-    private String georef_razonHint;
-    private String georef_otraRazon;
-    private String georef_otraRazonHint;
+    //private String georef;
+    //private String Manzana;
+    //private String georef_razon;
+    //private String georef_razonHint;
+    //private String georef_otraRazon;
+    //private String georef_otraRazonHint;
     private String tutor;
     private String jefeFam;
     private String padre;
     private String madre;
     private String domicilio;
+    private String notaCmDomicilio;
 
     public ReconDengue2018FormLabels() {
         Resources res = MyIcsApplication.getContext().getResources();
@@ -278,12 +279,12 @@ public class ReconDengue2018FormLabels {
         apellidotest1 = res.getString(R.string.apellidotest1);
         apellidotest2 = res.getString(R.string.apellidotest2);
         cmDomicilio = res.getString(R.string.cmDomicilio);
-        barrio = res.getString(R.string.barrioRC2018);
+        /*barrio = res.getString(R.string.barrioRC2018);
         otrobarrio = res.getString(R.string.otrobarrio);
         dire = res.getString(R.string.dire);
         autsup = res.getString(R.string.autsup);
         autsupHint = res.getString(R.string.autsupHint);
-        telefono1SN = res.getString(R.string.telefono1SN);
+        */telefono1SN = res.getString(R.string.telefono1SN);
         telefonoClasif1 = res.getString(R.string.telefonoClasif1);
         //telefonoConv1 = res.getString(R.string.telefonoConv1);
         telefonoCel1 = res.getString(R.string.telefonoCel1);
@@ -328,17 +329,18 @@ public class ReconDengue2018FormLabels {
         apellidomadre = res.getString(R.string.apellidomadre);
         apellidomadre2 = res.getString(R.string.apellidomadre2);
         verifTutor = res.getString(R.string.verifTutor);
-        georef = res.getString(R.string.georef);
+        /*georef = res.getString(R.string.georef);
         Manzana = res.getString(R.string.Manzana);
         georef_razon = res.getString(R.string.georef_razon);
         georef_razonHint = res.getString(R.string.georef_razonHint);
         georef_otraRazon = res.getString(R.string.georef_otraRazon);
         georef_otraRazonHint = res.getString(R.string.georef_otraRazonHint);
-        tutor = res.getString(R.string.tutor);
+        */tutor = res.getString(R.string.tutor);
         jefeFam = res.getString(R.string.jefeFam);
         padre = res.getString(R.string.padre);
         madre = res.getString(R.string.madre);
         domicilio = res.getString(R.string.domicilio);
+        notaCmDomicilio = res.getString(R.string.notaCmDomicilio);
     }
 
     public String getVisExit() {
@@ -1125,46 +1127,6 @@ public class ReconDengue2018FormLabels {
         this.cmDomicilio = cmDomicilio;
     }
 
-    public String getBarrio() {
-        return barrio;
-    }
-
-    public void setBarrio(String barrio) {
-        this.barrio = barrio;
-    }
-
-    public String getOtrobarrio() {
-        return otrobarrio;
-    }
-
-    public void setOtrobarrio(String otrobarrio) {
-        this.otrobarrio = otrobarrio;
-    }
-
-    public String getDire() {
-        return dire;
-    }
-
-    public void setDire(String dire) {
-        this.dire = dire;
-    }
-
-    public String getAutsup() {
-        return autsup;
-    }
-
-    public void setAutsup(String autsup) {
-        this.autsup = autsup;
-    }
-
-    public String getAutsupHint() {
-        return autsupHint;
-    }
-
-    public void setAutsupHint(String autsupHint) {
-        this.autsupHint = autsupHint;
-    }
-
     public String getTelefono1SN() {
         return telefono1SN;
     }
@@ -1485,54 +1447,6 @@ public class ReconDengue2018FormLabels {
         this.verifTutor = verifTutor;
     }
 
-    public String getGeoref() {
-        return georef;
-    }
-
-    public void setGeoref(String georef) {
-        this.georef = georef;
-    }
-
-    public String getManzana() {
-        return Manzana;
-    }
-
-    public void setManzana(String manzana) {
-        Manzana = manzana;
-    }
-
-    public String getGeoref_razon() {
-        return georef_razon;
-    }
-
-    public void setGeoref_razon(String georef_razon) {
-        this.georef_razon = georef_razon;
-    }
-
-    public String getGeoref_razonHint() {
-        return georef_razonHint;
-    }
-
-    public void setGeoref_razonHint(String georef_razonHint) {
-        this.georef_razonHint = georef_razonHint;
-    }
-
-    public String getGeoref_otraRazon() {
-        return georef_otraRazon;
-    }
-
-    public void setGeoref_otraRazon(String georef_otraRazon) {
-        this.georef_otraRazon = georef_otraRazon;
-    }
-
-    public String getGeoref_otraRazonHint() {
-        return georef_otraRazonHint;
-    }
-
-    public void setGeoref_otraRazonHint(String georef_otraRazonHint) {
-        this.georef_otraRazonHint = georef_otraRazonHint;
-    }
-
     public String getTutor() {
         return tutor;
     }
@@ -1571,5 +1485,13 @@ public class ReconDengue2018FormLabels {
 
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
+    }
+
+    public String getNotaCmDomicilio() {
+        return notaCmDomicilio;
+    }
+
+    public void setNotaCmDomicilio(String notaCmDomicilio) {
+        this.notaCmDomicilio = notaCmDomicilio;
     }
 }

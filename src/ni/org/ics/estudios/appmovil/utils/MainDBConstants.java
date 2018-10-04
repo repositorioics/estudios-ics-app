@@ -16,6 +16,8 @@
 
 package ni.org.ics.estudios.appmovil.utils;
 
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
+
 /**
  * Constantes usadas en la base de datos de la aplicacion
  * 
@@ -642,7 +644,8 @@ public class MainDBConstants {
             + estado + " text not null, "
             + "primary key (" + id + "));";
 
-    //Tabla CambioDomicilio
+    //Tabla CambioDomicilio. Se cambio a datos de coordenadas, para incluir todos las tomas de puntos
+   @Deprecated
     public static final String CAMBIO_DOMICILIO_TABLE = "cambio_domicilio";
 
     //Campos CambioDomicilio
@@ -651,6 +654,7 @@ public class MainDBConstants {
     public static final String otraRazonNoGeoref = "otraRazonNoGeoref";
 
     //Crear tabla casas
+    @Deprecated
     public static final String CREATE_CAMBIO_DOMICILIO_TABLE = "create table if not exists "
             + CAMBIO_DOMICILIO_TABLE + " ("
             + codigo + " text not null, "
@@ -688,4 +692,47 @@ public class MainDBConstants {
             + deviceId + " text, "
             + estado + " text not null, "
             + "primary key (" + id + "));";
+
+
+    //Tabla DatosCoordenadas
+    public static final String DATOS_COORDENADAS_TABLE = "datos_coordenadas";
+
+    //Campos CambioDomicilio
+    public static final String estudios = "estudios";
+    public static final String motivo = "motivo";
+    public static final String conpunto = "conpunto";
+
+    //Crear tabla casas
+    public static final String CREATE_DATOS_COORDENADAS_TABLE = "create table if not exists "
+            + DATOS_COORDENADAS_TABLE + " ("
+            + codigo + " text not null, "
+            + casa + " text, "
+            + estudios + " text, "
+            + participante + " integer, "
+            + motivo + " text, "
+            + barrio + " integer, "
+            + otroBarrio + " text, "
+            + direccion + " text, "
+            + manzana + " text, "
+            + conpunto + " text, "
+            + latitud + " real, "
+            + longitud + " real, "
+            + puntoGps + " text, "
+            + razonNoGeoref + " text, "
+            + otraRazonNoGeoref + " text, "
+            + ConstantsDB.ID_INSTANCIA + " integer,"
+            + ConstantsDB.FILE_PATH + " text,"
+            + ConstantsDB.STATUS + " text, "
+            + ConstantsDB.WHEN_UPDATED + " text, "
+            + ConstantsDB.START  + " text, "
+            + ConstantsDB.END  + " text, "
+            + ConstantsDB.DEVICE_ID  + " text, "
+            + ConstantsDB.SIM_SERIAL + " text, "
+            + ConstantsDB.PHONE_NUMBER  + " text, "
+            + ConstantsDB.TODAY  + " date, "
+            + ConstantsDB.USUARIO  + " text, "
+            + ConstantsDB.DELETED  + " boolean, "
+            + ConstantsDB.REC1    + " integer, "
+            + ConstantsDB.REC2    + " integer, "
+            + "primary key (" + codigo + "));";
 }

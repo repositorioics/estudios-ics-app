@@ -19,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.DatosCoordenadas;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
@@ -63,6 +64,7 @@ public class ListReviewActivity extends ListActivity {
     ArrayAdapter<EncuestaCasaSA> mEncuestasCasasSaAdapter =null;
     ArrayAdapter<EncuestaParticipanteSA> mEncuestasParticipantesSaAdapter = null;
     ArrayAdapter<ParticipanteSeroprevalencia> mParticipantesSAAdapter =null;
+    ArrayAdapter<DatosCoordenadas> mDatosCoordenadasAdapter =null;
 	public static final int BARCODE_CAPTURE = 2;
 	
 	private Integer codigo;
@@ -171,6 +173,9 @@ public class ListReviewActivity extends ListActivity {
                 }
                 if (mParticipantesSAAdapter != null) {
                     mParticipantesSAAdapter.getFilter().filter(s);
+                }
+                if (mDatosCoordenadasAdapter != null) {
+                    mDatosCoordenadasAdapter.getFilter().filter(s);
                 }
 			}
 
@@ -384,6 +389,13 @@ public class ListReviewActivity extends ListActivity {
             showToast("Total = "+ mParticipantesSAAdapter.getCount());
         }
 
+        if (titulo.matches(getString(R.string.info_coordenadas))){
+
+            mDatosCoordenadasAdapter = new DatosCoordenadaAdapter(this, R.layout.list_item_review,
+                    (ArrayList<DatosCoordenadas>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
+            setListAdapter(mDatosCoordenadasAdapter);
+            showToast("Total = "+ mDatosCoordenadasAdapter.getCount());
+        }
 
         ListView listView = (ListView) findViewById(android.R.id.list);
 		listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
@@ -573,6 +585,13 @@ public class ListReviewActivity extends ListActivity {
         if (titulo.matches(getString(R.string.info_sa))){
             ParticipanteSeroprevalencia cons = (ParticipanteSeroprevalencia) getListAdapter().getItem(position);
             arguments.putString(Constants.TITLE, getString(R.string.info_sa));
+            if (cons!=null) arguments.putSerializable(Constants.OBJECTO , cons);
+            i = new Intent(getApplicationContext(),
+                    ReviewActivity.class);
+        }
+        if (titulo.matches(getString(R.string.info_coordenadas))){
+            DatosCoordenadas cons = (DatosCoordenadas) getListAdapter().getItem(position);
+            arguments.putString(Constants.TITLE, getString(R.string.info_coordenadas));
             if (cons!=null) arguments.putSerializable(Constants.OBJECTO , cons);
             i = new Intent(getApplicationContext(),
                     ReviewActivity.class);

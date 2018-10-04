@@ -1924,6 +1924,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         }
 
                         procesos.setEstudio(estudios);
+                        procesos.setCoordenadas("1");
                         MovilInfo movilInfo = new MovilInfo();
                         movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
                         movilInfo.setDeviceid(infoMovil.getDeviceId());

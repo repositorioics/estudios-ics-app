@@ -6,14 +6,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +32,7 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.DatosCoordenadas;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
@@ -75,6 +74,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private ArrayList<EncuestaCasaSA> mEncuestasCasasSa = new ArrayList<EncuestaCasaSA>();
     private ArrayList<EncuestaParticipanteSA> mEncuestasParticipantesSa = new ArrayList<EncuestaParticipanteSA>();
     private List<MessageResource> catRelacionFamiliar = new ArrayList<MessageResource>();
+    private ArrayList<DatosCoordenadas> mDatosCoordenadas = new ArrayList<DatosCoordenadas>();
 
     private String username;
     private SharedPreferences settings;
@@ -104,6 +104,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private MenuItem encCasaChfItem;
     private MenuItem encCasaSaItem;
     private MenuItem encPartSaItem;
+    private MenuItem coordenadasItem;
 
     private EstudiosAdapter estudiosAdapter;
 
@@ -281,6 +282,12 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         if (mParticipante!=null) i.putExtra(Constants.PARTICIPANTE, mParticipante);
 
                         break;
+                    case 20:
+                        arguments.putString(Constants.TITLE, getString(R.string.info_coordenadas));
+                        if (mDatosCoordenadas!=null) arguments.putSerializable(Constants.OBJECTO , mDatosCoordenadas);
+                        i = new Intent(getApplicationContext(),
+                                ListReviewActivity.class);
+                        break;
                     default:
                         arguments.putString(Constants.TITLE, getString(R.string.info_participante));
                         if (mParticipante!=null) arguments.putSerializable(Constants.OBJECTO , mParticipante);
@@ -319,7 +326,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             encCasaChfItem = menu.findItem(R.id.ENCASA_CHF);
             encCasaSaItem = menu.findItem(R.id.ENCASA_SA);
             encPartSaItem = menu.findItem(R.id.ENPART_SA);
-
+            coordenadasItem = menu.findItem(R.id.COORDENADAS);
         }
         return true;
     }
@@ -764,6 +771,20 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     toast.show();
                 }
                 return true;
+            case R.id.COORDENADAS:
+                if(!mParticipante.getProcesos().getCoordenadas().equals("0")) {
+                    i = new Intent(getApplicationContext(),
+                            NewDatosCoordenadasActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.putExtra(ConstantsDB.COD_CASA, mParticipante.getCasa().getCodigo());
+                    i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());
+                    i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                    startActivity(i);
+                }
+                else {
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.e_error), Toast.LENGTH_LONG);
+                    toast.show();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -832,9 +853,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         encCasaChfItem.setVisible(false);
         encCasaSaItem.setVisible(false);
         encPartSaItem.setVisible(false);
+        coordenadasItem.setVisible(false);
         //la opción de reconsentimiento dengue siempre se va a mostrar
         if ((mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getReConsDeng().matches("Si")) && mUser.getConsentimiento()) reConsDenItem.setVisible(true);
-
+        if ((!mParticipante.getProcesos().getCoordenadas().equals("0") && mUser.getConsentimiento())) coordenadasItem.setVisible(true);
         if ((mUser.getVisitas()&&!visExitosa)){
             visitaItem.setVisible(true);
         }
@@ -916,6 +938,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 mEncuestasCasasChf = estudiosAdapter.getListaEncuestaCasasChf(mParticipante.getProcesos().getCasaCHF());
             mEncuestasCasasSa = (ArrayList)estudiosAdapter.getEncuestasCasaSA(SeroprevalenciaDBConstants.casa + "=" + mParticipante.getCasa().getCodigo() , null);
         }
+        mDatosCoordenadas = (ArrayList)estudiosAdapter.getDatosCoordenadas(MainDBConstants.participante + "=" + mParticipante.getCodigo(), null);
         mEncuestasParticipantesSa = (ArrayList)estudiosAdapter.getEncuestasParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo() , null);
         catRelacionFamiliar = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", null);
         estudiosAdapter.close();
@@ -962,7 +985,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No")|| mParticipante.getProcesos().getZika().matches("Si")
                     || mParticipante.getProcesos().getAdn().matches("Si")|| mParticipante.getProcesos().getDatosParto().matches("Si")|| mParticipante.getProcesos().getDatosVisita().matches("Si")
                     || !mParticipante.getProcesos().getConvalesciente().matches("No")
-                    || (mParticipante.getProcesos().getReConsDeng()!=null && mParticipante.getProcesos().getReConsDeng().matches("Si"))){
+                    || (mParticipante.getProcesos().getReConsDeng()!=null && mParticipante.getProcesos().getReConsDeng().matches("Si"))
+                    || !mParticipante.getProcesos().getCoordenadas().equals("0")){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
                 //Primero muestras
@@ -1222,6 +1246,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<small><font color='blue'>Pediente datos casa</font></small><br />";
                     pendiente=true;
                 }
+                if (!mParticipante.getProcesos().getCoordenadas().equals("0") && mUser.getConsentimiento()){
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.addresschange_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
                 if ((mParticipante.getProcesos().getObsequio().matches("Si"))){
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.gift_missing) + "</font></small><br />";
                 }
@@ -1468,7 +1496,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             gridView.setAdapter(new MenuInfoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
                     ,mVisitasTerreno.size(),mPyTs.size(),mEncuestasCasas.size(),mEncuestasParticipantes.size(),
                     mEncuestasLactancias.size(),mVacunas.size(),mReConsentimientoDen.size(),mMuestras.size(),mObsequios.size(),mConsentimientoZikas.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()
-                    ,mEncuestasCasasChf.size(), mEncuestasCasasSa.size(), mEncuestasParticipantesSa.size()));
+                    ,mEncuestasCasasChf.size(), mEncuestasCasasSa.size(), mEncuestasParticipantesSa.size(), mDatosCoordenadas.size()));
             refreshView();
             }catch (Exception ex){
                 dismissProgressDialog();

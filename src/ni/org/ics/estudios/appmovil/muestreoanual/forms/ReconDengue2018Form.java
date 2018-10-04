@@ -69,7 +69,7 @@ public class ReconDengue2018Form extends AbstractWizardModel {
         Page visExit = new SingleFixedChoicePage(this,labels.getVisExit(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page visNoExit = new SingleFixedChoicePage(this,labels.getRazonVisNoExit(), "", Constants.WIZARD, false).setChoices(catVisNoExitosa).setRequired(true);
         Page dejoCarta = new SingleFixedChoicePage(this,labels.getDejoCarta(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page noDejoCarta = new LabelPage(this,labels.getNoDejoCarta(), "", Constants.WIZARD, false).setRequired(false);
+        Page noDejoCarta = new LabelPage(this,labels.getNoDejoCarta(), "", Constants.ROJO, false).setRequired(false);
         Page personaDejoCarta = new TextPage(this,labels.getPersonaDejoCarta(), "", Constants.WIZARD, false).setRequired(true);
         Page relFamPersonaDejoCarta = new SingleFixedChoicePage(this,labels.getRelFamPersonaDejoCarta(), labels.getRelFamPersonaDejoCartaHint(), Constants.WIZARD, false).setChoices(catRelacionFamiliar).setRequired(true);
         Page personaCasa = new TextPage(this,labels.getPersonaCasa(), labels.getPersonaCasaHint(), Constants.WIZARD, false).setRequired(true);
@@ -159,10 +159,11 @@ public class ReconDengue2018Form extends AbstractWizardModel {
 
         Page domicilio = new LabelPage(this,labels.getDomicilio(), "", Constants.WIZARD, false).setRequired(false);
         Page cmDomicilio = new SingleFixedChoicePage(this,labels.getCmDomicilio(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page barrio = new SingleFixedChoicePage(this,labels.getBarrio(), "", Constants.WIZARD, false).setChoices(catBarrios).setRequired(true);
-        Page otrobarrio = new TextPage(this,labels.getOtrobarrio(), "", Constants.WIZARD, false).setRequired(true);
-        Page dire = new TextPage(this,labels.getDire(), "", Constants.WIZARD, false).setRequired(true);
-        Page autsup = new SingleFixedChoicePage(this,labels.getAutsup(), labels.getAutsupHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page notaCmDomicilio = new LabelPage(this,labels.getNotaCmDomicilio(), "", Constants.ROJO, false).setRequired(false);
+        //Page barrio = new SingleFixedChoicePage(this,labels.getBarrio(), "", Constants.WIZARD, false).setChoices(catBarrios).setRequired(true);
+        //Page otrobarrio = new TextPage(this,labels.getOtrobarrio(), "", Constants.WIZARD, false).setRequired(true);
+        //Page dire = new TextPage(this,labels.getDire(), "", Constants.WIZARD, false).setRequired(true);
+        //Page autsup = new SingleFixedChoicePage(this,labels.getAutsup(), labels.getAutsupHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page telefono1SN = new SingleFixedChoicePage(this,labels.getTelefono1SN(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page telefonoClasif1 = new SingleFixedChoicePage(this,labels.getTelefonoClasif1(), "", Constants.WIZARD, false).setChoices(catTipoTel).setRequired(true);
         Page telefonoCel1 = new NumberPage(this,labels.getTelefonoCel1(), "", Constants.WIZARD, false).setRequired(true);
@@ -210,21 +211,22 @@ public class ReconDengue2018Form extends AbstractWizardModel {
         Page apellidomadre2 = new TextPage(this,labels.getApellidomadre2(), "", Constants.WIZARD, false).setRequired(false);
         Page verifTutor = new MultipleFixedChoicePage(this,labels.getVerifTutor(), "", Constants.WIZARD, false).setChoices(catVerificaTutor).setRequired(true);
 
-        Page georef = new SingleFixedChoicePage(this,labels.getGeoref(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page manzana = new NumberPage(this,labels.getManzana(), "", Constants.WIZARD, false).setRangeValidation(true, 0, 88).setRequired(true);
-        Page georef_razon = new SingleFixedChoicePage(this,labels.getGeoref_razon(), labels.getGeoref_razonHint(), Constants.WIZARD, false).setChoices(catNoGeoref).setRequired(true);
-        Page georef_otraRazon = new TextPage(this,labels.getGeoref_otraRazon(), labels.getGeoref_otraRazonHint(), Constants.WIZARD, false).setRequired(true);
+        //Page georef = new SingleFixedChoicePage(this,labels.getGeoref(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        //Page manzana = new NumberPage(this,labels.getManzana(), "", Constants.WIZARD, false).setRangeValidation(true, 0, 88).setRequired(true);
+        //Page georef_razon = new SingleFixedChoicePage(this,labels.getGeoref_razon(), labels.getGeoref_razonHint(), Constants.WIZARD, false).setChoices(catNoGeoref).setRequired(true);
+        //Page georef_otraRazon = new TextPage(this,labels.getGeoref_otraRazon(), labels.getGeoref_otraRazonHint(), Constants.WIZARD, false).setRequired(true);
 
         return new PageList(visExit, visNoExit, dejoCarta, noDejoCarta, personaDejoCarta, relFamPersonaDejoCarta, personaCasa, relacionFamPersonaCasa, otraRelacionPersonaCasa, telefonoPersonaCasa,
                 aceptaCohorteDengue, razonNoAceptaDengue, otraRazonNoAceptaDengue, emancipado, razonEmancipacion, otraRazonEmancipacion, incDen, vivienda, tiempoResidencia, aceptaAtenderCentro, enfCronSN, enfCronica, oEnfCronica,
                 enfCronicaAnio1, enfCronicaMes1, enfCronicaAnio2, enfCronicaMes2, enfCronicaAnio3, enfCronicaMes3, enfCronicaAnio4, enfCronicaMes4, enfCronicaAnio5, enfCronicaMes5, enfCronicaAnio6, enfCronicaMes6, enfCronicaAnio7, enfCronicaMes7,
                 enfCronicaAnio8, enfCronicaMes8, enfCronicaAnio9, enfCronicaMes9, enfCronicaAnio10, enfCronicaMes10, enfCronicaAnio11, enfCronicaMes11, enfCronicaAnio12, enfCronicaMes12, enfCronicaAnio13, enfCronicaMes13, enfCronicaAnio14, enfCronicaMes14,
                 tomaTx, cualesTx, otroTx, asiste, ocentrosalud, puestosalud, parteADen, rechDen, otroRechDen, aceptaContactoFuturo, parteBDen, parteCDen, parteDDen, rechDenExtEdad, otroRechDenExtEdad, asentimiento,
-                tutor, mismoTutorSN, nombrept, nombrept2, apellidopt,
-                apellidopt2, relacionFam, otraRelacionFam, motivoDifTutor, otroMotivoDifTutor, alfabetoTutor, testigoSN, nombretest1, nombretest2, apellidotest1, apellidotest2, domicilio, cmDomicilio, barrio,
-                otrobarrio, dire, autsup, telefono1SN, telefonoClasif1, telefonoCel1, telefonoOper1, telefono2SN, telefonoClasif2, telefonoCel2, telefonoOper2, telefono3SN,
+                tutor, mismoTutorSN, nombrept, nombrept2, apellidopt, apellidopt2, relacionFam, otraRelacionFam, motivoDifTutor, otroMotivoDifTutor, alfabetoTutor, testigoSN, nombretest1, nombretest2, apellidotest1, apellidotest2,
+                domicilio, cmDomicilio, notaCmDomicilio,//barrio, otrobarrio, dire, autsup,
+                telefono1SN, telefonoClasif1, telefonoCel1, telefonoOper1, telefono2SN, telefonoClasif2, telefonoCel2, telefonoOper2, telefono3SN,
                 telefonoClasif3, telefonoCel3, telefonoOper3, jefeFam, cambiarJefe, jefenom, jefenom2, jefeap, jefeap2, nomContacto, barrioContacto, otrobarrioContacto, direContacto,
                 telContacto1SN, telContacto1, telContactoCel1, telContactoOper1, telContacto2SN, telContactoClasif2, telContactoCel2, telContactoOper2, padre, cambiarPadre,
-                nombrepadre, nombrepadre2, apellidopadre, apellidopadre2, madre, cambiarMadre, nombremadre, nombremadre2, apellidomadre, apellidomadre2, verifTutor, georef, manzana, georef_razon, georef_otraRazon);
+                nombrepadre, nombrepadre2, apellidopadre, apellidopadre2, madre, cambiarMadre, nombremadre, nombremadre2, apellidomadre, apellidomadre2, verifTutor);
+                //,georef, manzana, georef_razon, georef_otraRazon);
     }
 }

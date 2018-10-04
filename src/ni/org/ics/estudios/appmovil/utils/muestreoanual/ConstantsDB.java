@@ -150,6 +150,7 @@ public class ConstantsDB {
     public static final String enCasaSa = "enCasaSa";
     public static final String encPartSa = "encPartSa";
     public static final String tutor = "tutor";
+    public static final String coordenada = "coordenada"; //indica si tomar coordenadas por ingreso, por cambio de domicilio o por falta de punto
     public static final String consSa = "consSa"; //Consentimiento Seroprevalencia
 
     //Campos encuesta casa
@@ -934,6 +935,7 @@ public class ConstantsDB {
             + enCasaSa  + " text, "
             + encPartSa  + " text, "
             + tutor  + " text, "
+            + coordenada + " text, "
             + consSa  + " text, "
             + ID_INSTANCIA + " integer,"
             + FILE_PATH + " text,"

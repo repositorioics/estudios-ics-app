@@ -1121,22 +1121,14 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 esElegible = visible;
                 onPageTreeChanged();
             }
+            //datos de cambio de domicilio se pasan a formulario independiente
             if (page.getTitle().equals(labels.getCmDomicilio())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
-                changeStatus(mWizardModel.findByKey(labels.getBarrio()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getNotaCmDomicilio()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getOtrobarrio()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAutsup()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getDire()), visible);
-                notificarCambios = false;
-                //TODO: desarrollar funcionalidad para obtener punto gps
-                //changeStatus(mWizardModel.findByKey(labels.getGeoref()), visible);
-                //notificarCambios = false;
                 onPageTreeChanged();
             }
-            if (page.getTitle().equals(labels.getBarrio())) {
+            /*if (page.getTitle().equals(labels.getBarrio())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Fuera de Sector");
                 changeStatus(mWizardModel.findByKey(labels.getOtrobarrio()), visible);
                 notificarCambios = false;
@@ -1185,7 +1177,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 }
                 esElegible = visible;
                 onPageTreeChanged();
-            }
+            }*/
             if (page.getTitle().equals(labels.getTelefono1SN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif1()), visible);
@@ -1332,7 +1324,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 notificarCambios = false;
                 onPageTreeChanged();
             }
-            //TODO: desarrollar funcionalidad para obtener punto gps
+            //datos de cambio de domicilio se pasan a formulario independiente
             /*if (page.getTitle().equals(labels.getGeoref())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getGeoref_razon()), visible);
@@ -1483,10 +1475,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
         if (preg>89) changeStatus(mWizardModel.findByKey(labels.getNombretest2()), false);
         if (preg>89) changeStatus(mWizardModel.findByKey(labels.getApellidotest1()), false);
         if (preg>89) changeStatus(mWizardModel.findByKey(labels.getApellidotest2()), false);
-        if (preg>89) changeStatus(mWizardModel.findByKey(labels.getBarrio()), false);
-        if (preg>89) changeStatus(mWizardModel.findByKey(labels.getOtrobarrio()), false);
-        if (preg>89) changeStatus(mWizardModel.findByKey(labels.getDire()), false);
-        if (preg>89) changeStatus(mWizardModel.findByKey(labels.getAutsup()), false);
+        //datos de cambio de domicilio se pasan a formulario independiente
+        //if (preg>89) changeStatus(mWizardModel.findByKey(labels.getBarrio()), false);
+        //if (preg>89) changeStatus(mWizardModel.findByKey(labels.getOtrobarrio()), false);
+        //if (preg>89) changeStatus(mWizardModel.findByKey(labels.getDire()), false);
+        //if (preg>89) changeStatus(mWizardModel.findByKey(labels.getAutsup()), false);
         //no tiene autorizacion supervisor
         if (preg>88) changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), false);
         if (preg>88) changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), false);
@@ -1533,7 +1526,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
         if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelContactoOper2()), false);
 
         if (preg>88) changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), false);
-        //TODO: desarrollar funcionalidad para obtener punto gps
+        //datos de cambio de domicilio se pasan a formulario independiente
         //if (preg>88) changeStatus(mWizardModel.findByKey(labels.getGeoref()), false);
         //if (preg>88) changeStatus(mWizardModel.findByKey(labels.getGeoref_razon()), false);
         //if (preg>88) changeStatus(mWizardModel.findByKey(labels.getGeoref_otraRazon()), false);
@@ -1654,10 +1647,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             String apellidotest1 = datos.getString(this.getString(R.string.apellidotest1));
             String apellidotest2 = datos.getString(this.getString(R.string.apellidotest2));
             String cmDomicilio = datos.getString(this.getString(R.string.cmDomicilio));
-            String barrio = datos.getString(this.getString(R.string.barrioRC2018));
-            String otrobarrio = datos.getString(this.getString(R.string.otrobarrio));
-            String dire = datos.getString(this.getString(R.string.dire));
-            String autsup = datos.getString(this.getString(R.string.autsup));//agregar en tamizaje
+            //datos de cambio de domicilio se pasan a formulario independiente
+            //String barrio = datos.getString(this.getString(R.string.barrioRC2018));
+            //String otrobarrio = datos.getString(this.getString(R.string.otrobarrio));
+            //String dire = datos.getString(this.getString(R.string.dire));
+            //String autsup = datos.getString(this.getString(R.string.autsup));//agregar en tamizaje
             String telefonoClasif1 = datos.getString(this.getString(R.string.telefonoClasif1));
             String telefonoCel1 = datos.getString(this.getString(R.string.telefonoCel1));
             String telefonoOper1 = datos.getString(this.getString(R.string.telefonoOper1));
@@ -1693,10 +1687,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             String apellidomadre = datos.getString(this.getString(R.string.apellidomadre));
             String apellidomadre2 = datos.getString(this.getString(R.string.apellidomadre2));
             String verifTutor = datos.getString(this.getString(R.string.verifTutor));//agregar en carta
-            String georef = datos.getString(this.getString(R.string.georef));
-            String manzana = datos.getString(this.getString(R.string.Manzana));
-            String georef_razon = datos.getString(this.getString(R.string.georef_razon));
-            String georef_otraRazon = datos.getString(this.getString(R.string.georef_otraRazon));
+            //datos de cambio de domicilio se pasan a formulario independiente
+            //String georef = datos.getString(this.getString(R.string.georef));
+            //String manzana = datos.getString(this.getString(R.string.Manzana));
+            //String georef_razon = datos.getString(this.getString(R.string.georef_razon));
+            //String georef_otraRazon = datos.getString(this.getString(R.string.georef_otraRazon));
 
             VisitaTerrenoParticipante visita = new VisitaTerrenoParticipante();
             visita.setFechaVisita(new Date());
@@ -1830,11 +1825,12 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     if (catAsentimientoVerbal != null)
                         tamizaje.setAsentimientoVerbal(catAsentimientoVerbal.getCatKey());
                 }
+                /*//datos de cambio de domicilio se pasan a formulario independiente
                 if (tieneValor(autsup)) {
                     MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + autsup + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                     if (catSino != null)
                         tamizaje.setAutorizaSupervisor(catSino.getCatKey());
-                }
+                }*/
                 tamizaje.setRecordDate(new Date());
                 tamizaje.setRecordUser(username);
                 tamizaje.setDeviceid(infoMovil.getDeviceId());
@@ -2005,34 +2001,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                             casa.setDeviceid(infoMovil.getDeviceId());
                             casa.setEstado('0');
                         }
+                        //cambio de domicilio
                         if (tieneValor(cmDomicilio) && cmDomicilio.equals(Constants.YES)) {
-                            CambioDomicilio cambioDomicilio = new CambioDomicilio();
-                            cambioDomicilio.setRecordDate(new Date());
-                            cambioDomicilio.setRecordUser(username);
-                            cambioDomicilio.setDeviceid(infoMovil.getDeviceId());
-                            cambioDomicilio.setEstado('0');
-                            cambioDomicilio.setPasive('0');
-                            cambioDomicilio.setCodigo(infoMovil.getId());
-                            cambioDomicilio.setParticipante(participante);
-                            if (tieneValor(dire)) cambioDomicilio.setDireccion(dire);
-                            if (tieneValor(barrio)) {
-                                Barrio barrio1 = estudiosAdapter.getBarrio(CatalogosDBConstants.nombre + "= '" + barrio + "'", null);
-                                cambioDomicilio.setBarrio(barrio1);
-                            }
-                            cambioDomicilio.setOtroBarrio(otrobarrio);
-                            cambioDomicilio.setManzana(manzana);
-                            if (tieneValor(georef)) {
-                                MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + georef + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                                if (catSino != null) cambioDomicilio.setPuntoGps(catSino.getCatKey());
-                            }
-                            cambioDomicilio.setLatitud(null);
-                            cambioDomicilio.setLongitud(null);
-                            if (tieneValor(georef_razon)) {
-                                MessageResource catNoGeo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + georef_razon + "' and " + CatalogosDBConstants.catRoot + "='CP_CAT_NOGEO'", null);
-                                if (catNoGeo != null) cambioDomicilio.setRazonNoGeoref(catNoGeo.getCatKey());
-                            }
-                            cambioDomicilio.setOtraRazonNoGeoref(georef_otraRazon);
-                            estudiosAdapter.crearCambioDomicilio(cambioDomicilio);
+                            procesos.setCoordenadas("2");
+                        }else{
+                            procesos.setCoordenadas("0");
                         }
                         estudiosAdapter.editarCasa(casa);
                         if (tieneValor(cambiarPadre) && cambiarPadre.equals(Constants.YES)) {
@@ -2056,7 +2029,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         estudiosAdapter.editarParticipante(participante);
 
                         if (tieneValor(telefonoCel1) || tieneValor(telefonoCel2) || tieneValor(telefonoCel3)) {
-                            guardarContactoParticipante(Constants.YESKEYSND, null, null, barrio, otrobarrio , telefonoCel1, telefonoClasif1, telefonoOper1,
+                            guardarContactoParticipante(Constants.YESKEYSND, null, null, participante.getCasa().getBarrio().getCodigo().toString(), null , telefonoCel1, telefonoClasif1, telefonoOper1,
                                     telefonoCel2, telefonoClasif2, telefonoOper2, telefonoCel3, telefonoClasif3, telefonoOper3);
                         }
                         guardarContactoParticipante(Constants.NOKEYSND, nomContacto, direContacto, barrioContacto, otrobarrioContacto,

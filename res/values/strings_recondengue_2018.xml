@@ -150,7 +150,7 @@
     <string name="georef">26. Georeferenciar el hogar</string>
     <string name="Manzana">26.1 Manzana</string>
     <string name="georef_razon">26.2 Razón no georeferencia</string>
-    <string name="georef_razonHint">Razón por la que no se logró georeferenciar el hoga</string>
+    <string name="georef_razonHint">Razón por la que no se logró georeferenciar el hogar</string>
     <string name="georef_otraRazon">26.3 Otra razón no georeferencia</string>
     <string name="georef_otraRazonHint">Indique otra razón por la que no se logró georeferenciar el hogar</string>
     <string name="tutor">Tutor Registrado</string>
@@ -158,4 +158,5 @@
     <string name="padre">Padre Registrado</string>
     <string name="madre">Madre Registrada</string>
     <string name="domicilio">Domicilio Registrado</string>
+    <string name="notaCmDomicilio">NOTA: Recordar registrar formulario Coordenadas</string>
 </resources>

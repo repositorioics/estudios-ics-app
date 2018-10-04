@@ -12,6 +12,7 @@ import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeropreva
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
@@ -66,7 +67,7 @@ public class UploadAllTask extends UploadTask {
     private List<CartaConsentimiento> mCartasConsent = new ArrayList<CartaConsentimiento>();
     private List<ContactoParticipante> mContactos = new ArrayList<ContactoParticipante>();
     private List<ParticipanteSeroprevalencia> mParticipantesSa = new ArrayList<ParticipanteSeroprevalencia>();
-    private List<CambioDomicilio> mCambiosDom = new ArrayList<CambioDomicilio>();
+    private List<DatosCoordenadas> mCambiosDom = new ArrayList<DatosCoordenadas>();
     private List<VisitaTerrenoParticipante> mVisitasTerrenoP = new ArrayList<VisitaTerrenoParticipante>();
     private List<EnfermedadCronica> mEnfermedades = new ArrayList<EnfermedadCronica>();
 
@@ -448,7 +449,7 @@ public class UploadAllTask extends UploadTask {
                 return e1.getLocalizedMessage();
             }
             try {
-                mCambiosDom = estudioAdapter.getCambiosDomicilio(MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'", null);
+                mCambiosDom = estudioAdapter.getDatosCoordenadas( ConstantsDB.STATUS + "='" + Constants.STATUS_NOT_SUBMITTED + "'", null);
                 saveCambiosDomicilio(Constants.STATUS_SUBMITTED);
                 error = cargarCambioDomicilio(url, username, password);
                 if (!error.matches("Datos recibidos!")){
@@ -544,10 +545,10 @@ public class UploadAllTask extends UploadTask {
 
     private void saveCambiosDomicilio(String estado){
         int c = mCambiosDom.size();
-        for (CambioDomicilio cambioDomicilio : mCambiosDom) {
-            cambioDomicilio.setEstado(estado.charAt(0));
-            estudioAdapter.editarCambioDomicilio(cambioDomicilio);
-            publishProgress("Actualizando cambios de domicilio en base de datos local", Integer.valueOf(mCambiosDom.indexOf(cambioDomicilio)).toString(), Integer
+        for (DatosCoordenadas datosCoordenadas : mCambiosDom) {
+            datosCoordenadas.getMovilInfo().setEstado(estado);
+            estudioAdapter.editarDatosCoordenadas(datosCoordenadas);
+            publishProgress("Actualizando datos coordenadas en base de datos local", Integer.valueOf(mCambiosDom.indexOf(datosCoordenadas)).toString(), Integer
                     .valueOf(c).toString());
         }
     }
@@ -2554,14 +2555,14 @@ public class UploadAllTask extends UploadTask {
         try {
             if(mCambiosDom.size()>0){
                 // La URL de la solicitud POST
-                final String urlRequest = url + "/movil/cambiosdomicilio";
-                CambioDomicilio[] envio = mCambiosDom.toArray(new CambioDomicilio[mCambiosDom.size()]);
+                final String urlRequest = url + "/movil/datoscoordenadas";
+                DatosCoordenadas[] envio = mCambiosDom.toArray(new DatosCoordenadas[mCambiosDom.size()]);
                 HttpHeaders requestHeaders = new HttpHeaders();
                 HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
                 requestHeaders.setContentType(MediaType.APPLICATION_JSON);
                 requestHeaders.setAuthorization(authHeader);
-                HttpEntity<CambioDomicilio[]> requestEntity =
-                        new HttpEntity<CambioDomicilio[]>(envio, requestHeaders);
+                HttpEntity<DatosCoordenadas[]> requestEntity =
+                        new HttpEntity<DatosCoordenadas[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

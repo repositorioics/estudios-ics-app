@@ -792,6 +792,16 @@ public class ConstantsDB {
     public static final String docMedPesoBB_sn = "docMedPesoBB_sn";
     public static final String docMedPesoBB = "docMedPesoBB";
     public static final String otroDocMedPesoBB = "otroDocMedPesoBB";
+    public static final String tallaBB_sndr = "tallaBB_sndr";
+    public static final String tallaBB = "tallaBB";
+    public static final String docMedTallaBB_sn = "docMedTallaBB_sn";
+    public static final String docMedTallaBB = "docMedTallaBB";
+    public static final String otroDocMedTallaBB = "otroDocMedTallaBB";
+    public static final String vacFluMadre_sn = "vacFluMadre_sn";
+    public static final String fechaVacInf = "fechaVacInf";
+    public static final String docMedFecVacInfMadre_sn = "docMedFecVacInfMadre_sn";
+    public static final String docMedFecVacInfMadre = "docMedFecVacInfMadre";
+    public static final String otroDocMedFecVacInfMadre = "otroDocMedFecVacInfMadre";
 
     //Campos nuevas vacunas
     public static final String fechaRegistroVacuna = "fechaRegistroVacuna";
@@ -2018,6 +2028,16 @@ public class ConstantsDB {
             + docMedPesoBB_sn  + " text, "
             + docMedPesoBB  + " text, "
             + otroDocMedPesoBB  + " text, "
+            + tallaBB_sndr  + " text, "
+            + tallaBB  + " text, "
+            + docMedTallaBB_sn  + " text, "
+            + docMedTallaBB  + " text, "
+            + otroDocMedTallaBB  + " text, "
+            + vacFluMadre_sn  + " text, "
+            + fechaVacInf  + " date, "
+            + docMedFecVacInfMadre_sn + " text, "
+            + docMedFecVacInfMadre + " text, "
+            + otroDocMedFecVacInfMadre + " text, "
             + otrorecurso1  + " integer, "
             + otrorecurso2  + " integer, "
             + ID_INSTANCIA + " integer not null,"

@@ -240,9 +240,16 @@ public class EstudiosAdapter {
                 db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.codigoParticipanteRecon + " integer");
             }
             if (oldVersion==11){
-                db.execSQL("DROP TABLE " + MainDBConstants.CAMBIO_DOMICILIO_TABLE);
-                db.execSQL(MainDBConstants.CREATE_DATOS_COORDENADAS_TABLE);
-                db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.coordenada + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.DATOSPARTOBB_TABLE + " ADD COLUMN " + ConstantsDB.tallaBB_sndr + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.DATOSPARTOBB_TABLE + " ADD COLUMN " + ConstantsDB.tallaBB + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.DATOSPARTOBB_TABLE + " ADD COLUMN " + ConstantsDB.docMedTallaBB_sn + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.DATOSPARTOBB_TABLE + " ADD COLUMN " + ConstantsDB.docMedTallaBB + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.DATOSPARTOBB_TABLE + " ADD COLUMN " + ConstantsDB.otroDocMedTallaBB + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.DATOSPARTOBB_TABLE + " ADD COLUMN " + ConstantsDB.vacFluMadre_sn + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.DATOSPARTOBB_TABLE + " ADD COLUMN " + ConstantsDB.fechaVacInf + " date");
+                db.execSQL("ALTER TABLE " + ConstantsDB.DATOSPARTOBB_TABLE + " ADD COLUMN " + ConstantsDB.docMedFecVacInfMadre_sn + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.DATOSPARTOBB_TABLE + " ADD COLUMN " + ConstantsDB.docMedFecVacInfMadre + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.DATOSPARTOBB_TABLE + " ADD COLUMN " + ConstantsDB.otroDocMedFecVacInfMadre + " text");
             }
 
         }
@@ -6117,7 +6124,7 @@ public class EstudiosAdapter {
             datos.moveToFirst();
             mDatosPartoBBs.clear();
             do{
-                mDatosPartoBBs.add(crearDatosPartoBB(datos));
+                mDatosPartoBBs.add(DatosPartoBBHelper.crearDatosPartoBB(datos));
             } while (datos.moveToNext());
         }
         datos.close();
@@ -6401,7 +6408,7 @@ public class EstudiosAdapter {
             datosPartoBB.moveToFirst();
             mDatosPartoBB.clear();
             do{
-                mDatosPartoBB.add(crearDatosPartoBB(datosPartoBB));
+                mDatosPartoBB.add(DatosPartoBBHelper.crearDatosPartoBB(datosPartoBB));
             } while (datosPartoBB.moveToNext());
         }
         datosPartoBB.close();
@@ -6522,6 +6529,7 @@ public class EstudiosAdapter {
      *
      * @return DatosPartoBB
      */
+    @Deprecated
     public DatosPartoBB crearDatosPartoBB(Cursor cursorDatosPartoBB){
         DatosPartoBB mDatosPartoBB = new DatosPartoBB();
         DatosPartoBBId mDatosPartoBBId = new DatosPartoBBId();

@@ -209,6 +209,17 @@ public class NewDatosPartoBBActivity extends AbstractAsyncActivity {
             mDatosPartoBB.setDocMedPesoBB_sn(datosPartoBBXml.getDocMedPesoBB_sn());
             mDatosPartoBB.setDocMedPesoBB(datosPartoBBXml.getDocMedPesoBB());
             mDatosPartoBB.setOtroDocMedPesoBB(datosPartoBBXml.getOtroDocMedPesoBB());
+            mDatosPartoBB.setTallaBB_sndr(datosPartoBBXml.getTallaBB_sndr());
+            mDatosPartoBB.setTallaBB(datosPartoBBXml.getTallabb());
+            mDatosPartoBB.setDocMedTallaBB_sn(datosPartoBBXml.getDocMedTallaBB_sn());
+            mDatosPartoBB.setDocMedTallaBB(datosPartoBBXml.getDocMedTallaBB());
+            mDatosPartoBB.setOtroDocMedTallaBB(datosPartoBBXml.getOtroDocMedTallaBB());
+            mDatosPartoBB.setVacFluMadre_sn(datosPartoBBXml.getVacflumadre_sn());
+            mDatosPartoBB.setFechaVacInf(datosPartoBBXml.getFechavacinf());
+            mDatosPartoBB.setDocMedFecVacInfMadre_sn(datosPartoBBXml.getDocMedFecVacInfMadre_sn());
+            mDatosPartoBB.setDocMedFecVacInfMadre(datosPartoBBXml.getDocMedFecVacInfMadre());
+            mDatosPartoBB.setOtroDocMedFecVacInfMadre(datosPartoBBXml.getOtroDocMedFecVacInfMadre());
+
             mDatosPartoBB.setOtrorecurso1(datosPartoBBXml.getOtrorecurso1());
             mDatosPartoBB.setOtrorecurso1(datosPartoBBXml.getOtrorecurso1());
 

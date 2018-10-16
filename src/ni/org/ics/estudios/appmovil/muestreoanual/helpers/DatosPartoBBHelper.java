@@ -35,6 +35,17 @@ public class DatosPartoBBHelper {
 		cv.put(ConstantsDB.docMedPesoBB_sn, datosPartoBB.getDocMedPesoBB_sn());
 		cv.put(ConstantsDB.docMedPesoBB, datosPartoBB.getDocMedPesoBB());
 		cv.put(ConstantsDB.otroDocMedPesoBB, datosPartoBB.getOtroDocMedPesoBB());
+        cv.put(ConstantsDB.tallaBB_sndr, datosPartoBB.getTallaBB_sndr());
+        cv.put(ConstantsDB.tallaBB, datosPartoBB.getTallaBB());
+        cv.put(ConstantsDB.docMedTallaBB_sn, datosPartoBB.getDocMedTallaBB_sn());
+        cv.put(ConstantsDB.docMedTallaBB, datosPartoBB.getDocMedTallaBB());
+        cv.put(ConstantsDB.otroDocMedTallaBB, datosPartoBB.getOtroDocMedTallaBB());
+        cv.put(ConstantsDB.vacFluMadre_sn, datosPartoBB.getVacFluMadre_sn());
+        if (datosPartoBB.getFechaVacInf() != null) cv.put(ConstantsDB.fechaVacInf, datosPartoBB.getFechaVacInf().getTime());
+        cv.put(ConstantsDB.docMedFecVacInfMadre_sn, datosPartoBB.getDocMedFecVacInfMadre_sn());
+        cv.put(ConstantsDB.docMedFecVacInfMadre, datosPartoBB.getDocMedFecVacInfMadre());
+        cv.put(ConstantsDB.otroDocMedFecVacInfMadre, datosPartoBB.getOtroDocMedFecVacInfMadre());
+
 		cv.put(ConstantsDB.otrorecurso1, datosPartoBB.getOtrorecurso1());
 		cv.put(ConstantsDB.otrorecurso2, datosPartoBB.getOtrorecurso2());
 		cv.put(ConstantsDB.ID_INSTANCIA, datosPartoBB.getMovilInfo().getIdInstancia());
@@ -77,11 +88,22 @@ public class DatosPartoBBHelper {
 		mDatosPartoBB.setDocMedEdadGest(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.docMedEdadGest)));
 		mDatosPartoBB.setOtroDocMedEdadGest(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.OtroDocMedEdadGest)));
 		mDatosPartoBB.setPrematuro_sndr(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.prematuro_sndr)));
-		mDatosPartoBB.setPesoBB_sndr(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.pesoBB_sndr)));
+        mDatosPartoBB.setPesoBB_sndr(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.pesoBB_sndr)));
 		mDatosPartoBB.setPesoBB(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.pesoBB)));
 		mDatosPartoBB.setDocMedPesoBB_sn(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.docMedPesoBB_sn)));
 		mDatosPartoBB.setDocMedPesoBB(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.docMedPesoBB)));
 		mDatosPartoBB.setOtroDocMedPesoBB(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.otroDocMedPesoBB)));
+        mDatosPartoBB.setTallaBB_sndr(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.tallaBB_sndr)));
+        mDatosPartoBB.setTallaBB(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.tallaBB)));
+        mDatosPartoBB.setDocMedTallaBB_sn(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.docMedTallaBB_sn)));
+        mDatosPartoBB.setDocMedTallaBB(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.docMedTallaBB)));
+        mDatosPartoBB.setOtroDocMedTallaBB(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.otroDocMedTallaBB)));
+        mDatosPartoBB.setVacFluMadre_sn(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.vacFluMadre_sn)));
+        if(!cursorDatosPartoBB.isNull(cursorDatosPartoBB.getColumnIndex(ConstantsDB.fechaVacInf))) mDatosPartoBB.setFechaVacInf(new Date(cursorDatosPartoBB.getLong(cursorDatosPartoBB.getColumnIndex(ConstantsDB.fechaVacInf))));
+        mDatosPartoBB.setDocMedFecVacInfMadre_sn(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.docMedFecVacInfMadre_sn)));
+        mDatosPartoBB.setDocMedFecVacInfMadre(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.docMedFecVacInfMadre)));
+        mDatosPartoBB.setOtroDocMedFecVacInfMadre(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.otroDocMedFecVacInfMadre)));
+
 		if(!cursorDatosPartoBB.isNull(cursorDatosPartoBB.getColumnIndex(ConstantsDB.otrorecurso1))) mDatosPartoBB.setOtrorecurso1(cursorDatosPartoBB.getInt(cursorDatosPartoBB.getColumnIndex(ConstantsDB.otrorecurso1)));
 		if(!cursorDatosPartoBB.isNull(cursorDatosPartoBB.getColumnIndex(ConstantsDB.otrorecurso2))) mDatosPartoBB.setOtrorecurso2(cursorDatosPartoBB.getInt(cursorDatosPartoBB.getColumnIndex(ConstantsDB.otrorecurso2)));
 		Date fecha = new Date(cursorDatosPartoBB.getLong(cursorDatosPartoBB.getColumnIndex(ConstantsDB.TODAY)));

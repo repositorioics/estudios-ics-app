@@ -45,7 +45,16 @@ public class DatosPartoBB implements Serializable{
 	private MovilInfo movilInfo;
 	private Integer otrorecurso1;
 	private Integer otrorecurso2;
-
+    private String tallaBB_sndr;
+    private String tallaBB;
+    private String docMedTallaBB_sn;
+    private String docMedTallaBB;
+    private String otroDocMedTallaBB;
+    private String vacFluMadre_sn;
+    private Date fechaVacInf;
+    private String docMedFecVacInfMadre_sn;
+    private String docMedFecVacInfMadre;
+    private String otroDocMedFecVacInfMadre;
 
 	
 	public String getTipoParto() {
@@ -240,5 +249,83 @@ public class DatosPartoBB implements Serializable{
 		this.fumFueraRango_razon = fumFueraRango_razon;
 	}
 
-	
+    public String getTallaBB_sndr() {
+        return tallaBB_sndr;
+    }
+
+    public void setTallaBB_sndr(String tallaBB_sndr) {
+        this.tallaBB_sndr = tallaBB_sndr;
+    }
+
+    public String getTallaBB() {
+        return tallaBB;
+    }
+
+    public void setTallaBB(String tallaBB) {
+        this.tallaBB = tallaBB;
+    }
+
+    public String getDocMedTallaBB_sn() {
+        return docMedTallaBB_sn;
+    }
+
+    public void setDocMedTallaBB_sn(String docMedTallaBB_sn) {
+        this.docMedTallaBB_sn = docMedTallaBB_sn;
+    }
+
+    public String getDocMedTallaBB() {
+        return docMedTallaBB;
+    }
+
+    public void setDocMedTallaBB(String docMedTallaBB) {
+        this.docMedTallaBB = docMedTallaBB;
+    }
+
+    public String getOtroDocMedTallaBB() {
+        return otroDocMedTallaBB;
+    }
+
+    public void setOtroDocMedTallaBB(String otroDocMedTallaBB) {
+        this.otroDocMedTallaBB = otroDocMedTallaBB;
+    }
+
+    public String getVacFluMadre_sn() {
+        return vacFluMadre_sn;
+    }
+
+    public void setVacFluMadre_sn(String vacFluMadre_sn) {
+        this.vacFluMadre_sn = vacFluMadre_sn;
+    }
+
+    public Date getFechaVacInf() {
+        return fechaVacInf;
+    }
+
+    public void setFechaVacInf(Date fechaVacInf) {
+        this.fechaVacInf = fechaVacInf;
+    }
+
+    public String getDocMedFecVacInfMadre_sn() {
+        return docMedFecVacInfMadre_sn;
+    }
+
+    public void setDocMedFecVacInfMadre_sn(String docMedFecVacInfMadre_sn) {
+        this.docMedFecVacInfMadre_sn = docMedFecVacInfMadre_sn;
+    }
+
+    public String getDocMedFecVacInfMadre() {
+        return docMedFecVacInfMadre;
+    }
+
+    public void setDocMedFecVacInfMadre(String docMedFecVacInfMadre) {
+        this.docMedFecVacInfMadre = docMedFecVacInfMadre;
+    }
+
+    public String getOtroDocMedFecVacInfMadre() {
+        return otroDocMedFecVacInfMadre;
+    }
+
+    public void setOtroDocMedFecVacInfMadre(String otroDocMedFecVacInfMadre) {
+        this.otroDocMedFecVacInfMadre = otroDocMedFecVacInfMadre;
+    }
 }

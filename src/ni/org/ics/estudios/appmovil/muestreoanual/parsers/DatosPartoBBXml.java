@@ -61,8 +61,29 @@ public class DatosPartoBBXml {
 	private Integer otrorecurso1;
 	@Element(required=false)
 	private Integer otrorecurso2;
-	
-	@Element(required=false)
+    @Element(required=false)
+    private String tallaBB_sndr;
+    @Element(required=false)
+    private String tallabb;
+    @Element(required=false)
+    private String docMedTallaBB_sn;
+    @Element(required=false)
+    private String docMedTallaBB;
+    @Element(required=false)
+    private String otroDocMedTallaBB;
+    @Element(required=false)
+    private String vacflumadre_sn;
+    @Element(required=false)
+    private Date fechavacinf;
+    @Element(required=false)
+    private String docMedFecVacInfMadre_sn;
+    @Element(required=false)
+    private String docMedFecVacInfMadre;
+    @Element(required=false)
+    private String otroDocMedFecVacInfMadre;
+
+
+    @Element(required=false)
 	private Integer codigo;
 	@Element(required=false)
 	private Date fechanac;
@@ -465,8 +486,84 @@ public class DatosPartoBBXml {
 	public void setFumFueraRango_razon(String fumFueraRango_razon) {
 		this.fumFueraRango_razon = fumFueraRango_razon;
 	}
-	
-	
-	
 
+    public String getTallaBB_sndr() {
+        return tallaBB_sndr;
+    }
+
+    public void setTallaBB_sndr(String tallaBB_sndr) {
+        this.tallaBB_sndr = tallaBB_sndr;
+    }
+
+    public String getTallabb() {
+        return tallabb;
+    }
+
+    public void setTallabb(String tallabb) {
+        this.tallabb = tallabb;
+    }
+
+    public String getDocMedTallaBB_sn() {
+        return docMedTallaBB_sn;
+    }
+
+    public void setDocMedTallaBB_sn(String docMedTallaBB_sn) {
+        this.docMedTallaBB_sn = docMedTallaBB_sn;
+    }
+
+    public String getDocMedTallaBB() {
+        return docMedTallaBB;
+    }
+
+    public void setDocMedTallaBB(String docMedTallaBB) {
+        this.docMedTallaBB = docMedTallaBB;
+    }
+
+    public String getOtroDocMedTallaBB() {
+        return otroDocMedTallaBB;
+    }
+
+    public void setOtroDocMedTallaBB(String otroDocMedTallaBB) {
+        this.otroDocMedTallaBB = otroDocMedTallaBB;
+    }
+
+    public String getVacflumadre_sn() {
+        return vacflumadre_sn;
+    }
+
+    public void setVacflumadre_sn(String vacflumadre_sn) {
+        this.vacflumadre_sn = vacflumadre_sn;
+    }
+
+    public Date getFechavacinf() {
+        return fechavacinf;
+    }
+
+    public void setFechavacinf(Date fechavacinf) {
+        this.fechavacinf = fechavacinf;
+    }
+
+    public String getDocMedFecVacInfMadre_sn() {
+        return docMedFecVacInfMadre_sn;
+    }
+
+    public void setDocMedFecVacInfMadre_sn(String docMedFecVacInfMadre_sn) {
+        this.docMedFecVacInfMadre_sn = docMedFecVacInfMadre_sn;
+    }
+
+    public String getDocMedFecVacInfMadre() {
+        return docMedFecVacInfMadre;
+    }
+
+    public void setDocMedFecVacInfMadre(String docMedFecVacInfMadre) {
+        this.docMedFecVacInfMadre = docMedFecVacInfMadre;
+    }
+
+    public String getOtroDocMedFecVacInfMadre() {
+        return otroDocMedFecVacInfMadre;
+    }
+
+    public void setOtroDocMedFecVacInfMadre(String otroDocMedFecVacInfMadre) {
+        this.otroDocMedFecVacInfMadre = otroDocMedFecVacInfMadre;
+    }
 }

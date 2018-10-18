@@ -137,41 +137,49 @@ public class NewDateFragment extends Fragment {
 	}
 
 	private void createDialog(int dialog) {
-		switch(dialog){
-		case DATE_DIALOG_ID:
-			final DatePickerDialog dpD = new DatePickerDialog(this.getActivity(), android.R.style.Theme_Holo_Dialog, datePickerListener, year, month,
-					day);
-			if(mValRange){
-				dpD.getDatePicker().setMinDate(mMinDate.getMillis());
-				dpD.getDatePicker().setMaxDate(mMaxDate.getMillis());
-				year = mMaxDate.getYear();
-				month = mMaxDate.getMonthOfYear();
-				day = mMaxDate.getDayOfMonth();
-			}
-			else{
-				final Calendar c = Calendar.getInstance();
-				year = c.get(Calendar.YEAR);
-				month = c.get(Calendar.MONTH);
-				day = c.get(Calendar.DAY_OF_MONTH);
-			}
-			dpD.getDatePicker().init(year, month, day,new DatePicker.OnDateChangedListener() {
+        try {
+            switch (dialog) {
+                case DATE_DIALOG_ID:
+                    Calendar calendar = Calendar.getInstance();
+                    //Corrección bug no mostraba modal para seleccionar fecha en moviles  J5 pro con Android 8 (Oreo)
+                    year = calendar.get(Calendar.YEAR);
+                    month = calendar.get(Calendar.MONTH);
+                    day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                @Override
-                public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                	DateMidnight valueSelected = DateMidnight.parse(dayOfMonth+"/"+(monthOfYear+1)+"/"+year, DateTimeFormat.forPattern("dd/MM/yyyy"));
-                	if(mValRange && (valueSelected.isBefore(mMinDate.getMillis())||valueSelected.isAfter(mMaxDate.getMillis()))){
-            			Toast.makeText(getActivity(),getActivity().getString(R.string.outofrange), Toast.LENGTH_SHORT).show();
-                	}
-                	else{
-                		dpD.getButton(DatePickerDialog.BUTTON_POSITIVE).setEnabled(true);
-                	}
-                }
-            });
-			dpD.show();
-			
-		default:
-			break;
-		}
+                    final DatePickerDialog dpD = new DatePickerDialog(this.getActivity(), android.R.style.Theme_Holo_Dialog, datePickerListener, year, month,
+                            day);
+                    if (mValRange) {
+                        dpD.getDatePicker().setMinDate(mMinDate.getMillis());
+                        dpD.getDatePicker().setMaxDate(mMaxDate.getMillis());
+                        year = mMaxDate.getYear();
+                        month = mMaxDate.getMonthOfYear();
+                        day = mMaxDate.getDayOfMonth();
+                    } else {
+                        final Calendar c = Calendar.getInstance();
+                        year = c.get(Calendar.YEAR);
+                        month = c.get(Calendar.MONTH);
+                        day = c.get(Calendar.DAY_OF_MONTH);
+                    }
+                    dpD.getDatePicker().init(year, month, day, new DatePicker.OnDateChangedListener() {
+
+                        @Override
+                        public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            DateMidnight valueSelected = DateMidnight.parse(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year, DateTimeFormat.forPattern("dd/MM/yyyy"));
+                            if (mValRange && (valueSelected.isBefore(mMinDate.getMillis()) || valueSelected.isAfter(mMaxDate.getMillis()))) {
+                                Toast.makeText(getActivity(), getActivity().getString(R.string.outofrange), Toast.LENGTH_SHORT).show();
+                            } else {
+                                dpD.getButton(DatePickerDialog.BUTTON_POSITIVE).setEnabled(true);
+                            }
+                        }
+                    });
+                    dpD.show();
+
+                default:
+                    break;
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
 	}
 	
 	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {

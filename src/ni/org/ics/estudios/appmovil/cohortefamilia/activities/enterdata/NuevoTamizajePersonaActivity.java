@@ -1262,7 +1262,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         procesos.setPosZika(Constants.NO);
 
                         procesos.setEnCasa(Constants.YES);
-                        procesos.setEnCasaSa(Constants.YES);
+                        if (participante.getEdadMeses() >= 24) procesos.setEnCasaSa(Constants.YES);
                         procesos.setEnCasaChf(Constants.YES);
                         procesos.setInfoVacuna(Constants.YES);
                         procesos.setCuantasPers(0);
@@ -1278,7 +1278,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     else
                         procesos.setEncLacMat(Constants.NO);
                     procesos.setEncPart(Constants.YES);
-                    procesos.setEncPartSa(Constants.YES);
+                    if (participante.getEdadMeses() >= 24) procesos.setEncPartSa(Constants.YES);
                     procesos.setDatosVisita(Constants.YES);
                     procesos.setPesoTalla(Constants.YES);
                     procesos.setConmx(Constants.NO);

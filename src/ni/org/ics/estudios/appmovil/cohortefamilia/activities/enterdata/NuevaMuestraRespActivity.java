@@ -466,7 +466,7 @@ public class NuevaMuestraRespActivity extends FragmentActivity implements
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_TIP0_MX_RESP'", null);
                 if (mstipoMx != null) {
                    muestra.setTipoMuestra(mstipoMx.getCatKey());
-                   if (muestra.getTipoMuestra().equals("Lavado Nasal")){
+                   if (muestra.getTipoMuestra().equals("5")){
                    	muestra.setTubo(Constants.CODIGO_MEM);
                    }
                    else{

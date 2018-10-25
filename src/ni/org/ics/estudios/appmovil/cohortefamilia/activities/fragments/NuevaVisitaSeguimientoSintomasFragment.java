@@ -164,6 +164,9 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
         mNameView.setText(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getParticipante().getParticipante().getNombreCompleto());
         mNameView.setEnabled(false);
         inputFechaSintoma = (EditText) rootView.findViewById(R.id.inputFechaSintoma);
+        if (mVisitaSeguimientoCaso.getFechaVisita().compareTo(new Date())<0){
+            c.setTime(mVisitaSeguimientoCaso.getFechaVisita());
+        }
         inputFechaSintoma.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)<10? "0"+c.get(Calendar.DAY_OF_MONTH):c.get(Calendar.DAY_OF_MONTH))+"/"+
         							String.valueOf((c.get(Calendar.MONTH)+1)<10? "0"+(c.get(Calendar.MONTH)+1):(c.get(Calendar.MONTH)+1))+"/"+String.valueOf(c.get(Calendar.YEAR)));
         fechaSintoma = inputFechaSintoma.getText().toString();
@@ -605,7 +608,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
             }else {
                 minDate = new DateMidnight(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
             }
-			maxDate = DateMidnight.now();
+			maxDate = new DateMidnight(mVisitaSeguimientoCaso.getFechaVisita());
 			dpD.getDatePicker().setMinDate(minDate.getMillis());
 			dpD.getDatePicker().setMaxDate(maxDate.getMillis());
 			dpD.show();
@@ -629,7 +632,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
             }else {
                 minDate = new DateMidnight(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
             }
-			maxDate = DateMidnight.now();
+            maxDate = new DateMidnight(mVisitaSeguimientoCaso.getFechaVisita());
 			dpD.getDatePicker().setMinDate(minDate.getMillis());
 			dpD.getDatePicker().setMaxDate(maxDate.getMillis());
 			dpD.show();

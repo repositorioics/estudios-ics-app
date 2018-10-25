@@ -1873,11 +1873,10 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             procesos.setEnCasa(Constants.NO);
                         }
 
-                        if (aceptaDengue) {
-                            procesos.setEnCasaSa(Constants.YES);
-                            procesos.setEncPartSa(Constants.YES);
-                            if (participante.getEdadMeses() >= 24)
+                        if (aceptaDengue && participante.getEdadMeses() >= 24) {
                                 procesos.setConsSa(Constants.YES);
+                                procesos.setEncPartSa(Constants.YES);
+                                procesos.setEnCasaSa(Constants.YES);
                         } else {
                             procesos.setEnCasaSa(Constants.NO);
                             procesos.setEncPartSa(Constants.NO);

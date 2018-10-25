@@ -117,7 +117,9 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
         }else {
             minDate = new DateMidnight(visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
         }
-        pageFecha.setmLaterThan(minDate);
+        //pageFecha.setmLaterThan(minDate);
+        DateMidnight maxDate = new DateMidnight(visitaCaso.getFechaVisita());
+        pageFecha.setRangeValidation(true, minDate, maxDate);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);

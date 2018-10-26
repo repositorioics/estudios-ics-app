@@ -1843,7 +1843,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             MessageResource catOperadora = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + operadoraTelefono2 + "' and " + CatalogosDBConstants.catRoot + "='CAT_OPER_TEL'", null);
                             contacto.setOperadora2(catOperadora.getCatKey());
                         }
-
+                        contacto.setEsPropio(Constants.NOKEYSND);
                         estudiosAdapter.crearContactoParticipante(contacto);
 
                         procesos.setCodigo(participante.getCodigo());

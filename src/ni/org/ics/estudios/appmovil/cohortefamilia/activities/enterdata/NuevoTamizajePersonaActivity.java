@@ -559,7 +559,17 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), false);
                 }
                 else{
-                    changeStatus(mWizardModel.findByKey(labels.getEmancipado()), true);
+                    changeStatus(mWizardModel.findByKey(labels.getEmancipado()), edadAnios>=14);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), true);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), true);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), true);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), true);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), true);
                     notificarCambios = false;
                 }
                 changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), true);
@@ -1262,12 +1272,12 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         procesos.setPosZika(Constants.NO);
 
                         procesos.setEnCasa(Constants.YES);
-                        if (participante.getEdadMeses() >= 24) procesos.setEnCasaSa(Constants.YES);
                         procesos.setEnCasaChf(Constants.YES);
                         procesos.setInfoVacuna(Constants.YES);
                         procesos.setCuantasPers(0);
                         procesos.setVolRetoma(null);
                     }
+
                     if (participante.getEdadMeses() < 216)
                         procesos.setDatosParto(Constants.YES);
                     else
@@ -1278,7 +1288,13 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                     else
                         procesos.setEncLacMat(Constants.NO);
                     procesos.setEncPart(Constants.YES);
-                    if (participante.getEdadMeses() >= 24) procesos.setEncPartSa(Constants.YES);
+                    if (participante.getEdadMeses() >= 24) {
+                        procesos.setEnCasaSa(Constants.YES);
+                        procesos.setEncPartSa(Constants.YES);
+                    }else{
+                        procesos.setEnCasaSa(Constants.NO);
+                        procesos.setEncPartSa(Constants.NO);
+                    }
                     procesos.setDatosVisita(Constants.YES);
                     procesos.setPesoTalla(Constants.YES);
                     procesos.setConmx(Constants.NO);

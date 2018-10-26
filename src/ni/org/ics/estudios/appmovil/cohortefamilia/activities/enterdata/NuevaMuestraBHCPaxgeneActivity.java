@@ -25,6 +25,7 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -529,6 +530,13 @@ public class NuevaMuestraBHCPaxgeneActivity extends FragmentActivity implements
             muestra.setEstado('0');
             muestra.setPasive('0');
             estudiosAdapter.crearMuestras(muestra);
+            if (tomaMxSn.equalsIgnoreCase(Constants.YES)) {
+                ParticipanteProcesos procesos = participanteCHF.getParticipante().getProcesos();
+                procesos.setConmxbhc(Constants.YES);
+                if (realizaPaxgene.equalsIgnoreCase(Constants.NO))
+                    procesos.setPaxgene(Constants.NO);
+                estudiosAdapter.actualizarParticipanteProcesos(procesos);
+            }
             estudiosAdapter.close();
             Intent i;
             Bundle arguments = new Bundle();

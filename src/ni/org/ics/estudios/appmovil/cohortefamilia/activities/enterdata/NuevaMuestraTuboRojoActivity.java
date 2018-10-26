@@ -26,6 +26,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
@@ -509,6 +510,11 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
             muestra.setEstado('0');
             muestra.setPasive('0');
             estudiosAdapter.crearMuestras(muestra);
+            if (tomaMxSn.equalsIgnoreCase(Constants.YES)) {
+                ParticipanteProcesos procesos = participanteCHF.getParticipante().getProcesos();
+                procesos.setConmx(Constants.YES);
+                estudiosAdapter.actualizarParticipanteProcesos(procesos);
+            }
             estudiosAdapter.close();
             Intent i;
             Bundle arguments = new Bundle();

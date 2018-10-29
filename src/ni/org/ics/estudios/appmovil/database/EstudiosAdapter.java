@@ -2463,13 +2463,17 @@ public class EstudiosAdapter {
                 CasaCohorteFamiliaCaso caso = this.getCasaCohorteFamiliaCaso(CasosDBConstants.codigoCaso + "='" +cursor.getString(cursor.getColumnIndex(CasosDBConstants.codigoCaso))+"'", null);
                 mParticipanteCohorteFamiliaCaso.setCodigoCaso(caso);
                 ParticipanteCohorteFamilia participante = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" +cursor.getInt(cursor.getColumnIndex(CasosDBConstants.participante)), null);
-                mParticipanteCohorteFamiliaCaso.setParticipante(participante);
-                pd.setParticipante(mParticipanteCohorteFamiliaCaso);
-                List<VisitaSeguimientoCaso> mVisitaSeguimientoCasos = new ArrayList<VisitaSeguimientoCaso>();
-                mVisitaSeguimientoCasos = getVisitaSeguimientoCasos(CasosDBConstants.codigoCasoParticipante +" = '" + mParticipanteCohorteFamiliaCaso.getCodigoCasoParticipante() +"'", MainDBConstants.fechaVisita);
-                pd.setNumVisitas(mVisitaSeguimientoCasos.size());
-                if(mVisitaSeguimientoCasos.size()>0) pd.setFechaUltimaVisita(mVisitaSeguimientoCasos.get(mVisitaSeguimientoCasos.size()-1).getFechaVisita());
-                mParticipanteCohorteFamiliaCasosDatos.add(pd);
+                //mostrar solo registros con contraparte en la tabla de participantes y que esten activos
+                if (participante!=null && participante.getParticipante()!=null && participante.getParticipante().getProcesos().getEstPart().equals(1)) {
+                    mParticipanteCohorteFamiliaCaso.setParticipante(participante);
+                    pd.setParticipante(mParticipanteCohorteFamiliaCaso);
+                    List<VisitaSeguimientoCaso> mVisitaSeguimientoCasos = new ArrayList<VisitaSeguimientoCaso>();
+                    mVisitaSeguimientoCasos = getVisitaSeguimientoCasos(CasosDBConstants.codigoCasoParticipante + " = '" + mParticipanteCohorteFamiliaCaso.getCodigoCasoParticipante() + "'", MainDBConstants.fechaVisita);
+                    pd.setNumVisitas(mVisitaSeguimientoCasos.size());
+                    if (mVisitaSeguimientoCasos.size() > 0)
+                        pd.setFechaUltimaVisita(mVisitaSeguimientoCasos.get(mVisitaSeguimientoCasos.size() - 1).getFechaVisita());
+                    mParticipanteCohorteFamiliaCasosDatos.add(pd);
+                }
             } while (cursor.moveToNext());
         }
         if (!cursor.isClosed()) cursor.close();

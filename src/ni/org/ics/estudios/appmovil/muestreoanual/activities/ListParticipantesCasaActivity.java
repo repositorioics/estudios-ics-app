@@ -128,6 +128,7 @@ public class ListParticipantesCasaActivity extends ListActivity{
 		});
 
 		mSearchButton = (Button) findViewById(R.id.search_button);
+        mSearchButton.setVisibility(View.GONE);
 		mSearchButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -152,7 +153,7 @@ public class ListParticipantesCasaActivity extends ListActivity{
 		return true;
 	}
 
-	@Override
+	/*@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getMenuInflater();
@@ -170,7 +171,7 @@ public class ListParticipantesCasaActivity extends ListActivity{
 		default:
 			return super.onContextItemSelected(item);
 		}
-	}
+	}*/
 
 
 	@Override

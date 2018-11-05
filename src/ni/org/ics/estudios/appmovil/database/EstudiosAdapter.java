@@ -1069,8 +1069,11 @@ public class EstudiosAdapter {
                 CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" +cursorParticipanteCohorteFamilia.getInt(cursorParticipanteCohorteFamilia.getColumnIndex(MainDBConstants.casaCHF)), null);
                 mParticipanteCohorteFamilia.setCasaCHF(cchf);
                 Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorParticipanteCohorteFamilia.getInt(cursorParticipanteCohorteFamilia.getColumnIndex(MainDBConstants.participante)), null);
-                mParticipanteCohorteFamilia.setParticipante(participante);
-                mParticipanteCohorteFamilias.add(mParticipanteCohorteFamilia);
+                //mostrar solo registros con contraparte en la tabla de participantes y que esten activos
+                if (participante!=null && participante.getProcesos()!=null && participante.getProcesos().getEstPart().equals(1)) {
+                    mParticipanteCohorteFamilia.setParticipante(participante);
+                    mParticipanteCohorteFamilias.add(mParticipanteCohorteFamilia);
+                }
             } while (cursorParticipanteCohorteFamilia.moveToNext());
         }
         if (!cursorParticipanteCohorteFamilia.isClosed()) cursorParticipanteCohorteFamilia.close();

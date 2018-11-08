@@ -15,15 +15,19 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObsequioActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuVisitaFinalAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
 import java.text.SimpleDateFormat;
 
@@ -35,7 +39,7 @@ public class MenuVisitaFinalCasoActivity extends AbstractAsyncActivity {
     private String[] menu_visita;
     private VisitaFinalCaso visitaFinalCaso = new VisitaFinalCaso();
     private EstudiosAdapter estudiosAdapter;
-
+    private ObsequioGeneral obsequioGeneral = new ObsequioGeneral();
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
@@ -72,6 +76,20 @@ public class MenuVisitaFinalCasoActivity extends AbstractAsyncActivity {
 					startActivity(i);
 					finish();
 		        	break;
+                    case 1:
+                        if (obsequioGeneral==null) {
+                            arguments.putSerializable(Constants.VISITA_FINAL, visitaFinalCaso);
+                            i = new Intent(getApplicationContext(),
+                                    NuevoObsequioActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                            finish();
+                        }else{
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                            Toast.makeText(getApplicationContext(), "Obsequio entregado a " + obsequioGeneral.getPersonaRecibe() + " - " + formatter.format(obsequioGeneral.getRecordDate()), Toast.LENGTH_LONG).show();
+                        }
+                        break;
                 default:
                         break;
                 }
@@ -114,7 +132,7 @@ public class MenuVisitaFinalCasoActivity extends AbstractAsyncActivity {
 		ParticipanteCohorteFamiliaCaso partCaso = visitaFinalCaso.getCodigoParticipanteCaso();
 		if (partCaso!=null) arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
 		i = new Intent(getApplicationContext(),
-				ListaVisitasParticipantesCasosActivity.class);
+				ListaVisitaFinalCasosActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);
 		startActivity(i);
@@ -154,7 +172,8 @@ public class MenuVisitaFinalCasoActivity extends AbstractAsyncActivity {
         protected String doInBackground(String... values) {
             try {
                 estudiosAdapter.open();
-                
+                obsequioGeneral = estudiosAdapter.getObsequioGeneral(MainDBConstants.seguimiento +" = '"+visitaFinalCaso.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso() +
+                        "' and "+MainDBConstants.numVisitaSeguimiento+" = 'F' and " + MainDBConstants.obsequioSN + " = 1", null);
                 estudiosAdapter.close();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
@@ -171,7 +190,7 @@ public class MenuVisitaFinalCasoActivity extends AbstractAsyncActivity {
             textView.setText(getString(R.string.main_1)+ "\n" + visitaFinalCaso.getCodigoParticipanteCaso().getParticipante().getParticipante().getNombreCompleto()
             		+ "\n" + getString(R.string.visit_final) +" - "+ formatter.format(visitaFinalCaso.getFechaVisita()));
 
-            gridView.setAdapter(new MenuVisitaFinalAdapter(getApplicationContext(), R.layout.menu_item_2, menu_visita));
+            gridView.setAdapter(new MenuVisitaFinalAdapter(getApplicationContext(), R.layout.menu_item_2, menu_visita, obsequioGeneral!=null));
             dismissProgressDialog();
         }
     }

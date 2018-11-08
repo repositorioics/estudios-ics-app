@@ -28,7 +28,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 12;
+	public static final int DATABASE_VERSION = 13;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -735,4 +735,38 @@ public class MainDBConstants {
             + ConstantsDB.REC1    + " integer, "
             + ConstantsDB.REC2    + " integer, "
             + "primary key (" + codigo + "));";
+
+    public static final String seguimiento="seguimiento";
+    public static final String numVisitaSeguimiento="numVisitaSeguimiento";
+    public static final String obsequioSN="obsequioSN";
+    public static final String personaRecibe="personaRecibe";
+    public static final String otraRelacionFam="otraRelacionFam";
+    public static final String observaciones="observaciones";
+    public static final String relacionFam = "relacionFam";
+    public static final String telefono = "telefono";
+
+    public static final String OBSEQUIOS_TABLE = "obsequios_todos";
+
+    public static final String CREATE_OBSEQUIOS_TABLE = "create table if not exists "
+            + OBSEQUIOS_TABLE + " ("
+            + id + " text not null, "
+            + participante + " integer, "
+            + casa + " text, "
+            + casaCHF + " text, "
+            + seguimiento + " text, "
+            + numVisitaSeguimiento + " text, "
+            + motivo + " text, "
+            + obsequioSN + " integer, "
+            + personaRecibe + " text, "
+            + relacionFam + " integer, "
+            + otraRelacionFam + " text, "
+            + telefono + " text, "
+            + observaciones + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + id + "));";
+
 }

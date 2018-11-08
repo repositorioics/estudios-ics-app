@@ -17,15 +17,19 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObsequioActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuVisitaSeguimientoAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
 
 public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
@@ -35,7 +39,7 @@ public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
     private String[] menu_visita;
     private VisitaSeguimientoCaso visitaCaso = new VisitaSeguimientoCaso();
     private EstudiosAdapter estudiosAdapter;
-
+    private ObsequioGeneral obsequioGeneral = new ObsequioGeneral();
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
@@ -62,35 +66,49 @@ public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
                                     int position, long id) {
             	Intent i;
             	Bundle arguments = new Bundle();
-                switch (position){
-                case 0:
-                	arguments.putSerializable(Constants.VISITA , visitaCaso);
-					i = new Intent(getApplicationContext(),
-							ListaSintomasParticipantesCasosActivity.class);
-					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					i.putExtras(arguments);
-					startActivity(i);
-					finish();
-		        	break;
-                case 1:
-                	arguments.putSerializable(Constants.VISITA , visitaCaso);
-					i = new Intent(getApplicationContext(),
-							ListaContactosParticipantesCasosActivity.class);
-					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					i.putExtras(arguments);
-					startActivity(i);
-					finish();
-		        	break;
-                case 2:
-                	arguments.putSerializable(Constants.VISITA , visitaCaso);
-					i = new Intent(getApplicationContext(),
-							ListaMuestrasParticipantesCasosActivity.class);
-					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					i.putExtras(arguments);
-					startActivity(i);
-					finish();
-		        	break;
-                default:
+                switch (position) {
+                    case 0:
+                        arguments.putSerializable(Constants.VISITA, visitaCaso);
+                        i = new Intent(getApplicationContext(),
+                                ListaSintomasParticipantesCasosActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        finish();
+                        break;
+                    case 1:
+                        arguments.putSerializable(Constants.VISITA, visitaCaso);
+                        i = new Intent(getApplicationContext(),
+                                ListaContactosParticipantesCasosActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        finish();
+                        break;
+                    case 2:
+                        arguments.putSerializable(Constants.VISITA, visitaCaso);
+                        i = new Intent(getApplicationContext(),
+                                ListaMuestrasParticipantesCasosActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        finish();
+                        break;
+                    case 3:
+                        if (obsequioGeneral==null) {
+                            arguments.putSerializable(Constants.VISITA, visitaCaso);
+                            i = new Intent(getApplicationContext(),
+                                    NuevoObsequioActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                            finish();
+                        }else{
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                            Toast.makeText(getApplicationContext(), "Obsequio entregado a "+obsequioGeneral.getPersonaRecibe()+" - "+formatter.format(obsequioGeneral.getRecordDate()), Toast.LENGTH_LONG).show();
+                        }
+                        break;
+                    default:
                         break;
                 }
             }
@@ -172,7 +190,8 @@ public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
         protected String doInBackground(String... values) {
             try {
                 estudiosAdapter.open();
-                
+                obsequioGeneral = estudiosAdapter.getObsequioGeneral(MainDBConstants.seguimiento +" = '"+visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso()+
+                        "' and "+MainDBConstants.numVisitaSeguimiento+" != 'F' and "+MainDBConstants.obsequioSN+" = 1", null);
                 estudiosAdapter.close();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
@@ -189,7 +208,7 @@ public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
             textView.setText(getString(R.string.main_1)+ "\n" + visitaCaso.getCodigoParticipanteCaso().getParticipante().getParticipante().getNombreCompleto() 
             		+ "\n" + getString(R.string.visit) +": " + visitaCaso.getVisita() +" - "+ formatter.format(visitaCaso.getFechaVisita()));
 
-            gridView.setAdapter(new MenuVisitaSeguimientoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_visita));
+            gridView.setAdapter(new MenuVisitaSeguimientoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_visita, obsequioGeneral!=null));
             dismissProgressDialog();
         }
     }

@@ -114,7 +114,7 @@ public class DownloadBaseTask extends DownloadTask {
         estudioAdapter.borrarVisitasTerrenoParticipante();
         estudioAdapter.borrarEnfermedadesCronicas();
         estudioAdapter.borrarContactosParticipantes();
-
+        estudioAdapter.borrarObsequiosGenerales();
         try {
             if (mCatalogos != null){
                 v = mCatalogos.size();

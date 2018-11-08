@@ -15,12 +15,12 @@ import ni.org.ics.estudios.appmovil.R;
 public class MenuVisitaSeguimientoAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
-    
+    private final boolean obsequio;
 	public MenuVisitaSeguimientoAdapter(Context context, int textViewResourceId,
-                                   String[] values) {
+                                   String[] values, boolean obsequio) {
 		super(context, textViewResourceId, values);
 		this.values = values;
-        
+        this.obsequio = obsequio;
 	}
 
 	@Override
@@ -50,6 +50,13 @@ public class MenuVisitaSeguimientoAdapter extends ArrayAdapter<String> {
             case 2:
                 img=getContext().getResources().getDrawable(R.drawable.ic_samples_seg);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+            case 3:
+                img=getContext().getResources().getDrawable(R.drawable.ic_gift_o);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                if (!obsequio) {
+                    textView.setTextColor(Color.RED);
+                }
                 break;
 			default:
 				img=getContext().getResources().getDrawable(R.drawable.ic_menu_help);

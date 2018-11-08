@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gift">Obsequio</string>
+    <string name="obsequioSN">Entregó Obsequio?</string>
+    <string name="personaRecibe">Nombre de la persona que recibe el obsequio</string>
+    <string name="relacionFamObs">Relación Familiar de la persona que recibe el obsequio</string>
+    <string name="otraRelacionFamObs">Escriba la relación familiar</string>
+    <string name="observaciones">Observaciones</string>
+    <string name="telefono">Teléfono</string>
+</resources>

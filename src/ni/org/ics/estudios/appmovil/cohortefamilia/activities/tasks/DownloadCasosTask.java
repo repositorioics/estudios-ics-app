@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import org.springframework.http.HttpAuthentication;
@@ -44,19 +45,20 @@ public class DownloadCasosTask extends DownloadTask {
     private List<InformacionNoCompletaCaso> mInformacionNoCompletaCasos = null;
     private List<Muestra> mMuestras = null;
 	private List<VisitaFinalCaso> mVisitaFinalCasos = null;
-    
-    
+    private List<ObsequioGeneral> mObsequios = null;
+
     public static final String CASAS_CASOS = "1";
     public static final String PART_CASOS = "2";
     public static final String VISITAS_CASOS = "3";
     public static final String VISITAS_FALLIDAS_CASOS = "4";
     public static final String SINTOMAS_CASOS = "5";
     public static final String VISITAS_FINALES = "6";
+    public static final String OBSEQUIOS = "7";
     public static final String CONTACTOS_CASOS = "1";
     public static final String MUESTRAS = "2";
     public static final String NODATA_CASOS = "3";
 
-    private static final String TOTAL_TASK_CASOS = "6";
+    private static final String TOTAL_TASK_CASOS = "7";
     private static final String TOTAL_TASK_CASOS_CONTACTO = "3";
 
 	private String error = null;
@@ -89,6 +91,7 @@ public class DownloadCasosTask extends DownloadTask {
         estudioAdapter.borrarVisitaFallidaCaso();
         estudioAdapter.borrarVisitaSeguimientoCasoSintomas();
         estudioAdapter.borrarVisitaFinalCaso();
+        estudioAdapter.borrarObsequiosGenerales();
         /*estudioAdapter.borrarInformacionNoCompletaCaso();
         estudioAdapter.borrarFormularioContactoCaso();
         estudioAdapter.borrarMuestrasTx();*/
@@ -156,6 +159,16 @@ public class DownloadCasosTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mVisitaFinalCasos = null;
+            }
+            if (mObsequios != null){
+                v = mObsequios.size();
+                ListIterator<ObsequioGeneral> iter = mObsequios.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearObsequioGeneral(iter.next());
+                    publishProgress("Insertando obsequios en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mObsequios = null;
             }
             /*
             if (mFormularioContactoCasos != null){
@@ -335,6 +348,14 @@ public class DownloadCasosTask extends DownloadTask {
             mVisitaFinalCasos = Arrays.asList(responseEntityVisitasFinales.getBody());
             responseEntityVisitasFinales = null;
 
+            //Descargar visitas finales de casas con casos
+            urlRequest = url + "/movil/obsequiosgen/";
+            publishProgress("Solicitando obsequios", OBSEQUIOS,TOTAL_TASK_CASOS);
+            // Perform the HTTP GET request
+            ResponseEntity<ObsequioGeneral[]> responseEntityObsequios = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ObsequioGeneral[].class);
+            // convert the array to a list and return it
+            mObsequios = Arrays.asList(responseEntityObsequios.getBody());
             /*
             //Descargar contactos de casas con casos
             urlRequest = url + "/movil/contactoscasos/";

@@ -70,6 +70,7 @@ public class UploadAllTask extends UploadTask {
     private List<DatosCoordenadas> mCambiosDom = new ArrayList<DatosCoordenadas>();
     private List<VisitaTerrenoParticipante> mVisitasTerrenoP = new ArrayList<VisitaTerrenoParticipante>();
     private List<EnfermedadCronica> mEnfermedades = new ArrayList<EnfermedadCronica>();
+    private List<ObsequioGeneral> mObsequiosGeneral = new ArrayList<ObsequioGeneral>();
 
     private String url = null;
     private String username = null;
@@ -485,6 +486,19 @@ public class UploadAllTask extends UploadTask {
                 return e1.getLocalizedMessage();
             }
 
+            try {
+                mObsequiosGeneral = estudioAdapter.getObsequiosGenerales(MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'", null);
+                saveObsequiosGeneral(Constants.STATUS_SUBMITTED);
+                error = cargarObsequioGeneral(url, username, password);
+                if (!error.matches("Datos recibidos!")){
+                    saveObsequiosGeneral(Constants.STATUS_NOT_SUBMITTED);
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
+
         } catch (Exception e1) {
 
             e1.printStackTrace();
@@ -569,6 +583,16 @@ public class UploadAllTask extends UploadTask {
             cronica.setEstado(estado.charAt(0));
             estudioAdapter.editarEnfermedadCronica(cronica);
             publishProgress("Actualizando enfermedades crónicas en base de datos local", Integer.valueOf(mEnfermedades.indexOf(cronica)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+    }
+
+    private void saveObsequiosGeneral(String estado){
+        int c = mObsequiosGeneral.size();
+        for (ObsequioGeneral obsequio : mObsequiosGeneral) {
+            obsequio.setEstado(estado.charAt(0));
+            estudioAdapter.editarObsequioGeneral(obsequio);
+            publishProgress("Actualizando obsequios en base de datos local", Integer.valueOf(mObsequiosGeneral.indexOf(obsequio)).toString(), Integer
                     .valueOf(c).toString());
         }
     }
@@ -2631,6 +2655,40 @@ public class UploadAllTask extends UploadTask {
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<EnfermedadCronica[]> requestEntity =
                         new HttpEntity<EnfermedadCronica[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /*************** ObsequioGeneral ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarObsequioGeneral(String url, String username,
+                                             String password) throws Exception {
+        try {
+            if(mObsequiosGeneral.size()>0){
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/obsequiosgen";
+                ObsequioGeneral[] envio = mObsequiosGeneral.toArray(new ObsequioGeneral[mObsequiosGeneral.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ObsequioGeneral[]> requestEntity =
+                        new HttpEntity<ObsequioGeneral[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

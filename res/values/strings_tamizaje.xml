@@ -153,6 +153,7 @@
     <string name="jefeFamiliaHint">Nombres y apellidos del jefe de la casa de cohorte pediátrica</string>
     <string name="direccion">Dirección</string>
     <string name="direccionHint">Dirección de la casa de cohorte pediátrica</string>
+    <string name="participantechfExiste">Participante ya pertenece a la cohorte de familia</string>
 
     <string name="aceptaParteBDengue">Parte B Dengue</string>
     <string name="aceptaParteBDengueHint">¿Acepta Parte B Almacenamiento y uso de Muestras en Estudios Futuros?</string>

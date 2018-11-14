@@ -78,6 +78,7 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
 	private String expCs;
 	private float temp;
 	final Calendar c = Calendar.getInstance();
+    final Calendar calLimiteFecVisita = Calendar.getInstance();
 	
 	private DeviceInfo infoMovil;
 	private String username;
@@ -98,6 +99,8 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
         String mPass = ((MyIcsApplication) this.getActivity().getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getActivity(),mPass,false,false);
         mParticipanteCaso = (ParticipanteCohorteFamiliaCaso) getActivity().getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        calLimiteFecVisita.setTime(mParticipanteCaso.getCodigoCaso().getFechaInicio());
+        calLimiteFecVisita.add(Calendar.DATE,12);//12 dias después de la fecha de ingreso
         infoMovil = new DeviceInfo(getActivity());
         settings =
 				PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -254,6 +257,9 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
     	Date dVis = null;
 		try {
 			dVis = formatter.parse(fechaVisita);
+            vsc.setFechaVisita(dVis);
+            formatter = new SimpleDateFormat("dd/MM/yyyy");
+            dVis = formatter.parse(fechaVisita);
 		} catch (ParseException e) {
 			Toast.makeText(getActivity(), e.toString() ,Toast.LENGTH_LONG).show();
 			e.printStackTrace();
@@ -288,6 +294,10 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_fecha_visita),Toast.LENGTH_LONG).show();
         	return false;
         }
+        else if (dVis.after(calLimiteFecVisita.getTime())){//si la fecha de visita es posterior a los 12 dias después de la fecha de inicio no permitir registro
+            Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_fecha_visita2),Toast.LENGTH_LONG).show();
+            return false;
+        }
         else{
             if (visita != null || !visita.isEmpty()){
                 try {
@@ -305,7 +315,6 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
             }
         	vsc.setCodigoCasoVisita(infoMovil.getId());
         	vsc.setCodigoParticipanteCaso(mParticipanteCaso);
-        	vsc.setFechaVisita(dVis);
         	vsc.setVisita(visita);
         	vsc.setHoraProbableVisita(horaProbableVisita);
         	vsc.setExpCS(expCs);

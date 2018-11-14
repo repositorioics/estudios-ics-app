@@ -510,142 +510,155 @@ public class NuevaVisitaFinalActivity extends FragmentActivity implements
         VisitaFinalCaso vfc = new VisitaFinalCaso();
         vfc.setCodigoParticipanteCaso(participanteChfCaso);
         DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        boolean procesarVisita = true;
         try {
             vfc.setFechaVisita(mDateFormat.parse(fechaVisita));
+            DateFormat mDateFormatLim = new SimpleDateFormat("dd/MM/yyyy");
+            Date dVis = mDateFormatLim.parse(fechaVisita);
+            Calendar calLimiteFecVisita = Calendar.getInstance();
+            calLimiteFecVisita.setTime(participanteChfCaso.getCodigoCaso().getFechaInicio());
+            calLimiteFecVisita.add(Calendar.DATE,60);//60 dias después de la fecha de ingreso
+            if (dVis.after(calLimiteFecVisita.getTime())){//si la fecha de visita es posterior a los 60 dias después de la fecha de inicio no permitir registro
+                Toast.makeText(this,this.getString(R.string.wrong_fecha_visita3),Toast.LENGTH_LONG).show();
+                procesarVisita = false;
+            }
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (tieneValor(enfermo)) {
-            MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfermo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-            vfc.setEnfermo(catSino.getCatKey());
-        }
-        if (tieneValor(consTerreno)) {
-            MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + consTerreno + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-            vfc.setConsTerreno(catSino.getCatKey());
-        }
-        if (tieneValor(referidoCs)) {
-            MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + referidoCs + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-            vfc.setReferidoCs(catSino.getCatKey());
-        }
-        if (tieneValor(tratamiento)) {
-            String catKeys = "";
-            tratamiento = tratamiento.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
-            List<MessageResource> mCatTipo = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + tratamiento + "') and "
-                    + CatalogosDBConstants.catRoot + "='CHF_CAT_TRATAMIENTO'", null);
-            for(MessageResource ms : mCatTipo) {
-                catKeys += ms.getCatKey() + ",";
+        if (procesarVisita) {
+            if (tieneValor(enfermo)) {
+                MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfermo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                vfc.setEnfermo(catSino.getCatKey());
             }
-            if (!catKeys.isEmpty())
-                catKeys = catKeys.substring(0, catKeys.length() - 1);
-            vfc.setTratamiento(catKeys);
-        }
-        if (tieneValor(cualAntibiotico)){
-            vfc.setCualAntibiotico(cualAntibiotico);
-        }
-        if (tieneValor(sintResp)) {
-            MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + sintResp + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-            vfc.setSintResp(catSino.getCatKey());
-        }
+            if (tieneValor(consTerreno)) {
+                MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + consTerreno + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                vfc.setConsTerreno(catSino.getCatKey());
+            }
+            if (tieneValor(referidoCs)) {
+                MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + referidoCs + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                vfc.setReferidoCs(catSino.getCatKey());
+            }
+            if (tieneValor(tratamiento)) {
+                String catKeys = "";
+                tratamiento = tratamiento.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','");
+                List<MessageResource> mCatTipo = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + tratamiento + "') and "
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_TRATAMIENTO'", null);
+                for (MessageResource ms : mCatTipo) {
+                    catKeys += ms.getCatKey() + ",";
+                }
+                if (!catKeys.isEmpty())
+                    catKeys = catKeys.substring(0, catKeys.length() - 1);
+                vfc.setTratamiento(catKeys);
+            }
+            if (tieneValor(cualAntibiotico)) {
+                vfc.setCualAntibiotico(cualAntibiotico);
+            }
+            if (tieneValor(sintResp)) {
+                MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + sintResp + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                vfc.setSintResp(catSino.getCatKey());
+            }
 
-        mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        if (tieneValor(fiebre)) {
-            MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + fiebre + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-            vfc.setFiebre(catSino.getCatKey());
-        }
-        if (tieneValor(fif)){
-            try {
-                vfc.setFif(mDateFormat.parse(fif));
-            } catch (ParseException e) {
-                e.printStackTrace();
+            mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            if (tieneValor(fiebre)) {
+                MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + fiebre + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                vfc.setFiebre(catSino.getCatKey());
             }
-        }
-        if (tieneValor(fff)){
-            try {
-                vfc.setFff(mDateFormat.parse(fff));
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if (tieneValor(fif)) {
+                try {
+                    vfc.setFif(mDateFormat.parse(fif));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        if (tieneValor(tos)) {
-            MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tos + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-            vfc.setTos(catSino.getCatKey());
-        }
-        if (tieneValor(fitos)){
-            try {
-                vfc.setFitos(mDateFormat.parse(fitos));
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if (tieneValor(fff)) {
+                try {
+                    vfc.setFff(mDateFormat.parse(fff));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        if (tieneValor(fftos)){
-            try {
-                vfc.setFftos(mDateFormat.parse(fftos));
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if (tieneValor(tos)) {
+                MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tos + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                vfc.setTos(catSino.getCatKey());
             }
-        }
-        if (tieneValor(dolorGarganta)) {
-            MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + dolorGarganta + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-            vfc.setDolorGarganta(catSino.getCatKey());
-        }
-        if (tieneValor(figg)){
-            try {
-                vfc.setFigg(mDateFormat.parse(figg));
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if (tieneValor(fitos)) {
+                try {
+                    vfc.setFitos(mDateFormat.parse(fitos));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        if (tieneValor(ffgg)){
-            try {
-                vfc.setFfgg(mDateFormat.parse(ffgg));
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if (tieneValor(fftos)) {
+                try {
+                    vfc.setFftos(mDateFormat.parse(fftos));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        if (tieneValor(secrecionNasal)) {
-            MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + secrecionNasal + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-            vfc.setSecrecionNasal(catSino.getCatKey());
-        }
-        if (tieneValor(fisn)){
-            try {
-                vfc.setFisn(mDateFormat.parse(fisn));
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if (tieneValor(dolorGarganta)) {
+                MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + dolorGarganta + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                vfc.setDolorGarganta(catSino.getCatKey());
             }
-        }
-        if (tieneValor(ffsn)){
-            try {
-                vfc.setFfsn(mDateFormat.parse(ffsn));
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if (tieneValor(figg)) {
+                try {
+                    vfc.setFigg(mDateFormat.parse(figg));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+            if (tieneValor(ffgg)) {
+                try {
+                    vfc.setFfgg(mDateFormat.parse(ffgg));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (tieneValor(secrecionNasal)) {
+                MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + secrecionNasal + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                vfc.setSecrecionNasal(catSino.getCatKey());
+            }
+            if (tieneValor(fisn)) {
+                try {
+                    vfc.setFisn(mDateFormat.parse(fisn));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (tieneValor(ffsn)) {
+                try {
+                    vfc.setFfsn(mDateFormat.parse(ffsn));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
 
-        vfc.setRecordDate(new Date());
-        vfc.setRecordUser(username);
-        vfc.setDeviceid(infoMovil.getDeviceId());
-        vfc.setEstado('0');
-        vfc.setPasive('0');
+            vfc.setRecordDate(new Date());
+            vfc.setRecordUser(username);
+            vfc.setDeviceid(infoMovil.getDeviceId());
+            vfc.setEstado('0');
+            vfc.setPasive('0');
 
-        //Guarda el contacto
-        try {
-            estudiosAdapter.crearVisitaFinalCaso(vfc);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            //Guarda el contacto
+            try {
+                estudiosAdapter.crearVisitaFinalCaso(vfc);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            estudiosAdapter.close();
+            Bundle arguments = new Bundle();
+            Intent i;
+            if (participanteChfCaso != null) arguments.putSerializable(Constants.PARTICIPANTE, participanteChfCaso);
+            i = new Intent(getApplicationContext(),
+                    ListaVisitaFinalCasosActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtras(arguments);
+            startActivity(i);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_LONG);
+            toast.show();
+            finish();
         }
-        estudiosAdapter.close();
-        Bundle arguments = new Bundle();
-        Intent i;
-        if (participanteChfCaso!=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteChfCaso);
-        i = new Intent(getApplicationContext(),
-                ListaVisitaFinalCasosActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.putExtras(arguments);
-        startActivity(i);
-        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
-        toast.show();
-        finish();
 
     }
 

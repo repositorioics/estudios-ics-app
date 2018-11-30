@@ -71,6 +71,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
     private final String TIPO_INFLUENZA = "Influenza";
     private final String TIPO_AMBOS = "Ambos";
     private List<MessageResource> catMeses = new ArrayList<MessageResource>();
+    private String[] catRelFamMenorEdad; //relación familiar del tutor cuando es menor de edad
+    private String[] catRelFamMayorEdad; //relación familiar del tutor cuando es mayor de edad
+    //private int esElegibleDen = 4;
+    //private int esElegibleInf = 6;
+
     private Date fechaNacimiento = null;
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -175,6 +180,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
         estudiosAdapter.open();
         catMeses = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", CatalogosDBConstants.order);
+        catRelFamMayorEdad = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", CatalogosDBConstants.order);
+        catRelFamMenorEdad = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR' and "+CatalogosDBConstants.catKey + " != '8'", CatalogosDBConstants.order);
         estudiosAdapter.close();
 
     }
@@ -405,6 +412,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         notificarCambios = false;
                     }
                 }
+                SingleFixedChoicePage pagetmp = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getRelacionFamiliarTutor());
+                pagetmp.setChoices(edadAnios<18?catRelFamMenorEdad:catRelFamMayorEdad);
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getAceptaTamizajePersona())){
@@ -1532,11 +1541,13 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 MessageResource catRazonNoAceptaTamizajePersona = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaTamizajePersona + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NPP'", null);
                 if (catRazonNoAceptaTamizajePersona!=null) tamizaje.setRazonNoAceptaTamizajePersona(catRazonNoAceptaTamizajePersona.getCatKey());
             }
+            int totalCriterios = 0;
             if (tieneValor(criteriosInclusion)) {
                 String keysCriterios = "";
                 criteriosInclusion = criteriosInclusion.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
                 List<MessageResource> mcriteriosInclusion = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + criteriosInclusion + "') and "
                         + CatalogosDBConstants.catRoot + "='CP_CAT_CI'", null);
+                totalCriterios = mcriteriosInclusion.size();
                 for(MessageResource ms : mcriteriosInclusion) {
                     keysCriterios += ms.getCatKey() + ",";
                 }
@@ -1634,6 +1645,13 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     if (catRazonNoAceptaParticipar!=null) tamizaje.setRazonNoAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
                 }
                 tamizaje.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaDengue);
+                boolean esElegible = ((edadAnios >= 2 && edadAnios < 10)
+                        && (totalCriterios==2)
+                        && (((tieneValor(vivienda) && vivienda.matches("Propia"))
+                            && (tieneValor(tiempoResidencia) && (tiempoResidencia.matches("Seis Meses a Dos Años") || tiempoResidencia.matches("Dos Años ó Más"))))
+                        || ((tieneValor(vivienda) &&vivienda.matches("Alquilada")) && (tieneValor(tiempoResidencia) && tiempoResidencia.matches("Dos Años ó Más"))))
+                        );
+                tamizaje.setEsElegible(esElegible?Constants.YESKEYSND:Constants.NOKEYSND);
                 estudiosAdapter.crearTamizaje(tamizaje);
             }
             //Registrar tamizaje dengue si aplica
@@ -1663,6 +1681,15 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 if (tieneValor(enfermedad) && enfermedad.equals(Constants.YES)){
                         guardarEnfermedadesCronicas(cualEnfermedad.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','"), datos, tamizajeInf);
                 }
+                boolean esElegible = ((edadAnios >= 0 && edadAnios < 10)
+                        && (totalCriterios==2)
+                        && (((tieneValor(vivienda) && vivienda.matches("Propia"))
+                        && (tieneValor(tiempoResidencia) && (tiempoResidencia.matches("Seis Meses a Dos Años") || tiempoResidencia.matches("Dos Años ó Más"))))
+                        || ((tieneValor(vivienda) &&vivienda.matches("Alquilada")) && (tieneValor(tiempoResidencia) && tiempoResidencia.matches("Dos Años ó Más"))))
+                        && (tieneValor(pretermino) && pretermino.equalsIgnoreCase(Constants.NO))
+                        && (tieneValor(enfermedadInmuno) && enfermedadInmuno.equalsIgnoreCase(Constants.NO))
+                );
+                tamizajeInf.setEsElegible(esElegible?Constants.YESKEYSND:Constants.NOKEYSND);
                 estudiosAdapter.crearTamizaje(tamizajeInf);
             }
 

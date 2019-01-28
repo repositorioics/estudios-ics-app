@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.FormularioContactoCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.InformacionNoCompletaCaso;
 import org.springframework.http.HttpAuthentication;
@@ -36,11 +37,13 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
 	
     private List<FormularioContactoCaso> mFormularioContactoCasos = null;
     private List<InformacionNoCompletaCaso> mInformacionNoCompletaCasos = null;
+    private List<ObsequioGeneral> mObsequios = null;
 	
     public static final String CONTACTOS_CASOS = "1";
     public static final String NODATA_CASOS = "2";
+    public static final String OBSEQUIOS = "3";
 
-    private static final String TOTAL_TASK_CASOS = "2";
+    private static final String TOTAL_TASK_CASOS = "3";
 
 	private String error = null;
 	private String url = null;
@@ -69,7 +72,7 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
 		//Borrar los datos de la base de datos
         estudioAdapter.borrarInformacionNoCompletaCaso();
         estudioAdapter.borrarFormularioContactoCaso();
-        
+        estudioAdapter.borrarObsequiosGenerales();
 		try {
             if (mFormularioContactoCasos != null){
                 v = mFormularioContactoCasos.size();
@@ -92,7 +95,16 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
                 }
                 mInformacionNoCompletaCasos = null;
             }
-            
+            if (mObsequios != null){
+                v = mObsequios.size();
+                ListIterator<ObsequioGeneral> iter = mObsequios.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearObsequioGeneral(iter.next());
+                    publishProgress("Insertando obsequios en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mObsequios = null;
+            }
 		} catch (Exception e) {
 			// Regresa error al insertar
 			e.printStackTrace();
@@ -140,7 +152,16 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
             // convert the array to a list and return it
             mInformacionNoCompletaCasos = Arrays.asList(responseEntityInformacionNoCompletaCaso.getBody());
             responseEntityInformacionNoCompletaCaso = null;
-            
+
+            //Descargar obsequios
+            urlRequest = url + "/movil/obsequiosgen/";
+            publishProgress("Solicitando obsequios", OBSEQUIOS,TOTAL_TASK_CASOS);
+            // Perform the HTTP GET request
+            ResponseEntity<ObsequioGeneral[]> responseEntityObsequios = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ObsequioGeneral[].class);
+            // convert the array to a list and return it
+            mObsequios = Arrays.asList(responseEntityObsequios.getBody());
+
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

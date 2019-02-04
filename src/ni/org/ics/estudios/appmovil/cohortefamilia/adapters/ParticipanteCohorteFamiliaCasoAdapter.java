@@ -32,7 +32,7 @@ public class ParticipanteCohorteFamiliaCasoAdapter extends ArrayAdapter<Particip
 			v = vi.inflate(R.layout.complex_list_item, null);
 		}
 		ParticipanteCohorteFamiliaCasoData p = getItem(position);
-		if (p != null) {
+		if (p != null && p.getParticipante()!=null && p.getParticipante().getParticipante()!=null && p.getParticipante().getParticipante().getParticipante()!=null) {
 
 			TextView textView = (TextView) v.findViewById(R.id.identifier_text);
 			textView.setTextColor(Color.BLACK);

@@ -44,7 +44,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
-	private ViewPager mPager;
+    private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
     private boolean mEditingAfterReview;
     private AbstractWizardModel mWizardModel;
@@ -58,38 +58,40 @@ public class NewTamizajeActivity extends FragmentActivity implements
     private DeviceInfo infoMovil;
     private GPSTracker gps;
     //private static CasaCohorteFamilia casa = new CasaCohorteFamilia();
-	private String username;
-	private SharedPreferences settings;
-	private static final int EXIT = 1;
-	private AlertDialog alertDialog;
-	private boolean notificarCambios = true;
-	//private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
-	private Integer edadAnios = 0;
+    private String username;
+    private SharedPreferences settings;
+    private static final int EXIT = 1;
+    private AlertDialog alertDialog;
+    private boolean notificarCambios = true;
+    //private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
+    private Integer edadAnios = 0;
     private Integer edadMeses = 0;
     private String tipoIngreso = "";
     private final String TIPO_DENGUE = "Dengue";
     private final String TIPO_INFLUENZA = "Influenza";
     private final String TIPO_AMBOS = "Ambos";
     private List<MessageResource> catMeses = new ArrayList<MessageResource>();
+    private String[] catRelFamMenorEdad; //relación familiar del tutor cuando es menor de edad
+    private String[] catRelFamMayorEdad; //relación familiar del tutor cuando es mayor de edad
     private String[] catVerifTutAlf; //cosas a verificar cuando tutor es alfabeto
     private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
     private Date fechaNacimiento = null;
     @Override
-	public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!FileUtils.storageReady()) {
-			Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error, R.string.storage_error),Toast.LENGTH_LONG);
-			toast.show();
-			finish();
-		}
+            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error, R.string.storage_error),Toast.LENGTH_LONG);
+            toast.show();
+            finish();
+        }
         setContentView(R.layout.activity_data_enter);
         //casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
         settings =
-				PreferenceManager.getDefaultSharedPreferences(this);
-		username =
-				settings.getString(PreferencesActivity.KEY_USERNAME,
-						null);
-		infoMovil = new DeviceInfo(NewTamizajeActivity.this);
+                PreferenceManager.getDefaultSharedPreferences(this);
+        username =
+                settings.getString(PreferencesActivity.KEY_USERNAME,
+                        null);
+        infoMovil = new DeviceInfo(NewTamizajeActivity.this);
         gps = new GPSTracker(NewTamizajeActivity.this);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
@@ -123,7 +125,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
                 if (mConsumePageSelectedEvent) {
                     mConsumePageSelectedEvent = false;
-                    return; 
+                    return;
                 }
 
                 mEditingAfterReview = false;
@@ -141,16 +143,16 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             return new AlertDialog.Builder(getActivity())
                                     .setMessage(R.string.submit_confirm_message)
                                     .setPositiveButton(R.string.submit_confirm_button, new DialogInterface.OnClickListener() {
-                                    	@Override
-										public void onClick(DialogInterface arg0, int arg1) {
-                                    		saveData();
-										}
+                                        @Override
+                                        public void onClick(DialogInterface arg0, int arg1) {
+                                            saveData();
+                                        }
                                     })
                                     .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
-                                    	@Override
-										public void onClick(DialogInterface arg0, int arg1) {
-                                    		createDialog(EXIT);
-										}
+                                        @Override
+                                        public void onClick(DialogInterface arg0, int arg1) {
+                                            createDialog(EXIT);
+                                        }
                                     })
                                     .create();
                         }
@@ -177,6 +179,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
         estudiosAdapter.open();
         catMeses = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", CatalogosDBConstants.order);
+        catRelFamMayorEdad = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", CatalogosDBConstants.order);
+        catRelFamMenorEdad = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR' and "+CatalogosDBConstants.catKey + " != '8'", CatalogosDBConstants.order);
         catVerifTutNoAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
         catVerifTutAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catKey + " in ('1','2','3','6') and " + CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
         estudiosAdapter.close();
@@ -327,14 +331,14 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
         return false;
     }
-    
+
     public void updateConstrains(){
-        
+
     }
-    
+
     public void updateModel(Page page){
-       	try{
-			boolean visible = false;
+        try{
+            boolean visible = false;
             if (page.getTitle().equals(labels.getTipoIngreso())) {
                 if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(TIPO_DENGUE)) {
                     tipoIngreso = TIPO_DENGUE;
@@ -409,6 +413,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         notificarCambios = false;
                     }
                 }
+                SingleFixedChoicePage pagetmp = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getRelacionFamiliarTutor());
+                pagetmp.setChoices(edadAnios<18?catRelFamMenorEdad:catRelFamMayorEdad);
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getAceptaTamizajePersona())){
@@ -1280,10 +1286,10 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 onPageTreeChanged();
             }
-    	}catch (Exception ex){
+        }catch (Exception ex){
             ex.printStackTrace();
         }
-    	
+
     }
 
     private void resetForm(int preg){
@@ -1467,7 +1473,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
     private boolean tieneValor(String entrada){
         return (entrada != null && !entrada.isEmpty());
     }
-    
+
     public void saveData() {
         try {
 
@@ -1548,11 +1554,13 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 MessageResource catRazonNoAceptaTamizajePersona = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaTamizajePersona + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NPP'", null);
                 if (catRazonNoAceptaTamizajePersona!=null) tamizaje.setRazonNoAceptaTamizajePersona(catRazonNoAceptaTamizajePersona.getCatKey());
             }
+            int totalCriterios = 0;
             if (tieneValor(criteriosInclusion)) {
                 String keysCriterios = "";
                 criteriosInclusion = criteriosInclusion.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
                 List<MessageResource> mcriteriosInclusion = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + criteriosInclusion + "') and "
                         + CatalogosDBConstants.catRoot + "='CP_CAT_CI'", null);
+                totalCriterios = mcriteriosInclusion.size();
                 for(MessageResource ms : mcriteriosInclusion) {
                     keysCriterios += ms.getCatKey() + ",";
                 }
@@ -1650,6 +1658,13 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     if (catRazonNoAceptaParticipar!=null) tamizaje.setRazonNoAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
                 }
                 tamizaje.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaDengue);
+                boolean esElegible = ((edadAnios >= 2 && edadAnios < 10)
+                        && (totalCriterios==2)
+                        && (((tieneValor(vivienda) && vivienda.matches("Propia"))
+                        && (tieneValor(tiempoResidencia) && (tiempoResidencia.matches("Seis Meses a Dos Años") || tiempoResidencia.matches("Dos Años ó Más"))))
+                        || ((tieneValor(vivienda) &&vivienda.matches("Alquilada")) && (tieneValor(tiempoResidencia) && tiempoResidencia.matches("Dos Años ó Más"))))
+                );
+                tamizaje.setEsElegible(esElegible?Constants.YESKEYSND:Constants.NOKEYSND);
                 estudiosAdapter.crearTamizaje(tamizaje);
             }
             //Registrar tamizaje dengue si aplica
@@ -1677,8 +1692,17 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 }
                 tamizajeInf.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaInfluenza);
                 if (tieneValor(enfermedad) && enfermedad.equals(Constants.YES)){
-                        guardarEnfermedadesCronicas(cualEnfermedad.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','"), datos, tamizajeInf);
+                    guardarEnfermedadesCronicas(cualEnfermedad.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','"), datos, tamizajeInf);
                 }
+                boolean esElegible = ((edadAnios >= 0 && edadAnios < 10)
+                        && (totalCriterios==2)
+                        && (((tieneValor(vivienda) && vivienda.matches("Propia"))
+                        && (tieneValor(tiempoResidencia) && (tiempoResidencia.matches("Seis Meses a Dos Años") || tiempoResidencia.matches("Dos Años ó Más"))))
+                        || ((tieneValor(vivienda) &&vivienda.matches("Alquilada")) && (tieneValor(tiempoResidencia) && tiempoResidencia.matches("Dos Años ó Más"))))
+                        && (tieneValor(pretermino) && pretermino.equalsIgnoreCase(Constants.NO))
+                        && (tieneValor(enfermedadInmuno) && enfermedadInmuno.equalsIgnoreCase(Constants.NO))
+                );
+                tamizajeInf.setEsElegible(esElegible?Constants.YESKEYSND:Constants.NOKEYSND);
                 estudiosAdapter.crearTamizaje(tamizajeInf);
             }
 
@@ -1764,7 +1788,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         if (tieneValor(codigoCasaCohorte)) {
                             casaCohorte = estudiosAdapter.getCasa(Integer.valueOf(codigoCasaCohorte));
                         }else{
-                        //se creará casa
+                            //se creará casa
                             casaCohorte = new Casa();
                             casaCohorte.setCodigo(Integer.valueOf(codigoNuevaCasaCohorte));
                             Barrio barrio1 = estudiosAdapter.getBarrio(CatalogosDBConstants.nombre + "= '" + barrio + "'", null);
@@ -1893,9 +1917,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         }
 
                         if (aceptaDengue && participante.getEdadMeses() >= 24) {
-                                procesos.setConsSa(Constants.YES);
-                                procesos.setEncPartSa(Constants.YES);
-                                procesos.setEnCasaSa(Constants.YES);
+                            procesos.setConsSa(Constants.YES);
+                            procesos.setEncPartSa(Constants.YES);
+                            procesos.setEnCasaSa(Constants.YES);
                         } else {
                             procesos.setEnCasaSa(Constants.NO);
                             procesos.setEncPartSa(Constants.NO);

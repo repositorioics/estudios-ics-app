@@ -189,7 +189,7 @@ public class TamizajeFormLabels {
     protected String tipoTelefono2Hint;
     protected String tieneTelefono;
     protected String tieneOtroTelefono;
-
+    protected String verifTutor;
     protected String finTamizajeLabel;
 
 	public TamizajeFormLabels(){
@@ -370,7 +370,7 @@ public class TamizajeFormLabels {
         tipoTelefono2Hint = res.getString(R.string.tipoTelefono2Hint);
         tieneTelefono = res.getString(R.string.tieneTelefono);
         tieneOtroTelefono = res.getString(R.string.tieneOtroTelefono);
-
+        verifTutor = res.getString(R.string.verifTutor).replaceAll("25. ","");
         finTamizajeLabel = res.getString(R.string.finTamizajeLabel);
 		
 	}
@@ -1041,5 +1041,13 @@ public class TamizajeFormLabels {
 
     public String getFinTamizajeLabel() {
         return finTamizajeLabel;
+    }
+
+    public String getVerifTutor() {
+        return verifTutor;
+    }
+
+    public void setVerifTutor(String verifTutor) {
+        this.verifTutor = verifTutor;
     }
 }

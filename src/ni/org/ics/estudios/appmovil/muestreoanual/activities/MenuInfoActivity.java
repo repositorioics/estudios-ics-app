@@ -31,6 +31,7 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObsequioActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.DatosCoordenadas;
 import ni.org.ics.estudios.appmovil.domain.Participante;
@@ -98,6 +99,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private MenuItem reConsDenItem;
     private MenuItem muestraItem;
     private MenuItem obsequioItem;
+    private MenuItem obsequioChfItem;
     private MenuItem zikaItem;
     private MenuItem partoItem;
     private MenuItem datosCasaItem;
@@ -320,6 +322,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             reConsDenItem = menu.findItem(R.id.RECONS);
             muestraItem = menu.findItem(R.id.SAMPLE);
             obsequioItem = menu.findItem(R.id.GIFT);
+            obsequioChfItem = menu.findItem(R.id.GIFT_CHF);
             zikaItem = menu.findItem(R.id.ZIKA);
             partoItem = menu.findItem(R.id.PARTO);
             datosCasaItem = menu.findItem(R.id.DAT_CASA);
@@ -641,6 +644,33 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     toast.show();
                 }
                 return true;
+            case R.id.GIFT_CHF:
+                if(mUser.getObsequio()){
+                    if(mParticipante.getProcesos().getObsequioChf().matches("Si")){
+                        i = new Intent(getApplicationContext(),
+                                NuevoObsequioActivity.class);
+
+                        if (mParticipante.getProcesos().getCasaCHF()!=null && !mParticipante.getProcesos().getCasaCHF().isEmpty()) {
+                            estudiosAdapter.open();
+                            mCasasCHF = estudiosAdapter.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "=" + mParticipante.getProcesos().getCasaCHF(), MainDBConstants.codigoCHF);
+                            estudiosAdapter.close();
+                        }
+                        if (mCasasCHF != null) arguments.putSerializable(Constants.CASACHF, mCasasCHF);
+                        arguments.putSerializable(Constants.PARTICIPANTE, mParticipante.getCodigo());
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                return true;
             /*case R.id.ZIKA:
                 if(mUser.getConsentimiento()){
                     if(mParticipante.getProcesos().getZika().matches("Si")){
@@ -847,6 +877,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         reConsDenItem.setVisible(false);
         muestraItem.setVisible(false);
         obsequioItem.setVisible(false);
+        obsequioChfItem.setVisible(false);
         zikaItem.setVisible(false);
         partoItem.setVisible(false);
         datosCasaItem.setVisible(false);
@@ -870,6 +901,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if((mParticipante.getProcesos().getInfoVacuna().matches("Si") && mUser.getVacunas())) vacunaItem.setVisible(true);
             if ((mParticipante.getProcesos().getZika().matches("Si") && mUser.getConsentimiento())) zikaItem.setVisible(true);
             if ((mParticipante.getProcesos().getObsequio().matches("Si") && mUser.getObsequio())) obsequioItem.setVisible(true);
+            if ((mParticipante.getProcesos().getObsequioChf().matches("Si") && mUser.getObsequio())) obsequioChfItem.setVisible(true);
             if ((mParticipante.getProcesos().getDatosParto().matches("Si") && mUser.getDatosparto())) partoItem.setVisible(true);
             if ((mParticipante.getProcesos().getDatosVisita().matches("Si") && mUser.getVisitas())) datosCasaItem.setVisible(true);
             if((mParticipante.getProcesos().getEnCasaChf().matches("Si") && mUser.getEncuestaCasa())) encCasaChfItem.setVisible(true);
@@ -986,7 +1018,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || mParticipante.getProcesos().getAdn().matches("Si")|| mParticipante.getProcesos().getDatosParto().matches("Si")|| mParticipante.getProcesos().getDatosVisita().matches("Si")
                     || !mParticipante.getProcesos().getConvalesciente().matches("No")
                     || (mParticipante.getProcesos().getReConsDeng()!=null && mParticipante.getProcesos().getReConsDeng().matches("Si"))
-                    || !mParticipante.getProcesos().getCoordenadas().equals("0")){
+                    || !mParticipante.getProcesos().getCoordenadas().equals("0")
+                    || mParticipante.getProcesos().getObsequioChf().matches("Si")){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
                 //Primero muestras
@@ -1252,6 +1285,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if ((mParticipante.getProcesos().getObsequio().matches("Si"))){
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.gift_missing) + "</font></small><br />";
+                }
+                if ((mParticipante.getProcesos().getObsequioChf().matches("Si"))){
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.gift_chf_missing) + "</font></small><br />";
                 }
                 if (mParticipante.getProcesos().getAdn().matches("Si")) {
                     labelHeader = labelHeader + "<small><font color='red'>Pendiente de ADN, Informar a LAB para toma.</font></small><br />";

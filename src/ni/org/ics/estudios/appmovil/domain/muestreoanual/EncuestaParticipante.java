@@ -178,6 +178,12 @@ public class EncuestaParticipante implements Serializable{
     private String rash6m;
     private String ojoRojo6m;
     private String estudiosAct; // estudios actuales al momento de llenar la encuesta
+    //MA 2019
+    private Integer vacunaInfluenzaMes;
+    private String vacunaInfluenzaCSSF;
+    private String vacunaInfluenzaOtro;
+    private String nombreCDI;
+    private String direccionCDI;
 
     public Integer getOtrorecurso1() {
 		return otrorecurso1;
@@ -1426,5 +1432,45 @@ public class EncuestaParticipante implements Serializable{
 
     public void setEstudiosAct(String estudiosAct) {
         this.estudiosAct = estudiosAct;
+    }
+
+    public Integer getVacunaInfluenzaMes() {
+        return vacunaInfluenzaMes;
+    }
+
+    public void setVacunaInfluenzaMes(Integer vacunaInfluenzaMes) {
+        this.vacunaInfluenzaMes = vacunaInfluenzaMes;
+    }
+
+    public String getVacunaInfluenzaCSSF() {
+        return vacunaInfluenzaCSSF;
+    }
+
+    public void setVacunaInfluenzaCSSF(String vacunaInfluenzaCSSF) {
+        this.vacunaInfluenzaCSSF = vacunaInfluenzaCSSF;
+    }
+
+    public String getVacunaInfluenzaOtro() {
+        return vacunaInfluenzaOtro;
+    }
+
+    public void setVacunaInfluenzaOtro(String vacunaInfluenzaOtro) {
+        this.vacunaInfluenzaOtro = vacunaInfluenzaOtro;
+    }
+
+    public String getNombreCDI() {
+        return nombreCDI;
+    }
+
+    public void setNombreCDI(String nombreCDI) {
+        this.nombreCDI = nombreCDI;
+    }
+
+    public String getDireccionCDI() {
+        return direccionCDI;
+    }
+
+    public void setDireccionCDI(String direccionCDI) {
+        this.direccionCDI = direccionCDI;
     }
 }

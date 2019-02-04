@@ -256,6 +256,14 @@ public class EstudiosAdapter {
             if (oldVersion==12){
                 db.execSQL(MainDBConstants.CREATE_OBSEQUIOS_TABLE);
             }
+            if (oldVersion==13){
+                db.execSQL("ALTER TABLE " + ConstantsDB.ENC_PART_TABLE + " ADD COLUMN " + ConstantsDB.vacunaInfluenzaMes + " integer");
+                db.execSQL("ALTER TABLE " + ConstantsDB.ENC_PART_TABLE + " ADD COLUMN " + ConstantsDB.vacunaInfluenzaCSSF + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.ENC_PART_TABLE + " ADD COLUMN " + ConstantsDB.vacunaInfluenzaOtro + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.ENC_PART_TABLE + " ADD COLUMN " + ConstantsDB.nombreCDI + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.ENC_PART_TABLE + " ADD COLUMN " + ConstantsDB.direccionCDI + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.OBSEQUIOCHF + " text");
+            }
         }
 	}
 
@@ -3339,6 +3347,12 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.rash6m, encpar.getRash6m());
         cv.put(ConstantsDB.ojoRojo6m, encpar.getOjoRojo6m());
         cv.put(ConstantsDB.estudiosAct, encpar.getEstudiosAct());
+        //MA 2019
+        cv.put(ConstantsDB.vacunaInfluenzaMes, encpar.getVacunaInfluenzaMes());
+        cv.put(ConstantsDB.vacunaInfluenzaCSSF, encpar.getVacunaInfluenzaCSSF());
+        cv.put(ConstantsDB.vacunaInfluenzaOtro, encpar.getVacunaInfluenzaOtro());
+        cv.put(ConstantsDB.nombreCDI, encpar.getNombreCDI());
+        cv.put(ConstantsDB.direccionCDI, encpar.getDireccionCDI());
 
         cv.put(ConstantsDB.ID_INSTANCIA, encpar.getMovilInfo().getIdInstancia());
         cv.put(ConstantsDB.FILE_PATH, encpar.getMovilInfo().getInstancePath());
@@ -5775,6 +5789,12 @@ public class EstudiosAdapter {
         mEncPart.setRash6m(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.rash6m)));
         mEncPart.setEstudiosAct(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.estudiosAct)));
         mEncPart.setOjoRojo6m(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.ojoRojo6m)));
+        //MA2019
+        if(!encparticipantess.isNull(encparticipantess.getColumnIndex(ConstantsDB.vacunaInfluenzaMes))) mEncPart.setVacunaInfluenzaMes(encparticipantess.getInt(encparticipantess.getColumnIndex(ConstantsDB.vacunaInfluenzaMes)));
+        mEncPart.setVacunaInfluenzaCSSF(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.vacunaInfluenzaCSSF)));
+        mEncPart.setVacunaInfluenzaOtro(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.vacunaInfluenzaOtro)));
+        mEncPart.setNombreCDI(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.nombreCDI)));
+        mEncPart.setDireccionCDI(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.direccionCDI)));
 
 
         Boolean borrado = encparticipantess.getInt(encparticipantess.getColumnIndex(ConstantsDB.DELETED))>0;

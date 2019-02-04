@@ -58,6 +58,7 @@ public class TamizajeForm extends AbstractWizardModel {
     	String[] catDondeAsisteProblemasSalud = fillCatalog("CHF_CAT_DONDEASISTE");
     	String[] catPuestoSalud = fillCatalog("CHF_CAT_PUESTO");
     	String[] catRelacionFamiliarTutor = fillCatalog("CHF_CAT_RFTUTOR");
+        String[] catVerificaTutor = fillCatalog("CP_CAT_VERIFTUTOR");
 		estudiosAdapter.close();
 		
 		Page sexo = new SingleFixedChoicePage(this,labels.getSexo(), labels.getSexoHint(), Constants.WIZARD, true).setChoices(catSexo).setRequired(true);
@@ -126,6 +127,8 @@ public class TamizajeForm extends AbstractWizardModel {
         Page razonNoAceptaInfluenza = new SingleFixedChoicePage(this,labels.getRazonNoAceptaInfluenza(), labels.getRazonNoAceptaInfluenzaHint(), Constants.WIZARD, false).setChoices(catRazonNoParticipaPersona).setRequired(true);
         Page otraRazonNoAceptaInfluenza = new TextPage(this,labels.getOtraRazonNoAceptaInfluenza(),labels.getOtraRazonNoAceptaInfluenzaHint(),Constants.WIZARD,false).setRequired(true);
 
+        Page verifTutor = new MultipleFixedChoicePage(this,labels.getVerifTutor(), "", Constants.WIZARD, false).setChoices(catVerificaTutor).setRequired(true);
+
         Page finTamizajeLabel = new LabelPage(this,labels.getFinTamizajeLabel(),"", Constants.WIZARD, false).setRequired(false);
 		
 		
@@ -134,7 +137,7 @@ public class TamizajeForm extends AbstractWizardModel {
 				participadoCohortePediatrica,codigoCohorte,codigoNuevoParticipante,nombre1,nombre2,apellido1,apellido2,nombre1Padre,nombre2Padre,apellido1Padre,apellido2Padre,nombre1Madre,nombre2Madre,apellido1Madre,apellido2Madre,
 				emancipado,nombre1Tutor,nombre2Tutor,apellido1Tutor,apellido2Tutor,relacionFamiliarTutor,participanteOTutorAlfabeto,testigoPresente,nombre1Testigo,nombre2Testigo,apellido1Testigo,apellido2Testigo,
 				aceptaParteA,motivoRechazoParteA,aceptaContactoFuturo,aceptaParteB,aceptaParteC,aceptaSeroprevalencia, razonNoAceptaSeroprevalencia, otraRazonNoAceptaSeroprevalencia,aceptaCohorteDengue,
-                aceptaParteD, razonNoAceptaDengue, otraRazonNoAceptaDengue,aceptaCohorteInfluenza, razonNoAceptaInfluenza, otraRazonNoAceptaInfluenza, finTamizajeLabel);
+                aceptaParteD, razonNoAceptaDengue, otraRazonNoAceptaDengue,aceptaCohorteInfluenza, razonNoAceptaInfluenza, otraRazonNoAceptaInfluenza, verifTutor, finTamizajeLabel);
     }
 
 	public TamizajeFormLabels getLabels() {

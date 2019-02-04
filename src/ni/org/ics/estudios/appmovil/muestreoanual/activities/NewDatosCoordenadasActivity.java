@@ -24,10 +24,7 @@ import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.muestreoanual.parsers.CoordenadasXml;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
-import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.FileUtils;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -54,7 +51,7 @@ public class NewDatosCoordenadasActivity extends AbstractAsyncActivity {
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
 	Dialog dialogInit;
 	private boolean visExitosa = false;
-
+    private DeviceInfo infoMovil;
     private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -70,7 +67,7 @@ public class NewDatosCoordenadasActivity extends AbstractAsyncActivity {
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
-
+        infoMovil = new DeviceInfo(NewDatosCoordenadasActivity.this);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
@@ -238,11 +235,15 @@ public class NewDatosCoordenadasActivity extends AbstractAsyncActivity {
 
 
 			//Guarda en la base de datos local
-
+            MovilInfo movilInfo = new MovilInfo();
+            movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+            movilInfo.setDeviceid(infoMovil.getDeviceId());
+            movilInfo.setUsername(username);
+            movilInfo.setToday(new Date());
 			if (em.getTodosSN()!=null && em.getTodosSN().equalsIgnoreCase("1")) {
                 mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
                 for (Participante participante : mParticipantes) {
-                    if (participante.getCasa().getCodigo() != 9999) {
+                    if (participante.getCasa().getCodigo() != 9999 && participante.getProcesos().getEstPart().equals(1)) {
                         UUID deviceUuid = new UUID(em.getDeviceid().hashCode(),new Date().hashCode());
                         mCoordenadas.setCodigo(deviceUuid.toString());
                         mCoordenadas.setParticipante(participante);
@@ -253,7 +254,7 @@ public class NewDatosCoordenadasActivity extends AbstractAsyncActivity {
                         }else {
                             participante.getProcesos().setCoordenadas("3");
                         }
-
+                        participante.getProcesos().setMovilInfo(movilInfo);
                         estudiosAdapter.actualizarParticipanteProcesos(participante.getProcesos());
                     }
                 }
@@ -266,6 +267,7 @@ public class NewDatosCoordenadasActivity extends AbstractAsyncActivity {
                 }else {
                     mParticipante.getProcesos().setCoordenadas("3");
                 }
+                mParticipante.getProcesos().setMovilInfo(movilInfo);
                 estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());
             }
 			estudiosAdapter.close();

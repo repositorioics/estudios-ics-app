@@ -96,6 +96,7 @@ public class ParticipanteHelper {
         mPart.setEncPart(participantes.getString(participantes.getColumnIndex(ConstantsDB.ENC_PAR)));
         mPart.setEnCasa(participantes.getString(participantes.getColumnIndex(ConstantsDB.ENC_CASA)));
         mPart.setObsequio(participantes.getString(participantes.getColumnIndex(ConstantsDB.OBSEQUIO)));
+        mPart.setObsequioChf(participantes.getString(participantes.getColumnIndex(ConstantsDB.OBSEQUIOCHF)));
         mPart.setConvalesciente(participantes.getString(participantes.getColumnIndex(ConstantsDB.CONVAL)));
         mPart.setInfoVacuna(participantes.getString(participantes.getColumnIndex(ConstantsDB.INFOVAC)));
         mPart.setRelacionFam(participantes.getInt(participantes.getColumnIndex(ConstantsDB.RELFAMT)));
@@ -161,6 +162,7 @@ public class ParticipanteHelper {
         cv.put(ConstantsDB.ENC_PAR, participante.getEncPart());
         cv.put(ConstantsDB.ENC_CASA, participante.getEnCasa());
         cv.put(ConstantsDB.OBSEQUIO, participante.getObsequio());
+        cv.put(ConstantsDB.OBSEQUIOCHF, participante.getObsequioChf());
         cv.put(ConstantsDB.CONVAL, participante.getConvalesciente());
         cv.put(ConstantsDB.INFOVAC, participante.getInfoVacuna());
         cv.put(ConstantsDB.RELFAMT, participante.getRelacionFam());

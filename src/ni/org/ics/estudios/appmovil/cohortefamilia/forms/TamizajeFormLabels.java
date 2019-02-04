@@ -131,7 +131,7 @@ public class TamizajeFormLabels {
     protected String otraRazonNoAceptaInfluenza;
     protected String razonNoAceptaInfluenzaHint;
     protected String otraRazonNoAceptaInfluenzaHint;
-
+    protected String verifTutor;
 	protected String finTamizajeLabel;
 
 	
@@ -259,7 +259,7 @@ public class TamizajeFormLabels {
         razonNoAceptaInfluenzaHint = res.getString(R.string.razonNoAceptaInfluenzaHint);
         otraRazonNoAceptaInfluenza = res.getString(R.string.otraRazonNoAceptaInfluenza);
         otraRazonNoAceptaInfluenzaHint = res.getString(R.string.otraRazonNoAceptaInfluenzaHint);
-
+        verifTutor = res.getString(R.string.verifTutor).replaceAll("25. ","");
 		finTamizajeLabel = res.getString(R.string.finTamizajeLabel);
 		
 	}
@@ -1914,5 +1914,13 @@ public class TamizajeFormLabels {
 
     public void setOtraRazonNoAceptaInfluenzaHint(String otraRazonNoAceptaInfluenzaHint) {
         this.otraRazonNoAceptaInfluenzaHint = otraRazonNoAceptaInfluenzaHint;
+    }
+
+    public String getVerifTutor() {
+        return verifTutor;
+    }
+
+    public void setVerifTutor(String verifTutor) {
+        this.verifTutor = verifTutor;
     }
 }

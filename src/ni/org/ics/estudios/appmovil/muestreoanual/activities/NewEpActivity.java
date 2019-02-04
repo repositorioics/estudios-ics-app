@@ -351,6 +351,12 @@ public class NewEpActivity extends AbstractAsyncActivity {
             mEncuestaParticipante.setRash6m(em.getRash6m());
             mEncuestaParticipante.setOjoRojo6m(em.getOjoRojo6m());
             mEncuestaParticipante.setEstudiosAct(mParticipante.getProcesos().getEstudio());
+            //MA2019
+            mEncuestaParticipante.setVacunaInfluenzaMes(em.getVacunaInfluenzaMes());
+            mEncuestaParticipante.setVacunaInfluenzaCSSF(em.getVacunaInfluenzaCSSF());
+            mEncuestaParticipante.setVacunaInfluenzaOtro(em.getVacunaInfluenzaOtro());
+            mEncuestaParticipante.setNombreCDI(em.getNombreCDI());
+            mEncuestaParticipante.setDireccionCDI(em.getDireccionCDI());
 
             mEncuestaParticipante.setMovilInfo(new MovilInfo(idInstancia,
 					instanceFilePath,

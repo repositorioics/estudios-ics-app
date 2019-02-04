@@ -71,6 +71,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
     private final String TIPO_INFLUENZA = "Influenza";
     private final String TIPO_AMBOS = "Ambos";
     private List<MessageResource> catMeses = new ArrayList<MessageResource>();
+    private String[] catVerifTutAlf; //cosas a verificar cuando tutor es alfabeto
+    private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
     private Date fechaNacimiento = null;
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -175,6 +177,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
         estudiosAdapter.open();
         catMeses = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", CatalogosDBConstants.order);
+        catVerifTutNoAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
+        catVerifTutAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catKey + " in ('1','2','3','6') and " + CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
         estudiosAdapter.close();
 
     }
@@ -923,6 +927,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), visible || (visibleInf && !esInmuno && !esPretermino));
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
 
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), visible);
@@ -942,6 +948,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
                 notificarCambios = false;
                 //changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible);
                 //notificarCambios = false;
@@ -1057,6 +1065,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), (visible && !esInmuno) || visibleDen);
                     notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
                 }
                 onPageTreeChanged();
             }
@@ -1158,7 +1168,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDireccion()), (visible && !esPretermino) || visibleDen);
                     notificarCambios = false;
-
+                    changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
                 }
                 onPageTreeChanged();
             }
@@ -1203,6 +1214,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), false);
                 notificarCambios = false;
+                MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
+                pagetmp.setChoices(visible?catVerifTutNoAlf:catVerifTutAlf);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getTestigoPresente())){
@@ -1214,6 +1228,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
                 notificarCambios = false;
 
                 Page pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteDengue());
@@ -1376,6 +1392,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getNumTelefono2()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), false);
     }
 
     public void changeStatus(Page page, boolean visible){
@@ -1511,7 +1528,6 @@ public class NewTamizajeActivity extends FragmentActivity implements
             String enfermedadInmuno = datos.getString(this.getString(R.string.enfermedadInmuno));
             String razonNoAceptaInfluenza = datos.getString(this.getString(R.string.razonNoAceptaInfluenza));
             String otraRazonNoAceptaInfluenza = datos.getString(this.getString(R.string.otraRazonNoAceptaInfluenza));
-
             //Crea un Nuevo Registro de tamizaje
             Tamizaje tamizaje =  new Tamizaje();
             Tamizaje tamizajeInf = new Tamizaje();
@@ -1722,6 +1738,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 String tipoTelefono1 = datos.getString(this.getString(R.string.tipoTelefono1));
                 String tipoTelefono2 = datos.getString(this.getString(R.string.tipoTelefono2));
 
+                String verifTutor = datos.getString(this.getString(R.string.verifTutor).replaceAll("25. ",""));//agregar en carta
+
                 Boolean aceptaDengue = tieneValor(aceptaCohorteDengue) && aceptaCohorteDengue.equalsIgnoreCase(Constants.YES);
                 Boolean aceptaInfluenza = tieneValor(aceptaCohorteInfluenza) && aceptaCohorteInfluenza.equalsIgnoreCase(Constants.YES);
                 Boolean esPretermino = tieneValor(pretermino) && pretermino.equalsIgnoreCase(Constants.YES);
@@ -1857,6 +1875,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         procesos.setConPto(Constants.NO);
                         procesos.setConsDeng(Constants.NO);
                         procesos.setObsequio(Constants.YES);
+                        procesos.setObsequioChf(Constants.NO);
                         procesos.setConsChik(Constants.NO);
                         procesos.setConsFlu(Constants.NO);
                         procesos.setReConsDeng(Constants.NO);
@@ -1957,20 +1976,32 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             if (catRelacionFamiliarTutor!=null) cc.setRelacionFamiliarTutor(catRelacionFamiliarTutor.getCatKey());
                         }
 
-                            if (tieneValor(participanteOTutorAlfabeto)) {
-                                MessageResource catParticipanteOTutorAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participanteOTutorAlfabeto + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                                if (catParticipanteOTutorAlfabeto!=null) cc.setParticipanteOTutorAlfabeto(catParticipanteOTutorAlfabeto.getCatKey());
-                            }
-                            if (tieneValor(testigoPresente)) {
-                                MessageResource catTestigoPresente = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + testigoPresente + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                                if (catTestigoPresente!=null) cc.setTestigoPresente(catTestigoPresente.getCatKey());
-                            }
+                        if (tieneValor(participanteOTutorAlfabeto)) {
+                            MessageResource catParticipanteOTutorAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participanteOTutorAlfabeto + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                            if (catParticipanteOTutorAlfabeto!=null) cc.setParticipanteOTutorAlfabeto(catParticipanteOTutorAlfabeto.getCatKey());
+                        }
+                        if (tieneValor(testigoPresente)) {
+                            MessageResource catTestigoPresente = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + testigoPresente + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                            if (catTestigoPresente!=null) cc.setTestigoPresente(catTestigoPresente.getCatKey());
+                        }
 
-                            if (tieneValor(nombre1Testigo)) cc.setNombre1Testigo(nombre1Testigo);
-                            if (tieneValor(nombre2Testigo)) cc.setNombre2Testigo(nombre2Testigo);
-                            if (tieneValor(apellido1Testigo)) cc.setApellido1Testigo(apellido1Testigo);
-                            if (tieneValor(apellido2Testigo)) cc.setApellido2Testigo(apellido2Testigo);
+                        if (tieneValor(nombre1Testigo)) cc.setNombre1Testigo(nombre1Testigo);
+                        if (tieneValor(nombre2Testigo)) cc.setNombre2Testigo(nombre2Testigo);
+                        if (tieneValor(apellido1Testigo)) cc.setApellido1Testigo(apellido1Testigo);
+                        if (tieneValor(apellido2Testigo)) cc.setApellido2Testigo(apellido2Testigo);
 
+                        if (tieneValor(verifTutor)) {
+                            String keysCriterios = "";
+                            verifTutor = verifTutor.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','");
+                            List<MessageResource> catVerificaT = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + verifTutor + "') and "
+                                    + CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", null);
+                            for (MessageResource ms : catVerificaT) {
+                                keysCriterios += ms.getCatKey() + ",";
+                            }
+                            if (!keysCriterios.isEmpty())
+                                keysCriterios = keysCriterios.substring(0, keysCriterios.length() - 1);
+                            cc.setVerifTutor(keysCriterios);
+                        }
                         //crear carta de consentimiento para dengue
                         if (aceptaDengue){
                             cc.setAceptaParteA(Constants.YESKEYSND);

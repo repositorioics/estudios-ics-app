@@ -49,6 +49,7 @@ public class ParticipanteProcesos implements Serializable {
     private String tutor;
     private String consSa;
     private String coordenadas; //cambio de domicilio
+    private String obsequioChf;
 
     private MovilInfo movilInfo;
 
@@ -354,5 +355,13 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setCoordenadas(String coordenadas) {
         this.coordenadas = coordenadas;
+    }
+
+    public String getObsequioChf() {
+        return obsequioChf;
+    }
+
+    public void setObsequioChf(String obsequioChf) {
+        this.obsequioChf = obsequioChf;
     }
 }

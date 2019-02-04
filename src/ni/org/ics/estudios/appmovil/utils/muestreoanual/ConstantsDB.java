@@ -152,7 +152,7 @@ public class ConstantsDB {
     public static final String tutor = "tutor";
     public static final String coordenada = "coordenada"; //indica si tomar coordenadas por ingreso, por cambio de domicilio o por falta de punto
     public static final String consSa = "consSa"; //Consentimiento Seroprevalencia
-
+    public static final String OBSEQUIOCHF = "obsequioChf"; //MA2019
     //Campos encuesta casa
     public static final String FECHA_ENC_CASA = "fecha_encuesta";
     public static final String CVIVEN1 = "cvivencasa1";
@@ -412,6 +412,11 @@ public class ConstantsDB {
     public static final String rash6m = "rash6m";
     public static final String ojoRojo6m = "ojoRojo6m";
     public static final String estudiosAct = "estudiosAct";
+    public static final String vacunaInfluenzaMes = "vacunaInfluenzaMes";
+    public static final String vacunaInfluenzaCSSF = "vacunaInfluenzaCSSF";
+    public static final String vacunaInfluenzaOtro = "vacunaInfluenzaOtro";
+    public static final String nombreCDI = "nombreCDI";
+    public static final String direccionCDI = "direccionCDI";
 
     //Campos encuesta lactancia materna
     public static final String FECHA_ENC_LACT = "fecha_encuesta";
@@ -947,6 +952,7 @@ public class ConstantsDB {
             + tutor  + " text, "
             + coordenada + " text, "
             + consSa  + " text, "
+            + OBSEQUIOCHF  + " text, "
             + ID_INSTANCIA + " integer,"
             + FILE_PATH + " text,"
             + STATUS + " text, "
@@ -1246,6 +1252,12 @@ public class ConstantsDB {
             + rash6m + " text, "
             + ojoRojo6m + " text, "
             + estudiosAct + " text, "
+            //MA2019
+            + vacunaInfluenzaMes + " integer, "
+            + vacunaInfluenzaCSSF + " text, "
+            + vacunaInfluenzaOtro + " text, "
+            + nombreCDI + " text, "
+            + direccionCDI + " text, "
             + ID_INSTANCIA + " integer not null,"
             + FILE_PATH + " text not null,"
             + STATUS + " text not null, "

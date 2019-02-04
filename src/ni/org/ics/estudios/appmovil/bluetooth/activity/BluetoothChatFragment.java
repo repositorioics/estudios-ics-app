@@ -599,6 +599,7 @@ public class BluetoothChatFragment extends Fragment {
                 mParticipantesProc.getEncPart()+"','"+
                 mParticipantesProc.getEnCasa()+"','"+
                 mParticipantesProc.getObsequio()+"','"+
+                mParticipantesProc.getObsequioChf()+"','"+
                 mParticipantesProc.getConvalesciente()+"','"+
                 mParticipantesProc.getInfoVacuna()+"','"+
                 mParticipantesProc.getPaxgene()+"','"+

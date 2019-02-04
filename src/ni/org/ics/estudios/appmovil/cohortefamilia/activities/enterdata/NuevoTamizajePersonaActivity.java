@@ -93,6 +93,8 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     private Integer edadMeses = 0;
     private boolean fromCasos;
     private String codigoCaso;
+    private String[] catVerifTutAlf; //cosas a verificar cuando tutor es alfabeto
+    private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -119,7 +121,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
         mWizardModel.registerListener(this);
-
+        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
@@ -196,6 +198,10 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 
         onPageTreeChanged();
         updateBottomBar();
+        estudiosAdapter.open();
+        catVerifTutNoAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
+        catVerifTutAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catKey + " in ('1','2','3','6') and " + CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
+        estudiosAdapter.close();
     }
 
     @Override
@@ -574,6 +580,8 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 }
                 changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), true);
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), true);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getParticipanteOTutorAlfabeto())){
@@ -603,6 +611,9 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), !visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), !visible);
+                notificarCambios = false;
+                MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
+                pagetmp.setChoices(!visible?catVerifTutNoAlf:catVerifTutAlf);
                 notificarCambios = false;
                 if(!visible) {
                     resetForm(95);
@@ -635,6 +646,8 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -740,6 +753,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
         if (preg>95) changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), false);
         if (preg>95) changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), false);
         if (preg>95) changeStatus(mWizardModel.findByKey(labels.getTestigoPresente()), false);
+        if (preg>95) changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), false);
         if (preg>94) changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), false);
         if (preg>94) changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), false);
         if (preg>94) changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), false);
@@ -808,7 +822,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
             }
             //Abre la base de datos
             String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-            estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
+            //estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
             estudiosAdapter.open();
 
             //Obtener datos del bundle para el tamizaje
@@ -1054,7 +1068,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         String valorParteB = null;
                         String valorParteC = null;
                         String valorContactoFuturo = null;
-
+                        String verifTutor = datos.getString(this.getString(R.string.verifTutor).replaceAll("25. ",""));//agregar en carta
                         //Inserta un nuevo consentimiento
                         CartaConsentimiento cc = new CartaConsentimiento();
                         cc.setCodigo(id);
@@ -1099,6 +1113,18 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         if (tieneValor(nombre2Testigo)) cc.setNombre2Testigo(nombre2Testigo);
                         if (tieneValor(apellido1Testigo)) cc.setApellido1Testigo(apellido1Testigo);
                         if (tieneValor(apellido2Testigo)) cc.setApellido2Testigo(apellido2Testigo);
+                        if (tieneValor(verifTutor)) {
+                            String keysCriterios = "";
+                            verifTutor = verifTutor.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','");
+                            List<MessageResource> catVerificaT = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + verifTutor + "') and "
+                                    + CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", null);
+                            for (MessageResource ms : catVerificaT) {
+                                keysCriterios += ms.getCatKey() + ",";
+                            }
+                            if (!keysCriterios.isEmpty())
+                                keysCriterios = keysCriterios.substring(0, keysCriterios.length() - 1);
+                            cc.setVerifTutor(keysCriterios);
+                        }
                         if (tieneValor(aceptaParteA)) {
                             MessageResource catAceptaParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteA + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                             if (catAceptaParteA != null) cc.setAceptaParteA(catAceptaParteA.getCatKey());
@@ -1286,6 +1312,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                             procesos.setConPto(Constants.NO);
                             procesos.setConsDeng(Constants.NO);
                             procesos.setObsequio(Constants.YES);
+                            procesos.setObsequioChf(Constants.YES);
                             procesos.setConsChik(Constants.NO);
                             procesos.setConsFlu(Constants.NO);
                             procesos.setReConsDeng(Constants.NO);

@@ -30,6 +30,7 @@
 			<item android:id="@+id/DAT_CASA" android:title="@string/datos_casa"/>
             <item android:id="@+id/VACC" android:title="@string/info_vacc"/>
             <item android:id="@+id/GIFT" android:title="@string/info_gift"/>
+            <item android:id="@+id/GIFT_CHF" android:title="@string/info_gift_chf"/>
             <item android:id="@+id/DOC" android:title="@string/info_docs"/>
             <item android:id="@+id/ENCASA_CHF" android:title="@string/casa_chf"/>
             <item android:id="@+id/ENCASA_SA" android:title="@string/new_house_sa_survey"/>

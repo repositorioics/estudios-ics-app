@@ -92,7 +92,8 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 						|| procesos.getAdn().matches("Si")|| procesos.getDatosParto().matches("Si")|| procesos.getDatosVisita().matches("Si")
                         || !procesos.getConvalesciente().matches("No")
                         || (procesos.getReConsDeng()!=null && procesos.getReConsDeng().matches("Si"))
-                        || !procesos.getCoordenadas().equals("0")){
+                        || !procesos.getCoordenadas().equals("0")
+                        || procesos.getObsequioChf().matches("Si")){
 					labelHeader = labelHeader + "<font color='red'>Pendiente: <br /></font>";
 					
 					//Primero muestras
@@ -292,6 +293,9 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 					if ((procesos.getObsequio().matches("Si"))){
 						labelHeader = labelHeader + "<font color='blue'>" + this.getContext().getString(R.string.gift_missing) + "</font><br />";
 					}
+                    if ((procesos.getObsequioChf().matches("Si"))){
+                        labelHeader = labelHeader + "<font color='blue'>" + this.getContext().getString(R.string.gift_chf_missing) + "</font><br />";
+                    }
 					if (procesos.getAdn().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante pendiente de ADN, Informar a LAB para toma.</b></font><br />";
 					if ((procesos.getRetoma()!=null && procesos.getVolRetoma()!=null)){
 						if ((procesos.getRetoma().matches("Si"))){

@@ -253,9 +253,9 @@ public class EncuestaParticipanteXml {
 	@Element(required=false)
 	private String rashParteDelCuerpo;
 	@Element(required=false)
-	private String generated_table_list_label_133;
+	private String generated_table_list_label_136;
 	@Element(required=false)
-	private String reserved_name_for_field_list_labels_134;
+	private String reserved_name_for_field_list_labels_137;
 
     //CHF + NUEVAS PREGUNTAS MA2018
     @Element(required=false)
@@ -364,7 +364,17 @@ public class EncuestaParticipanteXml {
     private String rash6m;
     @Element(required=false)
     private String ojoRojo6m;
-
+    //MA2019
+    @Element(required=false)
+    private Integer vacunaInfluenzaMes;
+    @Element(required=false)
+    private String vacunaInfluenzaCSSF;
+    @Element(required=false)
+    private String vacunaInfluenzaOtro;
+    @Element(required=false)
+    private String nombreCDI;
+    @Element(required=false)
+    private String direccionCDI;
 
     @Element(required=false)
 	private String start;
@@ -1409,22 +1419,22 @@ public class EncuestaParticipanteXml {
 		this.imei = imei;
 	}
 
-	public String getGenerated_table_list_label_133() {
-		return generated_table_list_label_133;
+	public String getGenerated_table_list_label_136() {
+		return generated_table_list_label_136;
 	}
 
-	public void setGenerated_table_list_label_133(
-            String generated_table_list_label_133) {
-		this.generated_table_list_label_133 = generated_table_list_label_133;
+	public void setGenerated_table_list_label_136(
+            String generated_table_list_label_136) {
+		this.generated_table_list_label_136 = generated_table_list_label_136;
 	}
 
-	public String getReserved_name_for_field_list_labels_134() {
-		return reserved_name_for_field_list_labels_134;
+	public String getReserved_name_for_field_list_labels_137() {
+		return reserved_name_for_field_list_labels_137;
 	}
 
-	public void setReserved_name_for_field_list_labels_134(
-            String reserved_name_for_field_list_labels_134) {
-		this.reserved_name_for_field_list_labels_134 = reserved_name_for_field_list_labels_134;
+	public void setReserved_name_for_field_list_labels_137(
+            String reserved_name_for_field_list_labels_137) {
+		this.reserved_name_for_field_list_labels_137 = reserved_name_for_field_list_labels_137;
 	}
 
 	public Integer getRash_Dias() {
@@ -1874,6 +1884,46 @@ public class EncuestaParticipanteXml {
 
     public void setOjoRojo6m(String ojoRojo6m) {
         this.ojoRojo6m = ojoRojo6m;
+    }
+
+    public Integer getVacunaInfluenzaMes() {
+        return vacunaInfluenzaMes;
+    }
+
+    public void setVacunaInfluenzaMes(Integer vacunaInfluenzaMes) {
+        this.vacunaInfluenzaMes = vacunaInfluenzaMes;
+    }
+
+    public String getVacunaInfluenzaCSSF() {
+        return vacunaInfluenzaCSSF;
+    }
+
+    public void setVacunaInfluenzaCSSF(String vacunaInfluenzaCSSF) {
+        this.vacunaInfluenzaCSSF = vacunaInfluenzaCSSF;
+    }
+
+    public String getVacunaInfluenzaOtro() {
+        return vacunaInfluenzaOtro;
+    }
+
+    public void setVacunaInfluenzaOtro(String vacunaInfluenzaOtro) {
+        this.vacunaInfluenzaOtro = vacunaInfluenzaOtro;
+    }
+
+    public String getNombreCDI() {
+        return nombreCDI;
+    }
+
+    public void setNombreCDI(String nombreCDI) {
+        this.nombreCDI = nombreCDI;
+    }
+
+    public String getDireccionCDI() {
+        return direccionCDI;
+    }
+
+    public void setDireccionCDI(String direccionCDI) {
+        this.direccionCDI = direccionCDI;
     }
 
     public String getVersion() {

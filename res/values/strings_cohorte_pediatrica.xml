@@ -22,6 +22,7 @@
     <string name="info_weight">Peso y talla</string>
     <string name="info_sample">Muestras</string>
     <string name="info_gift">Obsequios</string>
+    <string name="info_gift_chf">Obsequio CHF</string>
     <string name="info_zika">Consentimiento Zika</string>
     <string name="info_vacc">Vacunas</string>
     <string name="info_visit">Visitas</string>
@@ -46,6 +47,7 @@
     <string name="sample_bhc_missing">Tomar muestra para BHC</string>
     <string name="sample_sero_missing">Tomar muestra tubo Rojo</string>
     <string name="gift_missing">Entregar obsequio</string>
+    <string name="gift_chf_missing">Entregar obsequio CHF</string>
     <string name="vaccines_missing">Registrar vacunas</string>
     <string name="visitas_missing">No tiene visitas</string>
     <string name="recons_missing">Realizar consentimiento Dengue</string>

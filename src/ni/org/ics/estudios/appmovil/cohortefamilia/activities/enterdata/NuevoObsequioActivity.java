@@ -24,13 +24,18 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.forms.ObsequioFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
 import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
+import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuInfoActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
 import ni.org.ics.estudios.appmovil.utils.FileUtils;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
 import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
@@ -56,8 +61,10 @@ public class NuevoObsequioActivity extends FragmentActivity implements
     private StepPagerStrip mStepPagerStrip;
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
-    private static VisitaSeguimientoCaso visita = new VisitaSeguimientoCaso();
-    private static VisitaFinalCaso visitaFinal = new VisitaFinalCaso();
+    private static VisitaSeguimientoCaso visita;
+    private static VisitaFinalCaso visitaFinal;
+    private static CasaCohorteFamilia casaChf;
+    private static Integer codigoParticipante;
 	private String username;
 	private SharedPreferences settings;
 	private static final int EXIT = 1;
@@ -80,8 +87,10 @@ public class NuevoObsequioActivity extends FragmentActivity implements
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 		infoMovil = new DeviceInfo(NuevoObsequioActivity.this);
-		visita = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
-        visitaFinal = (VisitaFinalCaso) getIntent().getExtras().getSerializable(Constants.VISITA_FINAL);
+		if (getIntent().getExtras().getSerializable(Constants.VISITA)!=null) visita = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
+        if (getIntent().getExtras().getSerializable(Constants.VISITA_FINAL)!=null) visitaFinal = (VisitaFinalCaso) getIntent().getExtras().getSerializable(Constants.VISITA_FINAL);
+        if (getIntent().getExtras().getSerializable(Constants.CASACHF)!=null) casaChf = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASACHF);
+        codigoParticipante = getIntent().getIntExtra(Constants.PARTICIPANTE, -1);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new ObsequioForm(this,mPass);
         if (savedInstanceState != null) {
@@ -166,8 +175,10 @@ public class NuevoObsequioActivity extends FragmentActivity implements
         Page pagePart = mWizardModel.findByKey(labels.getPersonaRecibe());
         if (visita!=null) {
             pagePart.setCasaCHF(visita.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF());
-        }else{
+        }else if (visitaFinal!=null){
             pagePart.setCasaCHF(visitaFinal.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF());
+        }else{
+            pagePart.setCasaCHF(casaChf.getCodigoCHF());
         }
 
         onPageTreeChanged(); 
@@ -193,25 +204,28 @@ public class NuevoObsequioActivity extends FragmentActivity implements
                         arguments.putSerializable(Constants.VISITA, visita);
                         i = new Intent(getApplicationContext(),
                                 MenuVisitaSeguimientoCasoActivity.class);
-                    }else{
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                    }else if (visitaFinal !=null){
                         arguments.putSerializable(Constants.VISITA_FINAL, visitaFinal);
                         i = new Intent(getApplicationContext(),
                                 MenuVisitaFinalCasoActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
                     }
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.putExtras(arguments);
-                    startActivity(i);
                     dialog.dismiss();
 					finish();
 				}
 			});
 			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// Do nothing
-					dialog.dismiss();
-				}
-			});
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing
+                    dialog.dismiss();
+                }
+            });
 			break;		
 		default:
 			break;
@@ -417,12 +431,16 @@ public class NuevoObsequioActivity extends FragmentActivity implements
             obsequioGeneral.setSeguimiento(visita.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso());
             obsequioGeneral.setNumVisitaSeguimiento(visita.getVisita());
             obsequioGeneral.setMotivo("1");
-        }else{
+        }else if (visitaFinal != null){
             obsequioGeneral.setCasa(visitaFinal.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCasa().getCodigo().toString());
             obsequioGeneral.setCasaChf(visitaFinal.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF());
             obsequioGeneral.setSeguimiento(visitaFinal.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso());
             obsequioGeneral.setNumVisitaSeguimiento("F");
             obsequioGeneral.setMotivo("2");
+        }else{
+            obsequioGeneral.setCasa(casaChf.getCasa().getCodigo().toString());
+            obsequioGeneral.setCasaChf(casaChf.getCodigoCHF());
+            obsequioGeneral.setMotivo("3");//MA
         }
         if (tieneValor(obsequioSN)){
             MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + obsequioSN + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -443,16 +461,38 @@ public class NuevoObsequioActivity extends FragmentActivity implements
 		obsequioGeneral.setEstado('0');
 		obsequioGeneral.setPasive('0');
 		estudiosAdapter.crearObsequioGeneral(obsequioGeneral);
+
+        if (casaChf != null && obsequioSN.equalsIgnoreCase(Constants.YES)) {
+            //actualizar en No a todos los participantes de la casa de familia que se le entregó obsequio
+            List<ParticipanteProcesos> procesos = estudiosAdapter.getParticipantesProc(ConstantsDB.casaCHF + "='" + obsequioGeneral.getCasaChf() + "'", null);
+            MovilInfo movilInfo = new MovilInfo();
+            movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+            movilInfo.setDeviceid(infoMovil.getDeviceId());
+            movilInfo.setUsername(username);
+            movilInfo.setToday(new Date());
+            for (ParticipanteProcesos proceso : procesos) {
+                proceso.setObsequioChf("No");
+                proceso.setMovilInfo(movilInfo);
+                estudiosAdapter.actualizarParticipanteProcesos(proceso);
+            }
+        }
+
 		Bundle arguments = new Bundle();
 		Intent i;
 		if (visita !=null) {
             arguments.putSerializable(Constants.VISITA, visita);
             i = new Intent(getApplicationContext(),
                     MenuVisitaSeguimientoCasoActivity.class);
-        }else{
+        }else if (visitaFinal != null){
             arguments.putSerializable(Constants.VISITA_FINAL, visitaFinal);
             i = new Intent(getApplicationContext(),
                     MenuVisitaFinalCasoActivity.class);
+        }else{
+            i = new Intent(getApplicationContext(),
+                    MenuInfoActivity.class);
+            i.putExtra(ConstantsDB.COD_CASA, casaChf.getCasa().getCodigo());
+            i.putExtra(ConstantsDB.CODIGO, codigoParticipante);
+            i.putExtra(ConstantsDB.VIS_EXITO, true);
         }
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);

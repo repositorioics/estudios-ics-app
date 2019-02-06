@@ -599,7 +599,6 @@ public class BluetoothChatFragment extends Fragment {
                 mParticipantesProc.getEncPart()+"','"+
                 mParticipantesProc.getEnCasa()+"','"+
                 mParticipantesProc.getObsequio()+"','"+
-                mParticipantesProc.getObsequioChf()+"','"+
                 mParticipantesProc.getConvalesciente()+"','"+
                 mParticipantesProc.getInfoVacuna()+"','"+
                 mParticipantesProc.getPaxgene()+"','"+
@@ -620,7 +619,10 @@ public class BluetoothChatFragment extends Fragment {
                 mParticipantesProc.getEncPartSa()+"','"+
                 mParticipantesProc.getTutor()+"','"+
                 mParticipantesProc.getCoordenadas()+"',"+
-                (mParticipantesProc.getConsSa()!=null?"'"+mParticipantesProc.getConsSa()+"'":"null")+",0,null,'"+
+                (mParticipantesProc.getConsSa()!=null?"'"+mParticipantesProc.getConsSa()+"'":"null")+",'"+
+                mParticipantesProc.getObsequioChf()+"','"+
+                mParticipantesProc.getcDatosParto()+"','"+
+                mParticipantesProc.getReConsChf18()+"',0,null,'"+
                 mParticipantesProc.getMovilInfo().getEstado()+"',null,null,null,'"+
                 mParticipantesProc.getMovilInfo().getDeviceid()+"',null,null,"+
                 mParticipantesProc.getMovilInfo().getToday().getTime()+",'"+

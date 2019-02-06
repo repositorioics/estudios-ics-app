@@ -49,7 +49,10 @@ public class ParticipanteProcesos implements Serializable {
     private String tutor;
     private String consSa;
     private String coordenadas; //cambio de domicilio
+    //MA2019
     private String obsequioChf;
+    private String cDatosParto;//completar datos parto campos que no se pedian antes del 2018
+    private String reConsChf18;//reconsentimiento a participantes de familia que cumplen 18 anios
 
     private MovilInfo movilInfo;
 
@@ -364,4 +367,21 @@ public class ParticipanteProcesos implements Serializable {
     public void setObsequioChf(String obsequioChf) {
         this.obsequioChf = obsequioChf;
     }
+
+    public String getcDatosParto() {
+        return cDatosParto;
+    }
+
+    public void setcDatosParto(String cDatosParto) {
+        this.cDatosParto = cDatosParto;
+    }
+
+    public String getReConsChf18() {
+        return reConsChf18;
+    }
+
+    public void setReConsChf18(String reConsChf18) {
+        this.reConsChf18 = reConsChf18;
+    }
 }
+

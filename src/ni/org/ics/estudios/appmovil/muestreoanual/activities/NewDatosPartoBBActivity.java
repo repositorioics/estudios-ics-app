@@ -241,6 +241,7 @@ public class NewDatosPartoBBActivity extends AbstractAsyncActivity {
             estudiosAdapter.crearDatosPartoBB(mDatosPartoBB);
 
             mParticipante.getProcesos().setDatosParto("No");
+            mParticipante.getProcesos().setcDatosParto("No");
             mParticipante.getProcesos().setMovilInfo(new MovilInfo(idInstancia,
                     instanceFilePath,
                     Constants.STATUS_NOT_SUBMITTED,
@@ -294,11 +295,13 @@ public class NewDatosPartoBBActivity extends AbstractAsyncActivity {
 			Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
 			//Arranca la actividad ODK Collect en busca de resultado
 			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-			String valores[] = new String[4];
+			String valores[] = new String[6];
 			valores[0] = "codigo";
 			valores[1] =  mParticipante.getCodigo().toString();
 			valores[2] = "fechanac";
 			valores[3] =  mParticipante.getFechaNac().toString();
+            valores[4] = "completar";
+            valores[5] =  mParticipante.getProcesos().getcDatosParto();
 			odkA.putExtra("vc", valores);
 			startActivityForResult(odkA,ADD_PART);
 		}

@@ -89,7 +89,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 						|| procesos.getEncLacMat().matches("Si")||procesos.getInfoVacuna().matches("Si")
 						|| procesos.getConsDeng().matches("Si") || procesos.getObsequio().matches("Si")
 						|| procesos.getConmx().matches("No") || procesos.getConmxbhc().matches("No")|| procesos.getZika().matches("Si")
-						|| procesos.getAdn().matches("Si")|| procesos.getDatosParto().matches("Si")|| procesos.getDatosVisita().matches("Si")
+						|| procesos.getAdn().matches("Si") || (procesos.getDatosParto().matches("Si") || procesos.getcDatosParto().matches("Si"))|| procesos.getDatosVisita().matches("Si")
                         || !procesos.getConvalesciente().matches("No")
                         || (procesos.getReConsDeng()!=null && procesos.getReConsDeng().matches("Si"))
                         || !procesos.getCoordenadas().equals("0")
@@ -286,7 +286,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 					if (procesos.getZika().matches("Si")) labelHeader = labelHeader + "Consentimiento Zika<br />";
 					if (procesos.getEncLacMat().matches("Si")) labelHeader = labelHeader + "Encuesta de Lactancia Materna<br />";
 					if (procesos.getPesoTalla().matches("Si")) labelHeader = labelHeader + "Peso y Talla <br />";
-					if (procesos.getDatosParto().matches("Si")) labelHeader = labelHeader + "Datos Parto BB<br />";
+					if (procesos.getDatosParto().matches("Si") || procesos.getcDatosParto().matches("Si")) labelHeader = labelHeader + "Datos Parto BB<br />";
 					if (procesos.getInfoVacuna().matches("Si")) labelHeader = labelHeader + "Vacunas<br />";
 					if (procesos.getDatosVisita().matches("Si")) labelHeader = labelHeader + "Pendiente datos de casa<br />";
                     if (!procesos.getCoordenadas().equals("0")) labelHeader = labelHeader + this.getContext().getString(R.string.addresschange_missing) + "<br />";

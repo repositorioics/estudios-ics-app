@@ -694,7 +694,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 return true;*/
             case R.id.PARTO:
                 if(mUser.getDatosparto()){
-                    if(mParticipante.getProcesos().getDatosParto().matches("Si")){
+                    if(mParticipante.getProcesos().getDatosParto().matches("Si") || mParticipante.getProcesos().getcDatosParto().matches("Si")){
                         i = new Intent(getApplicationContext(),
                                 NewDatosPartoBBActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -902,7 +902,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if ((mParticipante.getProcesos().getZika().matches("Si") && mUser.getConsentimiento())) zikaItem.setVisible(true);
             if ((mParticipante.getProcesos().getObsequio().matches("Si") && mUser.getObsequio())) obsequioItem.setVisible(true);
             if ((mParticipante.getProcesos().getObsequioChf().matches("Si") && mUser.getObsequio())) obsequioChfItem.setVisible(true);
-            if ((mParticipante.getProcesos().getDatosParto().matches("Si") && mUser.getDatosparto())) partoItem.setVisible(true);
+            if (((mParticipante.getProcesos().getDatosParto().matches("Si") || mParticipante.getProcesos().getcDatosParto().matches("Si")) && mUser.getDatosparto())) partoItem.setVisible(true);
             if ((mParticipante.getProcesos().getDatosVisita().matches("Si") && mUser.getVisitas())) datosCasaItem.setVisible(true);
             if((mParticipante.getProcesos().getEnCasaChf().matches("Si") && mUser.getEncuestaCasa())) encCasaChfItem.setVisible(true);
             if((mParticipante.getProcesos().getEnCasaSa().matches("Si") && mUser.getEncuestaCasa())) encCasaSaItem.setVisible(true);
@@ -1015,7 +1015,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || mParticipante.getProcesos().getEncLacMat().matches("Si")||mParticipante.getProcesos().getInfoVacuna().matches("Si")
                     || mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getObsequio().matches("Si")
                     || mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No")|| mParticipante.getProcesos().getZika().matches("Si")
-                    || mParticipante.getProcesos().getAdn().matches("Si")|| mParticipante.getProcesos().getDatosParto().matches("Si")|| mParticipante.getProcesos().getDatosVisita().matches("Si")
+                    || mParticipante.getProcesos().getAdn().matches("Si") || (mParticipante.getProcesos().getDatosParto().matches("Si") || mParticipante.getProcesos().getcDatosParto().matches("Si"))|| mParticipante.getProcesos().getDatosVisita().matches("Si")
                     || !mParticipante.getProcesos().getConvalesciente().matches("No")
                     || (mParticipante.getProcesos().getReConsDeng()!=null && mParticipante.getProcesos().getReConsDeng().matches("Si"))
                     || !mParticipante.getProcesos().getCoordenadas().equals("0")
@@ -1267,7 +1267,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.weigth_heigth_missing) + "</font></small><br />";
                     pendiente=true;
                 }
-                if (mParticipante.getProcesos().getDatosParto().matches("Si") && mUser.getDatosparto()){
+                if ((mParticipante.getProcesos().getDatosParto().matches("Si") || mParticipante.getProcesos().getcDatosParto().matches("Si")) && mUser.getDatosparto()){
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.parto_missing) + "</font></small><br />";
                     pendiente=true;
                 }

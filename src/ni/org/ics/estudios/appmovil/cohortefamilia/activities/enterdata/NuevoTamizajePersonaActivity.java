@@ -1333,6 +1333,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         else
                             procesos.setDatosParto(Constants.NO);
 
+                        procesos.setcDatosParto(Constants.NO);
                         if (participante.getEdadMeses() <= 36)
                             procesos.setEncLacMat(Constants.YES);
                         else

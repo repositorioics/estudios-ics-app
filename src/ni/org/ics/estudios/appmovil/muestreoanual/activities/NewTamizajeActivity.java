@@ -1934,6 +1934,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         procesos.setEncPart(Constants.YES);
                         procesos.setPesoTalla(Constants.YES);
                         procesos.setDatosParto(Constants.YES);
+                        procesos.setcDatosParto(Constants.NO);
                         procesos.setInfoVacuna(Constants.YES);
 
                         procesos.setCasaCHF(null);

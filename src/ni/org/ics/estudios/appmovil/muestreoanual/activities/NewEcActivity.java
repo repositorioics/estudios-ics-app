@@ -325,18 +325,11 @@ public class NewEcActivity extends AbstractAsyncActivity {
                 mEC.setCodCasa(mParticipante.getCasa().getCodigo());
             }
             estudiosAdapter.crearEncuestaCasa(mEC);
-            if (mParticipante.getCasa().getCodigo()!=9999) mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
-            for(Participante participante:mParticipantes){
-				if (participante.getCasa().getCodigo()!=9999) {
-                    ParticipanteProcesos procesos = participante.getProcesos();
-                    if (totalCasasChf == 1){ // es una unica casa cohorte pediatrica y una unica casa cohorte familia, solo realizar encuesta de casa una vez
-                        procesos.setEnCasaChf("No");
-                        procesos.setEnCasa("No");
-                    }else {
-                        if (casaChfId != null) procesos.setEnCasaChf("No");
-                        if (casaId != null && casaId > 0) procesos.setEnCasa("No");
-                    }
-                    procesos.setMovilInfo(new MovilInfo(idInstancia,
+            if (casaChfId != null){
+                List<ParticipanteProcesos> procesos = estudiosAdapter.getParticipantesProc(ConstantsDB.casaCHF + "='" + casaChfId + "'", null);
+                for (ParticipanteProcesos proceso : procesos) {
+                    proceso.setEnCasaChf("No");
+                    proceso.setMovilInfo(new MovilInfo(idInstancia,
                             instanceFilePath,
                             Constants.STATUS_NOT_SUBMITTED,
                             ultimoCambio,
@@ -348,9 +341,31 @@ public class NewEcActivity extends AbstractAsyncActivity {
                             em.getToday(),
                             username,
                             false, em.getRecurso1(), em.getRecurso2()));
-                    estudiosAdapter.actualizarParticipanteProcesos(procesos);
+                    estudiosAdapter.actualizarParticipanteProcesos(proceso);
                 }
-			}
+            }else {
+                if (mParticipante.getCasa().getCodigo() != 9999)
+                    mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
+                for (Participante participante : mParticipantes) {
+                    if (participante.getCasa().getCodigo() != 9999) {
+                        ParticipanteProcesos procesos = participante.getProcesos();
+                        procesos.setEnCasa("No");
+                        procesos.setMovilInfo(new MovilInfo(idInstancia,
+                                instanceFilePath,
+                                Constants.STATUS_NOT_SUBMITTED,
+                                ultimoCambio,
+                                em.getStart(),
+                                em.getEnd(),
+                                em.getDeviceid(),
+                                em.getSimserial(),
+                                em.getPhonenumber(),
+                                em.getToday(),
+                                username,
+                                false, em.getRecurso1(), em.getRecurso2()));
+                        estudiosAdapter.actualizarParticipanteProcesos(procesos);
+                    }
+                }
+            }
             /*if (totalCasasChf == 1){// es una unica casa cohorte pediatrica y una unica casa cohorte familia, solo realizar encuesta de casa una vez
                 mParticipante.getProcesos().setEnCasaChf("No");
                 mParticipante.getProcesos().setEnCasa("No");

@@ -809,6 +809,7 @@ public class ConstantsDB {
     public static final String docMedFecVacInfMadre_sn = "docMedFecVacInfMadre_sn";
     public static final String docMedFecVacInfMadre = "docMedFecVacInfMadre";
     public static final String otroDocMedFecVacInfMadre = "otroDocMedFecVacInfMadre";
+    public static final String docMedFUM_sn = "docMedFUM_sn";
 
     //Campos nuevas vacunas
     public static final String fechaRegistroVacuna = "fechaRegistroVacuna";
@@ -2054,6 +2055,7 @@ public class ConstantsDB {
             + docMedFecVacInfMadre_sn + " text, "
             + docMedFecVacInfMadre + " text, "
             + otroDocMedFecVacInfMadre + " text, "
+            + docMedFUM_sn + " text, "
             + otrorecurso1  + " integer, "
             + otrorecurso2  + " integer, "
             + ID_INSTANCIA + " integer not null,"

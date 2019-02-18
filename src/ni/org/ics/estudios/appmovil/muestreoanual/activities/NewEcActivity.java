@@ -53,7 +53,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
 	private SharedPreferences settings;
 	private static Participante mParticipante = new Participante();
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
-	private static EncuestaCasa mEC = new EncuestaCasa();
+
 	private boolean visExitosa = false;
 	Dialog dialogInit;
     private DeviceInfo infoMovil;
@@ -196,8 +196,9 @@ public class NewEcActivity extends AbstractAsyncActivity {
 			//ecId.setCodCasa(casaId);
 			//ecId.setFechaEncCasa(new Date());
 			//mEC.setEncCasaId(ecId);
+            EncuestaCasa mEC = new EncuestaCasa();
             mEC.setCodigo(infoMovil.getId());
-            if (casaId!=null && casaId > 0) mEC.setCodCasa(casaId);
+            if (casaId!=null && casaId > 0) mEC.setCodCasa(mParticipante.getCasa().getCodigo());
             mEC.setCodCasaChf(casaChfId);
             mEC.setFechaEncCasa(new Date());
 			mEC.setCvivencasa1(em.getCvivencasa1());
@@ -319,16 +320,23 @@ public class NewEcActivity extends AbstractAsyncActivity {
 			//Guarda en la base de datos local
 
 			estudiosAdapter.open();
+            mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
+            int pertenecenCHF = 0;
+            for (Participante participante : mParticipantes) {
+                if (participante.getProcesos().getEstudio().contains("CH Familia")) pertenecenCHF++;
+            }
             int totalCasasChf = estudiosAdapter.countCasasChfByCasa(mParticipante.getCasa().getCodigo());
-            if (totalCasasChf == 1){
+            if (totalCasasChf == 1 && pertenecenCHF == mParticipantes.size()){
                 mEC.setCodCasaChf(mParticipante.getProcesos().getCasaCHF());
                 mEC.setCodCasa(mParticipante.getCasa().getCodigo());
             }
             estudiosAdapter.crearEncuestaCasa(mEC);
             if (casaChfId != null){
                 List<ParticipanteProcesos> procesos = estudiosAdapter.getParticipantesProc(ConstantsDB.casaCHF + "='" + casaChfId + "'", null);
+
                 for (ParticipanteProcesos proceso : procesos) {
                     proceso.setEnCasaChf("No");
+                    if (mParticipantes.size() == procesos.size()) proceso.setEnCasa("No");
                     proceso.setMovilInfo(new MovilInfo(idInstancia,
                             instanceFilePath,
                             Constants.STATUS_NOT_SUBMITTED,
@@ -344,12 +352,11 @@ public class NewEcActivity extends AbstractAsyncActivity {
                     estudiosAdapter.actualizarParticipanteProcesos(proceso);
                 }
             }else {
-                if (mParticipante.getCasa().getCodigo() != 9999)
-                    mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
                 for (Participante participante : mParticipantes) {
                     if (participante.getCasa().getCodigo() != 9999) {
                         ParticipanteProcesos procesos = participante.getProcesos();
                         procesos.setEnCasa("No");
+                        if (totalCasasChf ==1 && mParticipantes.size()==pertenecenCHF) procesos.setEnCasaChf("No");
                         procesos.setMovilInfo(new MovilInfo(idInstancia,
                                 instanceFilePath,
                                 Constants.STATUS_NOT_SUBMITTED,
@@ -390,7 +397,6 @@ public class NewEcActivity extends AbstractAsyncActivity {
 			showToast(getApplicationContext().getString(R.string.success),0);
 			Intent i = new Intent(getApplicationContext(),
 					MenuInfoActivity.class);
-			i.putExtra(ConstantsDB.COD_CASA, casaId);
 			i.putExtra(ConstantsDB.CODIGO, codigo);
 			i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

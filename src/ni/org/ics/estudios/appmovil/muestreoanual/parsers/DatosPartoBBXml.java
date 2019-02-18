@@ -81,6 +81,9 @@ public class DatosPartoBBXml {
     private String docMedFecVacInfMadre;
     @Element(required=false)
     private String otroDocMedFecVacInfMadre;
+    //MA2019
+    @Element(required=false)
+    private String docMedFUM_sn;
 
 
     @Element(required=false)
@@ -105,6 +108,7 @@ public class DatosPartoBBXml {
 	private String titulo_final;
 	@Element(required=false)
 	private String calSG;
+    //MA2019
     @Element(required=false)
     private String completar;//1 si el formulario se usa solo para completar información que antes del 2018 no se solicitaba
 	
@@ -574,5 +578,13 @@ public class DatosPartoBBXml {
 
     public void setCompletar(String completar) {
         this.completar = completar;
+    }
+
+    public String getDocMedFUM_sn() {
+        return docMedFUM_sn;
+    }
+
+    public void setDocMedFUM_sn(String docMedFUM_sn) {
+        this.docMedFUM_sn = docMedFUM_sn;
     }
 }

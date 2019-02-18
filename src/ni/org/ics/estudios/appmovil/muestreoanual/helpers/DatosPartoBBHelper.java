@@ -45,6 +45,7 @@ public class DatosPartoBBHelper {
         cv.put(ConstantsDB.docMedFecVacInfMadre_sn, datosPartoBB.getDocMedFecVacInfMadre_sn());
         cv.put(ConstantsDB.docMedFecVacInfMadre, datosPartoBB.getDocMedFecVacInfMadre());
         cv.put(ConstantsDB.otroDocMedFecVacInfMadre, datosPartoBB.getOtroDocMedFecVacInfMadre());
+        cv.put(ConstantsDB.docMedFUM_sn, datosPartoBB.getDocMedFUM_sn());
 
 		cv.put(ConstantsDB.otrorecurso1, datosPartoBB.getOtrorecurso1());
 		cv.put(ConstantsDB.otrorecurso2, datosPartoBB.getOtrorecurso2());
@@ -103,6 +104,7 @@ public class DatosPartoBBHelper {
         mDatosPartoBB.setDocMedFecVacInfMadre_sn(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.docMedFecVacInfMadre_sn)));
         mDatosPartoBB.setDocMedFecVacInfMadre(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.docMedFecVacInfMadre)));
         mDatosPartoBB.setOtroDocMedFecVacInfMadre(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.otroDocMedFecVacInfMadre)));
+        mDatosPartoBB.setDocMedFUM_sn(cursorDatosPartoBB.getString(cursorDatosPartoBB.getColumnIndex(ConstantsDB.docMedFUM_sn)));
 
 		if(!cursorDatosPartoBB.isNull(cursorDatosPartoBB.getColumnIndex(ConstantsDB.otrorecurso1))) mDatosPartoBB.setOtrorecurso1(cursorDatosPartoBB.getInt(cursorDatosPartoBB.getColumnIndex(ConstantsDB.otrorecurso1)));
 		if(!cursorDatosPartoBB.isNull(cursorDatosPartoBB.getColumnIndex(ConstantsDB.otrorecurso2))) mDatosPartoBB.setOtrorecurso2(cursorDatosPartoBB.getInt(cursorDatosPartoBB.getColumnIndex(ConstantsDB.otrorecurso2)));

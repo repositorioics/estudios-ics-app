@@ -219,6 +219,7 @@ public class NewDatosPartoBBActivity extends AbstractAsyncActivity {
             mDatosPartoBB.setDocMedFecVacInfMadre_sn(datosPartoBBXml.getDocMedFecVacInfMadre_sn());
             mDatosPartoBB.setDocMedFecVacInfMadre(datosPartoBBXml.getDocMedFecVacInfMadre());
             mDatosPartoBB.setOtroDocMedFecVacInfMadre(datosPartoBBXml.getOtroDocMedFecVacInfMadre());
+            mDatosPartoBB.setDocMedFUM_sn(datosPartoBBXml.getDocMedFUM_sn());
 
             mDatosPartoBB.setOtrorecurso1(datosPartoBBXml.getOtrorecurso1());
             mDatosPartoBB.setOtrorecurso1(datosPartoBBXml.getOtrorecurso1());

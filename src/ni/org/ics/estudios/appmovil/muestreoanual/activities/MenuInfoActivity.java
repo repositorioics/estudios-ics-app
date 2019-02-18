@@ -32,6 +32,7 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObsequioActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoRecon18AniosActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.DatosCoordenadas;
 import ni.org.ics.estudios.appmovil.domain.Participante;
@@ -107,6 +108,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private MenuItem encCasaSaItem;
     private MenuItem encPartSaItem;
     private MenuItem coordenadasItem;
+    private MenuItem recon18ChfItem;
 
     private EstudiosAdapter estudiosAdapter;
 
@@ -330,6 +332,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             encCasaSaItem = menu.findItem(R.id.ENCASA_SA);
             encPartSaItem = menu.findItem(R.id.ENPART_SA);
             coordenadasItem = menu.findItem(R.id.COORDENADAS);
+            recon18ChfItem = menu.findItem(R.id.RECONS_CHF);
         }
         return true;
     }
@@ -573,6 +576,26 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtra(Constants.PARTICIPANTE, mParticipante);
                         //i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                        startActivity(i);
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                return true;
+            case R.id.RECONS_CHF:
+                if(mUser.getConsentimiento()){
+                    if(mParticipante.getProcesos().getReConsChf18().matches("Si")){
+                        i = new Intent(getApplicationContext(),
+                                NuevoRecon18AniosActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(Constants.PARTICIPANTE, mParticipanteChf);
                         i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
                         startActivity(i);
                     }
@@ -885,6 +908,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         encCasaSaItem.setVisible(false);
         encPartSaItem.setVisible(false);
         coordenadasItem.setVisible(false);
+        recon18ChfItem.setVisible(false);
         //la opción de reconsentimiento dengue siempre se va a mostrar
         if ((mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getReConsDeng().matches("Si")) && mUser.getConsentimiento()) reConsDenItem.setVisible(true);
         if ((!mParticipante.getProcesos().getCoordenadas().equals("0") && mUser.getConsentimiento())) coordenadasItem.setVisible(true);
@@ -907,6 +931,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if((mParticipante.getProcesos().getEnCasaChf().matches("Si") && mUser.getEncuestaCasa())) encCasaChfItem.setVisible(true);
             if((mParticipante.getProcesos().getEnCasaSa().matches("Si") && mUser.getEncuestaCasa())) encCasaSaItem.setVisible(true);
             if((mParticipante.getProcesos().getEncPartSa().matches("Si") && mUser.getEncuestaParticipante())) encPartSaItem.setVisible(true);
+            if ((mParticipante.getProcesos().getReConsChf18().matches("Si") && mUser.getConsentimiento())) recon18ChfItem.setVisible(true);
             visitaItem.setVisible(false);
         }
         return true;
@@ -1019,7 +1044,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || !mParticipante.getProcesos().getConvalesciente().matches("No")
                     || (mParticipante.getProcesos().getReConsDeng()!=null && mParticipante.getProcesos().getReConsDeng().matches("Si"))
                     || !mParticipante.getProcesos().getCoordenadas().equals("0")
-                    || mParticipante.getProcesos().getObsequioChf().matches("Si")){
+                    || mParticipante.getProcesos().getObsequioChf().matches("Si")
+                    || mParticipante.getProcesos().getReConsChf18().matches("Si")){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
                 //Primero muestras
@@ -1253,6 +1279,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getReConsDeng().matches("Si") && mUser.getConsentimiento()) {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consden_missing_d) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getReConsChf18().matches("Si") && mUser.getConsentimiento()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.reconchf18_missing) + "</font></small><br />";
                     pendiente=true;
                 }
                 if (mParticipante.getProcesos().getZika().matches("Si") && mUser.getConsentimiento()) {

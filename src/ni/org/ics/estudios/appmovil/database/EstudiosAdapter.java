@@ -268,6 +268,9 @@ public class EstudiosAdapter {
                 db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.cDatosParto + " text");
                 db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.reConsChf18 + " text");
             }
+            if (oldVersion==15) {
+                db.execSQL("ALTER TABLE " + ConstantsDB.DATOSPARTOBB_TABLE + " ADD COLUMN " + ConstantsDB.docMedFUM_sn + " text");
+            }
         }
 	}
 

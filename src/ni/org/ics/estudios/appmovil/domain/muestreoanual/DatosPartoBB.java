@@ -55,7 +55,8 @@ public class DatosPartoBB implements Serializable{
     private String docMedFecVacInfMadre_sn;
     private String docMedFecVacInfMadre;
     private String otroDocMedFecVacInfMadre;
-
+    //MA2019
+    private String docMedFUM_sn;
 	
 	public String getTipoParto() {
 		return tipoParto;
@@ -327,5 +328,13 @@ public class DatosPartoBB implements Serializable{
 
     public void setOtroDocMedFecVacInfMadre(String otroDocMedFecVacInfMadre) {
         this.otroDocMedFecVacInfMadre = otroDocMedFecVacInfMadre;
+    }
+
+    public String getDocMedFUM_sn() {
+        return docMedFUM_sn;
+    }
+
+    public void setDocMedFUM_sn(String docMedFUM_sn) {
+        this.docMedFUM_sn = docMedFUM_sn;
     }
 }

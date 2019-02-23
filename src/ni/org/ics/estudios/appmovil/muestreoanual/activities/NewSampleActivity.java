@@ -208,6 +208,9 @@ public class NewSampleActivity extends AbstractAsyncActivity {
             mMuestra.setPinchazos(em.getPinchazos());
             mMuestra.setOtrorecurso1(em.getOtrorecurso1());
             mMuestra.setOtrorecurso2(em.getOtrorecurso2());
+            //MA 2019
+            mMuestra.setHd_sn(em.getHd_sn());
+            mMuestra.setHdPorqueNo(em.getHdPorqueNo());
 
             mMuestra.setMovilInfo(new MovilInfo(idInstancia,
                     instanceFilePath,

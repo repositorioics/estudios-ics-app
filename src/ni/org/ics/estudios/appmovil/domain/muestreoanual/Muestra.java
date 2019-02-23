@@ -43,7 +43,8 @@ public class Muestra implements Serializable {
 	private Integer otrorecurso1;
 	private Integer otrorecurso2;
     private String estudiosAct;
-
+    private String hd_sn;
+    private String hdPorqueNo;
 
 	public Integer getOtrorecurso1() {
 		return otrorecurso1;
@@ -230,6 +231,22 @@ public class Muestra implements Serializable {
 
     public void setEstudiosAct(String estudiosAct) {
         this.estudiosAct = estudiosAct;
+    }
+
+    public String getHd_sn() {
+        return hd_sn;
+    }
+
+    public void setHd_sn(String hd_sn) {
+        this.hd_sn = hd_sn;
+    }
+
+    public String getHdPorqueNo() {
+        return hdPorqueNo;
+    }
+
+    public void setHdPorqueNo(String hdPorqueNo) {
+        this.hdPorqueNo = hdPorqueNo;
     }
 
     @Override

@@ -419,7 +419,6 @@ public class ConstantsDB {
     public static final String vacunaInfluenzaOtro = "vacunaInfluenzaOtro";
     public static final String nombreCDI = "nombreCDI";
     public static final String direccionCDI = "direccionCDI";
-
     //Campos encuesta lactancia materna
     public static final String FECHA_ENC_LACT = "fecha_encuesta";
     public static final String DIOPECHO = "diopecho";
@@ -478,6 +477,10 @@ public class ConstantsDB {
 
 
     public static final String PIN = "pinchazos";
+//MA 2019
+    public static final String hd_sn = "hd_sn";
+    public static final String hdPorqueNo = "hdPorqueNo";
+
 
     //Campos obsequios
     public static final String FECHA_OB = "fecha_ob";
@@ -1377,6 +1380,8 @@ public class ConstantsDB {
             + otrorecurso1  + " integer, "
             + otrorecurso2  + " integer, "
             + estudiosAct + " text, "
+            + hd_sn  + " text, "
+            + hdPorqueNo  + " text, "
             + ID_INSTANCIA + " integer not null,"
             + FILE_PATH + " text not null,"
             + STATUS + " text not null, "

@@ -824,6 +824,12 @@ public class NuevoRecon18AniosActivity extends FragmentActivity implements
                             e.printStackTrace();
                         }
                     }
+                    Participante participante = participanteCHF.getParticipante();
+                    participante.setNombre1(nombre1);
+                    participante.setNombre2(nombre2);
+                    participante.setApellido1(apellido1);
+                    participante.setApellido2(apellido2);
+                    estudiosAdapter.editarParticipante(participante);
                     ParticipanteProcesos procesos = participanteCHF.getParticipante().getProcesos();
                     if (tieneValor(cc.getRelacionFamiliarTutor()))
                         procesos.setRelacionFam(Integer.valueOf(cc.getRelacionFamiliarTutor()));
@@ -848,7 +854,8 @@ public class NuevoRecon18AniosActivity extends FragmentActivity implements
                             MenuInfoActivity.class);
                     i.putExtra(ConstantsDB.CODIGO, participanteCHF.getParticipante().getCodigo());
                     i.putExtra(Constants.INGRESO_CHF, true);
-                    i.putExtra(ConstantsDB.VIS_EXITO, false);
+                    i.putExtra(ConstantsDB.VIS_EXITO, true);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_LONG);
                     toast.show();

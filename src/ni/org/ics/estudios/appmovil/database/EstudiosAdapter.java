@@ -271,6 +271,10 @@ public class EstudiosAdapter {
             if (oldVersion==15) {
                 db.execSQL("ALTER TABLE " + ConstantsDB.DATOSPARTOBB_TABLE + " ADD COLUMN " + ConstantsDB.docMedFUM_sn + " text");
             }
+            if (oldVersion==16) {
+                db.execSQL("ALTER TABLE " + ConstantsDB.MUESTRA_TABLE + " ADD COLUMN " + ConstantsDB.hd_sn + " text");
+                db.execSQL("ALTER TABLE " + ConstantsDB.MUESTRA_TABLE + " ADD COLUMN " + ConstantsDB.hdPorqueNo + " text");
+            }
         }
 	}
 
@@ -4306,6 +4310,8 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.otrorecurso1, muestra.getOtrorecurso1());
         cv.put(ConstantsDB.otrorecurso2, muestra.getOtrorecurso2());
         cv.put(ConstantsDB.estudiosAct, muestra.getEstudiosAct());
+        cv.put(ConstantsDB.hd_sn, muestra.getHd_sn());
+        cv.put(ConstantsDB.hdPorqueNo, muestra.getHdPorqueNo());
 
         cv.put(ConstantsDB.PIN, muestra.getPinchazos());
         cv.put(ConstantsDB.ID_INSTANCIA, muestra.getMovilInfo().getIdInstancia());
@@ -6234,6 +6240,9 @@ public class EstudiosAdapter {
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.codPax))) mMuestra.setCodPax(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.codPax)));
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.terreno))) mMuestra.setTerreno(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.terreno)));
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.estudiosAct))) mMuestra.setEstudiosAct(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.estudiosAct)));
+        //MA2019
+        if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.hd_sn))) mMuestra.setHd_sn(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.hd_sn)));
+        if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.hdPorqueNo))) mMuestra.setHdPorqueNo(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.hdPorqueNo)));
 
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.otrorecurso1))) mMuestra.setOtrorecurso1(muestreo.getInt(muestreo.getColumnIndex(ConstantsDB.otrorecurso1)));
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.otrorecurso2))) mMuestra.setOtrorecurso2(muestreo.getInt(muestreo.getColumnIndex(ConstantsDB.otrorecurso2)));

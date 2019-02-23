@@ -42,6 +42,10 @@ public class MuestraXml {
 	private String bhc;
     @Element(required=false)
     private String ed;
+    @Element(required=false)
+    private String hd_sn;
+    @Element(required=false)
+    private String hdPorqueNo;
 	
 	@Element(required=false)
 	private String titulo1;
@@ -103,6 +107,10 @@ public class MuestraXml {
 	private String titulo29;
 	@Element(required=false)
 	private String titulo30;
+    @Element(required=false)
+    private String titulo31;
+    @Element(required=false)
+    private String titulo32;
 	
 	@Element(required=false)
 	private Integer fiebreM;
@@ -661,7 +669,23 @@ public class MuestraXml {
 		this.titulo30 = titulo30;
 	}
 
-	public String getMuestranoinf() {
+    public String getTitulo31() {
+        return titulo31;
+    }
+
+    public void setTitulo31(String titulo31) {
+        this.titulo31 = titulo31;
+    }
+
+    public String getTitulo32() {
+        return titulo32;
+    }
+
+    public void setTitulo32(String titulo32) {
+        this.titulo32 = titulo32;
+    }
+
+    public String getMuestranoinf() {
 		return muestranoinf;
 	}
 
@@ -756,8 +780,20 @@ public class MuestraXml {
 	public void setOtrorecurso2(Integer otrorecurso2) {
 		this.otrorecurso2 = otrorecurso2;
 	}
-	
-	
-	
 
+    public String getHd_sn() {
+        return hd_sn;
+    }
+
+    public void setHd_sn(String hd_sn) {
+        this.hd_sn = hd_sn;
+    }
+
+    public String getHdPorqueNo() {
+        return hdPorqueNo;
+    }
+
+    public void setHdPorqueNo(String hdPorqueNo) {
+        this.hdPorqueNo = hdPorqueNo;
+    }
 }

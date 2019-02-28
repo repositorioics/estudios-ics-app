@@ -377,6 +377,14 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoPersonaCasa()), (opcion7 || visible));
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getNoDejoCarta()), false);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getPersonaDejoCarta()), false);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getRelFamPersonaDejoCarta()), false);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getOtraRelacionPersonaCasa()), false);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDejoCarta())) {

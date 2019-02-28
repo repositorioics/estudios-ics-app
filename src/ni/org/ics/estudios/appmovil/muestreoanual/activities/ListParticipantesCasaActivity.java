@@ -148,8 +148,8 @@ public class ListParticipantesCasaActivity extends ListActivity{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.general, menu);
-		menu.add(0, MENU_ADD_PART, 0, getString(R.string.add_part))
-		.setIcon(R.drawable.ic_menu_add);
+		/*menu.add(0, MENU_ADD_PART, 0, getString(R.string.add_part))
+		.setIcon(R.drawable.ic_menu_add);*/
 		return true;
 	}
 

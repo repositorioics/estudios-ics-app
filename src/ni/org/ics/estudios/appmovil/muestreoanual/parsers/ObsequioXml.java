@@ -71,7 +71,8 @@ public class ObsequioXml {
 	private Integer recurso1;
 	@Attribute
 	private String id;
-	
+    @Attribute
+    private String version;
 	
 	@Element(required=false)
 	private Meta meta;
@@ -272,6 +273,12 @@ public class ObsequioXml {
 		this.otrorecurso1 = otrorecurso1;
 	}
 
-	
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
 }

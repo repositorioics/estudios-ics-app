@@ -1378,6 +1378,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
 
                         procesos.setEstudio(estudios);
                         procesos.setCoordenadas("1");
+                        procesos.setReConsChf18(Constants.NO);
                         MovilInfo movilInfo = new MovilInfo();
                         movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
                         movilInfo.setDeviceid(infoMovil.getDeviceId());

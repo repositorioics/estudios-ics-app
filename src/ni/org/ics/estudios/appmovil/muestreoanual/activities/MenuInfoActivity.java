@@ -1163,7 +1163,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 }
                             } else if (mParticipante.getProcesos().getEstudio().equals("Dengue")) {
                                 //De 2 años a 14 años
-                                if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 179) {
+                                if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 180) {
                                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
                                             labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
@@ -1201,7 +1201,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 }
                             } else if (mParticipante.getProcesos().getEstudio().equals("Dengue  Influenza")) {
                                 //De 2 años a 14 años
-                                if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 179) {
+                                if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 180) {
                                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
                                             labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";

@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
@@ -61,6 +62,7 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
 	private EditText editObs;
 	private TextView labelVolumen;
 	private Spinner lugar;
+    private Spinner mMetodoView;
 	private Date todayWithZeroTime = null;
 	private String username;
 	private SharedPreferences settings;
@@ -84,9 +86,9 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recepcionbhc_pdcs);
 		editCodigo = (EditText) findViewById(R.id.codigo);
-		editCodigo.setFocusable(true);
+		/*editCodigo.setFocusable(true);
 		editCodigo.setEnabled(false);
-		editCodigo.requestFocus();
+		editCodigo.requestFocus();*/
 		mBarcodeButton = (ImageButton) findViewById(R.id.barcode_button);
 		mBarcodeButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -135,6 +137,81 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
 			}
 		}
 
+        mMetodoView = (Spinner) findViewById(R.id.metodo_busqueda);
+        List<String> list = new ArrayList<String>();
+        list.add(getString(R.string.desc_barcode));
+        list.add(getString(R.string.enter)+" "+getString(R.string.code));
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_item);
+        mMetodoView.setAdapter(dataAdapter);
+
+        mMetodoView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                editCodigo.setText("");
+                editCodigo.setHint(getString(R.string.code));
+                if (position==0){
+                    editCodigo.setEnabled(false);
+                    mBarcodeButton.setVisibility(View.VISIBLE);
+                }
+                else{
+                    editCodigo.setFocusable(true);
+                    editCodigo.setEnabled(true);
+                    editCodigo.setFocusableInTouchMode(true);
+                    mBarcodeButton.setVisibility(View.GONE);
+                    editCodigo.requestFocus();
+                    if (position==1){
+                        editCodigo.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    }
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+
+            }
+        });
+
+
+        editCodigo.setOnFocusChangeListener(new OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (hasFocus == false)
+                {
+                    try{
+                        if (!editCodigo.getText().toString().isEmpty())
+                            codigo = Integer.valueOf(editCodigo.getText().toString());
+                    }
+                    catch(Exception e){
+                        codigo = null;
+                        editCodigo.setText(null);
+                        showToast("Código Inválido!!!!",1);
+                        return;
+                    }
+
+                    if (codigo!=null && codigo>0 && codigo <=15000){
+                        ca.open();
+                        Cursor c  = null;
+                        c = ca.buscarRecepcionBHC(codigo, todayWithZeroTime);
+                        if (c != null && c.getCount() > 0) {
+                            editCodigo.setText(null);
+                            codigo = null;
+                            showToast("Ya ingresó este código!!!!",1);
+                        }
+                        ca.close();
+                    }
+                    else
+                    {
+                        editCodigo.setText(null);
+                        codigo = null;
+                        showToast("Código Inválido!!!!",1);
+                    }
+                }
+            }
+        });
 
 		chkPaxgene = (CheckBox) findViewById(R.id.checkPaxgene);
 		chkPaxgene.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -155,7 +232,7 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
 		editVolumen.setOnFocusChangeListener(new OnFocusChangeListener()
 		{
 			@Override
-			public void onFocusChange(View v, boolean hasFocus) 
+			public void onFocusChange(View v, boolean hasFocus)
 			{
 				if (hasFocus == false)
 				{  
@@ -179,20 +256,20 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
 		});
 		editObs = ((EditText) findViewById(R.id.obs));
 		lugar = (Spinner) findViewById(R.id.lugar);
-		List<String> list = new ArrayList<String>();
-		list.add("Seleccionar..");
-		list.add("Auditorio");
-		list.add("Terreno");
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, list);
-		dataAdapter.setDropDownViewResource(R.layout.spinner_item);
-		lugar.setAdapter(dataAdapter);
+        List<String> list2 = new ArrayList<String>();
+		list2.add("Seleccionar..");
+		list2.add("Auditorio");
+		list2.add("Terreno");
+		ArrayAdapter<String> dataAdapterLugar = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, list2);
+        dataAdapterLugar.setDropDownViewResource(R.layout.spinner_item);
+		lugar.setAdapter(dataAdapterLugar);
 
 		final Button saveButton = (Button) findViewById(R.id.save);
 		saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				//captura entrada de la muestra
-				editObs.requestFocus();
+				editCodigo.requestFocus();
 				try{
 					volumen = Double.valueOf(editVolumen.getText().toString());
 				}
@@ -310,12 +387,12 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
 					return;
 				}
 			}
-			if (codigo>0 && codigo <=15000){
+			if (codigo != null && codigo>0 && codigo <=15000){
 				ca.open();
 				Cursor c  = null;
 				c = ca.buscarRecepcionBHC(codigo, todayWithZeroTime);
 				if (c != null && c.getCount() > 0) {
-					showToast("Ya ingresá este código!!!!",1);
+					showToast("Ya ingresó este código!!!!",1);
 				}else{
 					editCodigo.setText(codigo.toString());
 				}

@@ -76,6 +76,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
     private String[] catVerifTutAlf; //cosas a verificar cuando tutor es alfabeto
     private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
     private Date fechaNacimiento = null;
+    private final int EDAD_LIMITE_INGRESO = 11; //justo antes de cumplir 11 anios
+    private final int EDAD_MINIMA_DENGUE = 2;
+    private final int EDAD_MINIMA_FLU = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -367,7 +370,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 String[] edad = new CalcularEdad(fechaNacimiento).getEdad().split("/");
                 edadAnios = Integer.parseInt(edad[0]);
                 edadMeses = Integer.parseInt(edad[1]);
-                if (!(edadAnios >= 2 && edadAnios < 10) && !(edadAnios >= 0 && edadAnios < 10)){
+                if (!(edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && !(edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO)){
                     changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), false);
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), true);
@@ -376,16 +379,16 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     toast.show();
                     resetForm(99);
                 }else {
-                    if (!(edadAnios >= 2 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS))){
+                    if (!(edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS))){
                         Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noEsElegible) + " Dengue",Toast.LENGTH_LONG);
                         toast.show();
                     }
-                    if (!(edadAnios >= 0 && edadAnios < 10) && (tipoIngreso.contains(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS))){
+                    if (!(edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.contains(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS))){
                         Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noEsElegible) + " Influenza", Toast.LENGTH_LONG);
                         toast.show();
                     }
                     if (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)){
-                        if (!(edadAnios >= 2 && edadAnios < 10)) {
+                        if (!(edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO)) {
                             changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), false);
                             notificarCambios = false;
                             changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), true);
@@ -397,7 +400,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         }
                     }
                     if (tipoIngreso.contains(TIPO_INFLUENZA)){
-                        if (!(edadAnios >= 0 && edadAnios < 10)) {
+                        if (!(edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO)) {
                             changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), false);
                             notificarCambios = false;
                             changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), true);
@@ -451,11 +454,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible && edadAnios>5 && edadAnios<10); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
+                changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= 2 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= 0 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
                 notificarCambios = false;
                 if(test!=null && test.size()!=2){
                     resetForm(99);
@@ -485,11 +488,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), (visible && tiempoValido));
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), (visible && tiempoValido) && edadAnios>5 && edadAnios<10); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
+                    changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), (visible && tiempoValido) && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), (visible && tiempoValido) && (edadAnios >= 2 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), (visible && tiempoValido) && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), (visible && tiempoValido) && (edadAnios >= 0 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), (visible && tiempoValido) && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
                     notificarCambios = false;
                     //es alquilada y tiene tiempo valido
                     if (!visible) {
@@ -507,11 +510,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), tiempoValido);
                         notificarCambios = false;
-                        changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), tiempoValido && edadAnios>5 && edadAnios<10); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
+                        changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), tiempoValido && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
                         notificarCambios = false;
-                        changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), tiempoValido && (edadAnios >= 2 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                        changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), tiempoValido && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
                         notificarCambios = false;
-                        changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), tiempoValido && (edadAnios >= 0 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                        changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), tiempoValido && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
                         notificarCambios = false;
                     }
                 }
@@ -536,11 +539,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), (esPropia && visible));
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), (esPropia && visible) && edadAnios>5 && edadAnios<10); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
+                changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), (esPropia && visible) && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), (esPropia && visible) && (edadAnios >= 2 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), (esPropia && visible) && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), (esPropia && visible) && (edadAnios >= 0 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), (esPropia && visible) && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
                 notificarCambios = false;
 
                 if (!esPropia){
@@ -558,11 +561,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), visible);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible && edadAnios>5 && edadAnios<10); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
+                    changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= 2 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= 0 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
                     notificarCambios = false;
                 }
                 onPageTreeChanged();
@@ -822,9 +825,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
             }
             if(page.getTitle().equals(labels.getAsentimientoVerbal())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= 2 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= 0 && edadAnios < 10) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
                 notificarCambios = false;
                 if(!visible) {
                     resetForm(98);
@@ -1658,7 +1661,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     if (catRazonNoAceptaParticipar!=null) tamizaje.setRazonNoAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
                 }
                 tamizaje.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaDengue);
-                boolean esElegible = ((edadAnios >= 2 && edadAnios < 10)
+                boolean esElegible = ((edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO)
                         && (totalCriterios==2)
                         && (((tieneValor(vivienda) && vivienda.matches("Propia"))
                         && (tieneValor(tiempoResidencia) && (tiempoResidencia.matches("Seis Meses a Dos Años") || tiempoResidencia.matches("Dos Años ó Más"))))
@@ -1694,7 +1697,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 if (tieneValor(enfermedad) && enfermedad.equals(Constants.YES)){
                     guardarEnfermedadesCronicas(cualEnfermedad.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','"), datos, tamizajeInf);
                 }
-                boolean esElegible = ((edadAnios >= 0 && edadAnios < 10)
+                boolean esElegible = ((edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO)
                         && (totalCriterios==2)
                         && (((tieneValor(vivienda) && vivienda.matches("Propia"))
                         && (tieneValor(tiempoResidencia) && (tiempoResidencia.matches("Seis Meses a Dos Años") || tiempoResidencia.matches("Dos Años ó Más"))))

@@ -1348,10 +1348,13 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         }
                         procesos.setDatosVisita(Constants.YES);
                         procesos.setPesoTalla(Constants.YES);
-                        procesos.setConmx(Constants.NO);
-                        procesos.setConmxbhc(Constants.NO);
-                        procesos.setPbmc(Constants.NO);
-                        procesos.setPaxgene(Constants.YES);
+                        //si no pertenece a la pediatrica poner datos de muestra, sino que conserve los datos de muestra actuales
+                        if (estudios.isEmpty()) {
+                            procesos.setConmx(Constants.NO);
+                            procesos.setConmxbhc(Constants.NO);
+                            procesos.setPbmc(Constants.NO);
+                            procesos.setPaxgene(Constants.YES);
+                        }
                         procesos.setCasaCHF(casaCHF.getCodigoCHF());
                         procesos.setEstPart(1);
                         if (tieneValor(cc.getRelacionFamiliarTutor()))
@@ -1404,7 +1407,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                             Intent i = new Intent(getApplicationContext(),
                                     MenuInfoActivity.class);
                             i.putExtra(ConstantsDB.CODIGO, codigo);
-                            i.putExtra(Constants.INGRESO_CHF, true);
+                            i.putExtra(Constants.INGRESO_CHF, false); //se acuerda que siempre se tomara la pantalla de muestra de MA. Brenda 15032019
                             i.putExtra(ConstantsDB.VIS_EXITO, false);
                             startActivity(i);
                         } else {

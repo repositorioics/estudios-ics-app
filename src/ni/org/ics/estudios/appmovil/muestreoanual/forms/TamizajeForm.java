@@ -32,9 +32,9 @@ public class TamizajeForm extends AbstractWizardModel {
         return catalogo;
     }
 
-    private String[] fillBarrios(){
+    private String[] fillBarrios(boolean incluirFueraSector){
         String[] catalogo;
-        List<Barrio> barrios = estudiosAdapter.getBarrios(null, CatalogosDBConstants.nombre);
+        List<Barrio> barrios = estudiosAdapter.getBarrios(incluirFueraSector?null:CatalogosDBConstants.nombre+" <> 'Fuera de Sector'", CatalogosDBConstants.nombre);
         catalogo = new String[barrios.size()];
         index = 0;
         for (Barrio message: barrios){
@@ -59,7 +59,8 @@ public class TamizajeForm extends AbstractWizardModel {
         String[] catSiNo = fillCatalog("CHF_CAT_SINO");
         String[] catSiNoDes = fillCatalog("CHF_CAT_SND");
         String[] catRelacionFamiliarTutor = fillCatalog("CP_CAT_RFTUTOR");
-        String[] barrios = fillBarrios();
+        String[] barrios = fillBarrios(false);
+        String[] barriosCon = fillBarrios(true);
         String[] catDondeAsisteProblemasSalud = fillCatalog("CHF_CAT_DONDEASISTE");
         String[] catPuestoSalud = fillCatalog("CHF_CAT_PUESTO");
         String[] catCriteriosInclusion = fillCatalog("CP_CAT_CI");
@@ -193,7 +194,7 @@ public class TamizajeForm extends AbstractWizardModel {
 
 
         Page nombreContacto = new TextPage(this,labels.getNombreContacto(),labels.getNombreContactoHint(),Constants.WIZARD, false).setRequired(true);
-        Page barrioContacto = new SingleFixedChoicePage(this,labels.getBarrioContacto(), labels.getBarrioContactoHint(), Constants.WIZARD, false).setChoices(barrios).setRequired(true);
+        Page barrioContacto = new SingleFixedChoicePage(this,labels.getBarrioContacto(), labels.getBarrioContactoHint(), Constants.WIZARD, false).setChoices(barriosCon).setRequired(true);
         Page direccionContacto = new TextPage(this,labels.getDireccionContacto(),labels.getDireccionContactoHint(), Constants.WIZARD, false).setRequired(true);
         Page tieneTelefono = new SingleFixedChoicePage(this,labels.getTieneTelefono(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page tipoTel1 = new SingleFixedChoicePage(this,labels.getTipoTelefono1(),labels.getTipoTelefono1Hint(), Constants.WIZARD, false).setChoices(catTipo).setRequired(true);

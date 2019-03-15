@@ -417,7 +417,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 return true;
 
             case R.id.DAT_CASA:
-                if(mUser.getVisitas()){
+                //if(mUser.getVisitas()){
                     if(mParticipante.getProcesos().getDatosVisita().matches("Si")){
                         i = new Intent(getApplicationContext(),
                                 NewDatosVisitaActivity.class);
@@ -431,11 +431,11 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
                         toast.show();
                     }
-                }
+                /*}
                 else{
                     Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
                     toast.show();
-                }
+                }*/
                 return true;
 
             case R.id.RECONSFLU:
@@ -928,7 +928,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if ((mParticipante.getProcesos().getObsequio().matches("Si") && mUser.getObsequio())) obsequioItem.setVisible(true);
             if ((mParticipante.getProcesos().getObsequioChf().matches("Si") && mUser.getObsequio())) obsequioChfItem.setVisible(true);
             if (((mParticipante.getProcesos().getDatosParto().matches("Si") || mParticipante.getProcesos().getcDatosParto().matches("Si")) && mUser.getDatosparto())) partoItem.setVisible(true);
-            if ((mParticipante.getProcesos().getDatosVisita().matches("Si") && mUser.getVisitas())) datosCasaItem.setVisible(true);
+            if (mParticipante.getProcesos().getDatosVisita().matches("Si")) datosCasaItem.setVisible(true); //15032018. permitir aúnque no sea en terreno if ((mParticipante.getProcesos().getDatosVisita().matches("Si") && mUser.getVisitas())) datosCasaItem.setVisible(true);
             if((mParticipante.getProcesos().getEnCasaChf().matches("Si") && mUser.getEncuestaCasa())) encCasaChfItem.setVisible(true);
             if((mParticipante.getProcesos().getEnCasaSa().matches("Si") && mUser.getEncuestaCasa())) encCasaSaItem.setVisible(true);
             if((mParticipante.getProcesos().getEncPartSa().matches("Si") && mUser.getEncuestaParticipante())) encPartSaItem.setVisible(true);
@@ -1314,7 +1314,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.vaccines_missing) + "</font></small><br />";
                     pendiente=true;
                 }
-                if (mParticipante.getProcesos().getDatosVisita().matches("Si") && mUser.getVisitas()){
+                if (mParticipante.getProcesos().getDatosVisita().matches("Si")){ //15032019. Permitir aunque no sea terreno if (mParticipante.getProcesos().getDatosVisita().matches("Si") && mUser.getVisitas()){
                     labelHeader = labelHeader + "<small><font color='blue'>Pediente datos casa</font></small><br />";
                     pendiente=true;
                 }

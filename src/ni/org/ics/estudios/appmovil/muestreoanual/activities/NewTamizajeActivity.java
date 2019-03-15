@@ -1279,6 +1279,31 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
                 onPageTreeChanged();
             }
+            if(page.getTitle().equals(labels.getTipoTelefono1())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Celular");
+                changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono1()), visible);
+                notificarCambios = false;
+                TextPage pagetmp = (TextPage) mWizardModel.findByKey(labels.getNumTelefono1());
+                if (visible){
+                    pagetmp.setPatternValidation(true, "^$|^[8|5|7]{1}\\d{7}$");
+                }else{
+                    pagetmp.setPatternValidation(true, "^$|^[2]{1}\\d{7}$");
+                }
+
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getTipoTelefono2())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Celular");
+                changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), visible);
+                notificarCambios = false;
+                TextPage pagetmp = (TextPage) mWizardModel.findByKey(labels.getNumTelefono2());
+                if (visible){
+                    pagetmp.setPatternValidation(true, "^$|^[8|5|7]{1}\\d{7}$");
+                }else{
+                    pagetmp.setPatternValidation(true, "^$|^[2]{1}\\d{7}$");
+                }
+                onPageTreeChanged();
+            }
             if(page.getTitle().equals(labels.getTieneOtroTelefono())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), visible);

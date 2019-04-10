@@ -270,7 +270,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                                     //AL finalizar MA 2018, se solicita siempre muestre mensaje de muestra convasleciente.  28062018
                                     //if (procesos.getConmx().matches("No")) {
                                     //if (procesos.getPbmc().matches("Si")) {
-                                    labelHeader = labelHeader + "<font color='#de3163'>Tomar 5cc de convaleciente<br /></font>";
+                                    labelHeader = labelHeader + "<font color='#de3163'>Tomar 5cc de convaleciente (Tubo rojo o PBMC)<br /></font>";
                                     /*} else {
                                         labelHeader = labelHeader + "<font color='#de3163'>Tomar 5cc de convaleciente<br /></font>";
                                     }*/

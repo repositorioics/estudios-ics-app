@@ -808,20 +808,24 @@ public class NuevoRecon18AniosActivity extends FragmentActivity implements
                     //Validar si la casa a la que pertenece esta actualmente en seguimiento.. si es asi, agregar el participante al seguimiento
                     CasaCohorteFamiliaCaso casaCaso = estudiosAdapter.getCasaCohorteFamiliaCaso(CasosDBConstants.casa + "='" + participanteCHF.getCasaCHF().getCodigoCHF() + "'", null);
                     if (casaCaso != null) {
-                        ParticipanteCohorteFamiliaCaso pCaso = new ParticipanteCohorteFamiliaCaso();
-                        pCaso.setCodigoCasoParticipante(infoMovil.getId());
-                        pCaso.setParticipante(participanteCHF);
-                        pCaso.setCodigoCaso(casaCaso);
-                        pCaso.setEnfermo(Constants.NOKEYSND);
-                        pCaso.setRecordDate(new Date());
-                        pCaso.setRecordUser(username);
-                        pCaso.setDeviceid(infoMovil.getDeviceId());
-                        pCaso.setEstado('0');
-                        pCaso.setPasive('0');
-                        try {
-                            estudiosAdapter.crearParticipanteCohorteFamiliaCaso(pCaso);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        ParticipanteCohorteFamiliaCaso existePartCaso = estudiosAdapter.getParticipanteCohorteFamiliaCaso(CasosDBConstants.codigoCaso + "='"+casaCaso.getCodigoCaso()+"' and "+ CasosDBConstants.participante+"="+participanteCHF.getParticipante().getCodigo(),null);
+                        //solo agregar si no existe
+                        if (existePartCaso==null) {
+                            ParticipanteCohorteFamiliaCaso pCaso = new ParticipanteCohorteFamiliaCaso();
+                            pCaso.setCodigoCasoParticipante(infoMovil.getId());
+                            pCaso.setParticipante(participanteCHF);
+                            pCaso.setCodigoCaso(casaCaso);
+                            pCaso.setEnfermo(Constants.NOKEYSND);
+                            pCaso.setRecordDate(new Date());
+                            pCaso.setRecordUser(username);
+                            pCaso.setDeviceid(infoMovil.getDeviceId());
+                            pCaso.setEstado('0');
+                            pCaso.setPasive('0');
+                            try {
+                                estudiosAdapter.crearParticipanteCohorteFamiliaCaso(pCaso);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                     Participante participante = participanteCHF.getParticipante();

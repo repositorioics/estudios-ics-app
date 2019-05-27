@@ -155,6 +155,7 @@ public class ConstantsDB {
     public static final String OBSEQUIOCHF = "obsequioChf"; //MA2019
     public static final String cDatosParto = "cDatosParto";
     public static final String reConsChf18 = "reConsChf18";
+    public static final String posDengue = "posDengue";//22052019
     //Campos encuesta casa
     public static final String FECHA_ENC_CASA = "fecha_encuesta";
     public static final String CVIVEN1 = "cvivencasa1";
@@ -961,6 +962,7 @@ public class ConstantsDB {
             + OBSEQUIOCHF  + " text, "
             + cDatosParto  + " text, "
             + reConsChf18  + " text, "
+            + posDengue  + " text, "
             + ID_INSTANCIA + " integer,"
             + FILE_PATH + " text,"
             + STATUS + " text, "

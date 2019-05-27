@@ -275,6 +275,9 @@ public class EstudiosAdapter {
                 db.execSQL("ALTER TABLE " + ConstantsDB.MUESTRA_TABLE + " ADD COLUMN " + ConstantsDB.hd_sn + " text");
                 db.execSQL("ALTER TABLE " + ConstantsDB.MUESTRA_TABLE + " ADD COLUMN " + ConstantsDB.hdPorqueNo + " text");
             }
+            if (oldVersion==17) {
+                db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.posDengue + " text");
+            }
         }
 	}
 

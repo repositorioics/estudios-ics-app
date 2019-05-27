@@ -53,6 +53,8 @@ public class ParticipanteProcesos implements Serializable {
     private String obsequioChf;
     private String cDatosParto;//completar datos parto campos que no se pedian antes del 2018
     private String reConsChf18;//reconsentimiento a participantes de familia que cumplen 18 anios
+    //22052019
+    private String posDengue;
 
     private MovilInfo movilInfo;
 
@@ -382,6 +384,14 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setReConsChf18(String reConsChf18) {
         this.reConsChf18 = reConsChf18;
+    }
+
+    public String getPosDengue() {
+        return posDengue;
+    }
+
+    public void setPosDengue(String posDengue) {
+        this.posDengue = posDengue;
     }
 }
 

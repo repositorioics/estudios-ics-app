@@ -591,7 +591,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 return true;
             case R.id.RECONS_CHF:
                 if(mUser.getConsentimiento()){
-                    if(mParticipante.getProcesos().getReConsChf18().matches("Si")){
+                    if(mParticipante.getProcesos().getReConsChf18()!=null && mParticipante.getProcesos().getReConsChf18().matches("Si")){
                         i = new Intent(getApplicationContext(),
                                 NuevoRecon18AniosActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -932,7 +932,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if((mParticipante.getProcesos().getEnCasaChf().matches("Si") && mUser.getEncuestaCasa())) encCasaChfItem.setVisible(true);
             if((mParticipante.getProcesos().getEnCasaSa().matches("Si") && mUser.getEncuestaCasa())) encCasaSaItem.setVisible(true);
             if((mParticipante.getProcesos().getEncPartSa().matches("Si") && mUser.getEncuestaParticipante())) encPartSaItem.setVisible(true);
-            if ((mParticipante.getProcesos().getReConsChf18().matches("Si") && mUser.getConsentimiento())) recon18ChfItem.setVisible(true);
+            if ((mParticipante.getProcesos().getReConsChf18()!=null && mParticipante.getProcesos().getReConsChf18().matches("Si") && mUser.getConsentimiento())) recon18ChfItem.setVisible(true);
             visitaItem.setVisible(false);
         }
         return true;
@@ -1034,6 +1034,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.retired_error) + "</font></small><br />";
             }
             if (mParticipante.getProcesos().getPosZika().matches("Si")) labelHeader = labelHeader + "<small><font color='red'>Participante positivo a ZIKA</font></small><br />";
+            if (mParticipante.getProcesos().getPosDengue()!=null) labelHeader = labelHeader + "<small><font color='red'>"+mParticipante.getProcesos().getPosDengue()+"</font></small><br />";
 
             if (mParticipante.getProcesos().getConsFlu().matches("Si")|| mParticipante.getProcesos().getPesoTalla().matches("Si")
                     || mParticipante.getProcesos().getEnCasa().matches("Si")||mParticipante.getProcesos().getEncPart().matches("Si")
@@ -1046,7 +1047,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || (mParticipante.getProcesos().getReConsDeng()!=null && mParticipante.getProcesos().getReConsDeng().matches("Si"))
                     || !mParticipante.getProcesos().getCoordenadas().equals("0")
                     || mParticipante.getProcesos().getObsequioChf().matches("Si")
-                    || mParticipante.getProcesos().getReConsChf18().matches("Si")){
+                    || (mParticipante.getProcesos().getReConsChf18()!=null && mParticipante.getProcesos().getReConsChf18().matches("Si"))){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
                 //Primero muestras
@@ -1290,7 +1291,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consden_missing_d) + "</font></small><br />";
                     pendiente=true;
                 }
-                if (mParticipante.getProcesos().getReConsChf18().matches("Si") && mUser.getConsentimiento()) {
+                if (mParticipante.getProcesos().getReConsChf18()!=null && mParticipante.getProcesos().getReConsChf18().matches("Si") && mUser.getConsentimiento()) {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.reconchf18_missing) + "</font></small><br />";
                     pendiente=true;
                 }

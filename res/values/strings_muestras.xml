@@ -48,4 +48,75 @@
     <string name="bhcMlPermitido">14 años y mas. BHC : 2 ml es el volumen máximo permitido</string>
     <string name="bhcMlPermitido2a13">2 años a 13 años. BHC : 2 ml es el volumen máximo permitido</string>
     <string name="existeMA2017">Ya se tomó muestra anual</string>
+    <!-- MUESTRAS DE SUPERFICIE-->
+    <string name="manecillaPuerta">Manecilla de la puerta de la casa</string>
+    <string name="llaveBanio">Manija del baño</string>
+    <string name="manijaRefrigerador">Manija del refrigerador</string>
+    <string name="interruptorLuz">Interruptor de la luz sala o habitación</string>
+    <string name="jugueteNino">Juguete de niño</string>
+    <string name="telefonoCelular">Teléfono celular</string>
+    <string name="mesaComedor">Mesa del comedor</string>
+    <string name="grifoPrincipal">Grifo de agua</string>
+    <string name="encimaRefrigerador">Encima del refrigerador</string>
+    <string name="muebleCercaCama">Mueble cerca de la cama</string>
+    <string name="paredDetrasCama">Pared detrás de la cama</string>
+    <string name="paredBanio">Pared en el baño</string>
+    <string name="manos">Muestra de ambas manos</string>
+    <string name="manecillaPuertaHint">Manecilla de la puerta de la casa</string>
+    <string name="llaveBanioHint">Manija o llave del baño</string>
+    <string name="manijaRefrigeradorHint">Manija del refrigerador</string>
+    <string name="interruptorLuzHint">Interruptor de la luz en la sala principal o la habitación</string>
+    <string name="jugueteNinoHint">Juguete de niño usando con frecuencia con una superficie no porosa</string>
+    <string name="telefonoCelularHint">Teléfono celular (si hay) del caso índice</string>
+    <string name="mesaComedorHint">Mesa del comedor</string>
+    <string name="grifoPrincipalHint">Grifo de agua principal o pantry</string>
+    <string name="encimaRefrigeradorHint">Encima del refrigerador</string>
+    <string name="muebleCercaCamaHint">Mueble cerca de la cama</string>
+    <string name="paredDetrasCamaHint">Pared detrás de la cama</string>
+    <string name="paredBanioHint">Pared en el baño</string>
+    <string name="manosHint">Muestra de ambas manos del caso índice</string>
+
+    <string name="otraSuperficie">Otra supercie</string>
+    <string name="osManecillaPuerta">Otra supercie 01</string>
+    <string name="osLlaveBanio">Otra supercie 02</string>
+    <string name="osManijaRefrigerador">Otra supercie 03</string>
+    <string name="osInterruptorLuz">Otra supercie 04</string>
+    <string name="osJugueteNino">Otra supercie 05</string>
+    <string name="osTelefonoCelular">Otra supercie 06</string>
+    <string name="osMesaComedor">Otra supercie 07</string>
+    <string name="osGrifoPrincipal">Otra supercie 08</string>
+    <string name="osEncimaRefrigerador">Otra supercie 09</string>
+    <string name="osMuebleCercaCama">Otra supercie 10</string>
+    <string name="osParedDetrasCama">Otra supercie 11</string>
+    <string name="osParedBanio">Otra supercie 12</string>
+
+    <string name="osManecillaPuertaHint">Otra supercie en lugar de Manecilla de la puerta de la casa</string>
+    <string name="osLlaveBanioHint">Otra supercie en lugar de Manija del baño</string>
+    <string name="osManijaRefrigeradorHint">Otra supercie en lugar de Manija del refrigerador</string>
+    <string name="osInterruptorLuzHint">Otra supercie en lugar de Interruptor de la luz en la sala o habitación</string>
+    <string name="osJugueteNinoHint">Otra supercie en lugar de Juguete de niño usando</string>
+    <string name="osTelefonoCelularHint">Otra supercie en lugar de Teléfono celular</string>
+    <string name="osMesaComedorHint">Otra supercie en lugar de Mesa del comedor</string>
+    <string name="osGrifoPrincipalHint">Otra supercie en lugar de Grifo de agua</string>
+    <string name="osEncimaRefrigeradorHint">Otra supercie en lugar de Encima del refrigerador</string>
+    <string name="osMuebleCercaCamaHint">Otra supercie en lugar de Mueble cerca de la cama</string>
+    <string name="osParedDetrasCamaHint">Otra supercie en lugar de Pared detrás de la cama</string>
+    <string name="osParedBanioHint">Otra supercie en lugar de Pared en el baño</string>
+
+    <string name="codigoMx1">Escanee código de muestra 01</string>
+    <string name="codigoMx2">Escanee código de muestra 02</string>
+    <string name="codigoMx3">Escanee código de muestra 03</string>
+    <string name="codigoMx4">Escanee código de muestra 04</string>
+    <string name="codigoMx5">Escanee código de muestra 05</string>
+    <string name="codigoMx6">Escanee código de muestra 06</string>
+    <string name="codigoMx7">Escanee código de muestra 07</string>
+    <string name="codigoMx8">Escanee código de muestra 08</string>
+    <string name="codigoMx9">Escanee código de muestra 09</string>
+    <string name="codigoMx10">Escanee código de muestra 10</string>
+    <string name="codigoMx11">Escanee código de muestra 11</string>
+    <string name="codigoMx12">Escanee código de muestra 12</string>
+    <string name="codigoMx13">Escanee código de muestra 13</string>
+    <string name="positiveMxHands">Muestra de ambas manos sólo del positivo</string>
+
+
 </resources>

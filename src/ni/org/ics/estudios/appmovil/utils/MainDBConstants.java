@@ -28,7 +28,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 18;
+	public static final int DATABASE_VERSION = 19;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -333,7 +333,11 @@ public class MainDBConstants {
     public static final String otraRelacionFamTutor = "otraRelacionFamTutor";
     public static final String verifTutor = "verifTutor";
     public static final String reconsentimiento = "reconsentimiento";
-
+    //consentimiento muestras superficie casas
+    public static final String nombre1MxSuperficie = "nombre1MxSuperficie";
+    public static final String nombre2MxSuperficie = "nombre2MxSuperficie";
+    public static final String apellido1MxSuperficie = "apellido1MxSuperficie";
+    public static final String apellido2MxSuperficie = "apellido2MxSuperficie";
 
     //crear tabla cartas_consentimientos
     public static final String CREATE_CARTACONSENTIMIENTO_TABLE = "create table if not exists "
@@ -341,7 +345,7 @@ public class MainDBConstants {
             + codigo + " text not null, "
             + fechaFirma + " date not null, "
             + tamizaje + " text not null, "
-            + participante + " integer not null, "
+            + participante + " integer, "
             + nombre1Tutor + " text, "
             + nombre2Tutor + " text, "
             + apellido1Tutor + " text, "
@@ -369,6 +373,11 @@ public class MainDBConstants {
             + otraRelacionFamTutor + " text, "
             + verifTutor + " text, "
             + reconsentimiento + " text, "
+            + casaCHF + " text, "//consentimiento muestras superficie casas
+            + nombre1MxSuperficie + " text, "
+            + nombre2MxSuperficie + " text, "
+            + apellido1MxSuperficie + " text, "
+            + apellido2MxSuperficie + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "

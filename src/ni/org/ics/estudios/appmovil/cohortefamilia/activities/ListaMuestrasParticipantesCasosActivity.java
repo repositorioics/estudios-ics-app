@@ -108,7 +108,13 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
         mButton = (Button) findViewById(R.id.final_visit_button);
         mButton.setVisibility(View.GONE);
 
-		mAddBhcButton = (Button) findViewById(R.id.new_bhc_button);
+        mButton = (Button) findViewById(R.id.new_surface_button);
+        mButton.setVisibility(View.GONE);
+
+        mButton = (Button) findViewById(R.id.new_hand_button);
+        mButton.setVisibility(View.GONE);
+
+        mAddBhcButton = (Button) findViewById(R.id.new_bhc_button);
 		mAddRojoButton = (Button) findViewById(R.id.new_rojo_button);
 		mAddPbmcButton = (Button) findViewById(R.id.new_pbmc_button);
 		mAddRespButton = (Button) findViewById(R.id.new_resp_button);

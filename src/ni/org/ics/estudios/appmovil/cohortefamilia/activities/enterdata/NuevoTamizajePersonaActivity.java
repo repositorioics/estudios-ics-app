@@ -1130,7 +1130,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                             if (catAceptaParteA != null) cc.setAceptaParteA(catAceptaParteA.getCatKey());
                         }
                         if (tieneValor(motivoRechazoParteA)) {
-                            MessageResource catMotivoRechazoParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + motivoRechazoParteA + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                            MessageResource catMotivoRechazoParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + motivoRechazoParteA + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NPP'", null);
                             if (catMotivoRechazoParteA != null)
                                 cc.setMotivoRechazoParteA(catMotivoRechazoParteA.getCatKey());
                         }

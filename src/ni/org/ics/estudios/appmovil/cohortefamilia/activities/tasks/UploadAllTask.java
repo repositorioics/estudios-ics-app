@@ -81,6 +81,7 @@ public class UploadAllTask extends UploadTask {
 
     private List<VisitaFinalCaso> mVisitaFinalCasos = null;
     private List<ObsequioGeneral> mObsequiosGeneral = new ArrayList<ObsequioGeneral>();
+    private List<MuestraSuperficie> mMuestrasSuperficie = new ArrayList<MuestraSuperficie>();
 
 	private String url = null;
 	private String username = null;
@@ -125,8 +126,9 @@ public class UploadAllTask extends UploadTask {
     public static final String NODATA_CASOS = "35";
     public static final String VISITAS_FINALES = "36";
     public static final String OBSEQUIOS = "37";
+    public static final String MUESTRAS_SUP = "38";
     
-	private static final String TOTAL_TASK = "37";
+	private static final String TOTAL_TASK = "38";
 	
 
 	@Override
@@ -186,6 +188,7 @@ public class UploadAllTask extends UploadTask {
 
             mVisitaFinalCasos = estudioAdapter.getVisitaFinalCasos(filtro, null);
             mObsequiosGeneral = estudioAdapter.getObsequiosGenerales(filtro, null);
+            mMuestrasSuperficie = estudioAdapter.getMuestrasSuperficie(filtro, null);
 
 			publishProgress("Datos completos!", "2", "2");
 			
@@ -410,6 +413,12 @@ public class UploadAllTask extends UploadTask {
             error = cargarObsequioGeneral(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, OBSEQUIOS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS_SUP);
+            error = cargarMuestrasSuperficie(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS_SUP);
                 return error;
             }
 		} catch (Exception e1) {
@@ -2120,6 +2129,41 @@ public class UploadAllTask extends UploadTask {
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<ObsequioGeneral[]> requestEntity =
                         new HttpEntity<ObsequioGeneral[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /*************** ObsequioGeneral ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarMuestrasSuperficie(String url, String username,
+                                           String password) throws Exception {
+        try {
+            if(mMuestrasSuperficie.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando muestras superficie!", MUESTRAS_SUP, TOTAL_TASK);
+                final String urlRequest = url + "/movil/muestrasSuperficie";
+                MuestraSuperficie[] envio = mMuestrasSuperficie.toArray(new MuestraSuperficie[mMuestrasSuperficie.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<MuestraSuperficie[]> requestEntity =
+                        new HttpEntity<MuestraSuperficie[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

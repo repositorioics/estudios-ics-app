@@ -58,6 +58,7 @@
         <item>@string/contacts</item>
         <item>@string/samples_caso</item>
         <item>@string/gift</item>
+        <item>@string/surface_samples</item>
     </string-array>
 
     <string-array name="menu_visita_final">

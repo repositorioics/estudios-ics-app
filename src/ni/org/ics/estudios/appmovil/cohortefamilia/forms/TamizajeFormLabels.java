@@ -133,8 +133,20 @@ public class TamizajeFormLabels {
     protected String otraRazonNoAceptaInfluenzaHint;
     protected String verifTutor;
 	protected String finTamizajeLabel;
-
-	
+    //anexo parte D estudio familia para consentimiento muestras de superficie
+    protected String aceptaParteDChf;
+    protected String aceptaParteDChfHint;
+    protected String razonNoAceptaParteDChf;
+    protected String otraRazonNoAceptaParteDChf;
+    protected String razonNoAceptaParteDChfHint;
+    protected String otraRazonNoAceptaParteDChfHint;
+    protected String asentimientoVerbalMxSuper;
+    protected String asentimientoVerbalMxSuperHint;
+    protected String nombre1MxSuperficie;
+    protected String nombre1MxSuperficieHint;
+    protected String nombre2MxSuperficie;
+    protected String apellido1MxSuperficie;
+    protected String apellido2MxSuperficie;
 	
 	public TamizajeFormLabels(){
 		Resources res = MyIcsApplication.getContext().getResources();
@@ -261,7 +273,20 @@ public class TamizajeFormLabels {
         otraRazonNoAceptaInfluenzaHint = res.getString(R.string.otraRazonNoAceptaInfluenzaHint);
         verifTutor = res.getString(R.string.verifTutor).replaceAll("25. ","");
 		finTamizajeLabel = res.getString(R.string.finTamizajeLabel);
-		
+
+        aceptaParteDChf = res.getString(R.string.aceptaParteDChf);
+        aceptaParteDChfHint = res.getString(R.string.aceptaParteDChfHint);
+        razonNoAceptaParteDChf = res.getString(R.string.razonNoAceptaParteDChf);
+        razonNoAceptaParteDChfHint = res.getString(R.string.razonNoAceptaParteDChfHint);
+        otraRazonNoAceptaParteDChf = res.getString(R.string.otraRazonNoAceptaParteDChf);
+        otraRazonNoAceptaParteDChfHint = res.getString(R.string.otraRazonNoAceptaParteDChfHint);
+        asentimientoVerbalMxSuper = res.getString(R.string.asentimientoVerbalMxSuper);
+        asentimientoVerbalMxSuperHint = res.getString(R.string.asentimientoVerbalMxSuperHint);
+        nombre1MxSuperficie = res.getString(R.string.nombre1MxSuperficie);
+        nombre1MxSuperficieHint = res.getString(R.string.nombre1MxSuperficieHint);
+        nombre2MxSuperficie = res.getString(R.string.nombre2MxSuperficie);
+        apellido1MxSuperficie = res.getString(R.string.apellido1MxSuperficie);
+        apellido2MxSuperficie = res.getString(R.string.apellido2MxSuperficie);
 	}
 
 
@@ -1922,5 +1947,109 @@ public class TamizajeFormLabels {
 
     public void setVerifTutor(String verifTutor) {
         this.verifTutor = verifTutor;
+    }
+
+    public String getAceptaParteDChf() {
+        return aceptaParteDChf;
+    }
+
+    public void setAceptaParteDChf(String aceptaParteDChf) {
+        this.aceptaParteDChf = aceptaParteDChf;
+    }
+
+    public String getAceptaParteDChfHint() {
+        return aceptaParteDChfHint;
+    }
+
+    public void setAceptaParteDChfHint(String aceptaParteDChfHint) {
+        this.aceptaParteDChfHint = aceptaParteDChfHint;
+    }
+
+    public String getRazonNoAceptaParteDChf() {
+        return razonNoAceptaParteDChf;
+    }
+
+    public void setRazonNoAceptaParteDChf(String razonNoAceptaParteDChf) {
+        this.razonNoAceptaParteDChf = razonNoAceptaParteDChf;
+    }
+
+    public String getOtraRazonNoAceptaParteDChf() {
+        return otraRazonNoAceptaParteDChf;
+    }
+
+    public void setOtraRazonNoAceptaParteDChf(String otraRazonNoAceptaParteDChf) {
+        this.otraRazonNoAceptaParteDChf = otraRazonNoAceptaParteDChf;
+    }
+
+    public String getRazonNoAceptaParteDChfHint() {
+        return razonNoAceptaParteDChfHint;
+    }
+
+    public void setRazonNoAceptaParteDChfHint(String razonNoAceptaParteDChfHint) {
+        this.razonNoAceptaParteDChfHint = razonNoAceptaParteDChfHint;
+    }
+
+    public String getOtraRazonNoAceptaParteDChfHint() {
+        return otraRazonNoAceptaParteDChfHint;
+    }
+
+    public void setOtraRazonNoAceptaParteDChfHint(String otraRazonNoAceptaParteDChfHint) {
+        this.otraRazonNoAceptaParteDChfHint = otraRazonNoAceptaParteDChfHint;
+    }
+
+    public String getAsentimientoVerbalMxSuper() {
+        return asentimientoVerbalMxSuper;
+    }
+
+    public void setAsentimientoVerbalMxSuper(String asentimientoVerbalMxSuper) {
+        this.asentimientoVerbalMxSuper = asentimientoVerbalMxSuper;
+    }
+
+    public String getAsentimientoVerbalMxSuperHint() {
+        return asentimientoVerbalMxSuperHint;
+    }
+
+    public void setAsentimientoVerbalMxSuperHint(String asentimientoVerbalMxSuperHint) {
+        this.asentimientoVerbalMxSuperHint = asentimientoVerbalMxSuperHint;
+    }
+
+    public String getNombre1MxSuperficie() {
+        return nombre1MxSuperficie;
+    }
+
+    public void setNombre1MxSuperficie(String nombre1MxSuperficie) {
+        this.nombre1MxSuperficie = nombre1MxSuperficie;
+    }
+
+    public String getNombre1MxSuperficieHint() {
+        return nombre1MxSuperficieHint;
+    }
+
+    public void setNombre1MxSuperficieHint(String nombre1MxSuperficieHint) {
+        this.nombre1MxSuperficieHint = nombre1MxSuperficieHint;
+    }
+
+    public String getNombre2MxSuperficie() {
+        return nombre2MxSuperficie;
+    }
+
+    public void setNombre2MxSuperficie(String nombre2MxSuperficie) {
+        this.nombre2MxSuperficie = nombre2MxSuperficie;
+    }
+
+    public String getApellido1MxSuperficie() {
+        return apellido1MxSuperficie;
+    }
+
+    public void setApellido1MxSuperficie(String apellido1MxSuperficie) {
+        this.apellido1MxSuperficie = apellido1MxSuperficie;
+    }
+
+    public String getApellido2MxSuperficie() {
+        return apellido2MxSuperficie;
+    }
+
+    public void setApellido2MxSuperficie(String apellido2MxSuperficie) {
+        this.apellido2MxSuperficie = apellido2MxSuperficie;
     }
 }

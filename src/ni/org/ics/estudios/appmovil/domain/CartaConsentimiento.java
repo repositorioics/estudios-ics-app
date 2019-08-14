@@ -45,6 +45,12 @@ public class CartaConsentimiento extends BaseMetaData {
     private String otraRelacionFamTutor;
     private String verifTutor;
     private String reconsentimiento; //indica si es carta por reconsentimiento del estudio
+    //consentimiento muestras superficie casas
+    private String nombre1MxSuperficie;
+    private String nombre2MxSuperficie;
+    private String apellido1MxSuperficie;
+    private String apellido2MxSuperficie;
+    private String casaChf;
 
     public String getCodigo() {
         return codigo;
@@ -300,6 +306,48 @@ public class CartaConsentimiento extends BaseMetaData {
 
     public void setReconsentimiento(String reconsentimiento) {
         this.reconsentimiento = reconsentimiento;
+    }
+
+    public String getNombre1MxSuperficie() {
+        return nombre1MxSuperficie;
+    }
+
+    public void setNombre1MxSuperficie(String nombre1MxSuperficie) {
+        this.nombre1MxSuperficie = nombre1MxSuperficie;
+    }
+
+    public String getNombre2MxSuperficie() {
+        return nombre2MxSuperficie;
+    }
+
+    public void setNombre2MxSuperficie(String nombre2MxSuperficie) {
+        this.nombre2MxSuperficie = nombre2MxSuperficie;
+    }
+
+    public String getApellido2MxSuperficie() {
+        return apellido2MxSuperficie;
+    }
+
+
+    public String getApellido1MxSuperficie() {
+        return apellido1MxSuperficie;
+    }
+
+    public void setApellido1MxSuperficie(String apellido1MxSuperficie) {
+        this.apellido1MxSuperficie = apellido1MxSuperficie;
+    }
+
+    public void setApellido2MxSuperficie(String apellido2MxSuperficie) {
+        this.apellido2MxSuperficie = apellido2MxSuperficie;
+    }
+
+
+    public String getCasaChf() {
+        return casaChf;
+    }
+
+    public void setCasaChf(String casaChf) {
+        this.casaChf = casaChf;
     }
 
     @Override

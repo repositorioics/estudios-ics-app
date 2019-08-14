@@ -3,6 +3,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 import android.content.ContentValues;
 import android.database.Cursor;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.MuestraSuperficie;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
 
@@ -63,6 +64,45 @@ public class MuestraHelper {
         mMuestra.setRealizaPaxgene(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.realizaPaxgene)));
         mMuestra.setHoraInicioPax(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.horaInicioPax)));
         mMuestra.setHoraFinPax(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.horaFinPax)));
+
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mMuestra.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        mMuestra.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        mMuestra.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
+        mMuestra.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mMuestra.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
+        return mMuestra;
+    }
+
+    //MUESTRAS DE SUPERFICIE
+    public static ContentValues crearMuestraSuperficieContentValues(MuestraSuperficie muestra){
+        ContentValues cv = new ContentValues();
+        cv.put(MuestrasDBConstants.codigo, muestra.getCodigo());
+        cv.put(MuestrasDBConstants.codigoMx, muestra.getCodigoMx());
+        cv.put(MuestrasDBConstants.tipoMuestra, muestra.getTipoMuestra());
+        cv.put(MuestrasDBConstants.otraSuperficie, muestra.getOtraSuperficie());
+        cv.put(MuestrasDBConstants.visita, muestra.getVisita());
+        cv.put(MuestrasDBConstants.caso, muestra.getCaso());
+        if (muestra.getCasaChf()!=null) cv.put(MuestrasDBConstants.casaChf, muestra.getCasaChf().getCodigoCHF());
+        if (muestra.getParticipanteChf()!=null) cv.put(MuestrasDBConstants.participanteChf, muestra.getParticipanteChf().getParticipante().getCodigo());
+
+        if (muestra.getRecordDate() != null) cv.put(MainDBConstants.recordDate, muestra.getRecordDate().getTime());
+        cv.put(MainDBConstants.recordUser, muestra.getRecordUser());
+        cv.put(MainDBConstants.pasive, String.valueOf(muestra.getPasive()));
+        cv.put(MainDBConstants.estado, String.valueOf(muestra.getEstado()));
+        cv.put(MainDBConstants.deviceId, muestra.getDeviceid());
+        return cv;
+    }
+
+    public static MuestraSuperficie crearMuestraSuperficie(Cursor cursor){
+        MuestraSuperficie mMuestra = new MuestraSuperficie();
+        mMuestra.setCodigo(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.codigo)));
+        mMuestra.setCodigoMx(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.codigoMx)));
+        mMuestra.setTipoMuestra(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.tipoMuestra)));
+        mMuestra.setOtraSuperficie(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.otraSuperficie)));
+        mMuestra.setVisita(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.visita)));
+        mMuestra.setCaso(cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.caso)));
+        mMuestra.setParticipanteChf(null);
+        mMuestra.setCasaChf(null);
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mMuestra.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mMuestra.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

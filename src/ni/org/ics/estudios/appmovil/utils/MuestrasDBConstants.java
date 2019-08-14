@@ -1,5 +1,4 @@
 package ni.org.ics.estudios.appmovil.utils;
-
 /**
  * Created by Miguel Salinas on 5/17/2017.
  * V1.0
@@ -84,6 +83,32 @@ public class MuestrasDBConstants {
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigo +"));";
 
+    //tabla Muestras de superficie
+    public static final String MUESTRA_SUPERFICIE_TABLE = "chf_muestras_superficie";
 
+    //campos tabla Muestras de superficie
+    public static final String otraSuperficie = "otraSuperficie";
+    public static final String casaChf = "casaChf";
+    public static final String participanteChf = "participanteChf";
+    public static final String visita = "visita";
+    public static final String caso = "caso";
+
+    //crear tabla Muestras de superficie
+    public static final String CREATE_MUESTRA_SUPERFICIE_TABLE = "create table if not exists "
+            + MUESTRA_SUPERFICIE_TABLE + " ("
+            + codigo + " text not null, "
+            + tipoMuestra + " text, "
+            + otraSuperficie + " text, "
+            + codigoMx + " text, "
+            + casaChf + " text, "
+            + participanteChf + " integer, "
+            + visita + " text, "
+            + caso + " text, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + codigo + "));";
 
 }

@@ -151,5 +151,24 @@
             android:drawableTop="@drawable/ic_menu_search"
             style="?android:attr/buttonBarStyle" />
 
+        <Button
+                android:background="@drawable/selectable_item_background"
+                android:id="@+id/new_surface_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/new_samp_surface"
+                android:drawableTop="@drawable/ic_surface_sample"
+                style="?android:attr/buttonBarStyle" />
+        <Button
+                android:background="@drawable/selectable_item_background"
+                android:id="@+id/new_hand_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/new_samp_hands"
+                android:drawableTop="@drawable/ic_hands"
+                style="?android:attr/buttonBarStyle" />
+
     </LinearLayout>
 </LinearLayout>

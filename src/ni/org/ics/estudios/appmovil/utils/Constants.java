@@ -62,6 +62,7 @@ public class Constants {
     public static final String ENTERING = "ingresando";
     public static final String DESDE_CASOS = "desde_form_casos";
 
+    public static final int COD_EST_CHF = 1;
     public static final int COD_EST_SEROPREVALENCIA = 2;
     public static final int COD_EST_COHORTEDENGUE = 3;
     public static final int COD_EST_COHORTEINFLUENZA = 4;
@@ -107,6 +108,11 @@ public class Constants {
 
     public static final String NUEVO_INGRESO = "nuevo_ngreso";
     public static final String INGRESO_CHF = "nuevo_ngreso_chf";
+    public static final String MX_SUPERFICIE = "mx_superficie";
+    public static final String MX_SUPERFICIE_ASEN = "mx_superficie_asen";
+    public static final String MX_SUPERFICIE_CON = "mx_superficie_con";
+    public static final String MX_SUPERFICIE_1 = "1";
+    public static final String MX_SUPERFICIE_2 = "2";
 }
 
     

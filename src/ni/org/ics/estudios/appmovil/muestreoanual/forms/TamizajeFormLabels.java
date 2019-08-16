@@ -191,6 +191,12 @@ public class TamizajeFormLabels {
     protected String tieneOtroTelefono;
     protected String verifTutor;
     protected String finTamizajeLabel;
+    //UO1
+    protected String aceptaCohorteInfluenzaUO1;
+    protected String razonNoAceptaInfluenzaUO1;
+    protected String otraRazonNoAceptaInfluenzaUO1;
+    protected String razonNoAceptaInfluenzaUO1Hint;
+    protected String otraRazonNoAceptaInfluenzaUO1Hint;
 
 	public TamizajeFormLabels(){
 		Resources res = MyIcsApplication.getContext().getResources();
@@ -372,6 +378,13 @@ public class TamizajeFormLabels {
         tieneOtroTelefono = res.getString(R.string.tieneOtroTelefono);
         verifTutor = res.getString(R.string.verifTutor).replaceAll("25. ","");
         finTamizajeLabel = res.getString(R.string.finTamizajeLabel);
+
+        //UO1
+        aceptaCohorteInfluenzaUO1 = res.getString(R.string.aceptaCohorteInfluenzaUO1);
+        razonNoAceptaInfluenzaUO1 = res.getString(R.string.razonNoAceptaInfluenzaUO1);
+        razonNoAceptaInfluenzaUO1Hint = res.getString(R.string.razonNoAceptaInfluenzaUO1Hint);
+        otraRazonNoAceptaInfluenzaUO1 = res.getString(R.string.otraRazonNoAceptaInfluenzaUO1);
+        otraRazonNoAceptaInfluenzaUO1Hint = res.getString(R.string.otraRazonNoAceptaInfluenzaUO1Hint);
 		
 	}
 
@@ -1049,5 +1062,25 @@ public class TamizajeFormLabels {
 
     public void setVerifTutor(String verifTutor) {
         this.verifTutor = verifTutor;
+    }
+
+    public String getAceptaCohorteInfluenzaUO1() {
+        return aceptaCohorteInfluenzaUO1;
+    }
+
+    public String getRazonNoAceptaInfluenzaUO1() {
+        return razonNoAceptaInfluenzaUO1;
+    }
+
+    public String getOtraRazonNoAceptaInfluenzaUO1() {
+        return otraRazonNoAceptaInfluenzaUO1;
+    }
+
+    public String getRazonNoAceptaInfluenzaUO1Hint() {
+        return razonNoAceptaInfluenzaUO1Hint;
+    }
+
+    public String getOtraRazonNoAceptaInfluenzaUO1Hint() {
+        return otraRazonNoAceptaInfluenzaUO1Hint;
     }
 }

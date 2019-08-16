@@ -1,5 +1,8 @@
 package ni.org.ics.estudios.appmovil.utils;
 
+import org.joda.time.DateTime;
+import org.joda.time.Weeks;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,8 +25,14 @@ public class CalcularEdad {
 		this.fechaNac = fechaNac;
 	}
 
-
-
+    public int getEdadSemanas(){
+        if (this.fechaNac!=null) {
+            DateTime fechaNacimiento = new DateTime(this.fechaNac);
+            DateTime fechaActual = new DateTime(new Date());
+            return Weeks.weeksBetween(fechaNacimiento, fechaActual).getWeeks();
+        }
+        return 0;
+    }
 
 	/*
     Calcular edad del participante según su fecha de nacimiento y fecha actual del sistema

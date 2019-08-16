@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="aceptaCohorteFLuUO1">2. Acepta estudio Cohorte Influenza UO1</string>
+    <string name="incFluUO1">3. Criterios de Inclusión/Exclusión Influenza UO1</string>
+    <string name="preterminoUO1">7. ¿Es bebé Pretermino?</string>
+    <string name="enfermedadInmunoUO1">8. ¿El niño padece de alguna enfermedad con compromiso inmunologico?</string>
+    <string name="enfCronSNUO1">9. Padece alguna enfermedad crónica</string>
+    <string name="enfCronicaUO1">9.1 Seleccione la Enfermedad que padece</string>
+    <string name="tomaTxUO1">9.1.2 ¿Toma algún tratamiento?</string>
+    <string name="cualesTxUO1">9.1.3 ¿Cuál tratamiento?</string>
+    <string name="asisteUO1">10. ¿Dónde asiste cuando tiene problemas de salud el participante?</string>
+    <string name="ocentrosaludUO1">10.1.1 Indique otro centro de salud</string>
+    <string name="puestosaludUO1">10.2 ¿Cuál puesto de salud?</string>
+
+    <string name="aceptaContactoFuturoUO1">11. Contacto en el futuro</string>
+    <string name="aceptaParteBInfUO1">12. Parte B Influenza UO1</string>
+    <string name="aceptaParteCInfUO1">13. Parte C Influenza UO1</string>
+    <string name="asentimientoUO1">14. ¿Dio el niño Asentimiento verbal?</string>
+    <string name="noCumpleIncUO1">El participante no cumple los criterios de Inclusión/Exclusión. No podemos ingresarlo en el estudio</string>
+</resources>

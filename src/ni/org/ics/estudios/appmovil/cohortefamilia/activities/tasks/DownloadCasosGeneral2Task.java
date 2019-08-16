@@ -76,6 +76,7 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
         estudioAdapter.borrarInformacionNoCompletaCaso();
         estudioAdapter.borrarFormularioContactoCaso();
         estudioAdapter.borrarObsequiosGenerales();
+        estudioAdapter.borrarMuestrasSuperficie();
 		try {
             if (mFormularioContactoCasos != null){
                 v = mFormularioContactoCasos.size();

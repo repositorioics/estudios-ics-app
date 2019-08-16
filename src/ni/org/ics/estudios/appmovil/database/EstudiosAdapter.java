@@ -286,6 +286,9 @@ public class EstudiosAdapter {
                 db.execSQL(MainDBConstants.CREATE_CARTACONSENTIMIENTO_TABLE);
                 db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.mxSuperficie + " text");
             }
+            if (oldVersion==19){
+                db.execSQL("ALTER TABLE " + MainDBConstants.VISITAPART_TABLE + " ADD COLUMN " + MainDBConstants.estudio + " text");
+            }
 
         }
 	}

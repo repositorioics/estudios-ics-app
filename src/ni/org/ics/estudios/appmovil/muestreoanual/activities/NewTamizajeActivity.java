@@ -65,11 +65,12 @@ public class NewTamizajeActivity extends FragmentActivity implements
     private boolean notificarCambios = true;
     //private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
     private Integer edadAnios = 0;
-    private Integer edadMeses = 0;
+    private Integer edadSemanas = 0;
     private String tipoIngreso = "";
     private final String TIPO_DENGUE = "Dengue";
     private final String TIPO_INFLUENZA = "Influenza";
-    private final String TIPO_AMBOS = "Ambos";
+    //private final String TIPO_AMBOS = "Ambos";
+    private final String TIPO_INFLUENZA_UO1 = "Influenza UO1";
     private List<MessageResource> catMeses = new ArrayList<MessageResource>();
     private String[] catRelFamMenorEdad; //relación familiar del tutor cuando es menor de edad
     private String[] catRelFamMayorEdad; //relación familiar del tutor cuando es mayor de edad
@@ -77,8 +78,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
     private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
     private Date fechaNacimiento = null;
     private final int EDAD_LIMITE_INGRESO = 11; //justo antes de cumplir 11 anios
-    private final int EDAD_MINIMA_DENGUE = 2;
-    private final int EDAD_MINIMA_FLU = 0;
+    private final int EDAD_MINIMA_DENGUE = 2; //ANIOS
+    private final int EDAD_MINIMA_FLU = 0; //ANIOS
+    private final int EDAD_MAXIMA_FLU_UO1 = 4; //SEMANAS
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -349,8 +351,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(TIPO_INFLUENZA)) {
                     tipoIngreso = TIPO_INFLUENZA;
                 }
-                if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(TIPO_AMBOS)) {
-                    tipoIngreso = TIPO_AMBOS;
+                if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(TIPO_INFLUENZA_UO1)) {
+                    tipoIngreso = TIPO_INFLUENZA_UO1;
                 }
                 changeStatus(mWizardModel.findByKey(labels.getFechaNacimiento()), true);
                 notificarCambios = false;
@@ -367,9 +369,10 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     toast.show();
                     finish();
                 }
-                String[] edad = new CalcularEdad(fechaNacimiento).getEdad().split("/");
+                CalcularEdad calEdad = new CalcularEdad(fechaNacimiento);
+                String[] edad = calEdad.getEdad().split("/");
                 edadAnios = Integer.parseInt(edad[0]);
-                edadMeses = Integer.parseInt(edad[1]);
+                edadSemanas = calEdad.getEdadSemanas();
                 if (!(edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && !(edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO)){
                     changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), false);
                     notificarCambios = false;
@@ -379,12 +382,16 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     toast.show();
                     resetForm(99);
                 }else {
-                    if (!(edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS))){
+                    if (!(edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE))){
                         Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noEsElegible) + " Dengue",Toast.LENGTH_LONG);
                         toast.show();
                     }
-                    if (!(edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.contains(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS))){
+                    if (!(edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.contains(TIPO_INFLUENZA))){
                         Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noEsElegible) + " Influenza", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                    if (edadSemanas > EDAD_MAXIMA_FLU_UO1 && tipoIngreso.contains(TIPO_INFLUENZA_UO1)){
+                        Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noEsElegible) + " Influenza UO1 ", Toast.LENGTH_LONG);
                         toast.show();
                     }
                     if (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)){
@@ -399,7 +406,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             notificarCambios = false;
                         }
                     }
-                    if (tipoIngreso.contains(TIPO_INFLUENZA)){
+                    if (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)){
                         if (!(edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO)) {
                             changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), false);
                             notificarCambios = false;
@@ -411,9 +418,17 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             notificarCambios = false;
                         }
                     }
-                    if (tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)){
-                        changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), true);
-                        notificarCambios = false;
+                    if (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)){
+                        if (edadSemanas > EDAD_MAXIMA_FLU_UO1) {
+                            changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), false);
+                            notificarCambios = false;
+                            changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), true);
+                            notificarCambios = false;
+                            resetForm(99);
+                        }else{
+                            changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), true);
+                            notificarCambios = false;
+                        }
                     }
                 }
                 SingleFixedChoicePage pagetmp = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getRelacionFamiliarTutor());
@@ -456,9 +471,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)));
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), visible && (edadSemanas <= EDAD_MAXIMA_FLU_UO1 && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)));
                 notificarCambios = false;
                 if(test!=null && test.size()!=2){
                     resetForm(99);
@@ -490,9 +507,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), (visible && tiempoValido) && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), (visible && tiempoValido) && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), (visible && tiempoValido) && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)));
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), (visible && tiempoValido) && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), (visible && tiempoValido) && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)));
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), (visible && tiempoValido) && (edadSemanas <= EDAD_MAXIMA_FLU_UO1 && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)));
                     notificarCambios = false;
                     //es alquilada y tiene tiempo valido
                     if (!visible) {
@@ -512,9 +531,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), tiempoValido && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
                         notificarCambios = false;
-                        changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), tiempoValido && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                        changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), tiempoValido && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)));
                         notificarCambios = false;
-                        changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), tiempoValido && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                        changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), tiempoValido && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)));
+                        notificarCambios = false;
+                        changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), tiempoValido && (edadSemanas <= EDAD_MAXIMA_FLU_UO1 && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)));
                         notificarCambios = false;
                     }
                 }
@@ -541,9 +562,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), (esPropia && visible) && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), (esPropia && visible) && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), (esPropia && visible) && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)));
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), (esPropia && visible) && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), (esPropia && visible) && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), (esPropia && visible) && (edadSemanas <= EDAD_MAXIMA_FLU_UO1 && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)));
                 notificarCambios = false;
 
                 if (!esPropia){
@@ -563,9 +586,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)));
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)));
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), visible && (edadSemanas <= EDAD_MAXIMA_FLU_UO1 && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)));
                     notificarCambios = false;
                 }
                 onPageTreeChanged();
@@ -825,9 +850,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
             }
             if(page.getTitle().equals(labels.getAsentimientoVerbal())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)));
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), visible && (edadSemanas <= EDAD_MAXIMA_FLU_UO1 && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)));
                 notificarCambios = false;
                 if(!visible) {
                     resetForm(98);
@@ -942,6 +969,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), visible);
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaDengue()), false);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getRazonNoAceptaDengue())){
@@ -967,6 +996,36 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaInfluenza()), visible);
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenza()), false);
+                notificarCambios = false;
+                if (!visible) {
+                    Page pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteDengue());
+                    boolean visibleDen = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                    if (!visibleDen) {
+                        resetForm(97);
+                    }
+                }
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getAceptaCohorteInfluenzaUO1())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getPretermino()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
+                notificarCambios = false;
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible);
+                //notificarCambios = false;
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), visible);
+                notificarCambios = false;
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaInfluenzaUO1()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenzaUO1()), false);
+                notificarCambios = false;
                 if (!visible) {
                     Page pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteDengue());
                     boolean visibleDen = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
@@ -981,7 +1040,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 Page pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteDengue());
                 boolean visibleDen = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 if (!visible) {
-                    Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noEsElegible) + " Influenza", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noEsElegible) + " " +tipoIngreso, Toast.LENGTH_LONG);
                     toast.show();
                     if (!visibleDen) {
                         resetForm(97);
@@ -1084,7 +1143,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 Page pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteDengue());
                 boolean visibleDen = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 if (!visible) {
-                    Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noEsElegible) + " Influenza", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noEsElegible) + " "+tipoIngreso, Toast.LENGTH_LONG);
                     toast.show();
                     if (!visibleDen) {
                         resetForm(97);
@@ -1188,6 +1247,12 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 onPageTreeChanged();
             }
+            if(page.getTitle().equals(labels.getRazonNoAceptaInfluenzaUO1())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenzaUO1()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
             if(page.getTitle().equals(labels.getCasaPerteneceCohorte())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), visible);
@@ -1252,6 +1317,13 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 //notificarCambios = false;
 
                 pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteInfluenza());
+                visibleTmp = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible && visibleTmp);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), visible && visibleTmp);
+                notificarCambios = false;
+
+                pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1());
                 visibleTmp = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible && visibleTmp);
                 notificarCambios = false;
@@ -1370,8 +1442,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), false);
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaDengue()), false);
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), false);
+        if (preg>97) changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), false);
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaInfluenza()), false);
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenza()), false);
+        if (preg>97) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaInfluenzaUO1()), false);
+        if (preg>97) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenzaUO1()), false);
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getPretermino()), false);
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), false);
 
@@ -1558,13 +1633,17 @@ public class NewTamizajeActivity extends FragmentActivity implements
             String otraRazonNoAceptaDengue = datos.getString(this.getString(R.string.otraRazonNoAceptaDengue));
 
             String aceptaCohorteInfluenza = datos.getString(this.getString(R.string.aceptaCohorteInfluenza));
+            String aceptaCohorteInfluenzaUO1 = datos.getString(this.getString(R.string.aceptaCohorteInfluenzaUO1));
             String pretermino = datos.getString(this.getString(R.string.pretermino));
             String enfermedadInmuno = datos.getString(this.getString(R.string.enfermedadInmuno));
             String razonNoAceptaInfluenza = datos.getString(this.getString(R.string.razonNoAceptaInfluenza));
             String otraRazonNoAceptaInfluenza = datos.getString(this.getString(R.string.otraRazonNoAceptaInfluenza));
+            String razonNoAceptaInfluenzaUO1 = datos.getString(this.getString(R.string.razonNoAceptaInfluenzaUO1));
+            String otraRazonNoAceptaInfluenzaUO1 = datos.getString(this.getString(R.string.otraRazonNoAceptaInfluenzaUO1));
             //Crea un Nuevo Registro de tamizaje
             Tamizaje tamizaje =  new Tamizaje();
             Tamizaje tamizajeInf = new Tamizaje();
+            Tamizaje tamizajeInfUO1 = new Tamizaje();
             tamizaje.setCodigo(infoMovil.getId());
             tamizaje.setCohorte("CP");
             if (tieneValor(sexo)) {
@@ -1675,7 +1754,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
             tamizaje.setPasive('0');
             tamizaje.setEmancipado("0"); //por defecto no es emancipado
             //Registrar tamizaje dengue si aplica
-            if (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)){
+            if (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)){
                 Estudio estudioCDengue = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" +Constants.COD_EST_COHORTEDENGUE, null);
                 tamizaje.setEstudio(estudioCDengue);
                 //Si acepta o no participar, siempre registrar tamizaje
@@ -1695,8 +1774,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 tamizaje.setEsElegible(esElegible?Constants.YESKEYSND:Constants.NOKEYSND);
                 estudiosAdapter.crearTamizaje(tamizaje);
             }
-            //Registrar tamizaje dengue si aplica
-            if (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA) || tipoIngreso.equalsIgnoreCase(TIPO_AMBOS)){
+            //Registrar tamizaje influenza si aplica
+            if (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)){
                 tamizajeInf = tamizaje;
                 //Si acepta o no participar, siempre registrar tamizaje
                 MessageResource catAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaCohorteInfluenza + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -1732,6 +1811,44 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 );
                 tamizajeInf.setEsElegible(esElegible?Constants.YESKEYSND:Constants.NOKEYSND);
                 estudiosAdapter.crearTamizaje(tamizajeInf);
+            }
+            //Registrar tamizaje influenza uo1 si aplica
+            if (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)){
+                tamizajeInfUO1 = tamizaje;
+                //Si acepta o no participar, siempre registrar tamizaje
+                MessageResource catAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaCohorteInfluenzaUO1 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                if (catAceptaParticipar!=null) tamizajeInfUO1.setAceptaParticipar(catAceptaParticipar.getCatKey());
+
+                if (tieneValor(pretermino)) {
+                    MessageResource catPretermino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + pretermino + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    if (catPretermino != null) tamizajeInfUO1.setPretermino(catPretermino.getCatKey());
+                }
+                if (tieneValor(enfermedadInmuno)) {
+                    MessageResource catInmuno = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfermedadInmuno + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    if (catInmuno != null) tamizajeInfUO1.setEnfermedadInmuno(catInmuno.getCatKey());
+                }
+                //Recupera el estudio de la base de datos para el tamizaje
+                Estudio estudioCInfluenza = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" +Constants.COD_EST_UO1, null);
+                tamizajeInfUO1.setCodigo(infoMovil.getId());
+                tamizajeInfUO1.setEstudio(estudioCInfluenza);
+                if (tieneValor(razonNoAceptaInfluenzaUO1)) {
+                    MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaInfluenzaUO1 + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NPP'", null);
+                    if (catRazonNoAceptaParticipar!=null) tamizajeInfUO1.setRazonNoAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
+                }
+                tamizajeInfUO1.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaInfluenzaUO1);
+                if (tieneValor(enfermedad) && enfermedad.equals(Constants.YES)){
+                    guardarEnfermedadesCronicas(cualEnfermedad.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','"), datos, tamizajeInfUO1);
+                }
+                boolean esElegible = ((edadSemanas <= EDAD_MAXIMA_FLU_UO1)
+                        && (totalCriterios==2)
+                        && (((tieneValor(vivienda) && vivienda.matches("Propia"))
+                        && (tieneValor(tiempoResidencia) && (tiempoResidencia.matches("Seis Meses a Dos Años") || tiempoResidencia.matches("Dos Años ó Más"))))
+                        || ((tieneValor(vivienda) &&vivienda.matches("Alquilada")) && (tieneValor(tiempoResidencia) && tiempoResidencia.matches("Dos Años ó Más"))))
+                        && (tieneValor(pretermino) && pretermino.equalsIgnoreCase(Constants.NO))
+                        && (tieneValor(enfermedadInmuno) && enfermedadInmuno.equalsIgnoreCase(Constants.NO))
+                );
+                tamizajeInfUO1.setEsElegible(esElegible?Constants.YESKEYSND:Constants.NOKEYSND);
+                estudiosAdapter.crearTamizaje(tamizajeInfUO1);
             }
 
             //Pregunta si acepta realizar el tamizaje
@@ -1794,11 +1911,12 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
                 Boolean aceptaDengue = tieneValor(aceptaCohorteDengue) && aceptaCohorteDengue.equalsIgnoreCase(Constants.YES);
                 Boolean aceptaInfluenza = tieneValor(aceptaCohorteInfluenza) && aceptaCohorteInfluenza.equalsIgnoreCase(Constants.YES);
+                Boolean aceptaInfluenzaUO1 = tieneValor(aceptaCohorteInfluenzaUO1) && aceptaCohorteInfluenzaUO1.equalsIgnoreCase(Constants.YES);
                 Boolean esPretermino = tieneValor(pretermino) && pretermino.equalsIgnoreCase(Constants.YES);
                 Boolean padeceEnfInmuno = tieneValor(enfermedadInmuno) && enfermedadInmuno.equalsIgnoreCase(Constants.YES);
 
                 //Registrar casa (si es nueva), participante y consentimiento sólo si acepta participar en alguno de los estudios
-                if (aceptaDengue || (aceptaInfluenza && !esPretermino && !padeceEnfInmuno)) {
+                if (aceptaDengue || ((aceptaInfluenza || aceptaInfluenzaUO1)&& !esPretermino && !padeceEnfInmuno)) {
                     String estudios = "";
                     Participante participante;
                     ParticipanteProcesos procesos;
@@ -1993,6 +2111,12 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             } else
                                 estudios += "  " + "Influenza";
                         }
+                        if (aceptaInfluenzaUO1 && !esPretermino && !padeceEnfInmuno) {
+                            if (estudios.isEmpty()) {
+                                estudios = "Influenza UO1";
+                            } else
+                                estudios += "  " + "Influenza UO1";
+                        }
 
                         procesos.setEstudio(estudios);
                         procesos.setCoordenadas("1");
@@ -2085,6 +2209,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
                         //crear carta de consentimiento para influenza
                         if (aceptaInfluenza && !esPretermino && !padeceEnfInmuno){
+                            cc.setAceptaParteA(Constants.YESKEYSND);
                             if (tieneValor(aceptaParteBInf)) {
                                 MessageResource catAceptaParteB = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteBInf + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                                 if (catAceptaParteB!=null) {
@@ -2101,6 +2226,29 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             cc.setTamizaje(tamizajeInf);
                             cc.setReconsentimiento(Constants.NOKEYSND);
                             cc.setVersion(Constants.VERSION_CC_CI);
+                            cc.setAceptaParteD(null);
+                            estudiosAdapter.crearCartaConsentimiento(cc);
+                        }
+
+                        //crear carta de consentimiento para influenza
+                        if (aceptaInfluenzaUO1 && !esPretermino && !padeceEnfInmuno){
+                            cc.setAceptaParteA(Constants.YESKEYSND);
+                            if (tieneValor(aceptaParteBInf)) {
+                                MessageResource catAceptaParteB = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteBInf + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                                if (catAceptaParteB!=null) {
+                                    cc.setAceptaParteB(catAceptaParteB.getCatKey());
+                                }
+                            }
+                            if (tieneValor(aceptaParteCInf)) {
+                                MessageResource catAceptaParteC = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteCInf + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                                if (catAceptaParteC!=null) {
+                                    cc.setAceptaParteC(catAceptaParteC.getCatKey());
+                                }
+                            }
+                            cc.setCodigo(infoMovil.getId());
+                            cc.setTamizaje(tamizajeInfUO1);
+                            cc.setReconsentimiento(Constants.NOKEYSND);
+                            cc.setVersion(Constants.VERSION_CC_UO1);
                             cc.setAceptaParteD(null);
                             estudiosAdapter.crearCartaConsentimiento(cc);
                         }

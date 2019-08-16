@@ -23,8 +23,8 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
-import ni.org.ics.estudios.appmovil.muestreoanual.forms.ReconDengue2018Form;
-import ni.org.ics.estudios.appmovil.muestreoanual.forms.ReconDengue2018FormLabels;
+import ni.org.ics.estudios.appmovil.muestreoanual.forms.ConFluUO1Form;
+import ni.org.ics.estudios.appmovil.muestreoanual.forms.ConFluUO1FormLabels;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
@@ -36,7 +36,7 @@ import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 import java.util.*;
 
 
-public class NewReconDengue2018Activity extends FragmentActivity implements
+public class NewConFluUO1Activity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -49,7 +49,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
     private Button mPrevButton;
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
-    private ReconDengue2018FormLabels labels = new ReconDengue2018FormLabels();
+    private ConFluUO1FormLabels labels = new ConFluUO1FormLabels();
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
     private GPSTracker gps;
@@ -60,11 +60,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
 	private boolean notificarCambios = true;
 	private static Participante participante = new Participante();
     private Integer edadMeses = 0;
-    private boolean retirado;
     private boolean esElegible = true;
     private boolean visExitosa = false;
     private boolean consentimiento;
-    private boolean reconsentimiento;
     private List<MessageResource> catRelacionFamiliar = new ArrayList<MessageResource>();
     private List<MessageResource> catMeses = new ArrayList<MessageResource>();
     private String[] catRazonEmanFem; //razones de emancipación para mujeres
@@ -87,11 +85,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
-		infoMovil = new DeviceInfo(NewReconDengue2018Activity.this);
-        gps = new GPSTracker(NewReconDengue2018Activity.this);
+		infoMovil = new DeviceInfo(NewConFluUO1Activity.this);
+        gps = new GPSTracker(NewConFluUO1Activity.this);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-        mWizardModel = new ReconDengue2018Form(this,mPass);
+        mWizardModel = new ConFluUO1Form(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
@@ -171,10 +169,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             }
         });
 
-        retirado = (participante.getProcesos().getEstPart().equals(0) || !participante.getProcesos().getEstudio().contains("Dengue"));
         edadMeses = participante.getEdadMeses();
-        consentimiento = participante.getProcesos().getConsDeng().equalsIgnoreCase(Constants.YES);
-        reconsentimiento = participante.getProcesos().getReConsDeng().equalsIgnoreCase(Constants.YES);
+        consentimiento = participante.getProcesos().getConsFlu().equalsIgnoreCase(Constants.YES);
         estudiosAdapter.open();
         catRelacionFamiliar = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", CatalogosDBConstants.order);
         catMeses = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", CatalogosDBConstants.order);
@@ -412,32 +408,104 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getAceptaParticipar())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 //emancipado solo se pregunta de 14 a mas
-                changeStatus(mWizardModel.findByKey(labels.getEmancipado()), visible && edadMeses>=168);
-                notificarCambios = false;
+                //changeStatus(mWizardModel.findByKey(labels.getEmancipado()), visible && edadMeses>=168);
+                //notificarCambios = false;
                 //Sólo se preguntará a los retirados
-                changeStatus(mWizardModel.findByKey(labels.getIncDen()), (visible && retirado));
+                changeStatus(mWizardModel.findByKey(labels.getIncDen()), (visible));
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible && retirado));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible));
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), !visible);
                 notificarCambios = false;
-                if (visible && edadMeses<168){
-                    changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaDengue()), false);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getPretermino()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAsiste()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getParteBDen()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getParteCDen()), visible);
+                notificarCambios = false;
+
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && edadMeses >= 72);
+                notificarCambios = false;
+                if (visible && edadMeses < 72){
+                    changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAsiste()), visible);
+                    changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible);
                     notificarCambios = false;
-                    //de 2 a 14 anio
-                    changeStatus(mWizardModel.findByKey(labels.getParteADen()), consentimiento);
+                    changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), visible);
                     notificarCambios = false;
-                    //de 2 a 14 anio
-                    changeStatus(mWizardModel.findByKey(labels.getParteBDen()), consentimiento);
+                    changeStatus(mWizardModel.findByKey(labels.getDomicilio()), visible);
                     notificarCambios = false;
-                    //de 2 a 14 anio
-                    changeStatus(mWizardModel.findByKey(labels.getParteCDen()), consentimiento);
+                    changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), visible);
                     notificarCambios = false;
-                    //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
-                    changeStatus(mWizardModel.findByKey(labels.getParteDDen()), reconsentimiento);
+                    changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
                     notificarCambios = false;
+                    /*changeStatus(mWizardModel.findByKey(labels.getJefeFam()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), visible);
+                    notificarCambios = false;
+                    */
+                    changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDireContacto()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getPadre()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getMadre()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
+                    notificarCambios = false;
+
+                    LabelPage pagetmp = (LabelPage) mWizardModel.findByKey(labels.getDomicilio());
+                    String domicilio;
+                    if (participante.getCasa().getBarrio()!=null){
+                        domicilio = participante.getCasa().getDireccion() + " - ("+ participante.getCasa().getBarrio().getNombre()+")";
+                    }else
+                        domicilio = participante.getCasa().getDireccion();
+                    pagetmp.setHint(domicilio);
+
+                    String relacion = getRelacionFamiliar(participante.getProcesos().getRelacionFam());
+                    pagetmp = (LabelPage) mWizardModel.findByKey(labels.getTutor());
+                    pagetmp.setHint(participante.getProcesos().getTutor()+" - ("+ relacion +")");
+
+                    /*pagetmp = (LabelPage) mWizardModel.findByKey(labels.getJefeFam());
+                    String jefeFamilia = participante.getCasa().getNombre1JefeFamilia();
+                    if (participante.getCasa().getNombre2JefeFamilia()!=null) jefeFamilia = jefeFamilia + " "+  participante.getCasa().getNombre2JefeFamilia();
+                    jefeFamilia = jefeFamilia +" "+ participante.getCasa().getApellido1JefeFamilia();
+                    if (participante.getCasa().getApellido2JefeFamilia()!=null) jefeFamilia = jefeFamilia + " "+  participante.getCasa().getApellido2JefeFamilia();
+                    pagetmp.setHint(jefeFamilia);*/
+
+                    pagetmp = (LabelPage) mWizardModel.findByKey(labels.getPadre());
+                    String padre = participante.getNombre1Padre();
+                    if (participante.getNombre2Padre()!=null) padre = padre + " "+  participante.getNombre2Padre();
+                    padre = padre +" "+ participante.getApellido1Padre();
+                    if (participante.getApellido2Padre()!=null) padre = padre + " "+  participante.getApellido2Padre();
+                    pagetmp.setHint(padre);
+
+                    pagetmp = (LabelPage) mWizardModel.findByKey(labels.getMadre());
+                    String madre = participante.getNombre1Madre();
+                    if (participante.getNombre2Madre()!=null) madre = madre + " "+  participante.getNombre2Madre();
+                    madre = madre +" "+ participante.getApellido1Madre();
+                    if (participante.getApellido2Madre()!=null) madre = madre + " "+  participante.getApellido2Madre();
+                    pagetmp.setHint(madre);
+                    esElegible = visible;
                 }
                 esElegible = visible;
                 if (!visible){
@@ -453,7 +521,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 notificarCambios = false;
                 onPageTreeChanged();
             }
-            if(page.getTitle().equals(labels.getEmancipado())) {
+            /*if(page.getTitle().equals(labels.getEmancipado())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRazonEmancipacion()), visible);
                 notificarCambios = false;
@@ -473,16 +541,10 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getAsiste()), !visible);
                 notificarCambios = false;
                 //de 2 a 14 anio
-                changeStatus(mWizardModel.findByKey(labels.getParteADen()), !visible && consentimiento);
-                notificarCambios = false;
-                //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteBDen()), !visible && consentimiento);
                 notificarCambios = false;
                 //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteCDen()), !visible && consentimiento);
-                notificarCambios = false;
-                //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
-                changeStatus(mWizardModel.findByKey(labels.getParteDDen()), !visible && reconsentimiento);
                 notificarCambios = false;
                 esElegible = !visible;
                 onPageTreeChanged();
@@ -497,17 +559,23 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     toast.show();
                 }
                 onPageTreeChanged();
-            }
+            }*/
             if(page.getTitle().equals(labels.getIncDen())) {
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                 visible = test.size() > 1;
                 //Sólo se preguntará a los retirados
-                changeStatus(mWizardModel.findByKey(labels.getVivienda()), (visible && retirado));
+                changeStatus(mWizardModel.findByKey(labels.getVivienda()), visible);
                 notificarCambios = false;
                 //Sólo se preguntará a los retirados
-                changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), (visible && retirado));
+                changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getPretermino()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), visible);
                 notificarCambios = false;
                 if (!visible){
                     Toast toast = Toast.makeText(getApplicationContext(),labels.getNoCumpleIncDen(),Toast.LENGTH_LONG);
@@ -531,7 +599,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         resetForm(93);
                     }
                     esElegible = visible && tiempoValido;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible && tiempoValido && retirado));
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible && tiempoValido));
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), (visible && tiempoValido));
                     notificarCambios = false;
@@ -546,7 +614,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                             resetForm(93);
                         }
                         esElegible = tiempoValido;
-                        changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), tiempoValido && retirado);
+                        changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), tiempoValido);
                         notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), tiempoValido);
                         notificarCambios = false;
@@ -568,7 +636,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     resetForm(93);
                 }
                 esElegible = esPropia && visible;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (esPropia && visible && retirado));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (esPropia && visible));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getPretermino()), (esPropia && visible));
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), (esPropia && visible));
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), (esPropia && visible));
                 notificarCambios = false;
@@ -583,7 +655,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         resetForm(93);
                     }
                     esElegible = visible;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), visible && retirado);
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getPretermino()), visible);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), visible);
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
                     notificarCambios = false;
@@ -601,22 +677,199 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     resetForm(92);
                 }
                 esElegible = visible;
+                changeStatus(mWizardModel.findByKey(labels.getPretermino()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), visible);
+                notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAsiste()), visible);
                 notificarCambios = false;
-                //de 2 a 14 anio
-                changeStatus(mWizardModel.findByKey(labels.getParteADen()), visible && consentimiento);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
                 notificarCambios = false;
-                //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteBDen()), visible && consentimiento);
                 notificarCambios = false;
-                //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteCDen()), visible && consentimiento);
                 notificarCambios = false;
-                //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
-                changeStatus(mWizardModel.findByKey(labels.getParteDDen()), visible && reconsentimiento);
+                changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && edadMeses >= 72);
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getDomicilio()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
+                notificarCambios = false;
+                /*changeStatus(mWizardModel.findByKey(labels.getJefeFam()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), visible);
+                notificarCambios = false;*/
+                changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getDireContacto()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getPadre()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getMadre()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
+                notificarCambios = false;
+
+                LabelPage pagetmp = (LabelPage) mWizardModel.findByKey(labels.getDomicilio());
+                String domicilio;
+                if (participante.getCasa().getBarrio()!=null){
+                    domicilio = participante.getCasa().getDireccion() + " - ("+ participante.getCasa().getBarrio().getNombre()+")";
+                }else
+                    domicilio = participante.getCasa().getDireccion();
+                pagetmp.setHint(domicilio);
+
+                String relacion = getRelacionFamiliar(participante.getProcesos().getRelacionFam());
+                pagetmp = (LabelPage) mWizardModel.findByKey(labels.getTutor());
+                pagetmp.setHint(participante.getProcesos().getTutor()+" - ("+ relacion +")");
+
+                /*pagetmp = (LabelPage) mWizardModel.findByKey(labels.getJefeFam());
+                String jefeFamilia = participante.getCasa().getNombre1JefeFamilia();
+                if (participante.getCasa().getNombre2JefeFamilia()!=null) jefeFamilia = jefeFamilia + " "+  participante.getCasa().getNombre2JefeFamilia();
+                jefeFamilia = jefeFamilia +" "+ participante.getCasa().getApellido1JefeFamilia();
+                if (participante.getCasa().getApellido2JefeFamilia()!=null) jefeFamilia = jefeFamilia + " "+  participante.getCasa().getApellido2JefeFamilia();
+                pagetmp.setHint(jefeFamilia);*/
+
+                pagetmp = (LabelPage) mWizardModel.findByKey(labels.getPadre());
+                String padre = participante.getNombre1Padre();
+                if (participante.getNombre2Padre()!=null) padre = padre + " "+  participante.getNombre2Padre();
+                padre = padre +" "+ participante.getApellido1Padre();
+                if (participante.getApellido2Padre()!=null) padre = padre + " "+  participante.getApellido2Padre();
+                pagetmp.setHint(padre);
+
+                pagetmp = (LabelPage) mWizardModel.findByKey(labels.getMadre());
+                String madre = participante.getNombre1Madre();
+                if (participante.getNombre2Madre()!=null) madre = madre + " "+  participante.getNombre2Madre();
+                madre = madre +" "+ participante.getApellido1Madre();
+                if (participante.getApellido2Madre()!=null) madre = madre + " "+  participante.getApellido2Madre();
+                pagetmp.setHint(madre);
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getPretermino())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
+                esElegible = visible;
+                if (!visible) {
+                    Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noCumpleIncUO1), Toast.LENGTH_LONG);
+                    toast.show();
+                    resetForm(97);
+                }else {
+                    Page pagetmp2 = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getEnfermedadInmuno());
+                    boolean esInmuno = pagetmp2.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp2.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                    changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAsiste()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getParteBDen()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getParteCDen()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), !esInmuno && edadMeses >= 72);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTutor()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDomicilio()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNomContacto()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDireContacto()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getPadre()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getMadre()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), !esInmuno);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), !esInmuno);
+                    notificarCambios = false;
+                }
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getEnfermedadInmuno())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
+                esElegible = visible;
+                if (!visible) {
+                    Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noCumpleIncUO1), Toast.LENGTH_LONG);
+                    toast.show();
+                        resetForm(97);
+                }else {
+                    Page pagetmp2 = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getPretermino());
+                    boolean esPretermino = pagetmp2.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp2.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                    changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAsiste()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getParteBDen()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getParteCDen()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), !esPretermino && edadMeses >= 72);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTutor()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDomicilio()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getNomContacto()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDireContacto()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getPadre()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getMadre()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), !esPretermino);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), !esPretermino);
+                    notificarCambios = false;
+                }
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getEnfCronSN())) {
@@ -857,115 +1110,6 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 notificarCambios = false;
                 onPageTreeChanged();
             }
-            if (page.getTitle().equals(labels.getParteADen())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
-                changeStatus(mWizardModel.findByKey(labels.getRechDen()), !visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && edadMeses >= 72);
-                notificarCambios = false;
-                if (visible && edadMeses < 72){
-                    changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getDomicilio()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getJefeFam()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getDireContacto()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getPadre()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getMadre()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible);
-                    notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                    notificarCambios = false;
-
-                    LabelPage pagetmp = (LabelPage) mWizardModel.findByKey(labels.getDomicilio());
-                    String domicilio;
-                    if (participante.getCasa().getBarrio()!=null){
-                        domicilio = participante.getCasa().getDireccion() + " - ("+ participante.getCasa().getBarrio().getNombre()+")";
-                    }else
-                        domicilio = participante.getCasa().getDireccion();
-                    pagetmp.setHint(domicilio);
-
-                    String relacion = getRelacionFamiliar(participante.getProcesos().getRelacionFam());
-                    pagetmp = (LabelPage) mWizardModel.findByKey(labels.getTutor());
-                    pagetmp.setHint(participante.getProcesos().getTutor()+" - ("+ relacion +")");
-
-                    pagetmp = (LabelPage) mWizardModel.findByKey(labels.getJefeFam());
-                    String jefeFamilia = participante.getCasa().getNombre1JefeFamilia();
-                    if (participante.getCasa().getNombre2JefeFamilia()!=null) jefeFamilia = jefeFamilia + " "+  participante.getCasa().getNombre2JefeFamilia();
-                    jefeFamilia = jefeFamilia +" "+ participante.getCasa().getApellido1JefeFamilia();
-                    if (participante.getCasa().getApellido2JefeFamilia()!=null) jefeFamilia = jefeFamilia + " "+  participante.getCasa().getApellido2JefeFamilia();
-                    pagetmp.setHint(jefeFamilia);
-
-                    pagetmp = (LabelPage) mWizardModel.findByKey(labels.getPadre());
-                    String padre = participante.getNombre1Padre();
-                    if (participante.getNombre2Padre()!=null) padre = padre + " "+  participante.getNombre2Padre();
-                    padre = padre +" "+ participante.getApellido1Padre();
-                    if (participante.getApellido2Padre()!=null) padre = padre + " "+  participante.getApellido2Padre();
-                    pagetmp.setHint(padre);
-
-                    pagetmp = (LabelPage) mWizardModel.findByKey(labels.getMadre());
-                    String madre = participante.getNombre1Madre();
-                    if (participante.getNombre2Madre()!=null) madre = madre + " "+  participante.getNombre2Madre();
-                    madre = madre +" "+ participante.getApellido1Madre();
-                    if (participante.getApellido2Madre()!=null) madre = madre + " "+  participante.getApellido2Madre();
-                    pagetmp.setHint(madre);
-                    esElegible = visible;
-                }
-                onPageTreeChanged();
-            }
-            if (page.getTitle().equals(labels.getRechDen())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros motivos");
-                changeStatus(mWizardModel.findByKey(labels.getOtroRechDen()), visible);
-                notificarCambios = false;
-                onPageTreeChanged();
-            }
-            if (page.getTitle().equals(labels.getParteDDen())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
-                changeStatus(mWizardModel.findByKey(labels.getRechDenExtEdad()), !visible);
-                notificarCambios = false;
-                if (retirado && !visible){
-                    Toast toast = Toast.makeText(getApplicationContext(), R.string.noAceptaParticipar, Toast.LENGTH_LONG);
-                    toast.show();
-                    resetForm(92);
-                    esElegible = false;
-                }else {
-                    esElegible = true;
-                    changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), edadMeses >= 72);
-                    notificarCambios = false;
-                }
-
-                onPageTreeChanged();
-            }
-            if (page.getTitle().equals(labels.getRechDenExtEdad())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros motivos");
-                changeStatus(mWizardModel.findByKey(labels.getOtroRechDenExtEdad()), visible);
-                notificarCambios = false;
-                onPageTreeChanged();
-            }
             if (page.getTitle().equals(labels.getAsentimiento())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
@@ -980,10 +1124,10 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getJefeFam()), visible);
+                /*changeStatus(mWizardModel.findByKey(labels.getJefeFam()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), visible);
-                notificarCambios = false;
+                notificarCambios = false;*/
                 changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDireContacto()), visible);
@@ -1015,12 +1159,12 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 pagetmp = (LabelPage) mWizardModel.findByKey(labels.getTutor());
                 pagetmp.setHint(participante.getProcesos().getTutor()+" - ("+ relacion +")");
 
-                pagetmp = (LabelPage) mWizardModel.findByKey(labels.getJefeFam());
+                /*pagetmp = (LabelPage) mWizardModel.findByKey(labels.getJefeFam());
                 String jefeFamilia = participante.getCasa().getNombre1JefeFamilia();
                 if (participante.getCasa().getNombre2JefeFamilia()!=null) jefeFamilia = jefeFamilia + " "+  participante.getCasa().getNombre2JefeFamilia();
                 jefeFamilia = jefeFamilia +" "+ participante.getCasa().getApellido1JefeFamilia();
                 if (participante.getCasa().getApellido2JefeFamilia()!=null) jefeFamilia = jefeFamilia + " "+  participante.getCasa().getApellido2JefeFamilia();
-                pagetmp.setHint(jefeFamilia);
+                pagetmp.setHint(jefeFamilia);*/
 
                 pagetmp = (LabelPage) mWizardModel.findByKey(labels.getPadre());
                 String padre = participante.getNombre1Padre();
@@ -1097,14 +1241,14 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), visible);
-                notificarCambios = false;
+                //changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), visible);
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getJefeFam()), visible);
-                notificarCambios = false;
+                //changeStatus(mWizardModel.findByKey(labels.getJefeFam()), visible);
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getPadre()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMadre()), visible);
@@ -1136,56 +1280,6 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 notificarCambios = false;
                 onPageTreeChanged();
             }
-            /*if (page.getTitle().equals(labels.getBarrio())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Fuera de Sector");
-                changeStatus(mWizardModel.findByKey(labels.getOtrobarrio()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAutsup()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), !visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getJefeFam()), !visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), !visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getPadre()), !visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), !visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getMadre()), !visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), !visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), !visible);
-                notificarCambios = false;
-                onPageTreeChanged();
-            }
-            if (page.getTitle().equals(labels.getAutsup())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
-                changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getJefeFam()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getPadre()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getMadre()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                notificarCambios = false;
-                if (!visible) {
-                    Toast toast = Toast.makeText(getApplicationContext(), labels.getAutsupHint(), Toast.LENGTH_LONG);
-                    toast.show();
-                    resetForm(89);
-                }
-                esElegible = visible;
-                onPageTreeChanged();
-            }*/
             if (page.getTitle().equals(labels.getTelefono1SN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif1()), visible);
@@ -1252,7 +1346,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 notificarCambios = false;
                 onPageTreeChanged();
             }
-            if (page.getTitle().equals(labels.getCambiarJefe())) {
+            /*if (page.getTitle().equals(labels.getCambiarJefe())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getJefenom()), visible);
                 notificarCambios = false;
@@ -1263,7 +1357,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getJefeap2()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
-            }
+            }*/
             if (page.getTitle().equals(labels.getTelContacto1SN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTelContacto1()), visible);
@@ -1332,20 +1426,6 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 notificarCambios = false;
                 onPageTreeChanged();
             }
-            //datos de cambio de domicilio se pasan a formulario independiente
-            /*if (page.getTitle().equals(labels.getGeoref())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
-                changeStatus(mWizardModel.findByKey(labels.getGeoref_razon()), visible);
-                notificarCambios = false;
-                onPageTreeChanged();
-            }
-            if (page.getTitle().equals(labels.getGeoref_razon())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
-                changeStatus(mWizardModel.findByKey(labels.getGeoref_otraRazon()), visible);
-                notificarCambios = false;
-                onPageTreeChanged();
-            }*/
-
 
     	}catch (Exception ex){
             ex.printStackTrace();
@@ -1403,149 +1483,138 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
         return numMes;
     }
     private void resetForm(int preg){
-        if (preg>99) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), false);
-        if (preg>99) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaDengue()), false);
+        try {
+            if (preg > 99) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), false);
+            if (preg > 99) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaDengue()), false);
+            /*
+            if (preg > 98) changeStatus(mWizardModel.findByKey(labels.getEmancipado()), false);
+            if (preg > 98) changeStatus(mWizardModel.findByKey(labels.getRazonEmancipacion()), false);
+            if (preg > 97) changeStatus(mWizardModel.findByKey(labels.getOtraRazonEmancipacion()), false);
+            */
+            if (preg > 97) changeStatus(mWizardModel.findByKey(labels.getIncDen()), false);
+            if (preg > 97) changeStatus(mWizardModel.findByKey(labels.getDejoCarta()), false);
+            if (preg > 97) changeStatus(mWizardModel.findByKey(labels.getVivienda()), false);
+            if (preg > 97) changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), false);
+            if (preg > 97) changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), false);
+            if (preg > 97) changeStatus(mWizardModel.findByKey(labels.getPretermino()), false);
+            if (preg > 97) changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), false);
+            if (preg > 96) changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), false);
+            if (preg > 96) changeStatus(mWizardModel.findByKey(labels.getAsiste()), false);
+            if (preg > 96) changeStatus(mWizardModel.findByKey(labels.getOcentrosalud()), false);
+            if (preg > 96) changeStatus(mWizardModel.findByKey(labels.getPuestosalud()), false);
+            //tiempo de residencia
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getParteBDen()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getParteCDen()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronica()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getoEnfCronica()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getTomaTx()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getCualesTx()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getOtroTx()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio1()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes1()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio2()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes2()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio3()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes3()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio4()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes4()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio5()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes5()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio6()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes6()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio7()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes7()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio8()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes8()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio9()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes9()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio10()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes10()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio11()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes11()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio12()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes12()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio13()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes13()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio14()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes14()), false);
+            //no esta dispuesto a ir al centro
+            if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), false);
+            if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getTutor()), false);
+            if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), false);
+            if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getTestigoSN()), false);
+            //asentimiento verbal
+            if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getNombrept()), false);
+            if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getNombrept2()), false);
+            if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getApellidopt()), false);
+            if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getApellidopt2()), false);
+            if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getRelacionFam()), false);
+            if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getMotivoDifTutor()), false);
+            if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getOtroMotivoDifTutor()), false);
+            if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), false);
+            //no hay testigo
+            if (preg > 89) changeStatus(mWizardModel.findByKey(labels.getDomicilio()), false);
+            if (preg > 89) changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), false);
+            if (preg > 89) changeStatus(mWizardModel.findByKey(labels.getNombretest1()), false);
+            if (preg > 89) changeStatus(mWizardModel.findByKey(labels.getNombretest2()), false);
+            if (preg > 89) changeStatus(mWizardModel.findByKey(labels.getApellidotest1()), false);
+            if (preg > 89) changeStatus(mWizardModel.findByKey(labels.getApellidotest2()), false);
+            //if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), false);
+            //if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getJefeFam()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getPadre()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getMadre()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif1()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelefonoCel1()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelefonoOper1()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelefono2SN()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif2()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelefonoCel2()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelefonoOper2()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelefono3SN()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif3()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelefonoCel3()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelefonoOper3()), false);
 
-        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEmancipado()), false);
-        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getRazonEmancipacion()), false);
+            //if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getJefenom()), false);
+            //if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getJefenom2()), false);
+            //if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getJefeap()), false);
+            //if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getJefeap2()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getNombrepadre()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getNombrepadre2()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getApellidopadre()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getApellidopadre2()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getNombremadre()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getNombremadre2()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getApellidomadre()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getApellidomadre2()), false);
 
-        if (preg>97) changeStatus(mWizardModel.findByKey(labels.getOtraRazonEmancipacion()), false);
-        if (preg>97) changeStatus(mWizardModel.findByKey(labels.getIncDen()), false);
-        if (preg>97) changeStatus(mWizardModel.findByKey(labels.getDejoCarta()), false);
-        if (preg>97) changeStatus(mWizardModel.findByKey(labels.getVivienda()), false);
-        if (preg>97) changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), false);
-        if (preg>97) changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), false);
-        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), false);
-        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAsiste()), false);
-        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getOcentrosalud()), false);
-        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getPuestosalud()), false);
-        //tiempo de residencia
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getParteADen()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getRechDen()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getOtroRechDen()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getParteBDen()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getParteCDen()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getParteDDen()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getRechDenExtEdad()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getOtroRechDenExtEdad()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronica()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getoEnfCronica()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getTomaTx()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getCualesTx()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getOtroTx()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio1()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes1()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio2()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes2()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio3()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes3()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio4()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes4()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio5()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes5()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio6()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes6()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio7()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes7()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio8()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes8()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio9()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes9()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio10()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes10()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio11()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes11()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio12()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes12()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio13()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes13()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio14()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes14()), false);
-        //no esta dispuesto a ir al centro
-        if (preg>91) changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), false);
-        if (preg>91) changeStatus(mWizardModel.findByKey(labels.getTutor()), false);
-        if (preg>91) changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), false);
-        if (preg>91) changeStatus(mWizardModel.findByKey(labels.getTestigoSN()), false);
-        //asentimiento verbal
-        if (preg>90) changeStatus(mWizardModel.findByKey(labels.getNombrept()), false);
-        if (preg>90) changeStatus(mWizardModel.findByKey(labels.getNombrept2()), false);
-        if (preg>90) changeStatus(mWizardModel.findByKey(labels.getApellidopt()), false);
-        if (preg>90) changeStatus(mWizardModel.findByKey(labels.getApellidopt2()), false);
-        if (preg>90) changeStatus(mWizardModel.findByKey(labels.getRelacionFam()), false);
-        if (preg>90) changeStatus(mWizardModel.findByKey(labels.getMotivoDifTutor()), false);
-        if (preg>90) changeStatus(mWizardModel.findByKey(labels.getOtroMotivoDifTutor()), false);
-        if (preg>90) changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), false);
-        //no hay testigo
-        if (preg>89) changeStatus(mWizardModel.findByKey(labels.getDomicilio()), false);
-        if (preg>89) changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), false);
-        if (preg>89) changeStatus(mWizardModel.findByKey(labels.getNombretest1()), false);
-        if (preg>89) changeStatus(mWizardModel.findByKey(labels.getNombretest2()), false);
-        if (preg>89) changeStatus(mWizardModel.findByKey(labels.getApellidotest1()), false);
-        if (preg>89) changeStatus(mWizardModel.findByKey(labels.getApellidotest2()), false);
-        //datos de cambio de domicilio se pasan a formulario independiente
-        //if (preg>89) changeStatus(mWizardModel.findByKey(labels.getBarrio()), false);
-        //if (preg>89) changeStatus(mWizardModel.findByKey(labels.getOtrobarrio()), false);
-        //if (preg>89) changeStatus(mWizardModel.findByKey(labels.getDire()), false);
-        //if (preg>89) changeStatus(mWizardModel.findByKey(labels.getAutsup()), false);
-        //no tiene autorizacion supervisor
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getJefeFam()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getPadre()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getMadre()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif1()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelefonoCel1()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelefonoOper1()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelefono2SN()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif2()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelefonoCel2()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelefonoOper2()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelefono3SN()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif3()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelefonoCel3()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelefonoOper3()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getNomContacto()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getDireContacto()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContacto1()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContactoCel1()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContactoOper1()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContacto2SN()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContactoClasif2()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContactoCel2()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContactoOper2()), false);
 
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getJefenom()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getJefenom2()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getJefeap()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getJefeap2()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getNombrepadre()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getNombrepadre2()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getApellidopadre()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getApellidopadre2()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getNombremadre()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getNombremadre2()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getApellidomadre()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getApellidomadre2()), false);
-
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getNomContacto()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getDireContacto()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelContacto1()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelContactoCel1()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelContactoOper1()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelContacto2SN()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelContactoClasif2()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelContactoCel2()), false);
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getTelContactoOper2()), false);
-
-        if (preg>88) changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), false);
-        //datos de cambio de domicilio se pasan a formulario independiente
-        //if (preg>88) changeStatus(mWizardModel.findByKey(labels.getGeoref()), false);
-        //if (preg>88) changeStatus(mWizardModel.findByKey(labels.getGeoref_razon()), false);
-        //if (preg>88) changeStatus(mWizardModel.findByKey(labels.getGeoref_otraRazon()), false);
-
-        if (preg>87) changeStatus(mWizardModel.findByKey(labels.getDejoCarta()), false);
-        if (preg>87) changeStatus(mWizardModel.findByKey(labels.getPersonaDejoCarta()), false);
-        if (preg>87) changeStatus(mWizardModel.findByKey(labels.getRelFamPersonaDejoCarta()), false);
-        if (preg>87) changeStatus(mWizardModel.findByKey(labels.getPersonaCasa()), false);
-        if (preg>87) changeStatus(mWizardModel.findByKey(labels.getRelacionFamPersonaCasa()), false);
-        if (preg>87) changeStatus(mWizardModel.findByKey(labels.getOtraRelacionPersonaCasa()), false);
-        if (preg>87) changeStatus(mWizardModel.findByKey(labels.getTelefonoPersonaCasa()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), false);
+            if (preg > 87) changeStatus(mWizardModel.findByKey(labels.getDejoCarta()), false);
+            if (preg > 87) changeStatus(mWizardModel.findByKey(labels.getPersonaDejoCarta()), false);
+            if (preg > 87) changeStatus(mWizardModel.findByKey(labels.getRelFamPersonaDejoCarta()), false);
+            if (preg > 87) changeStatus(mWizardModel.findByKey(labels.getPersonaCasa()), false);
+            if (preg > 87) changeStatus(mWizardModel.findByKey(labels.getRelacionFamPersonaCasa()), false);
+            if (preg > 87) changeStatus(mWizardModel.findByKey(labels.getOtraRelacionPersonaCasa()), false);
+            if (preg > 87) changeStatus(mWizardModel.findByKey(labels.getTelefonoPersonaCasa()), false);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
 
     }
 
@@ -1611,34 +1680,30 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             String relacionFamPersonaCasa = datos.getString(this.getString(R.string.relacionFamPersonaCasa));
             String otraRelacionPersonaCasa = datos.getString(this.getString(R.string.otraRelacionPersonaCasa));
             String telefonoPersonaCasa = datos.getString(this.getString(R.string.telefonoPersonaCasa));
-            String aceptaParticipar = datos.getString(this.getString(R.string.aceptaCohorteDengueRC2018));
-            String razonNoAceptaDengue = datos.getString(this.getString(R.string.razonNoAceptaDengue));
-            String otraRazonNoAceptaDengue = datos.getString(this.getString(R.string.otraRazonNoAceptaDengue));
-            String emancipado = datos.getString(this.getString(R.string.emancipado2));
-            String razonEmancipacion = datos.getString(this.getString(R.string.razonEmancipacion));
-            String otraRazonEmancipacion = datos.getString(this.getString(R.string.otraRazonEmancipacion));
-            String incDen = datos.getString(this.getString(R.string.incDen));
+            String aceptaParticipar = datos.getString(this.getString(R.string.aceptaCohorteFLuUO1));
+            String razonNoAcepta = datos.getString(this.getString(R.string.razonNoAceptaInfluenzaUO1));
+            String otraRazonNoAcepta = datos.getString(this.getString(R.string.otraRazonNoAceptaInfluenzaUO1));
+            //String emancipado = datos.getString(this.getString(R.string.emancipado2));
+            //String razonEmancipacion = datos.getString(this.getString(R.string.razonEmancipacion));
+            //String otraRazonEmancipacion = datos.getString(this.getString(R.string.otraRazonEmancipacion));
+            String incDen = datos.getString(this.getString(R.string.incFluUO1));
             String vivienda = datos.getString(this.getString(R.string.vivienda));//agregar en tamizaje
             String tiempoResidencia = datos.getString(this.getString(R.string.tiempoResid));
+            String pretermino = datos.getString(this.getString(R.string.preterminoUO1));
+            String enfermedadInmuno = datos.getString(this.getString(R.string.enfermedadInmunoUO1));
             String aceptaAtenderCentro = datos.getString(this.getString(R.string.aceptaAtenderCentroRC2018));
-            String enfCronSN = datos.getString(this.getString(R.string.enfCronSN));
-            String enfCronica = datos.getString(this.getString(R.string.enfCronica));
-            String tomaTx = datos.getString(this.getString(R.string.tomaTx));
-            String cualesTx = datos.getString(this.getString(R.string.cualesTx));
+            String enfCronSN = datos.getString(this.getString(R.string.enfCronSNUO1));
+            String enfCronica = datos.getString(this.getString(R.string.enfCronicaUO1));
+            String tomaTx = datos.getString(this.getString(R.string.tomaTxUO1));
+            String cualesTx = datos.getString(this.getString(R.string.cualesTxUO1));
             String otroTx = datos.getString(this.getString(R.string.otroTx));//agregar en tamizaje
-            String asiste = datos.getString(this.getString(R.string.asiste));
-            String ocentrosalud = datos.getString(this.getString(R.string.ocentrosalud));
-            String puestosalud = datos.getString(this.getString(R.string.puestosalud));
-            String asentimiento = datos.getString(this.getString(R.string.asentimiento));
-            String parteADen = datos.getString(this.getString(R.string.parteADen));
-            String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturoRC2018));
-            String parteBDen = datos.getString(this.getString(R.string.parteBDen));
-            String parteCDen = datos.getString(this.getString(R.string.parteCDen));
-            String parteDDen = datos.getString(this.getString(R.string.parteDDen));
-            String rechDenExtEdad = datos.getString(this.getString(R.string.rechDenExtEdad));//agregar en carta
-            String otroRechDenExtEdad = datos.getString(this.getString(R.string.otroRechDenExtEdad));//agregar en carta
-            String rechDen = datos.getString(this.getString(R.string.rechDen));
-            String otroRechDen = datos.getString(this.getString(R.string.otroRechDen));
+            String asiste = datos.getString(this.getString(R.string.asisteUO1));
+            String ocentrosalud = datos.getString(this.getString(R.string.ocentrosaludUO1));
+            String puestosalud = datos.getString(this.getString(R.string.puestosaludUO1));
+            String asentimiento = datos.getString(this.getString(R.string.asentimientoUO1));
+            String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturoUO1));
+            String parteBDen = datos.getString(this.getString(R.string.aceptaParteBInfUO1));
+            String parteCDen = datos.getString(this.getString(R.string.aceptaParteCInfUO1));
             String nombrept = datos.getString(this.getString(R.string.nombrept));
             String nombrept2 = datos.getString(this.getString(R.string.nombrept2));
             String apellidopt = datos.getString(this.getString(R.string.apellidopt));
@@ -1655,11 +1720,6 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             String apellidotest1 = datos.getString(this.getString(R.string.apellidotest1));
             String apellidotest2 = datos.getString(this.getString(R.string.apellidotest2));
             String cmDomicilio = datos.getString(this.getString(R.string.cmDomicilio));
-            //datos de cambio de domicilio se pasan a formulario independiente
-            //String barrio = datos.getString(this.getString(R.string.barrioRC2018));
-            //String otrobarrio = datos.getString(this.getString(R.string.otrobarrio));
-            //String dire = datos.getString(this.getString(R.string.dire));
-            //String autsup = datos.getString(this.getString(R.string.autsup));//agregar en tamizaje
             String telefonoClasif1 = datos.getString(this.getString(R.string.telefonoClasif1));
             String telefonoCel1 = datos.getString(this.getString(R.string.telefonoCel1));
             String telefonoOper1 = datos.getString(this.getString(R.string.telefonoOper1));
@@ -1669,11 +1729,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             String telefonoClasif3 = datos.getString(this.getString(R.string.telefonoClasif3));
             String telefonoCel3 = datos.getString(this.getString(R.string.telefonoCel3));
             String telefonoOper3 = datos.getString(this.getString(R.string.telefonoOper3));
-            String cambiarJefe = datos.getString(this.getString(R.string.cambiarJefe));
+            /*String cambiarJefe = datos.getString(this.getString(R.string.cambiarJefe));
             String jefenom = datos.getString(this.getString(R.string.jefenom));
             String jefenom2 = datos.getString(this.getString(R.string.jefenom2));
             String jefeap = datos.getString(this.getString(R.string.jefeap));
-            String jefeap2 = datos.getString(this.getString(R.string.jefeap2));
+            String jefeap2 = datos.getString(this.getString(R.string.jefeap2));*/
             String nomContacto = datos.getString(this.getString(R.string.nomContacto));
             String barrioContacto = datos.getString(this.getString(R.string.barrioContacto211));
             String otrobarrioContacto = datos.getString(this.getString(R.string.otrobarrioContacto));//agregar en contactoparticipante
@@ -1695,11 +1755,6 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             String apellidomadre = datos.getString(this.getString(R.string.apellidomadre));
             String apellidomadre2 = datos.getString(this.getString(R.string.apellidomadre2));
             String verifTutor = datos.getString(this.getString(R.string.verifTutor));//agregar en carta
-            //datos de cambio de domicilio se pasan a formulario independiente
-            //String georef = datos.getString(this.getString(R.string.georef));
-            //String manzana = datos.getString(this.getString(R.string.Manzana));
-            //String georef_razon = datos.getString(this.getString(R.string.georef_razon));
-            //String georef_otraRazon = datos.getString(this.getString(R.string.georef_otraRazon));
 
             VisitaTerrenoParticipante visita = new VisitaTerrenoParticipante();
             visita.setFechaVisita(new Date());
@@ -1734,7 +1789,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             visita.setOtraRelacionPersonaCasa(otraRelacionPersonaCasa);
             visita.setTelefonoPersonaCasa(telefonoPersonaCasa);
             visita.setCodigoVisita(infoMovil.getId());
-            visita.setEstudio("Dengue");
+            visita.setEstudio("Influenza UO1");
             estudiosAdapter.crearVisitaTerrenoParticipante(visita);
 
             //si visita es exitosa registrar tamizaje, carta de consentimiento, y actualizar datos del participante participante
@@ -1746,18 +1801,17 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 tamizaje.setSexo(participante.getSexo());
                 tamizaje.setFechaNacimiento(participante.getFechaNac());
                 tamizaje.setAceptaTamizajePersona(Constants.YESKEYSND);
-                tamizaje.setCodigoParticipanteRecon(participante.getCodigo());
                 //Si acepta o no participar, siempre registrar tamizaje
                 MessageResource catAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParticipar + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 if (catAceptaParticipar != null) tamizaje.setAceptaParticipar(catAceptaParticipar.getCatKey());
-                if (tieneValor(razonNoAceptaDengue)) {
-                    MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaDengue + "' and " + CatalogosDBConstants.catRoot + "='CPD_CAT_MOTRECHAZO'", null);
+                if (tieneValor(razonNoAcepta)) {
+                    MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAcepta + "' and " + CatalogosDBConstants.catRoot + "='CPD_CAT_MOTRECHAZO'", null);
                     if (catRazonNoAceptaParticipar != null)
                         tamizaje.setRazonNoAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
                 }
-                tamizaje.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaDengue);
+                tamizaje.setOtraRazonNoAceptaParticipar(otraRazonNoAcepta);
                 tamizaje.setEsElegible(esElegible?Constants.YESKEYSND:Constants.NOKEYSND);
-                if (tieneValor(emancipado)) {
+                /*if (tieneValor(emancipado)) {
                     MessageResource catEman = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + emancipado + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                     if (catEman != null)
                         tamizaje.setEmancipado(catEman.getCatKey());
@@ -1767,7 +1821,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     if (catEman != null)
                         tamizaje.setRazonEmancipacion(catEman.getCatKey());
                     tamizaje.setOtraRazonEmancipacion(otraRazonEmancipacion);
-                }
+                }*/
                 if (tieneValor(incDen)) {
                     String keysCriterios = "";
                     incDen = incDen.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','");
@@ -1787,6 +1841,14 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 if (tieneValor(tiempoResidencia)) {
                     MessageResource cattiempoResidencia = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tiempoResidencia + "' and " + CatalogosDBConstants.catRoot + "='CP_CAT_TR'", null);
                     if (cattiempoResidencia != null) tamizaje.setTiempoResidencia(cattiempoResidencia.getCatKey());
+                }
+                if (tieneValor(pretermino)) {
+                    MessageResource catPretermino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + pretermino + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    if (catPretermino != null) tamizaje.setPretermino(catPretermino.getCatKey());
+                }
+                if (tieneValor(enfermedadInmuno)) {
+                    MessageResource catInmuno = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfermedadInmuno + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    if (catInmuno != null) tamizaje.setEnfermedadInmuno(catInmuno.getCatKey());
                 }
                 if (tieneValor(enfCronSN)) {
                     MessageResource catEnfermedad = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + enfCronSN + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -1846,9 +1908,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 tamizaje.setEstado('0');
                 tamizaje.setPasive('0');
 
-                //Registrar tamizaje dengue
-                Estudio estudioCDengue = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" + Constants.COD_EST_COHORTEDENGUE, null);
-                tamizaje.setEstudio(estudioCDengue);
+                //Registrar tamizaje UO1
+                Estudio estudioNuevo = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" + Constants.COD_EST_UO1, null);
+                tamizaje.setEstudio(estudioNuevo);
                 estudiosAdapter.crearTamizaje(tamizaje);
 
                 //Pregunta si acepta realizar el tamizaje
@@ -1903,18 +1965,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     }
                     cc.setOtroMotivoDifTutor(otroMotivoDifTutor);
                     cc.setOtraRelacionFamTutor(otraRelacionFam);
-
-                    if (tieneValor(parteADen)) {
-                        MessageResource catAceptaParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + parteADen + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                        if (catAceptaParteA != null) {
-                            cc.setAceptaParteA(catAceptaParteA.getCatKey());
-                        }
-                    }
-                    if (tieneValor(rechDen)) {
-                        MessageResource catrechazoParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + rechDen + "' and " + CatalogosDBConstants.catRoot + "='CPD_CAT_MOTRECHAZO'", null);
-                        if (catrechazoParteA != null) cc.setMotivoRechazoParteA(catrechazoParteA.getCatKey());
-                        cc.setOtroMotivoRechazoParteA(otroRechDen);
-                    }
+                    cc.setAceptaParteA(Constants.YESKEYSND);
                     if (tieneValor(parteBDen)) {
                         MessageResource catAceptaParteB = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + parteBDen + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                         if (catAceptaParteB != null) {
@@ -1945,61 +1996,23 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                             cc.setAceptaContactoFuturo(catConFut.getCatKey());
                         }
                     }
-                    cc.setReconsentimiento(Constants.YESKEYSND);
+                    cc.setReconsentimiento(Constants.NOKEYSND);
                     cc.setTamizaje(tamizaje);
-                    if (tieneValor(parteADen)) {
-                        cc.setCodigo(infoMovil.getId());
-                        cc.setVersion(Constants.VERSION_CC_CD);
-                        //crear carta de consentimiento para dengue
-                        estudiosAdapter.crearCartaConsentimiento(cc);
-                    }
-                    //si se preguntó por la parte D entonces crear nuevo tamizaje y nueva carta para la parte D
-                    if (tieneValor(parteDDen)) {
-                        //solo crear nuevo tamizaje si se pregunto por la parte A
-                        if (tieneValor(parteADen)) {
-                            //se crea tamizaje para parteD
-                            Tamizaje tamizajeParteD = new Tamizaje();
-                            tamizajeParteD = tamizaje;
-                            tamizajeParteD.setCodigo(infoMovil.getId());
-                            estudiosAdapter.crearTamizaje(tamizajeParteD);
-                            cc.setTamizaje(tamizajeParteD);
-                            if (tieneValor(enfCronSN) && enfCronSN.equals(Constants.YES))
-                                guardarEnfermedadesCronicas(enfCronica.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','"), datos, tamizajeParteD);
-                        }
-                        cc.setCodigo(infoMovil.getId());
-                        cc.setAceptaParteA(null);
-                        cc.setMotivoRechazoParteA(null);
-                        cc.setOtroMotivoRechazoParteA(null);
-                        cc.setAceptaContactoFuturo(null);
-                        cc.setAceptaParteB(null);
-                        cc.setAceptaParteC(null);
-                        cc.setVersion(Constants.VERSION_CC_CD_D);
-                        MessageResource catAceptaParteD = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + parteDDen + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                        if (catAceptaParteD != null) cc.setAceptaParteD(catAceptaParteD.getCatKey());
-
-                        if (tieneValor(rechDenExtEdad)) {
-                            MessageResource catRechD = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + rechDenExtEdad + "' and " + CatalogosDBConstants.catRoot + "='CPD_CAT_MOTRECHAZO'", null);
-                            if (catRechD != null) cc.setMotivoRechazoParteDExt(catRechD.getCatKey());
-                            cc.setOtroMotivoRechazoParteDExt(otroRechDenExtEdad);
-                        }
-                        //se crea tamizaje de parte D(es otra carta)
-                        estudiosAdapter.crearCartaConsentimiento(cc);
-                    }
+                    cc.setVersion(Constants.VERSION_CC_UO1);
+                    cc.setCodigo(infoMovil.getId());
+                    estudiosAdapter.crearCartaConsentimiento(cc);
                     MovilInfo movilInfo = new MovilInfo();
                     movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
                     movilInfo.setDeviceid(infoMovil.getDeviceId());
                     movilInfo.setUsername(username);
                     movilInfo.setToday(new Date());
                     ParticipanteProcesos procesos = participante.getProcesos();
-                    if (procesos.getReConsDeng() != null) {
-                        procesos.setReConsDeng("No");
-                    }
-                    procesos.setConsDeng("No");
+                    procesos.setConsFlu("No");
                     procesos.setMovilInfo(movilInfo);
                     estudiosAdapter.actualizarParticipanteProcesos(procesos);
                     if (esElegible) {
                         int ceroDefaul = 0;
-                        Casa casa = participante.getCasa();
+                        /*Casa casa = participante.getCasa();
                         if (cambiarJefe.equals(Constants.YES)) {
                             if (tieneValor(jefenom)) casa.setNombre1JefeFamilia(jefenom);
                             if (tieneValor(jefenom2)) casa.setNombre2JefeFamilia(jefenom2);
@@ -2009,14 +2022,14 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                             casa.setRecordUser(username);
                             casa.setDeviceid(infoMovil.getDeviceId());
                             casa.setEstado('0');
-                        }
+                        }*/
                         //cambio de domicilio
+                        //estudiosAdapter.editarCasa(casa);
                         if (tieneValor(cmDomicilio) && cmDomicilio.equals(Constants.YES)) {
                             procesos.setCoordenadas("2");
                         }else{
                             procesos.setCoordenadas("0");
                         }
-                        estudiosAdapter.editarCasa(casa);
                         if (tieneValor(cambiarPadre) && cambiarPadre.equals(Constants.YES)) {
                             if (tieneValor(nombrepadre)) participante.setNombre1Padre(nombrepadre);
                             if (tieneValor(nombrepadre2)) participante.setNombre2Padre(nombrepadre2);
@@ -2062,15 +2075,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                             procesos.setEstPart(1);
                         }
                         if (procesos.getEstudio() == null || procesos.getEstudio().isEmpty()) {
-                            procesos.setEstudio("Dengue");
-                        }else if (procesos.getEstudio().equals("Influenza")){
-                            procesos.setEstudio("Dengue  Influenza");
-                        }else if (procesos.getEstudio().equals("CH Familia")){
-                            procesos.setEstudio("Dengue    CH Familia");
-                        }else if (procesos.getEstudio().equals("Influenza  CH Familia")){
-                            procesos.setEstudio("Dengue  Influenza  CH Familiaa");
+                            procesos.setEstudio("Influenza UO1");
+                        }else {
+                            String estudios =procesos.getEstudio();
+                            procesos.setEstudio(estudios.replaceAll("Influenza","Influenza UO1"));
                         }
-
                         estudiosAdapter.actualizarParticipanteProcesos(procesos);
 
                         Intent i = new Intent(getApplicationContext(),
@@ -2089,17 +2098,14 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     }
 
                 } else {
-                    //Si no acepta participar entonces desactivar el proceso de recon dengue
+                    //Si no acepta participar entonces desactivar el proceso de cons flu UO1
                     MovilInfo movilInfo = new MovilInfo();
                     movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
                     movilInfo.setDeviceid(infoMovil.getDeviceId());
                     movilInfo.setUsername(username);
                     movilInfo.setToday(new Date());
                     ParticipanteProcesos procesos = participante.getProcesos();
-                    if (procesos.getReConsDeng() != null) {
-                        procesos.setReConsDeng("No");
-                    }
-                    procesos.setConsDeng("No");
+                    procesos.setConsFlu("No");
                     procesos.setMovilInfo(movilInfo);
                     estudiosAdapter.actualizarParticipanteProcesos(procesos);
                     Intent i = new Intent(getApplicationContext(),

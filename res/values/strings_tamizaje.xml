@@ -205,4 +205,10 @@
     <string name="missingMxSuper1">Debe registrar consentimiento mx manos</string>
     <string name="missingMxSuper2">Debe registrar asentimiento mx superficie</string>
     <string name="missingMxSuper3">Debe registrar consentimiento mx manos y asentimiento mx superficie</string>
+
+    <string name="aceptaCohorteInfluenzaUO1">Acepta estudio Cohorte Influeza UO1</string>
+    <string name="razonNoAceptaInfluenzaUO1">Porque no acepta participar Influenza UO1?</string>
+    <string name="razonNoAceptaInfluenzaUO1Hint">Seleccionar porque no acepta participar en el estudio Cohorte pediátrica de Influenza UO1</string>
+    <string name="otraRazonNoAceptaInfluenzaUO1">Otra razón estudio Cohorte pediátrica de Influenza UO1</string>
+    <string name="otraRazonNoAceptaInfluenzaUO1Hint">Indicar porque otra razón no acepta participar en el estudio Cohorte pediátrica de Influenza UO1</string>
 </resources>

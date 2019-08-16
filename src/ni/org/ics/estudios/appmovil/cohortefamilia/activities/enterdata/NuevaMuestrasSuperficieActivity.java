@@ -713,7 +713,6 @@ public class NuevaMuestrasSuperficieActivity extends FragmentActivity implements
                 muestra.setCodigoMx(codigoMx13);
                 muestra.setOtraSuperficie(null);
                 muestra.setParticipanteChf(participanteCHF);
-                muestra.setCasaChf(null);
                 estudiosAdapter.crearMuestraSuperficie(muestra);
             }
             estudiosAdapter.close();

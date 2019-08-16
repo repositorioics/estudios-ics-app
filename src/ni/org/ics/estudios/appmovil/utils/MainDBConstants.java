@@ -28,7 +28,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 19;
+	public static final int DATABASE_VERSION = 20;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -251,6 +251,7 @@ public class MainDBConstants {
     public static final String relacionFamPersonaCasa = "relacionFamPersonaCasa";
     public static final String otraRelacionPersonaCasa = "otraRelacionPersonaCasa";
     public static final String telefonoPersonaCasa = "telefonoPersonaCasa";
+    public static final String estudio = "estudio";
 
     //crear tabla Visitas a participantes
     public static final String CREATE_VISITAPART_TABLE = "create table if not exists "
@@ -268,6 +269,7 @@ public class MainDBConstants {
             + relacionFamPersonaCasa + " text, "
             + otraRelacionPersonaCasa + " text, "
             + telefonoPersonaCasa + " text, "
+            + estudio + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -279,7 +281,6 @@ public class MainDBConstants {
     public static final String PRETAMIZAJE_TABLE = "chf_pre_tamizajes";
 
     //Campos tabla Pretamizajes
-    public static final String estudio = "estudio";
     public static final String aceptaTamizajeCasa = "aceptaTamizajeCasa";
     public static final String razonNoAceptaTamizajeCasa = "razonNoAceptaTamizajeCasa";
     public static final String otraRazonNoAceptaTamizajeCasa = "otraRazonNoAceptaTamizajeCasa";

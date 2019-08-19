@@ -1800,6 +1800,7 @@ public class NewConFluUO1Activity extends FragmentActivity implements
                 tamizaje.setCohorte("CP");
                 tamizaje.setSexo(participante.getSexo());
                 tamizaje.setFechaNacimiento(participante.getFechaNac());
+                tamizaje.setCodigoParticipanteRecon(participante.getCodigo());
                 tamizaje.setAceptaTamizajePersona(Constants.YESKEYSND);
                 //Si acepta o no participar, siempre registrar tamizaje
                 MessageResource catAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParticipar + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);

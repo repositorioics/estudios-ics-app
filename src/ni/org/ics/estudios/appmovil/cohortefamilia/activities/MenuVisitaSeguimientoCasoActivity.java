@@ -1,9 +1,13 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -23,13 +27,17 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObsequioActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajeMxSuperficieActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MenuVisitaSeguimientoAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
 import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.MuestraSuperficie;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
 
 
 public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
@@ -40,7 +48,7 @@ public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
     private VisitaSeguimientoCaso visitaCaso = new VisitaSeguimientoCaso();
     private EstudiosAdapter estudiosAdapter;
     private ObsequioGeneral obsequioGeneral = new ObsequioGeneral();
-
+    private List<MuestraSuperficie> mMuestras = new ArrayList<MuestraSuperficie>();
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,7 +103,7 @@ public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
                         finish();
                         break;
                     case 3:
-                        if (obsequioGeneral==null) {
+                        if (obsequioGeneral == null) {
                             arguments.putSerializable(Constants.VISITA, visitaCaso);
                             i = new Intent(getApplicationContext(),
                                     NuevoObsequioActivity.class);
@@ -103,10 +111,20 @@ public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
                             i.putExtras(arguments);
                             startActivity(i);
                             finish();
-                        }else{
+                        } else {
                             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                            Toast.makeText(getApplicationContext(), "Obsequio entregado a "+obsequioGeneral.getPersonaRecibe()+" - "+formatter.format(obsequioGeneral.getRecordDate()), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Obsequio entregado a " + obsequioGeneral.getPersonaRecibe() + " - " + formatter.format(obsequioGeneral.getRecordDate()), Toast.LENGTH_LONG).show();
                         }
+                        break;
+                    case 4:
+                        arguments.putSerializable(Constants.VISITA, visitaCaso);
+                        i = new Intent(getApplicationContext(),
+                                ListaMuestrasSuperficieCasoActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        finish();
+
                         break;
                     default:
                         break;
@@ -178,7 +196,7 @@ public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    
+
     private class FetchDataVisitaTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -192,6 +210,10 @@ public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
                 estudiosAdapter.open();
                 obsequioGeneral = estudiosAdapter.getObsequioGeneral(MainDBConstants.seguimiento +" = '"+visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso()+
                         "' and "+MainDBConstants.numVisitaSeguimiento+" != 'F' and "+MainDBConstants.obsequioSN+" = 1", null);
+                mMuestras = estudiosAdapter.getMuestrasSuperficie(
+                        MuestrasDBConstants.caso + " = '" + visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso() + "' and " + MainDBConstants.pasive + " ='0' ",
+                        MuestrasDBConstants.tipoMuestra);
+
                 estudiosAdapter.close();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
@@ -208,9 +230,10 @@ public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
             textView.setText(getString(R.string.main_1)+ "\n" + visitaCaso.getCodigoParticipanteCaso().getParticipante().getParticipante().getNombreCompleto() 
             		+ "\n" + getString(R.string.visit) +": " + visitaCaso.getVisita() +" - "+ formatter.format(visitaCaso.getFechaVisita()));
 
-            gridView.setAdapter(new MenuVisitaSeguimientoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_visita, obsequioGeneral!=null));
+            gridView.setAdapter(new MenuVisitaSeguimientoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_visita, obsequioGeneral!=null, mMuestras.size()==13));
             dismissProgressDialog();
         }
     }
+
 }
 

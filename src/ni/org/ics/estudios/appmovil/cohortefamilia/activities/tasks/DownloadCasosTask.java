@@ -8,7 +8,9 @@ import java.util.ListIterator;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.MuestraSuperficie;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -44,22 +46,26 @@ public class DownloadCasosTask extends DownloadTask {
     private List<FormularioContactoCaso> mFormularioContactoCasos = null;
     private List<InformacionNoCompletaCaso> mInformacionNoCompletaCasos = null;
     private List<Muestra> mMuestras = null;
+    private List<MuestraSuperficie> mMuestrasSup = null;
 	private List<VisitaFinalCaso> mVisitaFinalCasos = null;
     private List<ObsequioGeneral> mObsequios = null;
+    private List<ParticipanteProcesos> mParticipantesProc = null;
 
-    public static final String CASAS_CASOS = "1";
-    public static final String PART_CASOS = "2";
-    public static final String VISITAS_CASOS = "3";
-    public static final String VISITAS_FALLIDAS_CASOS = "4";
-    public static final String SINTOMAS_CASOS = "5";
-    public static final String VISITAS_FINALES = "6";
-    public static final String OBSEQUIOS = "7";
+    public static final String PARTICIPANTE_PROC = "1";
+    public static final String CASAS_CASOS = "2";
+    public static final String PART_CASOS = "3";
+    public static final String VISITAS_CASOS = "4";
+    public static final String VISITAS_FALLIDAS_CASOS = "5";
+    public static final String SINTOMAS_CASOS = "6";
+    public static final String VISITAS_FINALES = "7";
+    public static final String OBSEQUIOS = "8";
     public static final String CONTACTOS_CASOS = "1";
     public static final String MUESTRAS = "2";
     public static final String NODATA_CASOS = "3";
+    public static final String MUESTRAS_SUP = "4";
 
-    private static final String TOTAL_TASK_CASOS = "7";
-    private static final String TOTAL_TASK_CASOS_CONTACTO = "3";
+    private static final String TOTAL_TASK_CASOS = "8";
+    private static final String TOTAL_TASK_CASOS_CONTACTO = "4";
 
 	private String error = null;
 	private String url = null;
@@ -85,6 +91,7 @@ public class DownloadCasosTask extends DownloadTask {
 		estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
 		estudioAdapter.open();
 		//Borrar los datos de la base de datos
+        estudioAdapter.borrarTodosParticipantesProcesos();
         estudioAdapter.borrarCasaCohorteFamiliaCaso();
         estudioAdapter.borrarParticipanteCohorteFamiliaCaso();
         estudioAdapter.borrarVisitaSeguimientoCaso();
@@ -97,6 +104,16 @@ public class DownloadCasosTask extends DownloadTask {
         estudioAdapter.borrarMuestrasTx();*/
         
 		try {
+            if (mParticipantesProc != null){
+                v = mParticipantesProc.size();
+                ListIterator<ParticipanteProcesos> iter = mParticipantesProc.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearParticipanteProcesos(iter.next());
+                    publishProgress("Insertando procesos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mParticipantesProc = null;
+            }
             if (mCasaCohorteFamiliaCasos != null){
                 v = mCasaCohorteFamiliaCasos.size();
                 ListIterator<CasaCohorteFamiliaCaso> iter = mCasaCohorteFamiliaCasos.listIterator();
@@ -223,6 +240,7 @@ public class DownloadCasosTask extends DownloadTask {
         estudioAdapter.borrarInformacionNoCompletaCaso();
         estudioAdapter.borrarFormularioContactoCaso();
         estudioAdapter.borrarMuestrasTx();
+        estudioAdapter.borrarMuestrasSuperficie();
 
         try {
 
@@ -255,7 +273,17 @@ public class DownloadCasosTask extends DownloadTask {
                     publishProgress("Insertando muestras de transmision de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
-                mInformacionNoCompletaCasos = null;
+                mMuestras = null;
+            }
+            if (mMuestrasSup != null){
+                v = mMuestrasSup.size();
+                ListIterator<MuestraSuperficie> iter = mMuestrasSup.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearMuestraSuperficie(iter.next());
+                    publishProgress("Insertando muestras de superficie de casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mMuestrasSup = null;
             }
 
         } catch (Exception e) {
@@ -287,6 +315,16 @@ public class DownloadCasosTask extends DownloadTask {
             // Create a new RestTemplate instance
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+            // The URL for making the GET request
+            urlRequest = url + "/movil/participantesprocesos";
+            publishProgress("Solicitando procesos de participantes",PARTICIPANTE_PROC,TOTAL_TASK_CASOS);
+
+            // Perform the HTTP GET request
+            ResponseEntity<ParticipanteProcesos[]> responseEntityPartProc = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ParticipanteProcesos[].class);
+
+            // convert the array to a list and return it
+            mParticipantesProc = Arrays.asList(responseEntityPartProc.getBody());
 
             //Descargar casas con casos
             urlRequest = url + "/movil/casascasos/";
@@ -441,6 +479,14 @@ public class DownloadCasosTask extends DownloadTask {
             // convert the array to a list and return it
             mMuestras = Arrays.asList(responseEntityMuestraCaso.getBody());
             responseEntityMuestraCaso = null;
+            //Descargar muestras de superficie del los casos activos
+            urlRequest = url + "/movil/muestrasSuperficie/";
+            publishProgress("Solicitando muesstras de superficie casos activos", MUESTRAS_SUP,TOTAL_TASK_CASOS_CONTACTO);
+            // Perform the HTTP GET request
+            ResponseEntity<MuestraSuperficie[]> responseEntityMxSup = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    MuestraSuperficie[].class);
+            // convert the array to a list and return it
+            mMuestrasSup = Arrays.asList(responseEntityMxSup.getBody());
 
             return null;
         } catch (Exception e) {

@@ -66,7 +66,7 @@ public class TamizajeForm extends AbstractWizardModel {
         String[] catCriteriosInclusion = fillCatalog("CP_CAT_CI");
         String[] catTiempoResid = fillCatalog("CP_CAT_TR");
         String[] catRazonNoParticipaPersona = fillCatalog("CHF_CAT_NPP");
-        String[] catTipoIngreso = {"Dengue","Influenza","Ambos"};
+        String[] catTipoIngreso = {"Dengue","Influenza","Influenza UO1"};
         String[] catTipo = fillCatalog("CAT_TIPO_TEL");
         String[] catOperadora = fillCatalog("CAT_OPER_TEL");
         String[] catTipoViv = fillCatalog("CP_CAT_TV");
@@ -147,10 +147,13 @@ public class TamizajeForm extends AbstractWizardModel {
         Page aceptaParteD = new SingleFixedChoicePage(this,labels.getAceptaParteD(), labels.getAceptaParteDHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 
         Page aceptaCohorteInfluenza = new SingleFixedChoicePage(this,labels.getAceptaCohorteInfluenza(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page aceptaCohorteInfluenzaUO1 = new SingleFixedChoicePage(this,labels.getAceptaCohorteInfluenzaUO1(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page pretermino = new SingleFixedChoicePage(this,labels.getPretermino(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page enfermedadInmuno = new SingleFixedChoicePage(this,labels.getEnfermedadInmuno(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page razonNoAceptaInfluenza = new SingleFixedChoicePage(this,labels.getRazonNoAceptaInfluenza(), labels.getRazonNoAceptaInfluenzaHint(), Constants.WIZARD, false).setChoices(catRazonNoParticipaPersona).setRequired(true);
         Page otraRazonNoAceptaInfluenza = new TextPage(this,labels.getOtraRazonNoAceptaInfluenza(),labels.getOtraRazonNoAceptaInfluenzaHint(),Constants.WIZARD, false).setRequired(true);
+        Page razonNoAceptaInfluenzaUO1 = new SingleFixedChoicePage(this,labels.getRazonNoAceptaInfluenzaUO1(), labels.getRazonNoAceptaInfluenzaUO1Hint(), Constants.WIZARD, false).setChoices(catRazonNoParticipaPersona).setRequired(true);
+        Page otraRazonNoAceptaInfluenzaUO1 = new TextPage(this,labels.getOtraRazonNoAceptaInfluenzaUO1(),labels.getOtraRazonNoAceptaInfluenzaUO1Hint(),Constants.WIZARD, false).setRequired(true);
         Page aceptaParteBInf = new SingleFixedChoicePage(this,labels.getAceptaParteBInf(), labels.getAceptaParteBInfHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page aceptaParteCInf = new SingleFixedChoicePage(this,labels.getAceptaParteCInf(), labels.getAceptaParteCInfHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 
@@ -214,7 +217,7 @@ public class TamizajeForm extends AbstractWizardModel {
                 enfCronicaAnio8, enfCronicaMes8, enfCronicaAnio9, enfCronicaMes9, enfCronicaAnio10, enfCronicaMes10, enfCronicaAnio11, enfCronicaMes11, enfCronicaAnio12, enfCronicaMes12, enfCronicaAnio13, enfCronicaMes13, enfCronicaAnio14, enfCronicaMes14,
                 tratamiento, cualTratamiento, otroTx, diagDengue, fechaDiagDengue, hospDengue, fechaHospDengue,
                 asentimientoVerbal, aceptaCohorteDengue, razonNoAceptaDengue, otraRazonNoAceptaDengue,
-                aceptaCohorteInfluenza, enfermedadInmuno, pretermino, razonNoAceptaInfluenza, otraRazonNoAceptaInfluenza,
+                aceptaCohorteInfluenza, aceptaCohorteInfluenzaUO1, enfermedadInmuno, pretermino, razonNoAceptaInfluenza, otraRazonNoAceptaInfluenza,razonNoAceptaInfluenzaUO1, otraRazonNoAceptaInfluenzaUO1,
                 casaPerteneceCohorte, codigoCasaCohorte, codigoNuevaCasaCohorte, nombre1JefeFamilia, nombre2JefeFamilia, apellido1JefeFamilia, apellido2JefeFamilia, barrio, manzana, direccion,
                 codigoNuevoParticipante, nombre1, nombre2, apellido1, apellido2,
                 nombre1Padre, nombre2Padre, apellido1Padre, apellido2Padre, nombre1Madre, nombre2Madre, apellido1Madre, apellido2Madre,

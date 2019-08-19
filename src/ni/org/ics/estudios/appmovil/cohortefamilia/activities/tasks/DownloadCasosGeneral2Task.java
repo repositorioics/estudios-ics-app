@@ -7,6 +7,7 @@ import java.util.ListIterator;
 
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.MuestraSuperficie;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.FormularioContactoCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.InformacionNoCompletaCaso;
 import org.springframework.http.HttpAuthentication;
@@ -38,12 +39,14 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
     private List<FormularioContactoCaso> mFormularioContactoCasos = null;
     private List<InformacionNoCompletaCaso> mInformacionNoCompletaCasos = null;
     private List<ObsequioGeneral> mObsequios = null;
+    private List<MuestraSuperficie> mMuestrasSup = null;
 	
     public static final String CONTACTOS_CASOS = "1";
     public static final String NODATA_CASOS = "2";
     public static final String OBSEQUIOS = "3";
+    public static final String MUESTRAS_SUP = "4";
 
-    private static final String TOTAL_TASK_CASOS = "3";
+    private static final String TOTAL_TASK_CASOS = "4";
 
 	private String error = null;
 	private String url = null;
@@ -73,6 +76,7 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
         estudioAdapter.borrarInformacionNoCompletaCaso();
         estudioAdapter.borrarFormularioContactoCaso();
         estudioAdapter.borrarObsequiosGenerales();
+        estudioAdapter.borrarMuestrasSuperficie();
 		try {
             if (mFormularioContactoCasos != null){
                 v = mFormularioContactoCasos.size();
@@ -104,6 +108,16 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mObsequios = null;
+            }
+            if (mMuestrasSup != null){
+                v = mMuestrasSup.size();
+                ListIterator<MuestraSuperficie> iter = mMuestrasSup.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearMuestraSuperficie(iter.next());
+                    publishProgress("Insertando muestras de superficie de casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mMuestrasSup = null;
             }
 		} catch (Exception e) {
 			// Regresa error al insertar
@@ -162,6 +176,14 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
             // convert the array to a list and return it
             mObsequios = Arrays.asList(responseEntityObsequios.getBody());
 
+            //Descargar muestras de superficie del los casos activos
+            urlRequest = url + "/movil/muestrasSuperficie/";
+            publishProgress("Solicitando muesstras de superficie casos activos", MUESTRAS_SUP,TOTAL_TASK_CASOS);
+            // Perform the HTTP GET request
+            ResponseEntity<MuestraSuperficie[]> responseEntityMxSup = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    MuestraSuperficie[].class);
+            // convert the array to a list and return it
+            mMuestrasSup = Arrays.asList(responseEntityMxSup.getBody());
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

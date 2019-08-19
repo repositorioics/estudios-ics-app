@@ -21,6 +21,7 @@
             <item android:id="@+id/SURVEY2" android:title="@string/info_survey2"/>
             <item android:id="@+id/SURVEY1" android:title="@string/info_survey1"/>
             <item android:id="@+id/RECONSFLU" android:title="@string/info_reconflu"/>
+            <item android:id="@+id/CONSFLUUO1" android:title="@string/info_conflu_uo1"/>
             <item android:id="@+id/RECONS" android:title="@string/info_recon"/>
             <item android:id="@+id/RECONS_CHF" android:title="@string/info_recon_chf"/>
             <item android:id="@+id/ZIKA" android:title="@string/info_zika"/>

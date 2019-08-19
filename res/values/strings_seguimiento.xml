@@ -109,4 +109,8 @@
     <string name="fisn">Fecha Inicia Secreción Nasal</string>
     <string name="ffsn">Fecha Termina Secreción Nasal</string>
 
+    <!-- Muestras de superficie -->
+    <string name="surface_samples">Muestras de superficie</string>
+    <string name="new_samp_surface">Superficie</string>
+    <string name="new_samp_hands">Manos</string>
 </resources>

@@ -55,6 +55,8 @@ public class ParticipanteProcesos implements Serializable {
     private String reConsChf18;//reconsentimiento a participantes de familia que cumplen 18 anios
     //22052019
     private String posDengue;
+    //Muestras de superficie
+    private String mxSuperficie; //1:asent mx superficie, 2:consent manos, 3:Ambos, 0 o null:No aplica
 
     private MovilInfo movilInfo;
 
@@ -392,6 +394,14 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setPosDengue(String posDengue) {
         this.posDengue = posDengue;
+    }
+
+    public String getMxSuperficie() {
+        return mxSuperficie;
+    }
+
+    public void setMxSuperficie(String mxSuperficie) {
+        this.mxSuperficie = mxSuperficie;
     }
 }
 

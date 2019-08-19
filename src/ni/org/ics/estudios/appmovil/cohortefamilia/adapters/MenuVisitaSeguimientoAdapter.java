@@ -16,11 +16,13 @@ public class MenuVisitaSeguimientoAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
     private final boolean obsequio;
+    private final boolean mxSuperficie;
 	public MenuVisitaSeguimientoAdapter(Context context, int textViewResourceId,
-                                   String[] values, boolean obsequio) {
+                                   String[] values, boolean obsequio, boolean mxSuperficie) {
 		super(context, textViewResourceId, values);
 		this.values = values;
         this.obsequio = obsequio;
+        this.mxSuperficie = mxSuperficie;
 	}
 
 	@Override
@@ -55,6 +57,13 @@ public class MenuVisitaSeguimientoAdapter extends ArrayAdapter<String> {
                 img=getContext().getResources().getDrawable(R.drawable.ic_gift_o);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 if (!obsequio) {
+                    textView.setTextColor(Color.RED);
+                }
+                break;
+            case 4:
+                img=getContext().getResources().getDrawable(R.drawable.ic_surface_sample);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                if (!mxSuperficie) {
                     textView.setTextColor(Color.RED);
                 }
                 break;

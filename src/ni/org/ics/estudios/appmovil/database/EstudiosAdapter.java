@@ -167,6 +167,8 @@ public class EstudiosAdapter {
             db.execSQL(MainDBConstants.CREATE_ENFCRONICA_TABLE);
 
             db.execSQL(MainDBConstants.CREATE_OBSEQUIOS_TABLE);
+            //Muestras de superficie
+            db.execSQL(MuestrasDBConstants.CREATE_MUESTRA_SUPERFICIE_TABLE);
         }
 
 		@Override
@@ -278,6 +280,16 @@ public class EstudiosAdapter {
             if (oldVersion==17) {
                 db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.posDengue + " text");
             }
+            if (oldVersion==18){
+                db.execSQL(MuestrasDBConstants.CREATE_MUESTRA_SUPERFICIE_TABLE);
+                db.execSQL("DROP TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE);
+                db.execSQL(MainDBConstants.CREATE_CARTACONSENTIMIENTO_TABLE);
+                db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.mxSuperficie + " text");
+            }
+            if (oldVersion==19){
+                db.execSQL("ALTER TABLE " + MainDBConstants.VISITAPART_TABLE + " ADD COLUMN " + MainDBConstants.estudio + " text");
+            }
+
         }
 	}
 
@@ -318,7 +330,7 @@ public class EstudiosAdapter {
 	//Crear nuevo usuario en la base de datos
 	public void crearUsuario(UserSistema user) {
 		ContentValues cv = UserSistemaHelper.crearUserSistemaContentValues(user);
-		mDb.insert(MainDBConstants.USER_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.USER_TABLE, null, cv);
 	}
 	//Editar usuario existente en la base de datos
 	public boolean editarUsuario(UserSistema user) {
@@ -368,7 +380,7 @@ public class EstudiosAdapter {
 	//Crear nuevo rol en la base de datos
 	public void crearRol(Authority rol) {
 		ContentValues cv = UserSistemaHelper.crearRolValues(rol);
-		mDb.insert(MainDBConstants.ROLE_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.ROLE_TABLE, null, cv);
 	}
 	//Limpiar la tabla de roles de la base de datos
 	public boolean borrarRoles() {
@@ -405,7 +417,7 @@ public class EstudiosAdapter {
 	//Crear nuevo barrio en la base de datos
 	public void crearBarrio(Barrio barrio) {
 		ContentValues cv = BarrioHelper.crearBarrioContentValues(barrio);
-		mDb.insert(CatalogosDBConstants.BARRIO_TABLE, null, cv);
+		mDb.insertOrThrow(CatalogosDBConstants.BARRIO_TABLE, null, cv);
 	}
 	//Editar barrio existente en la base de datos
 	public boolean editarBarrio(Barrio barrio) {
@@ -459,7 +471,7 @@ public class EstudiosAdapter {
 	//Crear nuevo estudio en la base de datos
 	public void crearEstudio(Estudio estudio) {
 		ContentValues cv = EstudiosHelper.crearEstudioContentValues(estudio);
-		mDb.insert(CatalogosDBConstants.ESTUDIO_TABLE, null, cv);
+		mDb.insertOrThrow(CatalogosDBConstants.ESTUDIO_TABLE, null, cv);
 	}
 	//Editar estudio existente en la base de datos
 	public boolean editarEstudio(Estudio estudio) {
@@ -565,7 +577,7 @@ public class EstudiosAdapter {
 	//Crear nuevo MessageResource en la base de datos
 	public void crearMessageResource(MessageResource mensaje) {
 		ContentValues cv = MessageResourceHelper.crearMessageResourceValues(mensaje);
-		mDb.insert(CatalogosDBConstants.MESSAGES_TABLE, null, cv);
+		mDb.insertOrThrow(CatalogosDBConstants.MESSAGES_TABLE, null, cv);
 	}
 	//Editar MessageResource existente en la base de datos
 	public boolean editarMessageResource(MessageResource mensaje) {
@@ -633,7 +645,7 @@ public class EstudiosAdapter {
 	//Crear nuevo VisitaTerreno en la base de datos
 	public void crearVisitaTereno(ni.org.ics.estudios.appmovil.domain.VisitaTerreno visitaTerreno) {
 		ContentValues cv = VisitaTerrenoHelper.crearVisitaTerrenoContentValues(visitaTerreno);
-		mDb.insert(MainDBConstants.VISITA_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.VISITA_TABLE, null, cv);
 	}
 	//Editar VisitaTerreno existente en la base de datos
 	public boolean editarVisitaTerreno(ni.org.ics.estudios.appmovil.domain.VisitaTerreno visitaTerreno) {
@@ -687,7 +699,7 @@ public class EstudiosAdapter {
 	//Crear nuevo PreTamizaje en la base de datos
 	public void crearPreTamizaje(PreTamizaje preTamizaje) {
 		ContentValues cv = PreTamizajeHelper.crearPreTamizajeContentValues(preTamizaje);
-		mDb.insert(MainDBConstants.PRETAMIZAJE_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.PRETAMIZAJE_TABLE, null, cv);
 	}
 	//Editar PreTamizaje existente en la base de datos
 	public boolean editarPreTamizaje(PreTamizaje preTamizaje) {
@@ -745,7 +757,7 @@ public class EstudiosAdapter {
 	//Crear nuevo CasaCohorteFamilia en la base de datos
 	public void crearCasaCohorteFamilia(CasaCohorteFamilia casaCHF) {
 		ContentValues cv = CasaCohorteFamiliaHelper.crearCasaCHFontentValues(casaCHF);
-		mDb.insert(MainDBConstants.CASA_CHF_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.CASA_CHF_TABLE, null, cv);
 	}
 	//Crear nuevo CasaCohorteFamilia en la base de datos desde otro equipo
 	public void insertarCasaCohorteFamilia(String casaSQL) {
@@ -1051,7 +1063,7 @@ public class EstudiosAdapter {
 	//Crear nuevo ParticipanteCohorteFamilia en la base de datos
 	public void crearParticipanteCohorteFamilia(ParticipanteCohorteFamilia participanteCohorteFamilia) {
 		ContentValues cv = ParticipanteCohorteFamiliaHelper.crearParticipanteCohorteFamiliaContentValues(participanteCohorteFamilia);
-		mDb.insert(MainDBConstants.PARTICIPANTE_CHF_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.PARTICIPANTE_CHF_TABLE, null, cv);
 	}
 	//Crear nuevo ParticipanteCohorteFamilia en la base de datos desde otro equipo
 	public void insertarParticipanteCohorteFamilia(String participanteCohorteFamiliaSQL) {
@@ -1170,7 +1182,7 @@ public class EstudiosAdapter {
 	//Crear nuevo CartaConsentimiento en la base de datos
 	public void crearCartaConsentimiento(CartaConsentimiento cartaConsentimiento) {
 		ContentValues cv = CartaConsentimientoHelper.crearCartaConsentimientoContentValues(cartaConsentimiento);
-		mDb.insert(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE, null, cv);
 	}
     //Editar EncuestasCasa existente en la base de datos
     public boolean editarCartaConsentimiento(CartaConsentimiento cartaConsentimiento) {
@@ -1229,7 +1241,7 @@ public class EstudiosAdapter {
     //Crear nuevo EncuestasCasa en la base de datos
     public void crearEncuestaCasa(EncuestaCasa encuestaCasa) {
         ContentValues cv = EncuestaCasaHelper.crearEncuestaCasaContentValues(encuestaCasa);
-        mDb.insert(EncuestasDBConstants.ENCUESTA_CASA_TABLE, null, cv);
+        mDb.insertOrThrow(EncuestasDBConstants.ENCUESTA_CASA_TABLE, null, cv);
     }
     //Editar EncuestasCasa existente en la base de datos
     public boolean editarEncuestaCasa(EncuestaCasa encuestaCasa) {
@@ -1283,7 +1295,7 @@ public class EstudiosAdapter {
     //Crear nuevo EncuestasDatosPartoBB en la base de datos
     public void crearEncuestasDatosPartoBB(EncuestaDatosPartoBB encuestaDatosPartoBB) {
         ContentValues cv = EncuestaDatosPartoBBHelper.crearEncuestaDatosPartoBBContentValues(encuestaDatosPartoBB);
-        mDb.insert(EncuestasDBConstants.ENCUESTA_PARTOBB_TABLE, null, cv);
+        mDb.insertOrThrow(EncuestasDBConstants.ENCUESTA_PARTOBB_TABLE, null, cv);
     }
     //Editar EncuestasDatosPartoBB existente en la base de datos
     public boolean editarEncuestasDatosPartoBB(EncuestaDatosPartoBB encuestaDatosPartoBB) {
@@ -1337,7 +1349,7 @@ public class EstudiosAdapter {
     //Crear nuevo EncuestasParticipante en la base de datos
     public void crearEncuestasParticipante(EncuestaParticipante encuestaParticipante) {
         ContentValues cv = EncuestaParticipanteHelper.crearEncuestaParticipanteContentValues(encuestaParticipante);
-        mDb.insert(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, null, cv);
+        mDb.insertOrThrow(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, null, cv);
     }
     //Editar EncuestasParticipante existente en la base de datos
     public boolean editarEncuestasParticipante(EncuestaParticipante encuestaParticipante) {
@@ -1391,7 +1403,7 @@ public class EstudiosAdapter {
     //Crear nuevo EncuestasPesoTalla en la base de datos
     public void crearEncuestasPesoTalla(EncuestaPesoTalla encuestaPesoTalla) {
         ContentValues cv = EncuestaPesoTallaHelper.crearEncuestaPesoTallaContentValues(encuestaPesoTalla);
-        mDb.insert(EncuestasDBConstants.ENCUESTA_PESOTALLA_TABLE, null, cv);
+        mDb.insertOrThrow(EncuestasDBConstants.ENCUESTA_PESOTALLA_TABLE, null, cv);
     }
     //Editar EncuestasPesoTalla existente en la base de datos
     public boolean editarEncuestasPesoTalla(EncuestaPesoTalla encuestaPesoTalla) {
@@ -1445,7 +1457,7 @@ public class EstudiosAdapter {
     //Crear nuevo EncuestasLactanciaMaterna en la base de datos
     public void crearEncuestasLactanciaMaterna(EncuestaLactanciaMaterna encuestaLactanciaMaterna) {
         ContentValues cv = EncuestaLactanciaMatHelper.crearEncuestaLactanciaMaternaContentValues(encuestaLactanciaMaterna);
-        mDb.insert(EncuestasDBConstants.ENCUESTA_LACTANCIAMAT_TABLE, null, cv);
+        mDb.insertOrThrow(EncuestasDBConstants.ENCUESTA_LACTANCIAMAT_TABLE, null, cv);
     }
     //Editar EncuestasLactanciaMaterna existente en la base de datos
     public boolean editarEncuestasLactanciaMaterna(EncuestaLactanciaMaterna encuestaLactanciaMaterna) {
@@ -1499,7 +1511,7 @@ public class EstudiosAdapter {
     //Crear nuevo Muestras en la base de datos
     public void crearMuestras(Muestra muestra) {
         ContentValues cv = MuestraHelper.crearMuestraContentValues(muestra);
-        mDb.insert(MuestrasDBConstants.MUESTRA_TABLE, null, cv);
+        mDb.insertOrThrow(MuestrasDBConstants.MUESTRA_TABLE, null, cv);
     }
     //Editar Muestras existente en la base de datos
     public boolean editarMuestras(Muestra muestra) {
@@ -1557,7 +1569,7 @@ public class EstudiosAdapter {
 	//Crear nuevo Habitacion en la base de datos
 	public void crearHabitacion(Habitacion habitacion) {
 		ContentValues cv = AreaAmbienteHelper.crearHabitacionContentValues(habitacion);
-		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
 	}
 	//Editar Habitacion existente en la base de datos
 	public boolean editarHabitacion(Habitacion habitacion) {
@@ -1611,7 +1623,7 @@ public class EstudiosAdapter {
 	//Crear nuevo Cama en la base de datos
 	public void crearCama(Cama cama) {
 		ContentValues cv = CamasHelper.crearCamaContentValues(cama);
-		mDb.insert(MainDBConstants.CAMA_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.CAMA_TABLE, null, cv);
 	}
 	//Editar Cama existente en la base de datos
 	public boolean editarCama(Cama cama) {
@@ -1666,7 +1678,7 @@ public class EstudiosAdapter {
 	//Crear nuevo PersonaCama en la base de datos
 	public void crearPersonaCama(PersonaCama personacama) {
 		ContentValues cv = CamasHelper.crearPersonaCamaContentValues(personacama);
-		mDb.insert(MainDBConstants.PERSONACAMA_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.PERSONACAMA_TABLE, null, cv);
 	}
 	//Editar Cama existente en la base de datos
 	public boolean editarPersonaCama(PersonaCama personacama) {
@@ -1724,7 +1736,7 @@ public class EstudiosAdapter {
 	//Crear nuevo AreaAmbiente en la base de datos
 	public void crearAreaAmbiente(AreaAmbiente area) {
 		ContentValues cv = AreaAmbienteHelper.crearAreaAmbienteContentValues(area);
-		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
 	}
 	//Editar AreaAmbiente existente en la base de datos
 	public boolean editarAreaAmbiente(AreaAmbiente area) {
@@ -1775,7 +1787,7 @@ public class EstudiosAdapter {
 	//Crear nuevo Banio en la base de datos
 	public void crearBanio(Banio banio) {
 		ContentValues cv = AreaAmbienteHelper.crearBanioContentValues(banio);
-		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
 	}
 	//Editar Banio existente en la base de datos
 	public boolean editarBanio(Banio banio) {
@@ -1841,7 +1853,7 @@ public class EstudiosAdapter {
 	//Crear nuevo Sala en la base de datos
 	public void crearSala(Sala sala) {
 		ContentValues cv = AreaAmbienteHelper.crearAreaAmbienteContentValues(sala);
-		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
 	}
 	//Editar Sala existente en la base de datos
 	public boolean editarSala(Sala sala) {
@@ -1892,7 +1904,7 @@ public class EstudiosAdapter {
 	//Crear nuevo Cocina en la base de datos
 	public void crearCocina(Cocina cocina) {
 		ContentValues cv = AreaAmbienteHelper.crearAreaAmbienteContentValues(cocina);
-		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
 	}
 	//Editar Cocina existente en la base de datos
 	public boolean editarCocina(Cocina cocina) {
@@ -1943,7 +1955,7 @@ public class EstudiosAdapter {
 	//Crear nuevo Comedor en la base de datos
 	public void crearComedor(Comedor comedor) {
 		ContentValues cv = AreaAmbienteHelper.crearAreaAmbienteContentValues(comedor);
-		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
 	}
 	//Editar Comedor existente en la base de datos
 	public boolean editarComedor(Comedor comedor) {
@@ -1994,7 +2006,7 @@ public class EstudiosAdapter {
 	//Crear nuevo Ventana en la base de datos
 	public void crearVentana(Ventana ventana) {
 		ContentValues cv = AreaAmbienteHelper.crearVentanaContentValues(ventana);
-		mDb.insert(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.AREA_AMBIENTE_TABLE, null, cv);
 	}
 	//Editar Ventana existente en la base de datos
 	public boolean editarVentana(Ventana ventana) {
@@ -2053,7 +2065,7 @@ public class EstudiosAdapter {
 	//Crear nuevo Cuarto en la base de datos
 	public void crearCuarto(Cuarto cuarto) {
 		ContentValues cv = CuartoHelper.crearCuartoContentValues(cuarto);
-		mDb.insert(MainDBConstants.CUARTO_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.CUARTO_TABLE, null, cv);
 	}
 	//Editar Cuarto existente en la base de datos
 	public boolean editarCuarto(Cuarto cuarto) {
@@ -2107,7 +2119,7 @@ public class EstudiosAdapter {
     //Crear nuevo ParticipanteSeroprevalencias en la base de datos
     public void crearParticipanteSeroprevalencia(ParticipanteSeroprevalencia participanteSeroprevalencia) {
         ContentValues cv = ParticipanteSeroprevalenciaHelper.crearParticipanteSeroprevalenciaContentValues(participanteSeroprevalencia);
-        mDb.insert(SeroprevalenciaDBConstants.PARTICIPANTESA_TABLE, null, cv);
+        mDb.insertOrThrow(SeroprevalenciaDBConstants.PARTICIPANTESA_TABLE, null, cv);
     }
 	//Crear nuevo ParticipanteSeroprevalencia en la base de datos desde otro equipo
 	public void insertarParticipanteSeroprevalencia(String participanteSeroprevalenciaSQL) {
@@ -2169,7 +2181,7 @@ public class EstudiosAdapter {
     //Crear nuevo EncuestaCasaSA en la base de datos
     public void crearEncuestaCasaSA(EncuestaCasaSA encuestaCasaSA) {
         ContentValues cv = EncuestaCasaSAHelper.crearEncuestaCasaSAContentValues(encuestaCasaSA);
-        mDb.insert(SeroprevalenciaDBConstants.ENCUESTA_CASASA_TABLE, null, cv);
+        mDb.insertOrThrow(SeroprevalenciaDBConstants.ENCUESTA_CASASA_TABLE, null, cv);
     }
     //Editar EncuestaCasaSA existente en la base de datos
     public boolean editarEncuestaCasaSA(EncuestaCasaSA encuestaCasaSA) {
@@ -2227,7 +2239,7 @@ public class EstudiosAdapter {
     //Crear nuevo EncuestaParticipanteSA en la base de datos
     public void crearEncuestaParticipanteSA(EncuestaParticipanteSA encuestaParticipanteSA) {
         ContentValues cv = EncuestaParticipanteSAHelper.crearEncuestaParticipanteSAContentValues(encuestaParticipanteSA);
-        mDb.insert(SeroprevalenciaDBConstants.ENCUESTA_PARTICIPANTESA_TABLE, null, cv);
+        mDb.insertOrThrow(SeroprevalenciaDBConstants.ENCUESTA_PARTICIPANTESA_TABLE, null, cv);
     }
     //Editar EncuestaParticipanteSA existente en la base de datos
     public boolean editarEncuestaParticipanteSA(EncuestaParticipanteSA encuestaParticipanteSA) {
@@ -2281,7 +2293,7 @@ public class EstudiosAdapter {
 	//Crear nuevo TelefonoContacto en la base de datos
 	public void crearTelefonoContacto(TelefonoContacto tel) {
 		ContentValues cv = TelefonoContactoHelper.crearTelefContactoContentValues(tel);
-		mDb.insert(MainDBConstants.TELEFONO_CONTACTO_TABLE, null, cv);
+		mDb.insertOrThrow(MainDBConstants.TELEFONO_CONTACTO_TABLE, null, cv);
 	}
 	//Editar TelefonoContacto existente en la base de datos
 	public boolean editarTelefonoContacto(TelefonoContacto tel) {
@@ -3001,6 +3013,15 @@ public class EstudiosAdapter {
         c = crearCursor(MainDBConstants.OBSEQUIOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
+        c = crearCursor(MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.TAMIZAJE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
 		return false;
 	}
 
@@ -3176,7 +3197,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, enccasa.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, enccasa.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, enccasa.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.ENC_CASA_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.ENC_CASA_TABLE, null, cv);
     }
 
     /**
@@ -3382,7 +3403,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, encpar.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, encpar.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, encpar.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.ENC_PART_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.ENC_PART_TABLE, null, cv);
     }
 
     /**
@@ -3439,7 +3460,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, enclac.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, enclac.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, enclac.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.LACT_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.LACT_TABLE, null, cv);
     }
 
     /**
@@ -3493,7 +3514,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, pt.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, pt.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, pt.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.PT_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.PT_TABLE, null, cv);
     }
 
     /**
@@ -3543,7 +3564,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, ob.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, ob.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, ob.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.OB_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.OB_TABLE, null, cv);
     }
 
     /**
@@ -3620,7 +3641,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, vacuna.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, vacuna.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, vacuna.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.VAC_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.VAC_TABLE, null, cv);
     }
 
     /**
@@ -3702,7 +3723,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, visita.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, visita.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, visita.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.DAT_VIS_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.DAT_VIS_TABLE, null, cv);
     }
 
     /**
@@ -3751,7 +3772,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, visita.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, visita.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, visita.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.VIS_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.VIS_TABLE, null, cv);
     }
 
     /**
@@ -3818,7 +3839,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, reconsentimiento.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, reconsentimiento.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, reconsentimiento.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.RECONS_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.RECONS_TABLE, null, cv);
     }
 
     /**
@@ -3988,7 +4009,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.USUARIO, temppbmc.getUsername());
         cv.put(ConstantsDB.STATUS, temppbmc.getEstado());
         cv.put(ConstantsDB.TODAY, temppbmc.getFecreg().getTime());
-        mDb.insert(ConstantsDB.TPBMC_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.TPBMC_TABLE, null, cv);
     }
 
     /**
@@ -4034,7 +4055,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.USUARIO, temprojo.getUsername());
         cv.put(ConstantsDB.STATUS, temprojo.getEstado());
         cv.put(ConstantsDB.TODAY, temprojo.getFecreg().getTime());
-        mDb.insert(ConstantsDB.TRB_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.TRB_TABLE, null, cv);
     }
 
     /**
@@ -4080,7 +4101,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.USUARIO, pinchazo.getUsername());
         cv.put(ConstantsDB.STATUS, pinchazo.getEstado());
         cv.put(ConstantsDB.TODAY, pinchazo.getFecreg().getTime());
-        mDb.insert(ConstantsDB.PIN_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.PIN_TABLE, null, cv);
     }
 
     /**
@@ -4140,7 +4161,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.ORAZON, rnd.getOtraRazon());
         cv.put(ConstantsDB.USUARIO, rnd.getUsername());
         cv.put(ConstantsDB.STATUS, rnd.getEstado());
-        mDb.insert(ConstantsDB.NO_DATA_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.NO_DATA_TABLE, null, cv);
     }
 
     /**
@@ -4193,7 +4214,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, enssat.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, enssat.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, enssat.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.ENC_SAT_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.ENC_SAT_TABLE, null, cv);
     }
 
     /**
@@ -4234,7 +4255,7 @@ public class EstudiosAdapter {
      */
     public void crearPermisosUsuario(UserPermissions user) {
         ContentValues cv = UserSistemaHelper.crearPermisosUsuario(user);
-        mDb.insert(ConstantsDB.USER_PERM_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.USER_PERM_TABLE, null, cv);
     }
 
     /**
@@ -4481,7 +4502,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, reconsentimiento.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, reconsentimiento.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, reconsentimiento.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.RECONS_TABLE_2015, null, cv);
+        mDb.insertOrThrow(ConstantsDB.RECONS_TABLE_2015, null, cv);
     }
 
     /**
@@ -4540,7 +4561,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, consentimiento.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, consentimiento.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, consentimiento.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.ZIKA_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.ZIKA_TABLE, null, cv);
     }
 
     /**
@@ -4568,7 +4589,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.COD_RELA, ccs.getCodigoRelacionado());
         cv.put(ConstantsDB.USUARIO, ccs.getUsername());
         cv.put(ConstantsDB.STATUS, ccs.getEstado());
-        mDb.insert(ConstantsDB.COD_REL_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.COD_REL_TABLE, null, cv);
     }
 
     /**
@@ -4636,7 +4657,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, reconsentimiento.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, reconsentimiento.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, reconsentimiento.getMovilInfo().getRecurso2());
-        mDb.insert(ConstantsDB.RECONSFLU_TABLE_2015, null, cv);
+        mDb.insertOrThrow(ConstantsDB.RECONSFLU_TABLE_2015, null, cv);
     }
 
     /**
@@ -4659,7 +4680,7 @@ public class EstudiosAdapter {
      */
     public void crearDatosPartoBB(DatosPartoBB datosPartoBB) {
         ContentValues cv = DatosPartoBBHelper.crearDatosPartoBBContentValues(datosPartoBB);
-        mDb.insert(ConstantsDB.DATOSPARTOBB_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.DATOSPARTOBB_TABLE, null, cv);
     }
 
     /**
@@ -4708,7 +4729,7 @@ public class EstudiosAdapter {
      */
     public void crearNewVacuna(NewVacuna newVacuna) {
         ContentValues cv = NewVacunaHelper.crearNewVacunaContentValues(newVacuna);
-        mDb.insert(ConstantsDB.NEWVAC_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.NEWVAC_TABLE, null, cv);
     }
 
     /**
@@ -4753,7 +4774,7 @@ public class EstudiosAdapter {
      */
     public void crearDocumentos(Documentos newDocumentos) {
         ContentValues cv = DocumentosHelper.crearDocumentosContentValues(newDocumentos);
-        mDb.insert(ConstantsDB.DOCS_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.DOCS_TABLE, null, cv);
     }
 
     /**
@@ -5217,7 +5238,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.codCasaActual, codCasaActual);
         cv.put(ConstantsDB.STATUS, Constants.STATUS_NOT_SUBMITTED);
         cv.put(ConstantsDB.USUARIO, username);
-        mDb.insert(ConstantsDB.CAMB_CASA_TABLE, null, cv);
+        mDb.insertOrThrow(ConstantsDB.CAMB_CASA_TABLE, null, cv);
     }
 
     public boolean checkCodigosCasas(Integer codigo) {
@@ -8152,7 +8173,7 @@ public class EstudiosAdapter {
     //Crear nuevo VisitaTerrenoParticipante en la base de datos
     public void crearVisitaTerrenoParticipante(VisitaTerrenoParticipante visitaTerrenoParticipante) {
         ContentValues cv = VisitaTerrenoHelper.crearVisitaTerrenoPartContentValues(visitaTerrenoParticipante);
-        mDb.insert(MainDBConstants.VISITAPART_TABLE, null, cv);
+        mDb.insertOrThrow(MainDBConstants.VISITAPART_TABLE, null, cv);
     }
     //Editar VisitaTerrenoParticipante existente en la base de datos
     public boolean editarVisitaTerrenoParticipante(VisitaTerrenoParticipante visitaTerrenoParticipante) {
@@ -8206,7 +8227,7 @@ public class EstudiosAdapter {
     //Crear nuevo DatosCoordenadas en la base de datos
     public void crearDatosCoordenadas(DatosCoordenadas datosCoordenadas) {
         ContentValues cv = CambioDomicilioHelper.crearCambioDomicilioContentValues(datosCoordenadas);
-        mDb.insert(MainDBConstants.DATOS_COORDENADAS_TABLE, null, cv);
+        mDb.insertOrThrow(MainDBConstants.DATOS_COORDENADAS_TABLE, null, cv);
     }
     //Editar DatosCoordenadas existente en la base de datos
     public boolean editarDatosCoordenadas(DatosCoordenadas datosCoordenadas) {
@@ -8356,5 +8377,73 @@ public class EstudiosAdapter {
         }
         if (!cursorObsequios.isClosed()) cursorObsequios.close();
         return mObsequios;
+    }
+
+
+    /**
+     * Metodos para Muestra en la base de datos
+     *
+     * @param muestra
+     *            Objeto Muestras que contiene la informacion
+     *
+     */
+    //Crear nuevo registro MuestraSuperficie en la base de datos
+    public void crearMuestraSuperficie(MuestraSuperficie muestra) {
+        ContentValues cv = MuestraHelper.crearMuestraSuperficieContentValues(muestra);
+        mDb.insertOrThrow(MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE, null, cv);
+    }
+    //Editar MuestraSuperficie existente en la base de datos
+    public boolean editarMuestraSuperficie(MuestraSuperficie muestra) {
+        ContentValues cv = MuestraHelper.crearMuestraSuperficieContentValues(muestra);
+        return mDb.update(MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE, cv, MuestrasDBConstants.codigo + "='"
+                + muestra.getCodigo() + "'", null) > 0;
+    }
+    //Limpiar la tabla de MuestraSuperficie de la base de datos
+    public boolean borrarMuestrasSuperficie() {
+        return mDb.delete(MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE, null, null) > 0;
+    }
+
+    //Obtener una MuestraSuperficie de la base de datos
+    public MuestraSuperficie getMuestraSuperficie(String filtro, String orden) throws SQLException {
+        MuestraSuperficie mMuestras = null;
+        Cursor cursor = crearCursor(MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mMuestras=MuestraHelper.crearMuestraSuperficie(cursor);
+            if (cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteChf))!=null) {
+                ParticipanteCohorteFamilia participante = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteChf)), null);
+                if (participante != null) mMuestras.setParticipanteChf(participante);
+            }
+            if (cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.casaChf))!=null) {
+                CasaCohorteFamilia casaCohorteFamilia = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.casaChf)) + "'", null);
+                if (casaCohorteFamilia != null) mMuestras.setCasaChf(casaCohorteFamilia);
+            }
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mMuestras;
+    }
+    //Obtener una lista de MuestraSuperficie de la base de datos
+    public List<MuestraSuperficie> getMuestrasSuperficie(String filtro, String orden) throws SQLException {
+        List<MuestraSuperficie> mMuestras = new ArrayList<MuestraSuperficie>();
+        Cursor cursor = crearCursor(MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mMuestras.clear();
+            do{
+                MuestraSuperficie mMuestra = null;
+                mMuestra = MuestraHelper.crearMuestraSuperficie(cursor);
+                if (cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteChf))!=null) {
+                    ParticipanteCohorteFamilia participante = this.getParticipanteCohorteFamilia(MainDBConstants.participante + "=" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.participanteChf)), null);
+                    if (participante != null) mMuestra.setParticipanteChf(participante);
+                }
+                if (cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.casaChf))!=null) {
+                    CasaCohorteFamilia casaCohorteFamilia = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" + cursor.getString(cursor.getColumnIndex(MuestrasDBConstants.casaChf)) + "'", null);
+                    if (casaCohorteFamilia != null) mMuestra.setCasaChf(casaCohorteFamilia);
+                }
+                mMuestras.add(mMuestra);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mMuestras;
     }
 }

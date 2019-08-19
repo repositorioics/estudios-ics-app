@@ -45,6 +45,7 @@ public abstract class Page implements PageTreeNode {
     protected boolean mVisible = false;
     protected boolean mEnabled = true;
     private String casaCHF;
+    private boolean mFullScan;
 
     protected Page(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean visible, boolean enabled) {
         mCallbacks = callbacks;
@@ -54,6 +55,7 @@ public abstract class Page implements PageTreeNode {
         mHintTextColor="#66000000";
         mVisible = visible;
         mEnabled = enabled;
+        mFullScan = true;
     }
 
     public Bundle getData() {
@@ -156,6 +158,11 @@ public abstract class Page implements PageTreeNode {
 		this.casaCHF = casaCHF;
 	}
 
-    
-    
+    public boolean ismFullScan() {
+        return mFullScan;
+    }
+
+    public void setmFullScan(boolean mFullScan) {
+        this.mFullScan = mFullScan;
+    }
 }

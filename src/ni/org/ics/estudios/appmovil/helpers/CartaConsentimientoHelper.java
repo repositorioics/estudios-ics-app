@@ -49,6 +49,12 @@ public class CartaConsentimientoHelper {
         cv.put(MainDBConstants.otraRelacionFamTutor, carta.getOtraRelacionFamTutor());
         cv.put(MainDBConstants.verifTutor, carta.getVerifTutor());
         cv.put(MainDBConstants.reconsentimiento, carta.getReconsentimiento());
+        //consentimiento muestras superficie casas
+        cv.put(MainDBConstants.casaCHF, carta.getCasaChf());
+        cv.put(MainDBConstants.nombre1MxSuperficie, carta.getNombre1MxSuperficie());
+        cv.put(MainDBConstants.nombre2MxSuperficie, carta.getNombre2MxSuperficie());
+        cv.put(MainDBConstants.apellido1MxSuperficie, carta.getApellido1MxSuperficie());
+        cv.put(MainDBConstants.apellido2MxSuperficie, carta.getApellido2MxSuperficie());
 
         if (carta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, carta.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, carta.getRecordUser());
@@ -94,6 +100,12 @@ public class CartaConsentimientoHelper {
         mCarta.setOtraRelacionFamTutor(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraRelacionFamTutor)));
         mCarta.setVerifTutor(cursor.getString(cursor.getColumnIndex(MainDBConstants.verifTutor)));
         mCarta.setReconsentimiento(cursor.getString(cursor.getColumnIndex(MainDBConstants.reconsentimiento)));
+        //consentimiento muestras superficie casas
+        mCarta.setCasaChf(cursor.getString(cursor.getColumnIndex(MainDBConstants.casaCHF)));
+        mCarta.setNombre1MxSuperficie(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre1MxSuperficie)));
+        mCarta.setNombre2MxSuperficie(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre2MxSuperficie)));
+        mCarta.setApellido1MxSuperficie(cursor.getString(cursor.getColumnIndex(MainDBConstants.apellido1MxSuperficie)));
+        mCarta.setApellido2MxSuperficie(cursor.getString(cursor.getColumnIndex(MainDBConstants.apellido2MxSuperficie)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mCarta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mCarta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

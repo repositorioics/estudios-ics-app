@@ -187,4 +187,28 @@
     <string name="tipoTelefono2Hint">Tipo de teléfono del segundo número</string>
     <string name="tieneTelefono">¿Tiene teléfono?</string>
     <string name="tieneOtroTelefono">¿Tiene otro teléfono?</string>
+    <!--anexo parte D estudio familia para consentimiento muestras de superficie-->
+    <string name="aceptaParteDChf">Acepta Parte D estudio CHF</string>
+    <string name="aceptaParteDChfHint">¿Acepta Parte D-Muestras de manos estudio CHF?</string>
+    <string name="razonNoAceptaParteDChf">Porque no acepta Parte D?</string>
+    <string name="razonNoAceptaParteDChfHint">Seleccionar porque no acepta Parte D-Muestras de manos estudio CHF</string>
+    <string name="otraRazonNoAceptaParteDChf">Otra razón Parte D</string>
+    <string name="otraRazonNoAceptaParteDChfHint">Indicar porque otra razón no acepta Parte D-Muestras de manos estudio CHF</string>
+    <string name="asentimientoVerbalMxSuper">Asentimiento verbal mx superficie</string>
+    <string name="asentimientoVerbalMxSuperHint">Da asentimiento verbal para tomar mx de superficie en su hogar?</string>
+    <string name="nombre1MxSuperficie">1er Nombre Asiente</string>
+    <string name="nombre1MxSuperficieHint">Nombre completo asiente mx superficie</string>
+    <string name="nombre2MxSuperficie">2do Nombre Asiente</string>
+    <string name="apellido1MxSuperficie">1er Apellido Asiente</string>
+    <string name="apellido2MxSuperficie">2do Apellido Asiente</string>
+
+    <string name="missingMxSuper1">Debe registrar consentimiento mx manos</string>
+    <string name="missingMxSuper2">Debe registrar asentimiento mx superficie</string>
+    <string name="missingMxSuper3">Debe registrar consentimiento mx manos y asentimiento mx superficie</string>
+
+    <string name="aceptaCohorteInfluenzaUO1">Acepta estudio Cohorte Influeza UO1</string>
+    <string name="razonNoAceptaInfluenzaUO1">Porque no acepta participar Influenza UO1?</string>
+    <string name="razonNoAceptaInfluenzaUO1Hint">Seleccionar porque no acepta participar en el estudio Cohorte pediátrica de Influenza UO1</string>
+    <string name="otraRazonNoAceptaInfluenzaUO1">Otra razón estudio Cohorte pediátrica de Influenza UO1</string>
+    <string name="otraRazonNoAceptaInfluenzaUO1Hint">Indicar porque otra razón no acepta participar en el estudio Cohorte pediátrica de Influenza UO1</string>
 </resources>

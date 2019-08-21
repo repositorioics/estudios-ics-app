@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="aceptaCohorteFLuUO1">2. Acepta estudio Cohorte Influenza UO1</string>
-    <string name="incFluUO1">3. Criterios de Inclusión/Exclusión Influenza UO1</string>
+    <string name="aceptaCohorteFLuUO1">2. Acepta estudio Cohorte UO1</string>
+    <string name="incFluUO1">3. Criterios de Inclusión/Exclusión UO1</string>
     <string name="preterminoUO1">7. ¿Es bebé Pretermino?</string>
     <string name="enfermedadInmunoUO1">8. ¿El niño padece de alguna enfermedad con compromiso inmunologico?</string>
     <string name="enfCronSNUO1">9. Padece alguna enfermedad crónica</string>
@@ -13,8 +13,8 @@
     <string name="puestosaludUO1">10.2 ¿Cuál puesto de salud?</string>
 
     <string name="aceptaContactoFuturoUO1">11. Contacto en el futuro</string>
-    <string name="aceptaParteBInfUO1">12. Parte B Influenza UO1</string>
-    <string name="aceptaParteCInfUO1">13. Parte C Influenza UO1</string>
+    <string name="aceptaParteBInfUO1">12. Parte B UO1</string>
+    <string name="aceptaParteCInfUO1">13. Parte C UO1</string>
     <string name="asentimientoUO1">14. ¿Dio el niño Asentimiento verbal?</string>
     <string name="noCumpleIncUO1">El participante no cumple los criterios de Inclusión/Exclusión. No podemos ingresarlo en el estudio</string>
 </resources>

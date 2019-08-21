@@ -1789,7 +1789,7 @@ public class NewConFluUO1Activity extends FragmentActivity implements
             visita.setOtraRelacionPersonaCasa(otraRelacionPersonaCasa);
             visita.setTelefonoPersonaCasa(telefonoPersonaCasa);
             visita.setCodigoVisita(infoMovil.getId());
-            visita.setEstudio("Influenza UO1");
+            visita.setEstudio("UO1");
             estudiosAdapter.crearVisitaTerrenoParticipante(visita);
 
             //si visita es exitosa registrar tamizaje, carta de consentimiento, y actualizar datos del participante participante
@@ -2076,10 +2076,10 @@ public class NewConFluUO1Activity extends FragmentActivity implements
                             procesos.setEstPart(1);
                         }
                         if (procesos.getEstudio() == null || procesos.getEstudio().isEmpty()) {
-                            procesos.setEstudio("Influenza UO1");
+                            procesos.setEstudio("UO1");
                         }else {
                             String estudios =procesos.getEstudio();
-                            procesos.setEstudio(estudios.replaceAll("Influenza","Influenza UO1"));
+                            procesos.setEstudio(estudios.replaceAll("Influenza","UO1"));
                         }
                         estudiosAdapter.actualizarParticipanteProcesos(procesos);
 

@@ -70,7 +70,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
     private final String TIPO_DENGUE = "Dengue";
     private final String TIPO_INFLUENZA = "Influenza";
     //private final String TIPO_AMBOS = "Ambos";
-    private final String TIPO_INFLUENZA_UO1 = "Influenza UO1";
+    private final String TIPO_INFLUENZA_UO1 = "UO1";
     private List<MessageResource> catMeses = new ArrayList<MessageResource>();
     private String[] catRelFamMenorEdad; //relación familiar del tutor cuando es menor de edad
     private String[] catRelFamMayorEdad; //relación familiar del tutor cuando es mayor de edad
@@ -391,7 +391,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         toast.show();
                     }
                     if (edadSemanas > EDAD_MAXIMA_FLU_UO1 && tipoIngreso.contains(TIPO_INFLUENZA_UO1)){
-                        Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noEsElegible) + " Influenza UO1 ", Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noEsElegible) + " UO1 ", Toast.LENGTH_LONG);
                         toast.show();
                     }
                     if (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)){
@@ -2113,9 +2113,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         }
                         if (aceptaInfluenzaUO1 && !esPretermino && !padeceEnfInmuno) {
                             if (estudios.isEmpty()) {
-                                estudios = "Influenza UO1";
+                                estudios = "UO1";
                             } else
-                                estudios += "  " + "Influenza UO1";
+                                estudios += "  " + "UO1";
                         }
 
                         procesos.setEstudio(estudios);

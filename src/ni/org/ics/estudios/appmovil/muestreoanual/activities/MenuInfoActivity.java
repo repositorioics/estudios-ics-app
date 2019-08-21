@@ -444,7 +444,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 if(mUser.getConsentimiento()){
                     if(mParticipante.getProcesos().getConsFlu().matches("Si")){
                         i = new Intent(getApplicationContext(),
-                                NewRecFlu2015Activity.class); //TODO UO1
+                                NewRecFlu2015Activity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtra(ConstantsDB.COD_CASA, mParticipante.getCasa().getCodigo());
                         i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());

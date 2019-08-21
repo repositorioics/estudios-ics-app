@@ -66,7 +66,7 @@ public class TamizajeForm extends AbstractWizardModel {
         String[] catCriteriosInclusion = fillCatalog("CP_CAT_CI");
         String[] catTiempoResid = fillCatalog("CP_CAT_TR");
         String[] catRazonNoParticipaPersona = fillCatalog("CHF_CAT_NPP");
-        String[] catTipoIngreso = {"Dengue","Influenza","Influenza UO1"};
+        String[] catTipoIngreso = {"Dengue","Influenza","UO1"};
         String[] catTipo = fillCatalog("CAT_TIPO_TEL");
         String[] catOperadora = fillCatalog("CAT_OPER_TEL");
         String[] catTipoViv = fillCatalog("CP_CAT_TV");

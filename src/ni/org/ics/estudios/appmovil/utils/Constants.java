@@ -74,7 +74,7 @@ public class Constants {
     public static final String VERSION_CC_CD = "12"; //COHORTE DENGUE
     public static final String VERSION_CC_CD_D = "1"; //COHORTE DENGUE Extensión edad 2018
     public static final String VERSION_CC_CI = "7"; //COHORTE INFLUENZA
-    public static final String VERSION_CC_UO1 = "1"; //COHORTE INFLUENZA
+    public static final String VERSION_CC_UO1 = "1"; //COHORTE UO1
 
     public static final String PARTICIPANTE_SA = "participanteSA";
 

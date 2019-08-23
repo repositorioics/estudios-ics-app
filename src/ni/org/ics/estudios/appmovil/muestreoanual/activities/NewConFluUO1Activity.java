@@ -762,6 +762,7 @@ public class NewConFluUO1Activity extends FragmentActivity implements
                 pagetmp.setHint(madre);
                 onPageTreeChanged();
             }
+            /*
             if (page.getTitle().equals(labels.getPretermino())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 esElegible = visible;
@@ -817,6 +818,7 @@ public class NewConFluUO1Activity extends FragmentActivity implements
                 }
                 onPageTreeChanged();
             }
+            */
             if (page.getTitle().equals(labels.getEnfermedadInmuno())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 esElegible = visible;
@@ -825,49 +827,49 @@ public class NewConFluUO1Activity extends FragmentActivity implements
                     toast.show();
                         resetForm(97);
                 }else {
-                    Page pagetmp2 = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getPretermino());
-                    boolean esPretermino = pagetmp2.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp2.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
-                    changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), !esPretermino);
+                    //Page pagetmp2 = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getPretermino());
+                    //boolean esPretermino = pagetmp2.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp2.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                    changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAsiste()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getAsiste()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getParteBDen()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getParteBDen()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getParteCDen()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getParteCDen()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), !esPretermino && edadMeses >= 72);
+                    changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), true && edadMeses >= 72);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getTutor()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getTutor()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getDomicilio()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getDomicilio()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getNomContacto()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getNomContacto()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getDireContacto()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getDireContacto()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getPadre()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getPadre()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getMadre()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getMadre()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), true);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), !esPretermino);
+                    changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), true);
                     notificarCambios = false;
                 }
                 onPageTreeChanged();

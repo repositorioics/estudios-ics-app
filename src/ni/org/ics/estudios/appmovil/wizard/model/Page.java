@@ -45,7 +45,7 @@ public abstract class Page implements PageTreeNode {
     protected boolean mVisible = false;
     protected boolean mEnabled = true;
     private String casaCHF;
-    private boolean mFullScan;
+    private int mCodePosicion; //para el fragment de codigo de barra, si es -1 toma el codigo completo, sino toma el segmento de codigo indicado en la posicion
 
     protected Page(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean visible, boolean enabled) {
         mCallbacks = callbacks;
@@ -55,7 +55,7 @@ public abstract class Page implements PageTreeNode {
         mHintTextColor="#66000000";
         mVisible = visible;
         mEnabled = enabled;
-        mFullScan = true;
+        mCodePosicion = -1;
     }
 
     public Bundle getData() {
@@ -158,11 +158,11 @@ public abstract class Page implements PageTreeNode {
 		this.casaCHF = casaCHF;
 	}
 
-    public boolean ismFullScan() {
-        return mFullScan;
+    public int getmCodePosicion() {
+        return mCodePosicion;
     }
 
-    public void setmFullScan(boolean mFullScan) {
-        this.mFullScan = mFullScan;
+    public void setmCodePosicion(int mCodePosicion) {
+        this.mCodePosicion = mCodePosicion;
     }
 }

@@ -31,6 +31,8 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimient
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
@@ -47,6 +49,8 @@ import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaFallidaCasoHelper;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaFinalCasoHelper;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaSeguimientoCasoHelper;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaSeguimientoCasoSintomasHelper;
+import ni.org.ics.estudios.appmovil.helpers.influenzauo1.ParticipanteCasoUO1Helper;
+import ni.org.ics.estudios.appmovil.helpers.influenzauo1.VisitaCasoUO1Helper;
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.EncuestaCasaSAHelper;
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.EncuestaParticipanteSAHelper;
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.ParticipanteSeroprevalenciaHelper;
@@ -169,6 +173,9 @@ public class EstudiosAdapter {
             db.execSQL(MainDBConstants.CREATE_OBSEQUIOS_TABLE);
             //Muestras de superficie
             db.execSQL(MuestrasDBConstants.CREATE_MUESTRA_SUPERFICIE_TABLE);
+            //UO1
+			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_PARTICIPANTES_CASOS_TABLE);
+			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_VISITAS_CASOS_TABLE);
         }
 
 		@Override
@@ -289,6 +296,11 @@ public class EstudiosAdapter {
             if (oldVersion==19){
                 db.execSQL("ALTER TABLE " + MainDBConstants.VISITAPART_TABLE + " ADD COLUMN " + MainDBConstants.estudio + " text");
             }
+            if (oldVersion==20){
+				//UO1
+				db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_PARTICIPANTES_CASOS_TABLE);
+				db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_VISITAS_CASOS_TABLE);
+			}
 
         }
 	}
@@ -1524,9 +1536,9 @@ public class EstudiosAdapter {
         return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, null, null) > 0;
     }
     //Limpiar la tabla de Muestras Transmision de la base de datos
-    public boolean borrarMuestrasTx() {
-        return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, MuestrasDBConstants.proposito + "='3'" , null) > 0;
-    }
+	public boolean borrarMuestrasTx() {
+		return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, MuestrasDBConstants.proposito + "='3'" , null) > 0;
+	}
     //Obtener una Muestra de la base de datos
     public Muestra getMuestra(String filtro, String orden) throws SQLException {
         Muestra mMuestras = null;
@@ -3022,6 +3034,9 @@ public class EstudiosAdapter {
         c = crearCursor(MainDBConstants.TAMIZAJE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
+		c = crearCursor(InfluenzaUO1DBConstants.UO1_VISITAS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
 		return false;
 	}
 
@@ -8446,4 +8461,127 @@ public class EstudiosAdapter {
         if (!cursor.isClosed()) cursor.close();
         return mMuestras;
     }
+
+	/**
+	 * Metodos para ParticipanteCasoUO1 en la base de datos
+	 *
+	 * @param participanteCasoUO1
+	 *            Objeto Muestras que contiene la informacion
+	 *
+	 */
+	//Crear nuevo registro ParticipanteCasoUO1 en la base de datos
+	public void crearParticipanteCasoUO1(ParticipanteCasoUO1 participanteCasoUO1) {
+		ContentValues cv = ParticipanteCasoUO1Helper.crearParticipanteCasoUO1ContentValues(participanteCasoUO1);
+		mDb.insertOrThrow(InfluenzaUO1DBConstants.UO1_PARTICIPANTES_CASOS_TABLE, null, cv);
+	}
+	//Editar ParticipanteCasoUO1 existente en la base de datos
+	public boolean editarParticipanteCasoUO1(ParticipanteCasoUO1 participanteCasoUO1) {
+		ContentValues cv = ParticipanteCasoUO1Helper.crearParticipanteCasoUO1ContentValues(participanteCasoUO1);
+		return mDb.update(InfluenzaUO1DBConstants.UO1_PARTICIPANTES_CASOS_TABLE, cv, InfluenzaUO1DBConstants.codigoCasoParticipante + "='"
+				+ participanteCasoUO1.getCodigoCasoParticipante() + "'", null) > 0;
+	}
+	//Limpiar la tabla de ParticipanteCasoUO1 de la base de datos
+	public boolean borrarParticipantesCasoUO1() {
+		return mDb.delete(InfluenzaUO1DBConstants.UO1_PARTICIPANTES_CASOS_TABLE, null, null) > 0;
+	}
+
+	//Obtener una ParticipanteCasoUO1 de la base de datos
+	public ParticipanteCasoUO1 getParticipanteCasoUO1(String filtro, String orden) throws SQLException {
+		ParticipanteCasoUO1 mParticipanteUO1 = null;
+		Cursor cursor = crearCursor(InfluenzaUO1DBConstants.UO1_PARTICIPANTES_CASOS_TABLE , filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mParticipanteUO1=ParticipanteCasoUO1Helper.crearParticipanteCasoUO1(cursor);
+			if (cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participante))!=null) {
+				Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participante)), null);
+				if (participante != null) mParticipanteUO1.setParticipante(participante);
+			}
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mParticipanteUO1;
+	}
+	//Obtener una lista de ParticipanteCasoUO1 de la base de datos
+	public List<ParticipanteCasoUO1> getParticipantesCasosUO1(String filtro, String orden) throws SQLException {
+		List<ParticipanteCasoUO1> mParticipantesUO1 = new ArrayList<ParticipanteCasoUO1>();
+		Cursor cursor = crearCursor(InfluenzaUO1DBConstants.UO1_PARTICIPANTES_CASOS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mParticipantesUO1.clear();
+			do{
+				ParticipanteCasoUO1 mParticipanteUO1 = null;
+				mParticipanteUO1=ParticipanteCasoUO1Helper.crearParticipanteCasoUO1(cursor);
+				if (cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participante))!=null) {
+					Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participante)), null);
+					if (participante != null) mParticipanteUO1.setParticipante(participante);
+				}
+				mParticipantesUO1.add(mParticipanteUO1);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mParticipantesUO1;
+	}
+
+	/**
+	 * Metodos para ParticipanteCasoUO1 en la base de datos
+	 *
+	 * @param visitaCasoUO1
+	 *            Objeto Muestras que contiene la informacion
+	 *
+	 */
+	//Crear nuevo registro VisitaCasoUO1 en la base de datos
+	public void crearVisitaCasoUO1(VisitaCasoUO1 visitaCasoUO1) {
+		ContentValues cv = VisitaCasoUO1Helper.crearVisitaCasoUO1ContentValues(visitaCasoUO1);
+		mDb.insertOrThrow(InfluenzaUO1DBConstants.UO1_VISITAS_CASOS_TABLE, null, cv);
+	}
+	//Editar VisitaCasoUO1 existente en la base de datos
+	public boolean editarVisitaCasoUO1(VisitaCasoUO1 visitaCasoUO1) {
+		ContentValues cv = VisitaCasoUO1Helper.crearVisitaCasoUO1ContentValues(visitaCasoUO1);
+		return mDb.update(InfluenzaUO1DBConstants.UO1_VISITAS_CASOS_TABLE, cv, InfluenzaUO1DBConstants.codigoCasoVisita + "='"
+				+ visitaCasoUO1.getCodigoCasoVisita() + "'", null) > 0;
+	}
+	//Limpiar la tabla de VisitaCasoUO1 de la base de datos
+	public boolean borrarVisitaCasoUO1() {
+		return mDb.delete(InfluenzaUO1DBConstants.UO1_VISITAS_CASOS_TABLE, null, null) > 0;
+	}
+
+	//Obtener una VisitaCasoUO1 de la base de datos
+	public VisitaCasoUO1 getVisitaCasoUO1(String filtro, String orden) throws SQLException {
+		VisitaCasoUO1 mParticipanteUO1 = null;
+		Cursor cursor = crearCursor(InfluenzaUO1DBConstants.UO1_VISITAS_CASOS_TABLE , filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mParticipanteUO1=VisitaCasoUO1Helper.crearVisitaCasoUO1(cursor);
+			if (cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participanteCasoUO1))!=null) {
+				ParticipanteCasoUO1 participante = this.getParticipanteCasoUO1(InfluenzaUO1DBConstants.codigoCasoParticipante + "='" + cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participanteCasoUO1))+"'", null);
+				if (participante != null) mParticipanteUO1.setParticipanteCasoUO1(participante);
+			}
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mParticipanteUO1;
+	}
+	//Obtener una lista de VisitaCasoUO1 de la base de datos
+	public List<VisitaCasoUO1> getVisitasCasosUO1(String filtro, String orden) throws SQLException {
+		List<VisitaCasoUO1> visitaCasoUO1List = new ArrayList<VisitaCasoUO1>();
+		Cursor cursor = crearCursor(InfluenzaUO1DBConstants.UO1_VISITAS_CASOS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			visitaCasoUO1List.clear();
+			do{
+				VisitaCasoUO1 visitaCasoUO1 = null;
+				visitaCasoUO1=VisitaCasoUO1Helper.crearVisitaCasoUO1(cursor);
+				if (cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participanteCasoUO1))!=null) {
+					ParticipanteCasoUO1 participante = this.getParticipanteCasoUO1(InfluenzaUO1DBConstants.codigoCasoParticipante + "='" + cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participanteCasoUO1))+"'", null);
+					if (participante != null) visitaCasoUO1.setParticipanteCasoUO1(participante);
+				}
+				visitaCasoUO1List.add(visitaCasoUO1);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return visitaCasoUO1List;
+	}
+
+	//Limpiar la tabla de Muestras Transmision de la base de datos
+	public boolean borrarMuestrasUO1() {
+		return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, MuestrasDBConstants.proposito + "='"+Constants.CODIGO_PROPOSITO_UO1+"'" , null) > 0;
+	}
 }

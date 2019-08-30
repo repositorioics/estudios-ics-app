@@ -11,6 +11,7 @@ import android.widget.EditText;
 import ni.org.ics.estudios.appmovil.adapters.MainActivityAdapter;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCohorteFamiliaActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.influenzauo1.activities.MenuInfluenzaUO1Activity;
 import ni.org.ics.estudios.appmovil.muestreoanual.activities.DownloadBaseActivity;
 import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
@@ -91,6 +92,12 @@ public class MainActivity extends AbstractAsyncActivity {
                     case 1:
                         i = new Intent(getApplicationContext(),
                                 MenuMuestreoAnualActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        break;
+                    case 2:
+                        i = new Intent(getApplicationContext(),
+                                MenuInfluenzaUO1Activity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;

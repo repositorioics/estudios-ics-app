@@ -101,14 +101,17 @@ public class BarcodeFragment extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		if (requestCode == BARCODE_CAPTURE && intent != null) {
-			if (mPage.ismFullScan()) {
+			if (mPage.getmCodePosicion()<0) {//tomar en cuenta el texto completo
                 mEditTextInput.setText(intent.getStringExtra("SCAN_RESULT"));
                 mPage.getData().putString(Page.SIMPLE_DATA_KEY, intent.getStringExtra("SCAN_RESULT"));
 
             }else {
                 String code = intent.getStringExtra("SCAN_RESULT");
-                if (code.contains(" "))code = code.substring(0, code.indexOf(" "));
-                mEditTextInput.setText(code.trim());
+                String[] codeparts = code.split(" ");
+                if (codeparts.length > mPage.getmCodePosicion() && codeparts[mPage.getmCodePosicion()] != null){
+                	code = codeparts[mPage.getmCodePosicion()];
+				}
+				mEditTextInput.setText(code.trim());
                 mPage.getData().putString(Page.SIMPLE_DATA_KEY, code);
             }
             mPage.notifyDataChanged();

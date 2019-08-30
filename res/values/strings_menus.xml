@@ -7,4 +7,6 @@
     <string name="download">Descargar Datos</string>
     <string name="upload">Subir Datos</string>
     <string name="catalog">Catálogos</string>
+
+    <string name="positives">Positivos</string>
 </resources>

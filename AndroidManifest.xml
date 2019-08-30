@@ -330,6 +330,26 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".muestreoanual.activities.NewConFluUO1Activity"
                   android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.MenuInfluenzaUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.server.DownloadUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.list.ListaParticipantesCasosUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.list.ListaVisitasCasoUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.enterdata.NuevaVisitaCasoUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.MenuVisitaCasoUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.list.ListaMuestrasParticipanteCasoUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.enterdata.NuevaMuestraTuboPbmcUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.enterdata.NuevaMuestraTuboRojoUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.server.UploadAllUO1Activity"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

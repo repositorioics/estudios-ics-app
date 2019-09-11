@@ -27,11 +27,16 @@
     <string name="otraRazonUO1">Otra razón</string>
     <string name="positivoPorUO1">Positivo por</string>
     <string name="fifUO1">Fecha de inicio de fiebre</string>
-    <string name="vacunaInfluenzaUO1">¿Su niño/a recibió una segunda dosis de vacuna de influenza?</string>
+    <string name="vacunaInfluenzaUO1">¿Su niño/a recibió la vacuna de influenza en las últimas 3 semanas?</string>
     <string name="fechaVacunaUO1">Fecha de vacuna de influenza</string>
     <string name="notaVacunaSiUO1">Solicite tarjeta de vacuna o documentos donde fue registrada la vacuna y tome fotografía</string>
     <string name="notaVacunaNoUO1">Registre información de toma de muestras según edad del participante</string>
-    <string name="wrong_visit_date_OU1">Fecha de visita es posterior a 45 días después de la fecha de inicio</string>
+    <string name="wrong_visit_start_date_OU1">Fecha de visita es inferior a 30 días después de la fecha de inicio</string>
+    <string name="wrong_visit_end_date_OU1">Fecha de visita es posterior a 45 días después de la fecha de inicio</string>
+    <string name="wrong_visit_date_OU1_1">Existe Visita Inicial registrada con menos de 30 días</string>
+    <string name="wrong_visit_date_OU1_2">Fecha de visita es inferior a 30 días después de la Visita Inicial</string>
+    <string name="wrong_visit_date_OU1_3">Fecha de visita es posterior a 45 días después de la Visita Inicial</string>
+    <string name="wrong_visit_date_OU1_4">Visita Inicial no ha sido registrada</string>
     <string name="visit_already_exist_OU1">Visita %s ya fue registrada para éste caso </string>
     <string name="visit_not_suscesfull">Visita no fue exitosa</string>
 
@@ -52,4 +57,16 @@
     <string name="visita_final">Final</string>
     <string name="visita_exitosa">Exitosa</string>
     <string name="visita_fallida">Fallida</string>
+    <string name="visita_reprogramada">Reprogramada</string>
+
+    <string name="administraVacFluUO1">¿Le fue administrada vacuna de influenza?</string>
+    <string name="tomamxAntesVacuna">¿Tomó muestras hemáticas antes de ser vacunado el participante?</string>
+    <string name="razonNoTomamxAntes">Razón no tomó muestras</string>
+    <string name="segundaDosis">¿Su niño/a recibió una segunda dosis de vacuna de influenza?</string>
+    <string name="fechaVacunaSegundaDosis">Fecha segunda dosis vacuna influenza</string>
+    <string name="reprogramarTomaMx">Solicite tarjeta de vacuna o documentos donde fue registrada la vacuna y tome fotografía. Reprograme cita para toma de muestra en 2 a 5 semanas.</string>
+    <string name="fechaReprogramacionTomaMx">Fecha reprogramación</string>
+    <string name="pbmc2mlVacunaUO1_1">Menor de 6 meses: No tomar PBMC</string>
+    <string name="visit_vac_already_exist_OU1">Visita %s exitosa ya fue registrada para ésta fecha </string>
+    <string name="no_pertenece_uo1">El participante no pertenece a UO1</string>
  </resources>

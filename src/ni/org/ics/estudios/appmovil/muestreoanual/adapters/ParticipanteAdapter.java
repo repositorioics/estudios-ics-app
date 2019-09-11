@@ -84,6 +84,12 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 				if (procesos.getMi().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante en monitoreo intensivo CHF</b></font><br />";
                 if (procesos.getPosDengue()!=null) labelHeader = labelHeader + "<font color='red'>"+procesos.getPosDengue()+"</font><br />";
 				//if (participante.getCand().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante candidato a CHF</b></font><br />";
+                if (participante.getDatosUO1()!=null &&  participante.getDatosUO1().isConvalesciente() && participante.getDatosUO1().getDiasConvalesciente() < 30){
+                    labelHeader = labelHeader + "<font color='red'>Convalesciente UO1 con menos de 30 días. No tomar muestra</font><br />";
+                }
+                if (participante.getDatosUO1()!=null &&  participante.getDatosUO1().isVacunado() && participante.getDatosUO1().getDiasVacuna() < 30){
+                    labelHeader = labelHeader + "<font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font><br />";
+                }
 				if (procesos.getConsFlu().matches("Si")|| procesos.getPesoTalla().matches("Si")
 						|| procesos.getEnCasa().matches("Si")||procesos.getEncPart().matches("Si")
                         || procesos.getEnCasaChf().matches("Si") || procesos.getEnCasaSa().matches("Si") || procesos.getEncPartSa().matches("Si")
@@ -96,6 +102,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         || !procesos.getCoordenadas().equals("0")
                         || procesos.getObsequioChf().matches("Si")
                         || (procesos.getReConsChf18()!=null && procesos.getReConsChf18().matches("Si"))){
+
 					labelHeader = labelHeader + "<font color='red'>Pendiente: <br /></font>";
 
 					//Primero muestras

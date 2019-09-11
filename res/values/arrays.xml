@@ -120,9 +120,9 @@
         <item>@string/info_casasa</item>
         <item>@string/info_participantesa</item>
     </string-array>
-
     <string-array name="menu_influenza_UO1">
         <item>@string/positives</item>
+        <item>@string/vaccines</item>
         <item>@string/download</item>
         <item>@string/upload</item>
         <item>@string/exit</item>

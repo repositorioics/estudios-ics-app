@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import android.os.AsyncTask;
 import android.os.Build;
@@ -38,18 +39,18 @@ import ni.org.ics.estudios.appmovil.domain.DatosCoordenadas;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
+import ni.org.ics.estudios.appmovil.influenzauo1.dto.DatosUO1;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.MenuInfoAdapter;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaCasaSAActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaParticipanteSAActivity;
-import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
-import ni.org.ics.estudios.appmovil.utils.SeroprevalenciaDBConstants;
+import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 public class MenuInfoActivity extends AbstractAsyncActivity {
@@ -1024,6 +1025,26 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         mDatosCoordenadas = (ArrayList)estudiosAdapter.getDatosCoordenadas(MainDBConstants.participante + "=" + mParticipante.getCodigo(), null);
         mEncuestasParticipantesSa = (ArrayList)estudiosAdapter.getEncuestasParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo() , null);
         catRelacionFamiliar = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", null);
+        //procesos UO1
+        if (mParticipante.getProcesos().getEstudio().contains("UO1")) {
+            ParticipanteCasoUO1 casoUO1 = estudiosAdapter.getParticipanteCasoUO1(InfluenzaUO1DBConstants.participante + "=" + mParticipante.getCodigo(), null);
+            DatosUO1 datosUO1 = new DatosUO1();
+            if (casoUO1 != null) {
+                datosUO1.setConvalesciente(true);
+                datosUO1.setFechaInicioCaso(casoUO1.getFechaIngreso());
+            }
+            //sacar la ultima visita inicial por vacuna uo1, si tiene evaluar si tiene menos de 30 dias de vacunado
+            List<VisitaVacunaUO1> mVisitasCasos = estudiosAdapter.getVisitasVacunasUO1(InfluenzaUO1DBConstants.participante + " = " + mParticipante.getCodigo() + " and visitaExitosa = '1' and visita = 'I' ",
+                    InfluenzaUO1DBConstants.fechaVisita + " desc ");
+            if (mVisitasCasos.size()>0) {
+                VisitaVacunaUO1 ultimaVisita = mVisitasCasos.get(0);
+                if (DateUtil.getDateDiff(ultimaVisita.getFechaVisita(), new Date(), TimeUnit.DAYS) < 30){
+                    datosUO1.setVacunado(true);
+                    datosUO1.setFechaVacuna(ultimaVisita.getFechaVacuna());
+                }
+            }
+            mParticipante.setDatosUO1(datosUO1);
+        }
         estudiosAdapter.close();
     }
 
@@ -1060,7 +1081,12 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             }
             if (mParticipante.getProcesos().getPosZika().matches("Si")) labelHeader = labelHeader + "<small><font color='red'>Participante positivo a ZIKA</font></small><br />";
             if (mParticipante.getProcesos().getPosDengue()!=null) labelHeader = labelHeader + "<small><font color='red'>"+mParticipante.getProcesos().getPosDengue()+"</font></small><br />";
-
+            if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isConvalesciente() && mParticipante.getDatosUO1().getDiasConvalesciente() < 30){
+                labelHeader = labelHeader + "<small><font color='red'>Convalesciente UO1 con menos de 30 días. No tomar muestra</font></small><br />";
+            }
+            if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isVacunado() && mParticipante.getDatosUO1().getDiasVacuna() < 30){
+                labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font></small><br />";
+            }
             if (mParticipante.getProcesos().getConsFlu().matches("Si")|| mParticipante.getProcesos().getPesoTalla().matches("Si")
                     || mParticipante.getProcesos().getEnCasa().matches("Si")||mParticipante.getProcesos().getEncPart().matches("Si")
                     || mParticipante.getProcesos().getEnCasaChf().matches("Si")|| mParticipante.getProcesos().getEnCasaSa().matches("Si")||mParticipante.getProcesos().getEncPartSa().matches("Si")

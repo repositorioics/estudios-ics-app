@@ -10,6 +10,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.MuestraSuperficie;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
@@ -35,13 +36,15 @@ public class DownloadCasosUO1Task extends DownloadTask {
     
     private List<ParticipanteCasoUO1> mParticipantesUO1 = null;
     private List<VisitaCasoUO1> mVisitasUO1 = null;
+    private List<VisitaVacunaUO1> mVisitasVacunasUO1 = null;
     private List<Muestra> mMuestras = null;
 
     public static final String PARTICIPANTE_UO1 = "1";
     public static final String VISITAS_UO1 = "2";
-    public static final String MUESTRAS_UO1 = "3";
+    public static final String VISITAS_VAC_UO1 = "3";
+    public static final String MUESTRAS_UO1 = "4";
 
-    private static final String TOTAL_TASK_CASOS = "3";
+    private static final String TOTAL_TASK_CASOS = "4";
 
 	private String error = null;
 	private String url = null;
@@ -73,6 +76,7 @@ public class DownloadCasosUO1Task extends DownloadTask {
             estudioAdapter.borrarParticipantesCasoUO1();
             estudioAdapter.borrarMuestrasUO1();
             estudioAdapter.borrarVisitaCasoUO1();
+            estudioAdapter.borrarVisitaVacunaUO1();
             if (mParticipantesUO1 != null){
                 v = mParticipantesUO1.size();
                 ListIterator<ParticipanteCasoUO1> iter = mParticipantesUO1.listIterator();
@@ -92,6 +96,16 @@ public class DownloadCasosUO1Task extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mVisitasUO1 = null;
+            }
+            if (mVisitasVacunasUO1 != null){
+                v = mVisitasVacunasUO1.size();
+                ListIterator<VisitaVacunaUO1> iter = mVisitasVacunasUO1.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearVisitaVacunaUO1(iter.next());
+                    publishProgress("Insertando visitas de vacunas UO1 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mVisitasVacunasUO1 = null;
             }
             if (mMuestras != null){
                 v = mMuestras.size();
@@ -143,9 +157,9 @@ public class DownloadCasosUO1Task extends DownloadTask {
             // convert the array to a list and return it
             mParticipantesUO1 = Arrays.asList(responseEntityPartProc.getBody());
 
-            // Descargando visitas UO1
+            // Descargando visitas positivos UO1
             urlRequest = url + "/movil/visitasCasoUO1";
-            publishProgress("Solicitando visitas UO1",VISITAS_UO1,TOTAL_TASK_CASOS);
+            publishProgress("Solicitando visitas positivos UO1",VISITAS_UO1,TOTAL_TASK_CASOS);
 
             // Perform the HTTP GET request
             ResponseEntity<VisitaCasoUO1[]> responseEntityVC = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
@@ -153,6 +167,17 @@ public class DownloadCasosUO1Task extends DownloadTask {
 
             // convert the array to a list and return it
             mVisitasUO1 = Arrays.asList(responseEntityVC.getBody());
+
+            // Descargando visitas vacunas UO1
+            urlRequest = url + "/movil/visitasVacunasUO1";
+            publishProgress("Solicitando visitas vacunas UO1",VISITAS_VAC_UO1,TOTAL_TASK_CASOS);
+
+            // Perform the HTTP GET request
+            ResponseEntity<VisitaVacunaUO1[]> responseEntityVV = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    VisitaVacunaUO1[].class);
+
+            // convert the array to a list and return it
+            mVisitasVacunasUO1 = Arrays.asList(responseEntityVV.getBody());
 
             // Descargando MUESTRAS UO1
                     urlRequest = url + "/movil/muestrasCasosUO1";

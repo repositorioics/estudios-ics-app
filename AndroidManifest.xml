@@ -350,6 +350,12 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".influenzauo1.activities.server.UploadAllUO1Activity"
                   android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.list.ListaVisitasVacunaUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.enterdata.NuevaVisitaVacunaUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.list.ListaMuestrasVacunasUO1Activity"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

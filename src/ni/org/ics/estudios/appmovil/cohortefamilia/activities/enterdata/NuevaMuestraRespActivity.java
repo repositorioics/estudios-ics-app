@@ -377,6 +377,12 @@ public class NuevaMuestraRespActivity extends FragmentActivity implements
                 notificarCambios = false;
                 onPageTreeChanged();
             }
+            if (page.getTitle().equals(labels.getTipoMuestra())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).contains("Lavado");
+                changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible, null);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
             if (page.getTitle().equals(labels.getObservacion())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), visible, null);
@@ -452,7 +458,7 @@ public class NuevaMuestraRespActivity extends FragmentActivity implements
             muestra.setCodigo(infoMovil.getId());
             muestra.setParticipante(participanteCHF.getParticipante());
             
-            muestra.setProposito(accion);//Muestreo anual
+            muestra.setProposito(accion);//MI o Seguimiento
             //listas
             if (tieneValor(tomaMxSn)){
                 MessageResource mstomaMxSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaMxSn + "' and "
@@ -490,7 +496,11 @@ public class NuevaMuestraRespActivity extends FragmentActivity implements
                 if (msrazonNoToma != null) muestra.setRazonNoToma(msrazonNoToma.getCatKey());
             }
             //Numericos
-            if (tieneValor(volumen)) muestra.setVolumen(Double.valueOf(volumen));
+            if (tieneValor(volumen)) {
+                muestra.setVolumen(Double.valueOf(volumen));
+            }else{ //para medios por defecto 3ml
+                if (muestra.getTubo().equalsIgnoreCase(Constants.CODIGO_MEDIO)) muestra.setVolumen(3D);
+            }
             //textos
             muestra.setHora(horaTomaMx);
             muestra.setCodigoMx(codigoMx);

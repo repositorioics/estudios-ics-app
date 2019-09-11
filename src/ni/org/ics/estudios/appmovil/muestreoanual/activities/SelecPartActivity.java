@@ -20,18 +20,26 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
+import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaVisitasVacunaUO1Activity;
+import ni.org.ics.estudios.appmovil.influenzauo1.dto.DatosUO1;
 import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.ParticipanteAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.DateUtil;
+import ni.org.ics.estudios.appmovil.utils.InfluenzaUO1DBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SelecPartActivity extends AbstractAsyncListActivity {
 
@@ -46,6 +54,7 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 	private SharedPreferences settings;
 	private boolean desdeMenuPrincipal=false;
 	private boolean desdeMenuZika=false;
+	private boolean desdeMenuUO1 = false;
 	private AlertDialog alertDialog;
 	
 	public static final int BARCODE_CAPTURE = 2;
@@ -86,6 +95,7 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 
 		desdeMenuPrincipal = getIntent().getBooleanExtra(Constants.MENU_INFO, true);
 		desdeMenuZika = getIntent().getBooleanExtra(Constants.MENU_ZIKA, true);
+		desdeMenuUO1 = getIntent().getBooleanExtra(Constants.MENU_UO1, false);
 		codigoCasa = getIntent().getIntExtra(ConstantsDB.COD_CASA,-1);
 		codigoComun = getIntent().getIntExtra(ConstantsDB.CODIGO,-1);
 		
@@ -239,6 +249,25 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 
 					if (mParticipante!= null && mParticipante.getCodigo() != null){
 						codigo = mParticipante.getCodigo();
+						if (mParticipante.getProcesos().getEstudio().contains("UO1")) {
+							ParticipanteCasoUO1 casoUO1 = estudiosAdapter.getParticipanteCasoUO1(InfluenzaUO1DBConstants.participante + "=" + mParticipante.getCodigo(), null);
+							DatosUO1 datosUO1 = new DatosUO1();
+							if (casoUO1 != null) {
+								datosUO1.setConvalesciente(true);
+								datosUO1.setFechaInicioCaso(casoUO1.getFechaIngreso());
+							}
+							//sacar la ultima visita inicial por vacuna uo1, si tiene evaluar si tiene menos de 30 dias de vacunado
+							List<VisitaVacunaUO1> mVisitasCasos = estudiosAdapter.getVisitasVacunasUO1(InfluenzaUO1DBConstants.participante + " = " + mParticipante.getCodigo() + " and visitaExitosa = '1' and visita = 'I' ",
+									InfluenzaUO1DBConstants.fechaVisita + " desc ");
+							if (mVisitasCasos.size()>0) {
+								VisitaVacunaUO1 ultimaVisita = mVisitasCasos.get(0);
+								if (DateUtil.getDateDiff(ultimaVisita.getFechaVisita(), new Date(), TimeUnit.DAYS) < 30){
+									datosUO1.setVacunado(true);
+									datosUO1.setFechaVacuna(ultimaVisita.getFechaVacuna());
+								}
+							}
+							mParticipante.setDatosUO1(datosUO1);
+						}
 						if (desdeMenuPrincipal){
                             ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos(); //ca.getParticipanteProceso(codigoScanned);
                             if (mParticipanteProc != null && (mParticipanteProc.getEstudio() != null && !mParticipanteProc.getEstudio().isEmpty())
@@ -259,6 +288,17 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 							Intent intent1 = new Intent();
 							intent1.putExtra("codigo", codigo);
 							setResult(RESULT_OK, intent1);
+							finish();
+						}
+						else if (desdeMenuUO1){
+							Bundle arguments = new Bundle();
+							Intent i;
+							if (mParticipante!=null) arguments.putSerializable(Constants.PARTICIPANTE , mParticipante);
+							i = new Intent(getApplicationContext(),
+									ListaVisitasVacunaUO1Activity.class);
+							i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+							i.putExtras(arguments);
+							startActivity(i);
 							finish();
 						}
 						else{
@@ -317,9 +357,9 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
                 codigoCasaAnt = mParticipante.getCasa().getCodigo();
             }
             estudiosAdapter.open();
-            if (desdeMenuPrincipal) {
+			ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos();
 
-                ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos();
+			if (desdeMenuPrincipal) {
                 if (mParticipanteProc != null && (mParticipanteProc.getEstudio() != null && !mParticipanteProc.getEstudio().isEmpty())
                         || (mParticipanteProc != null && mParticipanteProc.getReConsDeng()!=null && mParticipanteProc.getReConsDeng().matches("Si"))) {
                     Bundle arguments = new Bundle();
@@ -333,7 +373,27 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
                 } else {
                     showToast("(" + codigo + ") - " + getString(R.string.retired_error));
                 }
-            } else {
+            } else if (desdeMenuUO1){
+				if (mParticipanteProc != null && mParticipanteProc.getEstudio() != null && !mParticipanteProc.getEstudio().isEmpty())
+				{
+					if (mParticipanteProc.getEstudio().contains("UO1")){
+						Bundle arguments = new Bundle();
+						Intent i;
+						if (mParticipante != null) arguments.putSerializable(Constants.PARTICIPANTE, mParticipante);
+						i = new Intent(getApplicationContext(),
+								ListaVisitasVacunaUO1Activity.class);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						i.putExtras(arguments);
+						startActivity(i);
+						finish();
+					}else {
+						showToast("(" + codigo + ") - " + getString(R.string.no_pertenece_uo1));
+					}
+				} else {
+					showToast("(" + codigo + ") - " + getString(R.string.retired_error));
+				}
+			}
+            else {
                 createConfirmDialog();
             }
         }
@@ -393,6 +453,8 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
         new FetchDataTask().execute(filtro);
     }
 
+
+
     // ***************************************
     // Private classes
     // ***************************************
@@ -410,6 +472,31 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
             try {
                 estudiosAdapter.open();
                 mParticipantes = estudiosAdapter.getParticipantes(filtro, MainDBConstants.codigo);
+                int indice =0;
+                for(Participante p : mParticipantes){
+                	if (p.getProcesos().getEstudio().contains("UO1")) {
+						ParticipanteCasoUO1 casoUO1 = estudiosAdapter.getParticipanteCasoUO1(InfluenzaUO1DBConstants.participante + "=" + p.getCodigo(), null);
+						DatosUO1 datosUO1 = new DatosUO1();
+						if (casoUO1 != null) {
+							datosUO1.setConvalesciente(true);
+							datosUO1.setFechaInicioCaso(casoUO1.getFechaIngreso());
+
+						}
+						//sacar la ultima visita inicial por vacuna uo1, si tiene evaluar si tiene menos de 30 dias de vacunado
+						List<VisitaVacunaUO1> mVisitasCasos = estudiosAdapter.getVisitasVacunasUO1(InfluenzaUO1DBConstants.participante + " = " + p.getCodigo() + " and visitaExitosa = '1' and visita = 'I' ",
+								InfluenzaUO1DBConstants.fechaVisita + " desc ");
+						if (mVisitasCasos.size()>0) {
+							VisitaVacunaUO1 ultimaVisita = mVisitasCasos.get(0);
+							if (DateUtil.getDateDiff(ultimaVisita.getFechaVisita(), new Date(), TimeUnit.DAYS) < 30){
+								datosUO1.setVacunado(true);
+								datosUO1.setFechaVacuna(ultimaVisita.getFechaVacuna());
+							}
+
+						}
+						mParticipantes.get(indice).setDatosUO1(datosUO1);
+					}
+                	indice++;
+				}
                 estudiosAdapter.close();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);

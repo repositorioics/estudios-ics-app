@@ -33,6 +33,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
@@ -51,6 +52,7 @@ import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaSeguimientoCasoHelpe
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaSeguimientoCasoSintomasHelper;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.ParticipanteCasoUO1Helper;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.VisitaCasoUO1Helper;
+import ni.org.ics.estudios.appmovil.helpers.influenzauo1.VisitaVacunaUO1Helper;
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.EncuestaCasaSAHelper;
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.EncuestaParticipanteSAHelper;
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.ParticipanteSeroprevalenciaHelper;
@@ -176,6 +178,7 @@ public class EstudiosAdapter {
             //UO1
 			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_PARTICIPANTES_CASOS_TABLE);
 			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_VISITAS_CASOS_TABLE);
+			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_VISITAS_VACUNAS_TABLE);
         }
 
 		@Override
@@ -301,7 +304,11 @@ public class EstudiosAdapter {
 				db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_PARTICIPANTES_CASOS_TABLE);
 				db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_VISITAS_CASOS_TABLE);
 			}
-
+			if (oldVersion==21){
+				db.execSQL("DROP TABLE " + InfluenzaUO1DBConstants.UO1_VISITAS_VACUNAS_TABLE);
+				//continuación UO1
+				db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_VISITAS_VACUNAS_TABLE);
+			}
         }
 	}
 
@@ -8522,7 +8529,7 @@ public class EstudiosAdapter {
 	}
 
 	/**
-	 * Metodos para ParticipanteCasoUO1 en la base de datos
+	 * Metodos para VisitaCasoUO1 en la base de datos
 	 *
 	 * @param visitaCasoUO1
 	 *            Objeto Muestras que contiene la informacion
@@ -8580,8 +8587,67 @@ public class EstudiosAdapter {
 		return visitaCasoUO1List;
 	}
 
-	//Limpiar la tabla de Muestras Transmision de la base de datos
+	//Limpiar la tabla de Muestras Positivos UO1 de la base de datos
 	public boolean borrarMuestrasUO1() {
-		return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, MuestrasDBConstants.proposito + "='"+Constants.CODIGO_PROPOSITO_UO1+"'" , null) > 0;
+		return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, MuestrasDBConstants.proposito + "='"+Constants.CODIGO_PROPOSITO_UO1+"' or " + MuestrasDBConstants.proposito + "='"+Constants.CODIGO_PROPOSITO_VC_UO1+"'"  , null) > 0;
+	}
+
+	/**
+	 * Metodos para ParticipanteVacunaUO1 en la base de datos
+	 *
+	 * @param visitaVacunaUO1
+	 *            Objeto Muestras que contiene la informacion
+	 *
+	 */
+	//Crear nuevo registro VisitaVacunaUO1 en la base de datos
+	public void crearVisitaVacunaUO1(VisitaVacunaUO1 visitaVacunaUO1) {
+		ContentValues cv = VisitaVacunaUO1Helper.crearVisitaVacunaUO1ContentValues(visitaVacunaUO1);
+		mDb.insertOrThrow(InfluenzaUO1DBConstants.UO1_VISITAS_VACUNAS_TABLE, null, cv);
+	}
+	//Editar VisitaVacunaUO1 existente en la base de datos
+	public boolean editarVisitaVacunaUO1(VisitaVacunaUO1 visitaVacunaUO1) {
+		ContentValues cv = VisitaVacunaUO1Helper.crearVisitaVacunaUO1ContentValues(visitaVacunaUO1);
+		return mDb.update(InfluenzaUO1DBConstants.UO1_VISITAS_VACUNAS_TABLE, cv, InfluenzaUO1DBConstants.codigoVisita + "='"
+				+ visitaVacunaUO1.getCodigoVisita() + "'", null) > 0;
+	}
+	//Limpiar la tabla de VisitaVacunaUO1 de la base de datos
+	public boolean borrarVisitaVacunaUO1() {
+		return mDb.delete(InfluenzaUO1DBConstants.UO1_VISITAS_VACUNAS_TABLE, null, null) > 0;
+	}
+
+	//Obtener una VisitaVacunaUO1 de la base de datos
+	public VisitaVacunaUO1 getVisitaVacunaUO1(String filtro, String orden) throws SQLException {
+		VisitaVacunaUO1 visitaVacunaUO1 = null;
+		Cursor cursor = crearCursor(InfluenzaUO1DBConstants.UO1_VISITAS_VACUNAS_TABLE , filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			visitaVacunaUO1=VisitaVacunaUO1Helper.crearVisitaVacunaUO1(cursor);
+			if (cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participante))!=null) {
+				Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participante)), null);
+				if (participante != null) visitaVacunaUO1.setParticipante(participante);
+			}
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return visitaVacunaUO1;
+	}
+	//Obtener una lista de VisitaVacunaUO1 de la base de datos
+	public List<VisitaVacunaUO1> getVisitasVacunasUO1(String filtro, String orden) throws SQLException {
+		List<VisitaVacunaUO1> visitaVacunaUO1List = new ArrayList<VisitaVacunaUO1>();
+		Cursor cursor = crearCursor(InfluenzaUO1DBConstants.UO1_VISITAS_VACUNAS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			visitaVacunaUO1List.clear();
+			do{
+				VisitaVacunaUO1 visitaVacunaUO1 = null;
+				visitaVacunaUO1=VisitaVacunaUO1Helper.crearVisitaVacunaUO1(cursor);
+				if (cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participante))!=null) {
+					Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participante)), null);
+					if (participante != null) visitaVacunaUO1.setParticipante(participante);
+				}
+				visitaVacunaUO1List.add(visitaVacunaUO1);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return visitaVacunaUO1List;
 	}
 }

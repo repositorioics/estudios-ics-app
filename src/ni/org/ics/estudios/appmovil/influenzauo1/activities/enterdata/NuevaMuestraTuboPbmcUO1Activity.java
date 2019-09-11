@@ -20,10 +20,13 @@ import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestraTuboPbmcForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestrasFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaMuestrasParticipanteCasoUO1Activity;
+import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaMuestrasVacunasUO1Activity;
 import ni.org.ics.estudios.appmovil.influenzauo1.forms.MuestraCasoUO1Form;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
@@ -64,6 +67,7 @@ public class NuevaMuestraTuboPbmcUO1Activity extends FragmentActivity implements
     private DeviceInfo infoMovil;
     private static ParticipanteCasoUO1 participanteCasoUO1 = new ParticipanteCasoUO1();
     private static VisitaCasoUO1 visitaCaso = new VisitaCasoUO1();
+    private static VisitaVacunaUO1 visitaVacuna = new VisitaVacunaUO1();
     private String username;
     private SharedPreferences settings;
     private static final int EXIT = 1;
@@ -84,8 +88,12 @@ public class NuevaMuestraTuboPbmcUO1Activity extends FragmentActivity implements
                         null);
         infoMovil = new DeviceInfo(NuevaMuestraTuboPbmcUO1Activity.this);
         accion = getIntent().getStringExtra(Constants.ACCION);
-        visitaCaso = (VisitaCasoUO1) getIntent().getExtras().getSerializable(Constants.VISITA);
-        participanteCasoUO1 = visitaCaso.getParticipanteCasoUO1();
+        if (getIntent().getExtras().getSerializable(Constants.VISITA) instanceof VisitaCasoUO1)
+            visitaCaso = (VisitaCasoUO1) getIntent().getExtras().getSerializable(Constants.VISITA);
+        else
+            visitaVacuna = (VisitaVacunaUO1) getIntent().getExtras().getSerializable(Constants.VISITA);
+        if (visitaCaso!=null)
+            participanteCasoUO1 = visitaCaso.getParticipanteCasoUO1();
         volumenMaximoPermitido = getIntent().getDoubleExtra(Constants.VOLUMEN, 6);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new MuestraCasoUO1Form(this,mPass);
@@ -172,6 +180,10 @@ public class NuevaMuestraTuboPbmcUO1Activity extends FragmentActivity implements
         vol.setRangeValidation(true, 0, volumenMaximoPermitido.intValue());
         BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoMx());
         pagetmp.setmCodePosicion(1);
+        if (accion.equalsIgnoreCase(Constants.CODIGO_PROPOSITO_UO1)) //positivo
+            pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.U[P|R][I|F]$");
+        else //vacuna. permitir código de mx o código de participante
+            pagetmp.setPatternValidation(true, "(^\\d{1,5}\\.\\d{2}\\.V[P|R][I|F]$)|(^\\d{1,5}?$)");
 
         onPageTreeChanged();
         updateBottomBar();
@@ -450,10 +462,13 @@ public class NuevaMuestraTuboPbmcUO1Activity extends FragmentActivity implements
 
             Muestra muestra = new Muestra();
             muestra.setCodigo(infoMovil.getId());
-            muestra.setParticipante(participanteCasoUO1.getParticipante());
+            if (participanteCasoUO1!=null)
+                muestra.setParticipante(participanteCasoUO1.getParticipante());
+            else
+                muestra.setParticipante(visitaVacuna.getParticipante());
             muestra.setTipoMuestra(Constants.CODIGO_TIPO_SANGRE); //Sangre
             muestra.setTubo(Constants.CODIGO_TUBO_PBMC); //Pbmc
-            muestra.setProposito(accion);//Muestreo anual o transmision
+            muestra.setProposito(accion);//positivo UO1 o vacunaUO1
             //listas
             if (tieneValor(tomaMxSn)){
                 MessageResource mstomaMxSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaMxSn + "' and "
@@ -483,7 +498,10 @@ public class NuevaMuestraTuboPbmcUO1Activity extends FragmentActivity implements
             muestra.setDescOtraRazonNoToma(descOtraRazonNoToma);
             muestra.setDescOtraObservacion(descOtraObservacion);
             //
-            muestra.setRecordDate(visitaCaso.getFechaVisita());
+            if (visitaCaso.getFechaVisita()!=null)
+                muestra.setRecordDate(visitaCaso.getFechaVisita());
+            else
+                muestra.setRecordDate(visitaVacuna.getFechaVisita());
             muestra.setRecordUser(username);
             muestra.setDeviceid(infoMovil.getDeviceId());
             muestra.setEstado('0');
@@ -492,9 +510,15 @@ public class NuevaMuestraTuboPbmcUO1Activity extends FragmentActivity implements
             estudiosAdapter.close();
             Intent i;
             Bundle arguments = new Bundle();
-            arguments.putSerializable(Constants.VISITA, visitaCaso);
-            i = new Intent(getApplicationContext(),
-                    ListaMuestrasParticipanteCasoUO1Activity.class);
+            if (accion.equalsIgnoreCase(Constants.CODIGO_PROPOSITO_UO1)) {
+                arguments.putSerializable(Constants.VISITA, visitaCaso);
+                i = new Intent(getApplicationContext(),
+                        ListaMuestrasParticipanteCasoUO1Activity.class);
+            }else {
+                arguments.putSerializable(Constants.VISITA, visitaVacuna);
+                i = new Intent(getApplicationContext(),
+                        ListaMuestrasVacunasUO1Activity.class);
+            }
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);

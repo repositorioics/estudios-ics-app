@@ -65,4 +65,40 @@ public class InfluenzaUO1DBConstants {
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigoCasoVisita + "));";
 
+    //tabla VisitaVacunaUO1
+    public static final String UO1_VISITAS_VACUNAS_TABLE = "uo1_visitas_vacunas";
+
+    //campos Tabla VisitaVacunaUO1
+    public static final String codigoVisita = "codigoVisita";
+    public static final String vacuna = "vacuna";
+    public static final String tomaMxAntes = "tomaMxAntes";
+    public static final String razonNoTomaMx = "razonNoTomaMx";
+    public static final String segundaDosis = "segundaDosis";
+    public static final String fechaSegundaDosis = "fechaSegundaDosis";
+    public static final String fechaReprogramacion = "fechaReprogramacion";
+
+    //create
+    public static final String CREATE_UO1_VISITAS_VACUNAS_TABLE = "create table if not exists "
+            + UO1_VISITAS_VACUNAS_TABLE + " ("
+            + codigoVisita + " text not null, "
+            + participante + " integer not null, "
+            + fechaVisita + " date, "
+            + visita + " text, "
+            + visitaExitosa + " text, "
+            + razonVisitaFallida + " text, "
+            + otraRazon + " text, "
+            + vacuna + " text, "
+            + fechaVacuna + " date, "
+            + tomaMxAntes + " text, "
+            + razonNoTomaMx + " text, "
+            + segundaDosis + " text, "
+            + fechaSegundaDosis + " date, "
+            + fechaReprogramacion + " date, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + codigoVisita + "));";
+
 }

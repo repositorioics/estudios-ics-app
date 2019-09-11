@@ -25,7 +25,9 @@ import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaParticipan
 import ni.org.ics.estudios.appmovil.influenzauo1.activities.server.UploadAllUO1Activity;
 import ni.org.ics.estudios.appmovil.influenzauo1.adapters.MenuInfluenzaUO1Adapter;
 import ni.org.ics.estudios.appmovil.influenzauo1.activities.server.DownloadUO1Activity;
+import ni.org.ics.estudios.appmovil.muestreoanual.activities.SelecPartActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 public class MenuInfluenzaUO1Activity extends AbstractAsyncActivity {
 
@@ -71,26 +73,34 @@ public class MenuInfluenzaUO1Activity extends AbstractAsyncActivity {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
 				Intent i;
-				switch (position){
-				case 0:
-					i = new Intent(getApplicationContext(),
-							ListaParticipantesCasosUO1Activity.class);
-                    i.putExtra(Constants.NUEVO_INGRESO, false);
-					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(i);
-		        	break;
-                case 1:
-                	createDialog(DOWNLOAD);
-                    break;
-                case 2:
-                	createDialog(UPLOAD);
-                    break;
-                case 3:
-                	createDialog(EXIT);
-                    break;                    
-				default:
-					break;
-		        }
+				switch (position) {
+					case 0:
+						i = new Intent(getApplicationContext(),
+								ListaParticipantesCasosUO1Activity.class);
+						i.putExtra(Constants.NUEVO_INGRESO, false);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(i);
+						break;
+					case 1:
+						i = new Intent(getApplicationContext(),
+								SelecPartActivity.class);
+						i.putExtra(Constants.MENU_INFO, false);
+						i.putExtra(Constants.MENU_ZIKA, false);
+						i.putExtra(Constants.MENU_UO1, true);
+						startActivity(i);
+						break;
+					case 2:
+						createDialog(DOWNLOAD);
+						break;
+					case 3:
+						createDialog(UPLOAD);
+						break;
+					case 4:
+						createDialog(EXIT);
+						break;
+					default:
+						break;
+				}
 			}
 		});
 

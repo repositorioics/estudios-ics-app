@@ -81,6 +81,7 @@ public class Constants {
     public static final String CODIGO_PROPOSITO_MA = "1";
     public static final String CODIGO_PROPOSITO_TX = "3";
     public static final String CODIGO_PROPOSITO_UO1 = "4";
+    public static final String CODIGO_PROPOSITO_VC_UO1 = "5"; //VACUNA UO1
     public static final String CODIGO_TIPO_SANGRE = "1";
     public static final String CODIGO_TIPO_RESP = "9";
     public static final String CODIGO_TIPO_HF = "2";
@@ -100,6 +101,7 @@ public class Constants {
     //Opciones de la actividad de seleccionar participante
     public static final String MENU_INFO = "menu_info";
     public static final String MENU_ZIKA = "menu_zika";
+    public static final String MENU_UO1 = "menu_uo1";
 
     //Providers
     public static final String AUTHORITY = "org.odk.collect.android.provider.odk.forms";

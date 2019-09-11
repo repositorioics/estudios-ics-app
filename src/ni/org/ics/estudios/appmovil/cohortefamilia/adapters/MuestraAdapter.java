@@ -10,6 +10,7 @@ import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
+import ni.org.ics.estudios.appmovil.utils.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -56,7 +57,6 @@ public class MuestraAdapter extends ArrayAdapter<Muestra> {
             if (textView != null) {
 				textView.setText(getDescripcionCatalogo(p.getTubo(), "CHF_CAT_TIP_TUBO_MX"));
 			}
-			
 			textView = (TextView) v.findViewById(R.id.der_text);
 			textView.setTextColor(Color.BLACK);
 			if (textView != null) {
@@ -74,6 +74,16 @@ public class MuestraAdapter extends ArrayAdapter<Muestra> {
                             (p.getDescOtraRazonNoToma()!=null?p.getDescOtraRazonNoToma():getDescripcionCatalogo(p.getRazonNoToma(),"CHF_CAT_RAZON_NO_MX")));
                 }
             }
+            textView = (TextView) v.findViewById(R.id.infoc_text);
+            if (textView != null) {
+                textView.setTextColor(Color.GRAY);
+                if (p.getTubo().equalsIgnoreCase(Constants.CODIGO_MEM) || p.getTubo().equalsIgnoreCase(Constants.CODIGO_MEDIO)){
+                    textView.setText(getDescripcionCatalogo(p.getTipoMuestra(), "CHF_CAT_TIP0_MX_RESP"));
+                }else {
+                    textView.setText("");
+                }
+            }
+
 		}
 		return v;
 	}

@@ -18,11 +18,11 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
-import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
-import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaVisitasCasoUO1Activity;
-import ni.org.ics.estudios.appmovil.influenzauo1.forms.VisitaCasoUO1Form;
-import ni.org.ics.estudios.appmovil.influenzauo1.forms.VisitaCasoUO1FormLabels;
+import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
+import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaVisitasVacunaUO1Activity;
+import ni.org.ics.estudios.appmovil.influenzauo1.forms.VisitaVacunaUO1Form;
+import ni.org.ics.estudios.appmovil.influenzauo1.forms.VisitaVacunaUO1FormLabels;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
+public class NuevaVisitaVacunaUO1Activity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -55,15 +55,15 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
     private StepPagerStrip mStepPagerStrip;
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
-    private static ParticipanteCasoUO1 participanteCasoUO1 = new ParticipanteCasoUO1();
+    private static Participante participante = new Participante();
     private String username;
     private SharedPreferences settings;
     private static final int EXIT = 1;
     private AlertDialog alertDialog;
     private boolean notificarCambios = true;
-    private VisitaCasoUO1FormLabels labels = new VisitaCasoUO1FormLabels();
+    private VisitaVacunaUO1FormLabels labels = new VisitaVacunaUO1FormLabels();
 
-    final Calendar c = Calendar.getInstance();
+    final Calendar calendar = Calendar.getInstance();
     private String fechaVisita;
 
     @Override
@@ -80,27 +80,36 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
         username =
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
-        infoMovil = new DeviceInfo(NuevaVisitaCasoUO1Activity.this);
+        infoMovil = new DeviceInfo(NuevaVisitaVacunaUO1Activity.this);
 
-        participanteCasoUO1 = (ParticipanteCasoUO1) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        participante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        mWizardModel = new VisitaCasoUO1Form(this,mPass);
+        mWizardModel = new VisitaVacunaUO1Form(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
         mWizardModel.registerListener(this);
 
-        DateMidnight minDate = new DateMidnight(participanteCasoUO1.getParticipante().getFechaNac());
-        NewDatePage pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaVacuna());
-        pageFecha.setmLaterThan(minDate);
-
-        fechaVisita = String.valueOf(c.get(Calendar.DAY_OF_MONTH)<10? "0"+c.get(Calendar.DAY_OF_MONTH):c.get(Calendar.DAY_OF_MONTH))+"/"+
-                String.valueOf((c.get(Calendar.MONTH)+1)<10? "0"+(c.get(Calendar.MONTH)+1):(c.get(Calendar.MONTH)+1))+"/"+String.valueOf(c.get(Calendar.YEAR))+" "+
-                String.valueOf(c.get(Calendar.HOUR_OF_DAY)<10? "0"+c.get(Calendar.HOUR_OF_DAY):c.get(Calendar.HOUR_OF_DAY))+":"+
-                String.valueOf(c.get(Calendar.MINUTE)<10? "0"+c.get(Calendar.MINUTE):c.get(Calendar.MINUTE));
+        fechaVisita = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)<10? "0"+ calendar.get(Calendar.DAY_OF_MONTH): calendar.get(Calendar.DAY_OF_MONTH))+"/"+
+                String.valueOf((calendar.get(Calendar.MONTH)+1)<10? "0"+(calendar.get(Calendar.MONTH)+1):(calendar.get(Calendar.MONTH)+1))+"/"+String.valueOf(calendar.get(Calendar.YEAR))+" "+
+                String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)<10? "0"+ calendar.get(Calendar.HOUR_OF_DAY): calendar.get(Calendar.HOUR_OF_DAY))+":"+
+                String.valueOf(calendar.get(Calendar.MINUTE)<10? "0"+ calendar.get(Calendar.MINUTE): calendar.get(Calendar.MINUTE));
 
         mWizardModel.findByKey(labels.getFechaVisita()).setHint(fechaVisita);
+        DateMidnight minDate = new DateMidnight(participante.getFechaNac());
+
+        NewDatePage pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaVacuna());
+        pageFecha.setmLaterThan(minDate);
+        pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaSegundaDosis());
+        pageFecha.setmLaterThan(minDate);
+        //fecha de repogramación dentro de 30 dias min
+        calendar.add(Calendar.DATE, 30);
+        minDate = new DateMidnight(calendar.getTime());
+        calendar.add(Calendar.DATE, 10); //40 dias max
+        DateMidnight maxDate = new DateMidnight(calendar.getTime());
+        pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaReprogramacionTomaMx());
+        pageFecha.setRangeValidation(true, minDate, maxDate);
 
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -175,6 +184,8 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
+
+
         onPageTreeChanged();
     }
 
@@ -194,9 +205,9 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
                         // Finish app
                         Bundle arguments = new Bundle();
                         Intent i;
-                        if (participanteCasoUO1 !=null) arguments.putSerializable(Constants.PARTICIPANTE , participanteCasoUO1);
+                        if (participante !=null) arguments.putSerializable(Constants.PARTICIPANTE , participante);
                         i = new Intent(getApplicationContext(),
-                                ListaVisitasCasoUO1Activity.class);
+                                ListaVisitasVacunaUO1Activity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
@@ -342,16 +353,30 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
         try{
             boolean visible = false;
             if (page.getTitle().equals(labels.getVisita())) {
-                visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("Final"));
-                changeStatus(mWizardModel.findByKey(labels.getVacunaFlu3Semanas()), visible);
+                visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("Inicial"));
+                changeStatus(mWizardModel.findByKey(labels.getVacuna()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getFechaVacuna()), false);
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getTomaMxAntes()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoTomaMx()), false);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getVisitaExitosa()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getRazonVisitaFallida()), false);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazon()), false);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getSegundaDosis()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getFechaSegundaDosis()), false);
+                changeStatus(mWizardModel.findByKey(labels.getReprogramarTomaMx()), false);
+                changeStatus(mWizardModel.findByKey(labels.getFechaReprogramacionTomaMx()), false);
+                notificarCambios = false;
+
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getVisitaExitosa())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonVisitaFallida()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazon()), false);
+                changeStatus(mWizardModel.findByKey(labels.getSegundaDosis()), !visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -361,9 +386,25 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
                 notificarCambios = false;
                 onPageTreeChanged();
             }
-            if (page.getTitle().equals(labels.getVacunaFlu3Semanas())) {
+            if (page.getTitle().equals(labels.getVacuna())) {
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(Constants.YES));
                 changeStatus(mWizardModel.findByKey(labels.getFechaVacuna()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getTomaMxAntes())) {
+                visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(Constants.NO));
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoTomaMx()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getSegundaDosis())) {
+                visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(Constants.YES));
+                changeStatus(mWizardModel.findByKey(labels.getFechaSegundaDosis()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getReprogramarTomaMx()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getFechaReprogramacionTomaMx()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -424,42 +465,70 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
         String visitaExitosa = datos.getString(this.getString(R.string.visitaExitosaUO1));
         String razonVisitaFallida = datos.getString(this.getString(R.string.razonVisitaFallidaUO1));
         String otraRazon = datos.getString(this.getString(R.string.otraRazonUO1));
-        String vacunaInfluenza = datos.getString(this.getString(R.string.vacunaInfluenzaUO1));
+        String vacunaInfluenza = datos.getString(this.getString(R.string.administraVacFluUO1));
         String fechaVacuna = datos.getString(this.getString(R.string.fechaVacunaUO1));
+        String tomamxAntesVacuna = datos.getString(this.getString(R.string.tomamxAntesVacuna));
+        String razonNoTomamxAntes = datos.getString(this.getString(R.string.razonNoTomamxAntes));
+        String segundaDosis = datos.getString(this.getString(R.string.segundaDosis));
+        String fechaVacunaSegundaDosis = datos.getString(this.getString(R.string.fechaVacunaSegundaDosis));
+        String fechaReprogramacionTomaMx = datos.getString(this.getString(R.string.fechaReprogramacionTomaMx));
 
         //Crea un nueva visita final
-        VisitaCasoUO1 visitaCasoUO1 = new VisitaCasoUO1();
-        visitaCasoUO1.setParticipanteCasoUO1(participanteCasoUO1);
+        VisitaVacunaUO1 visitaVacunaUO1 = new VisitaVacunaUO1();
+        visitaVacunaUO1.setParticipante(participante);
         DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         boolean procesarVisita = true;
         try {
-            visitaCasoUO1.setFechaVisita(mDateFormat.parse(fechaVisita));
+            visitaVacunaUO1.setFechaVisita(mDateFormat.parse(fechaVisita));
             DateFormat mDateFormatLim = new SimpleDateFormat("dd/MM/yyyy");
-            if (visita.equalsIgnoreCase("Final")) {
+            /*if (visita.equalsIgnoreCase("Final")) {
                 Date dVis = mDateFormatLim.parse(fechaVisita);
                 Calendar calLimiteFecVisita = Calendar.getInstance();
-                //fecha minima para ingresar visita final
-                calLimiteFecVisita.setTime(participanteCasoUO1.getFechaIngreso());
-                calLimiteFecVisita.add(Calendar.DATE, 30);//30 dias después de la fecha de ingreso
-                if (dVis.before(calLimiteFecVisita.getTime())) {//si la fecha de visita no es posterior a los 30 dias después de la fecha de inicio no permitir registro
-                    Toast.makeText(this, this.getString(R.string.wrong_visit_start_date_OU1), Toast.LENGTH_LONG).show();
-                    procesarVisita = false;
-                }
-                //fecha limite para ingresar visita final
-                calLimiteFecVisita.setTime(participanteCasoUO1.getFechaIngreso());
-                calLimiteFecVisita.add(Calendar.DATE, 45);//45 dias después de la fecha de ingreso
-                if (dVis.after(calLimiteFecVisita.getTime())) {//si la fecha de visita es posterior a los 45 dias después de la fecha de inicio no permitir registro
-                    Toast.makeText(this, this.getString(R.string.wrong_visit_end_date_OU1), Toast.LENGTH_LONG).show();
+                calLimiteFecVisita.setTime(participante.getFechaIngreso());
+                calLimiteFecVisita.add(Calendar.DATE, 45);//60 dias después de la fecha de ingreso
+                if (dVis.after(calLimiteFecVisita.getTime())) {//si la fecha de visita es posterior a los 60 dias después de la fecha de inicio no permitir registro
+                    Toast.makeText(this, this.getString(R.string.wrong_visit_date_OU1), Toast.LENGTH_LONG).show();
                     procesarVisita = false;
                 }
 
             }
-            if (visitaExitosa.equalsIgnoreCase(Constants.YES)){
-                List<VisitaCasoUO1> mVisitasCasos = estudiosAdapter.getVisitasCasosUO1(InfluenzaUO1DBConstants.participanteCasoUO1 +" = '" +
-                        participanteCasoUO1.getCodigoCasoParticipante() +"' and visita = '"+(visita.equalsIgnoreCase("Final")?"F":"I")+"' and visitaExitosa = '1'", InfluenzaUO1DBConstants.fechaVisita);
-                if (mVisitasCasos.size()>0){
-                    Toast.makeText(this, String.format(this.getString(R.string.visit_already_exist_OU1), visita), Toast.LENGTH_LONG).show();
-                    procesarVisita = false;
+            */
+
+            List<VisitaVacunaUO1> mVisitasCasos = estudiosAdapter.getVisitasVacunasUO1(InfluenzaUO1DBConstants.participante + " = " + participante.getCodigo() + " and visitaExitosa = '1' ",
+                    InfluenzaUO1DBConstants.fechaVisita + " desc ");
+            Date dVis = mDateFormatLim.parse(fechaVisita);
+            if (mVisitasCasos.size()>0){
+                VisitaVacunaUO1 ultimaVisita = mVisitasCasos.get(0);
+                Calendar calLimiteFecVisita = Calendar.getInstance();
+                calLimiteFecVisita.setTime(ultimaVisita.getFechaVisita());
+                if (visita.equalsIgnoreCase("Inicial")){
+                    if (ultimaVisita.getVisita().equalsIgnoreCase("I")){
+                        calLimiteFecVisita.add(Calendar.DATE, 30);//30 dias después de la fecha de otra visita inicial
+                        if (dVis.before(calLimiteFecVisita.getTime())) {//si la fecha de visita es anterior a los 30 dias después de la fecha de ultima visita inicial no permitir registro
+                            Toast.makeText(this, this.getString(R.string.wrong_visit_date_OU1_1), Toast.LENGTH_LONG).show();
+                            procesarVisita = false;
+                        }
+                    }
+                }else if (visita.equalsIgnoreCase("Final")){
+                    if (ultimaVisita.getVisita().equalsIgnoreCase("I")){
+                        //fecha minima para ingresar visita final
+                        calLimiteFecVisita.add(Calendar.DATE, 30);//30 dias después de la fecha de visita inicial
+                        if (dVis.before(calLimiteFecVisita.getTime())) {//si la fecha de visita no es posterior a los 30 dias después de la fecha de inicio no permitir registro
+                            Toast.makeText(this, this.getString(R.string.wrong_visit_date_OU1_2), Toast.LENGTH_LONG).show();
+                            procesarVisita = false;
+                        }
+                        //fecha limite para ingresar visita final
+                        calLimiteFecVisita.add(Calendar.DATE, 45);//45 dias después de la fecha de visita inicial
+                        if (dVis.after(calLimiteFecVisita.getTime())) {//si la fecha de visita es posterior a los 45 dias después de la fecha de inicio no permitir registro
+                            Toast.makeText(this, this.getString(R.string.wrong_visit_date_OU1_3), Toast.LENGTH_LONG).show();
+                            procesarVisita = false;
+                        }
+                    }else{
+                        if (ultimaVisita.getFechaReprogramacion()==null){
+                            Toast.makeText(this, this.getString(R.string.wrong_visit_date_OU1_4), Toast.LENGTH_LONG).show();
+                            procesarVisita = false;
+                        }
+                    }
                 }
             }
 
@@ -469,42 +538,66 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
         if (procesarVisita) {
             if (tieneValor(visita)) {
                 MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + visita + "' and " + CatalogosDBConstants.catRoot + "='UO1_CAT_VISITA'", null);
-                visitaCasoUO1.setVisita(catSino.getCatKey());
+                visitaVacunaUO1.setVisita(catSino.getCatKey());
             }
             if (tieneValor(visitaExitosa)) {
                 MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + visitaExitosa + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                visitaCasoUO1.setVisitaExitosa(catSino.getCatKey());
+                visitaVacunaUO1.setVisitaExitosa(catSino.getCatKey());
+            }else {
+                if (visita.equalsIgnoreCase("Inicial"))
+                    visitaVacunaUO1.setVisitaExitosa(Constants.YESKEYSND);
             }
             if (tieneValor(razonVisitaFallida)) {
                 MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonVisitaFallida + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_VISITA_NO_P'", null);
-                visitaCasoUO1.setRazonVisitaFallida(catSino.getCatKey());
+                visitaVacunaUO1.setRazonVisitaFallida(catSino.getCatKey());
             }
-            visitaCasoUO1.setOtraRazon(otraRazon);
+            visitaVacunaUO1.setOtraRazon(otraRazon);
+            if (tieneValor(tomamxAntesVacuna)) {
+                MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomamxAntesVacuna + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                visitaVacunaUO1.setTomaMxAntes(catSino.getCatKey());
+            }
+            visitaVacunaUO1.setRazonNoTomaMx(razonNoTomamxAntes);
+
             mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             if (tieneValor(vacunaInfluenza)) {
                 MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + vacunaInfluenza + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                visitaCasoUO1.setVacunaFlu3Semanas(catSino.getCatKey());
+                visitaVacunaUO1.setVacuna(catSino.getCatKey());
             }
             if (tieneValor(fechaVacuna)) {
                 try {
-                    visitaCasoUO1.setFechaVacuna(mDateFormat.parse(fechaVacuna));
+                    visitaVacunaUO1.setFechaVacuna(mDateFormat.parse(fechaVacuna));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
-            if (visitaExitosa.equalsIgnoreCase(Constants.YES) && visita.equalsIgnoreCase("Inicial")){
-                visitaCasoUO1.setFif(participanteCasoUO1.getFif());
-                visitaCasoUO1.setPositivoPor(participanteCasoUO1.getPositivoPor());
+            if (tieneValor(segundaDosis)) {
+                MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + segundaDosis + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                visitaVacunaUO1.setSegundaDosis(catSino.getCatKey());
             }
-            visitaCasoUO1.setRecordDate(new Date());
-            visitaCasoUO1.setRecordUser(username);
-            visitaCasoUO1.setDeviceid(infoMovil.getDeviceId());
-            visitaCasoUO1.setEstado('0');
-            visitaCasoUO1.setPasive('0');
-            visitaCasoUO1.setCodigoCasoVisita(infoMovil.getId());
+            if (tieneValor(fechaVacunaSegundaDosis)) {
+                try {
+                    visitaVacunaUO1.setFechaSegundaDosis(mDateFormat.parse(fechaVacunaSegundaDosis));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (tieneValor(fechaReprogramacionTomaMx)){
+                try {
+                    visitaVacunaUO1.setFechaReprogramacion(mDateFormat.parse(fechaReprogramacionTomaMx));
+                }catch (ParseException e){
+                    e.printStackTrace();
+                }
+            }
+
+            visitaVacunaUO1.setRecordDate(new Date());
+            visitaVacunaUO1.setRecordUser(username);
+            visitaVacunaUO1.setDeviceid(infoMovil.getDeviceId());
+            visitaVacunaUO1.setEstado('0');
+            visitaVacunaUO1.setPasive('0');
+            visitaVacunaUO1.setCodigoVisita(infoMovil.getId());
             //Guarda el contacto
             try {
-                estudiosAdapter.crearVisitaCasoUO1(visitaCasoUO1);
+                estudiosAdapter.crearVisitaVacunaUO1(visitaVacunaUO1);
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -512,9 +605,9 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
             estudiosAdapter.close();
             Bundle arguments = new Bundle();
             Intent i;
-            if (participanteCasoUO1 != null) arguments.putSerializable(Constants.PARTICIPANTE, participanteCasoUO1);
+            if (participante != null) arguments.putSerializable(Constants.PARTICIPANTE, participante);
             i = new Intent(getApplicationContext(),
-                    ListaVisitasCasoUO1Activity.class);
+                    ListaVisitasVacunaUO1Activity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtras(arguments);
             startActivity(i);

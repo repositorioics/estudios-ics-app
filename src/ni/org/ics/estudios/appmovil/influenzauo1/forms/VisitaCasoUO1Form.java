@@ -20,6 +20,7 @@ public class VisitaCasoUO1Form extends AbstractWizardModel {
     private String[] catSiNo;
     private String[] catVisita;
     private String[] catVisitaFallida;
+    private String[] catLugar;
 
     private String[] fillCatalog(String codigoCatalogo){
         String[] catalogo;
@@ -45,6 +46,7 @@ public class VisitaCasoUO1Form extends AbstractWizardModel {
         estudiosAdapter.open();
         catSiNo = fillCatalog("CHF_CAT_SINO");
         catVisita = fillCatalog("UO1_CAT_VISITA");
+        catLugar = fillCatalog("CAT_LUGAR_REGISTRO");
         catVisitaFallida = fillCatalog("CHF_CAT_VISITA_NO_P");
         estudiosAdapter.close();
 
@@ -52,6 +54,7 @@ public class VisitaCasoUO1Form extends AbstractWizardModel {
         DateMidnight dmHasta = new DateMidnight(new Date().getTime());
 
         Page visita = new SingleFixedChoicePage(this,labels.getVisita(),"", Constants.WIZARD, true).setChoices(catVisita).setRequired(true);
+        Page lugar = new SingleFixedChoicePage(this,labels.getLugar(),labels.getLugarHint(), Constants.WIZARD, true).setChoices(catLugar).setRequired(true);
         Page fechaVisita = new LabelPage(this,labels.getFechaVisita(), "", Constants.WIZARD, true).setRequired(true);
         Page visitaExitosa = new SingleFixedChoicePage(this,labels.getVisitaExitosa(),"", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page visitaFallida = new SingleFixedChoicePage(this,labels.getRazonVisitaFallida(),"", Constants.WIZARD, false).setChoices(catVisitaFallida).setRequired(true);
@@ -59,6 +62,6 @@ public class VisitaCasoUO1Form extends AbstractWizardModel {
         Page vacuna = new SingleFixedChoicePage(this,labels.getVacunaFlu3Semanas(),"", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page fechaVacuna = new NewDatePage(this,labels.getFechaVacuna(), "", Constants.WIZARD, false).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
 
-        return new PageList(visita, fechaVisita, visitaExitosa, visitaFallida, otraRazon, vacuna, fechaVacuna);
+        return new PageList(visita, lugar, fechaVisita, visitaExitosa, visitaFallida, otraRazon, vacuna, fechaVacuna);
     }
 }

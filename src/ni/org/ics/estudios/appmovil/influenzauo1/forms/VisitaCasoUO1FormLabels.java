@@ -15,6 +15,8 @@ public class VisitaCasoUO1FormLabels {
     protected String fif;
     protected String vacunaFlu3Semanas;
     protected String fechaVacuna;
+    protected String lugar;
+    protected String lugarHint;
 
     public VisitaCasoUO1FormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
@@ -27,6 +29,8 @@ public class VisitaCasoUO1FormLabels {
         fif = res.getString(R.string.fif);
         vacunaFlu3Semanas = res.getString(R.string.vacunaInfluenzaUO1);
         fechaVacuna = res.getString(R.string.fechaVacunaUO1);
+        lugar = res.getString(R.string.lugar);
+        lugarHint = res.getString(R.string.lugarVisitaHint);
 
     }
 
@@ -65,4 +69,13 @@ public class VisitaCasoUO1FormLabels {
     public String getFechaVacuna() {
         return fechaVacuna;
     }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public String getLugarHint() {
+        return lugarHint;
+    }
+
 }

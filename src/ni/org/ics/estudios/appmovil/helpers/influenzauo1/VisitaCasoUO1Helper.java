@@ -22,6 +22,7 @@ public class VisitaCasoUO1Helper {
         cv.put(InfluenzaUO1DBConstants.participanteCasoUO1, visitaCasoUO1.getParticipanteCasoUO1().getCodigoCasoParticipante());
         if (visitaCasoUO1.getFechaVisita() != null) cv.put(InfluenzaUO1DBConstants.fechaVisita, visitaCasoUO1.getFechaVisita().getTime());
         cv.put(InfluenzaUO1DBConstants.visita, visitaCasoUO1.getVisita());
+        cv.put(InfluenzaUO1DBConstants.lugar, visitaCasoUO1.getLugar());
         cv.put(InfluenzaUO1DBConstants.visitaExitosa, visitaCasoUO1.getVisitaExitosa());
         cv.put(InfluenzaUO1DBConstants.razonVisitaFallida, visitaCasoUO1.getRazonVisitaFallida());
         cv.put(InfluenzaUO1DBConstants.otraRazon, visitaCasoUO1.getOtraRazon());
@@ -45,6 +46,7 @@ public class VisitaCasoUO1Helper {
     	mVisitaCasoUO1.setParticipanteCasoUO1(null);
     	if(cursor.getLong(cursor.getColumnIndex(InfluenzaUO1DBConstants.fechaVisita))>0) mVisitaCasoUO1.setFechaVisita(new Date(cursor.getLong(cursor.getColumnIndex(InfluenzaUO1DBConstants.fechaVisita))));
     	mVisitaCasoUO1.setVisita(cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.visita)));
+        mVisitaCasoUO1.setLugar(cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.lugar)));
         mVisitaCasoUO1.setVisitaExitosa(cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.visitaExitosa)));
         mVisitaCasoUO1.setRazonVisitaFallida(cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.razonVisitaFallida)));
         mVisitaCasoUO1.setOtraRazon(cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.otraRazon)));

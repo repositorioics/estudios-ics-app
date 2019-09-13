@@ -22,6 +22,8 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.forms.MuestrasFormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
@@ -29,6 +31,7 @@ import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaMuestrasPa
 import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaMuestrasVacunasUO1Activity;
 import ni.org.ics.estudios.appmovil.influenzauo1.forms.MuestraCasoUO1Form;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
@@ -462,13 +465,29 @@ public class NuevaMuestraTuboPbmcUO1Activity extends FragmentActivity implements
 
             Muestra muestra = new Muestra();
             muestra.setCodigo(infoMovil.getId());
+            Participante participante = null;
             if (participanteCasoUO1!=null)
-                muestra.setParticipante(participanteCasoUO1.getParticipante());
+                participante = participanteCasoUO1.getParticipante();
             else
-                muestra.setParticipante(visitaVacuna.getParticipante());
+                participante = visitaVacuna.getParticipante();
+            muestra.setParticipante(participante);
             muestra.setTipoMuestra(Constants.CODIGO_TIPO_SANGRE); //Sangre
             muestra.setTubo(Constants.CODIGO_TUBO_PBMC); //Pbmc
-            muestra.setProposito(accion);//positivo UO1 o vacunaUO1
+
+            //Validar si la casa a la que pertenece esta actualmente en seguimiento.. si es asi, agregar el participante al seguimiento
+            if (participante.getProcesos().getCasaCHF()!= null && !participante.getProcesos().getCasaCHF().isEmpty()) {
+                CasaCohorteFamiliaCaso casaCaso = estudiosAdapter.getCasaCohorteFamiliaCaso(CasosDBConstants.casa + "='" + participante.getProcesos().getCasaCHF() + "'", null);
+                if (casaCaso != null) {
+                    ParticipanteCohorteFamiliaCaso existePartCaso = estudiosAdapter.getParticipanteCohorteFamiliaCaso(CasosDBConstants.codigoCaso + "='" + casaCaso.getCodigoCaso() + "' and " + CasosDBConstants.participante + "=" + participante.getCodigo(), null);
+                    //solo agregar si no existe
+                    if (existePartCaso != null) {
+                        muestra.setProposito(Constants.CODIGO_PROPOSITO_UO1_CHF);
+                    }
+                }
+            }else {
+                muestra.setProposito(accion);//positivo UO1 o vacunaUO1
+            }
+
             //listas
             if (tieneValor(tomaMxSn)){
                 MessageResource mstomaMxSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaMxSn + "' and "

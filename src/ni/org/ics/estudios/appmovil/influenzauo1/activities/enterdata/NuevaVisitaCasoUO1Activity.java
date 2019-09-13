@@ -421,6 +421,7 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
         estudiosAdapter.open();
 
         String visita = datos.getString(this.getString(R.string.visitaUO1));
+        String lugar = datos.getString(this.getString(R.string.lugar));
         String visitaExitosa = datos.getString(this.getString(R.string.visitaExitosaUO1));
         String razonVisitaFallida = datos.getString(this.getString(R.string.razonVisitaFallidaUO1));
         String otraRazon = datos.getString(this.getString(R.string.otraRazonUO1));
@@ -470,6 +471,10 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
             if (tieneValor(visita)) {
                 MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + visita + "' and " + CatalogosDBConstants.catRoot + "='UO1_CAT_VISITA'", null);
                 visitaCasoUO1.setVisita(catSino.getCatKey());
+            }
+            if (tieneValor(lugar)) {
+                MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + lugar + "' and " + CatalogosDBConstants.catRoot + "='CAT_LUGAR_REGISTRO'", null);
+                visitaCasoUO1.setLugar(catSino.getCatKey());
             }
             if (tieneValor(visitaExitosa)) {
                 MessageResource catSino = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + visitaExitosa + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);

@@ -26,6 +26,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
@@ -501,6 +502,10 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
                     muestra.setRecordDate(visitaCaso.getFechaVisita());
                 if (visitaFinalCaso!=null)
                     muestra.setRecordDate(visitaFinalCaso.getFechaVisita());
+                ParticipanteCasoUO1 participanteCasoUO1 = estudiosAdapter.getParticipanteCasoUO1(InfluenzaUO1DBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
+                if (participanteCasoUO1!=null){
+                    muestra.setProposito(Constants.CODIGO_PROPOSITO_UO1_CHF);
+                }
             }
             else{
             	muestra.setRecordDate(new Date());

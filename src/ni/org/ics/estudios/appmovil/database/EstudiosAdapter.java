@@ -305,9 +305,11 @@ public class EstudiosAdapter {
 				db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_VISITAS_CASOS_TABLE);
 			}
 			if (oldVersion==21){
-				db.execSQL("DROP TABLE " + InfluenzaUO1DBConstants.UO1_VISITAS_VACUNAS_TABLE);
 				//continuación UO1
 				db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_VISITAS_VACUNAS_TABLE);
+			}
+			if (oldVersion==22){
+				db.execSQL("ALTER TABLE " + InfluenzaUO1DBConstants.UO1_VISITAS_CASOS_TABLE + " ADD COLUMN " + InfluenzaUO1DBConstants.lugar + " text");
 			}
         }
 	}

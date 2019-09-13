@@ -69,4 +69,6 @@
     <string name="pbmc2mlVacunaUO1_1">Menor de 6 meses: No tomar PBMC</string>
     <string name="visit_vac_already_exist_OU1">Visita %s exitosa ya fue registrada para ésta fecha </string>
     <string name="no_pertenece_uo1">El participante no pertenece a UO1</string>
+    <string name="lugarVisitaHint">Indique lugar dónde se registra la visita al participante</string>
+
  </resources>

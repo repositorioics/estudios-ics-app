@@ -16,6 +16,7 @@ public class VisitaCasoUO1 extends BaseMetaData {
     private Date fif;
     private String vacunaFlu3Semanas;
     private Date fechaVacuna;
+    private String lugar;
 
     public String getCodigoCasoVisita() {
         return codigoCasoVisita;
@@ -103,5 +104,13 @@ public class VisitaCasoUO1 extends BaseMetaData {
 
     public void setFechaVacuna(Date fechaVacuna) {
         this.fechaVacuna = fechaVacuna;
+    }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
     }
 }

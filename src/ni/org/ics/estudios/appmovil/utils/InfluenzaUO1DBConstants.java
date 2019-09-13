@@ -38,6 +38,7 @@ public class InfluenzaUO1DBConstants {
     public static final String participanteCasoUO1 = "participanteCasoUO1";
     public static final String fechaVisita = "fechaVisita";
     public static final String visita = "visita";
+    public static final String lugar = "lugar";
     public static final String visitaExitosa = "visitaExitosa";
     public static final String razonVisitaFallida = "razonVisitaFallida";
     public static final String otraRazon = "otraRazon";
@@ -51,6 +52,7 @@ public class InfluenzaUO1DBConstants {
             + participanteCasoUO1 + " text not null, "
             + fechaVisita + " date, "
             + visita + " text, "
+            + lugar + " text, "
             + visitaExitosa + " text, "
             + razonVisitaFallida + " text, "
             + otraRazon + " text, "

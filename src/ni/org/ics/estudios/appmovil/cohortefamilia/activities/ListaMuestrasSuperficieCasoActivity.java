@@ -24,7 +24,6 @@ import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.*;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MuestraSuperficieAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.CartaConsentimiento;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.MuestraSuperficie;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
@@ -33,18 +32,16 @@ import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
-import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ListaMuestrasSuperficieCasoActivity extends AbstractAsyncListActivity {
 	
 	private TextView textView;
 	private Drawable img = null;
-	private Button mAddButton;
-    private Button mAddButton2;
+	private Button mSurfaceButton;
+    private Button mHandButton;
 	private Button mButton;
 	//Viene de la actividad principal
 	private static VisitaSeguimientoCaso visitaCaso = new VisitaSeguimientoCaso();
@@ -54,6 +51,7 @@ public class ListaMuestrasSuperficieCasoActivity extends AbstractAsyncListActivi
 	private ArrayAdapter<MuestraSuperficie> mMuestraAdapter;
 	//Lista de objetos 
 	private List<MuestraSuperficie> mMuestras = new ArrayList<MuestraSuperficie>();
+    private List<MuestraSuperficie> mMuestrasMano = new ArrayList<MuestraSuperficie>();
 	private List<MessageResource> mTiposMuestra = new ArrayList<MessageResource>();
     private boolean pedirAsentimientoCasa = false;
     private boolean pedirConsentimiento = false;
@@ -114,9 +112,9 @@ public class ListaMuestrasSuperficieCasoActivity extends AbstractAsyncListActivi
         mButton = (Button) findViewById(R.id.view_samp_button);
         mButton.setVisibility(View.GONE);
 
-		mAddButton = (Button) findViewById(R.id.new_surface_button);
+		mSurfaceButton = (Button) findViewById(R.id.new_surface_button);
 
-        mAddButton.setOnClickListener(new View.OnClickListener()  {
+        mSurfaceButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
                 if (pedirAsentimientoCasa){
@@ -127,9 +125,9 @@ public class ListaMuestrasSuperficieCasoActivity extends AbstractAsyncListActivi
 			}
 		});
 
-        mAddButton2 = (Button) findViewById(R.id.new_hand_button);
+        mHandButton = (Button) findViewById(R.id.new_hand_button);
 
-        mAddButton2.setOnClickListener(new View.OnClickListener()  {
+        mHandButton.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
                     if (pedirConsentimiento) {
@@ -270,6 +268,9 @@ public class ListaMuestrasSuperficieCasoActivity extends AbstractAsyncListActivi
 				mMuestras = estudiosAdapter.getMuestrasSuperficie(
                         MuestrasDBConstants.caso + " = '" + visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso() + "' and " + MainDBConstants.pasive + " ='0' ",
                         MuestrasDBConstants.tipoMuestra);
+                mMuestrasMano = estudiosAdapter.getMuestrasSuperficie(
+                        MuestrasDBConstants.caso + " = '" + visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso() + "' and " + MainDBConstants.pasive + " ='0' and "+ MuestrasDBConstants.tipoMuestra + " = '13' ",
+                        MuestrasDBConstants.tipoMuestra);
 
                 mTiposMuestra = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_MX_SUP'", null);
                 //1:asent mx superficie, 2:consent manos, 3:Ambos, 0 o null:No aplica
@@ -296,10 +297,20 @@ public class ListaMuestrasSuperficieCasoActivity extends AbstractAsyncListActivi
             textView.setTextColor(Color.BLACK);
             textView.setText(getString(R.string.main_1) + "\n" + getString(R.string.follow_up_list_samp) + "\n" +
                     getString(R.string.code) + ": " + participantechf.getParticipante().getCodigo() + " - " + getString(R.string.visit) + ": " + visitaCaso.getVisita());
-            if (mMuestras.size()>1)
-                mAddButton.setVisibility(View.GONE);
-            if (mMuestras.size()==1 || mMuestras.size()==13)
-                mAddButton2.setVisibility(View.GONE);
+            if (mMuestras.size()>1) {
+                for(MuestraSuperficie m : mMuestras){
+                    if (!m.getTipoMuestra().equalsIgnoreCase("13")){
+                        mSurfaceButton.setVisibility(View.GONE);
+                        break;
+                    }
+                }
+                for(MuestraSuperficie m : mMuestras){
+                    if (m.getTipoMuestra().equalsIgnoreCase("13")){
+                        mHandButton.setVisibility(View.GONE);
+                        break;
+                    }
+                }
+            }
 
             mMuestraAdapter = new MuestraSuperficieAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item, mMuestras, mTiposMuestra);
             setListAdapter(mMuestraAdapter);

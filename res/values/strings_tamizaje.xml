@@ -107,7 +107,7 @@
     <string name="aceptaParteAHint">¿Acepta Parte A del Consentimiento de Cohorte de Familia?</string>
     <string name="motivoRechazoParteA">Motivo de rechazo</string>
     <string name="motivoRechazoParteAHint">Motivo de rechazo Consentimiento Cohorte de Familia</string>
-    <string name="aceptaContactoFuturo">Contacto en el futuro:</string>
+    <string name="aceptaContactoFuturo">Contacto en el futuro</string>
     <string name="aceptaContactoFuturoHint">¿Alguien puede contactarle en el futuro para proponerle participar en investigaciones adicionales?</string>
     <string name="aceptaParteB">Acepta Parte B</string>
     <string name="aceptaParteBHint">¿Acepta Parte B Almacenamiento y uso de Muestras en Estudios Futuros?</string>
@@ -211,4 +211,5 @@
     <string name="razonNoAceptaInfluenzaUO1Hint">Seleccionar porque no acepta participar en el estudio Cohorte pediátrica UO1</string>
     <string name="otraRazonNoAceptaInfluenzaUO1">Otra razón estudio Cohorte pediátrica UO1</string>
     <string name="otraRazonNoAceptaInfluenzaUO1Hint">Indicar porque otra razón no acepta participar en el estudio Cohorte pediátrica UO1</string>
+
 </resources>

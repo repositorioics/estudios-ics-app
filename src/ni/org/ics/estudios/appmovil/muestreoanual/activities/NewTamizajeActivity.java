@@ -327,6 +327,17 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     }
                 }
             }
+            if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")) {
+                BarcodePage bp = (BarcodePage) page;
+                if (bp.ismValRange() || bp.ismValPattern()) {
+                    String valor = bp.getData().getString(TextPage.SIMPLE_DATA_KEY);
+                    if ((bp.ismValRange() && (bp.getmGreaterOrEqualsThan() > Double.valueOf(valor) || bp.getmLowerOrEqualsThan() < Double.valueOf(valor)))
+                            || (bp.ismValPattern() && !valor.matches(bp.getmPattern()))){
+                        cutOffPage = i;
+                        break;
+                    }
+                }
+            }
         }
 
         if (mPagerAdapter.getCutOffPage() != cutOffPage) {
@@ -965,6 +976,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible || (visibleInf && !esInmuno && !esPretermino));
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible || (visibleInf && !esInmuno && !esPretermino));
+                notificarCambios = false;
 
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), visible);
@@ -988,6 +1001,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
                 notificarCambios = false;
                 //changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible);
                 //notificarCambios = false;
@@ -1016,6 +1031,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
                 notificarCambios = false;
                 //changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible);
                 //notificarCambios = false;
@@ -1135,6 +1152,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), (visible && !esInmuno) || visibleDen);
                     notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), (visible && !esInmuno) || visibleDen);
+                    notificarCambios = false;
                 }
                 onPageTreeChanged();
             }
@@ -1238,6 +1257,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), (visible && !esPretermino) || visibleDen);
                     notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), (visible && !esPretermino) || visibleDen);
+                    notificarCambios = false;
                 }
                 onPageTreeChanged();
             }
@@ -1291,6 +1312,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
                 pagetmp.setChoices(visible?catVerifTutNoAlf:catVerifTutAlf);
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), !visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getTestigoPresente())){
@@ -1304,6 +1327,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
+                notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
                 notificarCambios = false;
 
                 Page pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteDengue());
@@ -1322,13 +1347,15 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), visible && visibleTmp);
                 notificarCambios = false;
-
-                pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1());
-                visibleTmp = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
-                changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible && visibleTmp);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), visible && visibleTmp);
-                notificarCambios = false;
+                //si no es influeza, es influenza UO1
+                if (pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) == null || pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).isEmpty()) {
+                    pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1());
+                    visibleTmp = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible && visibleTmp);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), visible && visibleTmp);
+                    notificarCambios = false;
+                }
 
                 onPageTreeChanged();
             }
@@ -1485,6 +1512,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAceptaParteD()), false);
@@ -1861,6 +1889,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 String aceptaParteBInf = datos.getString(this.getString(R.string.aceptaParteBInf));
                 String aceptaParteCInf = datos.getString(this.getString(R.string.aceptaParteCInf));
 
+                String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturo));
+
                 String codigoCasaCohorte = datos.getString(this.getString(R.string.codigoCasaCohorte));
                 String codigoNuevaCasaCohorte = datos.getString(this.getString(R.string.codigoNuevaCasaCohorte));
                 String nombre1JefeFamilia = datos.getString(this.getString(R.string.nombre1JefeFamilia));
@@ -2180,6 +2210,12 @@ public class NewTamizajeActivity extends FragmentActivity implements
                                 keysCriterios = keysCriterios.substring(0, keysCriterios.length() - 1);
                             cc.setVerifTutor(keysCriterios);
                         }
+                        if (tieneValor(aceptaContactoFuturo)) {
+                            MessageResource catConFut = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaContactoFuturo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                            if (catConFut != null) {
+                                cc.setAceptaContactoFuturo(catConFut.getCatKey());
+                            }
+                        }
                         //crear carta de consentimiento para dengue
                         if (aceptaDengue){
                             cc.setAceptaParteA(Constants.YESKEYSND);
@@ -2199,7 +2235,6 @@ public class NewTamizajeActivity extends FragmentActivity implements
                                 MessageResource catAceptaParteD = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteD + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                                 if (catAceptaParteD!=null) cc.setAceptaParteD(catAceptaParteD.getCatKey());
                             }
-                            cc.setAceptaContactoFuturo(null);
                             cc.setCodigo(infoMovil.getId());
                             cc.setTamizaje(tamizaje);
                             cc.setReconsentimiento(Constants.NOKEYSND);

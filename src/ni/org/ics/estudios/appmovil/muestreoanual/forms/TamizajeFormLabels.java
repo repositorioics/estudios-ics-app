@@ -108,6 +108,9 @@ public class TamizajeFormLabels {
     protected String aceptaParteCInf;
     protected String aceptaParteCInfHint;
 
+    private String aceptaContactoFuturo;
+    private String aceptaContactoFuturoHint;
+
     protected String casaPerteneceCohorte;
     protected String codigoCasaCohorte;
     protected String codigoCasaCohorteHint;
@@ -385,6 +388,9 @@ public class TamizajeFormLabels {
         razonNoAceptaInfluenzaUO1Hint = res.getString(R.string.razonNoAceptaInfluenzaUO1Hint);
         otraRazonNoAceptaInfluenzaUO1 = res.getString(R.string.otraRazonNoAceptaInfluenzaUO1);
         otraRazonNoAceptaInfluenzaUO1Hint = res.getString(R.string.otraRazonNoAceptaInfluenzaUO1Hint);
+
+        aceptaContactoFuturo = res.getString(R.string.aceptaContactoFuturo);
+        aceptaContactoFuturoHint = res.getString(R.string.aceptaContactoFuturoHint);
 		
 	}
 
@@ -1082,5 +1088,13 @@ public class TamizajeFormLabels {
 
     public String getOtraRazonNoAceptaInfluenzaUO1Hint() {
         return otraRazonNoAceptaInfluenzaUO1Hint;
+    }
+
+    public String getAceptaContactoFuturo() {
+        return aceptaContactoFuturo;
+    }
+
+    public String getAceptaContactoFuturoHint() {
+        return aceptaContactoFuturoHint;
     }
 }

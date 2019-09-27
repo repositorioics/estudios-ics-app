@@ -141,7 +141,13 @@ public class CasosDBConstants {
     public static final String cualAntibiotico = "cualAntibiotico";
     public static final String prescritoMedico = "prescritoMedico";
     public static final String respiracionRapida = "respiracionRapida";
-
+    public static final String fiebreIntensidad = "fiebreIntensidad";
+    public static final String dolorCabezaIntensidad = "dolorCabezaIntensidad";
+    public static final String dolorArticularIntensidad = "dolorArticularIntensidad";
+    public static final String dolorMuscularIntensidad = "dolorMuscularIntensidad";
+    public static final String secrecionNasalIntensidad = "secrecionNasalIntensidad";
+    public static final String tosIntensidad = "tosIntensidad";
+    public static final String dolorGargantaIntensidad = "dolorGargantaIntensidad";
 
     //Crear VisitaSeguimientoCasoSintomas
     public static final String CREATE_SINTOMAS_CASOS_TABLE = "create table if not exists "
@@ -174,6 +180,13 @@ public class CasosDBConstants {
             + cualAntibiotico + " text, "
             + prescritoMedico + " text, "
             + respiracionRapida + " text, "
+            + fiebreIntensidad + " text, "
+            + dolorCabezaIntensidad + " text, "
+            + dolorArticularIntensidad + " text, "
+            + dolorMuscularIntensidad + " text, "
+            + secrecionNasalIntensidad + " text, "
+            + tosIntensidad + " text, "
+            + dolorGargantaIntensidad + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

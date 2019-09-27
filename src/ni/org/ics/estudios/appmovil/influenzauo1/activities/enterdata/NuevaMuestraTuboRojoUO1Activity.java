@@ -478,7 +478,7 @@ public class NuevaMuestraTuboRojoUO1Activity extends FragmentActivity implements
             muestra.setTubo(Constants.CODIGO_TUBO_ROJO); //Rojo
 
             //Validar si la casa a la que pertenece esta actualmente en seguimiento.. si es asi, agregar el participante al seguimiento
-            if (participante.getProcesos().getCasaCHF()!= null && !participante.getProcesos().getCasaCHF().isEmpty()) {
+            /*if (participante.getProcesos().getCasaCHF()!= null && !participante.getProcesos().getCasaCHF().isEmpty()) {
                 CasaCohorteFamiliaCaso casaCaso = estudiosAdapter.getCasaCohorteFamiliaCaso(CasosDBConstants.casa + "='" + participante.getProcesos().getCasaCHF() + "'", null);
                 if (casaCaso != null) {
                     ParticipanteCohorteFamiliaCaso existePartCaso = estudiosAdapter.getParticipanteCohorteFamiliaCaso(CasosDBConstants.codigoCaso + "='" + casaCaso.getCodigoCaso() + "' and " + CasosDBConstants.participante + "=" + participante.getCodigo(), null);
@@ -489,8 +489,8 @@ public class NuevaMuestraTuboRojoUO1Activity extends FragmentActivity implements
                 }
             }else {
                 muestra.setProposito(accion);//positivo UO1 o vacunaUO1
-            }
-
+            }*///quitar compartido esta dando error. 270092019
+            muestra.setProposito(accion);//positivo UO1 o vacunaUO1
             //listas
             if (tieneValor(tomaMxSn)){
                 MessageResource mstomaMxSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaMxSn + "' and "

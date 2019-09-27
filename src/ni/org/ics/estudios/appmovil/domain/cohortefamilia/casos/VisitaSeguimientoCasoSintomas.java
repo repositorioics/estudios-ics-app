@@ -42,7 +42,15 @@ public class VisitaSeguimientoCasoSintomas extends BaseMetaData {
 	private String cualAntibiotico;
 	private String prescritoMedico;
     private String respiracionRapida;
-    
+    //se agrega intensidad sintomas
+	private String fiebreIntensidad;
+	private String dolorCabezaIntensidad;
+	private String dolorArticularIntensidad;
+	private String dolorMuscularIntensidad;
+	private String secrecionNasalIntensidad;
+	private String tosIntensidad;
+	private String dolorGargantaIntensidad;
+
 	public String getCodigoCasoSintoma() {
 		return codigoCasoSintoma;
 	}
@@ -267,7 +275,63 @@ public class VisitaSeguimientoCasoSintomas extends BaseMetaData {
         this.respiracionRapida = respiracionRapida;
     }
 
-    @Override
+	public String getFiebreIntensidad() {
+		return fiebreIntensidad;
+	}
+
+	public void setFiebreIntensidad(String fiebreIntensidad) {
+		this.fiebreIntensidad = fiebreIntensidad;
+	}
+
+	public String getDolorCabezaIntensidad() {
+		return dolorCabezaIntensidad;
+	}
+
+	public void setDolorCabezaIntensidad(String dolorCabezaIntensidad) {
+		this.dolorCabezaIntensidad = dolorCabezaIntensidad;
+	}
+
+	public String getDolorArticularIntensidad() {
+		return dolorArticularIntensidad;
+	}
+
+	public void setDolorArticularIntensidad(String dolorArticularIntensidad) {
+		this.dolorArticularIntensidad = dolorArticularIntensidad;
+	}
+
+	public String getDolorMuscularIntensidad() {
+		return dolorMuscularIntensidad;
+	}
+
+	public void setDolorMuscularIntensidad(String dolorMuscularIntensidad) {
+		this.dolorMuscularIntensidad = dolorMuscularIntensidad;
+	}
+
+	public String getSecrecionNasalIntensidad() {
+		return secrecionNasalIntensidad;
+	}
+
+	public void setSecrecionNasalIntensidad(String secrecionNasalIntensidad) {
+		this.secrecionNasalIntensidad = secrecionNasalIntensidad;
+	}
+
+	public String getTosIntensidad() {
+		return tosIntensidad;
+	}
+
+	public void setTosIntensidad(String tosIntensidad) {
+		this.tosIntensidad = tosIntensidad;
+	}
+
+	public String getDolorGargantaIntensidad() {
+		return dolorGargantaIntensidad;
+	}
+
+	public void setDolorGargantaIntensidad(String dolorGargantaIntensidad) {
+		this.dolorGargantaIntensidad = dolorGargantaIntensidad;
+	}
+
+	@Override
 	public String toString(){
 		return codigoVisitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF() + "-" + codigoVisitaCaso.getCodigoParticipanteCaso().getParticipante().getParticipante().getCodigo() + "-" + codigoVisitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio();
 	}

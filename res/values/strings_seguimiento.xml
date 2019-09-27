@@ -66,6 +66,13 @@
 	<string name="prescritoMedico">Fue prescrito por medico</string>
 	<string name="cualAntibiotico">Cual Antibiótico</string>
     <string name="respiracionRapida">Respiración Rapida</string>
+	<string name="fiebreIntensidad">Intensidad Fiebre</string>
+	<string name="dolorCabezaIntensidad">Intensidad Dolor Cabeza</string>
+	<string name="dolorArticularIntensidad">Intensidad Dolor Articular</string>
+	<string name="dolorMuscularIntensidad">Intensidad Dolor Muscular</string>
+	<string name="secrecionNasalIntensidad">Intensidad Secreción Nasal</string>
+	<string name="tosIntensidad">Intensidad Tos</string>
+	<string name="dolorGargantaIntensidad">Intensidad Dolor Garganta</string>
 	
 	<string name="contacts">Contacto miembros del hogar</string>
 	<string name="partContacto">Nombre miembro del hogar</string>

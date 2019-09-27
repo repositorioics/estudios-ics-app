@@ -311,6 +311,15 @@ public class EstudiosAdapter {
 			if (oldVersion==22){
 				db.execSQL("ALTER TABLE " + InfluenzaUO1DBConstants.UO1_VISITAS_CASOS_TABLE + " ADD COLUMN " + InfluenzaUO1DBConstants.lugar + " text");
 			}
+			if (oldVersion==23){
+				db.execSQL("ALTER TABLE " + CasosDBConstants.SINTOMAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.fiebreIntensidad + " text");
+				db.execSQL("ALTER TABLE " + CasosDBConstants.SINTOMAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.dolorCabezaIntensidad + " text");
+				db.execSQL("ALTER TABLE " + CasosDBConstants.SINTOMAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.dolorArticularIntensidad + " text");
+				db.execSQL("ALTER TABLE " + CasosDBConstants.SINTOMAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.dolorMuscularIntensidad + " text");
+				db.execSQL("ALTER TABLE " + CasosDBConstants.SINTOMAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.secrecionNasalIntensidad + " text");
+				db.execSQL("ALTER TABLE " + CasosDBConstants.SINTOMAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.tosIntensidad + " text");
+				db.execSQL("ALTER TABLE " + CasosDBConstants.SINTOMAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.dolorGargantaIntensidad + " text");
+			}
         }
 	}
 

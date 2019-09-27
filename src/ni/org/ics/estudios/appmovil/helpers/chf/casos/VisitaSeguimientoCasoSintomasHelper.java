@@ -44,7 +44,15 @@ public class VisitaSeguimientoCasoSintomasHelper {
         cv.put(CasosDBConstants.cualAntibiotico, sintomaCaso.getCualAntibiotico());
         cv.put(CasosDBConstants.prescritoMedico, sintomaCaso.getPrescritoMedico());
         cv.put(CasosDBConstants.respiracionRapida, sintomaCaso.getRespiracionRapida());
-        
+        //se agrega intensidad sintomas
+        cv.put(CasosDBConstants.fiebreIntensidad, sintomaCaso.getFiebreIntensidad());
+        cv.put(CasosDBConstants.dolorCabezaIntensidad, sintomaCaso.getDolorCabezaIntensidad());
+        cv.put(CasosDBConstants.dolorArticularIntensidad, sintomaCaso.getDolorArticularIntensidad());
+        cv.put(CasosDBConstants.dolorMuscularIntensidad, sintomaCaso.getDolorMuscularIntensidad());
+        cv.put(CasosDBConstants.secrecionNasalIntensidad, sintomaCaso.getSecrecionNasalIntensidad());
+        cv.put(CasosDBConstants.tosIntensidad, sintomaCaso.getTosIntensidad());
+        cv.put(CasosDBConstants.dolorGargantaIntensidad, sintomaCaso.getDolorGargantaIntensidad());
+
         if (sintomaCaso.getRecordDate() != null) cv.put(MainDBConstants.recordDate, sintomaCaso.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, sintomaCaso.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(sintomaCaso.getPasive()));
@@ -83,7 +91,15 @@ public class VisitaSeguimientoCasoSintomasHelper {
     	mVisitaSeguimientoCasoSintomas.setCualAntibiotico(cursor.getString(cursor.getColumnIndex(CasosDBConstants.cualAntibiotico)));
     	mVisitaSeguimientoCasoSintomas.setPrescritoMedico(cursor.getString(cursor.getColumnIndex(CasosDBConstants.prescritoMedico)));
         mVisitaSeguimientoCasoSintomas.setRespiracionRapida(cursor.getString(cursor.getColumnIndex(CasosDBConstants.respiracionRapida)));
-    	
+        //se agrega intensidad sintomas
+        mVisitaSeguimientoCasoSintomas.setFiebreIntensidad(cursor.getString(cursor.getColumnIndex(CasosDBConstants.fiebreIntensidad)));
+        mVisitaSeguimientoCasoSintomas.setDolorCabezaIntensidad(cursor.getString(cursor.getColumnIndex(CasosDBConstants.dolorCabezaIntensidad)));
+        mVisitaSeguimientoCasoSintomas.setDolorArticularIntensidad(cursor.getString(cursor.getColumnIndex(CasosDBConstants.dolorArticularIntensidad)));
+        mVisitaSeguimientoCasoSintomas.setDolorMuscularIntensidad(cursor.getString(cursor.getColumnIndex(CasosDBConstants.dolorMuscularIntensidad)));
+        mVisitaSeguimientoCasoSintomas.setSecrecionNasalIntensidad(cursor.getString(cursor.getColumnIndex(CasosDBConstants.secrecionNasalIntensidad)));
+        mVisitaSeguimientoCasoSintomas.setTosIntensidad(cursor.getString(cursor.getColumnIndex(CasosDBConstants.tosIntensidad)));
+        mVisitaSeguimientoCasoSintomas.setDolorGargantaIntensidad(cursor.getString(cursor.getColumnIndex(CasosDBConstants.dolorGargantaIntensidad)));
+
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mVisitaSeguimientoCasoSintomas.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mVisitaSeguimientoCasoSintomas.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         mVisitaSeguimientoCasoSintomas.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));

@@ -474,8 +474,8 @@ public class NuevaMuestraTuboPbmcUO1Activity extends FragmentActivity implements
             muestra.setTipoMuestra(Constants.CODIGO_TIPO_SANGRE); //Sangre
             muestra.setTubo(Constants.CODIGO_TUBO_PBMC); //Pbmc
 
-            //Validar si la casa a la que pertenece esta actualmente en seguimiento.. si es asi, agregar el participante al seguimiento
-            if (participante.getProcesos().getCasaCHF()!= null && !participante.getProcesos().getCasaCHF().isEmpty()) {
+            //Validar si la casa a la que pertenece esta actualmente en seguimiento..
+            /*if (participante.getProcesos().getCasaCHF()!= null && !participante.getProcesos().getCasaCHF().isEmpty()) {
                 CasaCohorteFamiliaCaso casaCaso = estudiosAdapter.getCasaCohorteFamiliaCaso(CasosDBConstants.casa + "='" + participante.getProcesos().getCasaCHF() + "'", null);
                 if (casaCaso != null) {
                     ParticipanteCohorteFamiliaCaso existePartCaso = estudiosAdapter.getParticipanteCohorteFamiliaCaso(CasosDBConstants.codigoCaso + "='" + casaCaso.getCodigoCaso() + "' and " + CasosDBConstants.participante + "=" + participante.getCodigo(), null);
@@ -486,8 +486,8 @@ public class NuevaMuestraTuboPbmcUO1Activity extends FragmentActivity implements
                 }
             }else {
                 muestra.setProposito(accion);//positivo UO1 o vacunaUO1
-            }
-
+            }*///se quita ya no es compartido.. esta dando error 27092019
+            muestra.setProposito(accion);//positivo UO1 o vacunaUO1
             //listas
             if (tieneValor(tomaMxSn)){
                 MessageResource mstomaMxSn = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tomaMxSn + "' and "

@@ -65,6 +65,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	private VisitaSeguimientoCasoSintomas vscs = new VisitaSeguimientoCasoSintomas();
 	//Catalogos
 	private List<MessageResource> mCatalogoSnd;
+	private List<MessageResource> mCatalogoIntensidad;
 	private List<VisitaSeguimientoCaso> mVisitaSeguimientoCasos = new ArrayList<VisitaSeguimientoCaso>();
 	private List<VisitaSeguimientoCasoSintomas> mVisitasSeguimientoCasoSintomas = new ArrayList<VisitaSeguimientoCasoSintomas>();
 	//Widgets en el View
@@ -98,6 +99,21 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	private Spinner spinPrescritoMedico;
 	private TextView textCualAntibiotico;
 	private EditText inputCualAntibiotico;
+	//intensidad sintomas
+	private Spinner spinFiebreIntensidad;
+	private Spinner spinDolorCabezaIntensidad;
+	private Spinner spinDolorArticularIntensidad;
+	private Spinner spinDolorMuscularIntensidad;
+	private Spinner spinSecrecionNasalIntensidad;
+	private Spinner spinTosIntensidad;
+	private Spinner spinDolorGargantaIntensidad;
+	private TextView textFiebreIntensidad;
+	private TextView textDolorCabezaIntensidad;
+	private TextView textDolorArticularIntensidad;
+	private TextView textDolorMuscularIntensidad;
+	private TextView textSecrecionNasalIntensidad;
+	private TextView textTosIntensidad;
+	private TextView textDolorGargantaIntensidad;
 	
 	private Button mSaveView;
 	
@@ -123,6 +139,13 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	private String antibiotico;
 	private String cualAntibiotico;
 	private String prescritoMedico;
+	private String fiebreIntensidad;
+	private String dolorCabezaIntensidad;
+	private String dolorArticularIntensidad;
+	private String dolorMuscularIntensidad;
+	private String secrecionNasalIntensidad;
+	private String tosIntensidad;
+	private String dolorGargantaIntensidad;
 	
 	final Calendar c = Calendar.getInstance();
 	//Para el id
@@ -189,6 +212,8 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	        		inputFif.setVisibility(View.VISIBLE);
 	        		mButtonChangeFif.setVisibility(View.VISIBLE);
 	        		spinFiebre.setBackgroundColor(Color.RED);
+	        		spinFiebreIntensidad.setVisibility(View.VISIBLE);
+					textFiebreIntensidad.setVisibility(View.VISIBLE);
 	        	}
 	        	else{
 	        		textFif.setVisibility(View.GONE);
@@ -197,6 +222,8 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	        		inputFif.setText("");
 	        		fif = "";
 	        		spinFiebre.setBackgroundColor(Color.WHITE);
+					spinFiebreIntensidad.setVisibility(View.GONE);
+					textFiebreIntensidad.setVisibility(View.GONE);
 	        	}
 	        }
 			@Override
@@ -274,9 +301,13 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	        	dolorCabeza = mr.getCatKey();
 	        	if(dolorCabeza.equals(Constants.YESKEYSND)){
 	        		spinDolorCabeza.setBackgroundColor(Color.RED);
+					spinDolorCabezaIntensidad.setVisibility(View.VISIBLE);
+					textDolorCabezaIntensidad.setVisibility(View.VISIBLE);
 	        	}
 	        	else{
 	        		spinDolorCabeza.setBackgroundColor(Color.WHITE);
+					spinDolorCabezaIntensidad.setVisibility(View.GONE);
+					textDolorCabezaIntensidad.setVisibility(View.GONE);
 	        	}
 	        }
 			@Override
@@ -292,9 +323,13 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	        	dolorArticular = mr.getCatKey();
 	        	if(dolorArticular.equals(Constants.YESKEYSND)){
 	        		spinDolorArticular.setBackgroundColor(Color.RED);
+					spinDolorArticularIntensidad.setVisibility(View.VISIBLE);
+					textDolorArticularIntensidad.setVisibility(View.VISIBLE);
 	        	}
 	        	else{
 	        		spinDolorArticular.setBackgroundColor(Color.WHITE);
+					spinDolorArticularIntensidad.setVisibility(View.GONE);
+					textDolorArticularIntensidad.setVisibility(View.GONE);
 	        	}
 	        }
 			@Override
@@ -310,9 +345,13 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	        	dolorMuscular = mr.getCatKey();
 	        	if(dolorMuscular.equals(Constants.YESKEYSND)){
 	        		spinDolorMuscular.setBackgroundColor(Color.RED);
+					spinDolorMuscularIntensidad.setVisibility(View.VISIBLE);
+					textDolorMuscularIntensidad.setVisibility(View.VISIBLE);
 	        	}
 	        	else{
 	        		spinDolorMuscular.setBackgroundColor(Color.WHITE);
+					spinDolorMuscularIntensidad.setVisibility(View.GONE);
+					textDolorMuscularIntensidad.setVisibility(View.GONE);
 	        	}
 	        }
 			@Override
@@ -347,9 +386,13 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	        	secrecionNasal = mr.getCatKey();
 	        	if(secrecionNasal.equals(Constants.YESKEYSND)){
 	        		spinSecrecionNasal.setBackgroundColor(Color.RED);
+					spinSecrecionNasalIntensidad.setVisibility(View.VISIBLE);
+					textSecrecionNasalIntensidad.setVisibility(View.VISIBLE);
 	        	}
 	        	else{
 	        		spinSecrecionNasal.setBackgroundColor(Color.WHITE);
+					spinSecrecionNasalIntensidad.setVisibility(View.GONE);
+					textSecrecionNasalIntensidad.setVisibility(View.GONE);
 	        	}
 	        }
 			@Override
@@ -365,9 +408,13 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	        	tos = mr.getCatKey();
 	        	if(tos.equals(Constants.YESKEYSND)){
 	        		spinTos.setBackgroundColor(Color.RED);
+					spinTosIntensidad.setVisibility(View.VISIBLE);
+					textTosIntensidad.setVisibility(View.VISIBLE);
 	        	}
 	        	else{
 	        		spinTos.setBackgroundColor(Color.WHITE);
+					spinTosIntensidad.setVisibility(View.GONE);
+					textTosIntensidad.setVisibility(View.GONE);
 	        	}
 	        }
 			@Override
@@ -401,9 +448,13 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 	        	dolorGarganta = mr.getCatKey();
 	        	if(dolorGarganta.equals(Constants.YESKEYSND)){
 	        		spinDolorGarganta.setBackgroundColor(Color.RED);
+					spinDolorGargantaIntensidad.setVisibility(View.VISIBLE);
+					textDolorGargantaIntensidad.setVisibility(View.VISIBLE);
 	        	}
 	        	else{
 	        		spinDolorGarganta.setBackgroundColor(Color.WHITE);
+					spinDolorGargantaIntensidad.setVisibility(View.GONE);
+					textDolorGargantaIntensidad.setVisibility(View.GONE);
 	        	}
 	        }
 			@Override
@@ -570,7 +621,120 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 				}
 			}
 		});
-        return rootView;
+		//intensidad de los sintomas
+		textFiebreIntensidad = (TextView) rootView.findViewById(R.id.textFiebreIntensidad);
+		textFiebreIntensidad.setVisibility(View.GONE);
+		spinFiebreIntensidad = (Spinner) rootView.findViewById(R.id.spinFiebreIntensidad);
+		spinFiebreIntensidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> spinner, View v,
+									   int arg2, long arg3) {
+				MessageResource mr = (MessageResource) spinner.getSelectedItem();
+				fiebreIntensidad = mr.getCatKey();
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+		spinFiebreIntensidad.setVisibility(View.GONE);
+
+		textDolorCabezaIntensidad = (TextView) rootView.findViewById(R.id.textDolorCabezaIntensidad);
+		textDolorCabezaIntensidad.setVisibility(View.GONE);
+		spinDolorCabezaIntensidad = (Spinner) rootView.findViewById(R.id.spinDolorCabezaIntensidad);
+		spinDolorCabezaIntensidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> spinner, View v,
+									   int arg2, long arg3) {
+				MessageResource mr = (MessageResource) spinner.getSelectedItem();
+				dolorCabezaIntensidad = mr.getCatKey();
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+		spinDolorCabezaIntensidad.setVisibility(View.GONE);
+
+		textDolorArticularIntensidad = (TextView) rootView.findViewById(R.id.textDolorArticularIntensidad);
+		textDolorArticularIntensidad.setVisibility(View.GONE);
+		spinDolorArticularIntensidad = (Spinner) rootView.findViewById(R.id.spinDolorArticularIntensidad);
+		spinDolorArticularIntensidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> spinner, View v,
+									   int arg2, long arg3) {
+				MessageResource mr = (MessageResource) spinner.getSelectedItem();
+				dolorArticularIntensidad = mr.getCatKey();
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+		spinDolorArticularIntensidad.setVisibility(View.GONE);
+
+		textDolorMuscularIntensidad = (TextView) rootView.findViewById(R.id.textDolorMuscularIntensidad);
+		textDolorMuscularIntensidad.setVisibility(View.GONE);
+		spinDolorMuscularIntensidad = (Spinner) rootView.findViewById(R.id.spinDolorMuscularIntensidad);
+		spinDolorMuscularIntensidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> spinner, View v,
+									   int arg2, long arg3) {
+				MessageResource mr = (MessageResource) spinner.getSelectedItem();
+				dolorMuscularIntensidad = mr.getCatKey();
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+		spinDolorMuscularIntensidad.setVisibility(View.GONE);
+
+		textSecrecionNasalIntensidad = (TextView) rootView.findViewById(R.id.textSecrecionNasalIntensidad);
+		textSecrecionNasalIntensidad.setVisibility(View.GONE);
+		spinSecrecionNasalIntensidad = (Spinner) rootView.findViewById(R.id.spinSecrecionNasalIntensidad);
+		spinSecrecionNasalIntensidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> spinner, View v,
+									   int arg2, long arg3) {
+				MessageResource mr = (MessageResource) spinner.getSelectedItem();
+				secrecionNasalIntensidad = mr.getCatKey();
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+		spinSecrecionNasalIntensidad.setVisibility(View.GONE);
+
+		textTosIntensidad = (TextView) rootView.findViewById(R.id.textTosIntensidad);
+		textTosIntensidad.setVisibility(View.GONE);
+		spinTosIntensidad = (Spinner) rootView.findViewById(R.id.spinTosIntensidad);
+		spinTosIntensidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> spinner, View v,
+									   int arg2, long arg3) {
+				MessageResource mr = (MessageResource) spinner.getSelectedItem();
+				tosIntensidad = mr.getCatKey();
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+		spinTosIntensidad.setVisibility(View.GONE);
+
+		textDolorGargantaIntensidad = (TextView) rootView.findViewById(R.id.textDolorGargantaIntensidad);
+		textDolorGargantaIntensidad.setVisibility(View.GONE);
+		spinDolorGargantaIntensidad = (Spinner) rootView.findViewById(R.id.spinDolorGargantaIntensidad);
+		spinDolorGargantaIntensidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> spinner, View v,
+									   int arg2, long arg3) {
+				MessageResource mr = (MessageResource) spinner.getSelectedItem();
+				dolorGargantaIntensidad = mr.getCatKey();
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+		spinDolorGargantaIntensidad.setVisibility(View.GONE);
+
+		return rootView;
     }
 
     @Override
@@ -659,6 +823,10 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
         	inputFif.setError(getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.fif))); 
             return false;
         }
+		else if (fiebre.equals(Constants.YESKEYSND) && (fiebreIntensidad == null || fiebreIntensidad.equals(""))){
+			Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.fiebreIntensidad)),Toast.LENGTH_LONG).show();
+			return false;
+		}
         else if (fiebreCuantificada == null || fiebreCuantificada.equals("")){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.fiebreCuantificada)),Toast.LENGTH_LONG).show();
             return false;
@@ -672,14 +840,25 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.dolorCabeza)),Toast.LENGTH_LONG).show();
             return false;
         }
+		else if (dolorCabeza.equals(Constants.YESKEYSND) && (dolorCabezaIntensidad == null || dolorCabezaIntensidad.equals(""))){
+			Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.dolorCabezaIntensidad)),Toast.LENGTH_LONG).show();
+			return false;
+		}
         else if (dolorArticular == null || dolorArticular.equals("")){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.dolorArticular)),Toast.LENGTH_LONG).show();
             return false;
-        }
+        }else if (dolorArticular.equals(Constants.YESKEYSND) && (dolorArticularIntensidad == null || dolorArticularIntensidad.equals(""))){
+			Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.dolorArticularIntensidad)),Toast.LENGTH_LONG).show();
+			return false;
+		}
         else if (dolorMuscular == null || dolorMuscular.equals("")){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.dolorMuscular)),Toast.LENGTH_LONG).show();
             return false;
         }
+		else if (dolorMuscular.equals(Constants.YESKEYSND) && (dolorMuscularIntensidad == null || dolorMuscularIntensidad.equals(""))){
+			Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.dolorMuscularIntensidad)),Toast.LENGTH_LONG).show();
+			return false;
+		}
         else if (dificultadRespiratoria == null || dificultadRespiratoria.equals("")){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.dificultadRespiratoria)),Toast.LENGTH_LONG).show();
             return false;
@@ -688,10 +867,18 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.secrecionNasal)),Toast.LENGTH_LONG).show();
             return false;
         }
+		else if (secrecionNasal.equals(Constants.YESKEYSND) && (secrecionNasalIntensidad == null || secrecionNasalIntensidad.equals(""))){
+			Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.secrecionNasalIntensidad)),Toast.LENGTH_LONG).show();
+			return false;
+		}
         else if (tos == null || tos.equals("")){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.tos)),Toast.LENGTH_LONG).show();
             return false;
         }
+		else if (tos.equals(Constants.YESKEYSND) && (tosIntensidad == null || tosIntensidad.equals(""))){
+			Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.tosIntensidad)),Toast.LENGTH_LONG).show();
+			return false;
+		}
         else if (pocoApetito == null || pocoApetito.equals("")){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.pocoApetito)),Toast.LENGTH_LONG).show();
             return false;
@@ -700,6 +887,10 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.dolorGarganta)),Toast.LENGTH_LONG).show();
             return false;
         }
+		else if (dolorGarganta.equals(Constants.YESKEYSND) && (dolorGargantaIntensidad == null || dolorGargantaIntensidad.equals(""))){
+			Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.dolorGargantaIntensidad)),Toast.LENGTH_LONG).show();
+			return false;
+		}
         else if (diarrea == null || diarrea.equals("")){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.diarrea)),Toast.LENGTH_LONG).show();
             return false;
@@ -764,7 +955,14 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 			vscs.setAntibiotico(antibiotico);
 			vscs.setPrescritoMedico(prescritoMedico);
 			vscs.setCualAntibiotico(cualAntibiotico);
-			
+			vscs.setFiebreIntensidad(fiebreIntensidad);
+			vscs.setDolorCabezaIntensidad(dolorCabezaIntensidad);
+			vscs.setDolorArticularIntensidad(dolorArticularIntensidad);
+			vscs.setDolorMuscularIntensidad(dolorMuscularIntensidad);
+			vscs.setSecrecionNasalIntensidad(secrecionNasalIntensidad);
+			vscs.setTosIntensidad(tosIntensidad);
+			vscs.setDolorGargantaIntensidad(dolorGargantaIntensidad);
+
 			vscs.setRecordDate(new Date());
 			vscs.setRecordUser(username);
 			vscs.setDeviceid(infoMovil.getDeviceId());
@@ -793,6 +991,7 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 			try {
 				estudiosAdapter.open();
 				mCatalogoSnd = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", CatalogosDBConstants.order);
+				mCatalogoIntensidad = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CAT_INTENSIDAD_SIN'", CatalogosDBConstants.order);
 				mVisitaSeguimientoCasos = estudiosAdapter.getVisitaSeguimientoCasos(CasosDBConstants.codigoCasoParticipante +" = '" + mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCasoParticipante() +"'", MainDBConstants.fechaVisita);
 				String filtro = "";
 				for (VisitaSeguimientoCaso vsc: mVisitaSeguimientoCasos){
@@ -834,6 +1033,19 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
 			spinOseltamivir.setAdapter(dataAdapter);
 			spinAntibiotico.setAdapter(dataAdapter);
 			spinPrescritoMedico.setAdapter(dataAdapter);
+
+			mCatalogoIntensidad.add(new MessageResource("",0,getActivity().getString(R.string.select)));
+			Collections.sort(mCatalogoIntensidad);
+			ArrayAdapter<MessageResource> dataAdapterInt = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, mCatalogoIntensidad);
+			dataAdapterInt.setDropDownViewResource(R.layout.spinner_item);
+			spinFiebreIntensidad.setAdapter(dataAdapterInt);
+			spinDolorCabezaIntensidad.setAdapter(dataAdapterInt);
+			spinDolorArticularIntensidad.setAdapter(dataAdapterInt);
+			spinDolorMuscularIntensidad.setAdapter(dataAdapterInt);
+			spinSecrecionNasalIntensidad.setAdapter(dataAdapterInt);
+			spinTosIntensidad.setAdapter(dataAdapterInt);
+			spinDolorGargantaIntensidad.setAdapter(dataAdapterInt);
+
 		}
 
 	}	

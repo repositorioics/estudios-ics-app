@@ -492,10 +492,10 @@ public class NuevaMuestraTuboPbmcActivity extends FragmentActivity implements
                     muestra.setRecordDate(visitaCaso.getFechaVisita());
                 if (visitaFinalCaso!=null)
                     muestra.setRecordDate(visitaFinalCaso.getFechaVisita());
-                ParticipanteCasoUO1 participanteCasoUO1 = estudiosAdapter.getParticipanteCasoUO1(InfluenzaUO1DBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
+                /*ParticipanteCasoUO1 participanteCasoUO1 = estudiosAdapter.getParticipanteCasoUO1(InfluenzaUO1DBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
                 if (participanteCasoUO1!=null){
                     muestra.setProposito(Constants.CODIGO_PROPOSITO_UO1_CHF);
-                }
+                }*///quitar compartido esta dando error. 270092019
             }
             else{
             	muestra.setRecordDate(new Date());

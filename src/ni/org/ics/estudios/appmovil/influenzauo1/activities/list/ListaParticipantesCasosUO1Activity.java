@@ -66,6 +66,8 @@ public class ListaParticipantesCasosUO1Activity extends AbstractAsyncListActivit
 		mButton.setVisibility(View.GONE);
 		mButton = (Button) findViewById(R.id.new_pbmc_uo1_button);
 		mButton.setVisibility(View.GONE);
+		mButton = (Button) findViewById(R.id.add_symptom_uo1_button);
+		mButton.setVisibility(View.GONE);
 	}
 
 	@Override

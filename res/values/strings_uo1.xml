@@ -71,4 +71,30 @@
     <string name="no_pertenece_uo1">El participante no pertenece a UO1</string>
     <string name="lugarVisitaHint">Indique lugar dónde se registra la visita al participante</string>
 
+    <string name="fechaSintomaUO1">Fecha sintoma</string>
+    <string name="diaSintomaUO1">Día</string>
+    <string name="consultaInicialUO1">Consulta Inicial</string>
+    <string name="fiebreUO1">Fiebre</string>
+    <string name="fiebreIntensidadUO1">Intensidad Fiebre</string>
+    <string name="tosUO1">Tos</string>
+    <string name="tosIntensidadUO1">Intensidad Tos</string>
+    <string name="secrecionNasalUO1">Secreción Nasal</string>
+    <string name="secrecionNasalIntensidadUO1">Intensidad Secreción Nasal</string>
+    <string name="dolorGargantaUO1">Dolor de Garganta</string>
+    <string name="dolorGargantaIntensidadUO1">Intensidad Dolor Garganta</string>
+    <string name="congestionNasalUO1">Congestión Nasal</string>
+    <string name="dolorCabezaUO1">Dolor de cabeza</string>
+    <string name="dolorCabezaIntensidadUO1">Intensidad Dolor Cabeza</string>
+    <string name="faltaApetitoUO1">Falta de Apetito</string>
+    <string name="dolorMuscularUO1">Dolor muscular</string>
+    <string name="dolorMuscularIntensidadUO1">Intensidad Dolor Muscular</string>
+    <string name="dolorArticularUO1">Dolor Articular</string>
+    <string name="dolorArticularIntensidadUO1">Intensidad Dolor Articular</string>
+    <string name="dolorOidoUO1">Dolor de Oído</string>
+    <string name="respiracionRapidaUO1">Respiración Rapida</string>
+    <string name="dificultadRespiratoriaUO1">Dificultad Respirar</string>
+    <string name="faltaEscueltaUO1">Falta a la escuela</string>
+    <string name="quedoCamaUO1">Quedó en Cama</string>
+    <string name="diaRegistrado">Día %s ya fue registrado para éste caso</string>
+    <string name="fechaRegistrada">Fecha %s ya fue registrada para éste caso</string>
  </resources>

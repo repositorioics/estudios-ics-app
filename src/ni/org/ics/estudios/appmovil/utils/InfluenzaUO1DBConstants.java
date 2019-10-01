@@ -103,4 +103,68 @@ public class InfluenzaUO1DBConstants {
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigoVisita + "));";
 
+    //tabla SintomasVisitaCasoUO1
+    public static final String UO1_SINTOMAS_VISITA_CASO_TABLE = "uo1_sintomas_visita_caso";
+
+    public static final String codigoSintoma = "codigoSintoma";
+    public static final String fechaSintomas = "fechaSintomas";
+    public static final String dia = "dia";
+    public static final String consultaInicial = "consultaInicial";
+    public static final String fiebre = "fiebre";
+    public static final String fiebreIntensidad = "fiebreIntensidad";
+    public static final String tos = "tos";
+    public static final String tosIntensidad = "tosIntensidad";
+    public static final String secrecionNasal = "secrecionNasal";
+    public static final String secrecionNasalIntensidad = "secrecionNasalIntensidad";
+    public static final String dolorGarganta = "dolorGarganta";
+    public static final String dolorGargantaIntensidad = "dolorGargantaIntensidad";
+    public static final String congestionNasal = "congestionNasal";
+    public static final String dolorCabeza = "dolorCabeza";
+    public static final String dolorCabezaIntensidad = "dolorCabezaIntensidad";
+    public static final String faltaApetito = "faltaApetito";
+    public static final String dolorMuscular = "dolorMuscular";
+    public static final String dolorMuscularIntensidad = "dolorMuscularIntensidad";
+    public static final String dolorArticular = "dolorArticular";
+    public static final String dolorArticularIntensidad = "dolorArticularIntensidad";
+    public static final String dolorOido = "dolorOido";
+    public static final String respiracionRapida = "respiracionRapida";
+    public static final String dificultadRespiratoria = "dificultadRespiratoria";
+    public static final String faltaEscuelta = "faltaEscuelta";
+    public static final String quedoCama = "quedoCama";
+
+    //create
+    public static final String CREATE_UO1_SINTOMAS_VISITA_CASO_TABLE = "create table if not exists "
+            + UO1_SINTOMAS_VISITA_CASO_TABLE + " ("
+            + codigoSintoma + " text not null, "
+            + codigoCasoVisita + " text not null, "
+            + fechaSintomas + " date, "
+            + dia + " text, "
+            + consultaInicial + " text, "
+            + fiebre + " text, "
+            + fiebreIntensidad + " text, "
+            + tos + " text, "
+            + tosIntensidad + " text, "
+            + secrecionNasal + " text, "
+            + secrecionNasalIntensidad + " text, "
+            + dolorGarganta + " text, "
+            + dolorGargantaIntensidad + " text, "
+            + congestionNasal + " text, "
+            + dolorCabeza + " text, "
+            + dolorCabezaIntensidad + " text, "
+            + faltaApetito + " text, "
+            + dolorMuscular + " text, "
+            + dolorMuscularIntensidad + " text, "
+            + dolorArticular + " text, "
+            + dolorArticularIntensidad + " text, "
+            + dolorOido + " text, "
+            + respiracionRapida + " text, "
+            + dificultadRespiratoria + " text, "
+            + faltaEscuelta + " text, "
+            + quedoCama + " text, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + codigoSintoma + "));";
 }

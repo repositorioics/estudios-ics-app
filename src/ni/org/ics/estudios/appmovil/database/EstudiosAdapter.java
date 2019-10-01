@@ -32,6 +32,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.SintomasVisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
@@ -51,6 +52,7 @@ import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaFinalCasoHelper;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaSeguimientoCasoHelper;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaSeguimientoCasoSintomasHelper;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.ParticipanteCasoUO1Helper;
+import ni.org.ics.estudios.appmovil.helpers.influenzauo1.SintomasVisitaCasoUO1Helper;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.VisitaCasoUO1Helper;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.VisitaVacunaUO1Helper;
 import ni.org.ics.estudios.appmovil.helpers.seroprevalencia.EncuestaCasaSAHelper;
@@ -179,6 +181,7 @@ public class EstudiosAdapter {
 			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_PARTICIPANTES_CASOS_TABLE);
 			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_VISITAS_CASOS_TABLE);
 			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_VISITAS_VACUNAS_TABLE);
+			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_SINTOMAS_VISITA_CASO_TABLE);
         }
 
 		@Override
@@ -319,6 +322,10 @@ public class EstudiosAdapter {
 				db.execSQL("ALTER TABLE " + CasosDBConstants.SINTOMAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.secrecionNasalIntensidad + " text");
 				db.execSQL("ALTER TABLE " + CasosDBConstants.SINTOMAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.tosIntensidad + " text");
 				db.execSQL("ALTER TABLE " + CasosDBConstants.SINTOMAS_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.dolorGargantaIntensidad + " text");
+			}
+			if (oldVersion==24){
+				//continuación UO1
+				db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_SINTOMAS_VISITA_CASO_TABLE);
 			}
         }
 	}
@@ -8654,6 +8661,66 @@ public class EstudiosAdapter {
 				if (cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participante))!=null) {
 					Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.participante)), null);
 					if (participante != null) visitaVacunaUO1.setParticipante(participante);
+				}
+				visitaVacunaUO1List.add(visitaVacunaUO1);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return visitaVacunaUO1List;
+	}
+
+	/**
+	 * Metodos para SintomasVisitaCasoUO1 en la base de datos
+	 *
+	 * @param visitaVacunaUO1
+	 *            Objeto Muestras que contiene la informacion
+	 *
+	 */
+	//Crear nuevo registro SintomasVisitaCasoUO1 en la base de datos
+	public void crearSintomasVisitaCasoUO1(SintomasVisitaCasoUO1 visitaVacunaUO1) {
+		ContentValues cv = SintomasVisitaCasoUO1Helper.crearSintomasVisitaCasoUO1ContentValues(visitaVacunaUO1);
+		mDb.insertOrThrow(InfluenzaUO1DBConstants.UO1_SINTOMAS_VISITA_CASO_TABLE, null, cv);
+	}
+	//Editar SintomasVisitaCasoUO1 existente en la base de datos
+	public boolean editarSintomasVisitaCasoUO1(SintomasVisitaCasoUO1 visitaVacunaUO1) {
+		ContentValues cv = SintomasVisitaCasoUO1Helper.crearSintomasVisitaCasoUO1ContentValues(visitaVacunaUO1);
+		return mDb.update(InfluenzaUO1DBConstants.UO1_SINTOMAS_VISITA_CASO_TABLE, cv, InfluenzaUO1DBConstants.codigoSintoma + "='"
+				+ visitaVacunaUO1.getCodigoSintoma() + "'", null) > 0;
+	}
+	//Limpiar la tabla de SintomasVisitaCasoUO1 de la base de datos
+	public boolean borrarSintomasVisitaCasoUO1() {
+		return mDb.delete(InfluenzaUO1DBConstants.UO1_SINTOMAS_VISITA_CASO_TABLE, null, null) > 0;
+	}
+
+	//Obtener una SintomasVisitaCasoUO1 de la base de datos
+	public SintomasVisitaCasoUO1 getSintomasVisitaCasoUO1(String filtro, String orden) throws SQLException {
+		SintomasVisitaCasoUO1 visitaVacunaUO1 = null;
+		Cursor cursor = crearCursor(InfluenzaUO1DBConstants.UO1_SINTOMAS_VISITA_CASO_TABLE , filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			visitaVacunaUO1=SintomasVisitaCasoUO1Helper.crearSintomasVisitaCasoUO1(cursor);
+			if (cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.codigoCasoVisita))!=null) {
+				VisitaCasoUO1 visitaCasoUO1 = this.getVisitaCasoUO1(InfluenzaUO1DBConstants.codigoCasoVisita + "='" + cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.codigoCasoVisita)) + "'", null);
+				if (visitaCasoUO1 != null) visitaVacunaUO1.setCodigoCasoVisita(visitaCasoUO1);
+			}
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return visitaVacunaUO1;
+	}
+
+	//Obtener una lista de SintomasVisitaCasoUO1 de la base de datos
+	public List<SintomasVisitaCasoUO1> getSintomasVisitasCasosUO1(String filtro, String orden) throws SQLException {
+		List<SintomasVisitaCasoUO1> visitaVacunaUO1List = new ArrayList<SintomasVisitaCasoUO1>();
+		Cursor cursor = crearCursor(InfluenzaUO1DBConstants.UO1_SINTOMAS_VISITA_CASO_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			visitaVacunaUO1List.clear();
+			do{
+				SintomasVisitaCasoUO1 visitaVacunaUO1 = null;
+				visitaVacunaUO1=SintomasVisitaCasoUO1Helper.crearSintomasVisitaCasoUO1(cursor);
+				if (cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.codigoCasoVisita))!=null) {
+					VisitaCasoUO1 visitaCasoUO1 = this.getVisitaCasoUO1(InfluenzaUO1DBConstants.codigoCasoVisita + "='" + cursor.getString(cursor.getColumnIndex(InfluenzaUO1DBConstants.codigoCasoVisita)) + "'", null);
+					if (visitaCasoUO1 != null) visitaVacunaUO1.setCodigoCasoVisita(visitaCasoUO1);
 				}
 				visitaVacunaUO1List.add(visitaVacunaUO1);
 			} while (cursor.moveToNext());

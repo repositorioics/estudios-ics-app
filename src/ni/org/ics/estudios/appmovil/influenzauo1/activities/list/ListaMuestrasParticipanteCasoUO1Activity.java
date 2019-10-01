@@ -81,6 +81,8 @@ public class ListaMuestrasParticipanteCasoUO1Activity extends AbstractAsyncListA
 		
 		mButton = (Button) findViewById(R.id.add_visit_uo1_button);
 		mButton.setVisibility(View.GONE);
+		mButton = (Button) findViewById(R.id.add_symptom_uo1_button);
+		mButton.setVisibility(View.GONE);
 		
 		mAddRojoButton = (Button) findViewById(R.id.new_rojo_uo1_button);
 		mAddPbmcButton = (Button) findViewById(R.id.new_pbmc_uo1_button);

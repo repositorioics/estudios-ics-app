@@ -59,6 +59,8 @@ public class ListaVisitasCasoUO1Activity extends AbstractAsyncListActivity {
 		mButton.setVisibility(View.GONE);
 		mButton = (Button) findViewById(R.id.new_pbmc_uo1_button);
 		mButton.setVisibility(View.GONE);
+		mButton = (Button) findViewById(R.id.add_symptom_uo1_button);
+		mButton.setVisibility(View.GONE);
 
         mAddVisitButton = (Button) findViewById(R.id.add_visit_uo1_button);
 		mAddVisitButton.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_menu_btn_add), null, null);

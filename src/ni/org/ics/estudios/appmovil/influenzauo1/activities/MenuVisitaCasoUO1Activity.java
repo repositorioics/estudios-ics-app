@@ -31,6 +31,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimient
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaMuestrasParticipanteCasoUO1Activity;
+import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaSintomasVisitaCasoUO1Activity;
 import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaVisitasCasoUO1Activity;
 import ni.org.ics.estudios.appmovil.influenzauo1.adapters.MenuVisitaCasoUO1Adapter;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -74,13 +75,13 @@ public class MenuVisitaCasoUO1Activity extends AbstractAsyncActivity {
             	Bundle arguments = new Bundle();
                 switch (position) {
                     case 0:
-                        /*arguments.putSerializable(Constants.VISITA, visitaCaso);
+                        arguments.putSerializable(Constants.VISITA, visitaCaso);
                         i = new Intent(getApplicationContext(),
-                                ListaSintomasParticipantesCasosActivity.class);
+                                ListaSintomasVisitaCasoUO1Activity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
-                        finish();*/
+                        finish();
                         break;
                     case 1:
                         arguments.putSerializable(Constants.VISITA, visitaCaso);

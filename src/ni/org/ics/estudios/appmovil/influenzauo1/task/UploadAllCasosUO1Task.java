@@ -6,6 +6,7 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.tasks.UploadAllTas
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.tasks.UploadTask;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.SintomasVisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
@@ -36,12 +37,14 @@ public class UploadAllCasosUO1Task extends UploadTask {
     private List<VisitaCasoUO1> mVisitasUO1 = new ArrayList<VisitaCasoUO1>();
     private List<VisitaVacunaUO1> mVisitasVacunasUO1 = new ArrayList<VisitaVacunaUO1>();
     private List<Muestra> mMuestras = new ArrayList<Muestra>();
+    private List<SintomasVisitaCasoUO1> mSintomas = new ArrayList<SintomasVisitaCasoUO1>();
 
     public static final String VISITAS_UO1 = "1";
     public static final String VISITAS_VAC_UO1 = "2";
     public static final String MUESTRAS_UO1 = "3";
+    public static final String SINTOMAS_UO1 = "4";
 
-    private static final String TOTAL_TASK_CASOS = "3";
+    private static final String TOTAL_TASK_CASOS = "4";
 
     @Override
     protected String doInBackground(String... values) {
@@ -56,6 +59,7 @@ public class UploadAllCasosUO1Task extends UploadTask {
             mMuestras = estudioAdapter.getMuestras(filtro, null);
             mVisitasUO1 = estudioAdapter.getVisitasCasosUO1(filtro, null);
             mVisitasVacunasUO1 = estudioAdapter.getVisitasVacunasUO1(filtro, null);
+            mSintomas = estudioAdapter.getSintomasVisitasCasosUO1(filtro, null);
 
             publishProgress("Datos completos!", "2", "2");
 
@@ -77,6 +81,13 @@ public class UploadAllCasosUO1Task extends UploadTask {
             error = cargarMuestras(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS_UO1);
+                return error;
+            }
+
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, SINTOMAS_UO1);
+            error = cargarSintomas(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINTOMAS_UO1);
                 return error;
             }
         } catch (Exception e1) {
@@ -120,6 +131,17 @@ public class UploadAllCasosUO1Task extends UploadTask {
                     muestra.setEstado(estado.charAt(0));
                     estudioAdapter.editarMuestras(muestra);
                     publishProgress("Actualizando muestras UO1 en base de datos local", Integer.valueOf(mMuestras.indexOf(muestra)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(SINTOMAS_UO1)){
+            c = mSintomas.size();
+            if(c>0){
+                for (SintomasVisitaCasoUO1 sintoma : mSintomas) {
+                    sintoma.setEstado(estado.charAt(0));
+                    estudioAdapter.editarSintomasVisitaCasoUO1(sintoma);
+                    publishProgress("Actualizando sintomas UO1 en base de datos local", Integer.valueOf(mSintomas.indexOf(sintoma)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
@@ -214,6 +236,41 @@ public class UploadAllCasosUO1Task extends UploadTask {
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<VisitaVacunaUO1[]> requestEntity =
                         new HttpEntity<VisitaVacunaUO1[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* Sintomas visitas casos ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarSintomas(String url, String username,
+                                    String password) throws Exception {
+        try {
+            if(mSintomas.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando sintomas UO1!", SINTOMAS_UO1, TOTAL_TASK_CASOS);
+                final String urlRequest = url + "/movil/sintomasUO1";
+                SintomasVisitaCasoUO1[] envio = mSintomas.toArray(new SintomasVisitaCasoUO1[mSintomas.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<SintomasVisitaCasoUO1[]> requestEntity =
+                        new HttpEntity<SintomasVisitaCasoUO1[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

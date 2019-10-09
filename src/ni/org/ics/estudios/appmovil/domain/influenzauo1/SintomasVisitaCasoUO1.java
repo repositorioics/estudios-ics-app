@@ -5,7 +5,7 @@ import ni.org.ics.estudios.appmovil.domain.BaseMetaData;
 import java.util.Date;
 
 /**
- * Created by William Aviles on 6/07/2017.
+ * Created by Miguel Salinas on 30/09/2019.
  * V1.0
  */
 public class SintomasVisitaCasoUO1 extends BaseMetaData {

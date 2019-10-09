@@ -9,6 +9,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.MuestraSuperficie;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.SintomasVisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
@@ -38,13 +39,15 @@ public class DownloadCasosUO1Task extends DownloadTask {
     private List<VisitaCasoUO1> mVisitasUO1 = null;
     private List<VisitaVacunaUO1> mVisitasVacunasUO1 = null;
     private List<Muestra> mMuestras = null;
+    private List<SintomasVisitaCasoUO1> mSintomas = null;
 
     public static final String PARTICIPANTE_UO1 = "1";
     public static final String VISITAS_UO1 = "2";
     public static final String VISITAS_VAC_UO1 = "3";
     public static final String MUESTRAS_UO1 = "4";
+    public static final String SINTOMAS_UO1 = "5";
 
-    private static final String TOTAL_TASK_CASOS = "4";
+    private static final String TOTAL_TASK_CASOS = "5";
 
 	private String error = null;
 	private String url = null;
@@ -77,6 +80,7 @@ public class DownloadCasosUO1Task extends DownloadTask {
             estudioAdapter.borrarMuestrasUO1();
             estudioAdapter.borrarVisitaCasoUO1();
             estudioAdapter.borrarVisitaVacunaUO1();
+            estudioAdapter.borrarSintomasVisitaCasoUO1();
             if (mParticipantesUO1 != null){
                 v = mParticipantesUO1.size();
                 ListIterator<ParticipanteCasoUO1> iter = mParticipantesUO1.listIterator();
@@ -116,6 +120,16 @@ public class DownloadCasosUO1Task extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mMuestras = null;
+            }
+            if (mSintomas != null){
+                v = mSintomas.size();
+                ListIterator<SintomasVisitaCasoUO1> iter = mSintomas.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearSintomasVisitaCasoUO1(iter.next());
+                    publishProgress("Insertando sintomas de casos UO1 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mSintomas = null;
             }
         } catch (Exception e) {
             // Regresa error al insertar
@@ -189,6 +203,17 @@ public class DownloadCasosUO1Task extends DownloadTask {
 
             // convert the array to a list and return it
             mMuestras = Arrays.asList(responseEntityMx.getBody());
+
+            // Descargando SINTOMAS UO1
+            urlRequest = url + "/movil/sintomasUO1";
+            publishProgress("Solicitando síntomas UO1",SINTOMAS_UO1,TOTAL_TASK_CASOS);
+
+            // Perform the HTTP GET request
+            ResponseEntity<SintomasVisitaCasoUO1[]> responseEntitySin = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    SintomasVisitaCasoUO1[].class);
+
+            // convert the array to a list and return it
+            mSintomas = Arrays.asList(responseEntitySin.getBody());
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

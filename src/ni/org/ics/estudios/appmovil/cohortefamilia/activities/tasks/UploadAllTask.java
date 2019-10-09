@@ -890,6 +890,22 @@ public class UploadAllTask extends UploadTask {
                 }
             }
         }
+
+        if(opcion.equalsIgnoreCase(MUESTRAS_SUP)){
+            c = mMuestrasSuperficie.size();
+            if(c>0){
+                for (MuestraSuperficie muestraSuperficie : mMuestrasSuperficie) {
+                    muestraSuperficie.setEstado(estado.charAt(0));
+                    try {
+                        estudioAdapter.editarMuestraSuperficie(muestraSuperficie);
+                        publishProgress("Actualizando mx superficie en base de datos local", Integer.valueOf(mMuestrasSuperficie.indexOf(muestraSuperficie)).toString(), Integer
+                                .valueOf(c).toString());
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
 	}
 	
 	

@@ -76,13 +76,27 @@
 	
 	<string name="contacts">Contacto miembros del hogar</string>
 	<string name="partContacto">Nombre miembro del hogar</string>
-	<string name="fechaContacto">Fecha del contacto</string>
-	<string name="tiempoInteraccion">Tiempo interacción</string>
-	<string name="tipoInteraccion">Tipo de interacción</string>
+	<string name="fechaContacto">Dia1: Fecha del contacto</string>
+	<string name="tiempoInteraccion">Dia1: Tiempo interacción</string>
+	<string name="tipoInteraccion">Dia1: Tipo de interacción</string>
 	<string name="tiempoInteraccionHint">¿Cuánto tiempo interactuó con esta persona hoy (minutos)?</string>
 	<string name="tipoInteraccionHint">¿Qué tipo de interacción tuvo con esta persona? (marque todos los que correspondan)</string>
-    <string name="contactExist">Contacto <xliff:g id="codigoCon">%1$s</xliff:g> ya fue agregado en esta fecha para el participante seleccionado</string>
+    <string name="contactExist">Contacto <xliff:g id="codigoCon">%1$s</xliff:g> ya fue agregado el <xliff:g id="var2">%2$s</xliff:g> para el participante seleccionado</string>
     <string name="selfContact">No puede seleccionarse al mismo participante como contacto</string>
+	<string name="fechaContacto2">Dia2: Fecha del contacto</string>
+	<string name="tiempoInteraccion2">Dia2: Tiempo interacción</string>
+	<string name="tipoInteraccion2">Dia2: Tipo de interacción</string>
+	<string name="fechaContacto3">Dia3: Fecha del contacto</string>
+	<string name="tiempoInteraccion3">Dia3: Tiempo interacción</string>
+	<string name="tipoInteraccion3">Dia3: Tipo de interacción</string>
+	<string name="fechaContacto4">Dia4: Fecha del contacto</string>
+	<string name="tiempoInteraccion4">Dia4: Tiempo interacción</string>
+	<string name="tipoInteraccion4">Dia4: Tipo de interacción</string>
+	<string name="fechaContacto5">Dia5: Fecha del contacto</string>
+	<string name="tiempoInteraccion5">Dia5: Tiempo interacción</string>
+	<string name="tipoInteraccion5">Dia5: Tipo de interacción</string>
+	<string name="cantidadDias">¿Cuántos dias de contacto va a ingresar?</string>
+	<string name="cantidadDiasHint">Se permiten de 1 a 5 días</string>
 	
 	<string name="samples_caso">Muestras de visita</string>
 	<string name="new_samp_bhc">BHC</string>

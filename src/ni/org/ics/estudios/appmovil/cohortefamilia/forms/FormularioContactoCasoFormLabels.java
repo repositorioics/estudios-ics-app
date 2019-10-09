@@ -16,7 +16,21 @@ public class FormularioContactoCasoFormLabels {
 	protected String tiempoInteraccionHint;
 	protected String tipoInteraccion;
 	protected String tipoInteraccionHint;
-	
+	protected String cantidadDias;
+	protected String cantidadDiasHint;
+	protected String fechaContacto2;
+	protected String tiempoInteraccion2;
+	protected String tipoInteraccion2;
+	protected String fechaContacto3;
+	protected String tiempoInteraccion3;
+	protected String tipoInteraccion3;
+	protected String fechaContacto4;
+	protected String tiempoInteraccion4;
+	protected String tipoInteraccion4;
+	protected String fechaContacto5;
+	protected String tiempoInteraccion5;
+	protected String tipoInteraccion5;
+
 	public FormularioContactoCasoFormLabels(){
 		Resources res = MyIcsApplication.getContext().getResources();
 		partContacto = res.getString(R.string.partContacto);
@@ -25,6 +39,20 @@ public class FormularioContactoCasoFormLabels {
 		tiempoInteraccionHint = res.getString(R.string.tiempoInteraccionHint);
 		tipoInteraccion = res.getString(R.string.tipoInteraccion);
 		tipoInteraccionHint = res.getString(R.string.tipoInteraccionHint);
+		cantidadDias = res.getString(R.string.cantidadDias);
+		cantidadDiasHint = res.getString(R.string.cantidadDiasHint);
+		fechaContacto2 = res.getString(R.string.fechaContacto2);
+		tiempoInteraccion2 = res.getString(R.string.tiempoInteraccion2);
+		tipoInteraccion2 = res.getString(R.string.tipoInteraccion2);
+		fechaContacto3 = res.getString(R.string.fechaContacto3);
+		tiempoInteraccion3 = res.getString(R.string.tiempoInteraccion3);
+		tipoInteraccion3 = res.getString(R.string.tipoInteraccion3);
+		fechaContacto4 = res.getString(R.string.fechaContacto4);
+		tiempoInteraccion4 = res.getString(R.string.tiempoInteraccion4);
+		tipoInteraccion4 = res.getString(R.string.tipoInteraccion4);
+		fechaContacto5 = res.getString(R.string.fechaContacto5);
+		tiempoInteraccion5 = res.getString(R.string.tiempoInteraccion5);
+		tipoInteraccion5 = res.getString(R.string.tipoInteraccion5);
 	}
 
 	public String getPartContacto() {
@@ -74,7 +102,60 @@ public class FormularioContactoCasoFormLabels {
 	public void setTipoInteraccionHint(String tipoInteraccionHint) {
 		this.tipoInteraccionHint = tipoInteraccionHint;
 	}
-	
-	
-	
+
+	public String getCantidadDias() {
+		return cantidadDias;
+	}
+
+	public String getCantidadDiasHint() {
+		return cantidadDiasHint;
+	}
+
+	public String getFechaContacto2() {
+		return fechaContacto2;
+	}
+
+	public String getTiempoInteraccion2() {
+		return tiempoInteraccion2;
+	}
+
+	public String getTipoInteraccion2() {
+		return tipoInteraccion2;
+	}
+
+	public String getFechaContacto3() {
+		return fechaContacto3;
+	}
+
+	public String getTiempoInteraccion3() {
+		return tiempoInteraccion3;
+	}
+
+	public String getTipoInteraccion3() {
+		return tipoInteraccion3;
+	}
+
+	public String getFechaContacto4() {
+		return fechaContacto4;
+	}
+
+	public String getTiempoInteraccion4() {
+		return tiempoInteraccion4;
+	}
+
+	public String getTipoInteraccion4() {
+		return tipoInteraccion4;
+	}
+
+	public String getFechaContacto5() {
+		return fechaContacto5;
+	}
+
+	public String getTiempoInteraccion5() {
+		return tiempoInteraccion5;
+	}
+
+	public String getTipoInteraccion5() {
+		return tipoInteraccion5;
+	}
 }

@@ -356,9 +356,9 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".influenzauo1.activities.list.ListaMuestrasVacunasUO1Activity"
                   android:screenOrientation="portrait" />
-        <activity android:name=".influenzauo1.activities.enterdata.NuevoSintomasVisitaCasoUO1Activity"
-                  android:screenOrientation="portrait" />
         <activity android:name=".influenzauo1.activities.list.ListaSintomasVisitaCasoUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".influenzauo1.activities.enterdata.NuevoSintomaVisitaCasoUO1Activity"
                   android:screenOrientation="portrait" />
     </application>
 

@@ -25,10 +25,11 @@ import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.SintomasVisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.influenzauo1.activities.MenuVisitaCasoUO1Activity;
-import ni.org.ics.estudios.appmovil.influenzauo1.activities.enterdata.NuevoSintomasVisitaCasoUO1Activity;
+import ni.org.ics.estudios.appmovil.influenzauo1.activities.enterdata.NuevoSintomaVisitaCasoUO1Activity;
 import ni.org.ics.estudios.appmovil.influenzauo1.adapters.SintomasVisitaCasoUO1Adapter;
 import ni.org.ics.estudios.appmovil.utils.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -185,11 +186,12 @@ public class ListaSintomasVisitaCasoUO1Activity extends AbstractAsyncListActivit
 		protected void onPostExecute(String resultado) {
 			// after the request completes, hide the progress indicator
 			//Actualizar el encabezado de esta view y enlazar el adapter
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_3) + "\n" + getString(R.string.sintomas) + "\n" +
+			textView.setText(getString(R.string.main_3) + "\n" + getString(R.string.sint) + "\n" +
                         getString(R.string.code) + ": " + participanteCasoUO1.getParticipante().getCodigo() + " - " +
-					(visitaCaso.getVisita().equalsIgnoreCase("I")?getString(R.string.visita_inicial):getString(R.string.visita_final)));
+					(visitaCaso.getVisita().equalsIgnoreCase("I")?getString(R.string.visita_inicial):getString(R.string.visita_final))+" - "+ formatter.format(visitaCaso.getFechaVisita()));
 
 			mSintomasAdapter = new SintomasVisitaCasoUO1Adapter(getApplication().getApplicationContext(), R.layout.complex_list_item, mSintomas);
 			setListAdapter(mSintomasAdapter);
@@ -214,7 +216,7 @@ public class ListaSintomasVisitaCasoUO1Activity extends AbstractAsyncListActivit
 				Bundle arguments = new Bundle();
 				if (visitaCaso != null) arguments.putSerializable(Constants.VISITA, visitaCaso);
 				Intent i = new Intent(getApplicationContext(),
-								NuevoSintomasVisitaCasoUO1Activity.class);
+								NuevoSintomaVisitaCasoUO1Activity.class);
 				i.putExtras(arguments);
 		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);

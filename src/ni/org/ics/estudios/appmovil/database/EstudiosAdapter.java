@@ -3062,6 +3062,12 @@ public class EstudiosAdapter {
 		c = crearCursor(InfluenzaUO1DBConstants.UO1_VISITAS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
+		c = crearCursor(InfluenzaUO1DBConstants.UO1_VISITAS_VACUNAS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+		c = crearCursor(InfluenzaUO1DBConstants.UO1_SINTOMAS_VISITA_CASO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
 		return false;
 	}
 

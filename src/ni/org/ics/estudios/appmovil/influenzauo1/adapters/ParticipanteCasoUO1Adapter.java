@@ -18,6 +18,7 @@ import java.util.List;
 public class ParticipanteCasoUO1Adapter extends ArrayAdapter<ParticipanteCasoUO1> {
 
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	private List<MessageResource> catalogos;
 	public ParticipanteCasoUO1Adapter(Context context, int textViewResourceId,
                                       List<ParticipanteCasoUO1> items, List<MessageResource> catalogos) {
@@ -74,8 +75,16 @@ public class ParticipanteCasoUO1Adapter extends ArrayAdapter<ParticipanteCasoUO1
 			textView = (TextView) v.findViewById(R.id.infoc_text);
 			textView.setTextColor(Color.GRAY);
 			if (textView != null) {
-				if(p.getPositivoPor()!=null){
-					textView.setText(this.getContext().getString(R.string.positivoPorUO1) +": "+ this.getDescripcionCatalogo(p.getPositivoPor(), "UO1_CAT_POSITIVO_POR"));
+
+				if(p.getPositivoPor()!=null && p.getFechaIngreso()!=null){
+					textView.setText(this.getContext().getString(R.string.positivoPorUO1) +": "+ this.getDescripcionCatalogo(p.getPositivoPor(), "UO1_CAT_POSITIVO_POR")+ " - " + formatter.format(p.getFechaIngreso()));
+				}else {
+					if (p.getPositivoPor() != null) {
+						textView.setText(this.getContext().getString(R.string.positivoPorUO1) + ": " + this.getDescripcionCatalogo(p.getPositivoPor(), "UO1_CAT_POSITIVO_POR"));
+					}
+					if (p.getFechaIngreso() != null) {
+						textView.setText(mDateFormat.format(p.getFechaIngreso()));
+					}
 				}
 			}
 		}

@@ -104,7 +104,7 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
         mWizardModel.registerListener(this);
         Page pagePart = mWizardModel.findByKey(labels.getPartContacto());
         pagePart.setCasaCHF(visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF());
-        NewDatePage pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaContacto());
+        //poner rango de fecha de contacto permitidas
         DateMidnight minDate; //= new DateMidnight(visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
         if (visitaCaso.getCodigoParticipanteCaso().getFechaEnfermedad()!=null){
             Date fechaInicio = visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio();
@@ -119,7 +119,17 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
         }
         //pageFecha.setmLaterThan(minDate);
         DateMidnight maxDate = new DateMidnight(visitaCaso.getFechaVisita());
+        NewDatePage pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaContacto());
         pageFecha.setRangeValidation(true, minDate, maxDate);
+        pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaContacto2());
+        pageFecha.setRangeValidation(true, minDate, maxDate);
+        pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaContacto3());
+        pageFecha.setRangeValidation(true, minDate, maxDate);
+        pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaContacto4());
+        pageFecha.setRangeValidation(true, minDate, maxDate);
+        pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaContacto5());
+        pageFecha.setRangeValidation(true, minDate, maxDate);
+
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
@@ -325,7 +335,7 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
             if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")) {
             	NumberPage np = (NumberPage) page;
             	String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-        		if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Integer.valueOf(valor) || np.getmLowerOrEqualsThan() < Integer.valueOf(valor)))
+        		if(!isInteger(valor) || (np.ismValRange() && (np.getmGreaterOrEqualsThan() > Integer.valueOf(valor) || np.getmLowerOrEqualsThan() < Integer.valueOf(valor)))
         				|| (np.ismValPattern() && !valor.matches(np.getmPattern()))){
         			cutOffPage = i;
         			break;
@@ -350,8 +360,16 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
 
         return false;
     }
-    
-    
+
+    private static boolean isInteger(String cadena) {
+        try {
+            Integer.parseInt(cadena);
+            return  true;
+        } catch (NumberFormatException excepcion) {
+            return  false;
+        }
+    }
+
     public void updateConstrains(){
         
     }
@@ -360,16 +378,63 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
     	try{
     		boolean visible = false;
             if (page.getTitle().equals(labels.getPartContacto())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(visitaCaso.getCodigoParticipanteCaso().getParticipante().getParticipante().getCodigo().toString());
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(visitaCaso.getCodigoParticipanteCaso().getParticipante().getParticipante().getCodigo().toString());
                 if (visible) {
                     Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.selfContact), Toast.LENGTH_LONG);
                     toast.show();
                     page.resetData(new Bundle());
                 }
             }
+            if (page.getTitle().equals(labels.getCantidadDias())) {
+                String valor = page.getData().getString(TextPage.SIMPLE_DATA_KEY);
+                if (valor!=null && !valor.isEmpty()){
+                    int dias = Integer.valueOf(valor);
+                    changeStatus(mWizardModel.findByKey(labels.getFechaContacto2()), dias>1);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTiempoInteraccion2()), dias>1);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getFechaContacto3()), dias>2);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTiempoInteraccion3()), dias>2);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getFechaContacto4()), dias>3);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTiempoInteraccion4()), dias>3);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getFechaContacto5()), dias>4);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTiempoInteraccion5()), dias>4);
+                    notificarCambios = false;
+                }
+                onPageTreeChanged();
+            }
     		if (page.getTitle().equals(labels.getTiempoInteraccion())) {
-                visible = !page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("No tuvo contacto");
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && !page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("No tuvo contacto");
                 changeStatus(mWizardModel.findByKey(labels.getTipoInteraccion()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getTiempoInteraccion2())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && !page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("No tuvo contacto");
+                changeStatus(mWizardModel.findByKey(labels.getTipoInteraccion2()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getTiempoInteraccion3())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && !page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("No tuvo contacto");
+                changeStatus(mWizardModel.findByKey(labels.getTipoInteraccion3()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getTiempoInteraccion4())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && !page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("No tuvo contacto");
+                changeStatus(mWizardModel.findByKey(labels.getTipoInteraccion4()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getTiempoInteraccion5())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && !page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("No tuvo contacto");
+                changeStatus(mWizardModel.findByKey(labels.getTipoInteraccion5()), visible);
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -427,75 +492,33 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		estudiosAdapter.open();
 		
-		//Obtener datos del bundle para la habitacion
-		String id = infoMovil.getId();
-		
+		//Obtener datos del bundle para los contactos
 		String partContacto = datos.getString(this.getString(R.string.partContacto));
+		String cantidadDias = datos.getString(this.getString(R.string.cantidadDias));
 		String fechaContacto = datos.getString(this.getString(R.string.fechaContacto));
 		String tiempoInteraccion = datos.getString(this.getString(R.string.tiempoInteraccion));
 		String tipoInteraccion = datos.getString(this.getString(R.string.tipoInteraccion));
+        String fechaContacto2 = datos.getString(this.getString(R.string.fechaContacto2));
+        String tiempoInteraccion2 = datos.getString(this.getString(R.string.tiempoInteraccion2));
+        String tipoInteraccion2 = datos.getString(this.getString(R.string.tipoInteraccion2));
+        String fechaContacto3 = datos.getString(this.getString(R.string.fechaContacto3));
+        String tiempoInteraccion3 = datos.getString(this.getString(R.string.tiempoInteraccion3));
+        String tipoInteraccion3 = datos.getString(this.getString(R.string.tipoInteraccion3));
+        String fechaContacto4 = datos.getString(this.getString(R.string.fechaContacto4));
+        String tiempoInteraccion4 = datos.getString(this.getString(R.string.tiempoInteraccion4));
+        String tipoInteraccion4 = datos.getString(this.getString(R.string.tipoInteraccion4));
+        String fechaContacto5 = datos.getString(this.getString(R.string.fechaContacto5));
+        String tiempoInteraccion5 = datos.getString(this.getString(R.string.tiempoInteraccion5));
+        String tipoInteraccion5 = datos.getString(this.getString(R.string.tipoInteraccion5));
 
         if (tieneValor(partContacto) && tieneValor(fechaContacto)){
-            Date fContacto = new Date();
-            if (tieneValor(fechaContacto)) {
-                DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                    fContacto = mDateFormat.parse(fechaContacto);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-            List<FormularioContactoCaso> contactoCasos = estudiosAdapter.getFormularioContactoCasos(
-                    CasosDBConstants.codigoVisitaCaso + "='" + visitaCaso.getCodigoCasoVisita()
-                    + "' and "+ CasosDBConstants.partContacto + "="+Integer.parseInt(partContacto)
-                    + " and "+ CasosDBConstants.fechaContacto + "=" +fContacto.getTime() , null);
-            if (contactoCasos != null && contactoCasos.size()>0){
-                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.contactExist, partContacto),Toast.LENGTH_LONG);
-                toast.show();
-            }else{
-                //Crea un nuevo Contacto
-                FormularioContactoCaso fcc = new FormularioContactoCaso();
-                fcc.setCodigoCasoContacto(id);
-                fcc.setCodigoVisitaCaso(visitaCaso);
-
-                Integer codigo = 0;
-                if (tieneValor(partContacto)) {
-                    codigo = Integer.parseInt(partContacto);
-                    ParticipanteCohorteFamilia part = estudiosAdapter.getParticipanteCohorteFamilia(MainDBConstants.participante +" = "+ codigo , null);
-                    fcc.setPartContacto(part);
-                }
-                fcc.setFechaContacto(fContacto);
-                if (tieneValor(tiempoInteraccion)) {
-                    MessageResource catTiempo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tiempoInteraccion + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIEMPO_INTERACCION'", null);
-                    fcc.setTiempoInteraccion(catTiempo.getCatKey());
-                }
-
-                if (tieneValor(tipoInteraccion)) {
-                    String catKeys = "";
-                    tipoInteraccion = tipoInteraccion.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
-                    List<MessageResource> mCatTipo = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + tipoInteraccion + "') and "
-                            + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_INTERACCION'", null);
-                    for(MessageResource ms : mCatTipo) {
-                        catKeys += ms.getCatKey() + ",";
-                    }
-                    if (!catKeys.isEmpty())
-                        catKeys = catKeys.substring(0, catKeys.length() - 1);
-                    fcc.setTipoInteraccion(catKeys);
-                }
-
-                fcc.setRecordDate(new Date());
-                fcc.setRecordUser(username);
-                fcc.setDeviceid(infoMovil.getDeviceId());
-                fcc.setEstado('0');
-                fcc.setPasive('0');
-
-                //Guarda el contacto
-                try {
-                    estudiosAdapter.crearFormularioContactoCaso(fcc);
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+            if (ingresoValido(partContacto, fechaContacto, fechaContacto2, fechaContacto3, fechaContacto4, fechaContacto5)){
+                crearContacto(partContacto, fechaContacto, tiempoInteraccion, tipoInteraccion);
+                int dias = Integer.valueOf(cantidadDias);
+                if (dias>1) crearContacto(partContacto, fechaContacto2, tiempoInteraccion2, tipoInteraccion2);
+                if (dias>2) crearContacto(partContacto, fechaContacto3, tiempoInteraccion3, tipoInteraccion3);
+                if (dias>3) crearContacto(partContacto, fechaContacto4, tiempoInteraccion4, tipoInteraccion4);
+                if (dias>4) crearContacto(partContacto, fechaContacto5, tiempoInteraccion5, tipoInteraccion5);
                 estudiosAdapter.close();
                 Bundle arguments = new Bundle();
                 Intent i;
@@ -510,11 +533,152 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
                 finish();
             }
         }
-		
-
-		
     }
 
+    private void crearContacto(String partContacto, String fechaContacto, String tiempoInteraccion, String tipoInteraccion){
+        String id = infoMovil.getId();
+        //Crea un nuevo Contacto
+        FormularioContactoCaso fcc = new FormularioContactoCaso();
+        fcc.setCodigoCasoContacto(id);
+        fcc.setCodigoVisitaCaso(visitaCaso);
+
+        Integer codigo = 0;
+        Date fContacto = new Date();
+        if (tieneValor(fechaContacto)) {
+            DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fContacto = mDateFormat.parse(fechaContacto);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        if (tieneValor(partContacto)) {
+            codigo = Integer.parseInt(partContacto);
+            ParticipanteCohorteFamilia part = estudiosAdapter.getParticipanteCohorteFamilia(MainDBConstants.participante +" = "+ codigo , null);
+            fcc.setPartContacto(part);
+        }
+        fcc.setFechaContacto(fContacto);
+        if (tieneValor(tiempoInteraccion)) {
+            MessageResource catTiempo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tiempoInteraccion + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIEMPO_INTERACCION'", null);
+            fcc.setTiempoInteraccion(catTiempo.getCatKey());
+        }
+
+        if (tieneValor(tipoInteraccion)) {
+            String catKeys = "";
+            tipoInteraccion = tipoInteraccion.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
+            List<MessageResource> mCatTipo = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + tipoInteraccion + "') and "
+                    + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_INTERACCION'", null);
+            for(MessageResource ms : mCatTipo) {
+                catKeys += ms.getCatKey() + ",";
+            }
+            if (!catKeys.isEmpty())
+                catKeys = catKeys.substring(0, catKeys.length() - 1);
+            fcc.setTipoInteraccion(catKeys);
+        }
+
+        fcc.setRecordDate(new Date());
+        fcc.setRecordUser(username);
+        fcc.setDeviceid(infoMovil.getDeviceId());
+        fcc.setEstado('0');
+        fcc.setPasive('0');
+
+        //Guarda el contacto
+        try {
+            estudiosAdapter.crearFormularioContactoCaso(fcc);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    private boolean ingresoValido(String partContacto, String fechaContacto, String fechaContacto2, String fechaContacto3, String fechaContacto4, String fechaContacto5){
+        Date fContacto = new Date();
+        if (tieneValor(fechaContacto)) {
+            DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fContacto = mDateFormat.parse(fechaContacto);
+                List<FormularioContactoCaso> contactoCasos = estudiosAdapter.getFormularioContactoCasos(
+                        CasosDBConstants.codigoVisitaCaso + "='" + visitaCaso.getCodigoCasoVisita()
+                                + "' and "+ CasosDBConstants.partContacto + "="+Integer.parseInt(partContacto)
+                                + " and "+ CasosDBConstants.fechaContacto + "=" +fContacto.getTime() , null);
+                if (contactoCasos != null && contactoCasos.size()>0){
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.contactExist, partContacto, fechaContacto),Toast.LENGTH_LONG);
+                    toast.show();
+                    return false;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        if (tieneValor(fechaContacto2)) {
+            DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fContacto = mDateFormat.parse(fechaContacto2);
+                List<FormularioContactoCaso> contactoCasos = estudiosAdapter.getFormularioContactoCasos(
+                        CasosDBConstants.codigoVisitaCaso + "='" + visitaCaso.getCodigoCasoVisita()
+                                + "' and "+ CasosDBConstants.partContacto + "="+Integer.parseInt(partContacto)
+                                + " and "+ CasosDBConstants.fechaContacto + "=" +fContacto.getTime() , null);
+                if (contactoCasos != null && contactoCasos.size()>0){
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.contactExist, partContacto, fechaContacto2),Toast.LENGTH_LONG);
+                    toast.show();
+                    return false;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        if (tieneValor(fechaContacto3)) {
+            DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fContacto = mDateFormat.parse(fechaContacto3);
+                List<FormularioContactoCaso> contactoCasos = estudiosAdapter.getFormularioContactoCasos(
+                        CasosDBConstants.codigoVisitaCaso + "='" + visitaCaso.getCodigoCasoVisita()
+                                + "' and "+ CasosDBConstants.partContacto + "="+Integer.parseInt(partContacto)
+                                + " and "+ CasosDBConstants.fechaContacto + "=" +fContacto.getTime() , null);
+                if (contactoCasos != null && contactoCasos.size()>0){
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.contactExist, partContacto, fechaContacto3),Toast.LENGTH_LONG);
+                    toast.show();
+                    return false;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        if (tieneValor(fechaContacto4)) {
+            DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fContacto = mDateFormat.parse(fechaContacto4);
+                List<FormularioContactoCaso> contactoCasos = estudiosAdapter.getFormularioContactoCasos(
+                        CasosDBConstants.codigoVisitaCaso + "='" + visitaCaso.getCodigoCasoVisita()
+                                + "' and "+ CasosDBConstants.partContacto + "="+Integer.parseInt(partContacto)
+                                + " and "+ CasosDBConstants.fechaContacto + "=" +fContacto.getTime() , null);
+                if (contactoCasos != null && contactoCasos.size()>0){
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.contactExist, partContacto, fechaContacto4),Toast.LENGTH_LONG);
+                    toast.show();
+                    return false;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        if (tieneValor(fechaContacto5)) {
+            DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fContacto = mDateFormat.parse(fechaContacto5);
+                List<FormularioContactoCaso> contactoCasos = estudiosAdapter.getFormularioContactoCasos(
+                        CasosDBConstants.codigoVisitaCaso + "='" + visitaCaso.getCodigoCasoVisita()
+                                + "' and "+ CasosDBConstants.partContacto + "="+Integer.parseInt(partContacto)
+                                + " and "+ CasosDBConstants.fechaContacto + "=" +fContacto.getTime() , null);
+                if (contactoCasos != null && contactoCasos.size()>0){
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.contactExist, partContacto, fechaContacto5),Toast.LENGTH_LONG);
+                    toast.show();
+                    return false;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
         private int mCutOffPage;

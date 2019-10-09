@@ -113,4 +113,28 @@ public class VisitaCasoUO1 extends BaseMetaData {
     public void setLugar(String lugar) {
         this.lugar = lugar;
     }
+
+    @Override
+    public String toString() {
+        return codigoCasoVisita;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof VisitaCasoUO1)) return false;
+
+        VisitaCasoUO1 that = (VisitaCasoUO1) o;
+
+        if (!codigoCasoVisita.equals(that.getCodigoCasoVisita())) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = codigoCasoVisita.hashCode();
+        result = 31 * result + codigoCasoVisita.hashCode();
+        return result;
+    }
 }

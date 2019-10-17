@@ -18,8 +18,10 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.dto.DatosCHF;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
@@ -30,10 +32,7 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.ParticipanteAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.DateUtil;
-import ni.org.ics.estudios.appmovil.utils.InfluenzaUO1DBConstants;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 import java.util.ArrayList;
@@ -249,6 +248,18 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 
 					if (mParticipante!= null && mParticipante.getCodigo() != null){
 						codigo = mParticipante.getCodigo();
+						//procesos CHF
+						if (mParticipante.getProcesos().getEstudio().toLowerCase().contains("ch familia")){
+							ParticipanteCohorteFamiliaCaso existePartCaso = estudiosAdapter.getParticipanteCohorteFamiliaCaso(CasosDBConstants.participante+"="+mParticipante.getCodigo(),null);
+							DatosCHF datosCHF = new DatosCHF();
+							//existe caso seguimiento activo
+							if (existePartCaso!=null && existePartCaso.getCodigoCaso()!=null && existePartCaso.getCodigoCaso().getInactiva().equalsIgnoreCase("0")){
+								datosCHF.setEnMonitoreoIntensivo(true);
+							}else{
+								datosCHF.setEnMonitoreoIntensivo(false);
+							}
+							mParticipante.setDatosCHF(datosCHF);
+						}
 						if (mParticipante.getProcesos().getEstudio().contains("UO1")) {
 							ParticipanteCasoUO1 casoUO1 = estudiosAdapter.getParticipanteCasoUO1(InfluenzaUO1DBConstants.participante + "=" + mParticipante.getCodigo(), null);
 							DatosUO1 datosUO1 = new DatosUO1();
@@ -474,6 +485,18 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
                 mParticipantes = estudiosAdapter.getParticipantes(filtro, MainDBConstants.codigo);
                 int indice =0;
                 for(Participante p : mParticipantes){
+					//procesos CHF
+					if (p.getProcesos().getEstudio().toLowerCase().contains("ch familia")){
+						ParticipanteCohorteFamiliaCaso existePartCaso = estudiosAdapter.getParticipanteCohorteFamiliaCaso(CasosDBConstants.participante+"="+p.getCodigo(),null);
+						DatosCHF datosCHF = new DatosCHF();
+						//existe caso seguimiento activo
+						if (existePartCaso!=null && existePartCaso.getCodigoCaso()!=null && existePartCaso.getCodigoCaso().getInactiva().equalsIgnoreCase("0")){
+							datosCHF.setEnMonitoreoIntensivo(true);
+						}else{
+							datosCHF.setEnMonitoreoIntensivo(false);
+						}
+						mParticipantes.get(indice).setDatosCHF(datosCHF);
+					}
                 	if (p.getProcesos().getEstudio().contains("UO1")) {
 						ParticipanteCasoUO1 casoUO1 = estudiosAdapter.getParticipanteCasoUO1(InfluenzaUO1DBConstants.participante + "=" + p.getCodigo(), null);
 						DatosUO1 datosUO1 = new DatosUO1();

@@ -81,7 +81,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                     labelHeader = labelHeader + "<small><font color='red'>Participante retirado</font></small><br />";
                 }
 				if (procesos.getPosZika().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante positivo a ZIKA</b></font><br />";
-				if (procesos.getMi().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante en monitoreo intensivo CHF</b></font><br />";
+				if ((participante.getDatosCHF()!=null && participante.getDatosCHF().isEnMonitoreoIntensivo()) || procesos.getMi().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante en monitoreo intensivo CHF</b></font><br />";
                 if (procesos.getPosDengue()!=null) labelHeader = labelHeader + "<font color='red'>"+procesos.getPosDengue()+"</font><br />";
 				//if (participante.getCand().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante candidato a CHF</b></font><br />";
                 if (participante.getDatosUO1()!=null &&  participante.getDatosUO1().isConvalesciente() && participante.getDatosUO1().getDiasConvalesciente() < 30){

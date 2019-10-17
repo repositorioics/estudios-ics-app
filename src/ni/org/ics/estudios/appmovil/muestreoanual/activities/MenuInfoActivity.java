@@ -34,11 +34,13 @@ import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObsequioActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoRecon18AniosActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.dto.DatosCHF;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.DatosCoordenadas;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
@@ -1025,6 +1027,18 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         mDatosCoordenadas = (ArrayList)estudiosAdapter.getDatosCoordenadas(MainDBConstants.participante + "=" + mParticipante.getCodigo(), null);
         mEncuestasParticipantesSa = (ArrayList)estudiosAdapter.getEncuestasParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo() , null);
         catRelacionFamiliar = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", null);
+        //procesos CHF
+        if (mParticipante.getProcesos().getEstudio().toLowerCase().contains("ch familia")){
+            ParticipanteCohorteFamiliaCaso existePartCaso = estudiosAdapter.getParticipanteCohorteFamiliaCaso(CasosDBConstants.participante+"="+mParticipante.getCodigo(),null);
+            DatosCHF datosCHF = new DatosCHF();
+            //existe caso seguimiento activo
+            if (existePartCaso!=null && existePartCaso.getCodigoCaso()!=null && existePartCaso.getCodigoCaso().getInactiva().equalsIgnoreCase("0")){
+                datosCHF.setEnMonitoreoIntensivo(true);
+            }else{
+                datosCHF.setEnMonitoreoIntensivo(false);
+            }
+            mParticipante.setDatosCHF(datosCHF);
+        }
         //procesos UO1
         if (mParticipante.getProcesos().getEstudio().contains("UO1")) {
             ParticipanteCasoUO1 casoUO1 = estudiosAdapter.getParticipanteCasoUO1(InfluenzaUO1DBConstants.participante + "=" + mParticipante.getCodigo(), null);
@@ -1080,6 +1094,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.retired_error) + "</font></small><br />";
             }
             if (mParticipante.getProcesos().getPosZika().matches("Si")) labelHeader = labelHeader + "<small><font color='red'>Participante positivo a ZIKA</font></small><br />";
+            if ((mParticipante.getDatosCHF()!=null && mParticipante.getDatosCHF().isEnMonitoreoIntensivo()) || mParticipante.getProcesos().getMi().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante en monitoreo intensivo CHF</b></font><br />";
             if (mParticipante.getProcesos().getPosDengue()!=null) labelHeader = labelHeader + "<small><font color='red'>"+mParticipante.getProcesos().getPosDengue()+"</font></small><br />";
             if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isConvalesciente() && mParticipante.getDatosUO1().getDiasConvalesciente() < 30){
                 labelHeader = labelHeader + "<small><font color='red'>Convalesciente UO1 con menos de 30 días. No tomar muestra</font></small><br />";
@@ -1087,6 +1102,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isVacunado() && mParticipante.getDatosUO1().getDiasVacuna() < 30){
                 labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font></small><br />";
             }
+
             if (mParticipante.getProcesos().getConsFlu().matches("Si")|| mParticipante.getProcesos().getPesoTalla().matches("Si")
                     || mParticipante.getProcesos().getEnCasa().matches("Si")||mParticipante.getProcesos().getEncPart().matches("Si")
                     || mParticipante.getProcesos().getEnCasaChf().matches("Si")|| mParticipante.getProcesos().getEnCasaSa().matches("Si")||mParticipante.getProcesos().getEncPartSa().matches("Si")

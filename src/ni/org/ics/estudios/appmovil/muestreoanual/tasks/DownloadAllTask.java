@@ -40,16 +40,12 @@ public class DownloadAllTask extends DownloadTask {
     private List<PesoyTalla> mPyTs = null;
     private List<Muestra> mMuestras = null;
     private List<Obsequio> mObsequios = null;
-    private List<Vacuna> mVacunas = null;
     private List<NewVacuna> mNewVacunas = null;
     private List<DatosPartoBB> mDatosPartoBBs = null;
     private List<VisitaTerreno> mVisitasTerreno = null;
     private List<DatosVisitaTerreno> mDatosVisitasTerreno = null;
-    private List<ReConsentimientoDen> mReconsentimientos = null;
     private List<ReConsentimientoDen2015> mReconsentimientos2015 = null;
-    private List<ConsentimientoZika> mConsentimientosZika = null;
     private List<ReConsentimientoFlu2015> mReconsentimientosFlu2015 = null;
-    private List<CodigosCasas> mCodigosCasas = null;
     private List<RecepcionBHC> mRecepcionBHCs = null;
     private List<RecepcionSero> mRecepcionSeros = null;
     private List<Pinchazo> mPinchazos = null;
@@ -414,34 +410,6 @@ public class DownloadAllTask extends DownloadTask {
                 }
 
                 try {
-                    error = descargarVacunas();
-                    if (error != null) {
-                        return error;
-                    }
-                } catch (Exception e) {
-                    // Regresa error al descargar
-                    e.printStackTrace();
-                    return e.getLocalizedMessage();
-                }
-
-                if (mVacunas != null){
-                    // open db and clean entries
-                    //ca.open();
-                    ca.borrarTodasVacunas();
-                    // download and insert
-                    try {
-                        addVacunas(mVacunas);
-                    } catch (Exception e) {
-                        // Regresa error al insertar
-                        e.printStackTrace();
-                        return e.getLocalizedMessage();
-                    }
-                    // close db and stream
-                    //ca.close();
-                }
-
-
-                try {
                     error = descargarNewVacunas();
                     if (error!=null){
                         return error;
@@ -550,35 +518,6 @@ public class DownloadAllTask extends DownloadTask {
                     //ca.close();
                 }
 
-
-                try {
-                    error = descargarReconsentimientos();
-                    if (error != null) {
-                        return error;
-                    }
-                } catch (Exception e) {
-                    // Regresa error al descargar
-                    e.printStackTrace();
-                    return e.getLocalizedMessage();
-                }
-
-                if (mReconsentimientos != null) {
-                    // open db and clean entries
-                    //ca.open();
-                    ca.borrarTodosReConsentimientos();
-                    // download and insert
-                    try {
-                        addReconsentimientos(mReconsentimientos);
-                    } catch (Exception e) {
-                        // Regresa error al insertar
-                        e.printStackTrace();
-                        return e.getLocalizedMessage();
-                    }
-                    // close db and stream
-                    //ca.close();
-                }
-
-
                 try {
                     error = descargarReconsentimientos2015();
                     if (error != null) {
@@ -607,33 +546,6 @@ public class DownloadAllTask extends DownloadTask {
                 }
 
                 try {
-                    error = descargarConsentimientosZika();
-                    if (error != null) {
-                        return error;
-                    }
-                } catch (Exception e) {
-                    // Regresa error al descargar
-                    e.printStackTrace();
-                    return e.getLocalizedMessage();
-                }
-
-                if (mConsentimientosZika != null) {
-                    // open db and clean entries
-                    //ca.open();
-                    ca.borrarTodosConsentimientoZika();
-                    // download and insert
-                    try {
-                        addConsentimientoZika(mConsentimientosZika);
-                    } catch (Exception e) {
-                        // Regresa error al insertar
-                        e.printStackTrace();
-                        return e.getLocalizedMessage();
-                    }
-                    // close db and stream
-                    //ca.close();
-                }
-
-                try {
                     error = descargarReconsentimientosFlu2015();
                     if (error != null) {
                         return error;
@@ -651,33 +563,6 @@ public class DownloadAllTask extends DownloadTask {
                     // download and insert
                     try {
                         addReconsentimientosFlu2015(mReconsentimientosFlu2015);
-                    } catch (Exception e) {
-                        // Regresa error al insertar
-                        e.printStackTrace();
-                        return e.getLocalizedMessage();
-                    }
-                    // close db and stream
-                    //ca.close();
-                }
-
-                try {
-                    error = descargarCodigosCasas();
-                    if (error != null) {
-                        return error;
-                    }
-                } catch (Exception e) {
-                    // Regresa error al descargar
-                    e.printStackTrace();
-                    return e.getLocalizedMessage();
-                }
-
-                if (mCodigosCasas != null) {
-                    // open db and clean entries
-                    //ca.open();
-                    ca.borrarCodigosCasas();
-                    // download and insert
-                    try {
-                        addCodigosCasas(mCodigosCasas);
                     } catch (Exception e) {
                         // Regresa error al insertar
                         e.printStackTrace();
@@ -864,14 +749,10 @@ public class DownloadAllTask extends DownloadTask {
                 ca.borrarTempRojoBhc();
                 ca.borrarTodasEncuestaSatisfaccion();
                 ca.borrarTodasMuestras();
-                ca.borrarTodasVacunas();
                 ca.borrarTodasVisitaTerrenos();
                 ca.borrarTodosOB();
-                ca.borrarTodosReConsentimientos();
-                ca.borrarTodosConsentimientoChik();
                 ca.borrarTodosReConsentimientosFlu2015();
                 ca.borrarTodosReConsentimientos2015();
-                ca.borrarTodosConsentimientoZika();
                 //ca.close();
 
             }
@@ -1315,21 +1196,6 @@ public class DownloadAllTask extends DownloadTask {
 
     }
 
-    private void addVacunas(List<Vacuna> vacunas) throws Exception {
-
-        int v = vacunas.size();
-
-        ListIterator<Vacuna> iter = vacunas.listIterator();
-
-        while (iter.hasNext()){
-            ca.crearVacuna(iter.next());
-            publishProgress("Vacunas", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                    .valueOf(v).toString());
-        }
-
-    }
-
-
     private void addNewVacunas(List<NewVacuna> vacunas) throws Exception {
 
         int v = vacunas.size();
@@ -1386,22 +1252,6 @@ public class DownloadAllTask extends DownloadTask {
 
     }
 
-
-    private void addReconsentimientos(List<ReConsentimientoDen> recons) throws Exception {
-
-        int v = recons.size();
-
-        ListIterator<ReConsentimientoDen> iter = recons.listIterator();
-
-        while (iter.hasNext()){
-            ca.crearReConsentimiento(iter.next());
-            publishProgress("Reconsentimientos", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                    .valueOf(v).toString());
-        }
-
-    }
-
-
     private void addReconsentimientos2015(List<ReConsentimientoDen2015> recons) throws Exception {
 
         int v = recons.size();
@@ -1416,21 +1266,6 @@ public class DownloadAllTask extends DownloadTask {
 
     }
 
-    private void addConsentimientoZika(List<ConsentimientoZika> cons) throws Exception {
-
-        int v = cons.size();
-
-        ListIterator<ConsentimientoZika> iter = cons.listIterator();
-
-        while (iter.hasNext()){
-            ca.crearConsentimientoZika(iter.next());
-            publishProgress("ConsentimientoZika", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                    .valueOf(v).toString());
-        }
-
-    }
-
-
     private void addReconsentimientosFlu2015(List<ReConsentimientoFlu2015> recons) throws Exception {
 
         int v = recons.size();
@@ -1440,20 +1275,6 @@ public class DownloadAllTask extends DownloadTask {
         while (iter.hasNext()){
             ca.crearReConsentimientoFlu2015(iter.next());
             publishProgress("ReconsentimientosFlu2015", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                    .valueOf(v).toString());
-        }
-
-    }
-
-    private void addCodigosCasas(List<CodigosCasas> cca) throws Exception {
-
-        int v = cca.size();
-
-        ListIterator<CodigosCasas> iter = cca.listIterator();
-
-        while (iter.hasNext()){
-            ca.crearCodigosCasas(iter.next());
-            publishProgress("CodigosCasas", Integer.valueOf(iter.nextIndex()).toString(), Integer
                     .valueOf(v).toString());
         }
 
@@ -1758,41 +1579,6 @@ public class DownloadAllTask extends DownloadTask {
         }
     }
 
-    // url, username, password
-    protected String descargarVacunas() throws Exception {
-        try {
-            // The URL for making the GET request
-            final String urlRequest = url + "/movil/vacunas";
-
-            // Set the Accept header for "application/json"
-            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-            HttpHeaders requestHeaders = new HttpHeaders();
-            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
-            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-            requestHeaders.setAccept(acceptableMediaTypes);
-            requestHeaders.setAuthorization(authHeader);
-
-            // Populate the headers in an HttpEntity object to use for the request
-            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
-            // Create a new RestTemplate instance
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-
-            // Perform the HTTP GET request
-            ResponseEntity<Vacuna[]> responseEntity = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    Vacuna[].class);
-
-            // convert the array to a list and return it
-            mVacunas = Arrays.asList(responseEntity.getBody());
-            return null;
-
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            return e.getLocalizedMessage();
-        }
-    }
-
 
     // url, username, password
     protected String descargarNewVacunas() throws Exception {
@@ -1939,43 +1725,6 @@ public class DownloadAllTask extends DownloadTask {
         }
     }
 
-
-    // url, username, password
-    protected String descargarReconsentimientos() throws Exception {
-        try {
-            // The URL for making the GET request
-            final String urlRequest = url + "/movil/recons";
-
-            // Set the Accept header for "application/json"
-            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-            HttpHeaders requestHeaders = new HttpHeaders();
-            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
-            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-            requestHeaders.setAccept(acceptableMediaTypes);
-            requestHeaders.setAuthorization(authHeader);
-
-            // Populate the headers in an HttpEntity object to use for the request
-            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
-            // Create a new RestTemplate instance
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-
-            // Perform the HTTP GET request
-            ResponseEntity<ReConsentimientoDen[]> responseEntity = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    ReConsentimientoDen[].class);
-
-            // convert the array to a list and return it
-            mReconsentimientos = Arrays.asList(responseEntity.getBody());
-            return null;
-
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            return e.getLocalizedMessage();
-        }
-    }
-
-
     // url, username, password
     protected String descargarReconsentimientos2015() throws Exception {
         try {
@@ -2011,43 +1760,6 @@ public class DownloadAllTask extends DownloadTask {
         }
     }
 
-
-    // url, username, password
-    protected String descargarConsentimientosZika() throws Exception {
-        try {
-            // The URL for making the GET request
-            final String urlRequest = url + "/movil/conszika";
-
-            // Set the Accept header for "application/json"
-            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-            HttpHeaders requestHeaders = new HttpHeaders();
-            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
-            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-            requestHeaders.setAccept(acceptableMediaTypes);
-            requestHeaders.setAuthorization(authHeader);
-
-            // Populate the headers in an HttpEntity object to use for the request
-            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
-            // Create a new RestTemplate instance
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-
-            // Perform the HTTP GET request
-            ResponseEntity<ConsentimientoZika[]> responseEntity = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    ConsentimientoZika[].class);
-
-            // convert the array to a list and return it
-            mConsentimientosZika = Arrays.asList(responseEntity.getBody());
-            return null;
-
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            return e.getLocalizedMessage();
-        }
-    }
-
-
     // url, username, password
     protected String descargarReconsentimientosFlu2015() throws Exception {
         try {
@@ -2082,43 +1794,6 @@ public class DownloadAllTask extends DownloadTask {
             return e.getLocalizedMessage();
         }
     }
-
-
-    // url, username, password
-    protected String descargarCodigosCasas() throws Exception {
-        try {
-            // The URL for making the GET request
-            final String urlRequest = url + "/movil/codigoscasas";
-
-            // Set the Accept header for "application/json"
-            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-            HttpHeaders requestHeaders = new HttpHeaders();
-            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
-            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-            requestHeaders.setAccept(acceptableMediaTypes);
-            requestHeaders.setAuthorization(authHeader);
-
-            // Populate the headers in an HttpEntity object to use for the request
-            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
-            // Create a new RestTemplate instance
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-
-            // Perform the HTTP GET request
-            ResponseEntity<CodigosCasas[]> responseEntity = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    CodigosCasas[].class);
-
-            // convert the array to a list and return it
-            mCodigosCasas = Arrays.asList(responseEntity.getBody());
-            return null;
-
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            return e.getLocalizedMessage();
-        }
-    }
-
 
     // url, username, password
     protected String descargarRecepcionBHCs() throws Exception {

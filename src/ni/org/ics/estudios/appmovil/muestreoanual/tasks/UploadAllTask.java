@@ -41,14 +41,10 @@ public class UploadAllTask extends UploadTask {
     private List<Muestra> mMuestras = new ArrayList<Muestra>();
     private List<PesoyTalla> mPyTs = new ArrayList<PesoyTalla>();
     private List<Obsequio> mObsequios = new ArrayList<Obsequio>();
-    private List<Vacuna> mVacunas = new ArrayList<Vacuna>();
     private List<NewVacuna> mNewVacunas = new ArrayList<NewVacuna>();
     private List<DatosPartoBB> mDatosPartoBB = new ArrayList<DatosPartoBB>();
     private List<VisitaTerreno> mVisitasTerreno = new ArrayList<VisitaTerreno>();
     private List<DatosVisitaTerreno> mDatosVisitasTerreno = new ArrayList<DatosVisitaTerreno>();
-    private List<ReConsentimientoDen> mReconsentimientos = new ArrayList<ReConsentimientoDen>();
-    private List<ConsentimientoChik> mConsentimientoChiks = new ArrayList<ConsentimientoChik>();
-    private List<CambioEstudio> mCambiosEstudio = new ArrayList<CambioEstudio>();
     private List<RecepcionBHC> mRecepcionBHCs = new ArrayList<RecepcionBHC>();
     private List<RecepcionSero> mRecepcionSeros = new ArrayList<RecepcionSero>();
     private List<Pinchazo> mPinchazos = new ArrayList<Pinchazo>();
@@ -58,9 +54,7 @@ public class UploadAllTask extends UploadTask {
     private List<EncuestaSatisfaccion> mEncuestaSatisfaccions = new ArrayList<EncuestaSatisfaccion>();
     private List<ReConsentimientoDen2015> mReconsentimientos2015 = new ArrayList<ReConsentimientoDen2015>();
     private List<ReConsentimientoFlu2015> mReconsentimientosFlu2015 = new ArrayList<ReConsentimientoFlu2015>();
-    private List<CodigosCasas> mCodigosCasas = new ArrayList<CodigosCasas>();
     private List<CambiosCasas> mCambiosCasas = new ArrayList<CambiosCasas>();
-    private List<ConsentimientoZika> mConsentimientosZika = new ArrayList<ConsentimientoZika>();
     private List<EncuestaCasaSA> mEncuestasCasaSA = new ArrayList<EncuestaCasaSA>();
     private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = new ArrayList<EncuestaParticipanteSA>();
     private List<Tamizaje> mTamizajes = new ArrayList<Tamizaje>();
@@ -180,15 +174,6 @@ public class UploadAllTask extends UploadTask {
             }
 
             try {
-                error = cargarVacunas(url, username, password);
-                if (!error.matches("Datos recibidos!")) {
-                    return error;
-                }
-            } catch (Exception e1) {
-                e1.printStackTrace();
-                return e1.getLocalizedMessage();
-            }
-            try {
                 error = cargarNewVacunas(url, username, password);
                 if (!error.matches("Datos recibidos!")){
                     return error;
@@ -229,37 +214,7 @@ public class UploadAllTask extends UploadTask {
             }
 
             try {
-                error = cargarReconsentimientos(url, username, password);
-                if (!error.matches("Datos recibidos!")) {
-                    return error;
-                }
-            } catch (Exception e1) {
-                e1.printStackTrace();
-                return e1.getLocalizedMessage();
-            }
-
-            try {
-                error = cargarConsentimientoChik(url, username, password);
-                if (!error.matches("Datos recibidos!")) {
-                    return error;
-                }
-            } catch (Exception e1) {
-                e1.printStackTrace();
-                return e1.getLocalizedMessage();
-            }
-
-            try {
                 error = cargarReConsentimientos2015(url, username, password);
-                if (!error.matches("Datos recibidos!")) {
-                    return error;
-                }
-            } catch (Exception e1) {
-                e1.printStackTrace();
-                return e1.getLocalizedMessage();
-            }
-
-            try {
-                error = cargarConsentimientoZika(url, username, password);
                 if (!error.matches("Datos recibidos!")) {
                     return error;
                 }
@@ -279,27 +234,7 @@ public class UploadAllTask extends UploadTask {
             }
 
             try {
-                error = cargarCodigosCasas(url, username, password);
-                if (!error.matches("Datos recibidos!")) {
-                    return error;
-                }
-            } catch (Exception e1) {
-                e1.printStackTrace();
-                return e1.getLocalizedMessage();
-            }
-
-            try {
                 error = cargarCambiosCasas(url, username, password);
-                if (!error.matches("Datos recibidos!")) {
-                    return error;
-                }
-            } catch (Exception e1) {
-                e1.printStackTrace();
-                return e1.getLocalizedMessage();
-            }
-
-            try {
-                error = cargarCambiosEstudio(url, username, password);
                 if (!error.matches("Datos recibidos!")) {
                     return error;
                 }
@@ -1223,71 +1158,6 @@ public class UploadAllTask extends UploadTask {
     }
 
 
-
-
-
-
-    /**Vacunas**/
-    // url, username, password
-    protected String cargarVacunas(String url, String username,
-                                   String password) throws Exception {
-        try {
-            getVacunas();
-            if(mVacunas.size()>0){
-                saveVacunas(Constants.STATUS_SUBMITTED);
-                // La URL de la solicitud POST
-                final String urlRequest = url + "/movil/vacunas";
-                Vacuna[] envio = mVacunas.toArray(new Vacuna[mVacunas.size()]);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-                requestHeaders.setAuthorization(authHeader);
-                HttpEntity<Vacuna[]> requestEntity =
-                        new HttpEntity<Vacuna[]>(envio, requestHeaders);
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
-                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
-                        String.class);
-                // Regresa la respuesta a mostrar al usuario
-                if (!response.getBody().matches("Datos recibidos!")) {
-                    saveVacunas(Constants.STATUS_NOT_SUBMITTED);
-                }
-                return response.getBody();
-            }
-            else{
-                return "Datos recibidos!";
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            saveVacunas(Constants.STATUS_NOT_SUBMITTED);
-            return e.getMessage();
-        }
-
-    }
-
-    private void saveVacunas(String estado) {
-        //CohorteAdapterEnvio actualizar = new CohorteAdapterEnvio();
-        //actualizar.open();
-        int c = mVacunas.size();
-        for (Vacuna vacuna : mVacunas) {
-            vacuna.getMovilInfo().setEstado(estado);
-            estudioAdapter.updateVacSent(vacuna);
-            publishProgress("Actualizando Vacunas", Integer.valueOf(mVacunas.indexOf(vacuna)).toString(), Integer
-                    .valueOf(c).toString());
-        }
-        //actualizar.close();
-    }
-
-    private void getVacunas(){
-        //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
-        //ca.open();
-        mVacunas = estudioAdapter.getListaVacunasSinEnviar();
-        //ca.close();
-    }
-
-
     /**Vacunas**/
     // url, username, password
     protected String cargarNewVacunas(String url, String username,
@@ -1528,128 +1398,6 @@ public class UploadAllTask extends UploadTask {
         //ca.close();
     }
 
-    /**cargar Reconsentimientos**/
-    // url, username, password
-    protected String cargarReconsentimientos(String url, String username,
-                                             String password) throws Exception {
-        try {
-            getReconsentimientos();
-            if(mReconsentimientos.size()>0){
-                saveReconsentimientos(Constants.STATUS_SUBMITTED);
-                // La URL de la solicitud POST
-                final String urlRequest = url + "/movil/recons";
-                ReConsentimientoDen[] envio = mReconsentimientos.toArray(new ReConsentimientoDen[mReconsentimientos.size()]);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-                requestHeaders.setAuthorization(authHeader);
-                HttpEntity<ReConsentimientoDen[]> requestEntity =
-                        new HttpEntity<ReConsentimientoDen[]>(envio, requestHeaders);
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
-                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
-                        String.class);
-                // Regresa la respuesta a mostrar al usuario
-                if (!response.getBody().matches("Datos recibidos!")) {
-                    saveReconsentimientos(Constants.STATUS_NOT_SUBMITTED);
-                }
-                return response.getBody();
-            }
-            else{
-                return "Datos recibidos!";
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            saveReconsentimientos(Constants.STATUS_NOT_SUBMITTED);
-            return e.getMessage();
-        }
-
-    }
-
-    private void saveReconsentimientos(String estado) {
-        //CohorteAdapterEnvio actualizar = new CohorteAdapterEnvio();
-        //actualizar.open();
-        int c = mReconsentimientos.size();
-        for (ReConsentimientoDen recons : mReconsentimientos) {
-            recons.getMovilInfo().setEstado(estado);
-            estudioAdapter.updateReconsSent(recons);
-            publishProgress("Actualizando ReConsentimientoDen", Integer.valueOf(mReconsentimientos.indexOf(recons)).toString(), Integer
-                    .valueOf(c).toString());
-        }
-        //actualizar.close();
-    }
-
-    private void getReconsentimientos(){
-        //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
-        //ca.open();
-        mReconsentimientos = estudioAdapter.getListaReConsentimientoDensSinEnviar();
-        //ca.close();
-    }
-
-
-    /**cargar ConsentimientoChik**/
-    // url, username, password
-    protected String cargarConsentimientoChik(String url, String username,
-                                              String password) throws Exception {
-        try {
-            getConsentimientoChik();
-            if(mConsentimientoChiks.size()>0){
-                saveConsentimientoChik(Constants.STATUS_SUBMITTED);
-                // La URL de la solicitud POST
-                final String urlRequest = url + "/movil/conschik";
-                ConsentimientoChik[] envio = mConsentimientoChiks.toArray(new ConsentimientoChik[mConsentimientoChiks.size()]);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-                requestHeaders.setAuthorization(authHeader);
-                HttpEntity<ConsentimientoChik[]> requestEntity =
-                        new HttpEntity<ConsentimientoChik[]>(envio, requestHeaders);
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
-                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
-                        String.class);
-                // Regresa la respuesta a mostrar al usuario
-                if (!response.getBody().matches("Datos recibidos!")) {
-                    saveConsentimientoChik(Constants.STATUS_NOT_SUBMITTED);
-                }
-                return response.getBody();
-            }
-            else{
-                return "Datos recibidos!";
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            saveConsentimientoChik(Constants.STATUS_NOT_SUBMITTED);
-            return e.getMessage();
-        }
-
-    }
-
-    private void saveConsentimientoChik(String estado) {
-        //CohorteAdapterEnvio actualizar = new CohorteAdapterEnvio();
-        //actualizar.open();
-        int c = mConsentimientoChiks.size();
-        for (ConsentimientoChik cons : mConsentimientoChiks) {
-            cons.getMovilInfo().setEstado(estado);
-            estudioAdapter.updateConsChikSent(cons);
-            publishProgress("Actualizando ConsentimientoChik", Integer.valueOf(mConsentimientoChiks.indexOf(cons)).toString(), Integer
-                    .valueOf(c).toString());
-        }
-        //actualizar.close();
-    }
-
-    private void getConsentimientoChik(){
-        //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
-        //ca.open();
-        mConsentimientoChiks = estudioAdapter.getListaConsentimientoChikSinEnviar();
-        //ca.close();
-    }
-
-
     /**cargar ReConsentimientos2015**/
     // url, username, password
     protected String cargarReConsentimientos2015(String url, String username,
@@ -1710,128 +1458,6 @@ public class UploadAllTask extends UploadTask {
         //ca.close();
     }
 
-
-    /**cargar ConsentimientoZika**/
-    // url, username, password
-    protected String cargarConsentimientoZika(String url, String username,
-                                              String password) throws Exception {
-        try {
-            getConsentimientoZika();
-            if(mConsentimientosZika.size()>0){
-                saveConsentimientoZika(Constants.STATUS_SUBMITTED);
-                // La URL de la solicitud POST
-                final String urlRequest = url + "/movil/conszika";
-                ConsentimientoZika[] envio = mConsentimientosZika.toArray(new ConsentimientoZika[mConsentimientosZika.size()]);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-                requestHeaders.setAuthorization(authHeader);
-                HttpEntity<ConsentimientoZika[]> requestEntity =
-                        new HttpEntity<ConsentimientoZika[]>(envio, requestHeaders);
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
-                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
-                        String.class);
-                // Regresa la respuesta a mostrar al usuario
-                if (!response.getBody().matches("Datos recibidos!")) {
-                    saveConsentimientoZika(Constants.STATUS_NOT_SUBMITTED);
-                }
-                return response.getBody();
-            }
-            else{
-                return "Datos recibidos!";
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            saveConsentimientoZika(Constants.STATUS_NOT_SUBMITTED);
-            return e.getMessage();
-        }
-
-    }
-
-    private void saveConsentimientoZika(String estado) {
-        //CohorteAdapterEnvio actualizar = new CohorteAdapterEnvio();
-        //actualizar.open();
-        int c = mConsentimientosZika.size();
-        for (ConsentimientoZika cons : mConsentimientosZika) {
-            cons.getMovilInfo().setEstado(estado);
-            estudioAdapter.updateConsZikaSent(cons);
-            publishProgress("Actualizando ConsentimientoZika", Integer.valueOf(mConsentimientosZika.indexOf(cons)).toString(), Integer
-                    .valueOf(c).toString());
-        }
-        //actualizar.close();
-    }
-
-    private void getConsentimientoZika(){
-        //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
-        //ca.open();
-        mConsentimientosZika = estudioAdapter.getListaConsentimientoZikasSinEnviar();
-        //ca.close();
-    }
-
-    /**cargar CodigosCasas**/
-    // url, username, password
-    protected String cargarCodigosCasas(String url, String username,
-                                        String password) throws Exception {
-        try {
-            getCodigosCasas();
-            if(mCodigosCasas.size()>0){
-                saveCodigosCasas(Constants.STATUS_SUBMITTED);
-                // La URL de la solicitud POST
-                final String urlRequest = url + "/movil/codigoscasas";
-                CodigosCasas[] envio = mCodigosCasas.toArray(new CodigosCasas[mCodigosCasas.size()]);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-                requestHeaders.setAuthorization(authHeader);
-                HttpEntity<CodigosCasas[]> requestEntity =
-                        new HttpEntity<CodigosCasas[]>(envio, requestHeaders);
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
-                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
-                        String.class);
-                // Regresa la respuesta a mostrar al usuario
-                if (!response.getBody().matches("Datos recibidos!")) {
-                    saveCodigosCasas(Constants.STATUS_NOT_SUBMITTED);
-                }
-                return response.getBody();
-            }
-            else{
-                return "Datos recibidos!";
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            saveCodigosCasas(Constants.STATUS_NOT_SUBMITTED);
-            return e.getMessage();
-        }
-
-    }
-
-    private void saveCodigosCasas(String estado) {
-        //CohorteAdapterEnvio actualizar = new CohorteAdapterEnvio();
-        //actualizar.open();
-        int c = mCodigosCasas.size();
-        for (CodigosCasas cons : mCodigosCasas) {
-            cons.setEstado(estado);
-            estudioAdapter.updateCodigosCasasSent(cons);
-            publishProgress("Actualizando CodigosCasas", Integer.valueOf(mCodigosCasas.indexOf(cons)).toString(), Integer
-                    .valueOf(c).toString());
-        }
-        //actualizar.close();
-    }
-
-    private void getCodigosCasas(){
-        //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
-        //ca.open();
-        mCodigosCasas = estudioAdapter.getListaCodigosCasasSinEnviar();
-        //ca.close();
-    }
-
-
     /**cargar CambiosCasas**/
     // url, username, password
     protected String cargarCambiosCasas(String url, String username,
@@ -1891,68 +1517,6 @@ public class UploadAllTask extends UploadTask {
         mCambiosCasas = estudioAdapter.getListaCambiosCasasSinEnviar();
         //ca.close();
     }
-
-
-    /**cargar CambioEstudio**/
-    // url, username, password
-    protected String cargarCambiosEstudio(String url, String username,
-                                          String password) throws Exception {
-        try {
-            getCambiosEstudio();
-            if(mCambiosEstudio.size()>0){
-                saveCambiosEstudio(Constants.STATUS_SUBMITTED);
-                // La URL de la solicitud POST
-                final String urlRequest = url + "/movil/cambest";
-                CambioEstudio[] envio = mCambiosEstudio.toArray(new CambioEstudio[mCambiosEstudio.size()]);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-                requestHeaders.setAuthorization(authHeader);
-                HttpEntity<CambioEstudio[]> requestEntity =
-                        new HttpEntity<CambioEstudio[]>(envio, requestHeaders);
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
-                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
-                        String.class);
-                // Regresa la respuesta a mostrar al usuario
-                if (!response.getBody().matches("Datos recibidos!")) {
-                    saveCambiosEstudio(Constants.STATUS_NOT_SUBMITTED);
-                }
-                return response.getBody();
-            }
-            else{
-                return "Datos recibidos!";
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            saveCambiosEstudio(Constants.STATUS_NOT_SUBMITTED);
-            return e.getMessage();
-        }
-
-    }
-
-    private void saveCambiosEstudio(String estado) {
-        //CohorteAdapterEnvio actualizar = new CohorteAdapterEnvio();
-        //actualizar.open();
-        int c = mCambiosEstudio.size();
-        for (CambioEstudio cons : mCambiosEstudio) {
-            cons.getMovilInfo().setEstado(estado);
-            estudioAdapter.updateCambiosEstudioSent(cons);
-            publishProgress("Actualizando CambioEstudio", Integer.valueOf(mCambiosEstudio.indexOf(cons)).toString(), Integer
-                    .valueOf(c).toString());
-        }
-        //actualizar.close();
-    }
-
-    private void getCambiosEstudio(){
-        //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
-        //ca.open();
-        mCambiosEstudio = estudioAdapter.getListaCambiosEstudioSinEnviar();
-        //ca.close();
-    }
-
 
 
     /**cargar RecepcionBHCs**/

@@ -22,6 +22,7 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.MenuReviewAdapter;
@@ -49,13 +50,13 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
 	private ArrayList<ReConsentimientoDen2015> mReConsentimientoDen = new ArrayList<ReConsentimientoDen2015>();
 	private ArrayList<Muestra> mMuestras = new ArrayList<Muestra>();
 	private ArrayList<Obsequio> mObsequios = new ArrayList<Obsequio>();
-	private ArrayList<ConsentimientoZika> mConsentimientoZika = new ArrayList<ConsentimientoZika>();
     private ArrayList<DatosPartoBB> mDatosPartoBBs = new ArrayList<DatosPartoBB>();
     private ArrayList<DatosVisitaTerreno> mDatosVisitaTerreno = new ArrayList<DatosVisitaTerreno>();
     private ArrayList<Documentos> mDocumentos = new ArrayList<Documentos>();
     private ArrayList<EncuestaCasa> mEncuestasCasasChf = new ArrayList<EncuestaCasa>();
     private ArrayList<EncuestaCasaSA> mEncuestasCasasSa = new ArrayList<EncuestaCasaSA>();
     private ArrayList<EncuestaParticipanteSA> mEncuestasParticipantesSa = new ArrayList<EncuestaParticipanteSA>();
+    private ArrayList<ParticipanteSeroprevalencia> mConSA = new ArrayList<ParticipanteSeroprevalencia>();
 	private GridView gridView;
 	private TextView textView;
 
@@ -160,9 +161,9 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
                                 ListReviewActivity.class);
                         break;
                     case 11:
-                        arguments.putString(Constants.TITLE, getString(R.string.info_zika));
-                        if (mConsentimientoZika != null)
-                            arguments.putSerializable(Constants.OBJECTO, mConsentimientoZika);
+                        arguments.putString(Constants.TITLE, getString(R.string.info_sa));
+                        if (mConSA != null)
+                            arguments.putSerializable(Constants.OBJECTO, mConSA);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
@@ -237,13 +238,13 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
         mMuestras=ca.getListaMuestrasHoy();
         mDatosPartoBBs = ca.getListaDatosPartoBBHoy();
         mObsequios=ca.getListaObsequiosHoy();
-        mConsentimientoZika=ca.getListaConsentimientoZikaHoy();
         mEncuestasS = ca.getEncuestaSatisfaccionHoy();
         mDocumentos = ca.getListaDocumentosHoy();
         mDatosVisitaTerreno = ca.getListaDatosVisitaTerrenoHoy();
         mEncuestasCasasChf = ca.getListaEncuestaCasasChfHoy();
         mEncuestasCasasSa = (ArrayList)ca.getEncuestasCasaSA(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), MainDBConstants.codigo+ " , " +MainDBConstants.recordDate);
         mEncuestasParticipantesSa = (ArrayList)ca.getEncuestasParticipanteSA(MainDBConstants.recordDate + " >= " + timeStamp.getTime(), MainDBConstants.codigo+ " , " +MainDBConstants.recordDate);
+        mConSA=(ArrayList)ca.getParticipantesSeroprevalencia(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), SeroprevalenciaDBConstants.participante+ " , " +MainDBConstants.recordDate);
 		ca.close();	
 	}	
 
@@ -312,7 +313,7 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
             String[] menu_info = getResources().getStringArray(R.array.menu_review);
             gridView.setAdapter(new MenuReviewAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
                     , mVisitasTerreno.size(), mPyTs.size(), mEncuestasCasas.size(), mEncuestasParticipantes.size(),
-                    mEncuestasLactancias.size(), mVacunas.size(), mEncuestasS.size(), mReConsentimientoDen.size(), mMuestras.size(), mObsequios.size(), mConsentimientoZika.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size(), mDocumentos.size(),
+                    mEncuestasLactancias.size(), mVacunas.size(), mEncuestasS.size(), mReConsentimientoDen.size(), mMuestras.size(), mObsequios.size(), mConSA.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size(), mDocumentos.size(),
                     mEncuestasCasasChf.size(), mEncuestasCasasSa.size(), mEncuestasParticipantesSa.size()));
 
             dismissProgressDialog();

@@ -22,11 +22,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
-import android.widget.TextView;
-import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
@@ -46,6 +43,7 @@ import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.influenzauo1.dto.DatosUO1;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.MenuInfoAdapter;
@@ -71,7 +69,6 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private ArrayList<ReConsentimientoDen2015> mReConsentimientoDen = new ArrayList<ReConsentimientoDen2015>();
     private ArrayList<Muestra> mMuestras = new ArrayList<Muestra>();
     private ArrayList<Obsequio> mObsequios = new ArrayList<Obsequio>();
-    private ArrayList<ConsentimientoZika> mConsentimientoZikas = new ArrayList<ConsentimientoZika>();
     private ArrayList<DatosPartoBB> mDatosPartoBBs = new ArrayList<DatosPartoBB>();
     private ArrayList<DatosVisitaTerreno> mDatosVisitaTerreno = new ArrayList<DatosVisitaTerreno>();
     private ArrayList<Documentos> mDocumentos = new ArrayList<Documentos>();
@@ -80,6 +77,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private ArrayList<EncuestaParticipanteSA> mEncuestasParticipantesSa = new ArrayList<EncuestaParticipanteSA>();
     private List<MessageResource> catRelacionFamiliar = new ArrayList<MessageResource>();
     private ArrayList<DatosCoordenadas> mDatosCoordenadas = new ArrayList<DatosCoordenadas>();
+    private ArrayList<ParticipanteSeroprevalencia> mConSA = new ArrayList<ParticipanteSeroprevalencia>();
 
     private String username;
     private SharedPreferences settings;
@@ -241,8 +239,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 ListReviewActivity.class);
                         break;
                     case 12:
-                        arguments.putString(Constants.TITLE, getString(R.string.info_zika));
-                        if (mConsentimientoZikas!=null) arguments.putSerializable(Constants.OBJECTO , mConsentimientoZikas);
+                        arguments.putString(Constants.TITLE, getString(R.string.info_sa));
+                        if (mConSA!=null) arguments.putSerializable(Constants.OBJECTO , mConSA);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
@@ -1012,7 +1010,6 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         mReConsentimientoDen=estudiosAdapter.getListaReConsentimientoDen2015(codigo);
         mMuestras=estudiosAdapter.getListaMuestras(codigo);
         mObsequios=estudiosAdapter.getListaObsequios(codigo);
-        mConsentimientoZikas=estudiosAdapter.getListaConsentimientoZika(codigo);
         mDatosVisitaTerreno = estudiosAdapter.getListaDatosVisitaTerreno(codigo);
         mUser = estudiosAdapter.getPermisosUsuario(ConstantsDB.USERNAME + "='" +username+"'", null);
         String filtro = ConstantsDB.CODIGO + "=" + codigo;
@@ -1027,6 +1024,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         mDatosCoordenadas = (ArrayList)estudiosAdapter.getDatosCoordenadas(MainDBConstants.participante + "=" + mParticipante.getCodigo(), null);
         mEncuestasParticipantesSa = (ArrayList)estudiosAdapter.getEncuestasParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo() , null);
         catRelacionFamiliar = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", null);
+        mConSA = (ArrayList)estudiosAdapter.getParticipantesSeroprevalencia(MainDBConstants.participante + "=" + mParticipante.getCodigo(), null);
         //procesos CHF
         if (mParticipante.getProcesos().getEstudio().toLowerCase().contains("ch familia")){
             ParticipanteCohorteFamiliaCaso existePartCaso = estudiosAdapter.getParticipanteCohorteFamiliaCaso(CasosDBConstants.participante+"="+mParticipante.getCodigo(),null);
@@ -1116,6 +1114,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || mParticipante.getProcesos().getObsequioChf().matches("Si")
                     || (mParticipante.getProcesos().getReConsChf18()!=null && mParticipante.getProcesos().getReConsChf18().matches("Si"))){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
+
 
                 //Primero muestras
                 //'#B941E0'purple
@@ -1654,7 +1653,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 String[] menu_info = getResources().getStringArray(R.array.menu_info);
                 gridView.setAdapter(new MenuInfoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
                         ,mVisitasTerreno.size(),mPyTs.size(),mEncuestasCasas.size(),mEncuestasParticipantes.size(),
-                        mEncuestasLactancias.size(),mVacunas.size(),mReConsentimientoDen.size(),mMuestras.size(),mObsequios.size(),mConsentimientoZikas.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()
+                        mEncuestasLactancias.size(),mVacunas.size(),mReConsentimientoDen.size(),mMuestras.size(),mObsequios.size(), mConSA.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()
                         ,mEncuestasCasasChf.size(), mEncuestasCasasSa.size(), mEncuestasParticipantesSa.size(), mDatosCoordenadas.size()));
                 refreshView();
             }catch (Exception ex){

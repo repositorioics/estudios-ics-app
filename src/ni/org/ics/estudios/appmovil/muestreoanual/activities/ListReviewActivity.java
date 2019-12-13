@@ -53,10 +53,6 @@ public class ListReviewActivity extends ListActivity {
 	ArrayAdapter<VisitaTerreno> mVisitaTerrenoAdapter=null;
 	ArrayAdapter<ReConsentimientoDen2015> mReconsentimientoAdapter=null;
 	ArrayAdapter<ReConsentimientoFlu2015> mReconsentimientoFluAdapter=null;
-	ArrayAdapter<CodigosCasas> mCodigosCasasAdapter=null;
-	ArrayAdapter<ConsentimientoChik> mConsentimientoChikAdapter=null;
-	ArrayAdapter<CambioEstudio> mCambioEstudioAdapter=null;
-	ArrayAdapter<ConsentimientoZika> mConsentimientoZikaAdapter=null;
 	ArrayAdapter<EncuestaSatisfaccion> mEncuestasSAdapter=null;
     ArrayAdapter<DatosPartoBB> mDatosPartoBBAdapter=null;
     ArrayAdapter<DatosVisitaTerreno> mDatosVisitaTerrenoAdapter=null;
@@ -137,18 +133,6 @@ public class ListReviewActivity extends ListActivity {
 				}
 				if (mReconsentimientoFluAdapter != null) {
 					mReconsentimientoFluAdapter.getFilter().filter(s);
-				}
-				if (mConsentimientoChikAdapter != null) {
-					mConsentimientoChikAdapter.getFilter().filter(s);
-				}
-				if (mCambioEstudioAdapter != null) {
-					mCambioEstudioAdapter.getFilter().filter(s);
-				}
-				if (mCodigosCasasAdapter != null) {
-					mCodigosCasasAdapter.getFilter().filter(s);
-				}
-				if (mConsentimientoZikaAdapter != null) {
-					mConsentimientoZikaAdapter.getFilter().filter(s);
 				}
                 if (mDatosPartoBBAdapter != null) {
                     mDatosPartoBBAdapter.getFilter().filter(s);
@@ -308,38 +292,6 @@ public class ListReviewActivity extends ListActivity {
 					(ArrayList<ReConsentimientoFlu2015>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
 			setListAdapter(mReconsentimientoFluAdapter);
 			showToast("Total = "+ mReconsentimientoFluAdapter.getCount());
-		}
-		
-		if (titulo.matches(getString(R.string.info_conschik))){
-			
-			mConsentimientoChikAdapter = new ConsentimientoChikAdapter(this, R.layout.list_item_review,
-					(ArrayList<ConsentimientoChik>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
-			setListAdapter(mConsentimientoChikAdapter);
-			showToast("Total = "+ mConsentimientoChikAdapter.getCount());
-		}
-		
-		if (titulo.matches(getString(R.string.info_chgest))){
-			
-			mCambioEstudioAdapter = new CambioEstudioAdapter(this, R.layout.list_item_review,
-					(ArrayList<CambioEstudio>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
-			setListAdapter(mCambioEstudioAdapter);
-			showToast("Total = "+ mCambioEstudioAdapter.getCount());
-		}
-		
-		if (titulo.matches(getString(R.string.info_codscasa))){
-			
-			mCodigosCasasAdapter = new CodigosCasasAdapter(this, R.layout.list_item_review,
-					(ArrayList<CodigosCasas>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
-			setListAdapter(mCodigosCasasAdapter);
-			showToast("Total = "+ mCodigosCasasAdapter.getCount());
-		}
-		
-		if (titulo.matches(getString(R.string.info_zika))){
-			
-			mConsentimientoZikaAdapter = new ConsentimientoZikaAdapter(this, R.layout.list_item_review,
-					(ArrayList<ConsentimientoZika>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
-			setListAdapter(mConsentimientoZikaAdapter);
-			showToast("Total = "+ mConsentimientoZikaAdapter.getCount());
 		}
 
         if (titulo.matches(getString(R.string.datos_parto))){
@@ -519,41 +471,6 @@ public class ListReviewActivity extends ListActivity {
 			i = new Intent(getApplicationContext(),
 					ReviewActivity.class);
 		}
-		if (titulo.matches(getString(R.string.info_conschik))){
-			ConsentimientoChik conschik = (ConsentimientoChik) getListAdapter().getItem(position);
-			arguments.putString(Constants.TITLE, getString(R.string.info_conschik));
-			if (conschik!=null) arguments.putSerializable(Constants.OBJECTO , conschik);
-			i = new Intent(getApplicationContext(),
-					ReviewActivity.class);
-		}
-		if (titulo.matches(getString(R.string.info_chgest))){
-			CambioEstudio cambioEst = (CambioEstudio) getListAdapter().getItem(position);
-			arguments.putString(Constants.TITLE, getString(R.string.info_chgest));
-			if (cambioEst!=null) arguments.putSerializable(Constants.OBJECTO , cambioEst);
-			i = new Intent(getApplicationContext(),
-					ReviewActivity.class);
-		}
-		if (titulo.matches(getString(R.string.info_codscasa))){
-			CodigosCasas cods = (CodigosCasas) getListAdapter().getItem(position);
-			arguments.putString(Constants.TITLE, getString(R.string.info_codscasa));
-			if (cods!=null) arguments.putSerializable(Constants.OBJECTO , cods);
-			i = new Intent(getApplicationContext(),
-					ReviewActivity.class);
-		}
-		if (titulo.matches(getString(R.string.info_zika))){
-			ConsentimientoZika cons = (ConsentimientoZika) getListAdapter().getItem(position);
-			arguments.putString(Constants.TITLE, getString(R.string.info_zika));
-			if (cons!=null) arguments.putSerializable(Constants.OBJECTO , cons);
-			i = new Intent(getApplicationContext(),
-					ReviewActivity.class);
-		}
-        if (titulo.matches(getString(R.string.info_zika))){
-            ConsentimientoZika cons = (ConsentimientoZika) getListAdapter().getItem(position);
-            arguments.putString(Constants.TITLE, getString(R.string.info_zika));
-            if (cons!=null) arguments.putSerializable(Constants.OBJECTO , cons);
-            i = new Intent(getApplicationContext(),
-                    ReviewActivity.class);
-        }
         if (titulo.matches(getString(R.string.datos_parto))){
             DatosPartoBB datosParto = (DatosPartoBB) getListAdapter().getItem(position);
             arguments.putString(Constants.TITLE, getString(R.string.datos_parto));
@@ -599,50 +516,7 @@ public class ListReviewActivity extends ListActivity {
 		i.putExtras(arguments);
 		startActivity(i);
 	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent) {
-		Integer codigoScanned =0;
-		if (requestCode == BARCODE_CAPTURE && intent != null && titulo.matches(getString(R.string.info_codscasa))) {
-			String sb = intent.getStringExtra("SCAN_RESULT");
-			if (sb != null && sb.length() > 0) {
 
-				try{
-					codigoScanned = Integer.parseInt(sb);
-					ca.open();
-					Participante mParticipante = ca.getParticipante(codigoScanned);
-
-					if (mParticipante.getCodigo() != null){
-						codigo = mParticipante.getCodigo();
-						if (codigo.intValue() == codComun.intValue()){
-							showToast("Es el mismo codigo");
-							return;
-						}
-						if(ca.checkCodigosCasas(codigoScanned)) {
-							showToast("Ya existe relacionado a otro codigo");
-						}
-						else{
-							createConfirmDialog();
-						}
-					}
-					else {
-						//mSearchText.setText(sb);
-						showToast("("+codigoScanned+") - " + getString(R.string.code_notfound));
-					}
-                    ca.close();
-				}
-				catch(Exception e){
-					showToast(getString(R.string.scan_error));
-					return;
-				}
-			}
-		}
-
-		super.onActivityResult(requestCode, resultCode, intent);
-
-	}
-	
 	private void showToast(String mensaje){
 		LayoutInflater inflater = getLayoutInflater();
 
@@ -659,42 +533,5 @@ public class ListReviewActivity extends ListActivity {
 		toast.show();
 
 	}
-	
-	private void createConfirmDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(this.getString(R.string.confirm));
-		builder.setMessage("Desea relacionar al participante " + codigo + " con el codigo " + codComun + "?");
-		builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				// Finish app
-				dialog.dismiss();
-				CodigosCasas cc = new CodigosCasas();
-				cc.setFechaRegistro(new Date());
-				cc.setCodCasa(codCasa);
-				cc.setCodigoComun(codComun);
-				cc.setCodigoRelacionado(codigo);
-				cc.setEstado(Constants.STATUS_NOT_SUBMITTED);
-				cc.setUsername(username);
-				ca.open();
-				ca.crearCodigosCasas(cc);
-				ca.close();
-				finish();
-				Intent i = new Intent(getApplicationContext(),
-						MenuInfoActivity.class);
-				i.putExtra(ConstantsDB.COD_CASA, codCasa);
-				i.putExtra(ConstantsDB.CODIGO, codComun);
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(i);
-			}
-		});
-		builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// Do nothing
-				dialog.dismiss();
-			}
-		});
-		alertDialog = builder.create();
-		alertDialog.show();
-	}
+
 }

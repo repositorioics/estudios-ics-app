@@ -321,6 +321,12 @@ public class EstudiosAdapter {
 				//continuación UO1
 				db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_SINTOMAS_VISITA_CASO_TABLE);
 			}
+			if (oldVersion==25){
+				db.execSQL("ALTER TABLE " + ConstantsDB.VIS_TABLE + " ADD COLUMN " + ConstantsDB.estudiaSN + " text");
+				db.execSQL("ALTER TABLE " + ConstantsDB.VIS_TABLE + " ADD COLUMN " + ConstantsDB.nEscuela + " text");
+				db.execSQL("ALTER TABLE " + ConstantsDB.VIS_TABLE + " ADD COLUMN " + ConstantsDB.otraEscuela + " text");
+				db.execSQL("ALTER TABLE " + ConstantsDB.VIS_TABLE + " ADD COLUMN " + ConstantsDB.turno + " text");
+			}
         }
 	}
 
@@ -3705,6 +3711,12 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.ASENT_VIS, visita.getAsentimiento());
         cv.put(ConstantsDB.otraRelacionFam, visita.getOtraRelacionFam());
         cv.put(ConstantsDB.carnetSN, visita.getCarnetSN());
+		//para peso y talla muestreo 2020
+		cv.put(ConstantsDB.estudiaSN, visita.getEstudiaSN());
+		cv.put(ConstantsDB.nEscuela, visita.getnEscuela());
+		cv.put(ConstantsDB.otraEscuela, visita.getOtraEscuela());
+		cv.put(ConstantsDB.turno, visita.getTurno());
+
         cv.put(ConstantsDB.otrorecurso1, visita.getOtrorecurso1());
         cv.put(ConstantsDB.otrorecurso2, visita.getOtrorecurso2());
         cv.put(ConstantsDB.ID_INSTANCIA, visita.getMovilInfo().getIdInstancia());
@@ -6427,6 +6439,12 @@ public class EstudiosAdapter {
         if(!visitascampo.isNull(visitascampo.getColumnIndex(ConstantsDB.otrorecurso2))) mVisitaCasa.setOtrorecurso2(visitascampo.getInt(visitascampo.getColumnIndex(ConstantsDB.otrorecurso2)));
         mVisitaCasa.setOtraRelacionFam(visitascampo.getString(visitascampo.getColumnIndex(ConstantsDB.otraRelacionFam)));
         mVisitaCasa.setCarnetSN(visitascampo.getString(visitascampo.getColumnIndex(ConstantsDB.carnetSN)));
+		//para peso y talla muestreo 2020
+		mVisitaCasa.setEstudiaSN(visitascampo.getString(visitascampo.getColumnIndex(ConstantsDB.estudiaSN)));
+		mVisitaCasa.setnEscuela(visitascampo.getString(visitascampo.getColumnIndex(ConstantsDB.nEscuela)));
+		mVisitaCasa.setOtraEscuela(visitascampo.getString(visitascampo.getColumnIndex(ConstantsDB.otraEscuela)));
+		mVisitaCasa.setTurno(visitascampo.getString(visitascampo.getColumnIndex(ConstantsDB.turno)));
+
         Boolean borrado = visitascampo.getInt(visitascampo.getColumnIndex(ConstantsDB.DELETED))>0;
         mVisitaCasa.setMovilInfo(new MovilInfo(visitascampo.getInt(visitascampo.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
                 visitascampo.getString(visitascampo.getColumnIndex(ConstantsDB.FILE_PATH)),

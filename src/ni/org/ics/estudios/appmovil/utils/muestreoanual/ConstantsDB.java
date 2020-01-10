@@ -554,8 +554,11 @@ public class ConstantsDB {
     public static final String apellidoptTutorCandNI2 = "apellidoptTutorCandNI2";
     public static final String relacionFamCandNI = "relacionFamCandNI";
     public static final String otraRelacionFamCandNI = "otraRelacionFamCandNI";
-
-
+    //para peso y talla muestreo 2020
+    public static final String estudiaSN = "estudiaSN";
+    public static final String nEscuela = "nEscuela";
+    public static final String otraEscuela = "otraEscuela";
+    public static final String turno = "turno";
 
     //Campos reconsentimiento
     public static final String FECHA_CONS = "fecha_cons";
@@ -1440,6 +1443,10 @@ public class ConstantsDB {
             + otrorecurso2  + " integer, "
             + otraRelacionFam + " text, "
             + carnetSN + " text, "
+            + estudiaSN + " text, "
+            + nEscuela + " text, "
+            + otraEscuela + " text, "
+            + turno + " text, "
             + ID_INSTANCIA + " integer not null,"
             + FILE_PATH + " text not null,"
             + STATUS + " text not null, "

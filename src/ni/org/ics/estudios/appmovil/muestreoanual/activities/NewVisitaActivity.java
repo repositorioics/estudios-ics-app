@@ -195,6 +195,11 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 
             mVisitaTerreno.setOtraRelacionFam(em.getOtraRelacionFam());
             mVisitaTerreno.setCarnetSN(em.getCarnetSN());
+			//para peso y talla muestreo 2020
+			mVisitaTerreno.setEstudiaSN(em.getEstudiaSN());
+			mVisitaTerreno.setnEscuela(em.getnEscuela());
+			mVisitaTerreno.setOtraEscuela(em.getOtraEscuela());
+			mVisitaTerreno.setTurno(em.getTurno());
             mVisitaTerreno.setMovilInfo(new MovilInfo(idInstancia,
                     instanceFilePath,
                     Constants.STATUS_NOT_SUBMITTED,

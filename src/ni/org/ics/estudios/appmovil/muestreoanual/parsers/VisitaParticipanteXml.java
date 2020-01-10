@@ -36,6 +36,16 @@ public class VisitaParticipanteXml {
 	private String otraRelacionFam;
 	@Element(required=false)
 	private String carnetSN;
+
+	//para peso y talla muestreo 2020
+	@Element(required=false)
+	private String estudiaSN;
+	@Element(required=false)
+	private String nEscuela;
+	@Element(required=false)
+	private String otraEscuela;
+	@Element(required=false)
+	private String turno;
 	
 	
 	@Element(required=false)
@@ -258,5 +268,35 @@ public class VisitaParticipanteXml {
 		this.carnetSN = carnetSN;
 	}
 
-	
+	public String getEstudiaSN() {
+		return estudiaSN;
+	}
+
+	public void setEstudiaSN(String estudiaSN) {
+		this.estudiaSN = estudiaSN;
+	}
+
+	public String getnEscuela() {
+		return nEscuela;
+	}
+
+	public void setnEscuela(String nEscuela) {
+		this.nEscuela = nEscuela;
+	}
+
+	public String getOtraEscuela() {
+		return otraEscuela;
+	}
+
+	public void setOtraEscuela(String otraEscuela) {
+		this.otraEscuela = otraEscuela;
+	}
+
+	public String getTurno() {
+		return turno;
+	}
+
+	public void setTurno(String turno) {
+		this.turno = turno;
+	}
 }

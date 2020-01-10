@@ -31,7 +31,11 @@ public class VisitaTerreno implements Serializable {
 	
 	private String otraRelacionFam;
 	private String carnetSN;
-	
+	//para peso y talla muestreo 2020
+	private String estudiaSN;
+	private String nEscuela;
+	private String otraEscuela;
+	private String turno;
 
 
 	public MovilInfo getMovilInfo() {
@@ -122,5 +126,35 @@ public class VisitaTerreno implements Serializable {
 		this.carnetSN = carnetSN;
 	}
 
+	public String getEstudiaSN() {
+		return estudiaSN;
+	}
 
+	public void setEstudiaSN(String estudiaSN) {
+		this.estudiaSN = estudiaSN;
+	}
+
+	public String getnEscuela() {
+		return nEscuela;
+	}
+
+	public void setnEscuela(String nEscuela) {
+		this.nEscuela = nEscuela;
+	}
+
+	public String getOtraEscuela() {
+		return otraEscuela;
+	}
+
+	public void setOtraEscuela(String otraEscuela) {
+		this.otraEscuela = otraEscuela;
+	}
+
+	public String getTurno() {
+		return turno;
+	}
+
+	public void setTurno(String turno) {
+		this.turno = turno;
+	}
 }

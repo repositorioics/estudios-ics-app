@@ -1089,7 +1089,17 @@ public class EstudiosAdapter {
         if (cursorParticipante!=null && !cursorParticipante.isClosed()) cursorParticipante.close();
         return mParticipantesProc;
     }
-	
+
+    public boolean existenParticipantesEnEstudio(Integer casa, String estudio){
+		List<ParticipanteProcesos> mParticipantesProc = new ArrayList<ParticipanteProcesos>();
+		//participantes activos que pertenecen a la casa y tienen el estudio consentido
+		String filtro = ConstantsDB.CODIGO+" in ( select "+MainDBConstants.codigo+" from "+MainDBConstants.PARTICIPANTE_TABLE+" where "+MainDBConstants.casa+" = "+casa+") " +
+				"and "+ConstantsDB.ESTUDIO+" like '%"+estudio+"%' " +
+				"and "+ConstantsDB.ESTADO_PAR+" = 1";
+		Cursor cursorParticipante = crearCursor(ConstantsDB.PART_PROCESOS_TABLE, filtro, null, null);
+		return (cursorParticipante != null && cursorParticipante.getCount() > 0);
+	}
+
 	/**
 	 * Metodos para ParticipanteCohorteFamilia en la base de datos
 	 * 
@@ -3213,6 +3223,10 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.yearFabCamion, enccasa.getYearFabCamion());
         cv.put(ConstantsDB.opcFabOtroMedioTrans, enccasa.getOpcFabOtroMedioTrans());
         cv.put(ConstantsDB.yearFabOtroMedioTrans, enccasa.getYearFabOtroMedioTrans());
+        //MA2020
+		cv.put(ConstantsDB.cambiadoCasa, enccasa.getCambiadoCasa());
+		cv.put(ConstantsDB.remodelacionCasa, enccasa.getRemodelacionCasa());
+		cv.put(ConstantsDB.tieneVehiculo, enccasa.getTieneVehiculo());
 
         cv.put(ConstantsDB.ID_INSTANCIA, enccasa.getMovilInfo().getIdInstancia());
         cv.put(ConstantsDB.FILE_PATH, enccasa.getMovilInfo().getInstancePath());
@@ -3419,6 +3433,21 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.vacunaInfluenzaOtro, encpar.getVacunaInfluenzaOtro());
         cv.put(ConstantsDB.nombreCDI, encpar.getNombreCDI());
         cv.put(ConstantsDB.direccionCDI, encpar.getDireccionCDI());
+        //MA2020
+		cv.put(ConstantsDB.otroLugarCuidan, encpar.getOtroLugarCuidan());
+		cv.put(ConstantsDB.enfermedadCronica, encpar.getEnfermedadCronica());
+		cv.put(ConstantsDB.tenidoDengue, encpar.getTenidoDengue());
+		cv.put(ConstantsDB.unidadSaludDengue, encpar.getUnidadSaludDengue());
+		cv.put(ConstantsDB.centroSaludDengue, encpar.getCentroSaludDengue());
+		cv.put(ConstantsDB.otroCentroSaludDengue, encpar.getOtroCentroSaludDengue());
+		cv.put(ConstantsDB.puestoSaludDengue, encpar.getPuestoSaludDengue());
+		cv.put(ConstantsDB.hospitalDengue, encpar.getHospitalDengue());
+		cv.put(ConstantsDB.otroHospitalDengue, encpar.getOtroHospitalDengue());
+		cv.put(ConstantsDB.hospitalizadoDengue, encpar.getHospitalizadoDengue());
+		cv.put(ConstantsDB.ambulatorioDengue, encpar.getAmbulatorioDengue());
+		cv.put(ConstantsDB.diagMedicoDengue, encpar.getDiagMedicoDengue());
+		cv.put(ConstantsDB.rashUA, encpar.getRashUA());
+		cv.put(ConstantsDB.consultaRashUA, encpar.getConsultaRashUA());
 
         cv.put(ConstantsDB.ID_INSTANCIA, encpar.getMovilInfo().getIdInstancia());
         cv.put(ConstantsDB.FILE_PATH, encpar.getMovilInfo().getInstancePath());
@@ -5271,6 +5300,10 @@ public class EstudiosAdapter {
         if(!enccasas.isNull(enccasas.getColumnIndex(ConstantsDB.yearFabCamion))) mEncCasa.setYearFabCamion(enccasas.getInt(enccasas.getColumnIndex(ConstantsDB.yearFabCamion)));
         mEncCasa.setOpcFabOtroMedioTrans(enccasas.getString(enccasas.getColumnIndex(ConstantsDB.opcFabOtroMedioTrans)));
         if(!enccasas.isNull(enccasas.getColumnIndex(ConstantsDB.yearFabOtroMedioTrans))) mEncCasa.setYearFabOtroMedioTrans(enccasas.getInt(enccasas.getColumnIndex(ConstantsDB.yearFabOtroMedioTrans)));
+        //MA2020
+		mEncCasa.setCambiadoCasa(enccasas.getString(enccasas.getColumnIndex(ConstantsDB.cambiadoCasa)));
+		mEncCasa.setRemodelacionCasa(enccasas.getString(enccasas.getColumnIndex(ConstantsDB.remodelacionCasa)));
+		mEncCasa.setTieneVehiculo(enccasas.getString(enccasas.getColumnIndex(ConstantsDB.tieneVehiculo)));
 
         Boolean borrado = enccasas.getInt(enccasas.getColumnIndex(ConstantsDB.DELETED))>0;
         mEncCasa.setMovilInfo(new MovilInfo(enccasas.getInt(enccasas.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
@@ -5532,7 +5565,21 @@ public class EstudiosAdapter {
         mEncPart.setVacunaInfluenzaOtro(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.vacunaInfluenzaOtro)));
         mEncPart.setNombreCDI(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.nombreCDI)));
         mEncPart.setDireccionCDI(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.direccionCDI)));
-
+        //MA2020
+		mEncPart.setEnfermedadCronica(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.enfermedadCronica)));
+		mEncPart.setOtroLugarCuidan(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.otroLugarCuidan)));
+		mEncPart.setTenidoDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.tenidoDengue)));
+		mEncPart.setUnidadSaludDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.unidadSaludDengue)));
+		mEncPart.setCentroSaludDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.centroSaludDengue)));
+		mEncPart.setOtroCentroSaludDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.otroCentroSaludDengue)));
+		mEncPart.setPuestoSaludDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.puestoSaludDengue)));
+		mEncPart.setHospitalDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.hospitalDengue)));
+		mEncPart.setOtroHospitalDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.otroHospitalDengue)));
+		mEncPart.setHospitalizadoDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.hospitalizadoDengue)));
+		mEncPart.setAmbulatorioDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.ambulatorioDengue)));
+		mEncPart.setDiagMedicoDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.diagMedicoDengue)));
+		mEncPart.setRashUA(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.rashUA)));
+		mEncPart.setConsultaRashUA(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.consultaRashUA)));
 
         Boolean borrado = encparticipantess.getInt(encparticipantess.getColumnIndex(ConstantsDB.DELETED))>0;
         mEncPart.setMovilInfo(new MovilInfo(encparticipantess.getInt(encparticipantess.getColumnIndex(ConstantsDB.ID_INSTANCIA)),

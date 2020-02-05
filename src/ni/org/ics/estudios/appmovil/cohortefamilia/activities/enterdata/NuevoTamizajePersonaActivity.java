@@ -1339,13 +1339,15 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         else
                             procesos.setEncLacMat(Constants.NO);
                         procesos.setEncPart(Constants.YES);
-                        if (participante.getEdadMeses() >= 24) {
+                        //MA2020. Ya no preguntar encuestas seroprevalencia
+                        /*if (participante.getEdadMeses() >= 24) {
                             procesos.setEnCasaSa(Constants.YES);
                             procesos.setEncPartSa(Constants.YES);
-                        } else {
+                        } else {*/
                             procesos.setEnCasaSa(Constants.NO);
                             procesos.setEncPartSa(Constants.NO);
-                        }
+                        //}
+
                         procesos.setDatosVisita(Constants.YES);
                         procesos.setPesoTalla(Constants.YES);
                         //si no pertenece a la pediatrica poner datos de muestra, sino que conserve los datos de muestra actuales
@@ -1382,6 +1384,11 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         procesos.setEstudio(estudios);
                         procesos.setCoordenadas("1");
                         procesos.setReConsChf18(Constants.NO);
+                        //MA2020
+                        procesos.setAntecedenteTutorCP(Constants.YES);
+                        procesos.setMostrarAlfabeto(Constants.YES);
+                        procesos.setMostrarPadreAlfabeto(Constants.YES);
+                        procesos.setMostrarMadreAlfabeta(Constants.YES);
                         MovilInfo movilInfo = new MovilInfo();
                         movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
                         movilInfo.setDeviceid(infoMovil.getDeviceId());

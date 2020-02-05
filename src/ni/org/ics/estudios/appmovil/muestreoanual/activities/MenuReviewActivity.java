@@ -20,11 +20,8 @@ import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
-import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.MenuReviewAdapter;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -54,8 +51,9 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
     private ArrayList<DatosVisitaTerreno> mDatosVisitaTerreno = new ArrayList<DatosVisitaTerreno>();
     private ArrayList<Documentos> mDocumentos = new ArrayList<Documentos>();
     private ArrayList<EncuestaCasa> mEncuestasCasasChf = new ArrayList<EncuestaCasa>();
-    private ArrayList<EncuestaCasaSA> mEncuestasCasasSa = new ArrayList<EncuestaCasaSA>();
-    private ArrayList<EncuestaParticipanteSA> mEncuestasParticipantesSa = new ArrayList<EncuestaParticipanteSA>();
+    //MA2020
+    /*private ArrayList<EncuestaCasaSA> mEncuestasCasasSa = new ArrayList<EncuestaCasaSA>();
+    private ArrayList<EncuestaParticipanteSA> mEncuestasParticipantesSa = new ArrayList<EncuestaParticipanteSA>();*/
     private ArrayList<ParticipanteSeroprevalencia> mConSA = new ArrayList<ParticipanteSeroprevalencia>();
 	private GridView gridView;
 	private TextView textView;
@@ -192,7 +190,8 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 16:
+                    //MA2020
+                    /*case 16:
                         arguments.putString(Constants.TITLE, getString(R.string.info_casasa));
                         if (mEncuestasCasasSa!=null) arguments.putSerializable(Constants.OBJECTO , mEncuestasCasasSa);
                         i = new Intent(getApplicationContext(),
@@ -203,7 +202,7 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
                         if (mEncuestasParticipantesSa!=null) arguments.putSerializable(Constants.OBJECTO , mEncuestasParticipantesSa);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
-                        break;
+                        break;*/
                     default:
                         i = new Intent(getApplicationContext(),
                                 MenuReviewActivity.class);
@@ -242,8 +241,9 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
         mDocumentos = ca.getListaDocumentosHoy();
         mDatosVisitaTerreno = ca.getListaDatosVisitaTerrenoHoy();
         mEncuestasCasasChf = ca.getListaEncuestaCasasChfHoy();
-        mEncuestasCasasSa = (ArrayList)ca.getEncuestasCasaSA(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), MainDBConstants.codigo+ " , " +MainDBConstants.recordDate);
-        mEncuestasParticipantesSa = (ArrayList)ca.getEncuestasParticipanteSA(MainDBConstants.recordDate + " >= " + timeStamp.getTime(), MainDBConstants.codigo+ " , " +MainDBConstants.recordDate);
+        //MA2020
+        /*mEncuestasCasasSa = (ArrayList)ca.getEncuestasCasaSA(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), MainDBConstants.codigo+ " , " +MainDBConstants.recordDate);
+        mEncuestasParticipantesSa = (ArrayList)ca.getEncuestasParticipanteSA(MainDBConstants.recordDate + " >= " + timeStamp.getTime(), MainDBConstants.codigo+ " , " +MainDBConstants.recordDate);*/
         mConSA=(ArrayList)ca.getParticipantesSeroprevalencia(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), SeroprevalenciaDBConstants.participante+ " , " +MainDBConstants.recordDate);
 		ca.close();	
 	}	
@@ -314,7 +314,7 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
             gridView.setAdapter(new MenuReviewAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
                     , mVisitasTerreno.size(), mPyTs.size(), mEncuestasCasas.size(), mEncuestasParticipantes.size(),
                     mEncuestasLactancias.size(), mVacunas.size(), mEncuestasS.size(), mReConsentimientoDen.size(), mMuestras.size(), mObsequios.size(), mConSA.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size(), mDocumentos.size(),
-                    mEncuestasCasasChf.size(), mEncuestasCasasSa.size(), mEncuestasParticipantesSa.size()));
+                    mEncuestasCasasChf.size()));
 
             dismissProgressDialog();
         }

@@ -222,6 +222,15 @@ public class EncuestaCasaXml {
     private String opcFabOtroMedioTrans;
     @Element(required=false)
     private Integer yearFabOtroMedioTrans;
+    //MA2020
+	@Element(required=false)
+	private String dengue;
+	@Element(required=false)
+	private String cambiado_casa;
+	@Element(required=false)
+	private String remodelacion_casa;
+	@Element(required=false)
+	private String tiene_vehiculo;
 	
 	@Element(required=false)
 	private String titulo1;
@@ -1156,4 +1165,36 @@ public class EncuestaCasaXml {
     public void setYearFabOtroMedioTrans(Integer yearFabOtroMedioTrans) {
         this.yearFabOtroMedioTrans = yearFabOtroMedioTrans;
     }
+
+	public String getDengue() {
+		return dengue;
+	}
+
+	public void setDengue(String dengue) {
+		this.dengue = dengue;
+	}
+
+	public String getCambiado_casa() {
+		return cambiado_casa;
+	}
+
+	public void setCambiado_casa(String cambiado_casa) {
+		this.cambiado_casa = cambiado_casa;
+	}
+
+	public String getRemodelacion_casa() {
+		return remodelacion_casa;
+	}
+
+	public void setRemodelacion_casa(String remodelacion_casa) {
+		this.remodelacion_casa = remodelacion_casa;
+	}
+
+	public String getTiene_vehiculo() {
+		return tiene_vehiculo;
+	}
+
+	public void setTiene_vehiculo(String tiene_vehiculo) {
+		this.tiene_vehiculo = tiene_vehiculo;
+	}
 }

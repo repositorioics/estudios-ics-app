@@ -41,15 +41,11 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCoho
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.influenzauo1.dto.DatosUO1;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.MenuInfoAdapter;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
-import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaCasaSAActivity;
-import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaParticipanteSAActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
@@ -73,8 +69,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private ArrayList<DatosVisitaTerreno> mDatosVisitaTerreno = new ArrayList<DatosVisitaTerreno>();
     private ArrayList<Documentos> mDocumentos = new ArrayList<Documentos>();
     private ArrayList<EncuestaCasa> mEncuestasCasasChf = new ArrayList<EncuestaCasa>();
-    private ArrayList<EncuestaCasaSA> mEncuestasCasasSa = new ArrayList<EncuestaCasaSA>();
-    private ArrayList<EncuestaParticipanteSA> mEncuestasParticipantesSa = new ArrayList<EncuestaParticipanteSA>();
+    //private ArrayList<EncuestaCasaSA> mEncuestasCasasSa = new ArrayList<EncuestaCasaSA>();//MA2020
+    //private ArrayList<EncuestaParticipanteSA> mEncuestasParticipantesSa = new ArrayList<EncuestaParticipanteSA>();//MA2020
     private List<MessageResource> catRelacionFamiliar = new ArrayList<MessageResource>();
     private ArrayList<DatosCoordenadas> mDatosCoordenadas = new ArrayList<DatosCoordenadas>();
     private ArrayList<ParticipanteSeroprevalencia> mConSA = new ArrayList<ParticipanteSeroprevalencia>();
@@ -106,8 +102,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private MenuItem partoItem;
     private MenuItem datosCasaItem;
     private MenuItem encCasaChfItem;
-    private MenuItem encCasaSaItem;
-    private MenuItem encPartSaItem;
+    //MA2020
+    //private MenuItem encCasaSaItem;
+    //private MenuItem encPartSaItem;
     private MenuItem coordenadasItem;
     private MenuItem recon18ChfItem;
     private MenuItem consFluUO1Item;
@@ -268,7 +265,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 17:
+                    //MA2020
+                    /*case 17:
                         arguments.putString(Constants.TITLE, getString(R.string.info_casasa));
                         if (mEncuestasCasasSa!=null) arguments.putSerializable(Constants.OBJECTO , mEncuestasCasasSa);
                         i = new Intent(getApplicationContext(),
@@ -280,7 +278,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 19:
+                        */
+                    case 17:
                         arguments.putString(Constants.TITLE, getString(R.string.info_telefonos));
 
                         i = new Intent(getApplicationContext(),
@@ -288,7 +287,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         if (mParticipante!=null) i.putExtra(Constants.PARTICIPANTE, mParticipante);
 
                         break;
-                    case 20:
+                    case 18:
                         arguments.putString(Constants.TITLE, getString(R.string.info_coordenadas));
                         if (mDatosCoordenadas!=null) arguments.putSerializable(Constants.OBJECTO , mDatosCoordenadas);
                         i = new Intent(getApplicationContext(),
@@ -331,8 +330,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             partoItem = menu.findItem(R.id.PARTO);
             datosCasaItem = menu.findItem(R.id.DAT_CASA);
             encCasaChfItem = menu.findItem(R.id.ENCASA_CHF);
-            encCasaSaItem = menu.findItem(R.id.ENCASA_SA);
-            encPartSaItem = menu.findItem(R.id.ENPART_SA);
+            //MA2020
+            //encCasaSaItem = menu.findItem(R.id.ENCASA_SA);
+            //encPartSaItem = menu.findItem(R.id.ENPART_SA);
             coordenadasItem = menu.findItem(R.id.COORDENADAS);
             recon18ChfItem = menu.findItem(R.id.RECONS_CHF);
             consFluUO1Item = menu.findItem(R.id.CONSFLUUO1);
@@ -791,7 +791,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     toast.show();
                 }
                 return true;
-            case R.id.ENCASA_SA:
+                //MA2020
+            /*case R.id.ENCASA_SA:
                 if(mUser.getEncuestaCasa()) {
                     if(mParticipante.getProcesos().getEnCasaSa().matches("Si")) {
                         i = new Intent(getApplicationContext(),
@@ -848,7 +849,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
                     toast.show();
                 }
-                return true;
+                return true;*/
             case R.id.COORDENADAS:
                 if(!mParticipante.getProcesos().getCoordenadas().equals("0")) {
                     i = new Intent(getApplicationContext(),
@@ -930,8 +931,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         partoItem.setVisible(false);
         datosCasaItem.setVisible(false);
         encCasaChfItem.setVisible(false);
-        encCasaSaItem.setVisible(false);
-        encPartSaItem.setVisible(false);
+        //MA2020 encCasaSaItem.setVisible(false);
+        //MA2020 encPartSaItem.setVisible(false);
         coordenadasItem.setVisible(false);
         recon18ChfItem.setVisible(false);
         consFluUO1Item.setVisible(false);
@@ -956,8 +957,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if (((mParticipante.getProcesos().getDatosParto().matches("Si") || mParticipante.getProcesos().getcDatosParto().matches("Si")) && mUser.getDatosparto())) partoItem.setVisible(true);
             if (mParticipante.getProcesos().getDatosVisita().matches("Si")) datosCasaItem.setVisible(true); //15032018. permitir aúnque no sea en terreno if ((mParticipante.getProcesos().getDatosVisita().matches("Si") && mUser.getVisitas())) datosCasaItem.setVisible(true);
             if((mParticipante.getProcesos().getEnCasaChf().matches("Si") && mUser.getEncuestaCasa())) encCasaChfItem.setVisible(true);
-            if((mParticipante.getProcesos().getEnCasaSa().matches("Si") && mUser.getEncuestaCasa())) encCasaSaItem.setVisible(true);
-            if((mParticipante.getProcesos().getEncPartSa().matches("Si") && mUser.getEncuestaParticipante())) encPartSaItem.setVisible(true);
+            //MA2020 if((mParticipante.getProcesos().getEnCasaSa().matches("Si") && mUser.getEncuestaCasa())) encCasaSaItem.setVisible(true);
+            //MA2020 if((mParticipante.getProcesos().getEncPartSa().matches("Si") && mUser.getEncuestaParticipante())) encPartSaItem.setVisible(true);
             if ((mParticipante.getProcesos().getReConsChf18()!=null && mParticipante.getProcesos().getReConsChf18().matches("Si") && mUser.getConsentimiento())) recon18ChfItem.setVisible(true);
             visitaItem.setVisible(false);
         }
@@ -1019,10 +1020,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         if(mParticipante.getCasa().getCodigo()!=9999){
             if (mParticipante.getProcesos().getCasaCHF()!=null && !mParticipante.getProcesos().getCasaCHF().isEmpty())
                 mEncuestasCasasChf = estudiosAdapter.getListaEncuestaCasasChf(mParticipante.getProcesos().getCasaCHF());
-            mEncuestasCasasSa = (ArrayList)estudiosAdapter.getEncuestasCasaSA(SeroprevalenciaDBConstants.casa + "=" + mParticipante.getCasa().getCodigo() , null);
+            //MA2020 mEncuestasCasasSa = (ArrayList)estudiosAdapter.getEncuestasCasaSA(SeroprevalenciaDBConstants.casa + "=" + mParticipante.getCasa().getCodigo() , null);
         }
         mDatosCoordenadas = (ArrayList)estudiosAdapter.getDatosCoordenadas(MainDBConstants.participante + "=" + mParticipante.getCodigo(), null);
-        mEncuestasParticipantesSa = (ArrayList)estudiosAdapter.getEncuestasParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo() , null);
+        //MA2020 mEncuestasParticipantesSa = (ArrayList)estudiosAdapter.getEncuestasParticipanteSA(SeroprevalenciaDBConstants.participante + "=" + mParticipante.getCodigo() , null);
         catRelacionFamiliar = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", null);
         mConSA = (ArrayList)estudiosAdapter.getParticipantesSeroprevalencia(MainDBConstants.participante + "=" + mParticipante.getCodigo(), null);
         //procesos CHF
@@ -1103,7 +1104,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
 
             if (mParticipante.getProcesos().getConsFlu().matches("Si")|| mParticipante.getProcesos().getPesoTalla().matches("Si")
                     || mParticipante.getProcesos().getEnCasa().matches("Si")||mParticipante.getProcesos().getEncPart().matches("Si")
-                    || mParticipante.getProcesos().getEnCasaChf().matches("Si")|| mParticipante.getProcesos().getEnCasaSa().matches("Si")||mParticipante.getProcesos().getEncPartSa().matches("Si")
+                    || mParticipante.getProcesos().getEnCasaChf().matches("Si")//MA2020|| mParticipante.getProcesos().getEnCasaSa().matches("Si")||mParticipante.getProcesos().getEncPartSa().matches("Si")
                     || mParticipante.getProcesos().getEncLacMat().matches("Si")||mParticipante.getProcesos().getInfoVacuna().matches("Si")
                     || mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getObsequio().matches("Si")
                     || mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No")|| mParticipante.getProcesos().getZika().matches("Si")
@@ -1333,18 +1334,20 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.housechf_survey_missing) + "</font></small><br />";
                     pendiente=true;
                 }
-                if (mParticipante.getProcesos().getEnCasaSa().matches("Si") && mUser.getEncuestaCasa()) {
+                //MA2020
+                /*if (mParticipante.getProcesos().getEnCasaSa().matches("Si") && mUser.getEncuestaCasa()) {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.housesa_survey_missing) + "</font></small><br />";
                     pendiente=true;
-                }
+                }*/
                 if (mParticipante.getProcesos().getEncPart().matches("Si") && mUser.getEncuestaParticipante()) {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.part_survey_missing) + "</font></small><br />";
                     pendiente=true;
                 }
-                if (mParticipante.getProcesos().getEncPartSa().matches("Si") && mUser.getEncuestaParticipante()) {
+                //MA2020
+                /*if (mParticipante.getProcesos().getEncPartSa().matches("Si") && mUser.getEncuestaParticipante()) {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.partsa_survey_missing) + "</font></small><br />";
                     pendiente=true;
-                }
+                }*/
                 if (mParticipante.getProcesos().getConsFlu().matches("Si") && mUser.getConsentimiento()){
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consflu_missing_UO1) + "</font></small><br />";
                     pendiente=true;
@@ -1654,7 +1657,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 gridView.setAdapter(new MenuInfoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
                         ,mVisitasTerreno.size(),mPyTs.size(),mEncuestasCasas.size(),mEncuestasParticipantes.size(),
                         mEncuestasLactancias.size(),mVacunas.size(),mReConsentimientoDen.size(),mMuestras.size(),mObsequios.size(), mConSA.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()
-                        ,mEncuestasCasasChf.size(), mEncuestasCasasSa.size(), mEncuestasParticipantesSa.size(), mDatosCoordenadas.size()));
+                        ,mEncuestasCasasChf.size(), mDatosCoordenadas.size()));
                 refreshView();
             }catch (Exception ex){
                 dismissProgressDialog();

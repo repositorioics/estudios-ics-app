@@ -26,10 +26,7 @@ import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.muestreoanual.parsers.EncuestaCasaXml;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
-import ni.org.ics.estudios.appmovil.utils.FileUtils;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -53,6 +50,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
 	private SharedPreferences settings;
 	private static Participante mParticipante = new Participante();
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
+	private String existeParticipanteDengue = Constants.NO;
 
 	private boolean visExitosa = false;
 	Dialog dialogInit;
@@ -211,18 +209,23 @@ public class NewEcActivity extends AbstractAsyncActivity {
 			mEC.setGrifo(em.getGrifo());
 			mEC.setGrifoComSN(em.getGrifoComSN());
 			mEC.sethorasagua(em.getHorasagua());
+			//MA2020
+			mEC.setUbicacionLavandero(em.getUBICACION_LAVANDERO());
 			mEC.setMcasa(em.getMcasa());
 			mEC.setOcasa(em.getOcasa());
 			mEC.setPiso(em.getPiso());
 			mEC.setOpiso(em.getOpiso());
 			mEC.setTecho(em.getTecho());
 			mEC.setOtecho(em.getOtecho());
+
 			mEC.setCpropia(em.getCpropia());
 			mEC.setCabanicos(em.getCabanicos());
 			mEC.setCtelevisores(em.getCtelevisores());
 			mEC.setCrefrigeradores(em.getCrefrigeradores());
+			//MA2020
 			mEC.setMoto(em.getMoto());
 			mEC.setCarro(em.getCarro());
+
 			mEC.setCocinalena(em.getCocinalena());
 			mEC.setAnimalesSN(em.getAnimalesSN());
 			mEC.setPollos(em.getPollos());
@@ -239,7 +242,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
             mEC.setOtrorecurso2(em.getOtrorecurso2());
 
             //CHF + NUEVAS PREGUNTAS MA2018
-            mEC.setViveEmbEnCasa(em.getViveEmbEnCasa());
+            //mEC.setViveEmbEnCasa(em.getViveEmbEnCasa());//Ya no es necesario MA2020. Aubree
             mEC.setCantidadCuartos(em.getCANTIDAD_CUARTOS());
             mEC.setAlmacenaAgua(em.getALMACENA_AGUA());
             mEC.setAlmacenaEnBarriles(em.getALMACENA_EN_BARRILES());
@@ -259,12 +262,13 @@ public class NewEcActivity extends AbstractAsyncActivity {
             mEC.setNumeroOtrosRecipientes(em.getNUMERO_OTROS_RECIPIENTES());
             mEC.setOtrosRecipTapados(em.getOTROS_RECIP_TAPADOS());
             mEC.setOtrosrecipConAbate(em.getOTROSRECIP_CON_ABATE());
-            mEC.setUbicacionLavandero(em.getUBICACION_LAVANDERO());
+
             mEC.setTieneAbanico(em.getTIENE_ABANICO());
             mEC.setTieneTelevisor(em.getTIENE_TELEVISOR());
             mEC.setTieneRefrigeradorFreezer(em.getTIENE_REFRIGERADOR_FREEZER());
             mEC.setTieneAireAcondicionado(em.getTIENE_AIRE_ACONDICIONADO());
             mEC.setFuncionamientoAire(em.getFUNCIONAMIENTO_AIRE());
+			//MA2020
             mEC.setOpcFabCarro(em.getOpcFabCarro());
             mEC.setYearNow(em.getYearNow());
             mEC.setYearFabCarro(em.getYearFabCarro());
@@ -273,6 +277,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
             mEC.setTieneCamion(em.getTIENE_CAMION());
             mEC.setTieneOtroMedioTrans(em.getTIENE_OTRO_MEDIO_TRANS());
             mEC.setDescOtroMedioTrans(em.getDESC_OTRO_MEDIO_TRANS());
+
             mEC.setCocinaConLenia(em.getCOCINA_CON_LENIA());
             mEC.setUbicacionCocinaLenia(em.getUBICACION_COCINA_LENIA());
             mEC.setPeriodicidadCocinaLenia(em.getPERIODICIDAD_COCINA_LENIA());
@@ -296,6 +301,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
             mEC.setServRecolBasura(em.getServRecolBasura());
             mEC.setFrecServRecolBasura(em.getFrecServRecolBasura());
             mEC.setLlantasOtrosContConAgua(em.getLlantasOtrosContConAgua());
+			//MA2020
             mEC.setOpcFabMicrobus(em.getOpcFabMicrobus());
             mEC.setYearFabMicrobus(em.getYearFabMicrobus());
             mEC.setOpcFabCamioneta(em.getOpcFabCamioneta());
@@ -304,6 +310,10 @@ public class NewEcActivity extends AbstractAsyncActivity {
             mEC.setYearFabCamion(em.getYearFabCamion());
             mEC.setOpcFabOtroMedioTrans(em.getOpcFabOtroMedioTrans());
             mEC.setYearFabOtroMedioTrans(em.getYearFabOtroMedioTrans());
+            //MA2020
+			mEC.setCambiadoCasa(em.getCambiado_casa());
+			mEC.setRemodelacionCasa(em.getRemodelacion_casa());
+			mEC.setTieneVehiculo(em.getTiene_vehiculo());
 
             mEC.setMovilInfo(new MovilInfo(idInstancia,
 					instanceFilePath,
@@ -432,6 +442,12 @@ public class NewEcActivity extends AbstractAsyncActivity {
 			Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
 			//Arranca la actividad ODK Collect en busca de resultado
 			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
+
+			String valores[] = new String[2];
+			valores[0] = "dengue";
+			valores[1] =  existeParticipanteDengue;
+
+			odkA.putExtra("vc", valores);
 			startActivityForResult(odkA,ADD_PART);
 		}
 		catch(Exception e){
@@ -445,6 +461,8 @@ public class NewEcActivity extends AbstractAsyncActivity {
 
     	estudiosAdapter.open();
 		mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo +"="+ codigo, null);
+		boolean existenPart = estudiosAdapter.existenParticipantesEnEstudio(mParticipante.getCasa().getCodigo(), Constants.NOM_EST_COHORTEDENGUE);
+		if (existenPart) existeParticipanteDengue = Constants.YES;
 		estudiosAdapter.close();
 	}	
 

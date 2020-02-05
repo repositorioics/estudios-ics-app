@@ -150,6 +150,11 @@ public class RazonNoDataActivity extends AbstractAsyncActivity{
 		});
 	}
 
+	@Override
+	public void onBackPressed (){
+		Toast.makeText(getApplicationContext(), this.getString( R.string.header_rnd),Toast.LENGTH_LONG).show();
+	}
+
 	private boolean validarEntrada() {
 		if (rndSpinner.getSelectedItem().toString().matches("Seleccionar..")){
 			Toast.makeText(getApplicationContext(), this.getString( R.string.error_rnd),Toast.LENGTH_LONG).show();

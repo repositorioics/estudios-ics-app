@@ -151,6 +151,12 @@ public class ConstantsDB {
     public static final String reConsChf18 = "reConsChf18";
     public static final String posDengue = "posDengue";//22052019
     public static final String mxSuperficie = "mxSuperficie";//Muestras de superficie
+    //MA2020
+    public static final String mostrarAlfabeto = "mostrarAlfabeto";
+    public static final String mostrarPadreAlfabeto = "mostrarPadreAlfabeto";
+    public static final String mostrarMadreAlfabeta = "mostrarMadreAlfabeta";
+    public static final String antecedenteTutorCP = "antecedenteTutorCP";
+
     //Campos encuesta casa
     public static final String FECHA_ENC_CASA = "fecha_encuesta";
     public static final String CVIVEN1 = "cvivencasa1";
@@ -253,6 +259,10 @@ public class ConstantsDB {
     public static final String yearFabCamion = "yearFabCamion";
     public static final String opcFabOtroMedioTrans = "opcFabOtroMedioTrans";
     public static final String yearFabOtroMedioTrans = "yearFabOtroMedioTrans";
+    //MA2020
+    public static final String cambiadoCasa = "cambiadoCasa";
+    public static final String remodelacionCasa = "remodelacionCasa";
+    public static final String tieneVehiculo = "tieneVehiculo";
 
     //Campos encuesta participante
     public static final String FECHA_ENC_PAR = "fecha_encuesta";
@@ -415,6 +425,22 @@ public class ConstantsDB {
     public static final String vacunaInfluenzaOtro = "vacunaInfluenzaOtro";
     public static final String nombreCDI = "nombreCDI";
     public static final String direccionCDI = "direccionCDI";
+    //MA2020
+    public static final String otroLugarCuidan = "otroLugarCuidan";
+    public static final String enfermedadCronica = "enfermedadCronica";
+    public static final String tenidoDengue = "tenidoDengue";
+    public static final String unidadSaludDengue = "unidadSaludDengue";
+    public static final String centroSaludDengue = "centroSaludDengue";
+    public static final String otroCentroSaludDengue = "otroCentroSaludDengue";
+    public static final String puestoSaludDengue = "puestoSaludDengue";
+    public static final String hospitalDengue = "hospitalDengue";
+    public static final String otroHospitalDengue = "otroHospitalDengue";
+    public static final String hospitalizadoDengue = "hospitalizadoDengue";
+    public static final String ambulatorioDengue = "ambulatorioDengue";
+    public static final String diagMedicoDengue = "diagMedicoDengue";
+    public static final String rashUA = "rashUA";
+    public static final String consultaRashUA = "consultaRashUA";
+
     //Campos encuesta lactancia materna
     public static final String FECHA_ENC_LACT = "fecha_encuesta";
     public static final String DIOPECHO = "diopecho";
@@ -962,6 +988,10 @@ public class ConstantsDB {
             + reConsChf18  + " text, "
             + posDengue  + " text, "
             + mxSuperficie  + " text, "
+            + mostrarAlfabeto  + " text, " //MA2020
+            + mostrarMadreAlfabeta  + " text, "
+            + mostrarPadreAlfabeto  + " text, "
+            + antecedenteTutorCP  + " text, "
             + ID_INSTANCIA + " integer,"
             + FILE_PATH + " text,"
             + STATUS + " text, "
@@ -1087,6 +1117,9 @@ public class ConstantsDB {
             + yearFabCamion  + " integer, "
             + opcFabOtroMedioTrans  + " text, "
             + yearFabOtroMedioTrans  + " integer, "
+            + cambiadoCasa  + " text, "
+            + remodelacionCasa  + " text, "
+            + tieneVehiculo  + " text, "
             + ID_INSTANCIA + " integer not null,"
             + FILE_PATH + " text not null,"
             + STATUS + " text not null, "
@@ -1267,6 +1300,21 @@ public class ConstantsDB {
             + vacunaInfluenzaOtro + " text, "
             + nombreCDI + " text, "
             + direccionCDI + " text, "
+            //MA2020
+            + otroLugarCuidan + " text, "
+            + enfermedadCronica + " text, "
+            + tenidoDengue + " text, "
+            + unidadSaludDengue + " text, "
+            + centroSaludDengue + " text, "
+            + otroCentroSaludDengue + " text, "
+            + puestoSaludDengue + " text, "
+            + hospitalDengue + " text, "
+            + otroHospitalDengue + " text, "
+            + hospitalizadoDengue + " text, "
+            + ambulatorioDengue + " text, "
+            + diagMedicoDengue + " text, "
+            + rashUA + " text, "
+            + consultaRashUA + " text, "
             + ID_INSTANCIA + " integer not null,"
             + FILE_PATH + " text not null,"
             + STATUS + " text not null, "

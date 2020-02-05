@@ -184,8 +184,24 @@ public class EncuestaParticipante implements Serializable{
     private String vacunaInfluenzaOtro;
     private String nombreCDI;
     private String direccionCDI;
+    //MA2020
+	private String otroLugarCuidan;
+	private String enfermedadCronica;
+	private String tenidoDengue;
+	private String unidadSaludDengue;
+	private String centroSaludDengue;
+	private String otroCentroSaludDengue;
+	private String puestoSaludDengue;
+	private String hospitalDengue;
+	private String otroHospitalDengue;
+	private String hospitalizadoDengue;
+	private String ambulatorioDengue;
+	private String diagMedicoDengue;
+	private String rashUA; //sustitución de rash6m
+	private String consultaRashUA; //sustitución de consultaRashHormigueo
 
-    public Integer getOtrorecurso1() {
+
+	public Integer getOtrorecurso1() {
 		return otrorecurso1;
 	}
 
@@ -1473,4 +1489,116 @@ public class EncuestaParticipante implements Serializable{
     public void setDireccionCDI(String direccionCDI) {
         this.direccionCDI = direccionCDI;
     }
+
+	public String getOtroLugarCuidan() {
+		return otroLugarCuidan;
+	}
+
+	public void setOtroLugarCuidan(String otroLugarCuidan) {
+		this.otroLugarCuidan = otroLugarCuidan;
+	}
+
+	public String getEnfermedadCronica() {
+		return enfermedadCronica;
+	}
+
+	public void setEnfermedadCronica(String enfermedadCronica) {
+		this.enfermedadCronica = enfermedadCronica;
+	}
+
+	public String getTenidoDengue() {
+		return tenidoDengue;
+	}
+
+	public void setTenidoDengue(String tenidoDengue) {
+		this.tenidoDengue = tenidoDengue;
+	}
+
+	public String getUnidadSaludDengue() {
+		return unidadSaludDengue;
+	}
+
+	public void setUnidadSaludDengue(String unidadSaludDengue) {
+		this.unidadSaludDengue = unidadSaludDengue;
+	}
+
+	public String getCentroSaludDengue() {
+		return centroSaludDengue;
+	}
+
+	public void setCentroSaludDengue(String centroSaludDengue) {
+		this.centroSaludDengue = centroSaludDengue;
+	}
+
+	public String getOtroCentroSaludDengue() {
+		return otroCentroSaludDengue;
+	}
+
+	public void setOtroCentroSaludDengue(String otroCentroSaludDengue) {
+		this.otroCentroSaludDengue = otroCentroSaludDengue;
+	}
+
+	public String getPuestoSaludDengue() {
+		return puestoSaludDengue;
+	}
+
+	public void setPuestoSaludDengue(String puestoSaludDengue) {
+		this.puestoSaludDengue = puestoSaludDengue;
+	}
+
+	public String getHospitalDengue() {
+		return hospitalDengue;
+	}
+
+	public void setHospitalDengue(String hospitalDengue) {
+		this.hospitalDengue = hospitalDengue;
+	}
+
+	public String getOtroHospitalDengue() {
+		return otroHospitalDengue;
+	}
+
+	public void setOtroHospitalDengue(String otroHospitalDengue) {
+		this.otroHospitalDengue = otroHospitalDengue;
+	}
+
+	public String getHospitalizadoDengue() {
+		return hospitalizadoDengue;
+	}
+
+	public void setHospitalizadoDengue(String hospitalizadoDengue) {
+		this.hospitalizadoDengue = hospitalizadoDengue;
+	}
+
+	public String getAmbulatorioDengue() {
+		return ambulatorioDengue;
+	}
+
+	public void setAmbulatorioDengue(String ambulatorioDengue) {
+		this.ambulatorioDengue = ambulatorioDengue;
+	}
+
+	public String getDiagMedicoDengue() {
+		return diagMedicoDengue;
+	}
+
+	public void setDiagMedicoDengue(String diagMedicoDengue) {
+		this.diagMedicoDengue = diagMedicoDengue;
+	}
+
+	public String getRashUA() {
+		return rashUA;
+	}
+
+	public void setRashUA(String rashUA) {
+		this.rashUA = rashUA;
+	}
+
+	public String getConsultaRashUA() {
+		return consultaRashUA;
+	}
+
+	public void setConsultaRashUA(String consultaRashUA) {
+		this.consultaRashUA = consultaRashUA;
+	}
 }

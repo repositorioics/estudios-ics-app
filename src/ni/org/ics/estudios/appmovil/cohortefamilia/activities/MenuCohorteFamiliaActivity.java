@@ -367,6 +367,8 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 				return;
 			}
 		}
+		//MA2020
+		/*
 		if (requestCode == UPDATE_EQUIPO_CHF_ENC){
 			if (resultCode == RESULT_CANCELED) {
 				builder.setTitle(getApplicationContext().getString(R.string.error));
@@ -379,7 +381,8 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 				return;
 			}
 		}
-		if (requestCode == UPDATE_EQUIPO_SERO){
+		if (requestCode == UPDATE_EQUIPO_SERO){*/
+		if (requestCode == UPDATE_EQUIPO_CHF_ENC){
 			if (resultCode == RESULT_CANCELED) {
 				builder.setTitle(getApplicationContext().getString(R.string.error));
 				builder.setIcon(R.drawable.ic_menu_close_clear_cancel);

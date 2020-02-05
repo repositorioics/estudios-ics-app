@@ -35,8 +35,8 @@
             <item android:id="@+id/GIFT_CHF" android:title="@string/info_gift_chf"/>
             <item android:id="@+id/DOC" android:title="@string/info_docs"/>
             <item android:id="@+id/ENCASA_CHF" android:title="@string/casa_chf"/>
-            <item android:id="@+id/ENCASA_SA" android:title="@string/new_house_sa_survey"/>
-            <item android:id="@+id/ENPART_SA" android:title="@string/new_participant_sa_survey"/>
+            <!--MA2020<item android:id="@+id/ENCASA_SA" android:title="@string/new_house_sa_survey"/>
+            <item android:id="@+id/ENPART_SA" android:title="@string/new_participant_sa_survey"/>-->
             <item android:id="@+id/COORDENADAS" android:title="@string/info_coordenadas"/>
         </menu>
     </item>

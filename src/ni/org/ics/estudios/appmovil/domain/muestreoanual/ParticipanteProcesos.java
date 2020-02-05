@@ -57,6 +57,11 @@ public class ParticipanteProcesos implements Serializable {
     private String posDengue;
     //Muestras de superficie
     private String mxSuperficie; //1:asent mx superficie, 2:consent manos, 3:Ambos, 0 o null:No aplica
+    //MA2020
+    private String mostrarAlfabeto;
+    private String mostrarPadreAlfabeto;
+    private String mostrarMadreAlfabeta;
+    private String antecedenteTutorCP;
 
     private MovilInfo movilInfo;
 
@@ -402,6 +407,38 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setMxSuperficie(String mxSuperficie) {
         this.mxSuperficie = mxSuperficie;
+    }
+
+    public String getMostrarAlfabeto() {
+        return mostrarAlfabeto;
+    }
+
+    public void setMostrarAlfabeto(String mostrarAlfabeto) {
+        this.mostrarAlfabeto = mostrarAlfabeto;
+    }
+
+    public String getMostrarPadreAlfabeto() {
+        return mostrarPadreAlfabeto;
+    }
+
+    public void setMostrarPadreAlfabeto(String mostrarPadreAlfabeto) {
+        this.mostrarPadreAlfabeto = mostrarPadreAlfabeto;
+    }
+
+    public String getMostrarMadreAlfabeta() {
+        return mostrarMadreAlfabeta;
+    }
+
+    public void setMostrarMadreAlfabeta(String mostrarMadreAlfabeta) {
+        this.mostrarMadreAlfabeta = mostrarMadreAlfabeta;
+    }
+
+    public String getAntecedenteTutorCP() {
+        return antecedenteTutorCP;
+    }
+
+    public void setAntecedenteTutorCP(String antecedenteTutorCP) {
+        this.antecedenteTutorCP = antecedenteTutorCP;
     }
 }
 

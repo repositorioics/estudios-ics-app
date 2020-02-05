@@ -30,14 +30,15 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
 	private final int numDatosCasa;
 	private final int numDocs;
     private final int numEncCasaChf;
-    private final int numEncCasaSa;
-    private final int numEncPartSa;
+    //MA2020
+    //private final int numEncCasaSa;
+    //private final int numEncPartSa;
     private final int numDatosCoord;
 	public MenuInfoAdapter(Context context, int textViewResourceId,
 			String[] values, int recFlu, int visitas, int pyts
 			, int ecasa, int epart, int elact, int vacunas, int recDen
 			, int muestras, int obsequios, int seroprev, int partos, int datoscasas, int docs
-            , int ecasachf, int numEncCasaSa, int numEncPartSa, int numDatosCoord) {
+            , int ecasachf, int numDatosCoord) {
 		super(context, textViewResourceId, values);
 		this.values = values;
 		this.numRecFlu=recFlu;
@@ -55,8 +56,6 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
 		this.numDatosCasa=datoscasas;
 		this.numDocs = docs;
         this.numEncCasaChf = ecasachf;
-        this.numEncCasaSa = numEncCasaSa;
-        this.numEncPartSa = numEncPartSa;
         this.numDatosCoord = numDatosCoord;
 	}
 
@@ -204,7 +203,8 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 17:
+            //MA2020
+                /*case 17:
                 img = getContext().getResources().getDrawable(R.drawable.ic_survey_casa);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numEncCasaSa + ")");
@@ -219,12 +219,12 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
                 if (numEncPartSa < 1) {
                     textView.setTextColor(Color.RED);
                 }
-                break;
-            case 19:
+                break;*/
+            case 17:
                 img = getContext().getResources().getDrawable(R.drawable.ic_menu_call);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
-            case 20:
+            case 18:
                 img = getContext().getResources().getDrawable(R.drawable.ic_placemarker);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numDatosCoord + ")");

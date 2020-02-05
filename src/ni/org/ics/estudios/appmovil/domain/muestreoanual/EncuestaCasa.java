@@ -130,6 +130,10 @@ public class EncuestaCasa implements Serializable{
     private Integer yearFabCamion;
     private String opcFabOtroMedioTrans;
     private Integer yearFabOtroMedioTrans;
+    //MA2020
+	private String cambiadoCasa;
+	private String remodelacionCasa;
+	private String tieneVehiculo;
 
     public String getCodigo() {
         return codigo;
@@ -998,7 +1002,31 @@ public class EncuestaCasa implements Serializable{
         this.yearFabOtroMedioTrans = yearFabOtroMedioTrans;
     }
 
-    @Override
+	public String getCambiadoCasa() {
+		return cambiadoCasa;
+	}
+
+	public void setCambiadoCasa(String cambiadoCasa) {
+		this.cambiadoCasa = cambiadoCasa;
+	}
+
+	public String getRemodelacionCasa() {
+		return remodelacionCasa;
+	}
+
+	public void setRemodelacionCasa(String remodelacionCasa) {
+		this.remodelacionCasa = remodelacionCasa;
+	}
+
+	public String getTieneVehiculo() {
+		return tieneVehiculo;
+	}
+
+	public void setTieneVehiculo(String tieneVehiculo) {
+		this.tieneVehiculo = tieneVehiculo;
+	}
+
+	@Override
 	public String toString() {
 		return this.getCodigo();
 	}

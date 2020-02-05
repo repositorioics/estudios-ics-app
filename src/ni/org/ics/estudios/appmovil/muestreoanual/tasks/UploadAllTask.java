@@ -6,8 +6,6 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.VisitaTerreno;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -55,8 +53,8 @@ public class UploadAllTask extends UploadTask {
     private List<ReConsentimientoDen2015> mReconsentimientos2015 = new ArrayList<ReConsentimientoDen2015>();
     private List<ReConsentimientoFlu2015> mReconsentimientosFlu2015 = new ArrayList<ReConsentimientoFlu2015>();
     private List<CambiosCasas> mCambiosCasas = new ArrayList<CambiosCasas>();
-    private List<EncuestaCasaSA> mEncuestasCasaSA = new ArrayList<EncuestaCasaSA>();
-    private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = new ArrayList<EncuestaParticipanteSA>();
+    //MA2020 private List<EncuestaCasaSA> mEncuestasCasaSA = new ArrayList<EncuestaCasaSA>();
+    //MA2020 private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = new ArrayList<EncuestaParticipanteSA>();
     private List<Tamizaje> mTamizajes = new ArrayList<Tamizaje>();
     private List<CartaConsentimiento> mCartasConsent = new ArrayList<CartaConsentimiento>();
     private List<ContactoParticipante> mContactos = new ArrayList<ContactoParticipante>();
@@ -312,8 +310,8 @@ public class UploadAllTask extends UploadTask {
                 e1.printStackTrace();
                 return e1.getLocalizedMessage();
             }
-
-            getEncuestasSA();
+            //MA2020
+            /*getEncuestasSA();
             try {
                 saveEncuestasCasaSA(Constants.STATUS_SUBMITTED);
                 error = cargarEncuestasCasaSa(url, username, password);
@@ -335,7 +333,7 @@ public class UploadAllTask extends UploadTask {
             } catch (Exception e1) {
                 e1.printStackTrace();
                 return e1.getLocalizedMessage();
-            }
+            }*/
             try {
                 getTamizajes();
                 saveTamizajes(Constants.STATUS_SUBMITTED);
@@ -2004,7 +2002,8 @@ public class UploadAllTask extends UploadTask {
         //ca.close();
     }
 
-    private void getEncuestasSA(){
+    //MA2020
+    /*private void getEncuestasSA(){
         String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
         mEncuestasCasaSA = estudioAdapter.getEncuestasCasaSA(filtro, null);
         mEncuestasParticipanteSA = estudioAdapter.getEncuestasParticipanteSA(filtro,null);
@@ -2030,13 +2029,14 @@ public class UploadAllTask extends UploadTask {
                         .valueOf(c).toString());
             }
         }
-    }
+    }*/
 
     /***************************************************/
     /********************* Encuestas Casas sero prevalencia ************************/
     /***************************************************/
     // url, username, password
-    protected String cargarEncuestasCasaSa(String url, String username,
+    //MA2020
+    /*protected String cargarEncuestasCasaSa(String url, String username,
                                            String password) throws Exception {
         try {
             if(mEncuestasCasaSA.size()>0){
@@ -2064,13 +2064,14 @@ public class UploadAllTask extends UploadTask {
             Log.e(TAG, e.getMessage(), e);
             return e.getMessage();
         }
-    }
+    }*/
 
     /***************************************************/
     /********************* Encuestas Participantes sero prevalencia ************************/
     /***************************************************/
     // url, username, password
-    protected String cargarEncuestasParticipantesSa(String url, String username,
+    //MA2020
+    /*protected String cargarEncuestasParticipantesSa(String url, String username,
                                                     String password) throws Exception {
         try {
             if(mEncuestasParticipanteSA.size()>0){
@@ -2098,7 +2099,7 @@ public class UploadAllTask extends UploadTask {
             Log.e(TAG, e.getMessage(), e);
             return e.getMessage();
         }
-    }
+    }*/
 
     /***************************************************/
     /*************** Participantes SA ************/

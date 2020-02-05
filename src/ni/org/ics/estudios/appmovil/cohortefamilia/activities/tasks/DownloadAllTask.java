@@ -13,9 +13,6 @@ import ni.org.ics.estudios.appmovil.domain.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -66,8 +63,8 @@ public class DownloadAllTask extends DownloadTask {
     private List<TelefonoContacto> mTelefonos = null;
     
     //private List<ParticipanteSeroprevalencia> mParticipantesSA = null;
-    private List<EncuestaCasaSA> mEncuestasCasaSA = null;
-    private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = null;
+    //MA2020 private List<EncuestaCasaSA> mEncuestasCasaSA = null;
+    //MA2020 private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = null;
     
     
     private List<CasaCohorteFamiliaCaso> mCasaCohorteFamiliaCasos = null;
@@ -430,15 +427,15 @@ public class DownloadAllTask extends DownloadTask {
 			estudioAdapter.close();
 			return e.getLocalizedMessage();
 		}
-		
-		try {
+        //MA2020
+		/*try {
 			error = descargarDatosSeroprevalencia();
 			if (error!=null) return error;
 		} catch (Exception e) {
 			// Regresa error al descargar
 			e.printStackTrace();
 			return e.getLocalizedMessage();
-		}
+		}*/
 		publishProgress("Abriendo base de datos...","1","1");
 		//Borrar los datos de la base de datos
         estudioAdapter.borrarParticipanteSeroprevalencia();
@@ -455,7 +452,8 @@ public class DownloadAllTask extends DownloadTask {
                 }
                 mParticipantesSA = null;
             }*/
-            if (mEncuestasCasaSA != null){
+            //MA2020
+            /*if (mEncuestasCasaSA != null){
                 v = mEncuestasCasaSA.size();
                 ListIterator<EncuestaCasaSA> iter = mEncuestasCasaSA.listIterator();
                 while (iter.hasNext()){
@@ -474,7 +472,7 @@ public class DownloadAllTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mEncuestasParticipanteSA = null;
-            }
+            }*/
 		} catch (Exception e) {
 			// Regresa error al insertar
 			e.printStackTrace();
@@ -903,7 +901,8 @@ public class DownloadAllTask extends DownloadTask {
             responseEntityPartiSa = null;
             */
             //Descargar encuestas casas seroprevalencia
-            urlRequest = url + "/movil/encuestasCasaSA/";
+            //MA2020
+            /*urlRequest = url + "/movil/encuestasCasaSA/";
             publishProgress("Solicitando encuestas de casas seroprevalencia",ENCUESTA_CASASA,TOTAL_TASK_SERO);
             // Perform the HTTP GET request
             ResponseEntity<EncuestaCasaSA[]> responseEntityEncuCasaSa = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
@@ -919,7 +918,7 @@ public class DownloadAllTask extends DownloadTask {
                     EncuestaParticipanteSA[].class);
             // convert the array to a list and return it
             mEncuestasParticipanteSA = Arrays.asList(responseEntityEncuPartiSa.getBody());
-            responseEntityEncuPartiSa = null;
+            responseEntityEncuPartiSa = null;*/
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

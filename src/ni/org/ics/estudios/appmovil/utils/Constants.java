@@ -119,6 +119,8 @@ public class Constants {
     public static final String MX_SUPERFICIE_CON = "mx_superficie_con";
     public static final String MX_SUPERFICIE_1 = "1";
     public static final String MX_SUPERFICIE_2 = "2";
+
+    public static final String NOM_EST_COHORTEDENGUE = "Dengue";
 }
 
     

@@ -49,7 +49,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private TextView textView;
     private String[] menu_participante;
     private static ParticipanteCohorteFamilia participanteCHF = new ParticipanteCohorteFamilia();
-    private static ParticipanteSeroprevalencia participanteSA = new ParticipanteSeroprevalencia();
+    //MA2020 private static ParticipanteSeroprevalencia participanteSA = new ParticipanteSeroprevalencia();
     private EstudiosAdapter estudiosAdapter;
     boolean existeencuestaParticip = false;
     boolean existeencuestaParto = false;
@@ -115,10 +115,11 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         crearFomulario(position); break;
                     /*case OPCION_IR_CASA:
                         crearFomulario(position); break;*/
-                    case OPCION_ENCUESTA_PARTICIPANTESA:
+                    //MA2020
+                    /*case OPCION_ENCUESTA_PARTICIPANTESA:
                         tituloEncuesta = getString(R.string.new_participant_sa_survey);
                         existeEncuesta = existeencuestaParticipSA;
-                        break;
+                        break;*/
                     default:
                         break;
                 }
@@ -362,7 +363,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.putExtras(arguments);
                         startActivity(i);
                         break;*/
-                    case OPCION_ENCUESTA_PARTICIPANTESA:
+                    //MA2020
+                    /*case OPCION_ENCUESTA_PARTICIPANTESA:
                         if (!existeencuestaParticipSA) {
                             if (participanteCHF != null)
                                 arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
@@ -384,7 +386,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             i.putExtras(arguments);
                             startActivity(i);
                         }
-                        break;
+                        break;*/
                     /*case OPCION_IR_CASA:
                         arguments.putSerializable(Constants.CASA, participanteCHF.getCasaCHF());
                         i = new Intent(getApplicationContext(),
@@ -445,15 +447,15 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                 if (encuestaLactanciaMaterna!=null) {
                     existeencuestaLact = true;
                 }
-
-                participanteSA = estudiosAdapter.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
+//MA2020
+                /*participanteSA = estudiosAdapter.getParticipanteSeroprevalencia(SeroprevalenciaDBConstants.participante + " = " + participanteCHF.getParticipante().getCodigo(), null);
                 if (participanteSA!=null) {
                     habilitarEncuestaParticipSA = true;
                     EncuestaParticipanteSA encuestaParticipanteSA = estudiosAdapter.getEncuestaParticipanteSA(SeroprevalenciaDBConstants.participante + "='" + participanteSA.getParticipante().getCodigo() + "'", null);
                     if (encuestaParticipanteSA != null) {
                         existeencuestaParticipSA = true;
                     }
-                }
+                }*/
 
                 estudiosAdapter.close();
             } catch (Exception e) {

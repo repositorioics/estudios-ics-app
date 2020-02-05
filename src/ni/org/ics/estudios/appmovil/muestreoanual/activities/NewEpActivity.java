@@ -50,6 +50,12 @@ public class NewEpActivity extends AbstractAsyncActivity {
 	private static EncuestaParticipante mEncuestaParticipante = new EncuestaParticipante();
 	Dialog dialogInit;
     private String esChf=Constants.NO;
+	private String influenza=Constants.NO;
+	private String dengue=Constants.NO;
+	private String mostrarAlfabeto=Constants.NO;
+	private String mostrarPadreAlfabeto=Constants.NO;
+	private String mostrarMadreAlfabeta=Constants.NO;
+	private String antecedenteTutorCP=Constants.NO;
     private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -219,6 +225,7 @@ public class NewEpActivity extends AbstractAsyncActivity {
 			mEncuestaParticipante.setCama5(em.getCama5());
 			mEncuestaParticipante.setCama6(em.getCama6());
 			mEncuestaParticipante.setAsma(em.getAsma());
+			//MA2020
 			mEncuestaParticipante.setSilb12m(em.getSilb12m());
 			mEncuestaParticipante.setSitResf(em.getSitResf());
 			mEncuestaParticipante.setSitEjer(em.getSitEjer());
@@ -295,8 +302,11 @@ public class NewEpActivity extends AbstractAsyncActivity {
             mEncuestaParticipante.setOtraDescEmanc(em.getOtraDescEmanc());
             mEncuestaParticipante.setEmbarazada(em.getEMBARAZADA());
             mEncuestaParticipante.setSemanasEmbarazo(em.getSEMANAS_EMBARAZO());
+
+            //MA2020
             mEncuestaParticipante.setAlfabeto(em.getALFABETO());
             mEncuestaParticipante.setNivelEducacion(em.getNIVEL_EDUCACION());
+
             mEncuestaParticipante.setTrabaja(em.getTRABAJA());
             mEncuestaParticipante.setTipoTrabajo(em.getTIPO_TRABAJO());
             mEncuestaParticipante.setOcupacionActual(em.getOCUPACION_ACTUAL());
@@ -306,16 +316,24 @@ public class NewEpActivity extends AbstractAsyncActivity {
             mEncuestaParticipante.setOcupacionActualNino(em.getOCUPACION_ACTUAL_NINO());
             mEncuestaParticipante.setPadreEstudio(em.getPADRE_ESTUDIO());
             mEncuestaParticipante.setCodigoPadreEstudio(em.getCODIGO_PADRE_ESTUDIO());
+
+            //MA2020
             mEncuestaParticipante.setPadreAlfabeto(em.getPADRE_ALFABETO());
             mEncuestaParticipante.setTrabajaPadre(em.getTRABAJA_PADRE());
+
             mEncuestaParticipante.setMadreEstudio(em.getMADRE_ESTUDIO());
             mEncuestaParticipante.setCodigoMadreEstudio(em.getCODIGO_MADRE_ESTUDIO());
+
+            //MA2020
             mEncuestaParticipante.setMadreAlfabeta(em.getMADRE_ALFABETA());
             mEncuestaParticipante.setTrabajaMadre(em.getTRABAJA_MADRE());
+
             mEncuestaParticipante.setFuma(em.getFUMA());
             mEncuestaParticipante.setPeriodicidadFuna(em.getPERIODICIDAD_FUNA());
             mEncuestaParticipante.setCantidadCigarrillos(em.getCANTIDAD_CIGARRILLOS());
             mEncuestaParticipante.setFumaDentroCasa(em.getFUMA_DENTRO_CASA());
+
+            //MA2020
             mEncuestaParticipante.setTuberculosisPulmonarActual(em.getTUBERCULOSIS_PULMONAR_ACTUAL());
             String fechaDiagnosticoCompuestaAct = null;
             if (em.getA_FECHA_DIAG_TUBPUL_ACTUAL()!=null)
@@ -357,6 +375,21 @@ public class NewEpActivity extends AbstractAsyncActivity {
             mEncuestaParticipante.setVacunaInfluenzaOtro(em.getVacunaInfluenzaOtro());
             mEncuestaParticipante.setNombreCDI(em.getNombreCDI());
             mEncuestaParticipante.setDireccionCDI(em.getDireccionCDI());
+            //MA2020
+			mEncuestaParticipante.setOtroLugarCuidan(em.getOtroLugarCuidan());
+			mEncuestaParticipante.setEnfermedadCronica(em.getEnfermedadCronica());
+			mEncuestaParticipante.setTenidoDengue(em.getTenidoDengue());
+			mEncuestaParticipante.setUnidadSaludDengue(em.getUnidadSaludDengue());
+			mEncuestaParticipante.setCentroSaludDengue(em.getCentroSaludDengue());
+			mEncuestaParticipante.setOtroCentroSaludDengue(em.getOtroCentroSaludDengue());
+			mEncuestaParticipante.setPuestoSaludDengue(em.getPuestoSaludDengue());
+			mEncuestaParticipante.setHospitalDengue(em.getHospitalDengue());
+			mEncuestaParticipante.setOtroHospitalDengue(em.getOtroHospitalDengue());
+			mEncuestaParticipante.setHospitalizadoDengue(em.getHospitalizadoDengue());
+			mEncuestaParticipante.setAmbulatorioDengue(em.getAmbulatorioDengue());
+			mEncuestaParticipante.setDiagMedicoDengue(em.getDiagMedicoDengue());
+			mEncuestaParticipante.setRashUA(em.getRashUA()); //UA=ultimo anio
+			mEncuestaParticipante.setConsultaRashUA(em.getConsultaRashUA());//UA=ultimo anio
 
             mEncuestaParticipante.setMovilInfo(new MovilInfo(idInstancia,
 					instanceFilePath,
@@ -429,7 +462,7 @@ public class NewEpActivity extends AbstractAsyncActivity {
 			Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
 			//Arranca la actividad ODK Collect en busca de resultado
 			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-            String valores[] = new String[6];
+            String valores[] = new String[18];
             String edad[] = mParticipante.getEdad().split("/");
             String anios = "0";
             if (edad.length > 0) {
@@ -441,6 +474,18 @@ public class NewEpActivity extends AbstractAsyncActivity {
             valores[3] =  mParticipante.getSexo();
             valores[4] = "chf";
             valores[5] =  esChf;
+			valores[6] = "dengue";
+			valores[7] =  dengue;
+			valores[8] = "influenza";
+			valores[9] =  influenza;
+			valores[10] = "mostrarAlfabeto";
+			valores[11] =  mParticipante.getProcesos().getMostrarAlfabeto();
+			valores[12] = "mostrarPadreAlfabeto";
+			valores[13] =  mParticipante.getProcesos().getMostrarPadreAlfabeto();
+			valores[14] = "mostrarMadreAlfabeta";
+			valores[15] =  mParticipante.getProcesos().getMostrarMadreAlfabeta();
+			valores[16] = "antecedenteTutorCP";
+			valores[17] =  mParticipante.getProcesos().getAntecedenteTutorCP();
 
             odkA.putExtra("vc", valores);
 			startActivityForResult(odkA,ADD_PART);
@@ -459,6 +504,12 @@ public class NewEpActivity extends AbstractAsyncActivity {
         if (mParticipante.getProcesos().getEstudio().contains("CH Familia")) {
             esChf = Constants.YES;
         }
+		if (mParticipante.getProcesos().getEstudio().contains("Dengue")) {
+			dengue = Constants.YES;
+		}
+		if (mParticipante.getProcesos().getEstudio().contains("Influenza") || mParticipante.getProcesos().getEstudio().contains("UO1")) {
+			influenza = Constants.YES;
+		}
 	}
 
 	private void showToast(String mensaje, int numImage){

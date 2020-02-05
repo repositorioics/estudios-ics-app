@@ -35,15 +35,9 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
-import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevaEncuestaCasaSAActivity;
-import ni.org.ics.estudios.appmovil.seroprevalencia.activities.editdata.EditarEncuestaCasaSAActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.EncuestasDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
-import ni.org.ics.estudios.appmovil.utils.SeroprevalenciaDBConstants;
-import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 
 public class MenuCasaActivity extends AbstractAsyncActivity {
@@ -67,8 +61,9 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
     private final int OPCION_LISTA_CUARTOS = 2;
     private final int OPCION_LISTA_AREAS = 3;
     private final int OPCION_LISTA_TELEFONOS = 4;
-    private final int OPCION_ENCUESTA_CASASA = 5;
-    private final int OPCION_ENVIAR_CASA = 6;
+    //MA2020
+    //private final int OPCION_ENCUESTA_CASASA = 5;
+    private final int OPCION_ENVIAR_CASA = 5;
 
 	private EstudiosAdapter estudiosAdapter;
 
@@ -135,14 +130,15 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
     					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     					i.putExtras(arguments);
     					startActivity(i);break;
-                    case OPCION_ENCUESTA_CASASA:
+                    //MA2020
+    					/*case OPCION_ENCUESTA_CASASA:
                         if (existeencuestaCasaSA){
                             createDialogEditar(position);
                         }else {
                             createDialog(position);
                         }
 
-                        break;
+                        break;*/
                     case OPCION_ENVIAR_CASA:
             			i = new Intent(getApplicationContext(),
             					ChatActivity.class);
@@ -229,7 +225,8 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                     }
                 });
                 break;
-            case OPCION_ENCUESTA_CASASA:
+            //MA2020
+                /*case OPCION_ENCUESTA_CASASA:
                 builder.setTitle(this.getString(R.string.confirm));
                 builder.setMessage(getString(R.string.confirm_house_sa_survey) + "\n" + getString(R.string.code) + ": " + casaCHF.getCasa().getCodigo() + " " + casaCHF.getCasa().getNombre1JefeFamilia() + " " + casaCHF.getCasa().getApellido1JefeFamilia());
                 builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
@@ -245,7 +242,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                         dialog.dismiss();
                     }
                 });
-                break;
+                break;*/
             default:
                 break;
         }
@@ -273,7 +270,8 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                     }
                 });
                 break;
-            case OPCION_ENCUESTA_CASASA:
+            //MA2020
+                /*case OPCION_ENCUESTA_CASASA:
                 builder.setTitle(this.getString(R.string.confirm));
                 builder.setMessage(getString(R.string.confirm_house_sa_survey_edit) + "\n" + getString(R.string.code) + ": " + casaCHF.getCodigoCHF() + " " + casaCHF.getNombre1JefeFamilia() + " " + casaCHF.getApellido1JefeFamilia());
                 builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
@@ -290,6 +288,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                     }
                 });
                 break;
+                */
             default:
                 break;
         }
@@ -331,7 +330,8 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                         break;
-                    case OPCION_ENCUESTA_CASASA:
+                    //MA2020
+                        /*case OPCION_ENCUESTA_CASASA:
                         if (casaCHF != null) arguments.putSerializable(Constants.CASA, casaCHF);
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaCasaSAActivity.class);
@@ -340,7 +340,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
 
-                        break;
+                        break;*/
                     default: break;
                 }
             } catch (Exception e) {
@@ -385,7 +385,8 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
-                    case OPCION_ENCUESTA_CASASA:
+                    //MA2020
+                        /*case OPCION_ENCUESTA_CASASA:
                         EncuestaCasaSA encuestaCasaSA = estudiosAdapter.getEncuestaCasaSA(SeroprevalenciaDBConstants.casa + " = " + casaCHF.getCasa().getCodigo(), null);
                         if (encuestaCasaSA != null) arguments.putSerializable(Constants.ENCUESTA, encuestaCasaSA);
                         i = new Intent(getApplicationContext(),
@@ -395,6 +396,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                         startActivity(i);
 
                         break;
+                        */
                     default: break;
                 }
             } catch (Exception e) {
@@ -435,8 +437,8 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                 EncuestaCasa encuestaExiste = estudiosAdapter.getEncuestaCasa(EncuestasDBConstants.casa_chf + " = " + casaCHF.getCodigoCHF(), EncuestasDBConstants.casa_chf);
                 if (encuestaExiste != null)
                     existeencuestaCasa = true;
-
-                EncuestaCasaSA encuestaCasaSA = estudiosAdapter.getEncuestaCasaSA(SeroprevalenciaDBConstants.casa + " = " + casaCHF.getCasa().getCodigo(), null);
+                //MA2020
+                /*EncuestaCasaSA encuestaCasaSA = estudiosAdapter.getEncuestaCasaSA(SeroprevalenciaDBConstants.casa + " = " + casaCHF.getCasa().getCodigo(), null);
                 if (encuestaCasaSA != null) {
                     existeencuestaCasaSA = true;
                     habilitarencuestaCasaSA = true;
@@ -449,7 +451,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                             break;
                         }
                     }
-                }
+                }*/
 
                 estudiosAdapter.close();
 			} catch (Exception e) {

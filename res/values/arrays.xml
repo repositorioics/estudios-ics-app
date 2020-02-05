@@ -26,7 +26,7 @@
         <item>@string/rooms</item>
         <item>@string/environments</item>
         <item>@string/phones</item>
-        <item>@string/new_house_sa_survey</item>
+        <!--<item>@string/new_house_sa_survey</item>MA2020-->
         <item>@string/send_house</item>
     </string-array>
     
@@ -43,7 +43,7 @@
         <item>@string/new_survey_4</item>
         <item>@string/new_survey_5</item>
         <item>@string/samples</item>
-        <item>@string/new_participant_sa_survey</item>
+        <!--<item>@string/new_participant_sa_survey</item>MA2020-->
         <!--<item>@string/go_home</item>-->
     </string-array>
     
@@ -94,8 +94,8 @@
         <item>@string/datos_casa</item>
         <item>@string/info_docs</item>
         <item>@string/info_casachf</item>
-        <item>@string/info_casasa</item>
-        <item>@string/info_participantesa</item>
+        <!--MA2020<item>@string/info_casasa</item>
+        <item>@string/info_participantesa</item>-->
         <item>@string/info_telefonos</item>
         <item>@string/info_coordenadas</item>
 
@@ -117,8 +117,8 @@
         <item>@string/datos_casa</item>
         <item>@string/info_docs</item>
         <item>@string/info_casachf</item>
-        <item>@string/info_casasa</item>
-        <item>@string/info_participantesa</item>
+        <!--MA2020<item>@string/info_casasa</item>
+        <item>@string/info_participantesa</item>-->
     </string-array>
     <string-array name="menu_influenza_UO1">
         <item>@string/positives</item>

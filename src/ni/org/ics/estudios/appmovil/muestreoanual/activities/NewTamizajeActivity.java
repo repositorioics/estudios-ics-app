@@ -2091,16 +2091,16 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         } else {
                             procesos.setEnCasa(Constants.NO);
                         }
-
-                        if (aceptaDengue && participante.getEdadMeses() >= 24) {
+                        //MA2020. Ya no preguntar encuestas seroprevalencia
+                        /*if (aceptaDengue && participante.getEdadMeses() >= 24) {
                             procesos.setConsSa(Constants.YES);
                             procesos.setEncPartSa(Constants.YES);
                             procesos.setEnCasaSa(Constants.YES);
-                        } else {
+                        } else {*/
                             procesos.setEnCasaSa(Constants.NO);
                             procesos.setEncPartSa(Constants.NO);
-                            procesos.setConsSa(Constants.NO);
-                        }
+                            procesos.setConsSa(Constants.NO);//no se usa
+                        //}
 
                         if (participante.getEdadMeses() <= 36)
                             procesos.setEncLacMat(Constants.YES);
@@ -2157,6 +2157,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         movilInfo.setUsername(username);
                         movilInfo.setToday(new Date());
                         procesos.setMovilInfo(movilInfo);
+                        //MA2020
+                        procesos.setAntecedenteTutorCP(Constants.YES);
+                        procesos.setMostrarAlfabeto(Constants.YES);
+                        procesos.setMostrarPadreAlfabeto(Constants.YES);
+                        procesos.setMostrarMadreAlfabeta(Constants.YES);
                         estudiosAdapter.crearParticipanteProcesos(procesos);
 
                         CartaConsentimiento cc = new CartaConsentimiento();

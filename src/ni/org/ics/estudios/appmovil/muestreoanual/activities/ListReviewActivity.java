@@ -20,7 +20,6 @@ import android.widget.*;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.DatosCoordenadas;
-import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.R;
@@ -29,13 +28,9 @@ import ni.org.ics.estudios.appmovil.muestreoanual.adapters.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.adapters.ConsentimientoSAAdapter;
-import ni.org.ics.estudios.appmovil.seroprevalencia.adapters.EncuestaCasaSaAdapter;
-import ni.org.ics.estudios.appmovil.seroprevalencia.adapters.EncuestaParticipanteSaAdapter;
 import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ListReviewActivity extends ListActivity {
 	private String titulo;	
@@ -57,8 +52,9 @@ public class ListReviewActivity extends ListActivity {
     ArrayAdapter<DatosPartoBB> mDatosPartoBBAdapter=null;
     ArrayAdapter<DatosVisitaTerreno> mDatosVisitaTerrenoAdapter=null;
     ArrayAdapter<Documentos> mDocumentosAdapter=null;
-    ArrayAdapter<EncuestaCasaSA> mEncuestasCasasSaAdapter =null;
-    ArrayAdapter<EncuestaParticipanteSA> mEncuestasParticipantesSaAdapter = null;
+	//MA2020
+    /*ArrayAdapter<EncuestaCasaSA> mEncuestasCasasSaAdapter =null;
+    ArrayAdapter<EncuestaParticipanteSA> mEncuestasParticipantesSaAdapter = null;*/
     ArrayAdapter<ParticipanteSeroprevalencia> mParticipantesSAAdapter =null;
     ArrayAdapter<DatosCoordenadas> mDatosCoordenadasAdapter =null;
 	public static final int BARCODE_CAPTURE = 2;
@@ -149,12 +145,13 @@ public class ListReviewActivity extends ListActivity {
                 if (mDocumentosAdapter != null) {
                     mDocumentosAdapter.getFilter().filter(s);
                 }
-                if (mEncuestasParticipantesSaAdapter != null) {
+				//MA2020
+                /*if (mEncuestasParticipantesSaAdapter != null) {
                     mEncuestasParticipantesSaAdapter.getFilter().filter(s);
                 }
                 if (mEncuestasCasasSaAdapter != null) {
                     mEncuestasCasasSaAdapter.getFilter().filter(s);
-                }
+                }*/
                 if (mParticipantesSAAdapter != null) {
                     mParticipantesSAAdapter.getFilter().filter(s);
                 }
@@ -214,7 +211,8 @@ public class ListReviewActivity extends ListActivity {
 			showToast("Total = "+ mEncuestaCasaAdapter.getCount());
 		}
 
-        if (titulo.matches(getString(R.string.info_participantesa))){
+		//MA2020
+        /*if (titulo.matches(getString(R.string.info_participantesa))){
 
             mEncuestasParticipantesSaAdapter = new EncuestaParticipanteSaAdapter(this, R.layout.list_item_review,
                     (ArrayList<EncuestaParticipanteSA>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
@@ -222,13 +220,13 @@ public class ListReviewActivity extends ListActivity {
             showToast("Total = "+ mEncuestasParticipantesSaAdapter.getCount());
         }
 
-        if (titulo.matches(getString(R.string.info_casasa))){
+		if (titulo.matches(getString(R.string.info_casasa))){
 
             mEncuestasCasasSaAdapter = new EncuestaCasaSaAdapter(this, R.layout.list_item_review,
                     (ArrayList<EncuestaCasaSA>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
             setListAdapter(mEncuestasCasasSaAdapter);
             showToast("Total = "+ mEncuestasCasasSaAdapter.getCount());
-        }
+        }*/
 
         if (titulo.matches(getString(R.string.info_survey3))){
 			

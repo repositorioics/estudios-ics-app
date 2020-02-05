@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.domain.muestreoanual.ConsentimientoZika;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 
 import java.text.DateFormat;

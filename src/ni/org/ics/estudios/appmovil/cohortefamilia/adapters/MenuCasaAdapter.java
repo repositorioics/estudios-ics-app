@@ -39,9 +39,10 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
     public boolean isEnabled(int position) {
         // Disable the first item of GridView
         boolean habilitado = true;
-        if (position == 5){
+        //MA2020
+        /*if (position == 5){
             habilitado = habilitarencuestaCasaSA;
-        }
+        }*/
         return habilitado;
     }
 	@Override
@@ -105,7 +106,8 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                     textView.setTypeface(null, Typeface.BOLD);
                 }
                 break;
-            case 5:
+            //MA2020
+            /*case 5:
                 if (!habilitarencuestaCasaSA) {
                     textView.setTextColor(Color.GRAY);
                     textView.setText(textView.getText()+"\n"+ getContext().getResources().getString(R.string.notavailable));
@@ -119,8 +121,8 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                 }
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_paste_holo_light);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                break;
-            case 6:
+                break;*/
+            case 5:
             	textView.setText(values[position]);
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_chat_dashboard);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);

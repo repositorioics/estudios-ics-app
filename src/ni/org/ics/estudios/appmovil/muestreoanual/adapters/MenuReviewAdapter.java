@@ -26,18 +26,18 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
 	private final int numRecDen;
 	private final int numMuestras;
 	private final int numObsequios;
-	private final int numZikas;
+    private final int numZikas;
 	private final int numPartos;
 	private final int numDatosCasa;
 	private final int numDocs;
     private final int numEncCasaChf;
-    private final int numEncCasaSa;
-    private final int numEncPartSa;
+    //MA2020 private final int numEncCasaSa;
+    //MA2020 private final int numEncPartSa;
 	public MenuReviewAdapter(Context context, int textViewResourceId,
 			String[] values, int recFlu, int visitas, int pyts
 			, int ecasa, int epart, int elact, int vacunas, int encsats, int recDen
 			, int muestras, int obsequios, int zikas, int partos, int datoscasas, int docs
-            , int ecasachf, int numEncCasaSa, int numEncPartSa) {
+            , int ecasachf) {
 		super(context, textViewResourceId, values);
 		this.values = values;
 		this.numRecFlu=recFlu;
@@ -56,8 +56,8 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
 		this.numDatosCasa=datoscasas;
 		this.numDocs=docs;
         this.numEncCasaChf = ecasachf;
-        this.numEncCasaSa = numEncCasaSa;
-        this.numEncPartSa = numEncPartSa;
+        //MA2020 this.numEncCasaSa = numEncCasaSa;
+        //MA2020 this.numEncPartSa = numEncPartSa;
 	}
 
 	@Override
@@ -205,7 +205,8 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 16:
+            //MA2020
+            /*case 16:
                 img = getContext().getResources().getDrawable(R.drawable.ic_survey_casa);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numEncCasaSa + ")");
@@ -220,7 +221,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                 if (numEncPartSa < 1) {
                     textView.setTextColor(Color.RED);
                 }
-                break;
+                break;*/
 
             default:
                 img = getContext().getResources().getDrawable(R.drawable.ic_cohorte);

@@ -10,8 +10,6 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaCasaSA;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.EncuestaParticipanteSA;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -66,8 +64,8 @@ public class UploadAllTask extends UploadTask {
     private List<EncuestaLactanciaMaterna> mEncuestasLacMat = new ArrayList<EncuestaLactanciaMaterna>();
     private List<Muestra> mMuestras = new ArrayList<Muestra>();
     private List<ParticipanteSeroprevalencia> mParticipantesSA = new ArrayList<ParticipanteSeroprevalencia>();
-    private List<EncuestaCasaSA> mEncuestasCasaSA = new ArrayList<EncuestaCasaSA>();
-    private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = new ArrayList<EncuestaParticipanteSA>();
+    //MA2020 private List<EncuestaCasaSA> mEncuestasCasaSA = new ArrayList<EncuestaCasaSA>();
+    //MA2020 private List<EncuestaParticipanteSA> mEncuestasParticipanteSA = new ArrayList<EncuestaParticipanteSA>();
     private List<TelefonoContacto> mTelefonos = new ArrayList<TelefonoContacto>();
     private List<RecepcionMuestra> mRecepcionMuestras = new ArrayList<RecepcionMuestra>();
     private List<CasaCohorteFamiliaCaso> mCasaCohorteFamiliaCasos = new ArrayList<CasaCohorteFamiliaCaso>();
@@ -113,8 +111,8 @@ public class UploadAllTask extends UploadTask {
     public static final String ENCUESTA_LACTMAT = "22";
     public static final String MUESTRAS = "23";
     public static final String PARTICIPANTESA = "24";
-    public static final String ENCUESTA_PARTICIPANTESA = "25";
-    public static final String ENCUESTA_CASASA = "26";
+    //MA2020 public static final String ENCUESTA_PARTICIPANTESA = "25";
+    //MA2020 public static final String ENCUESTA_CASASA = "26";
     public static final String TELEFONOS = "27";
     public static final String RECEPCION_MUESTRA = "28";
     public static final String CASAS_CASOS = "29";
@@ -173,8 +171,8 @@ public class UploadAllTask extends UploadTask {
             mEncuestasLacMat = estudioAdapter.getEncuestasLactanciaMaternas(filtro, null);
             mMuestras = estudioAdapter.getMuestras(filtro, null);
             mParticipantesSA = estudioAdapter.getParticipantesSeroprevalencia(filtro, null);
-            mEncuestasCasaSA = estudioAdapter.getEncuestasCasaSA(filtro, null);
-            mEncuestasParticipanteSA = estudioAdapter.getEncuestasParticipanteSA(filtro,null);
+            //MA2020 mEncuestasCasaSA = estudioAdapter.getEncuestasCasaSA(filtro, null);
+            //MA2020 mEncuestasParticipanteSA = estudioAdapter.getEncuestasParticipanteSA(filtro,null);
             mTelefonos = estudioAdapter.getTelefonosContacto(filtro, null);
             mRecepcionMuestras = estudioAdapter.getRecepcionMuestras(filtro, null);
             mCasaCohorteFamiliaCasos = estudioAdapter.getCasaCohorteFamiliaCasos(filtro, null);
@@ -337,7 +335,8 @@ public class UploadAllTask extends UploadTask {
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTESA);
                 return error;
             }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_CASASA);
+            //MA2020
+            /*actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_CASASA);
             error = cargarEncuestasCasaSa(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_CASASA);
@@ -348,7 +347,7 @@ public class UploadAllTask extends UploadTask {
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PARTICIPANTESA);
                 return error;
-            }
+            }*/
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, TELEFONOS);
             error = cargarTelefonos(url, username, password);
             if (!error.matches("Datos recibidos!")){
@@ -708,7 +707,8 @@ public class UploadAllTask extends UploadTask {
                 }
             }
         }
-        if(opcion.equalsIgnoreCase(ENCUESTA_CASASA)){
+        //MA2020
+        /*if(opcion.equalsIgnoreCase(ENCUESTA_CASASA)){
             c = mEncuestasCasaSA.size();
             if(c>0){
                 for (EncuestaCasaSA encuestaCasaSA : mEncuestasCasaSA) {
@@ -729,7 +729,7 @@ public class UploadAllTask extends UploadTask {
                             .valueOf(c).toString());
                 }
             }
-        }
+        }*/
 
         if(opcion.equalsIgnoreCase(RECEPCION_MUESTRA)){
             c = mRecepcionMuestras.size();
@@ -1755,7 +1755,8 @@ public class UploadAllTask extends UploadTask {
     /********************* Encuestas Casas sero prevalencia ************************/
     /***************************************************/
     // url, username, password
-    protected String cargarEncuestasCasaSa(String url, String username,
+    //MA2020
+    /*protected String cargarEncuestasCasaSa(String url, String username,
                                                     String password) throws Exception {
         try {
             if(mEncuestasCasaSA.size()>0){
@@ -1784,13 +1785,14 @@ public class UploadAllTask extends UploadTask {
             Log.e(TAG, e.getMessage(), e);
             return e.getMessage();
         }
-    }
+    }*/
 
     /***************************************************/
     /********************* Encuestas Participantes sero prevalencia ************************/
     /***************************************************/
     // url, username, password
-    protected String cargarEncuestasParticipantesSa(String url, String username,
+    //MA2020
+    /*protected String cargarEncuestasParticipantesSa(String url, String username,
                                            String password) throws Exception {
         try {
             if(mEncuestasParticipanteSA.size()>0){
@@ -1819,7 +1821,7 @@ public class UploadAllTask extends UploadTask {
             Log.e(TAG, e.getMessage(), e);
             return e.getMessage();
         }
-    }
+    }*/
     
     /***************************************************/
     /********************* Telefonos ************************/

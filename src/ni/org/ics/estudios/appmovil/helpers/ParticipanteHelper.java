@@ -120,6 +120,11 @@ public class ParticipanteHelper {
         mPart.setReConsChf18(participantes.getString(participantes.getColumnIndex(ConstantsDB.reConsChf18)));
         mPart.setPosDengue(participantes.getString(participantes.getColumnIndex(ConstantsDB.posDengue)));
         mPart.setMxSuperficie(participantes.getString(participantes.getColumnIndex(ConstantsDB.mxSuperficie)));
+        //MA2020
+        mPart.setMostrarAlfabeto(participantes.getString(participantes.getColumnIndex(ConstantsDB.mostrarAlfabeto)));
+        mPart.setMostrarMadreAlfabeta(participantes.getString(participantes.getColumnIndex(ConstantsDB.mostrarMadreAlfabeta)));
+        mPart.setMostrarPadreAlfabeto(participantes.getString(participantes.getColumnIndex(ConstantsDB.mostrarPadreAlfabeto)));
+        mPart.setAntecedenteTutorCP(participantes.getString(participantes.getColumnIndex(ConstantsDB.antecedenteTutorCP)));
 
         Boolean borrado = participantes.getInt(participantes.getColumnIndex(ConstantsDB.DELETED))>0;
 		mPart.setMovilInfo(new MovilInfo(participantes.getInt(participantes.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
@@ -190,6 +195,11 @@ public class ParticipanteHelper {
         cv.put(ConstantsDB.reConsChf18, participante.getReConsChf18());
         cv.put(ConstantsDB.posDengue, participante.getPosDengue());
         cv.put(ConstantsDB.mxSuperficie, participante.getMxSuperficie());
+        //MA2020
+        cv.put(ConstantsDB.mostrarAlfabeto, participante.getMostrarAlfabeto());
+        cv.put(ConstantsDB.mostrarMadreAlfabeta, participante.getMostrarMadreAlfabeta());
+        cv.put(ConstantsDB.mostrarPadreAlfabeto, participante.getMostrarPadreAlfabeto());
+        cv.put(ConstantsDB.antecedenteTutorCP, participante.getAntecedenteTutorCP());
 
         cv.put(ConstantsDB.ID_INSTANCIA, participante.getMovilInfo().getIdInstancia());
         cv.put(ConstantsDB.FILE_PATH, participante.getMovilInfo().getInstancePath());

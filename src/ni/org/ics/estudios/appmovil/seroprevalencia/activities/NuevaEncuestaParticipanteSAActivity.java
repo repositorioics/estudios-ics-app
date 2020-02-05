@@ -43,6 +43,7 @@ import java.util.Map;
  * Created by Miguel Salinas on 5/17/2017.
  * V1.0
  */
+@Deprecated
 public class NuevaEncuestaParticipanteSAActivity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,

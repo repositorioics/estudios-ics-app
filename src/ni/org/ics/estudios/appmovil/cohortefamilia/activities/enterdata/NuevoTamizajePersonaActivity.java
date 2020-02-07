@@ -1389,6 +1389,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         procesos.setMostrarAlfabeto(Constants.YES);
                         procesos.setMostrarPadreAlfabeto(Constants.YES);
                         procesos.setMostrarMadreAlfabeta(Constants.YES);
+                        procesos.setMostrarNumParto(Constants.YES);
                         MovilInfo movilInfo = new MovilInfo();
                         movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
                         movilInfo.setDeviceid(infoMovil.getDeviceId());

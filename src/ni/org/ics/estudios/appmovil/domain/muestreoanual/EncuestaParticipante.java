@@ -192,6 +192,7 @@ public class EncuestaParticipante implements Serializable{
 	private String centroSaludDengue;
 	private String otroCentroSaludDengue;
 	private String puestoSaludDengue;
+	private String otroPuestoSaludDengue;
 	private String hospitalDengue;
 	private String otroHospitalDengue;
 	private String hospitalizadoDengue;
@@ -1544,6 +1545,14 @@ public class EncuestaParticipante implements Serializable{
 
 	public void setPuestoSaludDengue(String puestoSaludDengue) {
 		this.puestoSaludDengue = puestoSaludDengue;
+	}
+
+	public String getOtroPuestoSaludDengue() {
+		return otroPuestoSaludDengue;
+	}
+
+	public void setOtroPuestoSaludDengue(String otroPuestoSaludDengue) {
+		this.otroPuestoSaludDengue = otroPuestoSaludDengue;
 	}
 
 	public String getHospitalDengue() {

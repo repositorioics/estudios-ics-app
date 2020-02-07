@@ -340,7 +340,7 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 			valores[15] = mParticipante.getProcesos().getEstudio();
 			valores[16] = "terreno";
 			if (visExitosa){
-				valores[17] = "Si"; 
+				valores[17] = "Si";
 			}
 			else{
 				valores[17] = "No";

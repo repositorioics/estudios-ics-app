@@ -2162,6 +2162,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         procesos.setMostrarAlfabeto(Constants.YES);
                         procesos.setMostrarPadreAlfabeto(Constants.YES);
                         procesos.setMostrarMadreAlfabeta(Constants.YES);
+                        procesos.setMostrarNumParto(Constants.YES);
                         estudiosAdapter.crearParticipanteProcesos(procesos);
 
                         CartaConsentimiento cc = new CartaConsentimiento();

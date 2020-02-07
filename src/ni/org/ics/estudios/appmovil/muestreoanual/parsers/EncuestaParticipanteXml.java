@@ -253,9 +253,9 @@ public class EncuestaParticipanteXml {
 	@Element(required=false)
 	private String rashParteDelCuerpo;
 	@Element(required=false)
-	private String generated_table_list_label_154;
+	private String generated_table_list_label_158;
 	@Element(required=false)
-	private String reserved_name_for_field_list_labels_155;
+	private String reserved_name_for_field_list_labels_159;
 
     //CHF + NUEVAS PREGUNTAS MA2018
     @Element(required=false)
@@ -377,8 +377,6 @@ public class EncuestaParticipanteXml {
     private String direccionCDI;
 	//MA2020
 	@Element(required=false)
-	private String otroLugarCuidan;
-	@Element(required=false)
 	private String informacion;
 	@Element(required=false)
 	private String influenza;
@@ -391,7 +389,11 @@ public class EncuestaParticipanteXml {
 	@Element(required=false)
 	private String mostrarMadreAlfabeta;
 	@Element(required=false)
+	private String mostrarNumParto;
+	@Element(required=false)
 	private String antecedenteTutorCP;
+	@Element(required=false)
+	private String otroLugarCuidan;
 	@Element(required=false)
 	private String enfermedadCronica;
 	@Element(required=false)
@@ -404,6 +406,8 @@ public class EncuestaParticipanteXml {
 	private String otroCentroSaludDengue;
 	@Element(required=false)
 	private String puestoSaludDengue;
+	@Element(required=false)
+	private String otroPuestoSaludDengue;
 	@Element(required=false)
 	private String hospitalDengue;
 	@Element(required=false)
@@ -1462,20 +1466,20 @@ public class EncuestaParticipanteXml {
 		this.imei = imei;
 	}
 
-	public String getGenerated_table_list_label_154() {
-		return generated_table_list_label_154;
+	public String getGenerated_table_list_label_158() {
+		return generated_table_list_label_158;
 	}
 
-	public void setGenerated_table_list_label_154(String generated_table_list_label_154) {
-		this.generated_table_list_label_154 = generated_table_list_label_154;
+	public void setGenerated_table_list_label_158(String generated_table_list_label_158) {
+		this.generated_table_list_label_158 = generated_table_list_label_158;
 	}
 
-	public String getReserved_name_for_field_list_labels_155() {
-		return reserved_name_for_field_list_labels_155;
+	public String getReserved_name_for_field_list_labels_159() {
+		return reserved_name_for_field_list_labels_159;
 	}
 
-	public void setReserved_name_for_field_list_labels_155(String reserved_name_for_field_list_labels_155) {
-		this.reserved_name_for_field_list_labels_155 = reserved_name_for_field_list_labels_155;
+	public void setReserved_name_for_field_list_labels_159(String reserved_name_for_field_list_labels_159) {
+		this.reserved_name_for_field_list_labels_159 = reserved_name_for_field_list_labels_159;
 	}
 
 	public Integer getRash_Dias() {
@@ -1975,14 +1979,6 @@ public class EncuestaParticipanteXml {
         this.version = version;
     }
 
-	public String getOtroLugarCuidan() {
-		return otroLugarCuidan;
-	}
-
-	public void setOtroLugarCuidan(String otroLugarCuidan) {
-		this.otroLugarCuidan = otroLugarCuidan;
-	}
-
 	public String getInformacion() {
 		return informacion;
 	}
@@ -2031,12 +2027,28 @@ public class EncuestaParticipanteXml {
 		this.mostrarMadreAlfabeta = mostrarMadreAlfabeta;
 	}
 
+	public String getMostrarNumParto() {
+		return mostrarNumParto;
+	}
+
+	public void setMostrarNumParto(String mostrarNumParto) {
+		this.mostrarNumParto = mostrarNumParto;
+	}
+
 	public String getAntecedenteTutorCP() {
 		return antecedenteTutorCP;
 	}
 
 	public void setAntecedenteTutorCP(String antecedenteTutorCP) {
 		this.antecedenteTutorCP = antecedenteTutorCP;
+	}
+
+	public String getOtroLugarCuidan() {
+		return otroLugarCuidan;
+	}
+
+	public void setOtroLugarCuidan(String otroLugarCuidan) {
+		this.otroLugarCuidan = otroLugarCuidan;
 	}
 
 	public String getEnfermedadCronica() {
@@ -2085,6 +2097,14 @@ public class EncuestaParticipanteXml {
 
 	public void setPuestoSaludDengue(String puestoSaludDengue) {
 		this.puestoSaludDengue = puestoSaludDengue;
+	}
+
+	public String getOtroPuestoSaludDengue() {
+		return otroPuestoSaludDengue;
+	}
+
+	public void setOtroPuestoSaludDengue(String otroPuestoSaludDengue) {
+		this.otroPuestoSaludDengue = otroPuestoSaludDengue;
 	}
 
 	public String getHospitalDengue() {

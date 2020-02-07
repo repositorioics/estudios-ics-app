@@ -124,6 +124,7 @@ public class ParticipanteHelper {
         mPart.setMostrarAlfabeto(participantes.getString(participantes.getColumnIndex(ConstantsDB.mostrarAlfabeto)));
         mPart.setMostrarMadreAlfabeta(participantes.getString(participantes.getColumnIndex(ConstantsDB.mostrarMadreAlfabeta)));
         mPart.setMostrarPadreAlfabeto(participantes.getString(participantes.getColumnIndex(ConstantsDB.mostrarPadreAlfabeto)));
+        mPart.setMostrarNumParto(participantes.getString(participantes.getColumnIndex(ConstantsDB.mostrarNumParto)));
         mPart.setAntecedenteTutorCP(participantes.getString(participantes.getColumnIndex(ConstantsDB.antecedenteTutorCP)));
 
         Boolean borrado = participantes.getInt(participantes.getColumnIndex(ConstantsDB.DELETED))>0;
@@ -199,6 +200,7 @@ public class ParticipanteHelper {
         cv.put(ConstantsDB.mostrarAlfabeto, participante.getMostrarAlfabeto());
         cv.put(ConstantsDB.mostrarMadreAlfabeta, participante.getMostrarMadreAlfabeta());
         cv.put(ConstantsDB.mostrarPadreAlfabeto, participante.getMostrarPadreAlfabeto());
+        cv.put(ConstantsDB.mostrarNumParto, participante.getMostrarNumParto());
         cv.put(ConstantsDB.antecedenteTutorCP, participante.getAntecedenteTutorCP());
 
         cv.put(ConstantsDB.ID_INSTANCIA, participante.getMovilInfo().getIdInstancia());

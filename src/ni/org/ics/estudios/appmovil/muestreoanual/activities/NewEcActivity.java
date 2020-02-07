@@ -51,6 +51,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
 	private static Participante mParticipante = new Participante();
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
 	private String existeParticipanteDengue = Constants.NO;
+	private String medirSiCambiadoCasaoRemod = Constants.NO; //saber si es necesario mostrar alerta de llenado de cuarto y mediciones cuando hay remodelacion o cambiaron de casa
 
 	private boolean visExitosa = false;
 	Dialog dialogInit;
@@ -330,7 +331,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
 			//Guarda en la base de datos local
 
 			estudiosAdapter.open();
-            mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
+            //mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
             int pertenecenCHF = 0;
             for (Participante participante : mParticipantes) {
                 if (participante.getProcesos().getEstudio().contains("CH Familia")) pertenecenCHF++;
@@ -443,9 +444,11 @@ public class NewEcActivity extends AbstractAsyncActivity {
 			//Arranca la actividad ODK Collect en busca de resultado
 			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
 
-			String valores[] = new String[2];
+			String valores[] = new String[4];
 			valores[0] = "dengue";
 			valores[1] =  existeParticipanteDengue;
+			valores[2] = "medir";
+			valores[3] =  medirSiCambiadoCasaoRemod;
 
 			odkA.putExtra("vc", valores);
 			startActivityForResult(odkA,ADD_PART);
@@ -463,6 +466,17 @@ public class NewEcActivity extends AbstractAsyncActivity {
 		mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo +"="+ codigo, null);
 		boolean existenPart = estudiosAdapter.existenParticipantesEnEstudio(mParticipante.getCasa().getCodigo(), Constants.NOM_EST_COHORTEDENGUE);
 		if (existenPart) existeParticipanteDengue = Constants.YES;
+
+		mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
+		int pertenecenCHF = 0;
+		for (Participante participante : mParticipantes) {
+			if (participante.getProcesos().getEstudio().contains("CH Familia")) pertenecenCHF++;
+		}
+		int totalCasasChf = estudiosAdapter.countCasasChfByCasa(mParticipante.getCasa().getCodigo());
+		if ((totalCasasChf == 1 && pertenecenCHF == mParticipantes.size()) || casaChfId !=null){
+			medirSiCambiadoCasaoRemod = Constants.YES;
+		}
+
 		estudiosAdapter.close();
 	}	
 

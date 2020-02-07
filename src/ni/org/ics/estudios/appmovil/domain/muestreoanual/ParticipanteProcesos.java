@@ -61,6 +61,7 @@ public class ParticipanteProcesos implements Serializable {
     private String mostrarAlfabeto;
     private String mostrarPadreAlfabeto;
     private String mostrarMadreAlfabeta;
+    private String mostrarNumParto;
     private String antecedenteTutorCP;
 
     private MovilInfo movilInfo;
@@ -431,6 +432,14 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setMostrarMadreAlfabeta(String mostrarMadreAlfabeta) {
         this.mostrarMadreAlfabeta = mostrarMadreAlfabeta;
+    }
+
+    public String getMostrarNumParto() {
+        return mostrarNumParto;
+    }
+
+    public void setMostrarNumParto(String mostrarNumParto) {
+        this.mostrarNumParto = mostrarNumParto;
     }
 
     public String getAntecedenteTutorCP() {

@@ -3441,6 +3441,7 @@ public class EstudiosAdapter {
 		cv.put(ConstantsDB.centroSaludDengue, encpar.getCentroSaludDengue());
 		cv.put(ConstantsDB.otroCentroSaludDengue, encpar.getOtroCentroSaludDengue());
 		cv.put(ConstantsDB.puestoSaludDengue, encpar.getPuestoSaludDengue());
+		cv.put(ConstantsDB.otroPuestoSaludDengue, encpar.getOtroPuestoSaludDengue());
 		cv.put(ConstantsDB.hospitalDengue, encpar.getHospitalDengue());
 		cv.put(ConstantsDB.otroHospitalDengue, encpar.getOtroHospitalDengue());
 		cv.put(ConstantsDB.hospitalizadoDengue, encpar.getHospitalizadoDengue());
@@ -5573,6 +5574,7 @@ public class EstudiosAdapter {
 		mEncPart.setCentroSaludDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.centroSaludDengue)));
 		mEncPart.setOtroCentroSaludDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.otroCentroSaludDengue)));
 		mEncPart.setPuestoSaludDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.puestoSaludDengue)));
+		mEncPart.setOtroPuestoSaludDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.otroPuestoSaludDengue)));
 		mEncPart.setHospitalDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.hospitalDengue)));
 		mEncPart.setOtroHospitalDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.otroHospitalDengue)));
 		mEncPart.setHospitalizadoDengue(encparticipantess.getString(encparticipantess.getColumnIndex(ConstantsDB.hospitalizadoDengue)));

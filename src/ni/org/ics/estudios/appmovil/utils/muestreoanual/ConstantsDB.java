@@ -155,6 +155,7 @@ public class ConstantsDB {
     public static final String mostrarAlfabeto = "mostrarAlfabeto";
     public static final String mostrarPadreAlfabeto = "mostrarPadreAlfabeto";
     public static final String mostrarMadreAlfabeta = "mostrarMadreAlfabeta";
+    public static final String mostrarNumParto = "mostrarNumParto";
     public static final String antecedenteTutorCP = "antecedenteTutorCP";
 
     //Campos encuesta casa
@@ -433,6 +434,7 @@ public class ConstantsDB {
     public static final String centroSaludDengue = "centroSaludDengue";
     public static final String otroCentroSaludDengue = "otroCentroSaludDengue";
     public static final String puestoSaludDengue = "puestoSaludDengue";
+    public static final String otroPuestoSaludDengue = "otroPuestoSaludDengue";
     public static final String hospitalDengue = "hospitalDengue";
     public static final String otroHospitalDengue = "otroHospitalDengue";
     public static final String hospitalizadoDengue = "hospitalizadoDengue";
@@ -990,6 +992,7 @@ public class ConstantsDB {
             + mxSuperficie  + " text, "
             + mostrarAlfabeto  + " text, " //MA2020
             + mostrarMadreAlfabeta  + " text, "
+            + mostrarNumParto  + " text, "
             + mostrarPadreAlfabeto  + " text, "
             + antecedenteTutorCP  + " text, "
             + ID_INSTANCIA + " integer,"
@@ -1308,6 +1311,7 @@ public class ConstantsDB {
             + centroSaludDengue + " text, "
             + otroCentroSaludDengue + " text, "
             + puestoSaludDengue + " text, "
+            + otroPuestoSaludDengue + " text, "
             + hospitalDengue + " text, "
             + otroHospitalDengue + " text, "
             + hospitalizadoDengue + " text, "

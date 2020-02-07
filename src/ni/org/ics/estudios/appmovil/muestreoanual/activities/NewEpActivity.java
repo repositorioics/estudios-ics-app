@@ -365,7 +365,7 @@ public class NewEpActivity extends AbstractAsyncActivity {
             mEncuestaParticipante.setOtrasEnfermedades(em.getOTRAS_ENFERMEDADES());
             mEncuestaParticipante.setDescOtrasEnfermedades(em.getDESC_OTRAS_ENFERMEDADES());
             mEncuestaParticipante.setVacunaInfluenza(em.getVACUNA_INFLUENZA());
-            mEncuestaParticipante.setAnioVacunaInfluenza(em.getANIO_VACUNA_INFLUENZA());
+            if (em.getVacunaInfluenzaMes()!=null) mEncuestaParticipante.setAnioVacunaInfluenza(em.getYearActual()-1);//MA2020 se asume que el anio es siempre el anio pasado
             mEncuestaParticipante.setRash6m(em.getRash6m());
             mEncuestaParticipante.setOjoRojo6m(em.getOjoRojo6m());
             mEncuestaParticipante.setEstudiosAct(mParticipante.getProcesos().getEstudio());
@@ -383,6 +383,7 @@ public class NewEpActivity extends AbstractAsyncActivity {
 			mEncuestaParticipante.setCentroSaludDengue(em.getCentroSaludDengue());
 			mEncuestaParticipante.setOtroCentroSaludDengue(em.getOtroCentroSaludDengue());
 			mEncuestaParticipante.setPuestoSaludDengue(em.getPuestoSaludDengue());
+			mEncuestaParticipante.setOtroPuestoSaludDengue(em.getOtroPuestoSaludDengue());
 			mEncuestaParticipante.setHospitalDengue(em.getHospitalDengue());
 			mEncuestaParticipante.setOtroHospitalDengue(em.getOtroHospitalDengue());
 			mEncuestaParticipante.setHospitalizadoDengue(em.getHospitalizadoDengue());
@@ -462,7 +463,7 @@ public class NewEpActivity extends AbstractAsyncActivity {
 			Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
 			//Arranca la actividad ODK Collect en busca de resultado
 			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-            String valores[] = new String[18];
+            String valores[] = new String[20];
             String edad[] = mParticipante.getEdad().split("/");
             String anios = "0";
             if (edad.length > 0) {
@@ -484,8 +485,10 @@ public class NewEpActivity extends AbstractAsyncActivity {
 			valores[13] =  mParticipante.getProcesos().getMostrarPadreAlfabeto();
 			valores[14] = "mostrarMadreAlfabeta";
 			valores[15] =  mParticipante.getProcesos().getMostrarMadreAlfabeta();
-			valores[16] = "antecedenteTutorCP";
-			valores[17] =  mParticipante.getProcesos().getAntecedenteTutorCP();
+			valores[16] = "mostrarNumParto";
+			valores[17] =  mParticipante.getProcesos().getMostrarNumParto();
+			valores[18] = "antecedenteTutorCP";
+			valores[19] =  mParticipante.getProcesos().getAntecedenteTutorCP();
 
             odkA.putExtra("vc", valores);
 			startActivityForResult(odkA,ADD_PART);

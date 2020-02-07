@@ -628,6 +628,7 @@ public class BluetoothChatFragment extends Fragment {
                 mParticipantesProc.getMostrarAlfabeto()+"'," +
                 mParticipantesProc.getMostrarMadreAlfabeta()+"'," +
                 mParticipantesProc.getMostrarPadreAlfabeto()+"'," +
+                mParticipantesProc.getMostrarNumParto()+"'," +
                 mParticipantesProc.getAntecedenteTutorCP()+"'," +
                 "0,null,'"+
                 mParticipantesProc.getMovilInfo().getEstado()+"',null,null,null,'"+

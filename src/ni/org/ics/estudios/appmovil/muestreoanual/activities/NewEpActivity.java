@@ -52,10 +52,6 @@ public class NewEpActivity extends AbstractAsyncActivity {
     private String esChf=Constants.NO;
 	private String influenza=Constants.NO;
 	private String dengue=Constants.NO;
-	private String mostrarAlfabeto=Constants.NO;
-	private String mostrarPadreAlfabeto=Constants.NO;
-	private String mostrarMadreAlfabeta=Constants.NO;
-	private String antecedenteTutorCP=Constants.NO;
     private EstudiosAdapter estudiosAdapter;
 
 	@Override

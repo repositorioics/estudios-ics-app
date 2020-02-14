@@ -19,15 +19,7 @@ import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.domain.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.FormularioContactoCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.InformacionNoCompletaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCasoData;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFallidaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCasoSintomas;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
@@ -43,14 +35,7 @@ import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.helpers.*;
-import ni.org.ics.estudios.appmovil.helpers.chf.casos.CasaCohorteFamiliaCasoHelper;
-import ni.org.ics.estudios.appmovil.helpers.chf.casos.FormularioContactoCasoHelper;
-import ni.org.ics.estudios.appmovil.helpers.chf.casos.InformacionNoCompletaCasoHelper;
-import ni.org.ics.estudios.appmovil.helpers.chf.casos.ParticipanteCohorteFamiliaCasoHelper;
-import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaFallidaCasoHelper;
-import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaFinalCasoHelper;
-import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaSeguimientoCasoHelper;
-import ni.org.ics.estudios.appmovil.helpers.chf.casos.VisitaSeguimientoCasoSintomasHelper;
+import ni.org.ics.estudios.appmovil.helpers.chf.casos.*;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.ParticipanteCasoUO1Helper;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.SintomasVisitaCasoUO1Helper;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.VisitaCasoUO1Helper;
@@ -176,6 +161,8 @@ public class EstudiosAdapter {
 			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_VISITAS_CASOS_TABLE);
 			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_VISITAS_VACUNAS_TABLE);
 			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_SINTOMAS_VISITA_CASO_TABLE);
+			//sensores casos seguimiento
+			db.execSQL(CasosDBConstants.CREATE_SENSORES_CASOS_TABLE);
         }
 
 		@Override
@@ -326,6 +313,10 @@ public class EstudiosAdapter {
 				db.execSQL("ALTER TABLE " + ConstantsDB.VIS_TABLE + " ADD COLUMN " + ConstantsDB.nEscuela + " text");
 				db.execSQL("ALTER TABLE " + ConstantsDB.VIS_TABLE + " ADD COLUMN " + ConstantsDB.otraEscuela + " text");
 				db.execSQL("ALTER TABLE " + ConstantsDB.VIS_TABLE + " ADD COLUMN " + ConstantsDB.turno + " text");
+			}
+			if (oldVersion==26){
+				//sensores casos seguimiento
+				db.execSQL(CasosDBConstants.CREATE_SENSORES_CASOS_TABLE);
 			}
         }
 	}
@@ -7922,5 +7913,67 @@ public class EstudiosAdapter {
 		}
 		if (!cursor.isClosed()) cursor.close();
 		return visitaVacunaUO1List;
+	}
+
+	/**
+	 * Metodos para cambios de domicilio en la base de datos
+	 *
+	 * @param sensorCaso
+	 *            Objeto SensorCaso que contiene la informacion
+	 *
+	 */
+	//Crear nuevo SensorCaso en la base de datos
+	public void crearSensorCaso(SensorCaso sensorCaso) {
+		ContentValues cv = SensoresCasoHelper.crearSensorCasoContentValues(sensorCaso);
+		mDb.insertOrThrow(CasosDBConstants.SENSORES_CASOS_TABLE, null, cv);
+	}
+	//Editar SensorCaso existente en la base de datos
+	public boolean editarSensorCaso(SensorCaso sensorCaso) {
+		ContentValues cv = SensoresCasoHelper.crearSensorCasoContentValues(sensorCaso);
+		return mDb.update(CasosDBConstants.SENSORES_CASOS_TABLE , cv, CasosDBConstants.codigoSensor + "='"
+				+ sensorCaso.getCodigoSensor()+ "'", null) > 0;
+	}
+	//Limpiar la tabla de SensorCaso de la base de datos
+	public boolean borrarSensoresCasos() {
+		return mDb.delete(CasosDBConstants.SENSORES_CASOS_TABLE, null, null) > 0;
+	}
+	//Obtener un SensorCaso de la base de datos
+	public SensorCaso getSensorCaso(String filtro, String orden) throws SQLException {
+		SensorCaso mSensorCaso = null;
+		Cursor cursorSensor = crearCursor(CasosDBConstants.SENSORES_CASOS_TABLE, filtro, null, orden);
+		if (cursorSensor != null && cursorSensor.getCount() > 0) {
+			cursorSensor.moveToFirst();
+			mSensorCaso= SensoresCasoHelper.crearSensorCaso(cursorSensor);
+			CasaCohorteFamiliaCaso caso = this.getCasaCohorteFamiliaCaso(CasosDBConstants.codigoCaso + "='" + cursorSensor.getString(cursorSensor.getColumnIndex(CasosDBConstants.codigoCaso)) + "'", null);
+			AreaAmbiente part = this.getAreaAmbiente(MainDBConstants.codigo +" = '"+ cursorSensor.getString(cursorSensor.getColumnIndex(CasosDBConstants.area)) + "'", null);
+			mSensorCaso.setArea(part);
+			Cuarto cuarto = this.getCuarto(MainDBConstants.codigo +" = '"+ cursorSensor.getString(cursorSensor.getColumnIndex(CasosDBConstants.habitacionSensor)) + "'", null);
+			mSensorCaso.setCuarto(cuarto);
+			mSensorCaso.setCodigoCaso(caso);
+		}
+		if (!cursorSensor.isClosed()) cursorSensor.close();
+		return mSensorCaso;
+	}
+	//Obtener una lista de SensorCaso de la base de datos
+	public List<SensorCaso> getSensoresCasos(String filtro, String orden) throws SQLException {
+		List<SensorCaso> mEnfCronica = new ArrayList<SensorCaso>();
+		Cursor cursorSensores = crearCursor(CasosDBConstants.SENSORES_CASOS_TABLE, filtro, null, orden);
+		if (cursorSensores != null && cursorSensores.getCount() > 0) {
+			cursorSensores.moveToFirst();
+			mEnfCronica.clear();
+			do{
+				SensorCaso mSensorCaso = null;
+				mSensorCaso = SensoresCasoHelper.crearSensorCaso(cursorSensores);
+				CasaCohorteFamiliaCaso caso = this.getCasaCohorteFamiliaCaso(CasosDBConstants.codigoCaso + "='" + cursorSensores.getString(cursorSensores.getColumnIndex(CasosDBConstants.codigoCaso)) + "'", null);
+				mSensorCaso.setCodigoCaso(caso);
+				AreaAmbiente part = this.getAreaAmbiente(MainDBConstants.codigo +" = '"+ cursorSensores.getString(cursorSensores.getColumnIndex(CasosDBConstants.area)) + "'", null);
+				mSensorCaso.setArea(part);
+				Cuarto cuarto = this.getCuarto(MainDBConstants.codigo +" = '"+ cursorSensores.getString(cursorSensores.getColumnIndex(CasosDBConstants.habitacionSensor)) + "'", null);
+				mSensorCaso.setCuarto(cuarto);
+				mEnfCronica.add(mSensorCaso);
+			} while (cursorSensores.moveToNext());
+		}
+		if (!cursorSensores.isClosed()) cursorSensores.close();
+		return mEnfCronica;
 	}
 }

@@ -92,6 +92,9 @@ public class ListaVisitaFinalCasosActivity extends AbstractAsyncListActivity {
         mButton = (Button) findViewById(R.id.new_hand_button);
         mButton.setVisibility(View.GONE);
 
+		mButton = (Button) findViewById(R.id.sensors_button);
+		mButton.setVisibility(View.GONE);
+
 		mAddVisitButton = (Button) findViewById(R.id.add_visit_button);
 		mAddVisitButton.setText(getString(R.string.new_final_visit));
 		mAddVisitButton.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_menu_btn_add), null, null);

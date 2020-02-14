@@ -6,11 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFallidaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCasoSintomas;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -24,66 +20,66 @@ import org.springframework.web.client.RestTemplate;
 import android.content.Context;
 import android.util.Log;
 
-
-
 public class DownloadCasosGeneralTask extends DownloadTask {
-	
-	private final Context mContext;
-	
-	public DownloadCasosGeneralTask(Context context) {
-		mContext = context;
-	}
-	
-	protected static final String TAG = DownloadCasosGeneralTask.class.getSimpleName();
-	private EstudiosAdapter estudioAdapter = null;
-	
+
+    private final Context mContext;
+
+    public DownloadCasosGeneralTask(Context context) {
+        mContext = context;
+    }
+
+    protected static final String TAG = DownloadCasosGeneralTask.class.getSimpleName();
+    private EstudiosAdapter estudioAdapter = null;
+
     private List<CasaCohorteFamiliaCaso> mCasaCohorteFamiliaCasos = null;
     private List<ParticipanteCohorteFamiliaCaso> mParticipanteCohorteFamiliaCasos = null;
     private List<VisitaSeguimientoCaso> mVisitaSeguimientoCasos = null;
     private List<VisitaFallidaCaso> mVisitaFallidaCasos = null;
     private List<VisitaSeguimientoCasoSintomas> mVisitaSeguimientoSintomasCasos = null;
+    private List<SensorCaso> mSensoresCasos = null;
 
-	
-	public static final String CASAS_CASOS = "1";
+    public static final String CASAS_CASOS = "1";
     public static final String PART_CASOS = "2";
     public static final String VISITAS_CASOS = "3";
     public static final String VISITAS_FALLIDAS_CASOS = "4";
     public static final String SINTOMAS_CASOS = "5";
+    public static final String SENSORES_CASOS = "6";
 
-    private static final String TOTAL_TASK_CASOS = "5";
+    private static final String TOTAL_TASK_CASOS = "6";
 
-	private String error = null;
-	private String url = null;
-	private String username = null;
-	private String password = null;
-	private int v =0;
+    private String error = null;
+    private String url = null;
+    private String username = null;
+    private String password = null;
+    private int v =0;
 
-	@Override
-	protected String doInBackground(String... values) {
-		url = values[0];
-		username = values[1];
-		password = values[2];
-		
-		
-		try {
-			error = descargarDatosCasos();
-			if (error!=null) return error;
-		} catch (Exception e) {
-			// Regresa error al descargar
-			e.printStackTrace();
-			return e.getLocalizedMessage();
-		}
-		publishProgress("Abriendo base de datos...","1","1");
-		estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
-		estudioAdapter.open();
-		//Borrar los datos de la base de datos
+    @Override
+    protected String doInBackground(String... values) {
+        url = values[0];
+        username = values[1];
+        password = values[2];
+
+
+        try {
+            error = descargarDatosCasos();
+            if (error!=null) return error;
+        } catch (Exception e) {
+            // Regresa error al descargar
+            e.printStackTrace();
+            return e.getLocalizedMessage();
+        }
+        publishProgress("Abriendo base de datos...","1","1");
+        estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
+        estudioAdapter.open();
+        //Borrar los datos de la base de datos
         estudioAdapter.borrarCasaCohorteFamiliaCaso();
         estudioAdapter.borrarParticipanteCohorteFamiliaCaso();
         estudioAdapter.borrarVisitaSeguimientoCaso();
         estudioAdapter.borrarVisitaFallidaCaso();
         estudioAdapter.borrarVisitaSeguimientoCasoSintomas();
-        
-		try {
+        estudioAdapter.borrarSensoresCasos();
+
+        try {
             if (mCasaCohorteFamiliaCasos != null){
                 v = mCasaCohorteFamiliaCasos.size();
                 ListIterator<CasaCohorteFamiliaCaso> iter = mCasaCohorteFamiliaCasos.listIterator();
@@ -104,7 +100,7 @@ public class DownloadCasosGeneralTask extends DownloadTask {
                 }
                 mParticipanteCohorteFamiliaCasos = null;
             }
-            
+
             if (mVisitaSeguimientoCasos != null){
                 v = mVisitaSeguimientoCasos.size();
                 ListIterator<VisitaSeguimientoCaso> iter = mVisitaSeguimientoCasos.listIterator();
@@ -115,7 +111,7 @@ public class DownloadCasosGeneralTask extends DownloadTask {
                 }
                 mVisitaSeguimientoCasos = null;
             }
-            
+
             if (mVisitaFallidaCasos != null){
                 v = mVisitaFallidaCasos.size();
                 ListIterator<VisitaFallidaCaso> iter = mVisitaFallidaCasos.listIterator();
@@ -126,7 +122,7 @@ public class DownloadCasosGeneralTask extends DownloadTask {
                 }
                 mVisitaFallidaCasos = null;
             }
-            
+
             if (mVisitaSeguimientoSintomasCasos != null){
                 v = mVisitaSeguimientoSintomasCasos.size();
                 ListIterator<VisitaSeguimientoCasoSintomas> iter = mVisitaSeguimientoSintomasCasos.listIterator();
@@ -137,17 +133,28 @@ public class DownloadCasosGeneralTask extends DownloadTask {
                 }
                 mVisitaSeguimientoSintomasCasos = null;
             }
-            
-		} catch (Exception e) {
-			// Regresa error al insertar
-			e.printStackTrace();
-			estudioAdapter.close();
-			return e.getLocalizedMessage();
-		}
-		
-		estudioAdapter.close();
-		return error;
-	}
+
+            if (mSensoresCasos != null){
+                v = mSensoresCasos.size();
+                ListIterator<SensorCaso> iter = mSensoresCasos.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearSensorCaso(iter.next());
+                    publishProgress("Insertando sensores de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mSensoresCasos = null;
+            }
+
+        } catch (Exception e) {
+            // Regresa error al insertar
+            e.printStackTrace();
+            estudioAdapter.close();
+            return e.getLocalizedMessage();
+        }
+
+        estudioAdapter.close();
+        return error;
+    }
     // url, username, password
     protected String descargarDatosCasos() throws Exception {
         try {
@@ -171,51 +178,61 @@ public class DownloadCasosGeneralTask extends DownloadTask {
             publishProgress("Solicitando casas de casos",CASAS_CASOS,TOTAL_TASK_CASOS);
             // Perform the HTTP GET request
             ResponseEntity<CasaCohorteFamiliaCaso[]> responseEntityCasaCohorteFamiliaCasos = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		CasaCohorteFamiliaCaso[].class);
+                    CasaCohorteFamiliaCaso[].class);
             // convert the array to a list and return it
             mCasaCohorteFamiliaCasos = Arrays.asList(responseEntityCasaCohorteFamiliaCasos.getBody());
             responseEntityCasaCohorteFamiliaCasos = null;
-            
+
             //Descargar participantes de casas con casos
             urlRequest = url + "/movil/participantescasos/";
             publishProgress("Solicitando participantes de casas de casos",PART_CASOS,TOTAL_TASK_CASOS);
             // Perform the HTTP GET request
             ResponseEntity<ParticipanteCohorteFamiliaCaso[]> responseEntityParticipanteCohorteFamiliaCasos = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		ParticipanteCohorteFamiliaCaso[].class);
+                    ParticipanteCohorteFamiliaCaso[].class);
             // convert the array to a list and return it
             mParticipanteCohorteFamiliaCasos = Arrays.asList(responseEntityParticipanteCohorteFamiliaCasos.getBody());
             responseEntityParticipanteCohorteFamiliaCasos = null;
-            
+
             //Descargar visitas de casas con casos
             urlRequest = url + "/movil/visitascasos/";
-            publishProgress("Solicitando visitas de los participantes de casas de casos",PART_CASOS,TOTAL_TASK_CASOS);
+            publishProgress("Solicitando visitas de los participantes de casas de casos",VISITAS_CASOS,TOTAL_TASK_CASOS);
             // Perform the HTTP GET request
             ResponseEntity<VisitaSeguimientoCaso[]> responseEntityVisitaSeguimientoCasos = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		VisitaSeguimientoCaso[].class);
+                    VisitaSeguimientoCaso[].class);
             // convert the array to a list and return it
             mVisitaSeguimientoCasos = Arrays.asList(responseEntityVisitaSeguimientoCasos.getBody());
             responseEntityVisitaSeguimientoCasos = null;
-            
+
             //Descargar visitas fallidas de casas con casos
             urlRequest = url + "/movil/visitasfallidascasos/";
             publishProgress("Solicitando visitas fallidas de los participantes de casas de casos",VISITAS_FALLIDAS_CASOS,TOTAL_TASK_CASOS);
             // Perform the HTTP GET request
             ResponseEntity<VisitaFallidaCaso[]> responseEntityVisitaFallidaCasos = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		VisitaFallidaCaso[].class);
+                    VisitaFallidaCaso[].class);
             // convert the array to a list and return it
             mVisitaFallidaCasos = Arrays.asList(responseEntityVisitaFallidaCasos.getBody());
             responseEntityVisitaFallidaCasos = null;
-            
+
             //Descargar sintomas de casas con casos
             urlRequest = url + "/movil/sintomascasos/";
             publishProgress("Solicitando sintomas de los participantes de casas de casos",SINTOMAS_CASOS,TOTAL_TASK_CASOS);
             // Perform the HTTP GET request
             ResponseEntity<VisitaSeguimientoCasoSintomas[]> responseEntityVisitaSeguimientoCasoSintomas = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		VisitaSeguimientoCasoSintomas[].class);
+                    VisitaSeguimientoCasoSintomas[].class);
             // convert the array to a list and return it
             mVisitaSeguimientoSintomasCasos = Arrays.asList(responseEntityVisitaSeguimientoCasoSintomas.getBody());
             responseEntityVisitaSeguimientoCasoSintomas = null;
-            
+
+            //Descargar sensores de casos en seguimiento
+            urlRequest = url + "/movil/sensorescasos/";
+            publishProgress("Solicitando sensores de casos", SENSORES_CASOS,TOTAL_TASK_CASOS);
+            // Perform the HTTP GET request
+            ResponseEntity<SensorCaso[]> responseEntitySensores = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    SensorCaso[].class);
+            // convert the array to a list and return it
+            mSensoresCasos = Arrays.asList(responseEntitySensores.getBody());
+            responseEntitySensores = null;
+
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

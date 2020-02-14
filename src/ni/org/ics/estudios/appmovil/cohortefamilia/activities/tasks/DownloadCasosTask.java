@@ -50,6 +50,7 @@ public class DownloadCasosTask extends DownloadTask {
 	private List<VisitaFinalCaso> mVisitaFinalCasos = null;
     private List<ObsequioGeneral> mObsequios = null;
     private List<ParticipanteProcesos> mParticipantesProc = null;
+    private List<SensorCaso> mSensoresCasos = null;
 
     public static final String PARTICIPANTE_PROC = "1";
     public static final String CASAS_CASOS = "2";
@@ -63,8 +64,9 @@ public class DownloadCasosTask extends DownloadTask {
     public static final String MUESTRAS = "2";
     public static final String NODATA_CASOS = "3";
     public static final String MUESTRAS_SUP = "4";
+    public static final String SENSORES_CASOS = "9";
 
-    private static final String TOTAL_TASK_CASOS = "8";
+    private static final String TOTAL_TASK_CASOS = "9";
     private static final String TOTAL_TASK_CASOS_CONTACTO = "4";
 
 	private String error = null;
@@ -99,6 +101,7 @@ public class DownloadCasosTask extends DownloadTask {
         estudioAdapter.borrarVisitaSeguimientoCasoSintomas();
         estudioAdapter.borrarVisitaFinalCaso();
         estudioAdapter.borrarObsequiosGenerales();
+        estudioAdapter.borrarSensoresCasos();
         /*estudioAdapter.borrarInformacionNoCompletaCaso();
         estudioAdapter.borrarFormularioContactoCaso();
         estudioAdapter.borrarMuestrasTx();*/
@@ -186,6 +189,16 @@ public class DownloadCasosTask extends DownloadTask {
                             .valueOf(v).toString());
                 }
                 mObsequios = null;
+            }
+            if (mSensoresCasos != null){
+                v = mSensoresCasos.size();
+                ListIterator<SensorCaso> iter = mSensoresCasos.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearSensorCaso(iter.next());
+                    publishProgress("Insertando sensores de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mSensoresCasos = null;
             }
             /*
             if (mFormularioContactoCasos != null){
@@ -394,6 +407,15 @@ public class DownloadCasosTask extends DownloadTask {
                     ObsequioGeneral[].class);
             // convert the array to a list and return it
             mObsequios = Arrays.asList(responseEntityObsequios.getBody());
+            //Descargar sensores de casos en seguimiento
+            urlRequest = url + "/movil/sensorescasos/";
+            publishProgress("Solicitando sensores de casos", SENSORES_CASOS,TOTAL_TASK_CASOS);
+            // Perform the HTTP GET request
+            ResponseEntity<SensorCaso[]> responseEntitySensores = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    SensorCaso[].class);
+            // convert the array to a list and return it
+            mSensoresCasos = Arrays.asList(responseEntitySensores.getBody());
+            responseEntitySensores = null;
             /*
             //Descargar contactos de casas con casos
             urlRequest = url + "/movil/contactoscasos/";

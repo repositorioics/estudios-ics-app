@@ -99,6 +99,9 @@ public class ListaContactosParticipantesCasosActivity extends AbstractAsyncListA
         mButton = (Button) findViewById(R.id.new_hand_button);
         mButton.setVisibility(View.GONE);
 
+		mButton = (Button) findViewById(R.id.sensors_button);
+		mButton.setVisibility(View.GONE);
+
         mAddButton = (Button) findViewById(R.id.new_cont_button);
 		//Poner texto en el botón de agregar
 		mAddButton.setText(getString(R.string.new_cont));

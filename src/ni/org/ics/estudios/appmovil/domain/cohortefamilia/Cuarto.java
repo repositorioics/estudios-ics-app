@@ -55,4 +55,8 @@ public class Cuarto extends BaseMetaData {
         this.cantidadCamas = cantidadCamas;
     }
 
+    @Override
+    public String toString() {
+        return "Cuarto " + codigoHabitacion;
+    }
 }

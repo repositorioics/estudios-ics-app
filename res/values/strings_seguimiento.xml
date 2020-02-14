@@ -26,6 +26,7 @@
 	<string name="datos_casa">Datos Casa</string>
 	<string name="datos_part">Datos part</string>
 	<string name="visit_fail">Visita Fallida</string>
+	<string name="sensors">Sensores</string>
 
 	<string name="codigoParticipanteCaso">Participante</string>
     <string name="fecha_visita">Fecha visita</string>

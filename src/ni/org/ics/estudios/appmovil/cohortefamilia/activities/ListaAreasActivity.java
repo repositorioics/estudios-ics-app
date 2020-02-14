@@ -16,6 +16,8 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.AreaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import android.os.AsyncTask;
@@ -43,11 +45,13 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	private Drawable img = null;
 	private Button mAddButton;
 	private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
+    private static CasaCohorteFamiliaCaso casoCasa = new CasaCohorteFamiliaCaso();
+    private static String codigoCaso;
     private AreaAmbiente area = new AreaAmbiente();
 	private ArrayAdapter<AreaAmbiente> mAreaAdapter;
 	private List<AreaAmbiente> mAreas = new ArrayList<AreaAmbiente>();
 	private EstudiosAdapter estudiosAdapter;
-	
+
 	private static final int EDITAR_AREA = 1;
     private static final int BORRAR_AREA = 2;
 	private AlertDialog alertDialog;
@@ -61,15 +65,19 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 		setContentView(R.layout.list_add);
 		registerForContextMenu(getListView());
 		casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
+        codigoCaso = getIntent().getStringExtra(Constants.CASO);
 		textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_menu_selectall_holo_light);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 		new FetchDataCasaTask().execute();
-		
+
 		mAddButton = (Button) findViewById(R.id.add_button);
 		mAddButton.setText(getString(R.string.new_area));
+
+        if (codigoCaso !=null)
+            mAddButton.setVisibility(View.GONE);
 
 		mAddButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
@@ -113,9 +121,42 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
 		area = (AreaAmbiente)this.getListAdapter().getItem(position);
-		listView.showContextMenuForChild(view);
+        if (codigoCaso ==null)
+            listView.showContextMenuForChild(view);
+        else
+            createDialog();
 	}
-	
+
+    private void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                builder.setTitle(this.getString(R.string.confirm));
+                builder.setMessage(getString(R.string.select)+"\n"+getString(R.string.code)+": " + area.getCodigo() + " - " + area.getTipo());
+                builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        seleccionarArea();
+                    }
+                });
+                builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+
+        alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void seleccionarArea(){
+        Intent intent1 = new Intent();
+        intent1.putExtra("CODE_RESULT", area.getCodigo());
+        setResult(RESULT_OK, intent1);
+        finish();
+    }
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
@@ -212,19 +253,6 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 		alertDialog = builder.create();
 		alertDialog.show();
 	}
-	
-	@Override
-	public void onBackPressed (){
-		Bundle arguments = new Bundle();
-		Intent i;
-		if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
-		i = new Intent(getApplicationContext(),
-				MenuCasaActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		i.putExtras(arguments);
-		startActivity(i);
-		finish();
-	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -294,7 +322,12 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {      
 			try {
 				estudiosAdapter.open();
-				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + casaCHF.getCodigoCHF() + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.tipo);
+                if (codigoCaso !=null) {
+                    casoCasa = estudiosAdapter.getCasaCohorteFamiliaCaso(CasosDBConstants.codigoCaso + "='" + codigoCaso + "'", null);
+                    casaCHF = casoCasa.getCasa();
+                }
+                if (casaCHF != null)
+                    mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + casaCHF.getCodigoCHF() + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'" + (codigoCaso !=null?" and "+MainDBConstants.tipo+"!='habitacion'":""), MainDBConstants.tipo);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

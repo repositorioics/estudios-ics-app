@@ -95,4 +95,9 @@ public class AreaAmbiente extends BaseMetaData implements Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    @Override
+    public String toString() {
+        return tipo;
+    }
 }

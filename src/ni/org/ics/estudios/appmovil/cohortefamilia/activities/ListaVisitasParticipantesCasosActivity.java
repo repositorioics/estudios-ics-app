@@ -94,6 +94,9 @@ public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListAct
         mButton = (Button) findViewById(R.id.new_hand_button);
         mButton.setVisibility(View.GONE);
 
+		mButton = (Button) findViewById(R.id.sensors_button);
+		mButton.setVisibility(View.GONE);
+
         mAddVisitButton = (Button) findViewById(R.id.add_visit_button);
 
 		mAddVisitButton.setOnClickListener(new View.OnClickListener()  {

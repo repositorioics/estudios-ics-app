@@ -943,7 +943,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             visitaItem.setVisible(true);
         }
         else{
-            if((mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No"))  && mUser.getMuestra() && mParticipante.getEdadMeses()>5) muestraItem.setVisible(true);
+            if((mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No"))  && mUser.getMuestra() && (mParticipante.getEdadMeses()>5) || mParticipante.getProcesos().getEstudio().contains("UO1")) muestraItem.setVisible(true);
             if((mParticipante.getProcesos().getEnCasa().matches("Si") && mUser.getEncuestaCasa())) encCasaItem.setVisible(true);
             if((mParticipante.getProcesos().getEncPart().matches("Si") && mUser.getEncuestaParticipante())) encPartItem.setVisible(true);
             //if ((mParticipante.getProcesos().getConsFlu().matches("Si") && mUser.getConsentimiento())) reConsFluItem.setVisible(true);
@@ -1501,7 +1501,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
                     if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                     } else {
                         labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                     }
@@ -1519,7 +1519,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                     if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                     } else {
                         labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                     }
@@ -1538,7 +1538,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                     if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                     } else {
                         labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                     }
@@ -1568,7 +1568,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                     if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                     } else {
                         labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                     }
@@ -1587,7 +1587,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                     if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                     } else {
                         labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                     }
@@ -1617,7 +1617,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                     if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                     } else {
                         labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                     }
@@ -1636,7 +1636,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                     if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                     } else {
                         labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                     }

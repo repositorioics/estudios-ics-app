@@ -337,7 +337,11 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 			valores[12] = "confirmar";
 			valores[13] = getString(R.string.begin_sample);
 			valores[14] = "estudio";
-			valores[15] = mParticipante.getProcesos().getEstudio();
+			if (!mParticipante.getProcesos().getEstudio().contains("UO1")) {
+				valores[15] = mParticipante.getProcesos().getEstudio();//"Dengue UO1 CH Familia"; //
+			}else {
+				valores[15] = mParticipante.getProcesos().getEstudio().replaceAll(" {2}"," ");//"Dengue UO1 CH Familia"; //
+			}
 			valores[16] = "terreno";
 			if (visExitosa){
 				valores[17] = "Si";

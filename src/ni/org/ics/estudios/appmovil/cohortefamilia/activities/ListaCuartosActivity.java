@@ -4,6 +4,7 @@ package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.widget.*;
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
@@ -34,10 +35,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+import ni.org.ics.estudios.appmovil.wizard.model.Page;
 
 public class ListaCuartosActivity extends AbstractAsyncListActivity {
 	
@@ -56,7 +54,7 @@ public class ListaCuartosActivity extends AbstractAsyncListActivity {
 	private boolean fromCasos;
 
 	private AlertDialog alertDialog;
-
+    private static String codigoCasaChf;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -73,12 +71,13 @@ public class ListaCuartosActivity extends AbstractAsyncListActivity {
 		else{
 			casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
 		}
+        codigoCasaChf = getIntent().getStringExtra(Constants.CASO);
 		textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_menu_share);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		new FetchDataCasaTask().execute(casaCHF.getCodigoCHF());
+		new FetchDataCasaTask().execute(casaCHF!=null?casaCHF.getCodigoCHF():codigoCasaChf);
 		
 		mAddButton = (Button) findViewById(R.id.add_button);
 		mAddButton.setText(getString(R.string.new_room));
@@ -89,6 +88,9 @@ public class ListaCuartosActivity extends AbstractAsyncListActivity {
 				new OpenDataEnterActivityTask().execute();
 			}
 		});
+
+        if (codigoCasaChf!=null)
+            mAddButton.setVisibility(View.GONE);
 		
 	}
 
@@ -125,9 +127,30 @@ public class ListaCuartosActivity extends AbstractAsyncListActivity {
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
 		cuarto = (Cuarto)this.getListAdapter().getItem(position);
-		listView.showContextMenuForChild(view);
-	}
-	
+        if (codigoCasaChf==null)
+            listView.showContextMenuForChild(view);
+        else
+        {
+            Intent i = new Intent(this.getApplicationContext(),ListaPersonasCamasCuartosCasoActivity.class);
+            i.putExtra(Constants.CUARTO, cuarto.getCodigo());
+            startActivityForResult(i, 2);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent intent) {
+        if (requestCode == 2 && intent != null) {
+            String codigo = intent.getStringExtra("CODE_RESULT");
+            Intent intent1 = new Intent();
+            intent1.putExtra("CODE_RESULT", codigo);
+            setResult(RESULT_OK, intent1);
+            finish();
+        }
+        super.onActivityResult(requestCode, resultCode, intent);
+
+    }
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
@@ -207,22 +230,27 @@ public class ListaCuartosActivity extends AbstractAsyncListActivity {
 	
 	@Override
 	public void onBackPressed (){
-		Bundle arguments = new Bundle();
-		Intent i;
-		if(fromCasos){
-			if (casaCaso!=null) arguments.putSerializable(Constants.CASA , casaCaso);
-			i = new Intent(getApplicationContext(),
-					MenuCasaCasoActivity.class);
-		}
-		else{
-			if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
-			i = new Intent(getApplicationContext(),
-				MenuCasaActivity.class);
-		}
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		i.putExtras(arguments);
-		startActivity(i);
-		finish();
+
+        if (codigoCasaChf==null) {
+            Bundle arguments = new Bundle();
+            Intent i;
+            if (fromCasos) {
+                if (casaCaso != null) arguments.putSerializable(Constants.CASA, casaCaso);
+                i = new Intent(getApplicationContext(),
+                        MenuCasaCasoActivity.class);
+            } else {
+                if (casaCHF != null) arguments.putSerializable(Constants.CASA, casaCHF);
+                i = new Intent(getApplicationContext(),
+                        MenuCasaActivity.class);
+            }
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtras(arguments);
+            startActivity(i);
+            finish();
+        }else {
+            finish();
+        }
+
 	}
 
 	@Override
@@ -301,6 +329,8 @@ public class ListaCuartosActivity extends AbstractAsyncListActivity {
 			codigoCasaCHF = values[0];
 			try {
 				estudiosAdapter.open();
+                if (casaCHF==null)
+                    casaCHF = estudiosAdapter.getCasaCohorteFamilia(MainDBConstants.codigoCHF +" = '" + codigoCasaCHF + "'", null);
 				mCuartos = estudiosAdapter.getCuartos(MainDBConstants.casa +" = '" + codigoCasaCHF + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
 				estudiosAdapter.close();
 			} catch (Exception e) {

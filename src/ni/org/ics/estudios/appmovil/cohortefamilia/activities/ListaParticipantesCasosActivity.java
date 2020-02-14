@@ -38,6 +38,7 @@ public class ListaParticipantesCasosActivity extends AbstractAsyncListActivity {
 	private Button mDatosCasaButton;
 	private Button mVisitaFallidaButton;
     private Button mAddPartButton;
+	private Button mSensorsButton;
 	private static CasaCohorteFamiliaCaso casaCaso = new CasaCohorteFamiliaCaso();
     private ParticipanteCohorteFamiliaCasoData participanteCaso = new ParticipanteCohorteFamiliaCasoData();
 	private ArrayAdapter<ParticipanteCohorteFamiliaCasoData> mParticipanteCohorteFamiliaCasoAdapter;
@@ -138,6 +139,25 @@ public class ListaParticipantesCasosActivity extends AbstractAsyncListActivity {
 
             }
         });
+
+		mSensorsButton = (Button) findViewById(R.id.sensors_button);
+		mSensorsButton.setText(getString(R.string.sensors));
+		mSensorsButton.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_sens_temphum), null, null);
+		mSensorsButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Bundle arguments = new Bundle();
+				Intent i;
+				arguments.putSerializable(Constants.CASA , casaCaso);
+				i = new Intent(getApplicationContext(),
+						ListaSensoresCasoActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				i.putExtras(arguments);
+				startActivity(i);
+				finish();
+
+			}
+		});
 		
 	}
 

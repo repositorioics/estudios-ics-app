@@ -46,7 +46,25 @@ public class MuestraXml {
     private String hd_sn;
     @Element(required=false)
     private String hdPorqueNo;
-	
+	//MA2020
+	@Element(required=false)
+	private String muestranoinf03;
+	@Element(required=false)
+	private String muestraoinf04;
+	@Element(required=false)
+	private String muestraoinf05;
+	@Element(required=false)
+	private String muestraoinf06;
+	@Element(required=false)
+	private String muestraoinf07;
+	@Element(required=false)
+	private String muestraoinf08;
+	@Element(required=false)
+	private String muestraoinf09;
+	@Element(required=false)
+	private String muestraoinf10;
+
+
 	@Element(required=false)
 	private String titulo1;
 	@Element(required=false)
@@ -111,7 +129,76 @@ public class MuestraXml {
     private String titulo31;
     @Element(required=false)
     private String titulo32;
-	
+	//MA2020
+	@Element(required=false)
+	private String titulo50;
+	@Element(required=false)
+	private String titulo51;
+	@Element(required=false)
+	private String titulo52;
+	@Element(required=false)
+	private String titulo53;
+	@Element(required=false)
+	private String titulo54;
+	@Element(required=false)
+	private String titulo55;
+	@Element(required=false)
+	private String titulo56;
+	@Element(required=false)
+	private String titulo57;
+	@Element(required=false)
+	private String titulo58;
+	@Element(required=false)
+	private String titulo59;
+	@Element(required=false)
+	private String titulo60;
+	@Element(required=false)
+	private String titulo61;
+	@Element(required=false)
+	private String titulo62;
+	@Element(required=false)
+	private String titulo63;
+	@Element(required=false)
+	private String titulo64;
+	@Element(required=false)
+	private String titulo65;
+	@Element(required=false)
+	private String titulo66;
+	@Element(required=false)
+	private String titulo67;
+	@Element(required=false)
+	private String titulo68;
+	@Element(required=false)
+	private String titulo69;
+	@Element(required=false)
+	private String titulo70;
+	@Element(required=false)
+	private String titulo71;
+	@Element(required=false)
+	private String titulo72;
+	@Element(required=false)
+	private String titulo73;
+	@Element(required=false)
+	private String titulo74;
+	@Element(required=false)
+	private String titulo75;
+	@Element(required=false)
+	private String titulo76;
+	@Element(required=false)
+	private String titulo77;
+	@Element(required=false)
+	private String titulo78;
+	@Element(required=false)
+	private String titulo79;
+	@Element(required=false)
+	private String titulo80;
+	@Element(required=false)
+	private String titulo81;
+	@Element(required=false)
+	private String titulo82;
+	@Element(required=false)
+	private String titulo83;
+
 	@Element(required=false)
 	private Integer fiebreM;
 	@Element(required=false)

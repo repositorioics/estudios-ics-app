@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="numSensor">Sensor</string>
+    <string name="sensorSN">¿Colocó sensor?</string>
+    <string name="razonNoColocaSensor">Razón no colocó sensor</string>
+    <string name="razonNoColocaSensorHint">Indicar la razón por la que no colocó el sensor en el hogar</string>
+    <string name="numSensorHint">Número de Sensor</string>
+    <string name="enHabitacion">¿Colocado en un cuarto?</string>
+    <string name="enHabitacionHint">Indicar si sensor fue colocado en un cuarto. Si fue colocado en otro tipo de área, seleccionar NO</string>
+    <string name="habitacionSensor">Habitación de colocación</string>
+    <string name="habitacionSensorHint">Indicar la habitación dónde se colocó el sensor</string>
+    <string name="areaSensor">Area colocación</string>
+    <string name="areaSensorHint">Indicar el area dónde se colocó el sensor</string>
+    <string name="fechaSensor">Fecha colocación</string>
+    <string name="fechaSensorHint">Indicar la fecha en que se colocó el sensor</string>
+    <string name="horaRetiraSensor">Hora retira sensor</string>
+    <string name="horaRetiraSensorHint">Indicar la hora en que se retiró el sensor</string>
+    <string name="observRetiroSensor">Observación retiro sensores</string>
+    <string name="observRetiroSensorHint">Observación al momento de retitar los sensores</string>
+    <string name="add_sensor">Nuevo Sensor</string>
+    <string name="remove_sensor">Retirar Sensores</string>
+    <string name="sensor_exists">Sensor ya fue registrado para éste seguimiento</string>
+    <string name="no_pending_sensors">No hay sensores pendientes de retiro</string>
+    <string name="confirm_remove_sensor">Quitar sensor de esta casa? Va a quitarlo de sus datos y no va a recuperarlo!!</string>
+</resources>

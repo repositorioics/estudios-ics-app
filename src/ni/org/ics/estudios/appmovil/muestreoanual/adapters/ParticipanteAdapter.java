@@ -408,7 +408,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")){
                 if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                 }else{
                     labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                 }
@@ -424,7 +424,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                 if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                 } else {
                     labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                 }
@@ -441,7 +441,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                 if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                 } else {
                     labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                 }
@@ -464,7 +464,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                 if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                 } else {
                     labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                 }
@@ -481,7 +481,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                 if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                 } else {
                     labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                 }
@@ -504,7 +504,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                 if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                 } else {
                     labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                 }
@@ -521,7 +521,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                 if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
                 } else {
                     labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                 }
@@ -552,6 +552,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                         labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                     } else {
+                        //if ()
                         labelHeader = labelHeader + "<font color='red'>No tomar sorología<br /></font>";
                     }
                 }

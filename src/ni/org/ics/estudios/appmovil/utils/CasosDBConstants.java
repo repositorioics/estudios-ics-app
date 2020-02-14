@@ -296,4 +296,40 @@ public class CasosDBConstants {
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigoNoDataVisita + "));";
 
+    //Tabla SensoresCaso
+    public static final String SENSORES_CASOS_TABLE = "sensores_caso";
+
+    //Campos Tabla SensoresCaso
+    public static final String codigoSensor = "codigoSensor";
+    public static final String numeroSensor = "numeroSensor";
+    public static final String area = "area";
+    public static final String habitacionSensor = "habitacionSensor";
+    public static final String fechaColocacion = "fechaColocacion";
+    public static final String fechaRetiro = "fechaRetiro";
+    public static final String horaRetiro = "horaRetiro";
+    public static final String observacionRetiro = "observacionRetiro";
+    public static final String sensorSN = "sensorSN";
+    public static final String razonNoColocaSensor = "razonNoColocaSensor";
+
+    //Crear Tabla SensoresCaso
+    public static final String CREATE_SENSORES_CASOS_TABLE = "create table if not exists "
+            + SENSORES_CASOS_TABLE + " ("
+            + codigoSensor + " text not null, "
+            + codigoCaso + " text not null, "
+            + numeroSensor + " text, "
+            + area + " text, "
+            + habitacionSensor + " text, "
+            + fechaColocacion + " date, "
+            + fechaRetiro + " date, "
+            + horaRetiro + " text, "
+            + observacionRetiro + " text, "
+            + sensorSN + " text, "
+            + razonNoColocaSensor + " text, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + codigoSensor + "));";
+
 }

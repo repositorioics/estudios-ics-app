@@ -99,6 +99,9 @@ public class ListaSintomasParticipantesCasosActivity extends AbstractAsyncListAc
         mButton = (Button) findViewById(R.id.new_hand_button);
         mButton.setVisibility(View.GONE);
 
+		mButton = (Button) findViewById(R.id.sensors_button);
+		mButton.setVisibility(View.GONE);
+
         mAddButton = (Button) findViewById(R.id.new_sint_button);
 		//Poner texto en el botón de agregar
 		mAddButton.setText(getString(R.string.new_sint));

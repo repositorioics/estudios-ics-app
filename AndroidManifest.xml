@@ -288,8 +288,6 @@
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewSampleActivity"
                   android:screenOrientation="portrait" />
-        <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewVaccActivity"
-                  android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewRec2015Activity"
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewRecFlu2015Activity"
@@ -359,6 +357,14 @@
         <activity android:name=".influenzauo1.activities.list.ListaSintomasVisitaCasoUO1Activity"
                   android:screenOrientation="portrait" />
         <activity android:name=".influenzauo1.activities.enterdata.NuevoSintomaVisitaCasoUO1Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".cohortefamilia.activities.enterdata.NuevoSensorCasoActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".cohortefamilia.activities.enterdata.RetirarSensoresActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".cohortefamilia.activities.ListaSensoresCasoActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".cohortefamilia.activities.ListaPersonasCamasCuartosCasoActivity"
                   android:screenOrientation="portrait" />
     </application>
 

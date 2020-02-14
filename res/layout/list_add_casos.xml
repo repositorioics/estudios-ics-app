@@ -73,6 +73,16 @@
 
         <Button
                 android:background="@drawable/selectable_item_background"
+                android:id="@+id/sensors_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/sensors"
+                android:drawableTop="@drawable/ic_sens_temphum"
+                style="?android:attr/buttonBarStyle" />
+
+        <Button
+                android:background="@drawable/selectable_item_background"
                 android:id="@+id/final_visit_button"
                 android:layout_width="0dp"
                 android:layout_weight="1"

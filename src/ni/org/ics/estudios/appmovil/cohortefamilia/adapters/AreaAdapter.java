@@ -49,7 +49,14 @@ public class AreaAdapter extends ArrayAdapter<AreaAmbiente> {
 			if (textView != null) {
 				textView.setText(this.getContext().getString(R.string.largo) + ": " + p.getLargo() + " - " + this.getContext().getString(R.string.ancho) + ": " + p.getAncho()+" - " +this.getContext().getString(R.string.area) + ": " + p.getTotalM2());
 			}
-			
+
+			if (p.getTipo().equalsIgnoreCase("habitacion")) {
+				textView = (TextView) v.findViewById(R.id.infoc_text);
+				textView.setTextColor(Color.BLUE);
+				if (textView != null) {
+					textView.setText("Cuarto: "+p.getNumeroCuarto());
+				}
+			}
 		}
 		return v;
 	}

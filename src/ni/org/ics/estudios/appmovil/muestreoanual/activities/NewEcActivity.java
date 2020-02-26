@@ -50,7 +50,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
 	private SharedPreferences settings;
 	private static Participante mParticipante = new Participante();
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
-	private String existeParticipanteDengue = Constants.NO;
+	private String pregDetalleAlmAgua = Constants.NO; //si existe un participante con dengue y es encuesta de casa pediatrica o es encuesta de familia pero compartida pediatrica, preguntar detalle de almacenamiento de agua
 	private String medirSiCambiadoCasaoRemod = Constants.NO; //saber si es necesario mostrar alerta de llenado de cuarto y mediciones cuando hay remodelacion o cambiaron de casa
 
 	private boolean visExitosa = false;
@@ -343,7 +343,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
             }
             estudiosAdapter.crearEncuestaCasa(mEC);
             if (casaChfId != null){
-                List<ParticipanteProcesos> procesos = estudiosAdapter.getParticipantesProc(ConstantsDB.casaCHF + "='" + casaChfId + "'", null);
+                List<ParticipanteProcesos> procesos = estudiosAdapter.getParticipantesProc(ConstantsDB.casaCHF + "='" + casaChfId + "' and "+ConstantsDB.ESTADO_PAR + "=1", null);
 
                 for (ParticipanteProcesos proceso : procesos) {
                     proceso.setEnCasaChf("No");
@@ -445,8 +445,8 @@ public class NewEcActivity extends AbstractAsyncActivity {
 			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
 
 			String valores[] = new String[4];
-			valores[0] = "dengue";
-			valores[1] =  existeParticipanteDengue;
+			valores[0] = "almacena";
+			valores[1] =  pregDetalleAlmAgua;
 			valores[2] = "medir";
 			valores[3] =  medirSiCambiadoCasaoRemod;
 
@@ -464,10 +464,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
 
     	estudiosAdapter.open();
 		mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo +"="+ codigo, null);
-		boolean existenPart = estudiosAdapter.existenParticipantesEnEstudio(mParticipante.getCasa().getCodigo(), Constants.NOM_EST_COHORTEDENGUE);
-		if (existenPart) existeParticipanteDengue = Constants.YES;
-
-		mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
+		mParticipantes = estudiosAdapter.getParticipantesActivos(MainDBConstants.casa + "=" + mParticipante.getCasa().getCodigo(), null);
 		int pertenecenCHF = 0;
 		for (Participante participante : mParticipantes) {
 			if (participante.getProcesos().getEstudio().contains("CH Familia")) pertenecenCHF++;
@@ -476,6 +473,12 @@ public class NewEcActivity extends AbstractAsyncActivity {
 		if ((totalCasasChf == 1 && pertenecenCHF == mParticipantes.size()) || casaChfId !=null){
 			medirSiCambiadoCasaoRemod = Constants.YES;
 		}
+		boolean existenPart = estudiosAdapter.existenParticipantesEnEstudio(mParticipante.getCasa().getCodigo(), Constants.NOM_EST_COHORTEDENGUE);
+		if (existenPart) {
+			if (totalCasasChf == 1 && pertenecenCHF == mParticipantes.size() || casaChfId == null)
+				pregDetalleAlmAgua = Constants.YES;
+		}
+
 
 		estudiosAdapter.close();
 	}	

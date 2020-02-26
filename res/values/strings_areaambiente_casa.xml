@@ -22,4 +22,7 @@
 	<string name="largo">Largo (mts)</string>
 	<string name="ancho">Ancho (mts)</string>
 	<string name="area">Area (mts2)</string>
+    <string name="numeroCuarto">Número del cuarto</string>
+    <string name="numeroCuartoHint">Favor indicar el número de cuarto asignado a la habitación. Debe coincidir con el asignado durante las mediciones</string>
+    <string name="existeNumeroCuarto">Número de cuarto ya fue asignado a otra habitación</string>
 </resources>

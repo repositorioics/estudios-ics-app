@@ -186,6 +186,7 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
             mVisitaTerreno.setVisitaId(vtId);
             mVisitaTerreno.setVisitaSN(em.getVisitaSN());
             mVisitaTerreno.setMotNoVisita(em.getMotNoVisita());
+			mVisitaTerreno.setOtroMotNoVisita(em.getOtroMotNoVisita());//MA2020
             mVisitaTerreno.setAcomp(em.getAcomp());
             mVisitaTerreno.setRelacionFam(em.getRelacionFam());
             mVisitaTerreno.setAsentimiento(em.getAsentimiento());

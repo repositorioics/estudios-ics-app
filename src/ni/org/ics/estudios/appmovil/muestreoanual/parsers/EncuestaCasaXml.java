@@ -228,7 +228,7 @@ public class EncuestaCasaXml {
 	@Element(required=false)
 	private String medir;
 	@Element(required=false)
-	private String dengue;
+	private String almacena;
 	@Element(required=false)
 	private String cambiado_casa;
 	@Element(required=false)
@@ -1188,12 +1188,12 @@ public class EncuestaCasaXml {
 		this.medir = medir;
 	}
 
-	public String getDengue() {
-		return dengue;
+	public String getAlmacena() {
+		return almacena;
 	}
 
-	public void setDengue(String dengue) {
-		this.dengue = dengue;
+	public void setAlmacena(String almacena) {
+		this.almacena = almacena;
 	}
 
 	public String getCambiado_casa() {

@@ -587,6 +587,7 @@ public class ConstantsDB {
     public static final String nEscuela = "nEscuela";
     public static final String otraEscuela = "otraEscuela";
     public static final String turno = "turno";
+    public static final String otroMotNoVisita = "otroMotNoVisita";//MA2020
 
     //Campos reconsentimiento
     public static final String FECHA_CONS = "fecha_cons";
@@ -1390,6 +1391,7 @@ public class ConstantsDB {
             + DIFTALLA + " real, "
             + tomoMedidaSn  + " text, "
             + razonNoTomoMedidas  + " text, "
+            + estudiosAct + " text, "
             + otrorecurso1  + " integer, "
             + otrorecurso2  + " integer, "
             + ID_INSTANCIA + " integer not null,"
@@ -1499,6 +1501,7 @@ public class ConstantsDB {
             + nEscuela + " text, "
             + otraEscuela + " text, "
             + turno + " text, "
+            + otroMotNoVisita + " text, "
             + ID_INSTANCIA + " integer not null,"
             + FILE_PATH + " text not null,"
             + STATUS + " text not null, "

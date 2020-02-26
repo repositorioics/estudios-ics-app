@@ -21,7 +21,7 @@ public class AreaAmbiente extends BaseMetaData implements Serializable {
     private Integer numVentanas;
     private CasaCohorteFamilia casa;
     private String tipo;
-    
+    private String numeroCuarto;
     
 
     public AreaAmbiente() {
@@ -29,7 +29,7 @@ public class AreaAmbiente extends BaseMetaData implements Serializable {
 
 	public AreaAmbiente(String codigo, Double largo, Double ancho,
 			Double totalM2, Integer numVentanas, CasaCohorteFamilia casa,
-			String tipo) {
+			String tipo, String numeroCuarto) {
 		super();
 		this.codigo = codigo;
 		this.largo = largo;
@@ -38,6 +38,7 @@ public class AreaAmbiente extends BaseMetaData implements Serializable {
 		this.numVentanas = numVentanas;
 		this.casa = casa;
 		this.tipo = tipo;
+		this.numeroCuarto = numeroCuarto;
 	}
 
 	public String getCodigo() {
@@ -94,6 +95,14 @@ public class AreaAmbiente extends BaseMetaData implements Serializable {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getNumeroCuarto() {
+        return numeroCuarto;
+    }
+
+    public void setNumeroCuarto(String numeroCuarto) {
+        this.numeroCuarto = numeroCuarto;
     }
 
     @Override

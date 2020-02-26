@@ -37,7 +37,7 @@ public class PesoyTalla implements Serializable {
 	private Integer otrorecurso2;
     private String tomoMedidaSn;
     private String razonNoTomoMedidas;
-
+	private String estudiosAct; // estudios actuales al momento de llenar la encuesta
 
     public Integer getOtrorecurso1() {
 		return otrorecurso1;
@@ -175,7 +175,15 @@ public class PesoyTalla implements Serializable {
         this.razonNoTomoMedidas = razonNoTomoMedidas;
     }
 
-    @Override
+	public String getEstudiosAct() {
+		return estudiosAct;
+	}
+
+	public void setEstudiosAct(String estudiosAct) {
+		this.estudiosAct = estudiosAct;
+	}
+
+	@Override
 	public String toString() {
 		return this.getPtId().getCodigo().toString();
 	}

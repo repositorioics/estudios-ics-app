@@ -18,10 +18,14 @@ public class AreaAmbienteCasaFormLabels {
 	protected String totalM2;
 	protected String conVentana;
 	protected String abierta;
-	
+	protected String numeroCuarto;
+	protected String numeroCuartoHint;
+
 	public AreaAmbienteCasaFormLabels(){
 		Resources res = MyIcsApplication.getContext().getResources();
 		tipo = res.getString(R.string.tipo);
+		numeroCuarto = res.getString(R.string.numeroCuarto);
+		numeroCuartoHint = res.getString(R.string.numeroCuartoHint);
 		numVentanas = res.getString(R.string.numVentanas);
 		codigoHabitacion = res.getString(R.string.codigoHabitacion);
 		largo = res.getString(R.string.largo);
@@ -93,5 +97,21 @@ public class AreaAmbienteCasaFormLabels {
 
 	public void setAbierta(String abierta) {
 		this.abierta = abierta;
+	}
+
+	public String getNumeroCuarto() {
+		return numeroCuarto;
+	}
+
+	public void setNumeroCuarto(String numeroCuarto) {
+		this.numeroCuarto = numeroCuarto;
+	}
+
+	public String getNumeroCuartoHint() {
+		return numeroCuartoHint;
+	}
+
+	public void setNumeroCuartoHint(String numeroCuartoHint) {
+		this.numeroCuartoHint = numeroCuartoHint;
 	}
 }

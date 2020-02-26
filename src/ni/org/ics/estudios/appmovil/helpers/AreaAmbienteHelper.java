@@ -22,6 +22,7 @@ public class AreaAmbienteHelper {
         if (objeto.getTotalM2() != null) cv.put(MainDBConstants.totalM2, objeto.getTotalM2());
         if (objeto.getNumVentanas() != null) cv.put(MainDBConstants.numVentanas, objeto.getNumVentanas());
         cv.put(MainDBConstants.tipo, objeto.getTipo());
+        cv.put(MainDBConstants.numeroCuarto, objeto.getNumeroCuarto());//MA2020
         if (objeto.getRecordDate() != null) cv.put(MainDBConstants.recordDate, objeto.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, objeto.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(objeto.getPasive()));
@@ -40,6 +41,7 @@ public class AreaAmbienteHelper {
         //permitir 0
         //if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
         objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
+        objeto.setNumeroCuarto(cursor.getString(cursor.getColumnIndex(MainDBConstants.numeroCuarto)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         objeto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         objeto.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
@@ -57,6 +59,7 @@ public class AreaAmbienteHelper {
         if (objeto.getTotalM2() != null) cv.put(MainDBConstants.totalM2, objeto.getTotalM2());
         if (objeto.getNumVentanas() != null) cv.put(MainDBConstants.numVentanas, objeto.getNumVentanas());
         cv.put(MainDBConstants.tipo, objeto.getTipo());
+        cv.put(MainDBConstants.numeroCuarto, objeto.getNumeroCuarto());//MA2020
         if (objeto.getRecordDate() != null) cv.put(MainDBConstants.recordDate, objeto.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, objeto.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(objeto.getPasive()));
@@ -74,6 +77,7 @@ public class AreaAmbienteHelper {
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2))>0) objeto.setTotalM2(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2)));
         if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
         objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
+        objeto.setNumeroCuarto(cursor.getString(cursor.getColumnIndex(MainDBConstants.numeroCuarto)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         objeto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         objeto.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
@@ -92,6 +96,7 @@ public class AreaAmbienteHelper {
         if (objeto.getNumVentanas() != null) cv.put(MainDBConstants.numVentanas, objeto.getNumVentanas());
         cv.put(MainDBConstants.conVentana, objeto.getConVentana());
         cv.put(MainDBConstants.tipo, objeto.getTipo());
+        cv.put(MainDBConstants.numeroCuarto, objeto.getNumeroCuarto());//MA2020
         if (objeto.getAreaAmbiente() != null) cv.put(MainDBConstants.areaAmbiente, objeto.getAreaAmbiente().getCodigo());
         if (objeto.getRecordDate() != null) cv.put(MainDBConstants.recordDate, objeto.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, objeto.getRecordUser());
@@ -112,6 +117,7 @@ public class AreaAmbienteHelper {
         if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
         objeto.setConVentana(cursor.getString(cursor.getColumnIndex(MainDBConstants.conVentana)));
         objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
+        objeto.setNumeroCuarto(cursor.getString(cursor.getColumnIndex(MainDBConstants.numeroCuarto)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         objeto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         objeto.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
@@ -131,6 +137,7 @@ public class AreaAmbienteHelper {
         if (objeto.getNumVentanas() != null) cv.put(MainDBConstants.numVentanas, objeto.getNumVentanas());
         cv.put(MainDBConstants.abierta, objeto.getAbierta());
         cv.put(MainDBConstants.tipo, objeto.getTipo());
+        cv.put(MainDBConstants.numeroCuarto, objeto.getNumeroCuarto());//MA2020
         if (objeto.getRecordDate() != null) cv.put(MainDBConstants.recordDate, objeto.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, objeto.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(objeto.getPasive()));
@@ -150,6 +157,7 @@ public class AreaAmbienteHelper {
         if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
         objeto.setAbierta(cursor.getString(cursor.getColumnIndex(MainDBConstants.abierta)));
         objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
+        objeto.setNumeroCuarto(cursor.getString(cursor.getColumnIndex(MainDBConstants.numeroCuarto)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         objeto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         objeto.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
@@ -168,6 +176,7 @@ public class AreaAmbienteHelper {
         if (objeto.getTotalM2() != null) cv.put(MainDBConstants.totalM2, objeto.getTotalM2());
         if (objeto.getNumVentanas() != null) cv.put(MainDBConstants.numVentanas, objeto.getNumVentanas());
         cv.put(MainDBConstants.tipo, objeto.getTipo());
+        cv.put(MainDBConstants.numeroCuarto, objeto.getNumeroCuarto());//MA2020
         if (objeto.getRecordDate() != null) cv.put(MainDBConstants.recordDate, objeto.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, objeto.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(objeto.getPasive()));
@@ -185,6 +194,7 @@ public class AreaAmbienteHelper {
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2))>0) objeto.setTotalM2(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2)));
         if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
         objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
+        objeto.setNumeroCuarto(cursor.getString(cursor.getColumnIndex(MainDBConstants.numeroCuarto)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         objeto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         objeto.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
@@ -202,6 +212,7 @@ public class AreaAmbienteHelper {
         if (objeto.getTotalM2() != null) cv.put(MainDBConstants.totalM2, objeto.getTotalM2());
         if (objeto.getNumVentanas() != null) cv.put(MainDBConstants.numVentanas, objeto.getNumVentanas());
         cv.put(MainDBConstants.tipo, objeto.getTipo());
+        cv.put(MainDBConstants.numeroCuarto, objeto.getNumeroCuarto());//MA2020
         if (objeto.getRecordDate() != null) cv.put(MainDBConstants.recordDate, objeto.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, objeto.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(objeto.getPasive()));
@@ -219,6 +230,7 @@ public class AreaAmbienteHelper {
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2))>0) objeto.setTotalM2(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2)));
         if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
         objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
+        objeto.setNumeroCuarto(cursor.getString(cursor.getColumnIndex(MainDBConstants.numeroCuarto)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         objeto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         objeto.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
@@ -237,6 +249,7 @@ public class AreaAmbienteHelper {
         if (objeto.getTotalM2() != null) cv.put(MainDBConstants.totalM2, objeto.getTotalM2());
         if (objeto.getNumVentanas() != null) cv.put(MainDBConstants.numVentanas, objeto.getNumVentanas());
         cv.put(MainDBConstants.tipo, objeto.getTipo());
+        cv.put(MainDBConstants.numeroCuarto, objeto.getNumeroCuarto());//MA2020
         if (objeto.getRecordDate() != null) cv.put(MainDBConstants.recordDate, objeto.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, objeto.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(objeto.getPasive()));
@@ -254,6 +267,7 @@ public class AreaAmbienteHelper {
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2))>0) objeto.setTotalM2(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2)));
         if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
         objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
+        objeto.setNumeroCuarto(cursor.getString(cursor.getColumnIndex(MainDBConstants.numeroCuarto)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         objeto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         objeto.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));

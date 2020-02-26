@@ -317,6 +317,9 @@ public class EstudiosAdapter {
 			if (oldVersion==26){
 				//sensores casos seguimiento
 				db.execSQL(CasosDBConstants.CREATE_SENSORES_CASOS_TABLE);
+				db.execSQL("ALTER TABLE " + ConstantsDB.VIS_TABLE + " ADD COLUMN " + ConstantsDB.otroMotNoVisita + " text");
+				db.execSQL("ALTER TABLE " + ConstantsDB.PT_TABLE + " ADD COLUMN " + ConstantsDB.estudiosAct + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.AREA_AMBIENTE_TABLE + " ADD COLUMN " + MainDBConstants.numeroCuarto + " text");
 			}
         }
 	}
@@ -908,6 +911,30 @@ public class EstudiosAdapter {
                 mParticipante.setProcesos(procesos);
 
 				mParticipantes.add(mParticipante);
+			} while (cursorParticipante.moveToNext());
+		}
+		if (!cursorParticipante.isClosed()) cursorParticipante.close();
+		return mParticipantes;
+	}
+
+	//Obtener una lista de Participante de la base de datos
+	public List<Participante> getParticipantesActivos(String filtro, String orden) throws SQLException {
+		List<Participante> mParticipantes = new ArrayList<Participante>();
+		Cursor cursorParticipante = crearCursor(MainDBConstants.PARTICIPANTE_TABLE, filtro, null, orden);
+		if (cursorParticipante != null && cursorParticipante.getCount() > 0) {
+			cursorParticipante.moveToFirst();
+			mParticipantes.clear();
+			do{
+				Participante mParticipante = null;
+				mParticipante = ParticipanteHelper.crearParticipante(cursorParticipante);
+				Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.casa)), null);
+				mParticipante.setCasa(casa);
+
+				ParticipanteProcesos procesos = this.getParticipanteProcesos(ConstantsDB.CODIGO+"="+mParticipante.getCodigo().toString(), null);
+				if (procesos != null && procesos.getEstPart()==1) {
+					mParticipante.setProcesos(procesos);
+					mParticipantes.add(mParticipante);
+				}
 			} while (cursorParticipante.moveToNext());
 		}
 		if (!cursorParticipante.isClosed()) cursorParticipante.close();
@@ -3550,6 +3577,7 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DIFTALLA, pt.getDifTalla());
         cv.put(ConstantsDB.tomoMedidaSn, pt.getTomoMedidaSn());
         cv.put(ConstantsDB.razonNoTomoMedidas, pt.getRazonNoTomoMedidas());
+		cv.put(ConstantsDB.estudiosAct, pt.getEstudiosAct());//MA2020
         cv.put(ConstantsDB.otrorecurso1, pt.getOtrorecurso1());
         cv.put(ConstantsDB.otrorecurso2, pt.getOtrorecurso2());
         cv.put(ConstantsDB.ID_INSTANCIA, pt.getMovilInfo().getIdInstancia());
@@ -3737,6 +3765,7 @@ public class EstudiosAdapter {
 		cv.put(ConstantsDB.nEscuela, visita.getnEscuela());
 		cv.put(ConstantsDB.otraEscuela, visita.getOtraEscuela());
 		cv.put(ConstantsDB.turno, visita.getTurno());
+		cv.put(ConstantsDB.otroMotNoVisita, visita.getOtroMotNoVisita());//MA2020
 
         cv.put(ConstantsDB.otrorecurso1, visita.getOtrorecurso1());
         cv.put(ConstantsDB.otrorecurso2, visita.getOtrorecurso2());
@@ -5829,6 +5858,7 @@ public class EstudiosAdapter {
 
         if(!pesajes.isNull(pesajes.getColumnIndex(ConstantsDB.otrorecurso1))) mPyT.setOtrorecurso1(pesajes.getInt(pesajes.getColumnIndex(ConstantsDB.otrorecurso1)));
         if(!pesajes.isNull(pesajes.getColumnIndex(ConstantsDB.otrorecurso2))) mPyT.setOtrorecurso2(pesajes.getInt(pesajes.getColumnIndex(ConstantsDB.otrorecurso2)));
+		mPyT.setEstudiosAct(pesajes.getString(pesajes.getColumnIndex(ConstantsDB.estudiosAct)));//MA2020
 
         Boolean borrado = pesajes.getInt(pesajes.getColumnIndex(ConstantsDB.DELETED))>0;
         mPyT.setMovilInfo(new MovilInfo(pesajes.getInt(pesajes.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
@@ -6484,6 +6514,7 @@ public class EstudiosAdapter {
 		mVisitaCasa.setnEscuela(visitascampo.getString(visitascampo.getColumnIndex(ConstantsDB.nEscuela)));
 		mVisitaCasa.setOtraEscuela(visitascampo.getString(visitascampo.getColumnIndex(ConstantsDB.otraEscuela)));
 		mVisitaCasa.setTurno(visitascampo.getString(visitascampo.getColumnIndex(ConstantsDB.turno)));
+		mVisitaCasa.setOtroMotNoVisita(visitascampo.getString(visitascampo.getColumnIndex(ConstantsDB.otroMotNoVisita)));
 
         Boolean borrado = visitascampo.getInt(visitascampo.getColumnIndex(ConstantsDB.DELETED))>0;
         mVisitaCasa.setMovilInfo(new MovilInfo(visitascampo.getInt(visitascampo.getColumnIndex(ConstantsDB.ID_INSTANCIA)),

@@ -21,6 +21,7 @@ public class VisitaTerreno implements Serializable {
 	private VisitaTerrenoId visitaId;
 	private Integer visitaSN;
 	private Integer motNoVisita;
+	private String otroMotNoVisita;//MA2020
 	private String acomp;
 	private Integer relacionFam;
 	private Integer asentimiento;
@@ -31,7 +32,7 @@ public class VisitaTerreno implements Serializable {
 	
 	private String otraRelacionFam;
 	private String carnetSN;
-	//para peso y talla muestreo 2020
+	//para peso y talla muestreo 2020. Una vez iniciadas las encuestas de casa y participante se quitaron éstas preguntas, el 13022020
 	private String estudiaSN;
 	private String nEscuela;
 	private String otraEscuela;
@@ -156,5 +157,13 @@ public class VisitaTerreno implements Serializable {
 
 	public void setTurno(String turno) {
 		this.turno = turno;
+	}
+
+	public String getOtroMotNoVisita() {
+		return otroMotNoVisita;
+	}
+
+	public void setOtroMotNoVisita(String otroMotNoVisita) {
+		this.otroMotNoVisita = otroMotNoVisita;
 	}
 }

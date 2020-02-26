@@ -520,6 +520,7 @@ public class MainDBConstants {
     public static final String alto = "alto";
     public static final String abierta = "abierta";
     public static final String codigoHabitacion = "codigoHabitacion";
+    public static final String numeroCuarto = "numeroCuarto";
     
 
     //crear tabla telefonocontacto
@@ -537,6 +538,7 @@ public class MainDBConstants {
             + areaAmbiente + " text, "
             + abierta + " text, "
             + codigoHabitacion + " text, "
+            + numeroCuarto + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "

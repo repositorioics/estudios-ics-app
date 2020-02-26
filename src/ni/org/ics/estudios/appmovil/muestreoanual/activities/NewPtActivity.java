@@ -200,6 +200,7 @@ public class NewPtActivity extends AbstractAsyncActivity {
             mPyT.setOtrorecurso2(em.getOtrorecurso2());
             mPyT.setTomoMedidaSn(em.getTOMA_MEDIDAS());
             mPyT.setRazonNoTomoMedidas(em.getRAZON_NO_TOMA_MEDIDAS());
+			mPyT.setEstudiosAct(mParticipante.getProcesos().getEstudio());
             mPyT.setMovilInfo(new MovilInfo(idInstancia,
 					instanceFilePath,
 					Constants.STATUS_NOT_SUBMITTED,

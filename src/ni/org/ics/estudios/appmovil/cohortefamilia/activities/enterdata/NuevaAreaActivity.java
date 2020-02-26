@@ -34,10 +34,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Banio;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
-import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
-import ni.org.ics.estudios.appmovil.utils.FileUtils;
+import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.wizard.model.AbstractWizardModel;
 import ni.org.ics.estudios.appmovil.wizard.model.BarcodePage;
 import ni.org.ics.estudios.appmovil.wizard.model.DatePage;
@@ -345,6 +342,9 @@ public class NuevaAreaActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getNumVentanas()), !visible);
                 changeStatus(mWizardModel.findByKey(labels.getConVentana()), visible);
                 notificarCambios = false;
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Habitación");
+                changeStatus(mWizardModel.findByKey(labels.getNumeroCuarto()), visible);
+                notificarCambios = false;
                 onPageTreeChanged();
             }
     		if (page.getTitle().equals(labels.getAncho())) {
@@ -411,86 +411,92 @@ public class NuevaAreaActivity extends FragmentActivity implements
         return (entrada != null && !entrada.isEmpty());
     }
     
-    public void saveData(){
-		Map<String, String> mapa = mWizardModel.getAnswers();
-		//Guarda las respuestas en un bundle
-		Bundle datos = new Bundle();
-		for (Map.Entry<String, String> entry : mapa.entrySet()){
-			datos.putString(entry.getKey(), entry.getValue());
-		}
-		
-		//Abre la base de datos
-		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		estudiosAdapter.open();
-		
-		//Obtener datos del bundle para el areaambiente
-		String id = infoMovil.getId();
-		String tipo = datos.getString(this.getString(R.string.tipo));
-		String largo = datos.getString(this.getString(R.string.largo));
-		String ancho = datos.getString(this.getString(R.string.ancho));
-		String numVentanas = datos.getString(this.getString(R.string.numVentanas));
-		String conVentana = datos.getString(this.getString(R.string.conVentana));
-		String conVent = null;
-		
-		//Crea un nuevo areaambiente
+    public void saveData() {
+        Map<String, String> mapa = mWizardModel.getAnswers();
+        //Guarda las respuestas en un bundle
+        Bundle datos = new Bundle();
+        for (Map.Entry<String, String> entry : mapa.entrySet()) {
+            datos.putString(entry.getKey(), entry.getValue());
+        }
 
-		AreaAmbiente a = new AreaAmbiente();
-		a.setCodigo(id);
-		a.setCasa(casaCHF);
-		if (tieneValor(tipo)) {
-			MessageResource catTipo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_AREA'", null);
-			a.setTipo(catTipo.getCatKey());
-		}
-		if (tieneValor(largo)) {
-			a.setLargo(Double.valueOf(largo));
-		}
-		if (tieneValor(ancho)) {
-			a.setAncho(Double.valueOf(ancho));
-		}
-		Page area = mWizardModel.findByKey(labels.getTotalM2());
-		if (tieneValor(area.getHint())) {
-			a.setTotalM2(Double.valueOf(area.getHint()));
-		}
-		if (tieneValor(numVentanas)) {
-			a.setNumVentanas(Integer.valueOf(numVentanas));
-		}
-		
-		a.setRecordDate(new Date());
-		a.setRecordUser(username);
-		a.setDeviceid(infoMovil.getDeviceId());
-		a.setEstado('0');
-		a.setPasive('0');
-		
-		//Guarda el areaambiente
-		if(a.getTipo().matches("banio")){
-			if (tieneValor(conVentana)) {
-				MessageResource catConVentana = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + conVentana + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-				conVent = catConVentana.getCatKey();
-			}
-			Banio b = new Banio(a.getCodigo(), a.getLargo(), a.getAncho(), a.getTotalM2(), a.getNumVentanas(), a.getCasa(), a.getTipo(), conVent);
-			b.setRecordDate(new Date());
-			b.setRecordUser(username);
-			b.setDeviceid(infoMovil.getDeviceId());
-			b.setEstado('0');
-			b.setPasive('0');
-			estudiosAdapter.crearBanio(b);
-		}
-		else{
-			estudiosAdapter.crearAreaAmbiente(a);
-		}
-		Bundle arguments = new Bundle();
-		Intent i;
-		if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
-		i = new Intent(getApplicationContext(),
-				ListaAreasActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		i.putExtras(arguments);
-		startActivity(i);
-		Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
-		toast.show();
-		finish();
-		
+        //Abre la base de datos
+        String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
+        estudiosAdapter.open();
+
+        //Obtener datos del bundle para el areaambiente
+        String id = infoMovil.getId();
+        String tipo = datos.getString(this.getString(R.string.tipo));
+        String largo = datos.getString(this.getString(R.string.largo));
+        String ancho = datos.getString(this.getString(R.string.ancho));
+        String numVentanas = datos.getString(this.getString(R.string.numVentanas));
+        String conVentana = datos.getString(this.getString(R.string.conVentana));
+        String numeroCuarto = datos.getString(this.getString(R.string.numeroCuarto));
+        String conVent = null;
+
+        AreaAmbiente existeArea = estudiosAdapter.getAreaAmbiente(MainDBConstants.casa + "='" + casaCHF.getCodigoCHF() + "' and " + MainDBConstants.numeroCuarto + "='" + numeroCuarto + "' and " + MainDBConstants.pasive + " ='0'", null);
+        if (existeArea != null) {
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.existeNumeroCuarto), Toast.LENGTH_LONG);
+            toast.show();
+        } else {
+
+            //Crea un nuevo areaambiente
+            AreaAmbiente a = new AreaAmbiente();
+            a.setCodigo(id);
+            a.setCasa(casaCHF);
+            if (tieneValor(tipo)) {
+                MessageResource catTipo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_AREA'", null);
+                a.setTipo(catTipo.getCatKey());
+            }
+            if (tieneValor(largo)) {
+                a.setLargo(Double.valueOf(largo));
+            }
+            if (tieneValor(ancho)) {
+                a.setAncho(Double.valueOf(ancho));
+            }
+            Page area = mWizardModel.findByKey(labels.getTotalM2());
+            if (tieneValor(area.getHint())) {
+                a.setTotalM2(Double.valueOf(area.getHint()));
+            }
+            if (tieneValor(numVentanas)) {
+                a.setNumVentanas(Integer.valueOf(numVentanas));
+            }
+            a.setNumeroCuarto(numeroCuarto);
+
+            a.setRecordDate(new Date());
+            a.setRecordUser(username);
+            a.setDeviceid(infoMovil.getDeviceId());
+            a.setEstado('0');
+            a.setPasive('0');
+
+            //Guarda el areaambiente
+            if (a.getTipo().matches("banio")) {
+                if (tieneValor(conVentana)) {
+                    MessageResource catConVentana = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + conVentana + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    conVent = catConVentana.getCatKey();
+                }
+                Banio b = new Banio(a.getCodigo(), a.getLargo(), a.getAncho(), a.getTotalM2(), a.getNumVentanas(), a.getCasa(), a.getTipo(), conVent);
+                b.setRecordDate(new Date());
+                b.setRecordUser(username);
+                b.setDeviceid(infoMovil.getDeviceId());
+                b.setEstado('0');
+                b.setPasive('0');
+                estudiosAdapter.crearBanio(b);
+            } else {
+                estudiosAdapter.crearAreaAmbiente(a);
+            }
+            Bundle arguments = new Bundle();
+            Intent i;
+            if (casaCHF != null) arguments.putSerializable(Constants.CASA, casaCHF);
+            i = new Intent(getApplicationContext(),
+                    ListaAreasActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtras(arguments);
+            startActivity(i);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_LONG);
+            toast.show();
+            finish();
+        }
     }
 
 

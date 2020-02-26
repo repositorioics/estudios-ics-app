@@ -27,6 +27,7 @@ import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
 import java.util.*;
 
@@ -198,7 +199,7 @@ public class RetirarSensoresFragment extends Fragment {
 		protected String doInBackground(String... values) {
 			try {
 				estudiosAdapter.open();
-				sensorCasoList = estudiosAdapter.getSensoresCasos(CasosDBConstants.codigoCaso + "='"+mCasaCaso.getCodigoCaso()+"' and "+CasosDBConstants.sensorSN+"='1' and "+CasosDBConstants.horaRetiro+" IS NULL", null);
+				sensorCasoList = estudiosAdapter.getSensoresCasos(CasosDBConstants.codigoCaso + "='"+mCasaCaso.getCodigoCaso()+"' and "+CasosDBConstants.sensorSN+"='1' and "+CasosDBConstants.horaRetiro+" IS NULL and " + MainDBConstants.pasive + " ='0'", null);
                 estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

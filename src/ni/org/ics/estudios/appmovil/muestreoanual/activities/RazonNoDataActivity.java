@@ -23,29 +23,32 @@ import android.view.View;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
+import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.RazonNoData;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.RazonNoDataId;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author William Aviles
  */
-public class RazonNoDataActivity extends AbstractAsyncActivity{
+public class RazonNoDataActivity extends AbstractAsyncActivity {
 
 	protected static final String TAG = RazonNoDataActivity.class.getSimpleName();
 	private Integer codigo;
-	private Integer razon;
-	private String oRazon="";
+	private Integer razon = 0;
+	private String oRazon = "";
 	private Spinner rndSpinner;
 	private TextView labelOrazon;
 	private EditText editOrazon;
@@ -53,8 +56,8 @@ public class RazonNoDataActivity extends AbstractAsyncActivity{
 	private SharedPreferences settings;
 	private String username;
 
-    private EstudiosAdapter ca;
-
+	private EstudiosAdapter estudiosAdapter;
+	private List<MessageResource> mVisitas;
 	// ***************************************
 	// Activity methods
 	// ***************************************
@@ -68,62 +71,73 @@ public class RazonNoDataActivity extends AbstractAsyncActivity{
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
-        String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        ca = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		codigo = getIntent().getIntExtra(ConstantsDB.CODIGO,-1);
+		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
+		codigo = getIntent().getIntExtra(ConstantsDB.CODIGO, -1);
 		rndSpinner = (Spinner) findViewById(R.id.razon);
-		List<String> rnds = new ArrayList<String>();
-		rnds.add("Seleccionar..");
-		rnds.add("Acompañante desconoce informacion");
-		rnds.add("No se pudo tomar todas las muestras");
-		rnds.add("Abandono de Muestreo Anual");
-		rnds.add("No desea dar informacion");
-		rnds.add("Falta de tiempo por parte del acompañante");
-		rnds.add("Solo revisaba información");
-		rnds.add("Otra razón");
-		ArrayAdapter<String> dataRndAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, rnds);
-		dataRndAdapter.setDropDownViewResource(R.layout.spinner_item);
-		rndSpinner.setAdapter(dataRndAdapter);
-		
-		rndSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
+		getData();
+		mVisitas.add(new MessageResource("",0,this.getString(R.string.select)));
+		Collections.sort(mVisitas);
+		ArrayAdapter<MessageResource> dataAdapterVisit = new ArrayAdapter<MessageResource>(this, android.R.layout.simple_spinner_item, mVisitas);
+		dataAdapterVisit.setDropDownViewResource(R.layout.spinner_item_2);
+		rndSpinner.setAdapter(dataAdapterVisit);
+		rndSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				razon = arg2;
-				if(arg2==7){
+			public void onItemSelected(AdapterView<?> spinner, View v,
+									   int arg2, long arg3) {
+				MessageResource mr = (MessageResource) spinner.getSelectedItem();
+				if (!mr.getCatKey().isEmpty()){
+					razon = Integer.valueOf(mr.getCatKey());
+				}
+				if (razon == 7) {
 					editOrazon.setVisibility(View.VISIBLE);
 					labelOrazon.setVisibility(View.VISIBLE);
-				}
-				else{
+				} else {
 					editOrazon.setVisibility(View.GONE);
 					labelOrazon.setVisibility(View.GONE);
 				}
-				
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+		/*rndSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+									   int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				razon = arg2;
+				if (arg2 == 7) {
+					editOrazon.setVisibility(View.VISIBLE);
+					labelOrazon.setVisibility(View.VISIBLE);
+				} else {
+					editOrazon.setVisibility(View.GONE);
+					labelOrazon.setVisibility(View.GONE);
+				}
+
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-		    
-		}); 
-		
+
+		});*/
+
 		editOrazon = (EditText) findViewById(R.id.orazon);
 		labelOrazon = (TextView) findViewById(R.id.label_orazon);
 		editOrazon.setVisibility(View.GONE);
 		labelOrazon.setVisibility(View.GONE);
-		
-		
+
+
 		final Button saveButton = (Button) findViewById(R.id.save);
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				//captura entrada de la muestra
 				oRazon = editOrazon.getText().toString();
-				if(validarEntrada()){
+				if (validarEntrada()) {
 					RazonNoData rnd = new RazonNoData();
 					RazonNoDataId rndId = new RazonNoDataId();
 					rndId.setCodigo(codigo);
@@ -133,14 +147,13 @@ public class RazonNoDataActivity extends AbstractAsyncActivity{
 					rnd.setOtraRazon(oRazon);
 					rnd.setUsername(username);
 					rnd.setEstado(Constants.STATUS_NOT_SUBMITTED);
-					//CohorteAdapter ca = new CohorteAdapter();
-					ca.open();
-					ca.crearRazonNoData(rnd);
-					ca.close();
-					Toast.makeText(getApplicationContext(), getString( R.string.success),Toast.LENGTH_LONG).show();
+					estudiosAdapter.open();
+					estudiosAdapter.crearRazonNoData(rnd);
+					estudiosAdapter.close();
+					Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_LONG).show();
 					Intent i;
 					i = new Intent(getApplicationContext(),
-                            MenuMuestreoAnualActivity.class);
+							MenuMuestreoAnualActivity.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);
 					finish();
@@ -151,21 +164,29 @@ public class RazonNoDataActivity extends AbstractAsyncActivity{
 	}
 
 	@Override
-	public void onBackPressed (){
-		Toast.makeText(getApplicationContext(), this.getString( R.string.header_rnd),Toast.LENGTH_LONG).show();
+	public void onBackPressed() {
+		Toast.makeText(getApplicationContext(), this.getString(R.string.header_rnd), Toast.LENGTH_LONG).show();
 	}
 
 	private boolean validarEntrada() {
-		if (rndSpinner.getSelectedItem().toString().matches("Seleccionar..")){
-			Toast.makeText(getApplicationContext(), this.getString( R.string.error_rnd),Toast.LENGTH_LONG).show();
+		if (rndSpinner.getSelectedItem().toString().matches(this.getString(R.string.select))) {
+			Toast.makeText(getApplicationContext(), this.getString(R.string.wrongSelect, "Razón"), Toast.LENGTH_LONG).show();
+			rndSpinner.requestFocus();
 			return false;
-		}
-		else if (rndSpinner.getSelectedItem().toString().matches("Otra razón") && oRazon.matches("")){
-			Toast.makeText(getApplicationContext(), this.getString( R.string.error_rnd),Toast.LENGTH_LONG).show();
+		} else if (rndSpinner.getSelectedItem().toString().matches("Otra razón") && oRazon.matches("")) {
+			Toast.makeText(getApplicationContext(), this.getString(R.string.wrongSelect, this.getString(R.string.otraRazon)), Toast.LENGTH_LONG).show();
+			editOrazon.requestFocus();
 			return false;
-		}
-		else{
+		} else {
 			return true;
 		}
 	}
+
+
+	private void getData() {
+		estudiosAdapter.open();
+		mVisitas = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CAT_RAZON_NO_DATA'", CatalogosDBConstants.order);
+		estudiosAdapter.close();
+	}
+
 }

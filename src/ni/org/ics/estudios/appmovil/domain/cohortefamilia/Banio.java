@@ -21,7 +21,7 @@ public class Banio extends  AreaAmbiente {
 	public Banio(String codigo, Double largo, Double ancho,
 			Double totalM2, Integer numVentanas, CasaCohorteFamilia casa,
 			String tipo, String conVentana) {
-		super(codigo, largo, ancho, totalM2, numVentanas, casa, tipo);
+		super(codigo, largo, ancho, totalM2, numVentanas, casa, tipo, null);
 		this.conVentana = conVentana;
 	}
 

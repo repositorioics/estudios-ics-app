@@ -26,7 +26,9 @@ public class VisitaParticipanteXml {
 	private Integer relacionFam;
 	@Element(required=false)
 	private Integer asentimiento;
-	
+	@Element(required=false)
+	private String otroMotNoVisita;//MA2020
+
 	@Element(required=false)
 	private Integer otrorecurso1;
 	@Element(required=false)
@@ -77,7 +79,8 @@ public class VisitaParticipanteXml {
 	private Integer recurso2;
 	@Attribute
 	private String id;
-	
+	@Attribute
+	private String version;
 	
 	@Element(required=false)
 	private Meta meta;
@@ -298,5 +301,21 @@ public class VisitaParticipanteXml {
 
 	public void setTurno(String turno) {
 		this.turno = turno;
+	}
+
+	public String getOtroMotNoVisita() {
+		return otroMotNoVisita;
+	}
+
+	public void setOtroMotNoVisita(String otroMotNoVisita) {
+		this.otroMotNoVisita = otroMotNoVisita;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
 	}
 }

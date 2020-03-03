@@ -943,7 +943,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             visitaItem.setVisible(true);
         }
         else{
-            if((mParticipante.getProcesos().getConmx().matches("No") || mParticipante.getProcesos().getConmxbhc().matches("No"))  && mUser.getMuestra() && (mParticipante.getEdadMeses()>5) || mParticipante.getProcesos().getEstudio().contains("UO1")) muestraItem.setVisible(true);
+            if((mParticipante.getProcesos().getConmx().matches("No") || (mParticipante.getProcesos().getConmxbhc().matches("No") && !mParticipante.getProcesos().getEstudio().contains("UO1") && mParticipante.getEdadMeses()>24 )) //excluir UO1 menores de 24 que no aplica bhc
+                    && mUser.getMuestra()
+                    && (mParticipante.getEdadMeses()>5
+                    || (mParticipante.getEdadMeses()<=5 && mParticipante.getProcesos().getEstudio().contains("UO1")))) muestraItem.setVisible(true);
             if((mParticipante.getProcesos().getEnCasa().matches("Si") && mUser.getEncuestaCasa())) encCasaItem.setVisible(true);
             if((mParticipante.getProcesos().getEncPart().matches("Si") && mUser.getEncuestaParticipante())) encPartItem.setVisible(true);
             //if ((mParticipante.getProcesos().getConsFlu().matches("Si") && mUser.getConsentimiento())) reConsFluItem.setVisible(true);
@@ -1672,7 +1675,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                         labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                     } else {
-                        labelHeader = labelHeader + "<font color='red'>No tomar sorología<br /></font>";
+                        labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                     }
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
@@ -1685,7 +1688,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                             labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
                             labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                         } else {
-                            labelHeader = labelHeader + "<font color='red'>No tomar sorología<br /></font>";
+                            labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                         }
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
@@ -1725,7 +1728,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                         labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                     } else {
-                        labelHeader = labelHeader + "<font color='red'>No tomar sorología<br /></font>";
+                        labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                     }
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
@@ -1738,7 +1741,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                             labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
                             labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                         } else {
-                            labelHeader = labelHeader + "<font color='red'>No tomar sorología<br /></font>";
+                            labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                         }
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
@@ -1764,7 +1767,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
                     labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                 } else {
-                    labelHeader = labelHeader + "<font color='red'>No tomar sorología<br /></font>";
+                    labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                 }
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No")) {

@@ -1662,6 +1662,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<font color='red'>No tomar muestras<br /></font>";
                 } else {
                     labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                    pendiente=true;
                 }
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
@@ -1674,6 +1675,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 3cc en tubo PBMC<br /></font></small>";
                         labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                         labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
+                        pendiente=true;
                     } else {
                         labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                     }
@@ -1687,6 +1689,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
                             labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
                             labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                            pendiente=true;
                         } else {
                             labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                         }
@@ -1698,6 +1701,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                             } else {
                                 labelHeader = labelHeader + "<font color='#B941E0'>Tomar 1cc para BHC<br /></font>";
                             }
+                            pendiente=true;
                         }else {
                             labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                         }
@@ -1715,6 +1719,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<font color='red'>No tomar muestras<br /></font>";
                 } else {
                     labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                    pendiente=true;
                 }
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
@@ -1727,6 +1732,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 3cc en tubo PBMC<br /></font></small>";
                         labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                         labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
+                        pendiente=true;
                     } else {
                         labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                     }
@@ -1740,6 +1746,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
                             labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
                             labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                            pendiente=true;
                         } else {
                             labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                         }
@@ -1751,6 +1758,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                             } else {
                                 labelHeader = labelHeader + "<font color='#B941E0'>Tomar 1cc para BHC<br /></font>";
                             }
+                            pendiente=true;
                         }else {
                             labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                         }
@@ -1766,6 +1774,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 if (mParticipante.getProcesos().getPbmc().matches("Si")) {
                     labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
                     labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                    pendiente=true;
                 } else {
                     labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                 }
@@ -1777,6 +1786,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     } else {
                         labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
                     }
+                    pendiente=true;
                 } else {
                     labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                 }

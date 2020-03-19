@@ -504,7 +504,8 @@ public class ConstantsDB {
 //MA 2019
     public static final String hd_sn = "hd_sn";
     public static final String hdPorqueNo = "hdPorqueNo";
-
+    //MA2020
+    public static final String tuboPax = "tuboPax";
 
     //Campos obsequios
     public static final String FECHA_OB = "fecha_ob";
@@ -1437,6 +1438,7 @@ public class ConstantsDB {
             + estudiosAct + " text, "
             + hd_sn  + " text, "
             + hdPorqueNo  + " text, "
+            + tuboPax  + " integer, "
             + ID_INSTANCIA + " integer not null,"
             + FILE_PATH + " text not null,"
             + STATUS + " text not null, "

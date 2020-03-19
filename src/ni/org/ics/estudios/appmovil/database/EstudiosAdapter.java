@@ -321,6 +321,9 @@ public class EstudiosAdapter {
 				db.execSQL("ALTER TABLE " + ConstantsDB.PT_TABLE + " ADD COLUMN " + ConstantsDB.estudiosAct + " text");
 				db.execSQL("ALTER TABLE " + MainDBConstants.AREA_AMBIENTE_TABLE + " ADD COLUMN " + MainDBConstants.numeroCuarto + " text");
 			}
+			if (oldVersion==27){
+				db.execSQL("ALTER TABLE " + ConstantsDB.MUESTRA_TABLE + " ADD COLUMN " + ConstantsDB.tuboPax + " integer");
+			}
         }
 	}
 
@@ -4272,6 +4275,8 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.hd_sn, muestra.getHd_sn());
         cv.put(ConstantsDB.hdPorqueNo, muestra.getHdPorqueNo());
 
+		cv.put(ConstantsDB.tuboPax, muestra.getTuboPax()); //MA2020
+
         cv.put(ConstantsDB.PIN, muestra.getPinchazos());
         cv.put(ConstantsDB.ID_INSTANCIA, muestra.getMovilInfo().getIdInstancia());
         cv.put(ConstantsDB.FILE_PATH, muestra.getMovilInfo().getInstancePath());
@@ -6037,7 +6042,8 @@ public class EstudiosAdapter {
         //MA2019
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.hd_sn))) mMuestra.setHd_sn(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.hd_sn)));
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.hdPorqueNo))) mMuestra.setHdPorqueNo(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.hdPorqueNo)));
-
+        //MA2020
+		if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.tuboPax))) mMuestra.setTuboPax(muestreo.getInt(muestreo.getColumnIndex(ConstantsDB.tuboPax)));
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.otrorecurso1))) mMuestra.setOtrorecurso1(muestreo.getInt(muestreo.getColumnIndex(ConstantsDB.otrorecurso1)));
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.otrorecurso2))) mMuestra.setOtrorecurso2(muestreo.getInt(muestreo.getColumnIndex(ConstantsDB.otrorecurso2)));
 

@@ -33,6 +33,8 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -50,7 +52,7 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 	private static Muestra mMuestra = new Muestra();
 	Dialog dialogInit;
 
-    private EstudiosAdapter estudiosAdapter;
+	private EstudiosAdapter estudiosAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +68,8 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 
-        String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
 		casaId = getIntent().getIntExtra(ConstantsDB.COD_CASA,-1);
 		codigo = getIntent().getIntExtra(ConstantsDB.CODIGO,-1);
@@ -81,8 +83,8 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 	 */
 
 	private void createInitDialog() {
-		dialogInit = new Dialog(this, R.style.FullHeightDialog); 
-		dialogInit.setContentView(R.layout.yesno); 
+		dialogInit = new Dialog(this, R.style.FullHeightDialog);
+		dialogInit.setContentView(R.layout.yesno);
 		dialogInit.setCancelable(false);
 
 		//to set the message
@@ -122,24 +124,24 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.MENU_BACK:
-			finish();
-			return true;
-		case R.id.MENU_HOME:
-			Intent i = new Intent(getApplicationContext(),
-					MenuMuestreoAnualActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+			case R.id.MENU_BACK:
+				finish();
+				return true;
+			case R.id.MENU_HOME:
+				Intent i = new Intent(getApplicationContext(),
+						MenuMuestreoAnualActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent) {
+									Intent intent) {
 
 		//Si todo salio bien en ODK Collect
 		if (resultCode == RESULT_OK) {
@@ -177,130 +179,132 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 		Serializer serializer = new Persister();
 		File source = new File(instanceFilePath);
 		try {
-            MuestraXml em = new MuestraXml();
-            em = serializer.read(MuestraXml.class, source);
-            MuestraId mId = new MuestraId();
-            mId.setCodigo(codigo);
-            mId.setFechaMuestra(new Date());
-            mMuestra.setmId(mId);
-            mMuestra.setFiebreM(em.getFiebreM());
-            mMuestra.setConsulta(em.getConsulta());
-            mMuestra.setTuboBHC(em.getTuboBHC());
-            mMuestra.setTuboLeu(em.getTuboLeu());
-            mMuestra.setTuboRojo(em.getTuboRojo());
-            mMuestra.setEstudiosAct(mParticipante.getProcesos().getEstudio());
-            mMuestra.setBhc_razonNo(em.getBhc_razonNo());
-            mMuestra.setRojo_razonNo(em.getRojo_razonNo());
-            mMuestra.setPbmc_razonNo(em.getPbmc_razonNo());
+			MuestraXml em = new MuestraXml();
+			em = serializer.read(MuestraXml.class, source);
+			MuestraId mId = new MuestraId();
+			mId.setCodigo(codigo);
+			mId.setFechaMuestra(new Date());
+			mMuestra.setmId(mId);
+			mMuestra.setFiebreM(em.getFiebreM());
+			mMuestra.setConsulta(em.getConsulta());
+			mMuestra.setTuboBHC(em.getTuboBHC());
+			mMuestra.setTuboLeu(em.getTuboLeu());
+			mMuestra.setTuboRojo(em.getTuboRojo());
+			mMuestra.setEstudiosAct(mParticipante.getProcesos().getEstudio());
+			mMuestra.setBhc_razonNo(em.getBhc_razonNo());
+			mMuestra.setRojo_razonNo(em.getRojo_razonNo());
+			mMuestra.setPbmc_razonNo(em.getPbmc_razonNo());
 
-            mMuestra.setBhc_otraRazonNo(em.getBhc_otraRazonNo());
-            mMuestra.setRojo_otraRazonNo(em.getRojo_otraRazonNo());
-            mMuestra.setPbmc_otraRazonNo(em.getPbmc_otraRazonNo());
+			mMuestra.setBhc_otraRazonNo(em.getBhc_otraRazonNo());
+			mMuestra.setRojo_otraRazonNo(em.getRojo_otraRazonNo());
+			mMuestra.setPbmc_otraRazonNo(em.getPbmc_otraRazonNo());
 
-            mMuestra.setHoraBHC(em.getHoraBHC());
-            mMuestra.setHoraPBMC(em.getHoraPBMC());
-            mMuestra.setHoraInicioPax(em.getHoraInicioPax());
+			mMuestra.setHoraBHC(em.getHoraBHC());
+			mMuestra.setHoraPBMC(em.getHoraPBMC());
+			mMuestra.setHoraInicioPax(em.getHoraInicioPax());
 
-            mMuestra.setHoraFinPax(em.getHoraFinPax());
-            mMuestra.setTerreno(em.getTerreno());
-            mMuestra.setCodPax(em.getCodPax());
+			mMuestra.setHoraFinPax(em.getHoraFinPax());
+			mMuestra.setTerreno(em.getTerreno());
+			mMuestra.setCodPax(em.getCodPax());
 
-            mMuestra.setPinchazos(em.getPinchazos());
-            mMuestra.setOtrorecurso1(em.getOtrorecurso1());
-            mMuestra.setOtrorecurso2(em.getOtrorecurso2());
-            //MA 2019
-            mMuestra.setHd_sn(em.getHd_sn());
-            mMuestra.setHdPorqueNo(em.getHdPorqueNo());
+			mMuestra.setPinchazos(em.getPinchazos());
+			mMuestra.setOtrorecurso1(em.getOtrorecurso1());
+			mMuestra.setOtrorecurso2(em.getOtrorecurso2());
+			//MA 2019
+			mMuestra.setHd_sn(em.getHd_sn());
+			mMuestra.setHdPorqueNo(em.getHdPorqueNo());
+			//MA 2020
+			mMuestra.setTuboPax(em.getTuboPax());
 
-            mMuestra.setMovilInfo(new MovilInfo(idInstancia,
-                    instanceFilePath,
-                    Constants.STATUS_NOT_SUBMITTED,
-                    ultimoCambio,
-                    em.getStart(),
-                    em.getEnd(),
-                    em.getDeviceid(),
-                    em.getSimserial(),
-                    em.getPhonenumber(),
-                    em.getToday(),
-                    username,
-                    false, em.getRecurso1(), em.getRecurso2()));
-            //Guarda en la base de datos local
-            estudiosAdapter.open();
-            estudiosAdapter.crearMuestra(mMuestra);
+			mMuestra.setMovilInfo(new MovilInfo(idInstancia,
+					instanceFilePath,
+					Constants.STATUS_NOT_SUBMITTED,
+					ultimoCambio,
+					em.getStart(),
+					em.getEnd(),
+					em.getDeviceid(),
+					em.getSimserial(),
+					em.getPhonenumber(),
+					em.getToday(),
+					username,
+					false, em.getRecurso1(), em.getRecurso2()));
+			//Guarda en la base de datos local
+			estudiosAdapter.open();
+			estudiosAdapter.crearMuestra(mMuestra);
 
-            String mxSer = "";
-            if (em.getTuboRojo() != null) {
-                if (em.getTuboRojo().toString().matches("1")) {
-                    mxSer = "Si";
-                } else {
-                    mxSer = "No";
-                }
-                mParticipante.getProcesos().setConmx(mxSer);
-            }
-            if (em.getTuboLeu() != null) {
-                if (em.getTuboLeu().toString().matches("1")) {
-                    mxSer = "Si";
-                } else {
-                    mxSer = "No";
-                }
-                mParticipante.getProcesos().setConmx(mxSer);
-            }
-            String mxBhc = "";
-            if (em.getTuboBHC() != null) {
-                if (em.getTuboBHC().toString().matches("1")) {
-                    mxBhc = "Si";
-                } else {
-                    mxBhc = "No";
-                }
-                mParticipante.getProcesos().setConmxbhc(mxBhc);
-            }
-            if (mParticipante.getProcesos().getEstudio().equals("Influenza") || mParticipante.getProcesos().getEstudio().equals("Influenza  Cohorte BB")) {
-                if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
-                    if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                        mParticipante.getProcesos().setConmxbhc("Si");
-                    }
-                }
-            }
-            mParticipante.getProcesos().setMovilInfo(new MovilInfo(idInstancia,
-                    instanceFilePath,
-                    Constants.STATUS_NOT_SUBMITTED,
-                    ultimoCambio,
-                    em.getStart(),
-                    em.getEnd(),
-                    em.getDeviceid(),
-                    em.getSimserial(),
-                    em.getPhonenumber(),
-                    em.getToday(),
-                    username,
-                    false, em.getRecurso1(), em.getRecurso2()));
+			String mxSer = "";
+			if (em.getTuboRojo() != null) {
+				if (em.getTuboRojo().toString().matches("1")) {
+					mxSer = "Si";
+				} else {
+					mxSer = "No";
+				}
+				mParticipante.getProcesos().setConmx(mxSer);
+			}
+			if (em.getTuboLeu() != null) {
+				if (em.getTuboLeu().toString().matches("1")) {
+					mxSer = "Si";
+				} else {
+					mxSer = "No";
+				}
+				mParticipante.getProcesos().setConmx(mxSer);
+			}
+			String mxBhc = "";
+			if (em.getTuboBHC() != null) {
+				if (em.getTuboBHC().toString().matches("1")) {
+					mxBhc = "Si";
+				} else {
+					mxBhc = "No";
+				}
+				mParticipante.getProcesos().setConmxbhc(mxBhc);
+			}
+			if (mParticipante.getProcesos().getEstudio().equals("Influenza") || mParticipante.getProcesos().getEstudio().equals("Influenza  Cohorte BB")) {
+				if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
+					if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+						mParticipante.getProcesos().setConmxbhc("Si");
+					}
+				}
+			}
+			mParticipante.getProcesos().setMovilInfo(new MovilInfo(idInstancia,
+					instanceFilePath,
+					Constants.STATUS_NOT_SUBMITTED,
+					ultimoCambio,
+					em.getStart(),
+					em.getEnd(),
+					em.getDeviceid(),
+					em.getSimserial(),
+					em.getPhonenumber(),
+					em.getToday(),
+					username,
+					false, em.getRecurso1(), em.getRecurso2()));
 
-            estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());
-            estudiosAdapter.close();
-            showToast(getApplicationContext().getString(R.string.success), 0);
-            loadMenuInfo();
-        } catch (Exception e) {
+			estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());
+			estudiosAdapter.close();
+			showToast(getApplicationContext().getString(R.string.success), 0);
+			loadMenuInfo();
+		} catch (Exception e) {
 			// Presenta el error al parsear el xml
 			showToast(e.toString(),1);
 			e.printStackTrace();
-            loadMenuInfo();
+			loadMenuInfo();
 		}
 
 	}
 
-    private void loadMenuInfo(){
-        Intent i = new Intent(getApplicationContext(),
-                MenuInfoActivity.class);
-        i.putExtra(ConstantsDB.COD_CASA, casaId);
-        i.putExtra(ConstantsDB.CODIGO, codigo);
-        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        finish();
+	private void loadMenuInfo(){
+		Intent i = new Intent(getApplicationContext(),
+				MenuInfoActivity.class);
+		i.putExtra(ConstantsDB.COD_CASA, casaId);
+		i.putExtra(ConstantsDB.CODIGO, codigo);
+		i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
+		finish();
 
-    }
+	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void addMuestra() {
 		try{
@@ -321,7 +325,7 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 			Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
 			//Arranca la actividad ODK Collect en busca de resultado
 			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-			String valores[] = new String[18];
+			String valores[] = new String[20];
 			valores[0] = "pbmc";
 			valores[1] = mParticipante.getProcesos().getPbmc();
 			valores[2] = "conmx";
@@ -349,7 +353,20 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 			else{
 				valores[17] = "No";
 			}
-			
+			valores[18] = "nuevoIngreso";
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			Date fechaRegistro = null;
+			Date todayWithZeroTime = null;
+			try {
+				todayWithZeroTime =formatter.parse(formatter.format(new Date()));
+				fechaRegistro =formatter.parse(formatter.format(mParticipante.getRecordDate()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			valores[19] = (fechaRegistro!=null && fechaRegistro.equals(todayWithZeroTime)?Constants.YES:Constants.NO);
+
+
 			odkA.putExtra("vc", valores);
 			startActivityForResult(odkA,ADD_PART);
 		}
@@ -360,11 +377,11 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 		}
 	}
 
-    private void getData() {
-        estudiosAdapter.open();
-        mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo + "=" + codigo, null);
-        estudiosAdapter.close();
-    }
+	private void getData() {
+		estudiosAdapter.open();
+		mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo + "=" + codigo, null);
+		estudiosAdapter.close();
+	}
 
 	private void showToast(String mensaje, int numImage){
 		LayoutInflater inflater = getLayoutInflater();
@@ -375,15 +392,15 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 		ImageView image = (ImageView) layout.findViewById(R.id.image);
 
 		switch(numImage){
-		case 0:
-			image.setImageResource(R.drawable.ic_ok);
-			break;
-		case 1:
-			image.setImageResource(R.drawable.ic_error);
-			break;
-		default:
-			image.setImageResource(R.drawable.ic_launcher);
-			break;
+			case 0:
+				image.setImageResource(R.drawable.ic_ok);
+				break;
+			case 1:
+				image.setImageResource(R.drawable.ic_error);
+				break;
+			default:
+				image.setImageResource(R.drawable.ic_launcher);
+				break;
 		}
 
 

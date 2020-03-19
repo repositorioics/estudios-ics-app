@@ -8,12 +8,12 @@ import java.util.Date;
 
 /**
  * Objeto para capturar informacion del Xml producido por ODK en el formulario casa
- * 
+ *
  * @author William Aviles
  **/
 
 public class MuestraXml {
-	
+
 	@Element(required=false)
 	private String confirmar;
 	@Element(required=false)
@@ -40,12 +40,14 @@ public class MuestraXml {
 	private String leuco;
 	@Element(required=false)
 	private String bhc;
-    @Element(required=false)
-    private String ed;
-    @Element(required=false)
-    private String hd_sn;
-    @Element(required=false)
-    private String hdPorqueNo;
+	@Element(required=false)
+	private String ed;
+	@Element(required=false)
+	private String hd_sn;
+	@Element(required=false)
+	private String hdPorqueNo;
+	@Element(required=false)
+	private String nuevoIngreso;
 	//MA2020
 	@Element(required=false)
 	private String muestranoinf03;
@@ -125,10 +127,10 @@ public class MuestraXml {
 	private String titulo29;
 	@Element(required=false)
 	private String titulo30;
-    @Element(required=false)
-    private String titulo31;
-    @Element(required=false)
-    private String titulo32;
+	@Element(required=false)
+	private String titulo31;
+	@Element(required=false)
+	private String titulo32;
 	//MA2020
 	@Element(required=false)
 	private String titulo50;
@@ -235,12 +237,13 @@ public class MuestraXml {
 	private String terreno;
 	@Element(required=false)
 	private Integer pinchazos;
-	
+	@Element(required=false)
+	private Integer tuboPax;
 	@Element(required=false)
 	private Integer otrorecurso1;
 	@Element(required=false)
 	private Integer otrorecurso2;
-	
+
 	@Element(required=false)
 	private String start;
 	@Element(required=false)
@@ -259,13 +262,13 @@ public class MuestraXml {
 	private Integer recurso2;
 	@Attribute
 	private String id;
-	
-	
+
+
 	@Element(required=false)
-	private Meta meta;	
-	
+	private Meta meta;
+
 	public MuestraXml(){
-		
+
 	}
 
 	public String getPbmc() {
@@ -756,23 +759,23 @@ public class MuestraXml {
 		this.titulo30 = titulo30;
 	}
 
-    public String getTitulo31() {
-        return titulo31;
-    }
+	public String getTitulo31() {
+		return titulo31;
+	}
 
-    public void setTitulo31(String titulo31) {
-        this.titulo31 = titulo31;
-    }
+	public void setTitulo31(String titulo31) {
+		this.titulo31 = titulo31;
+	}
 
-    public String getTitulo32() {
-        return titulo32;
-    }
+	public String getTitulo32() {
+		return titulo32;
+	}
 
-    public void setTitulo32(String titulo32) {
-        this.titulo32 = titulo32;
-    }
+	public void setTitulo32(String titulo32) {
+		this.titulo32 = titulo32;
+	}
 
-    public String getMuestranoinf() {
+	public String getMuestranoinf() {
 		return muestranoinf;
 	}
 
@@ -868,19 +871,35 @@ public class MuestraXml {
 		this.otrorecurso2 = otrorecurso2;
 	}
 
-    public String getHd_sn() {
-        return hd_sn;
-    }
+	public String getHd_sn() {
+		return hd_sn;
+	}
 
-    public void setHd_sn(String hd_sn) {
-        this.hd_sn = hd_sn;
-    }
+	public void setHd_sn(String hd_sn) {
+		this.hd_sn = hd_sn;
+	}
 
-    public String getHdPorqueNo() {
-        return hdPorqueNo;
-    }
+	public String getHdPorqueNo() {
+		return hdPorqueNo;
+	}
 
-    public void setHdPorqueNo(String hdPorqueNo) {
-        this.hdPorqueNo = hdPorqueNo;
-    }
+	public void setHdPorqueNo(String hdPorqueNo) {
+		this.hdPorqueNo = hdPorqueNo;
+	}
+
+	public Integer getTuboPax() {
+		return tuboPax;
+	}
+
+	public void setTuboPax(Integer tuboPax) {
+		this.tuboPax = tuboPax;
+	}
+
+	public String getNuevoIngreso() {
+		return nuevoIngreso;
+	}
+
+	public void setNuevoIngreso(String nuevoIngreso) {
+		this.nuevoIngreso = nuevoIngreso;
+	}
 }

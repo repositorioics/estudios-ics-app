@@ -45,6 +45,7 @@ public class Muestra implements Serializable {
     private String estudiosAct;
     private String hd_sn;
     private String hdPorqueNo;
+	private Integer tuboPax;
 
 	public Integer getOtrorecurso1() {
 		return otrorecurso1;
@@ -249,7 +250,15 @@ public class Muestra implements Serializable {
         this.hdPorqueNo = hdPorqueNo;
     }
 
-    @Override
+	public Integer getTuboPax() {
+		return tuboPax;
+	}
+
+	public void setTuboPax(Integer tuboPax) {
+		this.tuboPax = tuboPax;
+	}
+
+	@Override
 	public String toString() {
 		return this.getmId().getCodigo().toString();
 	}

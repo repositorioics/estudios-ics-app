@@ -55,14 +55,12 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private static Participante mParticipante = new Participante();
     private static ParticipanteCohorteFamilia mParticipanteChf = new ParticipanteCohorteFamilia();
     private static UserPermissions mUser = new UserPermissions();
-    private static ArrayList<ReConsentimientoFlu2015> mReConsentimientoFlu = new ArrayList<ReConsentimientoFlu2015>();
     private ArrayList<VisitaTerreno> mVisitasTerreno = new ArrayList<VisitaTerreno>();
     private ArrayList<PesoyTalla> mPyTs = new ArrayList<PesoyTalla>();
     private ArrayList<EncuestaCasa> mEncuestasCasas = new ArrayList<EncuestaCasa>();
     private ArrayList<EncuestaParticipante> mEncuestasParticipantes = new ArrayList<EncuestaParticipante>();
     private ArrayList<LactanciaMaterna> mEncuestasLactancias = new ArrayList<LactanciaMaterna>();
     private ArrayList<NewVacuna> mVacunas = new ArrayList<NewVacuna>();
-    private ArrayList<ReConsentimientoDen2015> mReConsentimientoDen = new ArrayList<ReConsentimientoDen2015>();
     private ArrayList<Muestra> mMuestras = new ArrayList<Muestra>();
     private ArrayList<Obsequio> mObsequios = new ArrayList<Obsequio>();
     private ArrayList<DatosPartoBB> mDatosPartoBBs = new ArrayList<DatosPartoBB>();
@@ -169,97 +167,91 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 ReviewActivity.class);
                         break;
                     case 1:
-                        arguments.putString(Constants.TITLE, getString(R.string.info_reconflu));
-                        if (mReConsentimientoFlu!=null) arguments.putSerializable(Constants.OBJECTO , mReConsentimientoFlu);
-                        i = new Intent(getApplicationContext(),
-                                ListReviewActivity.class);
-                        break;
-                    case 2:
                         arguments.putString(Constants.TITLE, getString(R.string.info_visit));
                         if (mVisitasTerreno!=null) arguments.putSerializable(Constants.OBJECTO , mVisitasTerreno);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 3:
+                    case 2:
                         arguments.putString(Constants.TITLE, getString(R.string.info_weight));
                         if (mPyTs!=null) arguments.putSerializable(Constants.OBJECTO , mPyTs);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 4:
+                    case 3:
                         arguments.putString(Constants.TITLE, getString(R.string.info_survey2));
                         if (mEncuestasCasas!=null) arguments.putSerializable(Constants.OBJECTO , mEncuestasCasas);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 5:
+                    case 4:
                         arguments.putString(Constants.TITLE, getString(R.string.info_survey1));
                         if (mEncuestasParticipantes!=null) arguments.putSerializable(Constants.OBJECTO , mEncuestasParticipantes);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 6:
+                    case 5:
                         arguments.putString(Constants.TITLE, getString(R.string.info_survey3));
                         if (mEncuestasLactancias!=null) arguments.putSerializable(Constants.OBJECTO , mEncuestasLactancias);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 7:
+                    case 6:
                         arguments.putString(Constants.TITLE, getString(R.string.info_vacc));
                         if (mVacunas!=null) arguments.putSerializable(Constants.OBJECTO , mVacunas);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 8:
+                    case 7:
                         arguments.putInt("codCasa", mParticipante.getCasa().getCodigo());
                         arguments.putInt("codComun", mParticipante.getCodigo());
 
                         i = new Intent(getApplicationContext(),
                                 ListParticipantesCasaActivity.class);
                         break;
-                    case 9:
+                    /*case 9:
                         arguments.putString(Constants.TITLE, getString(R.string.info_recon));
                         if (mReConsentimientoDen!=null) arguments.putSerializable(Constants.OBJECTO , mReConsentimientoDen);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
-                        break;
-                    case 10:
+                        break;*/
+                    case 8:
                         arguments.putString(Constants.TITLE, getString(R.string.info_sample));
                         if (mMuestras!=null) arguments.putSerializable(Constants.OBJECTO , mMuestras);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 11:
+                    case 9:
                         arguments.putString(Constants.TITLE, getString(R.string.info_gift));
                         if (mObsequios!=null) arguments.putSerializable(Constants.OBJECTO , mObsequios);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 12:
+                    case 10:
                         arguments.putString(Constants.TITLE, getString(R.string.info_sa));
                         if (mConSA!=null) arguments.putSerializable(Constants.OBJECTO , mConSA);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 13:
+                    case 11:
                         arguments.putString(Constants.TITLE, getString(R.string.datos_parto));
                         if (mDatosPartoBBs!=null) arguments.putSerializable(Constants.OBJECTO , mDatosPartoBBs);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 14:
+                    case 12:
                         arguments.putString(Constants.TITLE, getString(R.string.datos_casa));
                         if (mDatosVisitaTerreno!=null) arguments.putSerializable(Constants.OBJECTO , mDatosVisitaTerreno);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 15:
+                    case 13:
                         arguments.putString(Constants.TITLE, getString(R.string.info_docs));
                         if (mDocumentos!=null) arguments.putSerializable(Constants.OBJECTO , mDocumentos);
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
-                    case 16:
+                    case 14:
                         arguments.putString(Constants.TITLE, getString(R.string.info_casachf));
                         if (mEncuestasCasasChf!=null) arguments.putSerializable(Constants.OBJECTO , mEncuestasCasasChf);
                         i = new Intent(getApplicationContext(),
@@ -279,7 +271,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 ListReviewActivity.class);
                         break;
                         */
-                    case 17:
+                    case 15:
                         arguments.putString(Constants.TITLE, getString(R.string.info_telefonos));
 
                         i = new Intent(getApplicationContext(),
@@ -287,7 +279,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         if (mParticipante!=null) i.putExtra(Constants.PARTICIPANTE, mParticipante);
 
                         break;
-                    case 18:
+                    case 16:
                         arguments.putString(Constants.TITLE, getString(R.string.info_coordenadas));
                         if (mDatosCoordenadas!=null) arguments.putSerializable(Constants.OBJECTO , mDatosCoordenadas);
                         i = new Intent(getApplicationContext(),
@@ -439,28 +431,6 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
                     toast.show();
                 }*/
-                return true;
-
-            case R.id.RECONSFLU:
-                if(mUser.getConsentimiento()){
-                    if(mParticipante.getProcesos().getConsFlu().matches("Si")){
-                        i = new Intent(getApplicationContext(),
-                                NewRecFlu2015Activity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtra(ConstantsDB.COD_CASA, mParticipante.getCasa().getCodigo());
-                        i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());
-                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
-                        startActivity(i);
-                    }
-                    else{
-                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
-                        toast.show();
-                    }
-                }
-                else{
-                    Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
-                    toast.show();
-                }
                 return true;
 
             case R.id.CONSFLUUO1:
@@ -1005,13 +975,11 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         estudiosAdapter.open();
         if (mParticipante == null)
             mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo  + "="+codigo, null);
-        mReConsentimientoFlu = estudiosAdapter.getListaReConsentimientoFlu2015(codigo);
         mVisitasTerreno=estudiosAdapter.getListaVisitaTerreno(codigo);
         mPyTs = estudiosAdapter.getListaPesoyTallas(codigo);
         if(mParticipante.getCasa().getCodigo()!=9999) mEncuestasCasas = estudiosAdapter.getListaEncuestaCasas(mParticipante.getCasa().getCodigo());
         mEncuestasParticipantes = estudiosAdapter.getListaEncuestaParticipantes(codigo);
         mEncuestasLactancias = estudiosAdapter.getListaLactanciaMaternas(codigo);
-        mReConsentimientoDen=estudiosAdapter.getListaReConsentimientoDen2015(codigo);
         mMuestras=estudiosAdapter.getListaMuestras(codigo);
         mObsequios=estudiosAdapter.getListaObsequios(codigo);
         mDatosVisitaTerreno = estudiosAdapter.getListaDatosVisitaTerreno(codigo);
@@ -1817,9 +1785,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             try {
                 onPrepareOptionsMenu();
                 String[] menu_info = getResources().getStringArray(R.array.menu_info);
-                gridView.setAdapter(new MenuInfoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info, mReConsentimientoFlu.size()
+                gridView.setAdapter(new MenuInfoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info
                         ,mVisitasTerreno.size(),mPyTs.size(),mEncuestasCasas.size(),mEncuestasParticipantes.size(),
-                        mEncuestasLactancias.size(),mVacunas.size(),mReConsentimientoDen.size(),mMuestras.size(),mObsequios.size(), mConSA.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()
+                        mEncuestasLactancias.size(),mVacunas.size(),mMuestras.size(),mObsequios.size(), mConSA.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size() , mDocumentos.size()
                         ,mEncuestasCasasChf.size(), mDatosCoordenadas.size()));
                 refreshView();
             }catch (Exception ex){

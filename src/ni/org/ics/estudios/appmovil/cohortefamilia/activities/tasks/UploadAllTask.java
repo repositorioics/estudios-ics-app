@@ -75,7 +75,6 @@ public class UploadAllTask extends UploadTask {
     private List<VisitaFallidaCaso> mVisitaFallidaCasos = new ArrayList<VisitaFallidaCaso>();
     private List<VisitaSeguimientoCasoSintomas> mVisitaSeguimientoSintomasCasos = new ArrayList<VisitaSeguimientoCasoSintomas>();
     private List<FormularioContactoCaso> mFormularioContactoCasos = new ArrayList<FormularioContactoCaso>();
-    private List<InformacionNoCompletaCaso> mInformacionNoCompletaCasos = new ArrayList<InformacionNoCompletaCaso>();
     private List<SensorCaso> mSensoresCaso = new ArrayList<SensorCaso>();
 
     private List<VisitaFinalCaso> mVisitaFinalCasos = null;
@@ -184,7 +183,6 @@ public class UploadAllTask extends UploadTask {
             mVisitaFallidaCasos = estudioAdapter.getVisitaFallidaCasos(filtro, null);
             mVisitaSeguimientoSintomasCasos = estudioAdapter.getVisitaSeguimientoCasosSintomas(filtro, null);
             mFormularioContactoCasos = estudioAdapter.getFormularioContactoCasos(filtro, null);
-            mInformacionNoCompletaCasos = estudioAdapter.getInformacionNoCompletaCasos(filtro, null);
             mSensoresCaso = estudioAdapter.getSensoresCasos(filtro, null);
 
             mVisitaFinalCasos = estudioAdapter.getVisitaFinalCasos(filtro, null);
@@ -403,12 +401,6 @@ public class UploadAllTask extends UploadTask {
             error = cargarSensoresCasos(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SENSORES_CASOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, NODATA_CASOS);
-            error = cargarInformacionNoCompletaCasos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, NODATA_CASOS);
                 return error;
             }
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FINALES);
@@ -860,22 +852,6 @@ public class UploadAllTask extends UploadTask {
                     try {
                         estudioAdapter.editarSensorCaso(sensorCaso);
                         publishProgress("Actualizando sensores de casos en la base de datos local", Integer.valueOf(mSensoresCaso.indexOf(sensorCaso)).toString(), Integer
-                                .valueOf(c).toString());
-                    }catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        if(opcion.equalsIgnoreCase(NODATA_CASOS)){
-            c = mInformacionNoCompletaCasos.size();
-            if(c>0){
-                for (InformacionNoCompletaCaso nodata : mInformacionNoCompletaCasos) {
-                	nodata.setEstado(estado.charAt(0));
-                    try {
-                        estudioAdapter.editarInformacionNoCompletaCaso(nodata);
-                        publishProgress("Actualizando falta de info de los participantes de casas con casos en base de datos local", Integer.valueOf(mInformacionNoCompletaCasos.indexOf(nodata)).toString(), Integer
                                 .valueOf(c).toString());
                     }catch (Exception ex){
                         ex.printStackTrace();
@@ -2077,36 +2053,6 @@ public class UploadAllTask extends UploadTask {
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<FormularioContactoCaso[]> requestEntity =
                         new HttpEntity<FormularioContactoCaso[]>(envio, requestHeaders);
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
-                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
-                        String.class);
-                return response.getBody();
-            }
-            else{
-                return "Datos recibidos!";
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            return e.getMessage();
-        }
-    }
-    
-    protected String cargarInformacionNoCompletaCasos(String url, String username,String password) throws Exception {
-        try {
-            if(mInformacionNoCompletaCasos.size()>0){
-                // La URL de la solicitud POST
-                publishProgress("Enviando informacion no completa de los participantes de Casas con casos!", CONTACTOS_CASOS, TOTAL_TASK);
-                final String urlRequest = url + "/movil/visitasnodatacasos";
-                InformacionNoCompletaCaso[] envio = mInformacionNoCompletaCasos.toArray(new InformacionNoCompletaCaso[mInformacionNoCompletaCasos.size()]);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-                requestHeaders.setAuthorization(authHeader);
-                HttpEntity<InformacionNoCompletaCaso[]> requestEntity =
-                        new HttpEntity<InformacionNoCompletaCaso[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

@@ -15,7 +15,6 @@ import ni.org.ics.estudios.appmovil.R;
 public class MenuReviewAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
-	private final int numRecFlu;
 	private final int numVisitas;
 	private final int numPesosT;
 	private final int numEncCasa;
@@ -23,7 +22,6 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
 	private final int numEncLact;
 	private final int numVacunas;
 	private final int numEncSats;
-	private final int numRecDen;
 	private final int numMuestras;
 	private final int numObsequios;
     private final int numZikas;
@@ -34,13 +32,12 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
     //MA2020 private final int numEncCasaSa;
     //MA2020 private final int numEncPartSa;
 	public MenuReviewAdapter(Context context, int textViewResourceId,
-			String[] values, int recFlu, int visitas, int pyts
-			, int ecasa, int epart, int elact, int vacunas, int encsats, int recDen
+			String[] values, int visitas, int pyts
+			, int ecasa, int epart, int elact, int vacunas, int encsats
 			, int muestras, int obsequios, int zikas, int partos, int datoscasas, int docs
             , int ecasachf) {
 		super(context, textViewResourceId, values);
 		this.values = values;
-		this.numRecFlu=recFlu;
 		this.numVisitas=visitas;
 		this.numPesosT=pyts;
 		this.numEncCasa=ecasa;
@@ -48,7 +45,6 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
 		this.numEncLact=elact;
 		this.numVacunas=vacunas;
 		this.numEncSats=encsats;
-		this.numRecDen=recDen;
 		this.numMuestras=muestras;
 		this.numObsequios=obsequios;
 		this.numZikas=zikas;
@@ -77,14 +73,6 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
 		Drawable img = null;
 		switch (position) {
             case 0:
-                img = getContext().getResources().getDrawable(R.drawable.ic_recons);
-                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                textView.setText(values[position] + "(" + numRecFlu + ")");
-                if (numRecFlu < 1) {
-                    textView.setTextColor(Color.RED);
-                }
-                break;
-            case 1:
                 img = getContext().getResources().getDrawable(R.drawable.ic_map);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numVisitas + ")");
@@ -92,7 +80,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 2:
+            case 1:
                 img = getContext().getResources().getDrawable(R.drawable.ic_pesotalla);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numPesosT + ")");
@@ -100,7 +88,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 3:
+            case 2:
                 img = getContext().getResources().getDrawable(R.drawable.ic_survey_casa);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numEncCasa + ")");
@@ -108,7 +96,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 4:
+            case 3:
                 img = getContext().getResources().getDrawable(R.drawable.ic_survey_persona);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numEncPart + ")");
@@ -116,7 +104,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 5:
+            case 4:
                 img = getContext().getResources().getDrawable(R.drawable.ic_breastfeeding);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numEncLact + ")");
@@ -124,7 +112,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 6:
+            case 5:
                 img = getContext().getResources().getDrawable(R.drawable.ic_vacc);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numVacunas + ")");
@@ -132,7 +120,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 7:
+            case 6:
                 img = getContext().getResources().getDrawable(R.drawable.ic_usersat);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numEncSats + ")");
@@ -140,16 +128,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 8:
-                img = getContext().getResources().getDrawable(R.drawable.ic_conschik);
-                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                textView.setText(values[position] + "(" + numRecDen + ")");
-                if (numRecDen < 1) {
-                    textView.setTextColor(Color.RED);
-                }
-                break;
-
-            case 9:
+            case 7:
                 img = getContext().getResources().getDrawable(R.drawable.ic_blood);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numMuestras + ")");
@@ -157,7 +136,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 10:
+            case 8:
                 img = getContext().getResources().getDrawable(R.drawable.ic_gift);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numObsequios + ")");
@@ -165,7 +144,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 11:
+            case 9:
                 img = getContext().getResources().getDrawable(R.drawable.ic_consentimiento);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numZikas + ")");
@@ -173,7 +152,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 12:
+            case 10:
                 img = getContext().getResources().getDrawable(R.drawable.ic_post);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numPartos + ")");
@@ -181,7 +160,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 13:
+            case 11:
                 img = getContext().getResources().getDrawable(R.drawable.ic_casa);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numDatosCasa + ")");
@@ -189,7 +168,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 14:
+            case 12:
                 img = getContext().getResources().getDrawable(R.drawable.ic_docs);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numDocs + ")");
@@ -197,7 +176,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;
-            case 15:
+            case 13:
                 img = getContext().getResources().getDrawable(R.drawable.ic_survey_casa);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numEncCasaChf + ")");

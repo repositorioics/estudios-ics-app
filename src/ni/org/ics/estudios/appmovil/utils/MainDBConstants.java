@@ -28,7 +28,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 28;
+	public static final int DATABASE_VERSION = 29;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -656,36 +656,10 @@ public class MainDBConstants {
             + estado + " text not null, "
             + "primary key (" + id + "));";
 
-    //Tabla CambioDomicilio. Se cambio a datos de coordenadas, para incluir todos las tomas de puntos
-   @Deprecated
-    public static final String CAMBIO_DOMICILIO_TABLE = "cambio_domicilio";
-
     //Campos CambioDomicilio
     public static final String puntoGps = "puntoGps";
     public static final String razonNoGeoref = "razonNoGeoref";
     public static final String otraRazonNoGeoref = "otraRazonNoGeoref";
-
-    //Crear tabla casas
-    @Deprecated
-    public static final String CREATE_CAMBIO_DOMICILIO_TABLE = "create table if not exists "
-            + CAMBIO_DOMICILIO_TABLE + " ("
-            + codigo + " text not null, "
-            + participante + " integer, "
-            + barrio + " integer, "
-            + otroBarrio + " text, "
-            + direccion + " text, "
-            + manzana + " text, "
-            + latitud + " real, "
-            + longitud + " real, "
-            + puntoGps + " text, "
-            + razonNoGeoref + " text, "
-            + otraRazonNoGeoref + " text, "
-            + recordDate + " date, "
-            + recordUser + " text, "
-            + pasive + " text, "
-            + deviceId + " text, "
-            + estado + " text not null, "
-            + "primary key (" + codigo + "));";
 
     // Tabla Tamizaje
     public static final String ENFCRONICA_TABLE = "enfermedades_cronicas";

@@ -134,6 +134,7 @@ public class EncuestaCasa implements Serializable{
 	private String cambiadoCasa;
 	private String remodelacionCasa;
 	private String tieneVehiculo;
+	private Integer participante;
 
     public String getCodigo() {
         return codigo;
@@ -1024,6 +1025,14 @@ public class EncuestaCasa implements Serializable{
 
 	public void setTieneVehiculo(String tieneVehiculo) {
 		this.tieneVehiculo = tieneVehiculo;
+	}
+
+	public Integer getParticipante() {
+		return participante;
+	}
+
+	public void setParticipante(Integer participante) {
+		this.participante = participante;
 	}
 
 	@Override

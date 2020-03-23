@@ -135,7 +135,6 @@ public class DownloadBaseTask extends DownloadTask {
         estudioAdapter.borrarVisitaSeguimientoCaso();
         estudioAdapter.borrarVisitaFallidaCaso();
         estudioAdapter.borrarVisitaSeguimientoCasoSintomas();
-        estudioAdapter.borrarInformacionNoCompletaCaso();
         estudioAdapter.borrarFormularioContactoCaso();
         estudioAdapter.borrarVisitaFinalCaso();
         estudioAdapter.borrarMuestrasSuperficie();
@@ -155,8 +154,6 @@ public class DownloadBaseTask extends DownloadTask {
         estudioAdapter.borrarDatosPartoBB();
         estudioAdapter.borrarTodasVisitaTerrenos();
         estudioAdapter.borrarTodasDatosVisitaTerrenos();
-        estudioAdapter.borrarTodosReConsentimientos2015();
-        estudioAdapter.borrarTodosReConsentimientosFlu2015();
         estudioAdapter.borrarRecepcionBHC();
         estudioAdapter.borrarRecepcionSero();
         estudioAdapter.borrarPinchazo();

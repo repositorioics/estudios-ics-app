@@ -315,6 +315,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
 			mEC.setCambiadoCasa(em.getCambiado_casa());
 			mEC.setRemodelacionCasa(em.getRemodelacion_casa());
 			mEC.setTieneVehiculo(em.getTiene_vehiculo());
+			mEC.setParticipante(mParticipante.getCodigo());
 
             mEC.setMovilInfo(new MovilInfo(idInstancia,
 					instanceFilePath,

@@ -275,27 +275,6 @@ public class CasosDBConstants {
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigoParticipanteCaso + "));";
     
-    //Tabla InformacionNoCompletaCaso
-    public static final String NO_DATA_CASOS_TABLE = "chf_no_data_casos";
-
-    //Campos InformacionNoCompletaCaso
-    public static final String codigoNoDataVisita = "codigoNoDataVisita";
-    public static final String razonNoCompletaInformacion = "razonNoCompletaInformacion";
-    
-    //Crear InformacionNoCompletaCaso
-    public static final String CREATE_NO_DATA_CASOS_TABLE = "create table if not exists "
-            + NO_DATA_CASOS_TABLE + " ("
-            + codigoNoDataVisita + " text not null, "
-            + codigoVisitaCaso + " text not null, "
-            + razonNoCompletaInformacion + " text, "
-            + otraRazon + " text, "
-            + MainDBConstants.recordDate + " date, "
-            + MainDBConstants.recordUser + " text, "
-            + MainDBConstants.pasive + " text, "
-            + MainDBConstants.deviceId + " text, "
-            + MainDBConstants.estado + " text not null, "
-            + "primary key (" + codigoNoDataVisita + "));";
-
     //Tabla SensoresCaso
     public static final String SENSORES_CASOS_TABLE = "sensores_caso";
 

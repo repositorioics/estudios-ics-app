@@ -1947,12 +1947,12 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     }
                     cc.setReconsentimiento(Constants.YESKEYSND);
                     cc.setTamizaje(tamizaje);
-                    if (tieneValor(parteADen)) {
+                    /*if (tieneValor(parteADen)) { //Se indica no se debe registrar ésta carta. MA2020 Brenda
                         cc.setCodigo(infoMovil.getId());
                         cc.setVersion(Constants.VERSION_CC_CD);
                         //crear carta de consentimiento para dengue
                         estudiosAdapter.crearCartaConsentimiento(cc);
-                    }
+                    }*/
                     //si se preguntó por la parte D entonces crear nuevo tamizaje y nueva carta para la parte D
                     if (tieneValor(parteDDen)) {
                         //solo crear nuevo tamizaje si se pregunto por la parte A

@@ -71,7 +71,7 @@ public class Constants {
     //VERSIONES CARTA DE CONSENTIMIENTO
     public static final String VERSION_CC_CHF = "1"; //COHORTE FAMILIA
     public static final String VERSION_CC_SA = "1"; //SEROPREVALENCIA
-    public static final String VERSION_CC_CD = "12"; //COHORTE DENGUE
+    public static final String VERSION_CC_CD = "13"; //COHORTE DENGUE //Version 13 MA2020
     public static final String VERSION_CC_CD_D = "1"; //COHORTE DENGUE Extensión edad 2018
     public static final String VERSION_CC_CI = "7"; //COHORTE INFLUENZA
     public static final String VERSION_CC_UO1 = "1"; //COHORTE UO1

@@ -288,10 +288,6 @@
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewSampleActivity"
                   android:screenOrientation="portrait" />
-        <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewRec2015Activity"
-                  android:screenOrientation="portrait" />
-        <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewRecFlu2015Activity"
-                  android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewPtActivity"
                   android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewObActivity"

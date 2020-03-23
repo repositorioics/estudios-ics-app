@@ -46,8 +46,6 @@ public class ListReviewActivity extends ListActivity {
 	ArrayAdapter<Obsequio> mObsequioAdapter=null;
     ArrayAdapter<NewVacuna> mVacunaAdapter=null;
 	ArrayAdapter<VisitaTerreno> mVisitaTerrenoAdapter=null;
-	ArrayAdapter<ReConsentimientoDen2015> mReconsentimientoAdapter=null;
-	ArrayAdapter<ReConsentimientoFlu2015> mReconsentimientoFluAdapter=null;
 	ArrayAdapter<EncuestaSatisfaccion> mEncuestasSAdapter=null;
     ArrayAdapter<DatosPartoBB> mDatosPartoBBAdapter=null;
     ArrayAdapter<DatosVisitaTerreno> mDatosVisitaTerrenoAdapter=null;
@@ -123,12 +121,6 @@ public class ListReviewActivity extends ListActivity {
 				}
 				if (mVisitaTerrenoAdapter != null) {
 					mVisitaTerrenoAdapter.getFilter().filter(s);
-				}
-				if (mReconsentimientoAdapter != null) {
-					mReconsentimientoAdapter.getFilter().filter(s);
-				}
-				if (mReconsentimientoFluAdapter != null) {
-					mReconsentimientoFluAdapter.getFilter().filter(s);
 				}
                 if (mDatosPartoBBAdapter != null) {
                     mDatosPartoBBAdapter.getFilter().filter(s);
@@ -274,22 +266,6 @@ public class ListReviewActivity extends ListActivity {
 					(ArrayList<VisitaTerreno>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
 			setListAdapter(mVisitaTerrenoAdapter);
 			showToast("Total = "+ mVisitaTerrenoAdapter.getCount());
-		}
-
-		if (titulo.matches(getString(R.string.info_recon))){
-			
-			mReconsentimientoAdapter = new Reconsentimiento2015Adapter(this, R.layout.list_item_review,
-					(ArrayList<ReConsentimientoDen2015>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
-			setListAdapter(mReconsentimientoAdapter);
-			showToast("Total = "+ mReconsentimientoAdapter.getCount());
-		}
-		
-		if (titulo.matches(getString(R.string.info_reconflu))){
-			
-			mReconsentimientoFluAdapter = new ReconsentimientoFlu2015Adapter(this, R.layout.list_item_review,
-					(ArrayList<ReConsentimientoFlu2015>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
-			setListAdapter(mReconsentimientoFluAdapter);
-			showToast("Total = "+ mReconsentimientoFluAdapter.getCount());
 		}
 
         if (titulo.matches(getString(R.string.datos_parto))){
@@ -454,21 +430,7 @@ public class ListReviewActivity extends ListActivity {
 			i = new Intent(getApplicationContext(),
 					ReviewActivity.class);
 		}
-		if (titulo.matches(getString(R.string.info_recon))){
-			ReConsentimientoDen2015 recons = (ReConsentimientoDen2015) getListAdapter().getItem(position);
-			arguments.putString(Constants.TITLE, getString(R.string.info_recon));
-			if (recons!=null) arguments.putSerializable(Constants.OBJECTO , recons);
-			i = new Intent(getApplicationContext(),
-					ReviewActivity.class);
-		}
-		
-		if (titulo.matches(getString(R.string.info_reconflu))){
-			ReConsentimientoFlu2015 recons = (ReConsentimientoFlu2015) getListAdapter().getItem(position);
-			arguments.putString(Constants.TITLE, getString(R.string.info_reconflu));
-			if (recons!=null) arguments.putSerializable(Constants.OBJECTO , recons);
-			i = new Intent(getApplicationContext(),
-					ReviewActivity.class);
-		}
+
         if (titulo.matches(getString(R.string.datos_parto))){
             DatosPartoBB datosParto = (DatosPartoBB) getListAdapter().getItem(position);
             arguments.putString(Constants.TITLE, getString(R.string.datos_parto));

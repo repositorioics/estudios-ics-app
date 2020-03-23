@@ -44,8 +44,6 @@ public class DownloadAllTask extends DownloadTask {
     private List<DatosPartoBB> mDatosPartoBBs = null;
     private List<VisitaTerreno> mVisitasTerreno = null;
     private List<DatosVisitaTerreno> mDatosVisitasTerreno = null;
-    private List<ReConsentimientoDen2015> mReconsentimientos2015 = null;
-    private List<ReConsentimientoFlu2015> mReconsentimientosFlu2015 = null;
     private List<RecepcionBHC> mRecepcionBHCs = null;
     private List<RecepcionSero> mRecepcionSeros = null;
     private List<Pinchazo> mPinchazos = null;
@@ -519,60 +517,6 @@ public class DownloadAllTask extends DownloadTask {
                 }
 
                 try {
-                    error = descargarReconsentimientos2015();
-                    if (error != null) {
-                        return error;
-                    }
-                } catch (Exception e) {
-                    // Regresa error al descargar
-                    e.printStackTrace();
-                    return e.getLocalizedMessage();
-                }
-
-                if (mReconsentimientos2015 != null) {
-                    // open db and clean entries
-                    //ca.open();
-                    ca.borrarTodosReConsentimientos2015();
-                    // download and insert
-                    try {
-                        addReconsentimientos2015(mReconsentimientos2015);
-                    } catch (Exception e) {
-                        // Regresa error al insertar
-                        e.printStackTrace();
-                        return e.getLocalizedMessage();
-                    }
-                    // close db and stream
-                    //ca.close();
-                }
-
-                try {
-                    error = descargarReconsentimientosFlu2015();
-                    if (error != null) {
-                        return error;
-                    }
-                } catch (Exception e) {
-                    // Regresa error al descargar
-                    e.printStackTrace();
-                    return e.getLocalizedMessage();
-                }
-
-                if (mReconsentimientosFlu2015 != null) {
-                    // open db and clean entries
-                    //ca.open();
-                    ca.borrarTodosReConsentimientosFlu2015();
-                    // download and insert
-                    try {
-                        addReconsentimientosFlu2015(mReconsentimientosFlu2015);
-                    } catch (Exception e) {
-                        // Regresa error al insertar
-                        e.printStackTrace();
-                        return e.getLocalizedMessage();
-                    }
-                    // close db and stream
-                    //ca.close();
-                }
-
-                try {
                     error = descargarRecepcionBHCs();
                     if (error != null) {
                         return error;
@@ -751,8 +695,6 @@ public class DownloadAllTask extends DownloadTask {
                 ca.borrarTodasMuestras();
                 ca.borrarTodasVisitaTerrenos();
                 ca.borrarTodosOB();
-                ca.borrarTodosReConsentimientosFlu2015();
-                ca.borrarTodosReConsentimientos2015();
                 //ca.close();
 
             }
@@ -1252,34 +1194,6 @@ public class DownloadAllTask extends DownloadTask {
 
     }
 
-    private void addReconsentimientos2015(List<ReConsentimientoDen2015> recons) throws Exception {
-
-        int v = recons.size();
-
-        ListIterator<ReConsentimientoDen2015> iter = recons.listIterator();
-
-        while (iter.hasNext()){
-            ca.crearReConsentimiento2015(iter.next());
-            publishProgress("Reconsentimientos2015", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                    .valueOf(v).toString());
-        }
-
-    }
-
-    private void addReconsentimientosFlu2015(List<ReConsentimientoFlu2015> recons) throws Exception {
-
-        int v = recons.size();
-
-        ListIterator<ReConsentimientoFlu2015> iter = recons.listIterator();
-
-        while (iter.hasNext()){
-            ca.crearReConsentimientoFlu2015(iter.next());
-            publishProgress("ReconsentimientosFlu2015", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                    .valueOf(v).toString());
-        }
-
-    }
-
     private void addRecepcionBHCs(List<RecepcionBHC> recbhcs) throws Exception {
 
         int v = recbhcs.size();
@@ -1717,76 +1631,6 @@ public class DownloadAllTask extends DownloadTask {
 
             // convert the array to a list and return it
             mDatosVisitasTerreno = Arrays.asList(responseEntity.getBody());
-            return null;
-
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            return e.getLocalizedMessage();
-        }
-    }
-
-    // url, username, password
-    protected String descargarReconsentimientos2015() throws Exception {
-        try {
-            // The URL for making the GET request
-            final String urlRequest = url + "/movil/recons2015";
-
-            // Set the Accept header for "application/json"
-            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-            HttpHeaders requestHeaders = new HttpHeaders();
-            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
-            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-            requestHeaders.setAccept(acceptableMediaTypes);
-            requestHeaders.setAuthorization(authHeader);
-
-            // Populate the headers in an HttpEntity object to use for the request
-            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
-            // Create a new RestTemplate instance
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-
-            // Perform the HTTP GET request
-            ResponseEntity<ReConsentimientoDen2015[]> responseEntity = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    ReConsentimientoDen2015[].class);
-
-            // convert the array to a list and return it
-            mReconsentimientos2015 = Arrays.asList(responseEntity.getBody());
-            return null;
-
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            return e.getLocalizedMessage();
-        }
-    }
-
-    // url, username, password
-    protected String descargarReconsentimientosFlu2015() throws Exception {
-        try {
-            // The URL for making the GET request
-            final String urlRequest = url + "/movil/reconsflu2015";
-
-            // Set the Accept header for "application/json"
-            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-            HttpHeaders requestHeaders = new HttpHeaders();
-            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
-            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-            requestHeaders.setAccept(acceptableMediaTypes);
-            requestHeaders.setAuthorization(authHeader);
-
-            // Populate the headers in an HttpEntity object to use for the request
-            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
-            // Create a new RestTemplate instance
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-
-            // Perform the HTTP GET request
-            ResponseEntity<ReConsentimientoFlu2015[]> responseEntity = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    ReConsentimientoFlu2015[].class);
-
-            // convert the array to a list and return it
-            mReconsentimientosFlu2015 = Arrays.asList(responseEntity.getBody());
             return null;
 
         } catch (Exception e) {

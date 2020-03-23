@@ -120,7 +120,6 @@ public class EstudiosAdapter {
             db.execSQL(CasosDBConstants.CREATE_SINTOMAS_CASOS_TABLE);
             db.execSQL(CasosDBConstants.CREATE_VISITAS_FALLIDAS_CASOS_TABLE);
             db.execSQL(CasosDBConstants.CREATE_VISITAS_FINALES_CASOS_TABLE);
-            db.execSQL(CasosDBConstants.CREATE_NO_DATA_CASOS_TABLE);
 
             //Muestreo anual
             db.execSQL(ConstantsDB.CREATE_ENCCASA_TABLE);
@@ -137,8 +136,6 @@ public class EstudiosAdapter {
             db.execSQL(ConstantsDB.CREATE_PIN_TABLE);
             db.execSQL(ConstantsDB.CREATE_RND_TABLE);
             db.execSQL(ConstantsDB.CREATE_ENCSAT_TABLE);
-            db.execSQL(ConstantsDB.CREATE_RECONS_TABLE_2015);
-            db.execSQL(ConstantsDB.CREATE_RECONSFLU_TABLE_2015);
             db.execSQL(ConstantsDB.CREATE_CAMBCASA_TABLE);
             db.execSQL(ConstantsDB.CREATE_PARTPROC_TABLE);
             db.execSQL(ConstantsDB.CREATE_USER_PERM_TABLE);
@@ -192,8 +189,6 @@ public class EstudiosAdapter {
             }
             if (oldVersion==5){
                 db.execSQL(MainDBConstants.CREATE_CONTACTO_PARTICIPANTE_TABLE);
-                db.execSQL("DROP TABLE " + ConstantsDB.RECONSFLU_TABLE_2015);
-                db.execSQL(ConstantsDB.CREATE_RECONSFLU_TABLE_2015);
             }
             if (oldVersion==6){
                 db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.VOLRETOMAPBMC + " real");
@@ -206,7 +201,6 @@ public class EstudiosAdapter {
                 db.execSQL("DROP TABLE " + MainDBConstants.CONTACTO_PARTICIPANTE_TABLE);
                 db.execSQL(MainDBConstants.CREATE_CONTACTO_PARTICIPANTE_TABLE);
                 db.execSQL(MainDBConstants.CREATE_VISITAPART_TABLE);
-                db.execSQL(MainDBConstants.CREATE_CAMBIO_DOMICILIO_TABLE);
 
                 db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.otroMotivoRechazoParteA + " text");
                 db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.motivoRechazoParteDExt + " text");
@@ -323,6 +317,9 @@ public class EstudiosAdapter {
 			}
 			if (oldVersion==27){
 				db.execSQL("ALTER TABLE " + ConstantsDB.MUESTRA_TABLE + " ADD COLUMN " + ConstantsDB.tuboPax + " integer");
+			}
+			if (oldVersion==28){
+				db.execSQL("ALTER TABLE " + ConstantsDB.ENC_CASA_TABLE + " ADD COLUMN " + ConstantsDB.participante + " integer");
 			}
         }
 	}
@@ -2803,56 +2800,6 @@ public class EstudiosAdapter {
         return mFormularioContactoCasos;
     }
     
-    
-    //Crear nuevo InformacionNoCompletaCaso en la base de datos
-    public void crearInformacionNoCompletaCaso(InformacionNoCompletaCaso noData) throws Exception {
-        ContentValues cv = InformacionNoCompletaCasoHelper.crearInformacionNoCompletaCasoContentValues(noData);
-        mDb.insertOrThrow(CasosDBConstants.NO_DATA_CASOS_TABLE, null, cv);
-    }
-
-    //Editar InformacionNoCompletaCaso existente en la base de datos
-    public boolean editarInformacionNoCompletaCaso(InformacionNoCompletaCaso noData) throws Exception{
-        ContentValues cv = InformacionNoCompletaCasoHelper.crearInformacionNoCompletaCasoContentValues(noData);
-        return mDb.update(CasosDBConstants.NO_DATA_CASOS_TABLE , cv, CasosDBConstants.codigoNoDataVisita + "='"
-                + noData.getCodigoNoDataVisita() + "'", null) > 0;
-    }
-    //Limpiar la tabla de InformacionNoCompletaCaso de la base de datos
-    public boolean borrarInformacionNoCompletaCaso() {
-        return mDb.delete(CasosDBConstants.NO_DATA_CASOS_TABLE, null, null) > 0;
-    }
-    
-    //Obtener un InformacionNoCompletaCaso de la base de datos
-    public InformacionNoCompletaCaso getInformacionNoCompletaCaso(String filtro, String orden) throws SQLException {
-    	InformacionNoCompletaCaso mInformacionNoCompletaCaso = null;
-        Cursor cursor = crearCursor(CasosDBConstants.NO_DATA_CASOS_TABLE , filtro, null, orden);
-        if (cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            mInformacionNoCompletaCaso=InformacionNoCompletaCasoHelper.crearInformacionNoCompletaCaso(cursor);
-            VisitaSeguimientoCaso caso = this.getVisitaSeguimientoCaso(CasosDBConstants.codigoCasoVisita + "='" +cursor.getString(cursor.getColumnIndex(CasosDBConstants.codigoVisitaCaso)) +"'", null);
-            mInformacionNoCompletaCaso.setCodigoVisitaCaso(caso);
-        }
-        if (!cursor.isClosed()) cursor.close();
-        return mInformacionNoCompletaCaso;
-    }
-    //Obtener una lista de InformacionNoCompletaCaso de la base de datos
-    public List<InformacionNoCompletaCaso> getInformacionNoCompletaCasos(String filtro, String orden) throws SQLException {
-        List<InformacionNoCompletaCaso> mInformacionNoCompletaCasos = new ArrayList<InformacionNoCompletaCaso>();
-        Cursor cursor = crearCursor(CasosDBConstants.NO_DATA_CASOS_TABLE, filtro, null, orden);
-        if (cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            mInformacionNoCompletaCasos.clear();
-            do{
-            	InformacionNoCompletaCaso mInformacionNoCompletaCaso = null;
-                mInformacionNoCompletaCaso = InformacionNoCompletaCasoHelper.crearInformacionNoCompletaCaso(cursor);
-                VisitaSeguimientoCaso caso = this.getVisitaSeguimientoCaso(CasosDBConstants.codigoCasoVisita + "='" +cursor.getString(cursor.getColumnIndex(CasosDBConstants.codigoVisitaCaso)) +"'", null);
-                mInformacionNoCompletaCaso.setCodigoVisitaCaso(caso);
-                mInformacionNoCompletaCasos.add(mInformacionNoCompletaCaso);
-            } while (cursor.moveToNext());
-        }
-        if (!cursor.isClosed()) cursor.close();
-        return mInformacionNoCompletaCasos;
-    }
-    
     //Crear nuevo VisitaFinalCaso en la base de datos
     public void crearVisitaFinalCaso(VisitaFinalCaso visitaFinal) throws Exception {
         ContentValues cv = VisitaFinalCasoHelper.crearVisitaFinalCasoContentValues(visitaFinal);
@@ -2974,9 +2921,6 @@ public class EstudiosAdapter {
 		c = crearCursor(CasosDBConstants.VISITAS_FALLIDAS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
-		c = crearCursor(CasosDBConstants.NO_DATA_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-		if (c != null && c.getCount()>0) {c.close();return true;}
-		c.close();
 		c = crearCursor(CasosDBConstants.SINTOMAS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
@@ -3009,12 +2953,6 @@ public class EstudiosAdapter {
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         c = crearCursor(ConstantsDB.VIS_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-        if (c != null && c.getCount()>0) {c.close();return true;}
-        c.close();
-        c = crearCursor(ConstantsDB.RECONS_TABLE_2015, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-        if (c != null && c.getCount()>0) {c.close();return true;}
-        c.close();
-        c = crearCursor(ConstantsDB.RECONSFLU_TABLE_2015, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         c = crearCursor(ConstantsDB.BHC_TABLE, ConstantsDB.STATUS + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
@@ -3248,6 +3186,7 @@ public class EstudiosAdapter {
 		cv.put(ConstantsDB.cambiadoCasa, enccasa.getCambiadoCasa());
 		cv.put(ConstantsDB.remodelacionCasa, enccasa.getRemodelacionCasa());
 		cv.put(ConstantsDB.tieneVehiculo, enccasa.getTieneVehiculo());
+		cv.put(ConstantsDB.participante, enccasa.getParticipante());
 
         cv.put(ConstantsDB.ID_INSTANCIA, enccasa.getMovilInfo().getIdInstancia());
         cv.put(ConstantsDB.FILE_PATH, enccasa.getMovilInfo().getInstancePath());
@@ -4321,206 +4260,7 @@ public class EstudiosAdapter {
     public boolean borrarTodosPermisos() {
         return mDb.delete(ConstantsDB.USER_PERM_TABLE, null, null) > 0;
     }
-    /**METODOS PARA RECONS 2015**/
 
-    /**
-     * Inserta un reconsentimiento en la base de datos
-     *
-     * @param reconsentimiento
-     *            Objeto ReConsentimientoDen que contiene la informacion
-     *
-     */
-    public void crearReConsentimiento2015(ReConsentimientoDen2015 reconsentimiento) {
-        ContentValues cv = new ContentValues();
-        cv.put(ConstantsDB.CODIGO, reconsentimiento.getReconsdenId().getCodigo());
-        cv.put(ConstantsDB.FECHA_CONS, reconsentimiento.getReconsdenId().getFechaCons().getTime());
-        cv.put(ConstantsDB.visExit, reconsentimiento.getVisExit());
-        cv.put(ConstantsDB.razonVisNoExit, reconsentimiento.getRazonVisNoExit());
-        cv.put(ConstantsDB.personaDejoCarta, reconsentimiento.getPersonaDejoCarta());
-        cv.put(ConstantsDB.personaCasa, reconsentimiento.getPersonaCasa());
-        cv.put(ConstantsDB.relacionFamPersonaCasa, reconsentimiento.getRelacionFamPersonaCasa());
-        cv.put(ConstantsDB.otraRelacionPersonaCasa, reconsentimiento.getOtraRelacionPersonaCasa());
-        cv.put(ConstantsDB.telefonoPersonaCasa, reconsentimiento.getTelefonoPersonaCasa());
-        cv.put(ConstantsDB.emancipado, reconsentimiento.getEmancipado());
-        cv.put(ConstantsDB.descEmancipado, reconsentimiento.getDescEmancipado());
-        cv.put(ConstantsDB.incDen, reconsentimiento.getIncDen());
-        cv.put(ConstantsDB.excDen, reconsentimiento.getExcDen());
-        cv.put(ConstantsDB.enfCronSN, reconsentimiento.getEnfCronSN());
-        cv.put(ConstantsDB.enfCronica, reconsentimiento.getEnfCronica());
-        cv.put(ConstantsDB.oEnfCronica, reconsentimiento.getoEnfCronica());
-        cv.put(ConstantsDB.tomaTx, reconsentimiento.getTomaTx());
-        cv.put(ConstantsDB.cualesTx, reconsentimiento.getCualesTx());
-        cv.put(ConstantsDB.assite, reconsentimiento.getAssite());
-        cv.put(ConstantsDB.centrosalud, reconsentimiento.getCentrosalud());
-        cv.put(ConstantsDB.ocentrosalud, reconsentimiento.getOcentrosalud());
-        cv.put(ConstantsDB.puestosalud, reconsentimiento.getPuestosalud());
-        cv.put(ConstantsDB.asentimiento, reconsentimiento.getAsentimiento());
-        cv.put(ConstantsDB.parteADen, reconsentimiento.getParteADen());
-        cv.put(ConstantsDB.parteBDen, reconsentimiento.getParteBDen());
-        cv.put(ConstantsDB.parteCDen, reconsentimiento.getParteCDen());
-        cv.put(ConstantsDB.parteDDen, reconsentimiento.getParteDDen());
-        cv.put(ConstantsDB.rechDen, reconsentimiento.getRechDen());
-        cv.put(ConstantsDB.nombrept, reconsentimiento.getNombrept());
-        cv.put(ConstantsDB.nombrept2, reconsentimiento.getNombrept2());
-        cv.put(ConstantsDB.apellidopt, reconsentimiento.getApellidopt());
-        cv.put(ConstantsDB.apellidopt2, reconsentimiento.getApellidopt2());
-        cv.put(ConstantsDB.relacionFam, reconsentimiento.getRelacionFam());
-        cv.put(ConstantsDB.otraRelacionFam, reconsentimiento.getOtraRelacionFam());
-        cv.put(ConstantsDB.mismoTutorSN, reconsentimiento.getMismoTutorSN());
-        cv.put(ConstantsDB.motivoDifTutor, reconsentimiento.getMotivoDifTutor());
-        cv.put(ConstantsDB.otroMotivoDifTutor, reconsentimiento.getOtroMotivoDifTutor());
-        cv.put(ConstantsDB.quePaisTutor, reconsentimiento.getQuePaisTutor());
-        cv.put(ConstantsDB.alfabetoTutor, reconsentimiento.getAlfabetoTutor());
-        cv.put(ConstantsDB.testigoSN, reconsentimiento.getTestigoSN());
-        cv.put(ConstantsDB.nombretest1, reconsentimiento.getNombretest1());
-        cv.put(ConstantsDB.nombretest2, reconsentimiento.getNombretest2());
-        cv.put(ConstantsDB.apellidotest1, reconsentimiento.getApellidotest1());
-        cv.put(ConstantsDB.apellidotest2, reconsentimiento.getApellidotest2());
-        cv.put(ConstantsDB.cmDomicilio, reconsentimiento.getCmDomicilio());
-        cv.put(ConstantsDB.barrio, reconsentimiento.getBarrio());
-        cv.put(ConstantsDB.otrobarrio, reconsentimiento.getOtrobarrio());
-        cv.put(ConstantsDB.dire, reconsentimiento.getDire());
-        cv.put(ConstantsDB.autsup, reconsentimiento.getAutsup());
-        cv.put(ConstantsDB.telefonoClasif1, reconsentimiento.getTelefonoClasif1());
-        cv.put(ConstantsDB.telefonoConv1, reconsentimiento.getTelefonoConv1());
-        cv.put(ConstantsDB.telefonoCel1, reconsentimiento.getTelefonoCel1());
-        cv.put(ConstantsDB.telefono2SN, reconsentimiento.getTelefono2SN());
-        cv.put(ConstantsDB.telefonoClasif2, reconsentimiento.getTelefonoClasif2());
-        cv.put(ConstantsDB.telefonoConv2, reconsentimiento.getTelefonoConv2());
-        cv.put(ConstantsDB.telefonoCel2, reconsentimiento.getTelContactoCel2());
-        cv.put(ConstantsDB.telefono3SN, reconsentimiento.getTelefono3SN());
-        cv.put(ConstantsDB.telefonoClasif3, reconsentimiento.getTelefonoClasif3());
-        cv.put(ConstantsDB.telefonoConv3, reconsentimiento.getTelefonoConv3());
-        cv.put(ConstantsDB.telefonoCel3, reconsentimiento.getTelefonoCel3());
-        cv.put(ConstantsDB.jefenom, reconsentimiento.getJefenom());
-        cv.put(ConstantsDB.jefenom2, reconsentimiento.getJefenom2());
-        cv.put(ConstantsDB.jefeap, reconsentimiento.getJefeap());
-        cv.put(ConstantsDB.jefeap2, reconsentimiento.getJefeap2());
-        cv.put(ConstantsDB.nomContacto, reconsentimiento.getNomContacto());
-        cv.put(ConstantsDB.barrioContacto, reconsentimiento.getBarrioContacto());
-        cv.put(ConstantsDB.otrobarrioContacto, reconsentimiento.getOtrobarrioContacto());
-        cv.put(ConstantsDB.direContacto, reconsentimiento.getDireContacto());
-        cv.put(ConstantsDB.telContacto1, reconsentimiento.getTelContacto1());
-        cv.put(ConstantsDB.telContactoConv1, reconsentimiento.getTelContactoConv1());
-        cv.put(ConstantsDB.telContactoCel1, reconsentimiento.getTelContactoCel1());
-        cv.put(ConstantsDB.telContacto2SN, reconsentimiento.getTelContacto2SN());
-        cv.put(ConstantsDB.telContactoClasif2, reconsentimiento.getTelContactoClasif2());
-        cv.put(ConstantsDB.telContactoConv2, reconsentimiento.getTelContactoConv2());
-        cv.put(ConstantsDB.telContactoCel2, reconsentimiento.getTelContactoCel2());
-        cv.put(ConstantsDB.nombrepadre, reconsentimiento.getNombrepadre());
-        cv.put(ConstantsDB.nombrepadre2, reconsentimiento.getNombrepadre2());
-        cv.put(ConstantsDB.apellidopadre, reconsentimiento.getApellidopadre());
-        cv.put(ConstantsDB.apellidopadre2, reconsentimiento.getApellidopadre2());
-        cv.put(ConstantsDB.nombremadre, reconsentimiento.getNombremadre());
-        cv.put(ConstantsDB.nombremadre2, reconsentimiento.getNombremadre2());
-        cv.put(ConstantsDB.apellidomadre, reconsentimiento.getApellidomadre());
-        cv.put(ConstantsDB.apellidomadre2, reconsentimiento.getApellidomadre2());
-        cv.put(ConstantsDB.copiaFormato, reconsentimiento.getCopiaFormato());
-        cv.put(ConstantsDB.firmo_cartcons, reconsentimiento.getFirmo_cartcons());
-        cv.put(ConstantsDB.fecho_cartcons, reconsentimiento.getFecho_cartcons());
-        cv.put(ConstantsDB.huella_dig, reconsentimiento.getHuella_dig());
-        cv.put(ConstantsDB.fech_firm_testigo, reconsentimiento.getFech_firm_testigo());
-        cv.put(ConstantsDB.entiende, reconsentimiento.getEntiende());
-        cv.put(ConstantsDB.georef, reconsentimiento.getGeoref());
-        cv.put(ConstantsDB.Manzana, reconsentimiento.getManzana());
-        cv.put(ConstantsDB.georef_razon, reconsentimiento.getGeoref_razon());
-        cv.put(ConstantsDB.georef_otraRazon, reconsentimiento.getGeoref_otraRazon());
-        cv.put(ConstantsDB.local, reconsentimiento.getLocal());
-        cv.put(ConstantsDB.otrorecurso1, reconsentimiento.getOtrorecurso1());
-        cv.put(ConstantsDB.otrorecurso2, reconsentimiento.getOtrorecurso2());
-        cv.put(ConstantsDB.ID_INSTANCIA, reconsentimiento.getMovilInfo().getIdInstancia());
-        cv.put(ConstantsDB.FILE_PATH, reconsentimiento.getMovilInfo().getInstancePath());
-        cv.put(ConstantsDB.STATUS, reconsentimiento.getMovilInfo().getEstado());
-        cv.put(ConstantsDB.WHEN_UPDATED, reconsentimiento.getMovilInfo().getUltimoCambio());
-        cv.put(ConstantsDB.START, reconsentimiento.getMovilInfo().getStart());
-        cv.put(ConstantsDB.END, reconsentimiento.getMovilInfo().getEnd());
-        cv.put(ConstantsDB.DEVICE_ID, reconsentimiento.getMovilInfo().getDeviceid());
-        cv.put(ConstantsDB.SIM_SERIAL, reconsentimiento.getMovilInfo().getSimserial());
-        cv.put(ConstantsDB.PHONE_NUMBER, reconsentimiento.getMovilInfo().getPhonenumber());
-        cv.put(ConstantsDB.TODAY, reconsentimiento.getMovilInfo().getToday().getTime());
-        cv.put(ConstantsDB.USUARIO, reconsentimiento.getMovilInfo().getUsername());
-        cv.put(ConstantsDB.DELETED, reconsentimiento.getMovilInfo().getEliminado());
-        cv.put(ConstantsDB.REC1, reconsentimiento.getMovilInfo().getRecurso1());
-        cv.put(ConstantsDB.REC2, reconsentimiento.getMovilInfo().getRecurso2());
-        mDb.insertOrThrow(ConstantsDB.RECONS_TABLE_2015, null, cv);
-    }
-
-    /**
-     * Borra todas las ReConsentimiento de la base de datos
-     *
-     * @return verdadero o falso
-     */
-    public boolean borrarTodosReConsentimientos2015() {
-        return mDb.delete(ConstantsDB.RECONS_TABLE_2015, null, null) > 0;
-    }
-
-    /**METODOS PARA RECONS 2015**/
-
-    /**
-     * Inserta un reconsentimiento en la base de datos
-     *
-     * @param reconsentimiento
-     *            Objeto ReConsentimientoDen que contiene la informacion
-     *
-     */
-    public void crearReConsentimientoFlu2015(ReConsentimientoFlu2015 reconsentimiento) {
-        ContentValues cv = new ContentValues();
-        cv.put(ConstantsDB.CODIGO, reconsentimiento.getReconsfluId().getCodigo());
-        cv.put(ConstantsDB.FECHA_CONS, reconsentimiento.getReconsfluId().getFechaCons().getTime());
-        cv.put(ConstantsDB.nombrept, reconsentimiento.getNombrept());
-        cv.put(ConstantsDB.nombrept2, reconsentimiento.getNombrept2());
-        cv.put(ConstantsDB.apellidopt, reconsentimiento.getApellidopt());
-        cv.put(ConstantsDB.apellidopt2, reconsentimiento.getApellidopt2());
-        cv.put(ConstantsDB.relacionFam, reconsentimiento.getRelacionFam());
-        cv.put(ConstantsDB.otraRelacionFam, reconsentimiento.getOtraRelacionFam());
-        cv.put(ConstantsDB.alfabetoTutor, reconsentimiento.getAlfabetoTutor());
-        cv.put(ConstantsDB.testigoSN, reconsentimiento.getTestigoSN());
-        cv.put(ConstantsDB.nombretest1, reconsentimiento.getNombretest1());
-        cv.put(ConstantsDB.nombretest2, reconsentimiento.getNombretest2());
-        cv.put(ConstantsDB.apellidotest1, reconsentimiento.getApellidotest1());
-        cv.put(ConstantsDB.apellidotest2, reconsentimiento.getApellidotest2());
-        cv.put(ConstantsDB.cmDomicilio, reconsentimiento.getCmDomicilio());
-        cv.put(ConstantsDB.barrio, reconsentimiento.getBarrio());
-        cv.put(ConstantsDB.otrobarrio, reconsentimiento.getOtrobarrio());
-        cv.put(ConstantsDB.dire, reconsentimiento.getDire());
-        cv.put(ConstantsDB.telContacto1, reconsentimiento.getTelefContact());
-        cv.put(ConstantsDB.telefonoConv1, reconsentimiento.getTelefonoConv1());
-        cv.put(ConstantsDB.telefonoCel1, reconsentimiento.getTelefonoCel1());
-        cv.put(ConstantsDB.telefonoCel2, reconsentimiento.getTelefonoCel2());
-        cv.put(ConstantsDB.telefonoCel3, reconsentimiento.getTelefonoCel3());
-        cv.put(ConstantsDB.asentimiento, reconsentimiento.getAsentimiento());
-        cv.put(ConstantsDB.parteAFlu, reconsentimiento.getParteAFlu());
-        cv.put(ConstantsDB.parteBFlu, reconsentimiento.getParteBFlu());
-        cv.put(ConstantsDB.parteCFlu, reconsentimiento.getParteCFlu());
-        cv.put(ConstantsDB.rechFlu, reconsentimiento.getPorqueno());
-        cv.put(ConstantsDB.contacto_futuro, reconsentimiento.getContacto_futuro());
-        cv.put(ConstantsDB.otrorecurso1, reconsentimiento.getOtrorecurso1());
-        cv.put(ConstantsDB.otrorecurso2, reconsentimiento.getOtrorecurso2());
-        cv.put(ConstantsDB.ID_INSTANCIA, reconsentimiento.getMovilInfo().getIdInstancia());
-        cv.put(ConstantsDB.FILE_PATH, reconsentimiento.getMovilInfo().getInstancePath());
-        cv.put(ConstantsDB.STATUS, reconsentimiento.getMovilInfo().getEstado());
-        cv.put(ConstantsDB.WHEN_UPDATED, reconsentimiento.getMovilInfo().getUltimoCambio());
-        cv.put(ConstantsDB.START, reconsentimiento.getMovilInfo().getStart());
-        cv.put(ConstantsDB.END, reconsentimiento.getMovilInfo().getEnd());
-        cv.put(ConstantsDB.DEVICE_ID, reconsentimiento.getMovilInfo().getDeviceid());
-        cv.put(ConstantsDB.SIM_SERIAL, reconsentimiento.getMovilInfo().getSimserial());
-        cv.put(ConstantsDB.PHONE_NUMBER, reconsentimiento.getMovilInfo().getPhonenumber());
-        cv.put(ConstantsDB.TODAY, reconsentimiento.getMovilInfo().getToday().getTime());
-        cv.put(ConstantsDB.USUARIO, reconsentimiento.getMovilInfo().getUsername());
-        cv.put(ConstantsDB.DELETED, reconsentimiento.getMovilInfo().getEliminado());
-        cv.put(ConstantsDB.REC1, reconsentimiento.getMovilInfo().getRecurso1());
-        cv.put(ConstantsDB.REC2, reconsentimiento.getMovilInfo().getRecurso2());
-        mDb.insertOrThrow(ConstantsDB.RECONSFLU_TABLE_2015, null, cv);
-    }
-
-    /**
-     * Borra todas las ReConsentimiento de la base de datos
-     *
-     * @return verdadero o falso
-     */
-    public boolean borrarTodosReConsentimientosFlu2015() {
-        return mDb.delete(ConstantsDB.RECONSFLU_TABLE_2015, null, null) > 0;
-    }
 
     /**METODOS PARA DatosPartoBB**/
 
@@ -4830,32 +4570,6 @@ public class EstudiosAdapter {
      *
      *
      */
-    public boolean updateRecons2015Sent(ReConsentimientoDen2015 recons) {
-        ContentValues cv = new ContentValues();
-        cv.put(ConstantsDB.STATUS, recons.getMovilInfo().getEstado());
-        return mDb.update(ConstantsDB.RECONS_TABLE_2015, cv,
-                ConstantsDB.CODIGO + "=" + recons.getReconsdenId().getCodigo() + " and " +
-                        ConstantsDB.FECHA_CONS + "=" + recons.getReconsdenId().getFechaCons().getTime(), null) > 0;
-    }
-
-    /**
-     * Actualiza la base de datos.
-     *
-     *
-     */
-    public boolean updateReconsFlu2015Sent(ReConsentimientoFlu2015 recons) {
-        ContentValues cv = new ContentValues();
-        cv.put(ConstantsDB.STATUS, recons.getMovilInfo().getEstado());
-        return mDb.update(ConstantsDB.RECONSFLU_TABLE_2015, cv,
-                ConstantsDB.CODIGO + "=" + recons.getReconsfluId().getCodigo() + " and " +
-                        ConstantsDB.FECHA_CONS + "=" + recons.getReconsfluId().getFechaCons().getTime(), null) > 0;
-    }
-
-    /**
-     * Actualiza la base de datos.
-     *
-     *
-     */
     public boolean updateBHCsSent(RecepcionBHC tubo) {
         ContentValues cv = new ContentValues();
         cv.put(ConstantsDB.STATUS, tubo.getEstado());
@@ -4939,18 +4653,6 @@ public class EstudiosAdapter {
         return mDb.update(ConstantsDB.DOCS_TABLE, cv,
                 ConstantsDB.CODIGO + "=" + documento.getDocsId().getCodigo() + " and " +
                         ConstantsDB.fechaDocumento + "=" + documento.getDocsId().getFechaDocumento().getTime(), null) > 0;
-    }
-
-    /**
-     * Actualiza la base de datos.
-     *
-     *
-     */
-    public boolean updateCambiosCasasSent(CambiosCasas ccs) {
-        ContentValues cv = new ContentValues();
-        cv.put(ConstantsDB.STATUS, ccs.getEstado());
-        return mDb.update(ConstantsDB.CAMB_CASA_TABLE, cv,
-                ConstantsDB.TODAY + "=" + ccs.getFechaRegistro().getTime(), null) > 0;
     }
 
     /**
@@ -5330,6 +5032,7 @@ public class EstudiosAdapter {
 		mEncCasa.setCambiadoCasa(enccasas.getString(enccasas.getColumnIndex(ConstantsDB.cambiadoCasa)));
 		mEncCasa.setRemodelacionCasa(enccasas.getString(enccasas.getColumnIndex(ConstantsDB.remodelacionCasa)));
 		mEncCasa.setTieneVehiculo(enccasas.getString(enccasas.getColumnIndex(ConstantsDB.tieneVehiculo)));
+		if(!enccasas.isNull(enccasas.getColumnIndex(ConstantsDB.participante))) mEncCasa.setParticipante(enccasas.getInt(enccasas.getColumnIndex(ConstantsDB.participante)));
 
         Boolean borrado = enccasas.getInt(enccasas.getColumnIndex(ConstantsDB.DELETED))>0;
         mEncCasa.setMovilInfo(new MovilInfo(enccasas.getInt(enccasas.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
@@ -7001,428 +6704,6 @@ public class EstudiosAdapter {
                 encsats.getInt(encsats.getColumnIndex(ConstantsDB.REC1)),
                 encsats.getInt(encsats.getColumnIndex(ConstantsDB.REC2))));
         return mEncSat;
-    }
-
-    /**
-     * Obtiene Lista todas las recons sin enviar
-     *
-     * @return lista con ReconsentimientoDen
-     */
-    public List<ReConsentimientoDen2015> getListaReConsentimientoDen2015sSinEnviar() throws SQLException {
-        Cursor recons = null;
-        List<ReConsentimientoDen2015> mRecons = new ArrayList<ReConsentimientoDen2015>();
-        recons = mDb.query(true, ConstantsDB.RECONS_TABLE_2015, null,
-                ConstantsDB.STATUS + "= '" + Constants.STATUS_NOT_SUBMITTED+ "'", null, null, null, null, null);
-        if (recons != null && recons.getCount() > 0) {
-            recons.moveToFirst();
-            mRecons.clear();
-            do{
-                mRecons.add(crearReConsentimientoDen2015(recons));
-            } while (recons.moveToNext());
-        }
-        recons.close();
-        return mRecons;
-    }
-
-    /**
-     * Obtiene Lista todas los ReConsentimientoDen de un codigo
-     *
-     * @return lista con ReConsentimientoDen
-     */
-    public ArrayList<ReConsentimientoDen2015> getListaReConsentimientoDen2015(Integer codigo) throws SQLException {
-        Cursor recons = null;
-        ArrayList<ReConsentimientoDen2015> mReConsentimientoDen = new ArrayList<ReConsentimientoDen2015>();
-        recons = mDb.query(true, ConstantsDB.RECONS_TABLE_2015, null,
-                ConstantsDB.CODIGO + "=" + codigo, null, null, null, null, null);
-        if (recons != null && recons.getCount() > 0) {
-            recons.moveToFirst();
-            mReConsentimientoDen.clear();
-            do{
-                mReConsentimientoDen.add(crearReConsentimientoDen2015(recons));
-            } while (recons.moveToNext());
-        }
-        recons.close();
-        return mReConsentimientoDen;
-    }
-
-    /**
-     * Obtiene Lista todas los ReConsentimientoDen de un codigo
-     *
-     * @return lista con ReConsentimientoDen
-     */
-    public ArrayList<ReConsentimientoDen2015> getListaReConsentimientoDen2015Hoy() throws SQLException {
-        Cursor recons = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateWithoutTime = null;
-        try {
-            dateWithoutTime = sdf.parse(sdf.format(new Date()));
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        Timestamp timeStamp = new Timestamp(dateWithoutTime.getTime());
-        ArrayList<ReConsentimientoDen2015> mReConsentimientoDen = new ArrayList<ReConsentimientoDen2015>();
-        recons = mDb.query(true, ConstantsDB.RECONS_TABLE_2015, null,
-                ConstantsDB.TODAY + "=" + timeStamp.getTime(), null, null, null, ConstantsDB.CODIGO + " , " +ConstantsDB.TODAY, null);
-        if (recons != null && recons.getCount() > 0) {
-            recons.moveToFirst();
-            mReConsentimientoDen.clear();
-            do{
-                mReConsentimientoDen.add(crearReConsentimientoDen2015(recons));
-            } while (recons.moveToNext());
-        }
-        recons.close();
-        return mReConsentimientoDen;
-    }
-
-    public ArrayList<ReConsentimientoDen2015> getListaReConsentimientoDen2015() throws SQLException {
-        Cursor recons = null;
-        ArrayList<ReConsentimientoDen2015> mReConsentimientoDen = new ArrayList<ReConsentimientoDen2015>();
-        recons = mDb.query(true, ConstantsDB.RECONS_TABLE_2015, null,
-                null, null, null, null, ConstantsDB.CODIGO + " , " +ConstantsDB.TODAY, null);
-        if (recons != null && recons.getCount() > 0) {
-            recons.moveToFirst();
-            mReConsentimientoDen.clear();
-            do{
-                mReConsentimientoDen.add(crearReConsentimientoDen2015(recons));
-            } while (recons.moveToNext());
-        }
-        recons.close();
-        return mReConsentimientoDen;
-    }
-
-
-
-    /**
-     * Crea una ReConsentimientoDen
-     *
-     * @return ReConsentimientoDen
-     */
-    public ReConsentimientoDen2015 crearReConsentimientoDen2015(Cursor reconsens){
-        ReConsentimientoDen2015 mReConsentimiento = new ReConsentimientoDen2015();
-        Date fecha = new Date(reconsens.getLong(reconsens.getColumnIndex(ConstantsDB.TODAY)));
-        ReConsentimientoDen2015Id reconsId = new ReConsentimientoDen2015Id();
-        reconsId.setCodigo(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.CODIGO)));
-        reconsId.setFechaCons(new Date(reconsens.getLong(reconsens.getColumnIndex(ConstantsDB.FECHA_CONS))));
-        mReConsentimiento.setReconsdenId(reconsId);
-
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.visExit))) mReConsentimiento.setVisExit(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.visExit)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.razonVisNoExit))) mReConsentimiento.setRazonVisNoExit(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.razonVisNoExit)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.personaDejoCarta))) mReConsentimiento.setPersonaDejoCarta(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.personaDejoCarta)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.personaCasa))) mReConsentimiento.setPersonaCasa(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.personaCasa)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.relacionFamPersonaCasa))) mReConsentimiento.setRelacionFamPersonaCasa(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.relacionFamPersonaCasa)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.otraRelacionPersonaCasa))) mReConsentimiento.setOtraRelacionPersonaCasa(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.otraRelacionPersonaCasa)));
-
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoPersonaCasa))) mReConsentimiento.setTelefonoPersonaCasa(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoPersonaCasa)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.emancipado))) mReConsentimiento.setEmancipado(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.emancipado)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.descEmancipado))) mReConsentimiento.setDescEmancipado(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.descEmancipado)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.incDen))) mReConsentimiento.setIncDen(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.incDen)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.excDen))) mReConsentimiento.setExcDen(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.excDen)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.enfCronSN))) mReConsentimiento.setEnfCronSN(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.enfCronSN)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.enfCronica))) mReConsentimiento.setEnfCronica(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.enfCronica)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.oEnfCronica))) mReConsentimiento.setoEnfCronica(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.oEnfCronica)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.tomaTx))) mReConsentimiento.setTomaTx(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.tomaTx)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.cualesTx))) mReConsentimiento.setCualesTx(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.cualesTx)));
-
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.assite))) mReConsentimiento.setAssite(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.assite)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.centrosalud))) mReConsentimiento.setCentrosalud(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.centrosalud)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.ocentrosalud))) mReConsentimiento.setOcentrosalud(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.ocentrosalud)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.puestosalud))) mReConsentimiento.setPuestosalud(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.puestosalud)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.asentimiento))) mReConsentimiento.setAsentimiento(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.asentimiento)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.parteADen))) mReConsentimiento.setParteADen(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.parteADen)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.parteBDen))) mReConsentimiento.setParteBDen(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.parteBDen)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.parteCDen))) mReConsentimiento.setParteCDen(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.parteCDen)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.parteDDen))) mReConsentimiento.setParteDDen(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.parteDDen)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.rechDen))) mReConsentimiento.setRechDen(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.rechDen)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.nombrept))) mReConsentimiento.setNombrept(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombrept)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.nombrept2))) mReConsentimiento.setNombrept2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombrept2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.apellidopt))) mReConsentimiento.setApellidopt(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidopt)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.apellidopt2))) mReConsentimiento.setApellidopt2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidopt2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.relacionFam))) mReConsentimiento.setRelacionFam(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.relacionFam)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.otraRelacionFam))) mReConsentimiento.setOtraRelacionFam(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.otraRelacionFam)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.mismoTutorSN))) mReConsentimiento.setMismoTutorSN(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.mismoTutorSN)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.motivoDifTutor))) mReConsentimiento.setMotivoDifTutor(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.motivoDifTutor)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.otroMotivoDifTutor))) mReConsentimiento.setOtroMotivoDifTutor(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.otroMotivoDifTutor)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.quePaisTutor))) mReConsentimiento.setQuePaisTutor(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.quePaisTutor)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.alfabetoTutor))) mReConsentimiento.setAlfabetoTutor(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.alfabetoTutor)));
-
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.testigoSN))) mReConsentimiento.setTestigoSN(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.testigoSN)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.nombretest1))) mReConsentimiento.setNombretest1(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombretest1)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.nombretest2))) mReConsentimiento.setNombretest2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombretest2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.apellidotest1))) mReConsentimiento.setApellidotest1(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidotest1)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.apellidotest2))) mReConsentimiento.setApellidotest2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidotest2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.cmDomicilio))) mReConsentimiento.setCmDomicilio(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.cmDomicilio)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.barrio))) mReConsentimiento.setBarrio(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.barrio)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.otrobarrio))) mReConsentimiento.setOtrobarrio(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.otrobarrio)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.dire))) mReConsentimiento.setDire(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.dire)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.autsup))) mReConsentimiento.setAutsup(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.autsup)));
-
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoClasif1))) mReConsentimiento.setTelefonoClasif1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoClasif1)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoConv1))) mReConsentimiento.setTelefonoConv1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoConv1)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoCel1))) mReConsentimiento.setTelefonoCel1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoCel1)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefono2SN))) mReConsentimiento.setTelefono2SN(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefono2SN)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoClasif2))) mReConsentimiento.setTelefonoClasif2(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoClasif2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoConv2))) mReConsentimiento.setTelefonoConv2(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoConv2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoCel2))) mReConsentimiento.setTelefonoCel2(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoCel2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefono3SN))) mReConsentimiento.setTelefono3SN(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefono3SN)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoClasif3))) mReConsentimiento.setTelefonoClasif3(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoClasif3)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoConv3))) mReConsentimiento.setTelefonoConv3(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoConv3)));
-
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoCel3))) mReConsentimiento.setTelefonoCel3(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoCel3)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.jefenom))) mReConsentimiento.setJefenom(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.jefenom)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.jefenom2))) mReConsentimiento.setJefenom2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.jefenom2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.jefeap))) mReConsentimiento.setJefeap(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.jefeap)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.jefeap2))) mReConsentimiento.setJefeap2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.jefeap2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.nomContacto))) mReConsentimiento.setNomContacto(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nomContacto)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.barrioContacto))) mReConsentimiento.setBarrioContacto(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.barrioContacto)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.otrobarrioContacto))) mReConsentimiento.setOtrobarrioContacto(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.otrobarrioContacto)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.direContacto))) mReConsentimiento.setDireContacto(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.direContacto)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telContacto1))) mReConsentimiento.setTelContacto1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telContacto1)));
-
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telContactoConv1))) mReConsentimiento.setTelContactoConv1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telContactoConv1)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telContactoCel1))) mReConsentimiento.setTelContactoCel1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telContactoCel1)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telContacto2SN))) mReConsentimiento.setTelContacto2SN(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telContacto2SN)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telContactoClasif2))) mReConsentimiento.setTelContactoClasif2(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telContactoClasif2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telContactoConv2))) mReConsentimiento.setTelContactoConv2(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telContactoConv2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telContactoCel2))) mReConsentimiento.setTelContactoCel2(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telContactoCel2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.nombrepadre))) mReConsentimiento.setNombrepadre(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombrepadre)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.nombrepadre2))) mReConsentimiento.setNombrepadre2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombrepadre2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.apellidopadre))) mReConsentimiento.setApellidopadre(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidopadre)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.apellidopadre2))) mReConsentimiento.setApellidopadre2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidopadre2)));
-
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.nombremadre))) mReConsentimiento.setNombremadre(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombremadre)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.nombremadre2))) mReConsentimiento.setNombremadre2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombremadre2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.apellidomadre))) mReConsentimiento.setApellidomadre(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidomadre)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.apellidomadre2))) mReConsentimiento.setApellidomadre2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidomadre2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.copiaFormato))) mReConsentimiento.setCopiaFormato(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.copiaFormato)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.firmo_cartcons))) mReConsentimiento.setFirmo_cartcons(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.firmo_cartcons)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.fecho_cartcons))) mReConsentimiento.setFecho_cartcons(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.fecho_cartcons)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.huella_dig))) mReConsentimiento.setHuella_dig(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.huella_dig)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.fech_firm_testigo))) mReConsentimiento.setFech_firm_testigo(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.fech_firm_testigo)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.entiende))) mReConsentimiento.setEntiende(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.entiende)));
-
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.georef))) mReConsentimiento.setGeoref(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.georef)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.Manzana))) mReConsentimiento.setManzana(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.Manzana)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.georef_razon))) mReConsentimiento.setGeoref_razon(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.georef_razon)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.georef_otraRazon))) mReConsentimiento.setGeoref_otraRazon(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.georef_otraRazon)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.local))) mReConsentimiento.setLocal(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.local)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.otrorecurso1))) mReConsentimiento.setOtrorecurso1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.otrorecurso1)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.otrorecurso2))) mReConsentimiento.setOtrorecurso2(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.otrorecurso2)));
-
-        Boolean borrado = reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.DELETED))>0;
-        mReConsentimiento.setMovilInfo(new MovilInfo(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.FILE_PATH)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.STATUS)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.WHEN_UPDATED)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.START)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.END)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.DEVICE_ID)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.SIM_SERIAL)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.PHONE_NUMBER)),
-                fecha,
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.USUARIO)),
-                borrado,
-                reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.REC1)),
-                reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.REC2))));
-        return mReConsentimiento;
-    }
-
-    /**
-     * Obtiene Lista todas las recons sin enviar
-     *
-     * @return lista con ReConsentimientoFlu2015
-     */
-    public List<ReConsentimientoFlu2015> getListaReConsentimientoFlu2015sSinEnviar() throws SQLException {
-        Cursor recons = null;
-        List<ReConsentimientoFlu2015> mRecons = new ArrayList<ReConsentimientoFlu2015>();
-        recons = mDb.query(true, ConstantsDB.RECONSFLU_TABLE_2015, null,
-                ConstantsDB.STATUS + "= '" + Constants.STATUS_NOT_SUBMITTED+ "'", null, null, null, null, null);
-        if (recons != null && recons.getCount() > 0) {
-            recons.moveToFirst();
-            mRecons.clear();
-            do{
-                mRecons.add(crearReConsentimientoFlu2015(recons));
-            } while (recons.moveToNext());
-        }
-        recons.close();
-        return mRecons;
-    }
-
-    /**
-     * Obtiene Lista todas los ReConsentimientoFlu2015 de un codigo
-     *
-     * @return lista con ReConsentimientoFlu2015
-     */
-    public ArrayList<ReConsentimientoFlu2015> getListaReConsentimientoFlu2015(Integer codigo) throws SQLException {
-        Cursor recons = null;
-        ArrayList<ReConsentimientoFlu2015> mReConsentimientoFlu = new ArrayList<ReConsentimientoFlu2015>();
-        recons = mDb.query(true, ConstantsDB.RECONSFLU_TABLE_2015, null,
-                ConstantsDB.CODIGO + "=" + codigo, null, null, null, null, null);
-        if (recons != null && recons.getCount() > 0) {
-            recons.moveToFirst();
-            mReConsentimientoFlu.clear();
-            do{
-                mReConsentimientoFlu.add(crearReConsentimientoFlu2015(recons));
-            } while (recons.moveToNext());
-        }
-        recons.close();
-        return mReConsentimientoFlu;
-    }
-
-    /**
-     * Obtiene Lista todas los ReConsentimientoFlu2015
-     *
-     * @return lista con ReConsentimientoFlu2015
-     */
-    public ArrayList<ReConsentimientoFlu2015> getListaReConsentimientoFlu2015() throws SQLException {
-        Cursor recons = null;
-        ArrayList<ReConsentimientoFlu2015> mReConsentimientoFlu = new ArrayList<ReConsentimientoFlu2015>();
-        recons = mDb.query(true, ConstantsDB.RECONSFLU_TABLE_2015, null,
-                null, null, null, null, ConstantsDB.CODIGO + " , " +ConstantsDB.TODAY, null);
-        if (recons != null && recons.getCount() > 0) {
-            recons.moveToFirst();
-            mReConsentimientoFlu.clear();
-            do{
-                mReConsentimientoFlu.add(crearReConsentimientoFlu2015(recons));
-            } while (recons.moveToNext());
-        }
-        recons.close();
-        return mReConsentimientoFlu;
-    }
-
-    /**
-     * Obtiene Lista todas los ReConsentimientoFlu2015
-     *
-     * @return lista con ReConsentimientoFlu2015
-     */
-    public ArrayList<ReConsentimientoFlu2015> getListaReConsentimientoFlu2015Hoy() throws SQLException {
-        Cursor recons = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateWithoutTime = null;
-        try {
-            dateWithoutTime = sdf.parse(sdf.format(new Date()));
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        Timestamp timeStamp = new Timestamp(dateWithoutTime.getTime());
-        ArrayList<ReConsentimientoFlu2015> mReConsentimientoFlu = new ArrayList<ReConsentimientoFlu2015>();
-        recons = mDb.query(true, ConstantsDB.RECONSFLU_TABLE_2015, null,
-                ConstantsDB.TODAY + "=" + timeStamp.getTime(), null, null, null, ConstantsDB.CODIGO + " , " +ConstantsDB.TODAY, null);
-        if (recons != null && recons.getCount() > 0) {
-            recons.moveToFirst();
-            mReConsentimientoFlu.clear();
-            do{
-                mReConsentimientoFlu.add(crearReConsentimientoFlu2015(recons));
-            } while (recons.moveToNext());
-        }
-        recons.close();
-        return mReConsentimientoFlu;
-    }
-
-
-
-    /**
-     * Crea una ReConsentimientoFlu
-     *
-     * @return ReConsentimientoFlu
-     */
-    public ReConsentimientoFlu2015 crearReConsentimientoFlu2015(Cursor reconsens){
-        ReConsentimientoFlu2015 mReConsentimiento = new ReConsentimientoFlu2015();
-        Date fecha = new Date(reconsens.getLong(reconsens.getColumnIndex(ConstantsDB.TODAY)));
-        ReConsentimientoFlu2015Id reconsId = new ReConsentimientoFlu2015Id();
-        reconsId.setCodigo(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.CODIGO)));
-        reconsId.setFechaCons(new Date(reconsens.getLong(reconsens.getColumnIndex(ConstantsDB.FECHA_CONS))));
-        mReConsentimiento.setReconsfluId(reconsId);
-
-        mReConsentimiento.setNombrept(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombrept)));
-        mReConsentimiento.setNombrept2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombrept2)));
-        mReConsentimiento.setApellidopt(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidopt)));
-        mReConsentimiento.setApellidopt2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidopt2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.relacionFam))) mReConsentimiento.setRelacionFam(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.relacionFam)));
-        mReConsentimiento.setOtraRelacionFam(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.otraRelacionFam)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.alfabetoTutor))) mReConsentimiento.setAlfabetoTutor(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.alfabetoTutor)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.testigoSN))) mReConsentimiento.setTestigoSN(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.testigoSN)));
-        mReConsentimiento.setNombretest1(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombretest1)));
-        mReConsentimiento.setNombretest2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.nombretest2)));
-        mReConsentimiento.setApellidotest1(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidotest1)));
-        mReConsentimiento.setApellidotest2(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.apellidotest2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.cmDomicilio))) mReConsentimiento.setCmDomicilio(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.cmDomicilio)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.barrio))) mReConsentimiento.setBarrio(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.barrio)));
-        mReConsentimiento.setOtrobarrio(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.otrobarrio)));
-        mReConsentimiento.setDire(reconsens.getString(reconsens.getColumnIndex(ConstantsDB.dire)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telContacto1))) mReConsentimiento.setTelefContact(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telContacto1)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoConv1))) mReConsentimiento.setTelefonoConv1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoConv1)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoCel1))) mReConsentimiento.setTelefonoCel1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoCel1)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoCel2))) mReConsentimiento.setTelefonoCel2(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoCel2)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.telefonoCel3))) mReConsentimiento.setTelefonoCel3(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.telefonoCel3)));
-
-
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.asentimiento))) mReConsentimiento.setAsentimiento(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.asentimiento)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.parteAFlu))) mReConsentimiento.setParteAFlu(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.parteAFlu)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.parteBFlu))) mReConsentimiento.setParteBFlu(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.parteBFlu)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.parteCFlu))) mReConsentimiento.setParteCFlu(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.parteCFlu)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.rechFlu))) mReConsentimiento.setPorqueno(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.rechFlu)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.contacto_futuro))) mReConsentimiento.setContacto_futuro(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.contacto_futuro)));
-
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.otrorecurso1))) mReConsentimiento.setOtrorecurso1(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.otrorecurso1)));
-        if(!reconsens.isNull(reconsens.getColumnIndex(ConstantsDB.otrorecurso2))) mReConsentimiento.setOtrorecurso2(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.otrorecurso2)));
-
-        Boolean borrado = reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.DELETED))>0;
-        mReConsentimiento.setMovilInfo(new MovilInfo(reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.FILE_PATH)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.STATUS)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.WHEN_UPDATED)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.START)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.END)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.DEVICE_ID)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.SIM_SERIAL)),
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.PHONE_NUMBER)),
-                fecha,
-                reconsens.getString(reconsens.getColumnIndex(ConstantsDB.USUARIO)),
-                borrado,
-                reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.REC1)),
-                reconsens.getInt(reconsens.getColumnIndex(ConstantsDB.REC2))));
-        return mReConsentimiento;
-    }
-
-
-    /**
-     * Obtiene Lista todas las CambiosCasas sin enviar
-     *
-     * @return lista con CambiosCasas
-     */
-    public List<CambiosCasas> getListaCambiosCasasSinEnviar() throws SQLException {
-        Cursor ccs = null;
-        List<CambiosCasas> mCambiosCasas = new ArrayList<CambiosCasas>();
-        ccs = mDb.query(true, ConstantsDB.CAMB_CASA_TABLE, null,
-                ConstantsDB.STATUS + "= '" + Constants.STATUS_NOT_SUBMITTED+ "'", null, null, null, null, null);
-        if (ccs != null && ccs.getCount() > 0) {
-            ccs.moveToFirst();
-            mCambiosCasas.clear();
-            do{
-                mCambiosCasas.add(crearCambiosCasas(ccs));
-            } while (ccs.moveToNext());
-        }
-        ccs.close();
-        return mCambiosCasas;
-    }
-
-    /**
-     * Crea una CambiosCasas
-     *
-     * @return CambiosCasas
-     */
-    public CambiosCasas crearCambiosCasas(Cursor rccs){
-        CambiosCasas mCcs = new CambiosCasas();
-
-        mCcs.setFechaRegistro(new Date(rccs.getLong(rccs.getColumnIndex(ConstantsDB.TODAY))));
-        mCcs.setCodigo(rccs.getInt(rccs.getColumnIndex(ConstantsDB.codigo)));
-        mCcs.setCodCasaAnterior(rccs.getInt(rccs.getColumnIndex(ConstantsDB.codCasaAnterior)));
-        mCcs.setCodCasaActual(rccs.getInt(rccs.getColumnIndex(ConstantsDB.codCasaActual)));
-        mCcs.setUsername(rccs.getString(rccs.getColumnIndex(ConstantsDB.USERNAME)));
-        mCcs.setEstado(rccs.getString(rccs.getColumnIndex(ConstantsDB.STATUS)));
-        return mCcs;
     }
 
     //reconsentimiento dengue 2018

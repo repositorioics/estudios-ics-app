@@ -168,7 +168,7 @@ public class TamizajeForm extends AbstractWizardModel {
         Page apellido1JefeFamilia = new TextPage(this,labels.getApellido1JefeFamilia(),labels.getJefeFamiliaHint(), Constants.WIZARD, false).setRequired(true);
         Page apellido2JefeFamilia = new TextPage(this,labels.getApellido2JefeFamilia(),labels.getJefeFamiliaHint(), Constants.WIZARD, false).setRequired(false);
         Page barrio = new SingleFixedChoicePage(this,labels.getBarrio(), "", Constants.WIZARD, false).setChoices(barrios).setRequired(true);
-        Page manzana = new NumberPage(this,labels.getManzana(),"",Constants.WIZARD, false).setRangeValidation(true,0,86).setRequired(true);
+        Page manzana = new NumberPage(this,labels.getManzana(),"",Constants.WIZARD, false).setRangeValidation(true,0,114).setRequired(true);
         Page direccion = new TextPage(this,labels.getDireccion(),labels.getDireccionHint(), Constants.WIZARD, false).setRequired(true);
 
         Page codigoNuevoParticipante = new BarcodePage(this,labels.getCodigoNuevoParticipante(),"",Constants.WIZARD, false).setPatternValidation(true, "^\\d{5}$").setRequired(true);

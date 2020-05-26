@@ -34,8 +34,8 @@
     <string name="wrong_visit_start_date_OU1">Fecha de visita es inferior a 30 días después de la fecha de inicio</string>
     <string name="wrong_visit_end_date_OU1">Fecha de visita es posterior a 45 días después de la fecha de inicio</string>
     <string name="wrong_visit_date_OU1_1">Existe Visita Inicial registrada con menos de 30 días</string>
-    <string name="wrong_visit_date_OU1_2">Fecha de visita es inferior a 30 días después de la Visita Inicial</string>
-    <string name="wrong_visit_date_OU1_3">Fecha de visita es posterior a 45 días después de la Visita Inicial</string>
+    <string name="wrong_visit_date_OU1_2">Fecha de visita es inferior a 30 días después de la %s</string>
+    <string name="wrong_visit_date_OU1_3">Fecha de visita es posterior a 45 días después de la %s</string>
     <string name="wrong_visit_date_OU1_4">Visita Inicial no ha sido registrada</string>
     <string name="visit_already_exist_OU1">Visita %s ya fue registrada para éste caso </string>
     <string name="visit_not_suscesfull">Visita no fue exitosa</string>

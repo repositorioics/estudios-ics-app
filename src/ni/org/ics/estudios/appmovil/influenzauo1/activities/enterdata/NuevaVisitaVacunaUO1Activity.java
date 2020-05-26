@@ -103,10 +103,10 @@ public class NuevaVisitaVacunaUO1Activity extends FragmentActivity implements
         pageFecha.setmLaterThan(minDate);
         pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaSegundaDosis());
         pageFecha.setmLaterThan(minDate);
-        //fecha de repogramación dentro de 30 dias min
-        calendar.add(Calendar.DATE, 30);
+        //fecha de repogramación dentro de 15 dias min. Reprograme cita para toma de muestra en 2 a 5 semanas.
+        calendar.add(Calendar.WEEK_OF_YEAR, 2);
         minDate = new DateMidnight(calendar.getTime());
-        calendar.add(Calendar.DATE, 10); //40 dias max
+        calendar.add(Calendar.WEEK_OF_YEAR, 3); //40 dias max
         DateMidnight maxDate = new DateMidnight(calendar.getTime());
         pageFecha = (NewDatePage) mWizardModel.findByKey(labels.getFechaReprogramacionTomaMx());
         pageFecha.setRangeValidation(true, minDate, maxDate);
@@ -511,16 +511,18 @@ public class NuevaVisitaVacunaUO1Activity extends FragmentActivity implements
                     }
                 }else if (visita.equalsIgnoreCase("Final")){
                     if (ultimaVisita.getVisita().equalsIgnoreCase("I")){
+                        calLimiteFecVisita.setTime(ultimaVisita.getFechaVacuna()!=null?ultimaVisita.getFechaVacuna():ultimaVisita.getFechaVisita());
+                        String nombreCampo = ultimaVisita.getFechaVacuna()!=null?"Primera dosis":"Visita Inicial";
                         //fecha minima para ingresar visita final
                         calLimiteFecVisita.add(Calendar.DATE, 30);//30 dias después de la fecha de visita inicial
                         if (dVis.before(calLimiteFecVisita.getTime())) {//si la fecha de visita no es posterior a los 30 dias después de la fecha de inicio no permitir registro
-                            Toast.makeText(this, this.getString(R.string.wrong_visit_date_OU1_2), Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, this.getString(R.string.wrong_visit_date_OU1_2, nombreCampo), Toast.LENGTH_LONG).show();
                             procesarVisita = false;
                         }
                         //fecha limite para ingresar visita final
                         calLimiteFecVisita.add(Calendar.DATE, 45);//45 dias después de la fecha de visita inicial
                         if (dVis.after(calLimiteFecVisita.getTime())) {//si la fecha de visita es posterior a los 45 dias después de la fecha de inicio no permitir registro
-                            Toast.makeText(this, this.getString(R.string.wrong_visit_date_OU1_3), Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, this.getString(R.string.wrong_visit_date_OU1_3, nombreCampo), Toast.LENGTH_LONG).show();
                             procesarVisita = false;
                         }
                     }else{

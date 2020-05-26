@@ -514,7 +514,7 @@ public class NuevaVisitaVacunaUO1Activity extends FragmentActivity implements
                         calLimiteFecVisita.setTime(ultimaVisita.getFechaVacuna()!=null?ultimaVisita.getFechaVacuna():ultimaVisita.getFechaVisita());
                         String nombreCampo = ultimaVisita.getFechaVacuna()!=null?"Primera dosis":"Visita Inicial";
                         //fecha minima para ingresar visita final
-                        calLimiteFecVisita.add(Calendar.DATE, 30);//30 dias después de la fecha de visita inicial
+                        calLimiteFecVisita.add(Calendar.DATE, 29);//29 dias después de la fecha de visita inicial. Se solicita bajar a 29 Dr. Plaza, 26052020
                         if (dVis.before(calLimiteFecVisita.getTime())) {//si la fecha de visita no es posterior a los 30 dias después de la fecha de inicio no permitir registro
                             Toast.makeText(this, this.getString(R.string.wrong_visit_date_OU1_2, nombreCampo), Toast.LENGTH_LONG).show();
                             procesarVisita = false;

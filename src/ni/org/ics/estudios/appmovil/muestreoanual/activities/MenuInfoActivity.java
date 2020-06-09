@@ -931,6 +931,11 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         recon18ChfItem.setVisible(false);
         consFluUO1Item.setVisible(false);
         consCovid19.setVisible(false);
+        if (!mParticipante.getProcesos().getEstudio().trim().contains("Influenza")){
+            consCovid19.setTitle(R.string.info_cons_covid19);
+        }else{
+            consCovid19.setTitle(R.string.info_cons_covid19_flu);
+        }
         //la opción de reconsentimiento dengue siempre se va a mostrar
         if ((mParticipante.getProcesos().getConsDeng().matches("Si") || mParticipante.getProcesos().getReConsDeng().matches("Si")) && mUser.getConsentimiento()) reConsDenItem.setVisible(true);
         if ((!mParticipante.getProcesos().getCoordenadas().equals("0") && mUser.getConsentimiento())) coordenadasItem.setVisible(true);
@@ -1365,9 +1370,14 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     pendiente=true;
                 }*/
                 if (mParticipante.getProcesos().getConsCovid19().matches("Si") && mUser.getConsentimiento()){
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.cons_missing_covid19) + "</font></small><br />";
+                    if (!mParticipante.getProcesos().getEstudio().trim().contains("Influenza")){
+                        labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.cons_missing_covid19) + "</font></small><br />";
+                    }else{
+                        labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.reconsflu_missing) + "</font></small><br />";
+                    }
                     pendiente=true;
                 }
+
                 if (mParticipante.getProcesos().getConsFlu().matches("Si") && mUser.getConsentimiento()){
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consflu_missing_UO1) + "</font></small><br />";
                     pendiente=true;

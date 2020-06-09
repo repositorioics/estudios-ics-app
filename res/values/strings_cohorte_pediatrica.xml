@@ -41,6 +41,7 @@
     <string name="info_recon_chf">Reconsentimiento CHF 18</string>
     <string name="info_conflu_uo1">Consentimiento UO1</string>
     <string name="info_cons_covid19">Consentimiento COVID19</string>
+    <string name="info_cons_covid19_flu">Reconsentimiento Influenza</string>
 
     <string name="house_survey_missing">Realizar encuesta de casa</string>
     <string name="part_survey_missing">Realizar encuesta de participante</string>

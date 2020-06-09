@@ -412,11 +412,11 @@ public class NewConsCovid19Activity extends FragmentActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible && esFlu);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && edadMeses >= 72);
+                changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && edadMeses >= 72 && esFlu);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteD()), !visible);
                 notificarCambios = false;
-                if (visible && edadMeses < 72){
+                if (visible && edadMeses < 72 || esUO1){
                     changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible);
@@ -429,13 +429,13 @@ public class NewConsCovid19Activity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
+                    /*changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDireContacto()), visible);
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), visible);
                     notificarCambios = false;
-                    changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), visible);
+                    changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), visible);*/
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getPadre()), visible);
                     notificarCambios = false;
@@ -503,13 +503,13 @@ public class NewConsCovid19Activity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
+                /*changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDireContacto()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), visible);*/
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getPadre()), visible);
                 notificarCambios = false;
@@ -619,14 +619,14 @@ public class NewConsCovid19Activity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
+                /*changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDireContacto()), visible);
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), visible);
-                notificarCambios = false;
+                notificarCambios = false;*/
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
                 notificarCambios = false;
                 if (!visible) {
@@ -890,7 +890,7 @@ public class NewConsCovid19Activity extends FragmentActivity implements
             if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getApellidomadre()), false);
             if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getApellidomadre2()), false);
 
-            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getNomContacto()), false);
+            /*if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getNomContacto()), false);
             if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), false);
             if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getDireContacto()), false);
             if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), false);
@@ -900,7 +900,7 @@ public class NewConsCovid19Activity extends FragmentActivity implements
             if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContacto2SN()), false);
             if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContactoClasif2()), false);
             if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContactoCel2()), false);
-            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContactoOper2()), false);
+            if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getTelContactoOper2()), false);*/
 
             if (preg > 88) changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), false);
             if (preg > 87) changeStatus(mWizardModel.findByKey(labels.getDejoCarta()), false);
@@ -1013,7 +1013,7 @@ public class NewConsCovid19Activity extends FragmentActivity implements
             String telefonoClasif3 = datos.getString(this.getString(R.string.telefonoClasif3));
             String telefonoCel3 = datos.getString(this.getString(R.string.telefonoCel3));
             String telefonoOper3 = datos.getString(this.getString(R.string.telefonoOper3));
-            String nomContacto = datos.getString(this.getString(R.string.nomContacto));
+            /*String nomContacto = datos.getString(this.getString(R.string.nomContacto));
             String barrioContacto = datos.getString(this.getString(R.string.barrioContacto211));
             String otrobarrioContacto = datos.getString(this.getString(R.string.otrobarrioContacto));//agregar en contactoparticipante
             String direContacto = datos.getString(this.getString(R.string.direContacto));
@@ -1022,7 +1022,7 @@ public class NewConsCovid19Activity extends FragmentActivity implements
             String telContactoOper1 = datos.getString(this.getString(R.string.telContactoOper1));
             String telContactoClasif2 = datos.getString(this.getString(R.string.telContactoClasif2));
             String telContactoCel2 = datos.getString(this.getString(R.string.telContactoCel2));
-            String telContactoOper2 = datos.getString(this.getString(R.string.telContactoOper2));
+            String telContactoOper2 = datos.getString(this.getString(R.string.telContactoOper2));*/
             String cambiarPadre = datos.getString(this.getString(R.string.cambiarPadre));
             String nombrepadre = datos.getString(this.getString(R.string.nombrepadre));
             String nombrepadre2 = datos.getString(this.getString(R.string.nombrepadre2));
@@ -1277,8 +1277,8 @@ public class NewConsCovid19Activity extends FragmentActivity implements
                             guardarContactoParticipante(Constants.YESKEYSND, null, null, participante.getCasa().getBarrio().getCodigo().toString(), null , telefonoCel1, telefonoClasif1, telefonoOper1,
                                     telefonoCel2, telefonoClasif2, telefonoOper2, telefonoCel3, telefonoClasif3, telefonoOper3);
                         }
-                        guardarContactoParticipante(Constants.NOKEYSND, nomContacto, direContacto, barrioContacto, otrobarrioContacto,
-                                telContactoCel1, telContacto1, telContactoOper1, telContactoCel2, telContactoClasif2, telContactoOper2, null, null, null);
+                        /*guardarContactoParticipante(Constants.NOKEYSND, nomContacto, direContacto, barrioContacto, otrobarrioContacto,
+                                telContactoCel1, telContacto1, telContactoOper1, telContactoCel2, telContactoClasif2, telContactoOper2, null, null, null);*/
 
                         if (tieneValor(mismoTutorSN) && mismoTutorSN.equals(Constants.NO)) {
                             String nombreTutor = nombrept;

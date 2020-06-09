@@ -109,7 +109,7 @@ public class ConsCovid19Form extends AbstractWizardModel {
         Page telefonoCel3 = new NumberPage(this,labels.getTelefonoCel3(), "", Constants.WIZARD, false).setRequired(true);
         Page telefonoOper3 = new SingleFixedChoicePage(this,labels.getTelefonoOper3(), "", Constants.WIZARD, false).setChoices(catOperadora).setRequired(true);
 
-        Page nomContacto = new TextPage(this,labels.getNomContacto(), "", Constants.WIZARD, false).setRequired(true);
+/*        Page nomContacto = new TextPage(this,labels.getNomContacto(), "", Constants.WIZARD, false).setRequired(true);
         Page barrioContacto = new SingleFixedChoicePage(this,labels.getBarrioContacto(), "", Constants.WIZARD, false).setChoices(catBarrios).setRequired(true);
         Page otrobarrioContacto = new TextPage(this,labels.getOtrobarrioContacto(), "", Constants.WIZARD, false).setRequired(true);
         Page direContacto = new TextPage(this,labels.getDireContacto(), "", Constants.WIZARD, false).setRequired(true);
@@ -121,7 +121,7 @@ public class ConsCovid19Form extends AbstractWizardModel {
         Page telContactoClasif2 = new SingleFixedChoicePage(this,labels.getTelContactoClasif2(), "", Constants.WIZARD, false).setChoices(catTipoTel).setRequired(true);
         Page telContactoCel2 = new NumberPage(this,labels.getTelContactoCel2(), "", Constants.WIZARD, false).setRequired(true);
         Page telContactoOper2 = new SingleFixedChoicePage(this,labels.getTelContactoOper2(), "", Constants.WIZARD, false).setChoices(catOperadora).setRequired(true);
-
+*/
         Page padre = new LabelPage(this,labels.getPadre(), "", Constants.WIZARD, false).setRequired(false);
         Page cambiarPadre = new SingleFixedChoicePage(this,labels.getCambiarPadre(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page nombrepadre = new TextPage(this,labels.getNombrepadre(), "", Constants.WIZARD, false).setRequired(true);
@@ -141,7 +141,7 @@ public class ConsCovid19Form extends AbstractWizardModel {
                 aceptaCohorteFLuParteDCovid, aceptaCohorteUO1ParteDCovid, razonNoAceptaParteD, otraRazonNoAceptaParteD, aceptaCohorteFLuParteECovid, asentimiento, aceptaContactoFuturo,
                 tutor, mismoTutorSN, nombrept, nombrept2, apellidopt, apellidopt2, relacionFam, otraRelacionFam, motivoDifTutor, otroMotivoDifTutor, alfabetoTutor, testigoSN, nombretest1, nombretest2, apellidotest1, apellidotest2,
                 domicilio, cmDomicilio, notaCmDomicilio, telefono1SN, telefonoClasif1, telefonoCel1, telefonoOper1, telefono2SN, telefonoClasif2, telefonoCel2, telefonoOper2, telefono3SN, telefonoClasif3, telefonoCel3, telefonoOper3,
-                nomContacto, barrioContacto, otrobarrioContacto, direContacto, telContacto1SN, telContacto1, telContactoCel1, telContactoOper1, telContacto2SN, telContactoClasif2, telContactoCel2, telContactoOper2,
+                //nomContacto, barrioContacto, otrobarrioContacto, direContacto, telContacto1SN, telContacto1, telContactoCel1, telContactoOper1, telContacto2SN, telContactoClasif2, telContactoCel2, telContactoOper2,
                 padre, cambiarPadre, nombrepadre, nombrepadre2, apellidopadre, apellidopadre2, madre, cambiarMadre, nombremadre, nombremadre2, apellidomadre, apellidomadre2, verifTutor);
     }
 }

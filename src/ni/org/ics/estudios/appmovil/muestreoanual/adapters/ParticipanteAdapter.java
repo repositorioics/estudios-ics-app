@@ -101,7 +101,8 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         || (procesos.getReConsDeng()!=null && procesos.getReConsDeng().matches("Si"))
                         || !procesos.getCoordenadas().equals("0")
                         || procesos.getObsequioChf().matches("Si")
-                        || (procesos.getReConsChf18()!=null && procesos.getReConsChf18().matches("Si"))){
+                        || (procesos.getReConsChf18()!=null && procesos.getReConsChf18().matches("Si"))
+                        || procesos.getConsCovid19().matches("Si")){
 
 					labelHeader = labelHeader + "<font color='red'>Pendiente: <br /></font>";
 
@@ -312,6 +313,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                     //MA2020 if (procesos.getEnCasaSa().matches("Si")) labelHeader = labelHeader +  this.getContext().getString(R.string.housesa_survey_missing) + "<br />";
                     //MA2020 if (procesos.getEncPartSa().matches("Si")) labelHeader = labelHeader + this.getContext().getString(R.string.partsa_survey_missing) + "<br />";
                     if (procesos.getEncPart().matches("Si")) labelHeader = labelHeader + "Encuesta de Participante<br />";
+                    if (procesos.getConsCovid19().matches("Si")) labelHeader = labelHeader + "Consentimiento COVID19<br />";
 					if (procesos.getConsFlu().matches("Si")) labelHeader = labelHeader + "Consentimiento UO1<br />";
                     if (procesos.getConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue A,B,C<br />";
                     if (procesos.getReConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue D<br />";

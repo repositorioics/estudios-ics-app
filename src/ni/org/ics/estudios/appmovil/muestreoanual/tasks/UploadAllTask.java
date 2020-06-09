@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.*;
+import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCovid19;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.VisitaTerreno;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
@@ -60,6 +61,7 @@ public class UploadAllTask extends UploadTask {
     private List<VisitaTerrenoParticipante> mVisitasTerrenoP = new ArrayList<VisitaTerrenoParticipante>();
     private List<EnfermedadCronica> mEnfermedades = new ArrayList<EnfermedadCronica>();
     private List<ObsequioGeneral> mObsequiosGeneral = new ArrayList<ObsequioGeneral>();
+    private List<ParticipanteCovid19> mParticipantesCovid19 = new ArrayList<ParticipanteCovid19>();
 
     private String url = null;
     private String username = null;
@@ -398,7 +400,15 @@ public class UploadAllTask extends UploadTask {
                 e1.printStackTrace();
                 return e1.getLocalizedMessage();
             }
-
+            try {
+                error = cargarParticipantesCovid19(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
         } catch (Exception e1) {
 
             e1.printStackTrace();
@@ -755,6 +765,20 @@ public class UploadAllTask extends UploadTask {
             participanteProc.getMovilInfo().setEstado(estado);
             estudioAdapter.updateParticipanteProcSent(participanteProc);
             publishProgress("Actualizando procesos participantes", Integer.valueOf(mParticipantesProc.indexOf(participanteProc)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+    }
+
+    private void getParticipantesCovid19() {
+        mParticipantesCovid19 = estudioAdapter.getParticipantesCovid19(MainDBConstants.estado + "= '" + Constants.STATUS_NOT_SUBMITTED+ "'", null);
+    }
+
+    private void saveParticipantesCovid19(String estado) throws Exception {
+        int c = mParticipantesCovid19.size();
+        for (ParticipanteCovid19 participante : mParticipantesCovid19) {
+            participante.setEstado(estado.charAt(0));
+            estudioAdapter.editarParticipanteCovid19(participante);
+            publishProgress("Actualizando participantes Covid19", Integer.valueOf(mParticipantesCovid19.indexOf(participante)).toString(), Integer
                     .valueOf(c).toString());
         }
     }
@@ -2054,5 +2078,47 @@ public class UploadAllTask extends UploadTask {
             Log.e(TAG, e.getMessage(), e);
             return e.getMessage();
         }
+    }
+
+    /***************************************************/
+    /*************** ParticipanteCovid19 ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarParticipantesCovid19(String url, String username,
+                                         String password) throws Exception {
+        try {
+            getParticipantesCovid19();
+            if(mParticipantesCovid19.size()>0){
+                saveParticipantesCovid19(Constants.STATUS_SUBMITTED);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/participantesCovid19";
+                ParticipanteCovid19[] envio = mParticipantesCovid19.toArray(new ParticipanteCovid19[mParticipantesCovid19.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ParticipanteCovid19[]> requestEntity =
+                        new HttpEntity<ParticipanteCovid19[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    saveParticipantesCovid19(Constants.STATUS_NOT_SUBMITTED);
+                }
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            saveParticipantes(Constants.STATUS_NOT_SUBMITTED);
+            return e.getMessage();
+        }
+
     }
 }

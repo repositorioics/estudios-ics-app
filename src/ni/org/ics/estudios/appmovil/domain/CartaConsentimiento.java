@@ -34,6 +34,7 @@ public class CartaConsentimiento extends BaseMetaData {
     private String aceptaParteB; //Consentimiento para almacenamiento y uso de muestras en estudios futuros
     private String aceptaParteC; //Consentimiento adicional para estudios genéticos
     private String aceptaParteD; //Consentimiento adicional para ZIKA (Estudio Cohorte Dengue)
+    private String aceptaParteE; //Consentimiento para almacenamiento y uso de meustras en estudios futuros EstudioFLu
     private String version; //Indicar la versión actual al momento de registrar la carta
     //reconsentimiento dengue 2018
     private String otroMotivoRechazoParteA;
@@ -348,6 +349,14 @@ public class CartaConsentimiento extends BaseMetaData {
 
     public void setCasaChf(String casaChf) {
         this.casaChf = casaChf;
+    }
+
+    public String getAceptaParteE() {
+        return aceptaParteE;
+    }
+
+    public void setAceptaParteE(String aceptaParteE) {
+        this.aceptaParteE = aceptaParteE;
     }
 
     @Override

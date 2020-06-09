@@ -362,6 +362,8 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".cohortefamilia.activities.ListaPersonasCamasCuartosCasoActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NewConsCovid19Activity"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

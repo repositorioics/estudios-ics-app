@@ -63,6 +63,9 @@ public class ParticipanteProcesos implements Serializable {
     private String mostrarMadreAlfabeta;
     private String mostrarNumParto;
     private String antecedenteTutorCP;
+    //Covid19
+    private String consCovid19;
+    private String subEstudios;
 
     private MovilInfo movilInfo;
 
@@ -448,6 +451,22 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setAntecedenteTutorCP(String antecedenteTutorCP) {
         this.antecedenteTutorCP = antecedenteTutorCP;
+    }
+
+    public String getConsCovid19() {
+        return consCovid19;
+    }
+
+    public void setConsCovid19(String consCovid19) {
+        this.consCovid19 = consCovid19;
+    }
+
+    public String getSubEstudios() {
+        return subEstudios;
+    }
+
+    public void setSubEstudios(String subEstudios) {
+        this.subEstudios = subEstudios;
     }
 }
 

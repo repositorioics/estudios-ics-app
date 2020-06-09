@@ -40,6 +40,7 @@
     <string name="info_coordenadas">Coordenadas</string>
     <string name="info_recon_chf">Reconsentimiento CHF 18</string>
     <string name="info_conflu_uo1">Consentimiento UO1</string>
+    <string name="info_cons_covid19">Consentimiento COVID19</string>
 
     <string name="house_survey_missing">Realizar encuesta de casa</string>
     <string name="part_survey_missing">Realizar encuesta de participante</string>
@@ -140,6 +141,7 @@
     <string name="parto_missing">Realizar Datos Parto BB</string>
     <string name="activos">Descargar solo activos</string>
     <string name="terreno">Descargar solo participantes</string>
+    <string name="cons_missing_covid19">Realizar Consentimiento COVID19</string>
 
     <string name="sinRelacFam">Sin Relación Familiar</string>
 </resources>

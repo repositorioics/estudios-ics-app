@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followup_cases_list">Lista de casos activos</string>
+    <string name="aceptaCohorteFLuParteDCovid">Parte D Flu</string>
+    <string name="aceptaCohorteFLuParteDCovidHint">Permiso paterno para re-enrolamiento y obtencion de muestras de sangre adicionales</string>
+    <string name="aceptaCohorteFLuParteECovid">Parte E FLu</string>
+    <string name="aceptaCohorteFLuParteECovidHint">Consentimiento para almacenamiento y uso de muestras en estudios futuros</string>
+    <string name="aceptaCohorteUO1ParteDCovid">Parte D UO1</string>
+    <string name="aceptaCohorteUO1ParteDCovidHint">Consentimiento adicional para toma de muesta de sangre en el SUBGRUPO DE COHORTE DE NACIMIENTO</string>
+
+    <string name="razonNoAceptaParteDCovid">¿Porque no acepta Parte D?</string>
+    <string name="razonNoAceptaParteDCovidHint">Seleccionar porque razón no acepta Parte D</string>
+    <string name="otraRazonNoAceptaParteDCovid">Otra razón no acepta Parte D</string>
+    <string name="otraRazonNoAceptaParteDCovidHint">Indicar porque otra razón no acepta Parte D</string>
+
+    <string name="asentimientoCovid19Hint">Para niños de 6 años o mas</string>
+
+</resources>

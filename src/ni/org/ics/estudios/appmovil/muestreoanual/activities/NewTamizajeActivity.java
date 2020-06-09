@@ -21,6 +21,7 @@ import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.*;
+import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCovid19;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
@@ -1070,6 +1071,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), (visible && !esInmuno) || visibleDen);
                     notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteUO1ParteDCovid()), ((visible && !esInmuno) || visibleDen) && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1));
+                    notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCasaPerteneceCohorte()), (visible && !esInmuno) || visibleDen);
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), (visible && !esInmuno) || visibleDen);
@@ -1175,6 +1178,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), (visible && !esPretermino) || visibleDen);
                     notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteUO1ParteDCovid()), ((visible && !esPretermino) || visibleDen) && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1));
+                    notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCasaPerteneceCohorte()), (visible && !esPretermino) || visibleDen);
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCodigoNuevoParticipante()), (visible && !esPretermino) || visibleDen);
@@ -1274,6 +1279,18 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 onPageTreeChanged();
             }
+            if (page.getTitle().equals(labels.getAceptaCohorteUO1ParteDCovid())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteD()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getRazonNoAceptaParteD())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros motivos");
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteD()), visible);
+                notificarCambios = false;
+                onPageTreeChanged();
+            }
             if(page.getTitle().equals(labels.getCasaPerteneceCohorte())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), visible);
@@ -1347,6 +1364,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), visible && visibleTmp);
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteUO1ParteDCovid()), visible && visibleTmp && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1));
+                notificarCambios = false;
                 //si no es influeza, es influenza UO1
                 if (pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) == null || pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).isEmpty()) {
                     pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1());
@@ -1354,6 +1373,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible && visibleTmp);
                     notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), visible && visibleTmp);
+                    notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteUO1ParteDCovid()), visible && visibleTmp && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1));
                     notificarCambios = false;
                 }
 
@@ -1518,6 +1539,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAceptaParteD()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), false);
+        if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteUO1ParteDCovid()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getNombreContacto()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getDireccionContacto()), false);
@@ -1888,6 +1910,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
                 String aceptaParteBInf = datos.getString(this.getString(R.string.aceptaParteBInf));
                 String aceptaParteCInf = datos.getString(this.getString(R.string.aceptaParteCInf));
+                String aceptaCohorteUO1ParteDCovid = datos.getString(this.getString(R.string.aceptaCohorteUO1ParteDCovid));
+                String razonNoAceptaParteDCovid = datos.getString(this.getString(R.string.razonNoAceptaParteDCovid));
+                String otraRazonNoAceptaParteDCovid = datos.getString(this.getString(R.string.otraRazonNoAceptaParteDCovid));
 
                 String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturo));
 
@@ -2084,6 +2109,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         procesos.setZika(Constants.NO);
                         procesos.setPosZika(Constants.NO);
                         procesos.setDatosVisita(Constants.YES);//siempre pedir datos de contacto
+                        procesos.setConsCovid19(Constants.NO);
+                        procesos.setSubEstudios(Constants.SUB_ESTUDIO_NA);//NA
                         //aca siempre va a marcar si, porque no hay registro de encuestas, ya que no se descargan del server
                         ArrayList<EncuestaCasa> mEncuestasCasas = estudiosAdapter.getListaEncuestaCasas(casaCohorte.getCodigo());
                         if (mEncuestasCasas.size() <= 0) {
@@ -2292,6 +2319,44 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             cc.setVersion(Constants.VERSION_CC_UO1);
                             cc.setAceptaParteD(null);
                             estudiosAdapter.crearCartaConsentimiento(cc);
+                            //Covid19
+                            if (tieneValor(aceptaCohorteUO1ParteDCovid)){
+                                //Tamizaje tamizajeInfUO1ParteD = tamizajeInfUO1;
+                                tamizajeInfUO1.setCodigo(infoMovil.getId());
+                                estudiosAdapter.crearTamizaje(tamizajeInfUO1);
+                                cc.setAceptaParteA(null);
+                                cc.setAceptaParteB(null);
+                                cc.setAceptaParteC(null);
+                                cc.setAceptaContactoFuturo(null);
+                                MessageResource catAceptaParteD = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaCohorteUO1ParteDCovid + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                                if (catAceptaParteD!=null) {
+                                    cc.setAceptaParteD(catAceptaParteD.getCatKey());
+                                }
+                                if (tieneValor(razonNoAceptaParteDCovid)) {
+                                    MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaParteDCovid + "' and " + CatalogosDBConstants.catRoot + "='CPD_CAT_MOTRECHAZO'", null);
+                                    if (catRazonNoAceptaParticipar != null)
+                                        cc.setMotivoRechazoParteDExt(catRazonNoAceptaParticipar.getCatKey());
+                                }
+                                cc.setOtroMotivoRechazoParteDExt(otraRazonNoAceptaParteDCovid);
+                                cc.setCodigo(infoMovil.getId());
+                                cc.setTamizaje(tamizajeInfUO1);
+                                cc.setReconsentimiento(Constants.NOKEYSND);
+                                cc.setVersion(Constants.VERSION_CC_UO1_COVID);
+                                estudiosAdapter.crearCartaConsentimiento(cc);
+
+                                if (aceptaCohorteUO1ParteDCovid.equalsIgnoreCase(Constants.YES)) {
+                                    ParticipanteCovid19 participanteCovid19 = new ParticipanteCovid19();
+                                    participanteCovid19.setParticipante(participante);
+                                    participanteCovid19.setRecordDate(new Date());
+                                    participanteCovid19.setRecordUser(username);
+                                    participanteCovid19.setDeviceid(infoMovil.getDeviceId());
+                                    participanteCovid19.setEstado('0');
+                                    participanteCovid19.setPasive('0');
+                                    estudiosAdapter.crearParticipanteCovid19(participanteCovid19);
+                                    procesos.setSubEstudios(Constants.SUB_ESTUDIO_COVID19);//Covid-19
+                                    estudiosAdapter.actualizarParticipanteProcesos(procesos);
+                                }
+                            }
                         }
 
                         Intent i = new Intent(getApplicationContext(),

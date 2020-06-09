@@ -74,7 +74,7 @@ public class TamizajeForm extends AbstractWizardModel {
         String[] catEnfCron = fillCatalog("ENFERMEDAD_CRN");
         String[] catTramiento = fillCatalog("CPD_CAT_TRATAMIENTO");
         String[] catVerificaTutor = fillCatalog("CP_CAT_VERIFTUTOR");
-
+        String[] catMotivoRechazo = fillCatalog("CPD_CAT_MOTRECHAZO");
         estudiosAdapter.close();
 
         DateMidnight dmDesde = DateMidnight.parse("01/01/1900", DateTimeFormat.forPattern("dd/MM/yyyy"));
@@ -156,6 +156,10 @@ public class TamizajeForm extends AbstractWizardModel {
         Page otraRazonNoAceptaInfluenzaUO1 = new TextPage(this,labels.getOtraRazonNoAceptaInfluenzaUO1(),labels.getOtraRazonNoAceptaInfluenzaUO1Hint(),Constants.WIZARD, false).setRequired(true);
         Page aceptaParteBInf = new SingleFixedChoicePage(this,labels.getAceptaParteBInf(), labels.getAceptaParteBInfHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page aceptaParteCInf = new SingleFixedChoicePage(this,labels.getAceptaParteCInf(), labels.getAceptaParteCInfHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        //Covid19
+        Page aceptaCohorteUO1ParteDCovid = new SingleFixedChoicePage(this,labels.getAceptaCohorteUO1ParteDCovid(), labels.getAceptaCohorteUO1ParteDCovidHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page razonNoAceptaParteD = new SingleFixedChoicePage(this,labels.getRazonNoAceptaParteD(), labels.getRazonNoAceptaParteDHint(), Constants.WIZARD, false).setChoices(catMotivoRechazo).setRequired(true);
+        Page otraRazonNoAceptaParteD = new TextPage(this,labels.getOtraRazonNoAceptaParteD(),labels.getOtraRazonNoAceptaParteDHint(),Constants.WIZARD, false).setRequired(true);
 
         Page aceptaContactoFuturo = new SingleFixedChoicePage(this,labels.getAceptaContactoFuturo(), labels.getAceptaContactoFuturoHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 
@@ -226,7 +230,7 @@ public class TamizajeForm extends AbstractWizardModel {
                 nombre1Padre, nombre2Padre, apellido1Padre, apellido2Padre, nombre1Madre, nombre2Madre, apellido1Madre, apellido2Madre,
                 nombre1Tutor, nombre2Tutor, apellido1Tutor, apellido2Tutor, relacionFamiliarTutor,
                 participanteOTutorAlfabeto, testigoPresente, nombre1Testigo, nombre2Testigo, apellido1Testigo, apellido2Testigo,
-                aceptaParteB, aceptaParteC, aceptaParteD, aceptaParteBInf, aceptaParteCInf, aceptaContactoFuturo,
+                aceptaParteB, aceptaParteC, aceptaParteD, aceptaParteBInf, aceptaParteCInf, aceptaCohorteUO1ParteDCovid, razonNoAceptaParteD, otraRazonNoAceptaParteD, aceptaContactoFuturo,
                 nombreContacto, barrioContacto, direccionContacto, tieneTelefono, tipoTel1, operadoraTel1, numeroTel1, tieneOtroTelefono, tipoTel2, operadoraTel2, numeroTel2, verifTutor,
                 finTamizajeLabel);
     }

@@ -73,8 +73,10 @@ public class Constants {
     public static final String VERSION_CC_SA = "1"; //SEROPREVALENCIA
     public static final String VERSION_CC_CD = "13"; //COHORTE DENGUE //Version 13 MA2020
     public static final String VERSION_CC_CD_D = "1"; //COHORTE DENGUE Extensión edad 2018
-    public static final String VERSION_CC_CI = "7"; //COHORTE INFLUENZA
+    public static final String VERSION_CC_CI = "7"; //COHORTE INFLUENZA.
+    public static final String VERSION_CC_CI_COVID = "1"; //COHORTE INFLUENZA. Cuando se agrega la parte D de Covid pasa a verson 1
     public static final String VERSION_CC_UO1 = "1"; //COHORTE UO1
+    public static final String VERSION_CC_UO1_COVID = "1"; //COHORTE UO1 + consentimiento covid
 
     public static final String PARTICIPANTE_SA = "participanteSA";
 
@@ -121,6 +123,10 @@ public class Constants {
     public static final String MX_SUPERFICIE_2 = "2";
 
     public static final String NOM_EST_COHORTEDENGUE = "Dengue";
+
+    public static final String SUB_ESTUDIO_NA = "0";
+    public static final String SUB_ESTUDIO_ARBOVIRUS = "1";
+    public static final String SUB_ESTUDIO_COVID19 = "2";
 }
 
     

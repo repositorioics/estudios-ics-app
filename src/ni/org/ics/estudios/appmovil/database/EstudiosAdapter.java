@@ -23,6 +23,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
+import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCovid19;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.SintomasVisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
@@ -36,6 +37,7 @@ import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.helpers.*;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.*;
+import ni.org.ics.estudios.appmovil.helpers.covid19.ParticipanteCovid19Helper;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.ParticipanteCasoUO1Helper;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.SintomasVisitaCasoUO1Helper;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.VisitaCasoUO1Helper;
@@ -160,6 +162,8 @@ public class EstudiosAdapter {
 			db.execSQL(InfluenzaUO1DBConstants.CREATE_UO1_SINTOMAS_VISITA_CASO_TABLE);
 			//sensores casos seguimiento
 			db.execSQL(CasosDBConstants.CREATE_SENSORES_CASOS_TABLE);
+			//Covid19
+			db.execSQL(Covid19DBConstants.CREATE_PARTICIPANTE_COVID_TABLE);
         }
 
 		@Override
@@ -320,6 +324,12 @@ public class EstudiosAdapter {
 			}
 			if (oldVersion==28){
 				db.execSQL("ALTER TABLE " + ConstantsDB.ENC_CASA_TABLE + " ADD COLUMN " + ConstantsDB.participante + " integer");
+			}
+			if (oldVersion==29){
+				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.consCovid19 + " text");
+				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.subEstudios + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.aceptaParteE + " text");
+				db.execSQL(Covid19DBConstants.CREATE_PARTICIPANTE_COVID_TABLE);
 			}
         }
 	}
@@ -7293,5 +7303,53 @@ public class EstudiosAdapter {
 		}
 		if (!cursorSensores.isClosed()) cursorSensores.close();
 		return mEnfCronica;
+	}
+
+	//Crear nuevo ParticipanteCovid19 en la base de datos
+	public void crearParticipanteCovid19(ParticipanteCovid19 partcaso) throws Exception {
+		ContentValues cv = ParticipanteCovid19Helper.crearParticipanteCovid19ContentValues(partcaso);
+		mDb.insertOrThrow(Covid19DBConstants.PARTICIPANTE_COVID_TABLE, null, cv);
+	}
+
+	//Editar ParticipanteCovid19 existente en la base de datos
+	public boolean editarParticipanteCovid19(ParticipanteCovid19 partcaso) throws Exception{
+		ContentValues cv = ParticipanteCovid19Helper.crearParticipanteCovid19ContentValues(partcaso);
+		return mDb.update(Covid19DBConstants.PARTICIPANTE_COVID_TABLE, cv, Covid19DBConstants.participante + "="
+				+ partcaso.getParticipante().getCodigo(), null) > 0;
+	}
+	//Limpiar la tabla de ParticipanteCovid19 de la base de datos
+	public boolean borrarParticipanteCovid19() {
+		return mDb.delete(Covid19DBConstants.PARTICIPANTE_COVID_TABLE, null, null) > 0;
+	}
+	//Obtener un ParticipanteCovid19 de la base de datos
+	public ParticipanteCovid19 getParticipanteCovid19(String filtro, String orden) throws SQLException {
+		ParticipanteCovid19 mParticipanteCovid19 = null;
+		Cursor cursor = crearCursor(Covid19DBConstants.PARTICIPANTE_COVID_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mParticipanteCovid19=ParticipanteCovid19Helper.crearParticipanteCovid19(cursor);
+			Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(Covid19DBConstants.participante)), null);
+			mParticipanteCovid19.setParticipante(participante);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mParticipanteCovid19;
+	}
+	//Obtener una lista de ParticipanteCovid19 de la base de datos
+	public List<ParticipanteCovid19> getParticipantesCovid19(String filtro, String orden) throws SQLException {
+		List<ParticipanteCovid19> mParticipanteCovid19s = new ArrayList<ParticipanteCovid19>();
+		Cursor cursor = crearCursor(Covid19DBConstants.PARTICIPANTE_COVID_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mParticipanteCovid19s.clear();
+			do{
+				ParticipanteCovid19 mParticipanteCovid19 = null;
+				mParticipanteCovid19 = ParticipanteCovid19Helper.crearParticipanteCovid19(cursor);
+				Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(Covid19DBConstants.participante)), null);
+				mParticipanteCovid19.setParticipante(participante);
+				mParticipanteCovid19s.add(mParticipanteCovid19);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mParticipanteCovid19s;
 	}
 }

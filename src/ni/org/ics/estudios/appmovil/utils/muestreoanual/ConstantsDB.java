@@ -155,6 +155,9 @@ public class ConstantsDB {
     public static final String mostrarMadreAlfabeta = "mostrarMadreAlfabeta";
     public static final String mostrarNumParto = "mostrarNumParto";
     public static final String antecedenteTutorCP = "antecedenteTutorCP";
+    //Covid19
+    public static final String consCovid19 = "consCovid19";
+    public static final String subEstudios = "subEstudios";
 
     //Campos encuesta casa
     public static final String FECHA_ENC_CASA = "fecha_encuesta";
@@ -996,6 +999,8 @@ public class ConstantsDB {
             + mostrarNumParto  + " text, "
             + mostrarPadreAlfabeto  + " text, "
             + antecedenteTutorCP  + " text, "
+            + consCovid19 + " text, "
+            + subEstudios + " text, "
             + ID_INSTANCIA + " integer,"
             + FILE_PATH + " text,"
             + STATUS + " text, "

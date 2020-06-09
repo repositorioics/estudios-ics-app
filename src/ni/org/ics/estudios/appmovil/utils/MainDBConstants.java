@@ -28,7 +28,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 29;
+	public static final int DATABASE_VERSION = 30;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -339,6 +339,8 @@ public class MainDBConstants {
     public static final String nombre2MxSuperficie = "nombre2MxSuperficie";
     public static final String apellido1MxSuperficie = "apellido1MxSuperficie";
     public static final String apellido2MxSuperficie = "apellido2MxSuperficie";
+    //Covid19
+    public static final String aceptaParteE = "aceptaParteE"; //Consentimiento para almacenamiento y uso de meustras en estudios futuros EstudioFLu
 
     //crear tabla cartas_consentimientos
     public static final String CREATE_CARTACONSENTIMIENTO_TABLE = "create table if not exists "
@@ -379,6 +381,7 @@ public class MainDBConstants {
             + nombre2MxSuperficie + " text, "
             + apellido1MxSuperficie + " text, "
             + apellido2MxSuperficie + " text, "
+            + aceptaParteE + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "

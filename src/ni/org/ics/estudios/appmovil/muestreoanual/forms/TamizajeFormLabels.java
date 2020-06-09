@@ -107,6 +107,13 @@ public class TamizajeFormLabels {
     protected String aceptaParteBInfHint;
     protected String aceptaParteCInf;
     protected String aceptaParteCInfHint;
+    //Covid19
+    private String aceptaCohorteUO1ParteDCovid;
+    private String aceptaCohorteUO1ParteDCovidHint;
+    protected String razonNoAceptaParteD;
+    protected String otraRazonNoAceptaParteD;
+    protected String razonNoAceptaParteDHint;
+    protected String otraRazonNoAceptaParteDHint;
 
     private String aceptaContactoFuturo;
     private String aceptaContactoFuturoHint;
@@ -297,6 +304,13 @@ public class TamizajeFormLabels {
         aceptaParteBInfHint = res.getString(R.string.aceptaParteBInfHint);
         aceptaParteCInf = res.getString(R.string.aceptaParteCInf);
         aceptaParteCInfHint = res.getString(R.string.aceptaParteCInfHint);
+        //Covid19
+        aceptaCohorteUO1ParteDCovid = res.getString(R.string.aceptaCohorteUO1ParteDCovid);
+        aceptaCohorteUO1ParteDCovidHint = res.getString(R.string.aceptaCohorteUO1ParteDCovidHint);
+        razonNoAceptaParteD = res.getString(R.string.razonNoAceptaParteDCovid);
+        razonNoAceptaParteDHint = res.getString(R.string.razonNoAceptaParteDCovidHint);
+        otraRazonNoAceptaParteD = res.getString(R.string.otraRazonNoAceptaParteDCovid);
+        otraRazonNoAceptaParteDHint = res.getString(R.string.otraRazonNoAceptaParteDCovidHint);
 
         casaPerteneceCohorte = res.getString(R.string.casaPerteneceCohorte);
         codigoCasaCohorte = res.getString(R.string.codigoCasaCohorte);
@@ -1096,5 +1110,29 @@ public class TamizajeFormLabels {
 
     public String getAceptaContactoFuturoHint() {
         return aceptaContactoFuturoHint;
+    }
+
+    public String getAceptaCohorteUO1ParteDCovid() {
+        return aceptaCohorteUO1ParteDCovid;
+    }
+
+    public String getAceptaCohorteUO1ParteDCovidHint() {
+        return aceptaCohorteUO1ParteDCovidHint;
+    }
+
+    public String getRazonNoAceptaParteD() {
+        return razonNoAceptaParteD;
+    }
+
+    public String getOtraRazonNoAceptaParteD() {
+        return otraRazonNoAceptaParteD;
+    }
+
+    public String getRazonNoAceptaParteDHint() {
+        return razonNoAceptaParteDHint;
+    }
+
+    public String getOtraRazonNoAceptaParteDHint() {
+        return otraRazonNoAceptaParteDHint;
     }
 }

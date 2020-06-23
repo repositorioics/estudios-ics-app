@@ -5,6 +5,7 @@
         <item>@string/main_1</item>
         <item>@string/main_2</item>
         <item>@string/main_3</item>
+        <item>@string/main_4</item>
     </string-array>
     
     <string-array name="menu_cohorte_familia">
@@ -128,6 +129,19 @@
     <string-array name="menu_visita_uo1">
         <item>@string/sint</item>
         <item>@string/samples_caso</item>
+    </string-array>
+    <string-array name="menu_covid19">
+        <item>@string/follow_up</item>
+        <item>@string/candidates</item>
+        <item>@string/download</item>
+        <item>@string/upload</item>
+        <item>@string/exit</item>
+    </string-array>
+
+    <string-array name="menu_visitas_covid19">
+        <item>@string/samples_caso</item>
+        <item>@string/sint</item>
+        <item>@string/aislamiento</item>
     </string-array>
 
 </resources>

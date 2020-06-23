@@ -1366,7 +1366,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteUO1ParteDCovid()), visible && visibleTmp && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1));
                 notificarCambios = false;
-                //si no es influeza, es influenza UO1
+                //si no es influenza, es influenza UO1
                 if (pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) == null || pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).isEmpty()) {
                     pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1());
                     visibleTmp = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
@@ -2158,7 +2158,6 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         procesos.setCuantasPers(0);
                         procesos.setVolRetoma(null);
                         procesos.setVolRetomaPbmc(null);
-
                         if (aceptaDengue) {
                             estudios = "Dengue";
                         }
@@ -2190,6 +2189,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         procesos.setMostrarPadreAlfabeto(Constants.YES);
                         procesos.setMostrarMadreAlfabeta(Constants.YES);
                         procesos.setMostrarNumParto(Constants.YES);
+                        //Covid19
+                        procesos.setSubEstudios("0");
                         estudiosAdapter.crearParticipanteProcesos(procesos);
 
                         CartaConsentimiento cc = new CartaConsentimiento();

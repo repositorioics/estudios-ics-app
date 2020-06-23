@@ -32,7 +32,8 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActiv
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObsequioActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoRecon18AniosActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.dto.DatosCHF;
-import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NewConsCovid19Activity;
+import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoConsCovid19Activity;
+import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoTamizajeTransmisionCovid19Activity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.DatosCoordenadas;
 import ni.org.ics.estudios.appmovil.domain.Participante;
@@ -440,7 +441,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 if(mUser.getConsentimiento()){
                     if(mParticipante.getProcesos().getConsCovid19().matches("Si")){
                         i = new Intent(getApplicationContext(),
-                                NewConsCovid19Activity.class);
+                                NuevoConsCovid19Activity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtra(Constants.PARTICIPANTE, mParticipante);
                         i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);

@@ -35,6 +35,7 @@ public class Constants {
     public static final String ENCUESTA = "encuesta";
     public static final String VISITA_FINAL = "visita_final";
     public static final String CASO = "caso";
+    public static final String ES_CANDIDATO = "candidato";
     
     //Form wizard
     public static final String FORM_NAME = "form";
@@ -67,6 +68,7 @@ public class Constants {
     public static final int COD_EST_COHORTEDENGUE = 3;
     public static final int COD_EST_COHORTEINFLUENZA = 4;
     public static final int COD_EST_UO1 = 5;
+    public static final int COD_EST_TCOVID = 6; //Transmisión Covid
 
     //VERSIONES CARTA DE CONSENTIMIENTO
     public static final String VERSION_CC_CHF = "1"; //COHORTE FAMILIA
@@ -77,6 +79,7 @@ public class Constants {
     public static final String VERSION_CC_CI_COVID = "1"; //COHORTE INFLUENZA. Cuando se agrega la parte D de Covid pasa a verson 1
     public static final String VERSION_CC_UO1 = "1"; //COHORTE UO1
     public static final String VERSION_CC_UO1_COVID = "1"; //COHORTE UO1 + consentimiento covid
+    public static final String VERSION_CC_TCOVID = "1"; //Transmisión Covid
 
     public static final String PARTICIPANTE_SA = "participanteSA";
 
@@ -84,6 +87,8 @@ public class Constants {
     public static final String CODIGO_PROPOSITO_TX = "3";
     public static final String CODIGO_PROPOSITO_UO1 = "4";
     public static final String CODIGO_PROPOSITO_VC_UO1 = "5"; //VACUNA UO1
+    public static final String CODIGO_PROPOSITO_COVID_CP = "7";//Covid Flu y UO1
+    public static final String CODIGO_PROPOSITO_T_COVID = "8"; //Seguimiento Transmisión Covid
     //public static final String CODIGO_PROPOSITO_UO1_CHF = "6"; //Compartido Positivo UO1 y positivo familia
     public static final String CODIGO_TIPO_SANGRE = "1";
     public static final String CODIGO_TIPO_RESP = "9";
@@ -127,6 +132,7 @@ public class Constants {
     public static final String SUB_ESTUDIO_NA = "0";
     public static final String SUB_ESTUDIO_ARBOVIRUS = "1";
     public static final String SUB_ESTUDIO_COVID19 = "2";
+    public static final String T_COVID19 = "Tcovid";
 }
 
     

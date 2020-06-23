@@ -161,6 +161,15 @@ public class DownloadBaseTask extends DownloadTask {
         estudioAdapter.borrarTempPbmc();
         estudioAdapter.borrarTodasEncuestaSatisfaccion();
         estudioAdapter.borrarRazonNoData();
+        estudioAdapter.borrarParticipanteCovid19();
+        estudioAdapter.borrarCasoCovid19();
+        estudioAdapter.borrarParticipanteCasoCovid19();
+        estudioAdapter.borrarVisitaSeguimientoCasoCovid19();
+        estudioAdapter.borrarMuestrasCovid19();
+        estudioAdapter.borrarVisitaFallidaCasoCovid19();
+        estudioAdapter.borrarCandidatoTransmisionCovid19();
+        estudioAdapter.borrarSintomasVisitaCasoCovid19();
+        estudioAdapter.borrarDatosAislamientoVisitaCasoCovid19();
 
         try {
             if (mCatalogos != null){

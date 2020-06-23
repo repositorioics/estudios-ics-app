@@ -1,0 +1,99 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/WizardPageContainer">
+
+    <TextView style="@style/WizardPageTitle" />
+
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/codigoParticipanteCaso" />
+
+            <EditText android:id="@+id/inputCodigoParticipanteCaso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/fechaDatoAisla" />
+			<EditText android:id="@+id/inputFechaDato"
+					  android:layout_width="match_parent"
+					  android:layout_height="wrap_content"
+					  android:layout_marginBottom="20dp"
+					  android:focusable="false"
+					  android:enabled="false"
+					  android:inputType="text" />
+
+
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/aislado" />
+            
+            <Spinner android:id="@+id/spinAislado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textSiAislado"
+					  android:text="@string/estaAislado"
+					android:textColor="@color/solid_red"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textDormir"
+					  android:text="@string/dormirSoloComparte" />
+			<Spinner android:id="@+id/spinDormir"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textBanio"
+					  android:text="@string/banioPropioComparte" />
+			<Spinner android:id="@+id/spinBanio"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textAlejadoFamilia"
+					  android:text="@string/alejadoFamilia" />
+			<Spinner android:id="@+id/spinAlejadoFamilia"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textTieneContacto"
+					  android:text="@string/tieneContacto" />
+			<Spinner android:id="@+id/spinTieneContacto"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textConQuienTC"
+					  android:text="@string/conQuienTieneContacto" />
+			<ni.org.ics.estudios.appmovil.multiselector.gui.MultiSpinner android:id="@+id/spinConQuienTC"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textLugares"
+					  android:text="@string/lugares" />
+			<ni.org.ics.estudios.appmovil.multiselector.gui.MultiSpinner android:id="@+id/spinLugares"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textOtrosLugares"
+					  android:text="@string/otrosLugares" />
+
+			<EditText android:id="@+id/inputOtrosLugares"
+					  android:layout_width="match_parent"
+					  android:layout_height="wrap_content"
+					  android:layout_marginBottom="20dp"
+					  android:inputType="text" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

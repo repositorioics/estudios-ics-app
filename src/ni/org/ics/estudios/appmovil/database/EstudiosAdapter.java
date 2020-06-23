@@ -23,7 +23,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaCasa;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.encuestas.EncuestaParticipante;
-import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCovid19;
+import ni.org.ics.estudios.appmovil.domain.covid19.*;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.SintomasVisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
@@ -37,7 +37,7 @@ import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.helpers.*;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.*;
-import ni.org.ics.estudios.appmovil.helpers.covid19.ParticipanteCovid19Helper;
+import ni.org.ics.estudios.appmovil.helpers.covid19.*;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.ParticipanteCasoUO1Helper;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.SintomasVisitaCasoUO1Helper;
 import ni.org.ics.estudios.appmovil.helpers.influenzauo1.VisitaCasoUO1Helper;
@@ -164,7 +164,15 @@ public class EstudiosAdapter {
 			db.execSQL(CasosDBConstants.CREATE_SENSORES_CASOS_TABLE);
 			//Covid19
 			db.execSQL(Covid19DBConstants.CREATE_PARTICIPANTE_COVID_TABLE);
-        }
+			db.execSQL(Covid19DBConstants.CREATE_COVID_CASOS_TABLE);
+			db.execSQL(Covid19DBConstants.CREATE_COVID_PARTICIPANTES_CASOS_TABLE);
+			db.execSQL(Covid19DBConstants.CREATE_COVID_VISITAS_CASOS_TABLE);
+			db.execSQL(Covid19DBConstants.CREATE_COVID_VISITAS_FALLIDAS_CASOS_TABLE);
+			db.execSQL(Covid19DBConstants.CREATE_COVID_CANDIDATO_TRANSMISION_TABLE);
+			db.execSQL(Covid19DBConstants.CREATE_COVID_SINTOMAS_VISITA_CASO_TABLE);
+			db.execSQL(Covid19DBConstants.CREATE_COVID_DATOS_AISLAMIENTO_VC_TABLE);
+
+		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -330,6 +338,15 @@ public class EstudiosAdapter {
 				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.subEstudios + " text");
 				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.aceptaParteE + " text");
 				db.execSQL(Covid19DBConstants.CREATE_PARTICIPANTE_COVID_TABLE);
+			}
+			if (oldVersion==30){
+				db.execSQL(Covid19DBConstants.CREATE_COVID_CASOS_TABLE);
+				db.execSQL(Covid19DBConstants.CREATE_COVID_PARTICIPANTES_CASOS_TABLE);
+				db.execSQL(Covid19DBConstants.CREATE_COVID_VISITAS_CASOS_TABLE);
+				db.execSQL(Covid19DBConstants.CREATE_COVID_VISITAS_FALLIDAS_CASOS_TABLE);
+				db.execSQL(Covid19DBConstants.CREATE_COVID_CANDIDATO_TRANSMISION_TABLE);
+				db.execSQL(Covid19DBConstants.CREATE_COVID_SINTOMAS_VISITA_CASO_TABLE);
+				db.execSQL(Covid19DBConstants.CREATE_COVID_DATOS_AISLAMIENTO_VC_TABLE);
 			}
         }
 	}
@@ -3032,6 +3049,28 @@ public class EstudiosAdapter {
 		c = crearCursor(InfluenzaUO1DBConstants.UO1_SINTOMAS_VISITA_CASO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
+		c = crearCursor(Covid19DBConstants.PARTICIPANTE_COVID_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+		c = crearCursor(Covid19DBConstants.COVID_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+		c = crearCursor(Covid19DBConstants.COVID_PARTICIPANTES_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+		c = crearCursor(Covid19DBConstants.COVID_VISITAS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+		c = crearCursor(Covid19DBConstants.COVID_VISITAS_FALLIDAS_CASOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+		c = crearCursor(Covid19DBConstants.COVID_CANDIDATO_TRANSMISION_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+		c = crearCursor(Covid19DBConstants.COVID_SINTOMAS_VISITA_CASO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+
 		return false;
 	}
 
@@ -7352,4 +7391,375 @@ public class EstudiosAdapter {
 		if (!cursor.isClosed()) cursor.close();
 		return mParticipanteCovid19s;
 	}
+
+	//Crear nuevo CasoCovid19 en la base de datos
+	public void crearCasoCovid19(CasoCovid19 casacaso) throws Exception {
+		ContentValues cv = CasoCovid19Helper.crearCasoCovid19ContentValues(casacaso);
+		mDb.insertOrThrow(Covid19DBConstants.COVID_CASOS_TABLE, null, cv);
+	}
+
+	//Editar CasoCovid19 existente en la base de datos
+	public boolean editarCasoCovid19(CasoCovid19 casacaso) throws Exception{
+		ContentValues cv = CasoCovid19Helper.crearCasoCovid19ContentValues(casacaso);
+		return mDb.update(Covid19DBConstants.COVID_CASOS_TABLE, cv, Covid19DBConstants.codigoCaso + "='"
+				+ casacaso.getCodigoCaso() + "'", null) > 0;
+	}
+	//Limpiar la tabla de CasoCovid19 de la base de datos
+	public boolean borrarCasoCovid19() {
+		return mDb.delete(Covid19DBConstants.COVID_CASOS_TABLE, null, null) > 0;
+	}
+	//Obtener un CasoCovid19 de la base de datos
+	public CasoCovid19 getCasoCovid19(String filtro, String orden) throws SQLException {
+		CasoCovid19 mCasoCovid19 = null;
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_CASOS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mCasoCovid19= CasoCovid19Helper.crearCasoCovid19(cursor);
+			CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" + cursor.getString(cursor.getColumnIndex(Covid19DBConstants.casa)) +"'", null);
+			mCasoCovid19.setCasa(cchf);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mCasoCovid19;
+	}
+	//Obtener una lista de CasoCovid19 de la base de datos
+	public List<CasoCovid19> getCasosCovid19(String filtro, String orden) throws SQLException {
+		List<CasoCovid19> mCasoCovid19s = new ArrayList<CasoCovid19>();
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_CASOS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mCasoCovid19s.clear();
+			do{
+				CasoCovid19 mCasoCovid19 = null;
+				mCasoCovid19 = CasoCovid19Helper.crearCasoCovid19(cursor);
+				CasaCohorteFamilia cchf = this.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" + cursor.getString(cursor.getColumnIndex(MainDBConstants.casa)) +"'", null);
+				mCasoCovid19.setCasa(cchf);
+				mCasoCovid19s.add(mCasoCovid19);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mCasoCovid19s;
+	}
+
+	//Crear nuevo ParticipanteCasoCovid19 en la base de datos
+	public void crearParticipanteCasoCovid19(ParticipanteCasoCovid19 partcaso) throws Exception {
+		ContentValues cv = ParticipanteCasoCovid19Helper.crearParticipanteCasoCovid19ContentValues(partcaso);
+		mDb.insertOrThrow(Covid19DBConstants.COVID_PARTICIPANTES_CASOS_TABLE, null, cv);
+	}
+
+	//Crear nuevo ParticipanteCasoCovid19 en la base de datos desde otro equipo
+	public void insertarParticipanteCasoCovid19(String participanteCovid19CasoSQL) {
+		mDb.execSQL(participanteCovid19CasoSQL);
+	}
+
+	//Editar ParticipanteCasoCovid19 existente en la base de datos
+	public boolean editarParticipanteCasoCovid19(ParticipanteCasoCovid19 partcaso) throws Exception{
+		ContentValues cv = ParticipanteCasoCovid19Helper.crearParticipanteCasoCovid19ContentValues(partcaso);
+		return mDb.update(Covid19DBConstants.COVID_PARTICIPANTES_CASOS_TABLE, cv, Covid19DBConstants.codigoCasoParticipante + "='"
+				+ partcaso.getCodigoCasoParticipante() + "'", null) > 0;
+	}
+	//Limpiar la tabla de ParticipanteCasoCovid19 de la base de datos
+	public boolean borrarParticipanteCasoCovid19() {
+		return mDb.delete(Covid19DBConstants.COVID_PARTICIPANTES_CASOS_TABLE, null, null) > 0;
+	}
+	//Obtener un ParticipanteCasoCovid19 de la base de datos
+	public ParticipanteCasoCovid19 getParticipanteCasoCovid19(String filtro, String orden) throws SQLException {
+		ParticipanteCasoCovid19 mParticipanteCasoCovid19 = null;
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_PARTICIPANTES_CASOS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mParticipanteCasoCovid19=ParticipanteCasoCovid19Helper.crearParticipanteCasoCovid19(cursor);
+			CasoCovid19 caso = this.getCasoCovid19(Covid19DBConstants.codigoCaso + "='" +cursor.getString(cursor.getColumnIndex(Covid19DBConstants.codigoCaso))+"'", null);
+			mParticipanteCasoCovid19.setCodigoCaso(caso);
+			Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(Covid19DBConstants.participante)), null);
+			mParticipanteCasoCovid19.setParticipante(participante);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mParticipanteCasoCovid19;
+	}
+	//Obtener una lista de ParticipanteCasoCovid19 de la base de datos
+	public List<ParticipanteCasoCovid19> getParticipantesCasosCovid19(String filtro, String orden) throws SQLException {
+		List<ParticipanteCasoCovid19> mParticipanteCasoCovid19s = new ArrayList<ParticipanteCasoCovid19>();
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_PARTICIPANTES_CASOS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mParticipanteCasoCovid19s.clear();
+			do{
+				ParticipanteCasoCovid19 mParticipanteCasoCovid19 = null;
+				mParticipanteCasoCovid19 = ParticipanteCasoCovid19Helper.crearParticipanteCasoCovid19(cursor);
+				CasoCovid19 caso = this.getCasoCovid19(Covid19DBConstants.codigoCaso + "='" +cursor.getString(cursor.getColumnIndex(Covid19DBConstants.codigoCaso))+"'", null);
+				mParticipanteCasoCovid19.setCodigoCaso(caso);
+				Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(Covid19DBConstants.participante)), null);
+				mParticipanteCasoCovid19.setParticipante(participante);
+				mParticipanteCasoCovid19s.add(mParticipanteCasoCovid19);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mParticipanteCasoCovid19s;
+	}
+
+	//Crear nuevo VisitaSeguimientoCasoCovid19 en la base de datos
+	public void crearVisitaSeguimientoCasoCovid19(VisitaSeguimientoCasoCovid19 visitacaso) throws Exception {
+		ContentValues cv = VisitaSeguimientoCasoCovid19Helper.crearVisitaSeguimientoCasoCovid19ContentValues(visitacaso);
+		mDb.insertOrThrow(Covid19DBConstants.COVID_VISITAS_CASOS_TABLE, null, cv);
+	}
+
+	//Editar VisitaSeguimientoCasoCovid19 existente en la base de datos
+	public boolean editarVisitaSeguimientoCasoCovid19(VisitaSeguimientoCasoCovid19 visitacaso) throws Exception{
+		ContentValues cv = VisitaSeguimientoCasoCovid19Helper.crearVisitaSeguimientoCasoCovid19ContentValues(visitacaso);
+		return mDb.update(Covid19DBConstants.COVID_VISITAS_CASOS_TABLE , cv, Covid19DBConstants.codigoCasoVisita + "='"
+				+ visitacaso.getCodigoCasoVisita() + "'", null) > 0;
+	}
+	//Limpiar la tabla de VisitaSeguimientoCasoCovid19 de la base de datos
+	public boolean borrarVisitaSeguimientoCasoCovid19() {
+		return mDb.delete(Covid19DBConstants.COVID_VISITAS_CASOS_TABLE, null, null) > 0;
+	}
+	//Seleccionar ultima visita de seguimiento
+	public Integer selectUltimaVisitaSeguimientoCasoCovid19(String codigoParticipanteCaso) {
+		Integer vis = 0;
+		Cursor cursor = mDb.rawQuery("select max(visita) from chf_visitas_casos where codigoCasoParticipante = '"+codigoParticipanteCaso+"'", null);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			vis = cursor.getInt(0);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return vis;
+	}
+	//Obtener un VisitaSeguimientoCasoCovid19 de la base de datos
+	public VisitaSeguimientoCasoCovid19 getVisitaSeguimientoCasoCovid19(String filtro, String orden) throws SQLException {
+		VisitaSeguimientoCasoCovid19 mVisitaSeguimientoCasoCovid19 = null;
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_VISITAS_CASOS_TABLE , filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mVisitaSeguimientoCasoCovid19=VisitaSeguimientoCasoCovid19Helper.crearVisitaSeguimientoCasoCovid19(cursor);
+			ParticipanteCasoCovid19 caso = this.getParticipanteCasoCovid19(Covid19DBConstants.codigoCasoParticipante + "='" +cursor.getString(cursor.getColumnIndex(Covid19DBConstants.codigoCasoParticipante)) +"'", null);
+			mVisitaSeguimientoCasoCovid19.setCodigoParticipanteCaso(caso);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mVisitaSeguimientoCasoCovid19;
+	}
+	//Obtener una lista de VisitaSeguimientoCasoCovid19 de la base de datos
+	public List<VisitaSeguimientoCasoCovid19> getVisitasSeguimientosCasosCovid19(String filtro, String orden) throws SQLException {
+		List<VisitaSeguimientoCasoCovid19> mVisitaSeguimientoCasoCovid19s = new ArrayList<VisitaSeguimientoCasoCovid19>();
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_VISITAS_CASOS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mVisitaSeguimientoCasoCovid19s.clear();
+			do{
+				VisitaSeguimientoCasoCovid19 mVisitaSeguimientoCasoCovid19 = null;
+				mVisitaSeguimientoCasoCovid19 = VisitaSeguimientoCasoCovid19Helper.crearVisitaSeguimientoCasoCovid19(cursor);
+				ParticipanteCasoCovid19 caso = this.getParticipanteCasoCovid19(Covid19DBConstants.codigoCasoParticipante + "='" +cursor.getString(cursor.getColumnIndex(Covid19DBConstants.codigoCasoParticipante)) +"'", null);
+				mVisitaSeguimientoCasoCovid19.setCodigoParticipanteCaso(caso);
+				mVisitaSeguimientoCasoCovid19s.add(mVisitaSeguimientoCasoCovid19);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mVisitaSeguimientoCasoCovid19s;
+	}
+
+	//Limpiar la tabla de Muestras Positivos UO1 de la base de datos
+	public boolean borrarMuestrasCovid19() {
+		return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, MuestrasDBConstants.proposito + " in ('"+Constants.CODIGO_PROPOSITO_COVID_CP+"','"+Constants.CODIGO_PROPOSITO_T_COVID+"')"  , null) > 0;
+	}
+
+	//Crear nuevo VisitaFallidaCasoCovid19 en la base de datos
+	public void crearVisitaFallidaCasoCovid19(VisitaFallidaCasoCovid19 visitaFallida) throws Exception {
+		ContentValues cv = VisitaFallidaCasoCovid19Helper.crearVisitaFallidaCasoCovid19ContentValues(visitaFallida);
+		mDb.insertOrThrow(Covid19DBConstants.COVID_VISITAS_FALLIDAS_CASOS_TABLE, null, cv);
+	}
+
+	//Editar VisitaFallidaCasoCovid19 existente en la base de datos
+	public boolean editarVisitaFallidaCasoCovid19(VisitaFallidaCasoCovid19 visitaFallida) throws Exception{
+		ContentValues cv = VisitaFallidaCasoCovid19Helper.crearVisitaFallidaCasoCovid19ContentValues(visitaFallida);
+		return mDb.update(Covid19DBConstants.COVID_VISITAS_FALLIDAS_CASOS_TABLE , cv, Covid19DBConstants.codigoFallaVisita + "='"
+				+ visitaFallida.getCodigoFallaVisita() + "'", null) > 0;
+	}
+	//Limpiar la tabla de VisitaFallidaCasoCovid19 de la base de datos
+	public boolean borrarVisitaFallidaCasoCovid19() {
+		return mDb.delete(Covid19DBConstants.COVID_VISITAS_FALLIDAS_CASOS_TABLE, null, null) > 0;
+	}
+
+	//Obtener un VisitaFallidaCasoCovid19 de la base de datos
+	public VisitaFallidaCasoCovid19 getVisitaFallidaCasoCovid19(String filtro, String orden) throws SQLException {
+		VisitaFallidaCasoCovid19 mVisitaFallidaCasoCovid19 = null;
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_VISITAS_FALLIDAS_CASOS_TABLE , filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mVisitaFallidaCasoCovid19= VisitaFallidaCasoCovid19Helper.crearVisitaFallidaCasoCovid19(cursor);
+			ParticipanteCasoCovid19 caso = this.getParticipanteCasoCovid19(Covid19DBConstants.codigoCasoParticipante + "='" +cursor.getString(cursor.getColumnIndex(Covid19DBConstants.codigoParticipanteCaso)) +"'", null);
+			mVisitaFallidaCasoCovid19.setCodigoParticipanteCaso(caso);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mVisitaFallidaCasoCovid19;
+	}
+	//Obtener una lista de VisitaFallidaCasoCovid19 de la base de datos
+	public List<VisitaFallidaCasoCovid19> getVisitasFallidasCasoCovid19(String filtro, String orden) throws SQLException {
+		List<VisitaFallidaCasoCovid19> mVisitaFallidaCasoCovid19s = new ArrayList<VisitaFallidaCasoCovid19>();
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_VISITAS_FALLIDAS_CASOS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mVisitaFallidaCasoCovid19s.clear();
+			do{
+				VisitaFallidaCasoCovid19 mVisitaFallidaCasoCovid19 = null;
+				mVisitaFallidaCasoCovid19 = VisitaFallidaCasoCovid19Helper.crearVisitaFallidaCasoCovid19(cursor);
+				ParticipanteCasoCovid19 caso = this.getParticipanteCasoCovid19(Covid19DBConstants.codigoCasoParticipante + "='" +cursor.getString(cursor.getColumnIndex(Covid19DBConstants.codigoParticipanteCaso)) +"'", null);
+				mVisitaFallidaCasoCovid19.setCodigoParticipanteCaso(caso);
+				mVisitaFallidaCasoCovid19s.add(mVisitaFallidaCasoCovid19);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mVisitaFallidaCasoCovid19s;
+	}
+
+	//Crear nuevo CandidatoTransmisionCovid19 en la base de datos
+	public void crearCandidatoTransmisionCovid19(CandidatoTransmisionCovid19 partcaso) throws Exception {
+		ContentValues cv = CandidatoTransmisionCovid19Helper.crearCandidatoTransmisionCovid19ContentValues(partcaso);
+		mDb.insertOrThrow(Covid19DBConstants.COVID_CANDIDATO_TRANSMISION_TABLE, null, cv);
+	}
+
+	//Crear nuevo CandidatoTransmisionCovid19 en la base de datos desde otro equipo
+	public void insertarCandidatoTransmisionCovid19(String participanteCohorteFamiliaCasoSQL) {
+		mDb.execSQL(participanteCohorteFamiliaCasoSQL);
+	}
+
+	//Editar CandidatoTransmisionCovid19 existente en la base de datos
+	public boolean editarCandidatoTransmisionCovid19(CandidatoTransmisionCovid19 partcaso) throws Exception{
+		ContentValues cv = CandidatoTransmisionCovid19Helper.crearCandidatoTransmisionCovid19ContentValues(partcaso);
+		return mDb.update(Covid19DBConstants.COVID_CANDIDATO_TRANSMISION_TABLE, cv, Covid19DBConstants.codigo + "='"
+				+ partcaso.getCodigo() + "'", null) > 0;
+	}
+	//Limpiar la tabla de CandidatoTransmisionCovid19 de la base de datos
+	public boolean borrarCandidatoTransmisionCovid19() {
+		return mDb.delete(Covid19DBConstants.COVID_CANDIDATO_TRANSMISION_TABLE, null, null) > 0;
+	}
+	//Obtener un CandidatoTransmisionCovid19 de la base de datos
+	public CandidatoTransmisionCovid19 getCandidatoTransmisionCovid19(String filtro, String orden) throws SQLException {
+		CandidatoTransmisionCovid19 mCandidatoTransmisionCovid19 = null;
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_CANDIDATO_TRANSMISION_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mCandidatoTransmisionCovid19=CandidatoTransmisionCovid19Helper.crearCandidatoTransmisionCovid19(cursor);
+			Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(Covid19DBConstants.participante)), null);
+			mCandidatoTransmisionCovid19.setParticipante(participante);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mCandidatoTransmisionCovid19;
+	}
+	//Obtener una lista de CandidatoTransmisionCovid19 de la base de datos
+	public List<CandidatoTransmisionCovid19> getCandidatosTransmisionCovid19(String filtro, String orden) throws SQLException {
+		List<CandidatoTransmisionCovid19> mCandidatoTransmisionCovid19s = new ArrayList<CandidatoTransmisionCovid19>();
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_CANDIDATO_TRANSMISION_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mCandidatoTransmisionCovid19s.clear();
+			do{
+				CandidatoTransmisionCovid19 mCandidatoTransmisionCovid19 = null;
+				mCandidatoTransmisionCovid19 = CandidatoTransmisionCovid19Helper.crearCandidatoTransmisionCovid19(cursor);
+				Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(Covid19DBConstants.participante)), null);
+				mCandidatoTransmisionCovid19.setParticipante(participante);
+				mCandidatoTransmisionCovid19s.add(mCandidatoTransmisionCovid19);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mCandidatoTransmisionCovid19s;
+	}
+
+	//Crear nuevo SintomasVisitaCasoCovid19 en la base de datos
+	public void crearSintomasVisitaCasoCovid19(SintomasVisitaCasoCovid19 sintomasVisitaCasoCovid19) throws Exception {
+		ContentValues cv = SintomasVisitaCasoCovid19Helper.crearSintomasVisitaCasoCovid19ContentValues(sintomasVisitaCasoCovid19);
+		mDb.insertOrThrow(Covid19DBConstants.COVID_SINTOMAS_VISITA_CASO_TABLE, null, cv);
+	}
+
+	//Editar SintomasVisitaCasoCovid19 existente en la base de datos
+	public boolean editarSintomasVisitaCasoCovid19(SintomasVisitaCasoCovid19 sintomasVisitaCasoCovid19) throws Exception{
+		ContentValues cv = SintomasVisitaCasoCovid19Helper.crearSintomasVisitaCasoCovid19ContentValues(sintomasVisitaCasoCovid19);
+		return mDb.update(Covid19DBConstants.COVID_SINTOMAS_VISITA_CASO_TABLE , cv, Covid19DBConstants.codigoCasoSintoma + "='"
+				+ sintomasVisitaCasoCovid19.getCodigoCasoSintoma() + "'", null) > 0;
+	}
+	//Limpiar la tabla de SintomasVisitaCasoCovid19 de la base de datos
+	public boolean borrarSintomasVisitaCasoCovid19() {
+		return mDb.delete(Covid19DBConstants.COVID_SINTOMAS_VISITA_CASO_TABLE, null, null) > 0;
+	}
+
+	//Obtener un SintomasVisitaCasoCovid19 de la base de datos
+	public SintomasVisitaCasoCovid19 getSintomasVisitaCasoCovid19(String filtro, String orden) throws SQLException {
+		SintomasVisitaCasoCovid19 mSintomasVisitaCasoCovid19 = null;
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_SINTOMAS_VISITA_CASO_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mSintomasVisitaCasoCovid19=SintomasVisitaCasoCovid19Helper.crearSintomasVisitaCasoCovid19(cursor);
+			VisitaSeguimientoCasoCovid19 visitaSeguimientoCasoCovid19 = this.getVisitaSeguimientoCasoCovid19(Covid19DBConstants.codigoCasoVisita + "='" +cursor.getString(cursor.getColumnIndex(Covid19DBConstants.codigoCasoVisita))+"'", null);
+			mSintomasVisitaCasoCovid19.setCodigoCasoVisita(visitaSeguimientoCasoCovid19);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mSintomasVisitaCasoCovid19;
+	}
+
+	//Obtener un SintomasVisitaCasoCovid19 de la base de datos
+	public List<SintomasVisitaCasoCovid19> getSintomasVisitasCasosCovid19(String filtro, String orden) throws SQLException {
+		List<SintomasVisitaCasoCovid19> mSintomasVisitasCasosCovid19 = new ArrayList<SintomasVisitaCasoCovid19>();
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_SINTOMAS_VISITA_CASO_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mSintomasVisitasCasosCovid19.clear();
+			do{
+				SintomasVisitaCasoCovid19 sintomasVisitaCasoCovid19 = SintomasVisitaCasoCovid19Helper.crearSintomasVisitaCasoCovid19(cursor);
+				VisitaSeguimientoCasoCovid19 visitaSeguimientoCasoCovid19 = this.getVisitaSeguimientoCasoCovid19(Covid19DBConstants.codigoCasoVisita + "='" +cursor.getString(cursor.getColumnIndex(Covid19DBConstants.codigoCasoVisita))+"'", null);
+				sintomasVisitaCasoCovid19.setCodigoCasoVisita(visitaSeguimientoCasoCovid19);
+				mSintomasVisitasCasosCovid19.add(sintomasVisitaCasoCovid19);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mSintomasVisitasCasosCovid19;
+	}
+
+	/***DatosAislamientoVisitaCasoCovid19**/
+	//Crear nuevo DatosAislamientoVisitaCasoCovid19 en la base de datos
+	public void crearDatosAislamientoVisitaCasoCovid19(DatosAislamientoVisitaCasoCovid19 DatosAislamientoVisitaCasoCovid19) throws Exception {
+		ContentValues cv = DatosAislamientoVisitaCasoCovid19Helper.crearDatosAislamientoVisitaCasoCovid19ContentValues(DatosAislamientoVisitaCasoCovid19);
+		mDb.insertOrThrow(Covid19DBConstants.COVID_DATOS_AISLAMIENTO_VC_TABLE, null, cv);
+	}
+
+	//Editar DatosAislamientoVisitaCasoCovid19 existente en la base de datos
+	public boolean editarDatosAislamientoVisitaCasoCovid19(DatosAislamientoVisitaCasoCovid19 DatosAislamientoVisitaCasoCovid19) throws Exception{
+		ContentValues cv = DatosAislamientoVisitaCasoCovid19Helper.crearDatosAislamientoVisitaCasoCovid19ContentValues(DatosAislamientoVisitaCasoCovid19);
+		return mDb.update(Covid19DBConstants.COVID_DATOS_AISLAMIENTO_VC_TABLE , cv, Covid19DBConstants.codigoAislamiento + "='"
+				+ DatosAislamientoVisitaCasoCovid19.getCodigoAislamiento() + "'", null) > 0;
+	}
+	//Limpiar la tabla de DatosAislamientoVisitaCasoCovid19 de la base de datos
+	public boolean borrarDatosAislamientoVisitaCasoCovid19() {
+		return mDb.delete(Covid19DBConstants.COVID_DATOS_AISLAMIENTO_VC_TABLE, null, null) > 0;
+	}
+
+	//Obtener un DatosAislamientoVisitaCasoCovid19 de la base de datos
+	public DatosAislamientoVisitaCasoCovid19 getDatosAislamientoVisitaCasoCovid19(String filtro, String orden) throws SQLException {
+		DatosAislamientoVisitaCasoCovid19 mDatosAislamientoVisitaCasoCovid19 = null;
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_DATOS_AISLAMIENTO_VC_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mDatosAislamientoVisitaCasoCovid19=DatosAislamientoVisitaCasoCovid19Helper.crearDatosAislamientoVisitaCasoCovid19(cursor);
+			VisitaSeguimientoCasoCovid19 visitaSeguimientoCasoCovid19 = this.getVisitaSeguimientoCasoCovid19(Covid19DBConstants.codigoCasoVisita + "='" +cursor.getString(cursor.getColumnIndex(Covid19DBConstants.codigoCasoVisita))+"'", null);
+			mDatosAislamientoVisitaCasoCovid19.setCodigoCasoVisita(visitaSeguimientoCasoCovid19);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mDatosAislamientoVisitaCasoCovid19;
+	}
+
+	//Obtener un DatosAislamientoVisitaCasoCovid19 de la base de datos
+	public List<DatosAislamientoVisitaCasoCovid19> getDatosAislamientoVisitasCasosCovid19(String filtro, String orden) throws SQLException {
+		List<DatosAislamientoVisitaCasoCovid19> mSintomasVisitasCasosCovid19 = new ArrayList<DatosAislamientoVisitaCasoCovid19>();
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_DATOS_AISLAMIENTO_VC_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mSintomasVisitasCasosCovid19.clear();
+			do{
+				DatosAislamientoVisitaCasoCovid19 DatosAislamientoVisitaCasoCovid19 = DatosAislamientoVisitaCasoCovid19Helper.crearDatosAislamientoVisitaCasoCovid19(cursor);
+				VisitaSeguimientoCasoCovid19 visitaSeguimientoCasoCovid19 = this.getVisitaSeguimientoCasoCovid19(Covid19DBConstants.codigoCasoVisita + "='" +cursor.getString(cursor.getColumnIndex(Covid19DBConstants.codigoCasoVisita))+"'", null);
+				DatosAislamientoVisitaCasoCovid19.setCodigoCasoVisita(visitaSeguimientoCasoCovid19);
+				mSintomasVisitasCasosCovid19.add(DatosAislamientoVisitaCasoCovid19);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mSintomasVisitasCasosCovid19;
+	}
+
 }

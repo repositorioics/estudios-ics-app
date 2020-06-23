@@ -1,0 +1,125 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/label"
+        style="?android:textAppearanceMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_family"
+        android:drawableStart="@drawable/ic_family"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1.0"/>
+    
+    <View android:id="@+id/divider"
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="?android:attr/dividerHorizontal" />
+    
+    <LinearLayout
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="?android:attr/buttonBarStyle">
+
+        <Button
+                android:background="@drawable/selectable_item_background"
+                android:id="@+id/update_cases_cv19"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/follow_up_update"
+                android:drawableTop="@drawable/ic_menu_refresh"
+                style="?android:attr/buttonBarStyle" />
+
+        <Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/add_visit_button_cv19"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_visit"
+            android:drawableTop="@drawable/ic_menu_mark"
+            style="?android:attr/buttonBarStyle" />
+        
+        <Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/fail_visit_button_cv19"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/visit_fail"
+            android:drawableTop="@drawable/ic_menu_end_conversation"
+            style="?android:attr/buttonBarStyle" />
+
+        <Button
+                android:background="@drawable/selectable_item_background"
+                android:id="@+id/final_visit_button_cv19"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/visit_final"
+                android:drawableTop="@drawable/ic_final"
+                style="?android:attr/buttonBarStyle" />
+        
+        <Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/new_sint_button_cv19"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_sint"
+            android:drawableTop="@drawable/ic_menu_invite"
+            style="?android:attr/buttonBarStyle" />
+
+		<Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/new_rojo_button_cv19"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_samp_rojo"
+            android:drawableTop="@drawable/ic_rojo"
+            style="?android:attr/buttonBarStyle" />
+		
+		<Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/new_pbmc_button_cv19"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_samp_pbmc"
+            android:drawableTop="@drawable/ic_pbmc"
+            style="?android:attr/buttonBarStyle" />
+		
+		<Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/new_resp_button_cv19"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_samp_resp"
+            android:drawableTop="@drawable/ic_resp"
+            style="?android:attr/buttonBarStyle" />
+		
+		<Button
+            android:background="@drawable/selectable_item_background"
+            android:id="@+id/view_samp_button_cv19"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/view_samp"
+            android:drawableTop="@drawable/ic_menu_search"
+            style="?android:attr/buttonBarStyle" />
+
+    </LinearLayout>
+</LinearLayout>

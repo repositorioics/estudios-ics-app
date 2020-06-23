@@ -130,7 +130,7 @@
     <string name="otraRazonNoAceptaDengue">Otra razón Cohorte pediátrica de Dengue</string>
     <string name="otraRazonNoAceptaDengueHint">Indicar porque otra razón no acepta participar en el estudio Cohorte pediátrica de Dengue</string>
 
-    <string name="aceptaCohorteInfluenza">Acepta estudio Cohorte Influeza</string>
+    <string name="aceptaCohorteInfluenza">Acepta estudio Cohorte Influenza</string>
     <string name="aceptaCohorteInfluenzaHint">¿Acepta participar en estudio Cohorte pediátrica de Influenza?</string>
     <string name="razonNoAceptaInfluenza">Porque no acepta participar Influenza?</string>
     <string name="razonNoAceptaInfluenzaHint">Seleccionar porque no acepta participar en el estudio Cohorte pediátrica de Influenza</string>

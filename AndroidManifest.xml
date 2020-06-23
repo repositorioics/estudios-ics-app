@@ -362,8 +362,49 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".cohortefamilia.activities.ListaPersonasCamasCuartosCasoActivity"
                   android:screenOrientation="portrait" />
-        <activity android:name=".covid19.activities.enterdata.NewConsCovid19Activity"
+        <activity android:name=".covid19.activities.enterdata.NuevoConsCovid19Activity"
                   android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevaVisitaSeguimientoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevaVisitaFallidaCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevaMuestraTuboPbmcCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevaMuestraTuboRojoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevoTamizajeTransmisionCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevaMuestraRespCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevoSintomasVisitaCasoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevoDAislamientoVisitaCasoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.MenuCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.MenuVisitaCasoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.list.ListaCasasCasosCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.list.ListaParticipantesCasoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.list.ListaParticipantesPosCasoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.list.ListaVisitasParticipanteCasoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.list.ListaVisitasFallidasCasoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.list.ListaMuestrasParticipanteCasoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.list.ListaCanditatosTransmisionCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.list.ListaSintomasVisitaCasoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.server.DownloadCasosCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.server.UploadAllCasosCovid19Activity"
+                  android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

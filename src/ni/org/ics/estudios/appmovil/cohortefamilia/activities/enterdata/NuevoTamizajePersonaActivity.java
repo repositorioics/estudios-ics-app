@@ -42,6 +42,8 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.covid19.CasoCovid19;
+import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
@@ -1305,6 +1307,30 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                             }
                         }
 
+                        //Validar si la casa a la que pertenece esta actualmente en seguimiento COVID19.. si es asi, agregar el participante al seguimiento, pero con consentimiento pendiente
+                        CasoCovid19 casoCovid19 = estudiosAdapter.getCasoCovid19(Covid19DBConstants.casa + "='" + pchf.getCasaCHF().getCodigoCHF() + "'", null);
+                        if (casoCovid19 != null) {
+                            ParticipanteCasoCovid19 pCaso = new ParticipanteCasoCovid19();
+                            pCaso.setCodigoCasoParticipante(infoMovil.getId());
+                            pCaso.setParticipante(participante);
+                            pCaso.setCodigoCaso(casoCovid19);
+                            pCaso.setEnfermo("N");
+                            pCaso.setRecordDate(new Date());
+                            pCaso.setRecordUser(username);
+                            pCaso.setDeviceid(infoMovil.getDeviceId());
+                            pCaso.setEstado('0');
+                            pCaso.setPasive('0');
+                            pCaso.setFis(null);
+                            pCaso.setFif(null);
+                            pCaso.setPositivoPor(null);
+                            pCaso.setConsentimiento("2");
+                            try {
+                                estudiosAdapter.crearParticipanteCasoCovid19(pCaso);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
                         if (catParticipadoCohortePediatrica.getCatKey().matches(Constants.NOKEYSND)) {
                             procesos.setCodigo(participante.getCodigo());
                             procesos.setRetoma(Constants.NO);
@@ -1390,6 +1416,9 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         procesos.setMostrarPadreAlfabeto(Constants.YES);
                         procesos.setMostrarMadreAlfabeta(Constants.YES);
                         procesos.setMostrarNumParto(Constants.YES);
+                        //Covid19
+                        procesos.setConsCovid19(Constants.NO);
+                        procesos.setSubEstudios("0");
                         MovilInfo movilInfo = new MovilInfo();
                         movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
                         movilInfo.setDeviceid(infoMovil.getDeviceId());

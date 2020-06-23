@@ -45,7 +45,11 @@ public class MainActivityAdapter extends ArrayAdapter<String> {
 				img=getContext().getResources().getDrawable( R.drawable.ic_fluuo1);
 				textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 				break;
-            default:
+			case 3:
+				img=getContext().getResources().getDrawable( R.drawable.ic_covid19);
+				textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+				break;
+			default:
                 img=getContext().getResources().getDrawable( R.drawable.ic_launcher);
                 textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
                 break;

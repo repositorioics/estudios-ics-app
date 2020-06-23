@@ -38,7 +38,7 @@ import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 import java.util.*;
 
 
-public class NewConsCovid19Activity extends FragmentActivity implements
+public class NuevoConsCovid19Activity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -86,8 +86,8 @@ public class NewConsCovid19Activity extends FragmentActivity implements
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
-		infoMovil = new DeviceInfo(NewConsCovid19Activity.this);
-        gps = new GPSTracker(NewConsCovid19Activity.this);
+		infoMovil = new DeviceInfo(NuevoConsCovid19Activity.this);
+        gps = new GPSTracker(NuevoConsCovid19Activity.this);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
         mWizardModel = new ConsCovid19Form(this,mPass);
@@ -1303,7 +1303,7 @@ public class NewConsCovid19Activity extends FragmentActivity implements
                             String estudios =procesos.getEstudio();
                             procesos.setEstudio(estudios.replaceAll("Influenza","UO1"));
                         }*/
-                        if (procesos.getSubEstudios()!=null){
+                        if (procesos.getSubEstudios()!=null && !procesos.getSubEstudios().equalsIgnoreCase("0")){
                             procesos.setSubEstudios(procesos.getSubEstudios()+","+Constants.SUB_ESTUDIO_COVID19);
                         }else{
                             procesos.setSubEstudios(Constants.SUB_ESTUDIO_COVID19);

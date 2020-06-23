@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="followup_cases_list">Lista de casos activos</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="followup_cases_list">Lista de seguimientos activos</string>
     <string name="aceptaCohorteFLuParteDCovid">Parte D Flu</string>
     <string name="aceptaCohorteFLuParteDCovidHint">Permiso paterno para re-enrolamiento y obtencion de muestras de sangre adicionales</string>
     <string name="aceptaCohorteFLuParteECovid">Parte E FLu</string>
@@ -14,5 +14,89 @@
     <string name="otraRazonNoAceptaParteDCovidHint">Indicar porque otra razón no acepta Parte D</string>
 
     <string name="asentimientoCovid19Hint">Para niños de 6 años o mas</string>
+
+    <string name="fecIniPrimerSintoma">Fecha de Inicio del Primer Síntoma</string>
+    <string name="primerSintoma">¿Cuál fue el primer síntoma?</string>
+    <string name="saturacion">Saturación de O2</string>
+    <string name="frecRespiratoria">Frecuencia Respiratoria</string>
+    <string name="wrongSaturation">Saturación de O2 inválida. Debe ser entre <xliff:g id="sat1">%1$s</xliff:g> y <xliff:g id="sat2">%2$s</xliff:g></string>
+    <string name="wrongFrecResp">Frecuencia respiratorio inválida. Debe ser entre <xliff:g id="sat1">%1$s</xliff:g> y <xliff:g id="sat2">%2$s</xliff:g></string>
+
+    <string name="rojo_covid19_mas14">Más de 14 años. Rojo: 6 ml es el volumen requerido. Si no hay PBMC 12 ml es el volumen requerido</string>
+    <string name="rojo_covid19_14a2">Entre 2 y 14 años. Rojo: 2 ml es el volumen requerido. Si no hay PBMC 8 ml es el volumen requerido</string>
+    <string name="rojo_covid19_2a6m">6 meses y menos de 2 años: Rojo: 2 ml es el volumen requerido. Si no hay PBMC 4 ml es el volumen requerido</string>
+    <string name="rojo_covid19_6m">Menor de 6 meses: Rojo: No se toma. Si no hay PBMC 2 ml es el volumen requerido</string>
+    <string name="rojo_covid19_mas14_perm">Más de 14 años. Rojo: 12 ml volumen máximo permitido</string>
+    <string name="rojo_covid19_14a2_perm">Entre 2 y 14 años. Rojo: 8 ml volumen máximo permitido</string>
+    <string name="rojo_covid19_2a6m_perm">6 meses y menos de 2 años: Rojo: 4 ml volumen máximo permitido</string>
+    <string name="rojo_covid19_6m_perm">Menor de 6 meses: Rojo: 2 ml volumen máximo permitido</string>
+
+    <string name="pbmc_covid19_mas14">Más de 14 años. PBMC: 6 ml es el volumen requerido</string>
+    <string name="pbmc_covid19_14a2">Entre 2 y 14 años. PBMC: 6 ml es el volumen requerido</string>
+    <string name="pbmc_covid19_2a6m">6 meses y menos de 2 años: PBMC: 2 ml es el volumen requerido</string>
+    <string name="pbmc_covid19_6m">Menor de 6 meses: PBMC: 2 ml es el volumen requerido</string>
+    <string name="pbmc_covid19_mas14_perm">Más de 14 años. PBMC: 6 ml volumen máximo permitido</string>
+    <string name="pbmc_covid19_14a2_perm">Entre 2 y 14 años. PBMC: 6 ml volumen máximo permitido</string>
+    <string name="pbmc_covid19_2a6m_perm">6 meses y menos de 2 años: PBMC: 2 ml volumen máximo permitido</string>
+    <string name="pbmc_covid19_6m_perm">Menor de 6 meses: PBMC: 2 ml volumen máximo permitido</string>
+
+    <!--Tamizaje Transmision COvid -->
+    <string name="candidates">Candidatos Transmisión</string>
+    <string name="candidates_list">Lista de candidatos activos</string>
+    <string name="confirm_screening_tcovid">Desea realizar tamizaje del Caso Indice?</string>
+
+    <string name="criteriosInclusionIndice">Criterios de Inclusión 1er caso de enfermedad por coronavirus en el hogar</string>
+    <string name="criteriosInclusionMiembro">Criterios de Inclusión Miembro del hogar</string>
+    <string name="aceptaParticiparIndiceHint">Caso Indice</string>
+    <string name="aceptaParticiparMiembroHint">Miembro del hogar</string>
+    <string name="aceptaParteAIndiceHint">Acepta estudio Transmision de Coronavirus (1er caso de enfermedad por coronavirus en el hogar)</string>
+    <string name="aceptaParteAMiembroHint">Acepta estudio Transmision de Coronavirus (Miembro del hogar)</string>
+    <string name="razonNoAceptaParteA">Porque no acepta participar?</string>
+    <string name="razonNoAceptaParteAHint">Seleccionar porque no acepta participar en el estudio Transmisión de Coronavirus?</string>
+    <string name="otraRazonNoAceptaParteACovid">Otra razón no acepta Parte A</string>
+    <string name="otraRazonNoAceptaParteACovidHint">Indicar porque otra razón no acepta Parte A</string>
+    <string name="aceptaParteBIndiceHint">¿Acepta Parte B Almacenamiento y uso de Muestras en Estudios Futuros? (1er caso de enfermedad por coronavirus en el hogar)</string>
+    <string name="aceptaParteBMiembroHint">¿Acepta Parte B Almacenamiento y uso de Muestras en Estudios Futuros? (Miembro del hogar)</string>
+
+    <string name="picorGarganta">Picor en Garganta</string>
+    <string name="congestionNasal">Congestión Nasal</string>
+    <string name="rash">Rash</string>
+    <string name="urticaria">Urticaria</string>
+    <string name="conjuntivitis">Conjuntivitis</string>
+    <string name="expectoracion">Expectoración</string>
+    <string name="vomito">Vómitos</string>
+    <string name="fatiga">Fatiga </string>
+    <string name="perdidaOlfato">Perdida del Olfato</string>
+    <string name="perdidaGusto">Perdida del Gusto</string>
+    <string name="desmayos">Desmayos</string>
+    <string name="sensacionPechoApretado">Sensación de Pecho apretado</string>
+    <string name="dolorPecho">Dolor en el Pecho</string>
+    <string name="sensacionFaltaAire">Sensación de falta de aire </string>
+    <string name="tratamientoCovid19">Toma Tratamiento actualmente para esta enfermedad</string>
+    <string name="fechaInicioTx">Fecha de Inicio</string>
+    <string name="cualMedicamento">	¿Cuál fue el medicamento?Seleccionar más de uno</string>
+    <string name="otroMedicamento">Otro medicamento</string>
+    <string name="factorRiesgo">Presenta usted algún factor de riesgo (Solo en primera visita)</string>
+    <string name="otroFactorRiesgo">Otro factor</string>
+    <string name="otraPersonaEnferma">Hay otra persona enferma en casa</string>
+    <string name="cuantasPersonas">¿Cuántas personas enfermas hay? </string>
+    <string name="trasladoHospital">Se traslado a Hospital</string>
+    <string name="cualHospital">Cual Hospital</string>
+    <string name="hospitalizado">¿Esta hospitalizado actualmente?</string>
+    <string name="fechaAlta">Fecha de Alta </string>
+    <string name="fechaIngreso">Fecha de ingreso caso</string>
+
+    <string name="fechaDatoAisla">Fecha Dato Aislamiento</string>
+    <string name="aislado">1.¿Está aislado, es decir, mantenerse alejado de otros miembros de su hogar que no están enfermos?</string>
+    <string name="estaAislado">2. ¿Estás haciendo lo siguiente?</string>
+    <string name="dormirSoloComparte">A.¿Dormir solo en una habitación o solo con otras personas que también están enfermas </string>
+    <string name="banioPropioComparte">B.¿Usa su propio baño o lo comparte con otras personas con síntomas o enfermas como usted?</string>
+    <string name="alejadoFamilia">C.¿Usted Permanece todo el día en una habitación alejada de los miembros saludables de su familia, excepto por irse para necesidades (como el baño) o contactar a un cuidador?</string>
+    <string name="tieneContacto">D.¿Tiene contacto con una persona que le da cuidos en esta enfermedad?</string>
+    <string name="conQuienTieneContacto">¿Con quién tiene contacto (enumere los códigos)?</string>
+    <string name="lugares">3.Usted ha visitado en los últimos 15 días los siguientes lugares</string>
+    <string name="otrosLugares">Otros lugares</string>
+    <string name="aislamiento">Aislamiento</string>
+    <string name="aislamientoExist">Datos de Aislamiento ya fueron ingresados</string>
 
 </resources>

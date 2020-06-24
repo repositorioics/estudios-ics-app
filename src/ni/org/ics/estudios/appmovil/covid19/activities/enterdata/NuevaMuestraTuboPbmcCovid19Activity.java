@@ -175,7 +175,7 @@ public class NuevaMuestraTuboPbmcCovid19Activity extends FragmentActivity implem
         NumberPage vol = (NumberPage)mWizardModel.findByKey(labels.getVolumen());
         vol.setRangeValidation(true, 0, volumenMaximoPermitido.intValue());
         BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoMx());
-        pagetmp.setmCodePosicion(1);
+        pagetmp.setmCodePosicion(1);//tomar la segunda parte del código ejemplo 10-10-300020-06-2020  11571.01.SPI ó 08-06-202018-06-2020 9308.01.IPI
         //if (accion.equalsIgnoreCase(Constants.CODIGO_PROPOSITO_COVID_CP)) //Covid19
             pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.[C|I|F|S]P[I|F]$");
         onPageTreeChanged();

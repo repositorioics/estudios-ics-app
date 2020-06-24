@@ -175,6 +175,8 @@ public class NuevaMuestraRespCovid19Activity extends FragmentActivity implements
         vol.setmVisible(false);
         SingleFixedChoicePage tipoMx = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getTipoMuestra());
         if (tipoMx!=null) tipoMx.setmVisible(false);
+        BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoMx());
+        pagetmp.setmCodePosicion(1);//tomar la segunda parte del código
         onPageTreeChanged();
         updateBottomBar();
     }

@@ -107,6 +107,7 @@ public class BarcodeFragment extends Fragment {
 
             }else {
                 String code = intent.getStringExtra("SCAN_RESULT");
+                if (code.contains("  ")) code = code.replaceAll(" {2}", " "); //Covid19
                 String[] codeparts = code.split(" ");
                 if (codeparts.length > mPage.getmCodePosicion() && codeparts[mPage.getmCodePosicion()] != null){
                 	code = codeparts[mPage.getmCodePosicion()];

@@ -256,8 +256,7 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 				labelMuestra = getString(R.string.rojo_covid19_mas14);
 				labelVolumenPermitido = getString(R.string.rojo_covid19_mas14_perm);
 				volumenTotalPermitido = 13D;//permitir 1 ml de desviación
-			}//14 a 2 años
-			if (edadMeses<=168 && edadMeses >= 24) {
+			} else if (edadMeses<=168 && edadMeses >= 24) { //14 a 2 años
 				labelMuestra = getString(R.string.rojo_covid19_14a2);
 				labelVolumenPermitido = getString(R.string.rojo_covid19_14a2_perm);
 				volumenTotalPermitido = 9D;//permitir 1 ml de desviación
@@ -282,8 +281,7 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 				labelMuestra = getString(R.string.pbmc_covid19_mas14);
 				labelVolumenPermitido = getString(R.string.pbmc_covid19_mas14_perm);
 				volumenTotalPermitido = 7D;//permitir 1 ml de desviación
-			}//14 a 2 años
-			if (edadMeses<=168 && edadMeses >= 24) {
+			}else if (edadMeses<=168 && edadMeses >= 24) {//14 a 2 años
 				labelMuestra = getString(R.string.pbmc_covid19_14a2);
 				labelVolumenPermitido = getString(R.string.pbmc_covid19_14a2_perm);
 				volumenTotalPermitido = 7D;//permitir 1 ml de desviación

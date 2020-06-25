@@ -1249,7 +1249,10 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                                 casoCovid19.setCodigoCaso(infoMovil.getId());
                                 casoCovid19.setCasa(casaCohorteFamilia);
                                 casoCovid19.setInactivo("0");
-                                casoCovid19.setFechaIngreso(formatter.parse(formatter.format(new Date())));
+                                if (candidato.getFechaIngreso()!=null){
+                                    casoCovid19.setFechaIngreso(candidato.getFechaIngreso());
+                                }else
+                                    casoCovid19.setFechaIngreso(formatter.parse(formatter.format(new Date())));
                                 //Metadata
                                 casoCovid19.setRecordDate(new Date());
                                 casoCovid19.setRecordUser(username);

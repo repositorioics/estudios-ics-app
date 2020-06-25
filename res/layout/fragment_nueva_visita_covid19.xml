@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"/>
 
-			<TextView style="@style/WizardFormLabel"
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textFecIniPrimerSintoma"
 					  android:text="@string/fecIniPrimerSintoma" />
 
 			<LinearLayout
@@ -106,7 +106,7 @@
 						android:src="@drawable/ic_menu_month" />
 			</LinearLayout>
 
-			<TextView style="@style/WizardFormLabel"
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textPrimerSintoma"
 					  android:text="@string/primerSintoma" />
 
 			<EditText android:id="@+id/inputPrimerSintoma"

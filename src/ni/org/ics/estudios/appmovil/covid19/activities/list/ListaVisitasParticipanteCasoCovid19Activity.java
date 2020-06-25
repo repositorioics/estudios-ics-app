@@ -16,7 +16,6 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaVisitasFallidasCasosActivity;
 import ni.org.ics.estudios.appmovil.covid19.activities.MenuVisitaCasoCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevaVisitaSeguimientoCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.adapters.VisitaSeguimientoCasoCovid19Adapter;
@@ -36,11 +35,12 @@ public class ListaVisitasParticipanteCasoCovid19Activity extends AbstractAsyncLi
 	private Button mAddVisitButton;
 	private Button mFailVisitsButton;
 	private static ParticipanteCasoCovid19 partCaso = new ParticipanteCasoCovid19();
-    private VisitaSeguimientoCasoCovid19 visitaCasoUO1 = new VisitaSeguimientoCasoCovid19();
+    private VisitaSeguimientoCasoCovid19 visitaCasoCovid19 = new VisitaSeguimientoCasoCovid19();
 	private ArrayAdapter<VisitaSeguimientoCasoCovid19> mVisitaFallidaCasoAdapter;
 	private List<VisitaSeguimientoCasoCovid19> mVisitasCasos = new ArrayList<VisitaSeguimientoCasoCovid19>();
 	private List<MessageResource> mRazonNoVisita = new ArrayList<MessageResource>();
 	private EstudiosAdapter estudiosAdapter;
+	private boolean primerSintomaIngresado = false;
 
 
 	@Override
@@ -57,6 +57,9 @@ public class ListaVisitasParticipanteCasoCovid19Activity extends AbstractAsyncLi
 		new FetchDataVisitasCasosTask().execute(partCaso.getCodigoCasoParticipante());
 
 		mButton = (Button) findViewById(R.id.new_sint_button_cv19);
+		mButton.setVisibility(View.GONE);
+
+		mButton = (Button) findViewById(R.id.new_bhc_button_cv19);
 		mButton.setVisibility(View.GONE);
 
 		mButton = (Button) findViewById(R.id.new_rojo_button_cv19);
@@ -85,6 +88,7 @@ public class ListaVisitasParticipanteCasoCovid19Activity extends AbstractAsyncLi
 			public void onClick(View v) {
 				Bundle arguments = new Bundle();
 				arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
+				arguments.putBoolean(Constants.PRIMER_SINTOMA, primerSintomaIngresado);
 				Intent i = new Intent(getApplicationContext(),
 						NuevaVisitaSeguimientoCovid19Activity.class);
 				i.putExtras(arguments);
@@ -144,22 +148,17 @@ public class ListaVisitasParticipanteCasoCovid19Activity extends AbstractAsyncLi
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
-        visitaCasoUO1 = (VisitaSeguimientoCasoCovid19)this.getListAdapter().getItem(position);
-        //if (visitaCasoUO1.getVisitaExitosa().equalsIgnoreCase(Constants.YESKEYSND)) {
-			// Opcion de menu seleccionada
-			Bundle arguments = new Bundle();
-			Intent i;
-			arguments.putSerializable(Constants.VISITA, visitaCasoUO1);
-			i = new Intent(getApplicationContext(),
-					MenuVisitaCasoCovid19Activity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			i.putExtras(arguments);
-			startActivity(i);
-			finish();
-		/*}else{
-			Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.visit_not_suscesfull),Toast.LENGTH_LONG);
-			toast.show();
-		}*/
+		visitaCasoCovid19 = (VisitaSeguimientoCasoCovid19) this.getListAdapter().getItem(position);
+		// Opcion de menu seleccionada
+		Bundle arguments = new Bundle();
+		Intent i;
+		arguments.putSerializable(Constants.VISITA, visitaCasoCovid19);
+		i = new Intent(getApplicationContext(),
+				MenuVisitaCasoCovid19Activity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		i.putExtras(arguments);
+		startActivity(i);
+		finish();
 	}
 	
 	@Override
@@ -221,6 +220,12 @@ public class ListaVisitasParticipanteCasoCovid19Activity extends AbstractAsyncLi
 				mVisitasCasos = estudiosAdapter.getVisitasSeguimientosCasosCovid19(Covid19DBConstants.codigoCasoParticipante +" = '" + codigoCaso +"'", MainDBConstants.fechaVisita);
 				mRazonNoVisita = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_VISITA_NO_P' or " + CatalogosDBConstants.catRoot + "='CHF_CAT_VISITA_NO_C'" , null);
 				estudiosAdapter.close();
+				for(VisitaSeguimientoCasoCovid19 v : mVisitasCasos){
+					if (v.getPrimerSintoma()!=null && !v.getPrimerSintoma().isEmpty()) {
+						primerSintomaIngresado = true;
+						break;
+					}
+				}
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
 				return "error";

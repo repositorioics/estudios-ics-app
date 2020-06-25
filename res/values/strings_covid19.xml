@@ -39,6 +39,8 @@
     <string name="pbmc_covid19_14a2_perm">Entre 2 y 14 años. PBMC: 6 ml volumen máximo permitido</string>
     <string name="pbmc_covid19_2a6m_perm">6 meses y menos de 2 años: PBMC: 2 ml volumen máximo permitido</string>
     <string name="pbmc_covid19_6m_perm">Menor de 6 meses: PBMC: 2 ml volumen máximo permitido</string>
+    <string name="bhc_covid19">BHC: 1 ml es el volumen requerido</string>
+    <string name="bhc_covid19_perm">BHC: 1 ml es el volumen máximo permitido</string>
 
     <!--Tamizaje Transmision COvid -->
     <string name="candidates">Candidatos Transmisión</string>

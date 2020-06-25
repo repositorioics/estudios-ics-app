@@ -90,6 +90,9 @@ public class ListaSintomasVisitaCasoCovid19Activity extends AbstractAsyncListAct
 		mButton = (Button) findViewById(R.id.update_cases_cv19);
 		mButton.setVisibility(View.GONE);
 
+		mButton = (Button) findViewById(R.id.new_bhc_button_cv19);
+		mButton.setVisibility(View.GONE);
+
 		mButton = (Button) findViewById(R.id.new_rojo_button_cv19);
 		mButton.setVisibility(View.GONE);
 

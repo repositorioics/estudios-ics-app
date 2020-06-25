@@ -380,6 +380,8 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".covid19.activities.enterdata.NuevoDAislamientoVisitaCasoCovid19Activity"
                   android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevaMuestraTuboBhcCovid19Activity"
+                  android:screenOrientation="portrait" />
         <activity android:name=".covid19.activities.MenuCovid19Activity"
                   android:screenOrientation="portrait" />
         <activity android:name=".covid19.activities.MenuVisitaCasoCovid19Activity"

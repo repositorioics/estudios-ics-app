@@ -133,6 +133,7 @@ public class Constants {
     public static final String SUB_ESTUDIO_ARBOVIRUS = "1";
     public static final String SUB_ESTUDIO_COVID19 = "2";
     public static final String T_COVID19 = "Tcovid";
+    public static final String PRIMER_SINTOMA = "primer_sintoma";
 }
 
     

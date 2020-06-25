@@ -46,6 +46,8 @@ public class RetirarSensoresFragment extends Fragment {
 	protected ImageButton mButtonChangeTime;
 	private Button mSaveView;
 
+	private int horaDefectoTimer = 7;
+	private int minutoDefectoTimer = 0;
 
 	private String horaRetiroSensor;
     private String observacionRetiro;
@@ -148,8 +150,10 @@ public class RetirarSensoresFragment extends Fragment {
                 public void onTimeSet(TimePicker picker, int hourOfDay, int minute) {
                     horaRetiroSensor = (picker != null) ? String.valueOf(hourOfDay < 10 ? "0" + hourOfDay : hourOfDay) + ":" + String.valueOf(minute < 10 ? "0" + minute : minute) : null;
                     inputHoraProbableVisita.setText(horaRetiroSensor);
+					horaDefectoTimer = hourOfDay;
+					minutoDefectoTimer = minute;
                 }
-            }, 7, 0,true);
+            }, horaDefectoTimer, minutoDefectoTimer,true);
 			tmD.show();	
 		default:
 			break;

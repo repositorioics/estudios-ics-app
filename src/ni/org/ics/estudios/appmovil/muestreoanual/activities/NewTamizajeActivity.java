@@ -2093,8 +2093,6 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         procesos.setEstPart(1);
                         procesos.setRetoma(Constants.NO);
                         procesos.setAdn(Constants.NO);
-                        procesos.setConmx(Constants.NO);
-                        procesos.setConmxbhc(Constants.NO);
                         procesos.setPbmc(Constants.NO);
                         procesos.setPaxgene(Constants.YES);
                         procesos.setConPto(Constants.NO);
@@ -2160,18 +2158,24 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         procesos.setVolRetomaPbmc(null);
                         if (aceptaDengue) {
                             estudios = "Dengue";
+                            procesos.setConmx(Constants.NO);
+                            procesos.setConmxbhc(Constants.NO);
                         }
                         if (aceptaInfluenza && !esPretermino && !padeceEnfInmuno) {
                             if (estudios.isEmpty()) {
                                 estudios = "Influenza";
                             } else
                                 estudios += "  " + "Influenza";
+                            procesos.setConmx(Constants.NO);
+                            procesos.setConmxbhc(Constants.NO);
                         }
                         if (aceptaInfluenzaUO1 && !esPretermino && !padeceEnfInmuno) {
                             if (estudios.isEmpty()) {
                                 estudios = "UO1";
                             } else
                                 estudios += "  " + "UO1";
+                            procesos.setConmx(Constants.YES);
+                            procesos.setConmxbhc(Constants.YES);
                         }
 
                         procesos.setEstudio(estudios);

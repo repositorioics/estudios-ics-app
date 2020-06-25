@@ -61,12 +61,17 @@ public class NuevaVisitaSeguimientoCovid19Fragment extends Fragment {
 	private TextView mTempView;
 	private TextView mSaturacionView;
 	private TextView mFrecRespView;
+	private TextView textFecIniPrimerSintoma;
 	private EditText inputFecIniPrimerSintoma;
+	private TextView textPrimerSintoma;
 	private ImageButton fecIniPrimerSintoma_button;
 	private EditText inputPrimerSintoma;
 
 	private Button mSaveView;
 
+	private int horaDefectoTimer = 7;
+	private int minutoDefectoTimer = 0;
+	private boolean primerSintomaIngresado = false;
 
 	private String fechaVisita;
 	private String visita;
@@ -100,6 +105,7 @@ public class NuevaVisitaSeguimientoCovid19Fragment extends Fragment {
         String mPass = ((MyIcsApplication) this.getActivity().getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getActivity(),mPass,false,false);
         mParticipanteCaso = (ParticipanteCasoCovid19) getActivity().getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        primerSintomaIngresado = this.getActivity().getIntent().getBooleanExtra(Constants.PRIMER_SINTOMA, false);
         calLimiteFecVisita.setTime(mParticipanteCaso.getCodigoCaso().getFechaIngreso());
         calLimiteFecVisita.add(Calendar.DATE,30);//12 dias después de la fecha de ingreso
         infoMovil = new DeviceInfo(getActivity());
@@ -170,6 +176,7 @@ public class NuevaVisitaSeguimientoCovid19Fragment extends Fragment {
 			}
 	    });
 
+		textFecIniPrimerSintoma = (TextView) rootView.findViewById(R.id.textFecIniPrimerSintoma);
 		inputFecIniPrimerSintoma = (EditText) rootView.findViewById(R.id.inputFecIniPrimerSintoma);
 		fecIniPrimerSintoma_button = (ImageButton) rootView.findViewById(R.id.fecIniPrimerSintoma_button);
 		fecIniPrimerSintoma_button.setOnClickListener(new View.OnClickListener()  {
@@ -178,6 +185,7 @@ public class NuevaVisitaSeguimientoCovid19Fragment extends Fragment {
 				createDialog(DATE_FIRST_SINT);
 			}
 		});
+		textPrimerSintoma = (TextView) rootView.findViewById(R.id.textPrimerSintoma);
 		inputPrimerSintoma = ((EditText) rootView.findViewById(R.id.inputPrimerSintoma));
 		inputPrimerSintoma.addTextChangedListener(new TextWatcher() {
 			@Override
@@ -201,6 +209,14 @@ public class NuevaVisitaSeguimientoCovid19Fragment extends Fragment {
 			}
 
 		});
+		if (primerSintomaIngresado) {
+			textFecIniPrimerSintoma.setVisibility(View.GONE);
+			textPrimerSintoma.setVisibility(View.GONE);
+			inputFecIniPrimerSintoma.setVisibility(View.GONE);
+			fecIniPrimerSintoma_button.setVisibility(View.GONE);
+			inputPrimerSintoma.setVisibility(View.GONE);
+		}
+
 		spinExpCS = (Spinner) rootView.findViewById(R.id.spinExpCS);
 		spinExpCS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
@@ -373,8 +389,10 @@ public class NuevaVisitaSeguimientoCovid19Fragment extends Fragment {
 					public void onTimeSet(TimePicker picker, int hourOfDay, int minute) {
 						horaProbableVisita = (picker != null) ? String.valueOf(hourOfDay < 10 ? "0" + hourOfDay : hourOfDay) + ":" + String.valueOf(minute < 10 ? "0" + minute : minute) : null;
 						inputHoraProbableVisita.setText(horaProbableVisita);
+						horaDefectoTimer = hourOfDay;
+						minutoDefectoTimer = minute;
 					}
-				}, 7, 0, true);
+				}, horaDefectoTimer, minutoDefectoTimer, true);
 				tmD.show();
 			default:
 				break;

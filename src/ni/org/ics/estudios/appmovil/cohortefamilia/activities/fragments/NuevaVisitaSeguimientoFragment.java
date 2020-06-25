@@ -70,7 +70,9 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
 	private Spinner spinExpCS;
 	private TextView mTempView;
 	private Button mSaveView;
-	
+
+	private int horaDefectoTimer = 7;
+	private int minutoDefectoTimer = 0;
 	
 	private String fechaVisita;
 	private String visita;
@@ -242,9 +244,11 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
 		        	else{*/
 		        		horaProbableVisita= (picker != null) ? String.valueOf(hourOfDay<10? "0"+hourOfDay:hourOfDay)+":"+String.valueOf(minute<10?"0"+minute:minute) : null;
 		        		inputHoraProbableVisita.setText(horaProbableVisita);
+					horaDefectoTimer = hourOfDay;
+					minutoDefectoTimer = minute;
 		        	//}
 		        }
-		    }, 7, 0,true);
+		    }, horaDefectoTimer, minutoDefectoTimer,true);
 			tmD.show();	
 		default:
 			break;

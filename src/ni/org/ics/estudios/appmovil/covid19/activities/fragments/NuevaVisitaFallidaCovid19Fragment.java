@@ -253,7 +253,11 @@ public class NuevaVisitaFallidaCovid19Fragment extends Fragment {
 			try {
 				estudiosAdapter.open();
 				mCatalogoRazonNoVisita = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_VISITA_NO_P'", CatalogosDBConstants.order);
-				mVisitas = estudiosAdapter.getMessageResources(CatalogosDBConstants.messageKey + "='COVID_CAT_VIS_SEG_I' or "+CatalogosDBConstants.messageKey + " = 'COVID_CAT_VIS_SEG_F'" , CatalogosDBConstants.order);
+				if (!mParticipanteCaso.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19)) {
+					mVisitas = estudiosAdapter.getMessageResources(CatalogosDBConstants.messageKey + "='COVID_CAT_VIS_SEG_I' or " + CatalogosDBConstants.messageKey + " = 'COVID_CAT_VIS_SEG_F'", CatalogosDBConstants.order);
+				}else {
+					mVisitas = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='COVID_CAT_VIS_SEG' and "+ CatalogosDBConstants.catKey + " in ('1','2','3','4','5','6','F')", CatalogosDBConstants.order);
+				}
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

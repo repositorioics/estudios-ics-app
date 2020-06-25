@@ -23,6 +23,7 @@ public class CandidatoTransmisionCovid19 extends BaseMetaData {
 	private String positivoPor;
 	private String consentimiento;
     private String estActuales;
+	private Date fechaIngreso;
     
 	public String getCodigo() {
 		return codigo;
@@ -88,7 +89,15 @@ public class CandidatoTransmisionCovid19 extends BaseMetaData {
         this.estActuales = estActuales;
     }
 
-    @Override
+	public Date getFechaIngreso() {
+		return fechaIngreso;
+	}
+
+	public void setFechaIngreso(Date fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+
+	@Override
 	public String toString(){
 		return participante.getCodigo().toString();
 	}

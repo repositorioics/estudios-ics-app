@@ -1104,18 +1104,20 @@ public class NuevoSintomaVisitaCasoCovid19Fragment extends Fragment {
 									   int arg2, long arg3) {
 				MessageResource mr = (MessageResource) spinner.getSelectedItem();
 				hospitalizado = mr.getCatKey();
-				if(hospitalizado.equals(Constants.YESKEYSND)){
-					spinHospitalizado.setBackgroundColor(Color.RED);
+				spinHospitalizado.setBackgroundColor(Color.WHITE);
+				if(hospitalizado.equals(Constants.NOKEYSND)){
 					textFechaAlta.setVisibility(View.VISIBLE);
 					inputFechaAlta.setVisibility(View.VISIBLE);
 					fechaAlta_button.setVisibility(View.VISIBLE);
 				}
 				else{
-					spinHospitalizado.setBackgroundColor(Color.WHITE);
+					if(hospitalizado.equals(Constants.YESKEYSND)) spinHospitalizado.setBackgroundColor(Color.RED);
+
 					textFechaAlta.setVisibility(View.GONE);
 					inputFechaAlta.setVisibility(View.GONE);
 					fechaAlta_button.setVisibility(View.GONE);
 					fechaAlta = null;
+
 				}
 			}
 			@Override
@@ -1592,7 +1594,7 @@ public class NuevoSintomaVisitaCasoCovid19Fragment extends Fragment {
 			Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.hospitalizado)),Toast.LENGTH_LONG).show();
 			return false;
 		}
-		else if ((hospitalizado!= null && hospitalizado.equals(Constants.YESKEYSND)) && (fechaAlta == null || fechaAlta.equals(""))){
+		else if ((hospitalizado!= null && hospitalizado.equals(Constants.NOKEYSND)) && (fechaAlta == null || fechaAlta.equals(""))){
 			Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.fechaAlta)),Toast.LENGTH_LONG).show();
 			return false;
 		}
@@ -1604,7 +1606,7 @@ public class NuevoSintomaVisitaCasoCovid19Fragment extends Fragment {
 			Toast.makeText(getActivity(), getActivity().getString(R.string.fecAftRegistro,getActivity().getString(R.string.fechaInicioTx),getActivity().getString(R.string.fecha_sintoma)),Toast.LENGTH_LONG).show();
 			return false;
 		}
-		else if ((hospitalizado!=null && hospitalizado.equals(Constants.YESKEYSND)) && (formatter.parse(fechaAlta).after(formatter.parse(fechaSintoma)))){
+		else if ((hospitalizado!=null && hospitalizado.equals(Constants.NOKEYSND)) && (formatter.parse(fechaAlta).after(formatter.parse(fechaSintoma)))){
 			Toast.makeText(getActivity(), getActivity().getString(R.string.fecAftRegistro,getActivity().getString(R.string.fechaAlta),getActivity().getString(R.string.fecha_sintoma)),Toast.LENGTH_LONG).show();
 			return false;
 		}

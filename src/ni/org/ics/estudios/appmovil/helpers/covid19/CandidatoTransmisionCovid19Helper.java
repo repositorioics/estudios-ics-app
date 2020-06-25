@@ -19,6 +19,7 @@ public class CandidatoTransmisionCovid19Helper {
         cv.put(Covid19DBConstants.casaCHF, candidato.getCasaCHF());
         if (candidato.getFis() != null) cv.put(Covid19DBConstants.fis, candidato.getFis().getTime());
         if (candidato.getFif() != null) cv.put(Covid19DBConstants.fif, candidato.getFif().getTime());
+        if (candidato.getFechaIngreso() != null) cv.put(Covid19DBConstants.fechaIngreso, candidato.getFechaIngreso().getTime());
 
         if (candidato.getRecordDate() != null) cv.put(MainDBConstants.recordDate, candidato.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, candidato.getRecordUser());
@@ -39,6 +40,7 @@ public class CandidatoTransmisionCovid19Helper {
         mCandidato.setCasaCHF(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.casaCHF)));
         if(cursor.getLong(cursor.getColumnIndex(Covid19DBConstants.fis))>0) mCandidato.setFis(new Date(cursor.getLong(cursor.getColumnIndex(Covid19DBConstants.fis))));
         if(cursor.getLong(cursor.getColumnIndex(Covid19DBConstants.fif))>0) mCandidato.setFif(new Date(cursor.getLong(cursor.getColumnIndex(Covid19DBConstants.fif))));
+        if(cursor.getLong(cursor.getColumnIndex(Covid19DBConstants.fechaIngreso))>0) mCandidato.setFechaIngreso(new Date(cursor.getLong(cursor.getColumnIndex(Covid19DBConstants.fechaIngreso))));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mCandidato.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mCandidato.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

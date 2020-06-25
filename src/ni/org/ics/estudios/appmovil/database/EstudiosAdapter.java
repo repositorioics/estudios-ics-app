@@ -348,6 +348,9 @@ public class EstudiosAdapter {
 				db.execSQL(Covid19DBConstants.CREATE_COVID_SINTOMAS_VISITA_CASO_TABLE);
 				db.execSQL(Covid19DBConstants.CREATE_COVID_DATOS_AISLAMIENTO_VC_TABLE);
 			}
+			if (oldVersion==31){
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CANDIDATO_TRANSMISION_TABLE + " ADD COLUMN " + Covid19DBConstants.fechaIngreso + " date");
+			}
         }
 	}
 

@@ -154,6 +154,7 @@ public class Covid19DBConstants {
             + positivoPor + " text, "
             + consentimiento + " text, "
             + estActuales + " text, "
+            + fechaIngreso + " date, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

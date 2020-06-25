@@ -81,6 +81,16 @@
             android:drawableTop="@drawable/ic_menu_invite"
             style="?android:attr/buttonBarStyle" />
 
+        <Button
+                android:background="@drawable/selectable_item_background"
+                android:id="@+id/new_bhc_button_cv19"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/new_samp_bhc"
+                android:drawableTop="@drawable/ic_bhc"
+                style="?android:attr/buttonBarStyle" />
+
 		<Button
             android:background="@drawable/selectable_item_background"
             android:id="@+id/new_rojo_button_cv19"

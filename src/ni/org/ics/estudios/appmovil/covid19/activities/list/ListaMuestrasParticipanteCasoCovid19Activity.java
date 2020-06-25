@@ -24,6 +24,7 @@ import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MuestraAdapter;
 import ni.org.ics.estudios.appmovil.covid19.activities.MenuVisitaCasoCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevaMuestraRespCovid19Activity;
+import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevaMuestraTuboBhcCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevaMuestraTuboPbmcCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevaMuestraTuboRojoCovid19Activity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
@@ -43,6 +44,7 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 	
 	private TextView textView;
 	private Drawable img = null;
+	private Button mAddBhcButton;
 	private Button mAddRojoButton;
 	private Button mAddPbmcButton;
 	private Button mAddRespButton;
@@ -102,15 +104,26 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 		mButton = (Button) findViewById(R.id.update_cases_cv19);
 		mButton.setVisibility(View.GONE);
 
+		mAddBhcButton = (Button) findViewById(R.id.new_bhc_button_cv19);
 		mAddRojoButton = (Button) findViewById(R.id.new_rojo_button_cv19);
 		mAddPbmcButton = (Button) findViewById(R.id.new_pbmc_button_cv19);
 		mAddRespButton = (Button) findViewById(R.id.new_resp_button_cv19);
 		if (!participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19)){
 			mAddRespButton.setVisibility(View.GONE);
+			mAddBhcButton.setVisibility(View.GONE);
 		}
 
 		mReviewButton = (Button) findViewById(R.id.view_samp_button_cv19);
 		mReviewButton.setVisibility(View.GONE);
+
+		mAddBhcButton.setOnClickListener(new View.OnClickListener()  {
+			@Override
+			public void onClick(View v) {
+				//volumenTotalPermitido = 1D;
+				createDialogMuestras(Constants.CODIGO_TUBO_BHC);
+				//new OpenDataEnterActivityTask().execute(Constants.CODIGO_TUBO_BHC);
+			}
+		});
 
 		mAddRojoButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
@@ -246,10 +259,12 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 		String labelMuestra = "";
 		String labelVolumenPermitido = "";
 		int edadMeses = participanteCasoCovid19.getParticipante().getEdadMeses();
-		/*Volumen de muestra para Serologia UO1 (Aguda y Convaleciente)
-		 * < de 6 meses	| >= 6 meses y < de 2 años	| >= 2 años
-		 *      N/A 	|           2 ml	        |   2 ml
-		 */
+		/*Volumen de muestra para ROJO Covid19 (INFLUENZA(CEIRS)/ U01 / Tranmisión Covid)
+		 * < de 6 meses  |	6 m - < 2 años	|  >=2 a - <= 14 años	|	>  14 años
+		 *		2 ml	 |		4 ml		|		8 ml			|		12 ml
+		 *  Con PBMC
+		 * No se toma	 |		2 ml		|		2 ml			|  6 ml
+		 * */
 		if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_ROJO) && !participanteCasoCovid19.getParticipante().getEdad().equalsIgnoreCase("ND")) {
 			//+14 años
 			if (edadMeses>168) {
@@ -271,10 +286,10 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 			}
 
 		}
-		/*Volumen de muestra para PBMC UO1 (Aguda y Convaleciente)
-		 * < de 6 meses	| >= 6 meses y < de 2 años	| >= 2 años
-		 *      2 ml 	|           2 ml	        |   6 ml
-		 */
+		/*Volumen de muestra para PBMC Covid19 (INFLUENZA(CEIRS)/ U01 / Tranmisión Covid)
+		 * < de 6 meses  |	6 m - < 2 años	|  >=2 a - <= 14 años |	>  14 años
+		 *		2 ml	 |   	2 ml	 	|  		 6 ml		  |		6 ml
+		 * */
 		if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_PBMC) && !participanteCasoCovid19.getParticipante().getEdad().equalsIgnoreCase("ND")) {
 			//+14 años
 			if (edadMeses>168) {
@@ -295,6 +310,12 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 				volumenTotalPermitido = 0D;
 			}
 
+		}
+
+		if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_BHC)){
+			labelMuestra = getString(R.string.bhc_covid19);
+			labelVolumenPermitido = getString(R.string.bhc_covid19_perm);
+			volumenTotalPermitido = 2D;//permitir 1 ml de desviación
 		}
 
 		Double volumenExistente = getVolumenExistente(opcion);
@@ -397,12 +418,14 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 				arguments.putSerializable(Constants.VOLUMEN , volumenTotalPermitido);
                 //if (visitaFinalCaso != null) arguments.putSerializable(Constants.VISITA, visitaFinalCaso);
 				Intent i;
-				/*if(opcion.equals(Constants.CODIGO_TUBO_BHC)){
+				if(opcion.equals(Constants.CODIGO_TUBO_BHC)){
 					i = new Intent(getApplicationContext(),
-							NuevaMuestraBHCPaxgeneActivity.class);
-					i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_TX);
+							NuevaMuestraTuboBhcCovid19Activity.class);
+					if (participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19))
+						i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_T_COVID);
+					else i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_COVID_CP);
 				}
-				else*/ if(opcion.equals(Constants.CODIGO_TUBO_ROJO)){
+				else if(opcion.equals(Constants.CODIGO_TUBO_ROJO)){
 					i = new Intent(getApplicationContext(),
 							NuevaMuestraTuboRojoCovid19Activity.class);
 					if (participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19))

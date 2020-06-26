@@ -200,6 +200,7 @@ public class NewElActivity extends AbstractAsyncActivity {
 			mLactanciaMaterna.setMesDioLiqDisLeche(em.getMesDioLiqDisLeche());
 			mLactanciaMaterna.setEdadLiqDistLeche(em.getEdadLiqDistLeche());
 			mLactanciaMaterna.setMesDioLiqDisPecho(em.getMesDioLiqDisPecho());
+			mLactanciaMaterna.setEdAlimSolidos(em.getEdAlimSolidos());//26062020
 			mLactanciaMaterna.setMesDioAlimSol(em.getMesDioAlimSol());
             mLactanciaMaterna.setOtrorecurso1(em.getOtrorecurso1());
             mLactanciaMaterna.setOtrorecurso2(em.getOtrorecurso2());

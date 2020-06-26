@@ -448,7 +448,7 @@ public class UploadAllTask extends UploadTask {
     }
 
     private void saveContactos(String estado){
-        int c = mCartasConsent.size();
+        int c = mContactos.size();
         for (ContactoParticipante contacto : mContactos) {
             contacto.setEstado(estado.charAt(0));
             estudioAdapter.editarContactoParticipante(contacto);

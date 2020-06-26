@@ -5,7 +5,9 @@ import android.util.Log;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.tasks.UploadAllTask;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.tasks.UploadTask;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.covid19.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
@@ -35,7 +37,13 @@ public class UploadAllCasosCovid19Task extends UploadTask {
     private String error = null;
     protected UploadListener mStateListener;
 
-    private List<ParticipanteCovid19> mParticipantes = new ArrayList<ParticipanteCovid19>();
+    private List<Tamizaje> mTamizajes = new ArrayList<Tamizaje>();
+    private List<CartaConsentimiento> mCartasConsent = new ArrayList<CartaConsentimiento>();
+    private List<Participante> mParticipantes = new ArrayList<Participante>();
+    private List<ContactoParticipante> mContactos = new ArrayList<ContactoParticipante>();
+    private List<VisitaTerrenoParticipante> mVisitasTerrenoP = new ArrayList<VisitaTerrenoParticipante>();
+
+    private List<ParticipanteCovid19> mParticipantesCovid = new ArrayList<ParticipanteCovid19>();
     private List<CasoCovid19> mCasos = new ArrayList<CasoCovid19>();
     private List<ParticipanteCasoCovid19> mParticipantesCasos = new ArrayList<ParticipanteCasoCovid19>();
     private List<VisitaSeguimientoCasoCovid19> mVisitas = new ArrayList<VisitaSeguimientoCasoCovid19>();
@@ -46,18 +54,25 @@ public class UploadAllCasosCovid19Task extends UploadTask {
     private List<DatosAislamientoVisitaCasoCovid19> mAislamientos = new ArrayList<DatosAislamientoVisitaCasoCovid19>();
     private List<ParticipanteProcesos> mParticipantesProc = new ArrayList<ParticipanteProcesos>();
 
-    public static final String PARTICIPANTES_COVID19 = "1";
-    public static final String CASOS_COVID19 = "2";
-    public static final String PARTICIPANTES_CASOS_COVID19 = "3";
-    public static final String VISITAS_CASOS_COVID19 = "4";
-    public static final String MUESTRAS = "5";
-    public static final String SINT_VISITAS_CASOS_COVID19 = "6";
-    public static final String VISITAS_FALL_CASOS_COVID19 = "7";
-    public static final String CANDIDATOS_COVID19 = "8";
-    public static final String DATOS_AISLAMIENTO_COVID19 = "9";
-    public static final String PARTICIPANTE_PRC = "10";
+    public static final String TAMIZAJE = "1";
+    public static final String PARTICIPANTE = "2";
+    public static final String CARTAS_CONSENT = "3";
+    public static final String PARTICIPANTE_PRC = "4";
+    public static final String CONTACTO_PARTICIPANTE = "5";
+    public static final String VISITA_TERRENO_PARTICIPANTE = "6";
 
-    private static final String TOTAL_TASK_CASOS = "10";
+    public static final String PARTICIPANTES_COVID19 = "7";
+    public static final String CASOS_COVID19 = "8";
+    public static final String PARTICIPANTES_CASOS_COVID19 = "9";
+    public static final String VISITAS_CASOS_COVID19 = "10";
+    public static final String MUESTRAS = "11";
+    public static final String SINT_VISITAS_CASOS_COVID19 = "12";
+    public static final String VISITAS_FALL_CASOS_COVID19 = "13";
+    public static final String CANDIDATOS_COVID19 = "14";
+    public static final String DATOS_AISLAMIENTO_COVID19 = "15";
+
+
+    private static final String TOTAL_TASK_CASOS = "15";
 
     @Override
     protected String doInBackground(String... values) {
@@ -69,7 +84,7 @@ public class UploadAllCasosCovid19Task extends UploadTask {
             estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
             estudioAdapter.open();
             String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
-            mParticipantes = estudioAdapter.getParticipantesCovid19(filtro, null);
+            mParticipantesCovid = estudioAdapter.getParticipantesCovid19(filtro, null);
             mCasos = estudioAdapter.getCasosCovid19(filtro, null);
             mParticipantesCasos = estudioAdapter.getParticipantesCasosCovid19(filtro, null);
             mVisitas = estudioAdapter.getVisitasSeguimientosCasosCovid19(filtro, null);
@@ -79,7 +94,56 @@ public class UploadAllCasosCovid19Task extends UploadTask {
             mSintomas = estudioAdapter.getSintomasVisitasCasosCovid19(filtro, null);
             mAislamientos = estudioAdapter.getDatosAislamientoVisitasCasosCovid19(filtro, null);
             mParticipantesProc = estudioAdapter.getParticipantesProc(filtro, null);
+
+            mTamizajes = estudioAdapter.getTamizajes(filtro, null);
+            mCartasConsent = estudioAdapter.getCartasConsentimientos(filtro, null);
+            mParticipantes = estudioAdapter.getParticipantes(filtro, null);
+            mContactos = estudioAdapter.getContactosParticipantes(filtro, null);
+            mVisitasTerrenoP = estudioAdapter.getVisitasTerrenoParticipantes(filtro, null);
+
             publishProgress("Datos completos!", "2", "2");
+
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, TAMIZAJE);
+            error = cargarTamizajes(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TAMIZAJE);
+                return error;
+            }
+
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE);
+            error = cargarParticipantes(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE);
+                return error;
+            }
+
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CARTAS_CONSENT);
+            error = cargarCartasConsentimientos(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CARTAS_CONSENT);
+                return error;
+            }
+
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE_PRC);
+            error = cargarParticipantesProc(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE_PRC);
+                return error;
+            }
+
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CONTACTO_PARTICIPANTE);
+            error = cargarContactos(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CONTACTO_PARTICIPANTE);
+                return error;
+            }
+
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITA_TERRENO_PARTICIPANTE);
+            error = cargarVisitaTerrenoParticipante(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITA_TERRENO_PARTICIPANTE);
+                return error;
+            }
 
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTES_COVID19);
             error = cargarParticipanteCovid19(url, username, password);
@@ -87,58 +151,60 @@ public class UploadAllCasosCovid19Task extends UploadTask {
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTES_COVID19);
                 return error;
             }
+
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, CASOS_COVID19);
             error = cargarCasoCovid19(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CASOS_COVID19);
                 return error;
             }
+
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTES_CASOS_COVID19);
             error = cargarParticipantesCasosCovid19(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTES_CASOS_COVID19);
                 return error;
             }
+
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_CASOS_COVID19);
             error = cargarVisitasCasosCovid19(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_CASOS_COVID19);
                 return error;
             }
+
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS);
             error = cargarMuestras(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
                 return error;
             }
+
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, SINT_VISITAS_CASOS_COVID19);
             error = cargarSintomas(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINT_VISITAS_CASOS_COVID19);
                 return error;
             }
+
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FALL_CASOS_COVID19);
             error = cargarVisitasFallidasCasosCovid19(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_FALL_CASOS_COVID19);
                 return error;
             }
+
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, CANDIDATOS_COVID19);
             error = cargarCandidatosTransmisionCovid19(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CANDIDATOS_COVID19);
                 return error;
             }
+
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, DATOS_AISLAMIENTO_COVID19);
             error = cargarDatosAislamientoVisitaCasoCovid19(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, DATOS_AISLAMIENTO_COVID19);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE_PRC);
-            error = cargarParticipantesProc(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE_PRC);
                 return error;
             }
         } catch (Exception e1) {
@@ -153,13 +219,68 @@ public class UploadAllCasosCovid19Task extends UploadTask {
 
     private void actualizarBaseDatos(String estado, String opcion) throws Exception{
         int c;
-        if(opcion.equalsIgnoreCase(PARTICIPANTES_COVID19)){
+        if(opcion.equalsIgnoreCase(TAMIZAJE)){
+            c = mTamizajes.size();
+            if(c>0){
+                for (Tamizaje tamizaje : mTamizajes) {
+                    tamizaje.setEstado(estado.charAt(0));
+                    estudioAdapter.editarTamizaje(tamizaje);
+                    publishProgress("Actualizando tamizajes en base de datos local", Integer.valueOf(mTamizajes.indexOf(tamizaje)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(CARTAS_CONSENT)){
+            c = mCartasConsent.size();
+            if(c>0){
+                for (CartaConsentimiento consentimiento : mCartasConsent) {
+                    consentimiento.setEstado(estado.charAt(0));
+                    estudioAdapter.editarCartaConsentimiento(consentimiento);
+                    publishProgress("Actualizando cartas de consentimiento en base de datos local", Integer.valueOf(mCartasConsent.indexOf(consentimiento)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(PARTICIPANTE)){
             c = mParticipantes.size();
             if(c>0){
-                for (ParticipanteCovid19 participanteCovid19 : mParticipantes) {
+                for (Participante participante : mParticipantes) {
+                    participante.setEstado(estado.charAt(0));
+                    estudioAdapter.editarParticipante(participante);
+                    publishProgress("Actualizando participantes en base de datos local", Integer.valueOf(mParticipantes.indexOf(participante)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(CONTACTO_PARTICIPANTE)){
+            c = mContactos.size();
+            if(c>0){
+                for (ContactoParticipante contacto : mContactos) {
+                    contacto.setEstado(estado.charAt(0));
+                    estudioAdapter.editarContactoParticipante(contacto);
+                    publishProgress("Actualizando contactos en base de datos local", Integer.valueOf(mContactos.indexOf(contacto)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(VISITA_TERRENO_PARTICIPANTE)){
+            c = mVisitasTerrenoP.size();
+            if(c>0) {
+                for (VisitaTerrenoParticipante visita : mVisitasTerrenoP) {
+                    visita.setEstado(estado.charAt(0));
+                    estudioAdapter.editarVisitaTerrenoParticipante(visita);
+                    publishProgress("Actualizando visitas a participante en base de datos local", Integer.valueOf(mVisitasTerrenoP.indexOf(visita)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(PARTICIPANTES_COVID19)){
+            c = mParticipantesCovid.size();
+            if(c>0){
+                for (ParticipanteCovid19 participanteCovid19 : mParticipantesCovid) {
                     participanteCovid19.setEstado(estado.charAt(0));
                     estudioAdapter.editarParticipanteCovid19(participanteCovid19);
-                    publishProgress("Actualizando participantes COVID19 en base de datos local", Integer.valueOf(mParticipantes.indexOf(participanteCovid19)).toString(), Integer
+                    publishProgress("Actualizando participantes COVID19 en base de datos local", Integer.valueOf(mParticipantesCovid.indexOf(participanteCovid19)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
@@ -270,11 +391,11 @@ public class UploadAllCasosCovid19Task extends UploadTask {
     // url, username, password
     protected String cargarParticipanteCovid19(String url, String username, String password) throws Exception {
         try {
-            if(mParticipantes.size()>0){
+            if(mParticipantesCovid.size()>0){
                 // La URL de la solicitud POST.
                 publishProgress("Enviando participantes COVID19!", PARTICIPANTES_COVID19, TOTAL_TASK_CASOS);
                 final String urlRequest = url + "/movil/participantesCovid19";
-                ParticipanteCovid19[] envio = mParticipantes.toArray(new ParticipanteCovid19[mParticipantes.size()]);
+                ParticipanteCovid19[] envio = mParticipantesCovid.toArray(new ParticipanteCovid19[mParticipantesCovid.size()]);
                 HttpHeaders requestHeaders = new HttpHeaders();
                 HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
                 requestHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -605,5 +726,179 @@ public class UploadAllCasosCovid19Task extends UploadTask {
         }
     }
 
+    /***************************************************/
+    /********************* Tamizajes participantes ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarTamizajes(String url, String username,
+                                     String password) throws Exception {
+        try {
+            if(mTamizajes.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando tamizaje de personas cohorte familia!", TAMIZAJE, TOTAL_TASK_CASOS);
+                final String urlRequest = url + "/movil/tamizajes";
+                Tamizaje[] envio = mTamizajes.toArray(new Tamizaje[mTamizajes.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Tamizaje[]> requestEntity =
+                        new HttpEntity<Tamizaje[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
 
+    /***************************************************/
+    /********************* Participantes ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarParticipantes(String url, String username,
+                                         String password) throws Exception {
+        try {
+            if(mParticipantes.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando participantes!", PARTICIPANTE, TOTAL_TASK_CASOS);
+                final String urlRequest = url + "/movil/participantes";
+                Participante[] envio = mParticipantes.toArray(new Participante[mParticipantes.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Participante[]> requestEntity =
+                        new HttpEntity<Participante[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* Cartas de consentimiento ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarCartasConsentimientos(String url, String username,
+                                                 String password) throws Exception {
+        try {
+            if(mCartasConsent.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando cartas de consentimiento!", CARTAS_CONSENT, TOTAL_TASK_CASOS);
+                final String urlRequest = url + "/movil/cartasConsen";
+                CartaConsentimiento[] envio = mCartasConsent.toArray(new CartaConsentimiento[mCartasConsent.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<CartaConsentimiento[]> requestEntity =
+                        new HttpEntity<CartaConsentimiento[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+
+    /***************************************************/
+    /*************** ContactosParticipantes ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarContactos(String url, String username,
+                                     String password) throws Exception {
+        try {
+            if(mContactos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando contactos de participantes!", CONTACTO_PARTICIPANTE, TOTAL_TASK_CASOS);
+                final String urlRequest = url + "/movil/contactosparticipantes";
+                ContactoParticipante[] envio = mContactos.toArray(new ContactoParticipante[mContactos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ContactoParticipante[]> requestEntity =
+                        new HttpEntity<ContactoParticipante[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /*************** VisitaTerrenoParticipante ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarVisitaTerrenoParticipante(String url, String username,
+                                                     String password) throws Exception {
+        try {
+            if(mVisitasTerrenoP.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando visitas terreno de participantes!", VISITA_TERRENO_PARTICIPANTE, TOTAL_TASK_CASOS);
+                final String urlRequest = url + "/movil/visitasterrenoparti";
+                VisitaTerrenoParticipante[] envio = mVisitasTerrenoP.toArray(new VisitaTerrenoParticipante[mVisitasTerrenoP.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<VisitaTerrenoParticipante[]> requestEntity =
+                        new HttpEntity<VisitaTerrenoParticipante[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
 }

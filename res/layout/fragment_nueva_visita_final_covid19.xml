@@ -1,0 +1,209 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/WizardPageContainer">
+
+    <TextView style="@style/WizardPageTitle" />
+
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/codigoParticipanteCaso" />
+
+            <EditText android:id="@+id/inputCodigoParticipanteCaso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/fecha_visita" />
+
+            <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginBottom="20dp"
+	            android:orientation="horizontal">
+				<EditText android:id="@+id/inputFechaVisita"
+	                android:layout_width="0dip"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1.0"
+	                android:focusable="false"
+	                android:inputType="text" />
+				<ImageButton
+	                android:id="@+id/changedate_button"
+	                android:layout_width="wrap_content"
+	                android:layout_height="fill_parent"
+	                android:contentDescription="@string/app_name"
+	                android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+            
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/enfermo" />
+            
+            <Spinner android:id="@+id/spinEnfermo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textConsTerreno"
+					  android:text="@string/consTerreno" />
+
+			<Spinner android:id="@+id/spinConsTerreno"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textReferidoCs"
+					  android:text="@string/referidoCs" />
+
+			<Spinner android:id="@+id/spinReferidoCs"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textTratamiento"
+					  android:text="@string/tratamientoVFCovid19" />
+
+			<ni.org.ics.estudios.appmovil.multiselector.gui.MultiSpinner android:id="@+id/spinTratamiento"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textQueAntibiotico"
+					  android:text="@string/queAntibiotico" />
+
+			<EditText android:id="@+id/inputQueAntibiotico"
+					  android:layout_width="match_parent"
+					  android:layout_height="wrap_content"
+					  android:layout_marginBottom="20dp"
+					  android:inputType="text" />
+
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textOtroMedicamento"
+					  android:text="@string/otroMedicamento" />
+
+			<EditText android:id="@+id/inputOtroMedicamento"
+					  android:layout_width="match_parent"
+					  android:layout_height="wrap_content"
+					  android:layout_marginBottom="20dp"
+					  android:inputType="text" />
+
+			<TextView style="@style/WizardFormLabel"
+					  android:text="@string/sintRespHint" />
+
+			<Spinner android:id="@+id/spinSintResp"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel"
+					  android:text="@string/fueHospitalizado" />
+
+			<Spinner android:id="@+id/spinFueHospitalizado"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textFechaIngresoHosp"
+					  android:text="@string/fechaIngresoHosp" />
+
+			<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="20dp"
+					android:orientation="horizontal">
+				<EditText android:id="@+id/inputFechaIngresoHosp"
+						  android:layout_width="0dip"
+						  android:layout_height="wrap_content"
+						  android:layout_weight="1.0"
+						  android:focusable="false"
+						  android:inputType="text" />
+				<ImageButton
+						android:id="@+id/fechaIngresoHosp_button"
+						android:layout_width="wrap_content"
+						android:layout_height="fill_parent"
+						android:contentDescription="@string/app_name"
+						android:src="@drawable/ic_menu_month" />
+			</LinearLayout>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textFechaEgresoHosp"
+					  android:text="@string/fechaEgresoHosp" />
+
+			<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="20dp"
+					android:orientation="horizontal">
+				<EditText android:id="@+id/inputFechaEgresoHosp"
+						  android:layout_width="0dip"
+						  android:layout_height="wrap_content"
+						  android:layout_weight="1.0"
+						  android:focusable="false"
+						  android:inputType="text" />
+				<ImageButton
+						android:id="@+id/fechaEgresoHosp_button"
+						android:layout_width="wrap_content"
+						android:layout_height="fill_parent"
+						android:contentDescription="@string/app_name"
+						android:src="@drawable/ic_menu_month" />
+			</LinearLayout>
+
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textCualHospital"
+					  android:text="@string/cualHospitalVF" />
+
+			<EditText android:id="@+id/inputCualHospital"
+					  android:layout_width="match_parent"
+					  android:layout_height="wrap_content"
+					  android:layout_marginBottom="20dp"
+					  android:inputType="text" />
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textUtilizoOxigeno"
+					  android:text="@string/utilizoOxigeno" />
+
+			<Spinner android:id="@+id/spinUtilizoOxigeno"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textFueIntubado"
+					  android:text="@string/fueIntubado" />
+
+			<Spinner android:id="@+id/spinFueIntubado"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textEstadoSalud"
+					  android:text="@string/estadoSalud" />
+
+			<Spinner android:id="@+id/spinEstadoSalud"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel"
+					  android:text="@string/faltoTrabajoEscuela" />
+
+			<Spinner android:id="@+id/spinFaltoTrabajoEscuela"
+					 android:layout_width="match_parent"
+					 android:layout_height="wrap_content"
+					 android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel" android:id="@+id/textDiasFaltoTrabajoEscuela"
+					  android:text="@string/diasFaltoTrabajoEscuela" />
+
+			<EditText android:id="@+id/inputDiasFaltoTrabajoEscuela"
+					  android:layout_width="match_parent"
+					  android:layout_height="wrap_content"
+					  android:layout_marginBottom="20dp"
+					  android:inputType="number" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

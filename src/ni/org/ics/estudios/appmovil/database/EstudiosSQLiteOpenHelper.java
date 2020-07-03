@@ -76,7 +76,9 @@ public abstract class EstudiosSQLiteOpenHelper {
             onOpen(db);
             success = true;
             return db;
-        } finally {
+        } catch (Throwable e) {
+            throw e;
+        } finally{
             mIsInitializing = false;
             if (success) {
                 if (mDatabase != null) {

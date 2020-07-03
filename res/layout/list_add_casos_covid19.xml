@@ -33,12 +33,12 @@
 
         <Button
                 android:background="@drawable/selectable_item_background"
-                android:id="@+id/update_cases_cv19"
+                android:id="@+id/send_case_cv19"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="@string/follow_up_update"
-                android:drawableTop="@drawable/ic_menu_refresh"
+                android:text="@string/send_case"
+                android:drawableTop="@drawable/ic_menu_chat_dashboard"
                 style="?android:attr/buttonBarStyle" />
 
         <Button

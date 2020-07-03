@@ -24,7 +24,6 @@ import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.covid19.activities.MenuCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoTamizajeTransmisionCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.adapters.CandidatoTransmisionCovid19Adapter;
-import ni.org.ics.estudios.appmovil.covid19.adapters.ParticipanteCasoCovid19Adapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.covid19.CandidatoTransmisionCovid19;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
@@ -88,7 +87,7 @@ public class ListaCanditatosTransmisionCovid19Activity extends AbstractAsyncList
 		mButton = (Button) findViewById(R.id.final_visit_button_cv19);
 		mButton.setVisibility(View.GONE);
 
-		mButton = (Button) findViewById(R.id.update_cases_cv19);
+		mButton = (Button) findViewById(R.id.send_case_cv19);
 		mButton.setVisibility(View.GONE);
 
 	}

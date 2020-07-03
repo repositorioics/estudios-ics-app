@@ -170,7 +170,8 @@ public class DownloadBaseTask extends DownloadTask {
         estudioAdapter.borrarCandidatoTransmisionCovid19();
         estudioAdapter.borrarSintomasVisitaCasoCovid19();
         estudioAdapter.borrarDatosAislamientoVisitaCasoCovid19();
-
+        estudioAdapter.borrarVisitaFinalCasoCovid19();
+        estudioAdapter.borrarSintomasVisitaFinalCovid19();
         try {
             if (mCatalogos != null){
                 v = mCatalogos.size();

@@ -1,0 +1,1482 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/WizardPageContainer">
+
+    <TextView style="@style/WizardPageTitle" />
+
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/codigoParticipanteCaso" />
+
+            <EditText android:id="@+id/inputCodigoParticipanteCaso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:inputType="text" />
+
+
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/fiebre" />
+            
+            <Spinner android:id="@+id/spinFiebre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textFiebreFecIni"
+                      android:text="@string/fiebreFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputFiebreFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonFiebreFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textFiebreFecFin"
+                      android:text="@string/fiebreFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputFiebreFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonFiebreFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/tos" />
+
+            <Spinner android:id="@+id/spinTos"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textTosFecIni"
+                      android:text="@string/tosFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputTosFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonTosFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textTosFecFin"
+                      android:text="@string/tosFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputTosFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonTosFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/dolorCabeza" />
+
+            <Spinner android:id="@+id/spinDolorCabeza"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDolorCabezaFecIni"
+                      android:text="@string/dolorCabezaFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDolorCabezaFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDolorCabezaFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDolorCabezaFecFin"
+                      android:text="@string/dolorCabezaFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDolorCabezaFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDolorCabezaFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/dolorArticular" />
+
+            <Spinner android:id="@+id/spinDolorArticular"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDolorArticularFecIni"
+                      android:text="@string/dolorArticularFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDolorArticularFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDolorArticularFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDolorArticularFecFin"
+                      android:text="@string/dolorArticularFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDolorArticularFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDolorArticularFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/dolorMuscular" />
+
+            <Spinner android:id="@+id/spinDolorMuscular"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDolorMuscularFecIni"
+                      android:text="@string/dolorMuscularFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDolorMuscularFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDolorMuscularFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDolorMuscularFecFin"
+                      android:text="@string/dolorMuscularFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDolorMuscularFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDolorMuscularFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/dificultadRespiratoria" />
+
+            <Spinner android:id="@+id/spinDificultadRespiratoria"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDificultadRespiratoriaFecIni"
+                      android:text="@string/dificultadRespiratoriaFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDificultadRespiratoriaFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDificultadRespiratoriaFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDificultadRespiratoriaFecFin"
+                      android:text="@string/dificultadRespiratoriaFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDificultadRespiratoriaFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDificultadRespiratoriaFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/pocoApetito" />
+
+            <Spinner android:id="@+id/spinPocoApetito"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textPocoApetitoFecIni"
+                      android:text="@string/pocoApetitoFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputPocoApetitoFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonPocoApetitoFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textPocoApetitoFecFin"
+                      android:text="@string/pocoApetitoFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputPocoApetitoFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonPocoApetitoFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/dolorGarganta" />
+
+            <Spinner android:id="@+id/spinDolorGarganta"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDolorGargantaFecIni"
+                      android:text="@string/dolorGargantaFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDolorGargantaFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDolorGargantaFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDolorGargantaFecFin"
+                      android:text="@string/dolorGargantaFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDolorGargantaFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDolorGargantaFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/secrecionNasal" />
+
+            <Spinner android:id="@+id/spinSecrecionNasal"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textSecrecionNasalFecIni"
+                      android:text="@string/secrecionNasalFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputSecrecionNasalFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonSecrecionNasalFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textSecrecionNasalFecFin"
+                      android:text="@string/secrecionNasalFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputSecrecionNasalFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonSecrecionNasalFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/picorGarganta" />
+
+            <Spinner android:id="@+id/spinPicorGarganta"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textPicorGargantaFecIni"
+                      android:text="@string/picorGargantaFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputPicorGargantaFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonPicorGargantaFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textPicorGargantaFecFin"
+                      android:text="@string/picorGargantaFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputPicorGargantaFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonPicorGargantaFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/expectoracion" />
+
+            <Spinner android:id="@+id/spinExpectoracion"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textExpectoracionFecIni"
+                      android:text="@string/expectoracionFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputExpectoracionFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonExpectoracionFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textExpectoracionFecFin"
+                      android:text="@string/expectoracionFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputExpectoracionFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonExpectoracionFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/rash" />
+
+            <Spinner android:id="@+id/spinRash"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textRashFecIni"
+                      android:text="@string/rashFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputRashFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonRashFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textRashFecFin"
+                      android:text="@string/rashFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputRashFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonRashFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/urticaria" />
+
+            <Spinner android:id="@+id/spinUrticaria"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textUrticariaFecIni"
+                      android:text="@string/urticariaFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputUrticariaFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonUrticariaFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textUrticariaFecFin"
+                      android:text="@string/urticariaFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputUrticariaFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonUrticariaFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/conjuntivitis" />
+
+            <Spinner android:id="@+id/spinConjuntivitis"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textConjuntivitisFecIni"
+                      android:text="@string/conjuntivitisFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputConjuntivitisFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonConjuntivitisFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textConjuntivitisFecFin"
+                      android:text="@string/conjuntivitisFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputConjuntivitisFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonConjuntivitisFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/diarrea" />
+
+            <Spinner android:id="@+id/spinDiarrea"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDiarreaFecIni"
+                      android:text="@string/diarreaFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDiarreaFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDiarreaFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDiarreaFecFin"
+                      android:text="@string/diarreaFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDiarreaFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDiarreaFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/vomito" />
+
+            <Spinner android:id="@+id/spinVomito"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textVomitoFecIni"
+                      android:text="@string/vomitoFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputVomitoFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonVomitoFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textVomitoFecFin"
+                      android:text="@string/vomitoFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputVomitoFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonVomitoFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/quedoCama" />
+
+            <Spinner android:id="@+id/spinQuedoCama"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textQuedoCamaFecIni"
+                      android:text="@string/quedoCamaFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputQuedoCamaFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonQuedoCamaFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textQuedoCamaFecFin"
+                      android:text="@string/quedoCamaFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputQuedoCamaFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonQuedoCamaFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/respiracionRuidosa" />
+
+            <Spinner android:id="@+id/spinRespiracionRuidosa"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textRespiracionRuidosaFecIni"
+                      android:text="@string/respiracionRuidosaFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputRespiracionRuidosaFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonRespiracionRuidosaFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textRespiracionRuidosaFecFin"
+                      android:text="@string/respiracionRuidosaFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputRespiracionRuidosaFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonRespiracionRuidosaFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/respiracionRapida" />
+
+            <Spinner android:id="@+id/spinRespiracionRapida"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textRespiracionRapidaFecIni"
+                      android:text="@string/respiracionRapidaFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputRespiracionRapidaFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonRespiracionRapidaFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textRespiracionRapidaFecFin"
+                      android:text="@string/respiracionRapidaFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputRespiracionRapidaFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonRespiracionRapidaFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/perdidaOlfato" />
+
+            <Spinner android:id="@+id/spinPerdidaOlfato"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textPerdidaOlfatoFecIni"
+                      android:text="@string/perdidaOlfatoFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputPerdidaOlfatoFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonPerdidaOlfatoFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textPerdidaOlfatoFecFin"
+                      android:text="@string/perdidaOlfatoFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputPerdidaOlfatoFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonPerdidaOlfatoFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/congestionNasal" />
+
+            <Spinner android:id="@+id/spinCongestionNasal"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textCongestionNasalFecIni"
+                      android:text="@string/congestionNasalFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputCongestionNasalFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonCongestionNasalFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textCongestionNasalFecFin"
+                      android:text="@string/congestionNasalFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputCongestionNasalFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonCongestionNasalFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/perdidaGusto" />
+
+            <Spinner android:id="@+id/spinPerdidaGusto"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textPerdidaGustoFecIni"
+                      android:text="@string/perdidaGustoFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputPerdidaGustoFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonPerdidaGustoFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textPerdidaGustoFecFin"
+                      android:text="@string/perdidaGustoFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputPerdidaGustoFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonPerdidaGustoFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/desmayos" />
+
+            <Spinner android:id="@+id/spinDesmayos"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDesmayosFecIni"
+                      android:text="@string/desmayosFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDesmayosFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDesmayosFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDesmayosFecFin"
+                      android:text="@string/desmayosFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDesmayosFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDesmayosFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/sensacionPechoApretado" />
+
+            <Spinner android:id="@+id/spinSensacionPechoApretado"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textSensacionPechoApretadoFecIni"
+                      android:text="@string/sensacionPechoApretadoFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputSensacionPechoApretadoFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonSensacionPechoApretadoFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textSensacionPechoApretadoFecFin"
+                      android:text="@string/sensacionPechoApretadoFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputSensacionPechoApretadoFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonSensacionPechoApretadoFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/dolorPecho" />
+
+            <Spinner android:id="@+id/spinDolorPecho"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDolorPechoFecIni"
+                      android:text="@string/dolorPechoFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDolorPechoFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDolorPechoFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textDolorPechoFecFin"
+                      android:text="@string/dolorPechoFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputDolorPechoFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonDolorPechoFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/sensacionFaltaAire" />
+
+            <Spinner android:id="@+id/spinSensacionFaltaAire"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textSensacionFaltaAireFecIni"
+                      android:text="@string/sensacionFaltaAireFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputSensacionFaltaAireFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonSensacionFaltaAireFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textSensacionFaltaAireFecFin"
+                      android:text="@string/sensacionFaltaAireFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputSensacionFaltaAireFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonSensacionFaltaAireFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/fatiga" />
+
+            <Spinner android:id="@+id/spinFatiga"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textFatigaFecIni"
+                      android:text="@string/fatigaFecIni" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputFatigaFecIni"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonFatigaFecIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textFatigaFecFin"
+                      android:text="@string/fatigaFecFin" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputFatigaFecFin"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+
+                <ImageButton
+                        android:id="@+id/buttonFatigaFecFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

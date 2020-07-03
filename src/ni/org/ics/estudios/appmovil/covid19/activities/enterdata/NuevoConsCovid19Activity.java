@@ -985,7 +985,7 @@ public class NuevoConsCovid19Activity extends FragmentActivity implements
             String razonNoAceptaParteDCovid = datos.getString(this.getString(R.string.razonNoAceptaParteDCovid));
             String otraRazonNoAceptaParteDCovid = datos.getString(this.getString(R.string.otraRazonNoAceptaParteDCovid));
 
-            String asentimiento = datos.getString(this.getString(R.string.asentimiento));
+            String asentimiento = datos.getString(this.getString(R.string.asentimientoVerbal));
             String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturo));
 
             String nombrept = datos.getString(this.getString(R.string.nombrept));

@@ -1220,7 +1220,8 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                                 procesos.setEstudio(Constants.T_COVID19);
                             } else {
                                 String estudios = procesos.getEstudio();
-                                procesos.setEstudio(estudios + "  "+Constants.T_COVID19);
+                                if (!estudios.contains(Constants.T_COVID19))
+                                    procesos.setEstudio(estudios + "  "+Constants.T_COVID19);
                             }
                             if (procesos.getSubEstudios() != null && !procesos.getSubEstudios().equalsIgnoreCase("0")) {
                                 if (!procesos.getSubEstudios().contains("2"))

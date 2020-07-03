@@ -86,7 +86,7 @@ public class ListaCasasCasosCovid19Activity extends AbstractAsyncListActivity {
         mButton = (Button) findViewById(R.id.final_visit_button_cv19);
         mButton.setVisibility(View.GONE);
 
-		mUpdateButton = (Button) findViewById(R.id.update_cases_cv19);
+		mUpdateButton = (Button) findViewById(R.id.send_case_cv19);
 		mUpdateButton.setVisibility(View.GONE);
 		/*mUpdateButton.setOnClickListener(new View.OnClickListener()  {
 			@Override

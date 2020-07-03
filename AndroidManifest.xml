@@ -406,7 +406,16 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".covid19.activities.server.UploadAllCasosCovid19Activity"
                   android:screenOrientation="portrait" />
-
+        <activity android:name=".bluetooth.activity.ChatCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.list.ListaVisitasFinalesCasoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.MenuVisitaFinalCasoCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevaVisitaFinalCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevoSintomasVisitaFinalCovid19Activity"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

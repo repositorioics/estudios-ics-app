@@ -135,6 +135,7 @@
         <item>@string/candidates</item>
         <item>@string/download</item>
         <item>@string/upload</item>
+        <item>@string/receive_case</item>
         <item>@string/exit</item>
     </string-array>
 
@@ -142,6 +143,11 @@
         <item>@string/samples_caso</item>
         <item>@string/sint</item>
         <item>@string/aislamiento</item>
+    </string-array>
+
+    <string-array name="menu_visita_final_covid19">
+        <item>@string/samples_caso</item>
+        <item>@string/sint</item>
     </string-array>
 
 </resources>

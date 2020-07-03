@@ -20,13 +20,12 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.bluetooth.activity.ChatActivity;
+import ni.org.ics.estudios.appmovil.bluetooth.activity.ChatCovid19Activity;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasSuperficieCasoActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajeMxSuperficieActivity;
 import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoTamizajeTransmisionCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.adapters.ParticipanteCasoCovid19Adapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.covid19.CasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
@@ -43,6 +42,7 @@ public class ListaParticipantesCasoCovid19Activity extends AbstractAsyncListActi
 	private TextView textView;
 	private Drawable img = null;
 	private Button mButton;
+	private Button mSendCase;
 	private ArrayAdapter<ParticipanteCasoCovid19> mParticipantesCovid19Adapter;
 	private List<ParticipanteCasoCovid19> participanteCasoCovid19List = new ArrayList<ParticipanteCasoCovid19>();
 	private List<MessageResource> mPositivoPor = new ArrayList<MessageResource>();
@@ -93,8 +93,24 @@ public class ListaParticipantesCasoCovid19Activity extends AbstractAsyncListActi
 		mButton = (Button) findViewById(R.id.final_visit_button_cv19);
 		mButton.setVisibility(View.GONE);
 
-		mButton = (Button) findViewById(R.id.update_cases_cv19);
-		mButton.setVisibility(View.GONE);
+		mSendCase = (Button) findViewById(R.id.send_case_cv19);
+		if (participanteCasoCovid19List.size()>1)//si es mayo de 1 es una casa
+			mSendCase.setVisibility(View.GONE);
+
+		mSendCase.setOnClickListener(new View.OnClickListener()  {
+			@Override
+			public void onClick(View v) {
+				Bundle arguments = new Bundle();
+				Intent i = new Intent(getApplicationContext(),
+						ChatCovid19Activity.class);
+				if (casaCaso!=null) arguments.putSerializable(Constants.CASA , casaCaso);
+				i.putExtra(Constants.ACCION, Constants.SENDING);
+				i.putExtras(arguments);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				finish();
+			}
+		});
 
 	}
 
@@ -293,10 +309,11 @@ public class ListaParticipantesCasoCovid19Activity extends AbstractAsyncListActi
 				estudiosAdapter.open();
 				participanteCasoCovid19List = estudiosAdapter.getParticipantesCasosCovid19(Covid19DBConstants.codigoCaso+"='"+casaCaso.getCodigoCaso()+"' and "+ MainDBConstants.pasive + "='0'", null);
 				mPositivoPor = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='COVID_CAT_POSITIVO_POR'", null);
-				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
 				return "error";
+			} finally {
+				estudiosAdapter.close();
 			}
 			return "exito";
 		}

@@ -110,6 +110,8 @@
     <string name="start_partsa">/*Enviar participante seroprevalencia*/</string>
     <string name="finished_partsa">/*Terminado participantes seroprevalencia*/</string>
     <string name="start_partproc">/*Enviar participante procesos*/</string>
+    <string name="start_partcovid">/*Enviar participante covid*/</string>
+    <string name="finished_partcovid">/*Terminado participante covid*/</string>
     <string name="finished_partproc">/*Terminado procesos*/</string>
     <string name="start_partcasos">/*Enviar casos participante*/</string>
     <string name="finished_partcasos">/*Terminado casos*/</string>

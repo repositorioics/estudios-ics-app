@@ -88,6 +88,8 @@
     <string name="fechaAlta">Fecha de Alta </string>
     <string name="fechaIngreso">Fecha de ingreso caso</string>
 
+    <string name="tratamientoVFCovid19">Que tratamiento fue prescrito</string>
+    <string name="queAntibiotico">Qué Antibiótico</string>
     <string name="fechaDatoAisla">Fecha Dato Aislamiento</string>
     <string name="aislado">1.¿Está aislado, es decir, mantenerse alejado de otros miembros de su hogar que no están enfermos?</string>
     <string name="estaAislado">2. ¿Estás haciendo lo siguiente?</string>
@@ -101,4 +103,76 @@
     <string name="aislamiento">Aislamiento</string>
     <string name="aislamientoExist">Datos de Aislamiento ya fueron ingresados</string>
 
+    <!-- enviar caso bluetooth-->
+    <string name="receive_case">Recibir Caso</string>
+    <string name="send_case">Enviar Caso</string>
+
+    <!-- VISITA FINAL-->
+    <string name="fueHospitalizado">¿El participante fue hospitalizado por neumonía en el periodo que no fue visitado por el personal del CSSFV?</string>
+    <string name="fechaIngresoHosp">Fecha de Ingreso</string>
+    <string name="fechaEgresoHosp">Fecha de Egreso</string>
+    <string name="cualHospitalVF">¿En cuál hospital?</string>
+    <string name="utilizoOxigeno">¿Usted utilizo oxígeno en su estancia hospitalaria?</string>
+    <string name="fueIntubado">¿Fue intubado en esta hospitalización?</string>
+    <string name="estadoSalud">Usted considera que su hospitalización fue porque su estado de salud fue</string>
+    <string name="faltoTrabajoEscuela">¿Desde el momento del diagnóstico tuvo síntomas que le impidieron asistir a trabajar o a la escuela?</string>
+    <string name="diasFaltoTrabajoEscuela">¿Cuántos días?</string>
+    <string name="wrong_fecha_visita4">Fecha de visita es posterior a 90 días después de la fecha de inicio</string>
+
+    <string name="fiebreFecIni">Fecha Inicio Fiebre</string>
+    <string name="tosFecIni">Fecha Inicio Tos</string>
+    <string name="dolorCabezaFecIni">Fecha Inicio Dolor de cabeza</string>
+    <string name="dolorArticularFecIni">Fecha Inicio Dolor Articular</string>
+    <string name="dolorMuscularFecIni">Fecha Inicio Dolor muscular</string>
+    <string name="dificultadRespiratoriaFecIni">Fecha Inicio Dificultad Respiratoria</string>
+    <string name="pocoApetitoFecIni">Fecha Inicio Poco Apetito</string>
+    <string name="dolorGargantaFecIni">Fecha Inicio Dolor de Garganta</string>
+    <string name="secrecionNasalFecIni">Fecha Inicio Secreción Nasal</string>
+    <string name="picorGargantaFecIni">Fecha Inicio Picor en Garganta</string>
+    <string name="expectoracionFecIni">Fecha Inicio Expectoración</string>
+    <string name="rashFecIni">Fecha Inicio Rash</string>
+    <string name="urticariaFecIni">Fecha Inicio Urticaria</string>
+    <string name="conjuntivitisFecIni">Fecha Inicio Conjuntivitis</string>
+    <string name="diarreaFecIni">Fecha Inicio Diarrea</string>
+    <string name="vomitoFecIni">Fecha Inicio Vómitos</string>
+    <string name="quedoCamaFecIni">Fecha Inicio Quedó en Cama</string>
+    <string name="respiracionRuidosaFecIni">Fecha Inicio Respiración Ruidosa</string>
+    <string name="respiracionRapidaFecIni">Fecha Inicio Respiración Rapida</string>
+    <string name="perdidaOlfatoFecIni">Fecha Inicio Perdida del Olfato</string>
+    <string name="congestionNasalFecIni">Fecha Inicio Congestión Nasal</string>
+    <string name="perdidaGustoFecIni">Fecha Inicio Perdida del Gusto</string>
+    <string name="desmayosFecIni">Fecha Inicio Desmayos</string>
+    <string name="sensacionPechoApretadoFecIni">Fecha Inicio Sensación de Pecho apretado</string>
+    <string name="dolorPechoFecIni">Fecha Inicio Dolor en el Pecho</string>
+    <string name="sensacionFaltaAireFecIni">Fecha Inicio Sensación de falta de aire </string>
+    <string name="fatigaFecIni">Fecha Inicio Fatiga </string>
+    <string name="fiebreFecFin">Fecha Termina Fiebre</string>
+    <string name="tosFecFin">Fecha Termina Tos</string>
+    <string name="dolorCabezaFecFin">Fecha Termina Dolor de cabeza</string>
+    <string name="dolorArticularFecFin">Fecha Termina Dolor Articular</string>
+    <string name="dolorMuscularFecFin">Fecha Termina Dolor muscular</string>
+    <string name="dificultadRespiratoriaFecFin">Fecha Termina Dificultad Respiratoria</string>
+    <string name="pocoApetitoFecFin">Fecha Termina Poco Apetito</string>
+    <string name="dolorGargantaFecFin">Fecha Termina Dolor de Garganta</string>
+    <string name="secrecionNasalFecFin">Fecha Termina Secreción Nasal</string>
+    <string name="picorGargantaFecFin">Fecha Termina Picor en Garganta</string>
+    <string name="expectoracionFecFin">Fecha Termina Expectoración</string>
+    <string name="rashFecFin">Fecha Termina Rash</string>
+    <string name="urticariaFecFin">Fecha Termina Urticaria</string>
+    <string name="conjuntivitisFecFin">Fecha Termina Conjuntivitis</string>
+    <string name="diarreaFecFin">Fecha Termina Diarrea</string>
+    <string name="vomitoFecFin">Fecha Termina Vómitos</string>
+    <string name="quedoCamaFecFin">Fecha Termina Quedó en Cama</string>
+    <string name="respiracionRuidosaFecFin">Fecha Termina Respiración Ruidosa</string>
+    <string name="respiracionRapidaFecFin">Fecha Termina Respiración Rapida</string>
+    <string name="perdidaOlfatoFecFin">Fecha Termina Perdida del Olfato</string>
+    <string name="congestionNasalFecFin">Fecha Termina Congestión Nasal</string>
+    <string name="perdidaGustoFecFin">Fecha Termina Perdida del Gusto</string>
+    <string name="desmayosFecFin">Fecha Termina Desmayos</string>
+    <string name="sensacionPechoApretadoFecFin">Fecha Termina Sensación de Pecho apretado</string>
+    <string name="dolorPechoFecFin">Fecha Termina Dolor en el Pecho</string>
+    <string name="sensacionFaltaAireFecFin">Fecha Termina Sensación de falta de aire </string>
+    <string name="fatigaFecFin">Fecha Termina Fatiga </string>
+
+    <string name="sintVFExist">Síntomas ya fueron ingresados</string>
 </resources>

@@ -53,6 +53,8 @@ public class UploadAllCasosCovid19Task extends UploadTask {
     private List<SintomasVisitaCasoCovid19> mSintomas = new ArrayList<SintomasVisitaCasoCovid19>();
     private List<DatosAislamientoVisitaCasoCovid19> mAislamientos = new ArrayList<DatosAislamientoVisitaCasoCovid19>();
     private List<ParticipanteProcesos> mParticipantesProc = new ArrayList<ParticipanteProcesos>();
+    private List<VisitaFinalCasoCovid19> mVisitasFinales = new ArrayList<VisitaFinalCasoCovid19>();
+    private List<SintomasVisitaFinalCovid19> mSintomasFinal = new ArrayList<SintomasVisitaFinalCovid19>();
 
     public static final String TAMIZAJE = "1";
     public static final String PARTICIPANTE = "2";
@@ -60,7 +62,6 @@ public class UploadAllCasosCovid19Task extends UploadTask {
     public static final String PARTICIPANTE_PRC = "4";
     public static final String CONTACTO_PARTICIPANTE = "5";
     public static final String VISITA_TERRENO_PARTICIPANTE = "6";
-
     public static final String PARTICIPANTES_COVID19 = "7";
     public static final String CASOS_COVID19 = "8";
     public static final String PARTICIPANTES_CASOS_COVID19 = "9";
@@ -70,9 +71,10 @@ public class UploadAllCasosCovid19Task extends UploadTask {
     public static final String VISITAS_FALL_CASOS_COVID19 = "13";
     public static final String CANDIDATOS_COVID19 = "14";
     public static final String DATOS_AISLAMIENTO_COVID19 = "15";
+    public static final String VISITAS_FINALES_COVID19 = "16";
+    public static final String SINT_VISITAS_FINALES_COVID19 = "17";
 
-
-    private static final String TOTAL_TASK_CASOS = "15";
+    private static final String TOTAL_TASK_CASOS = "17";
 
     @Override
     protected String doInBackground(String... values) {
@@ -94,12 +96,13 @@ public class UploadAllCasosCovid19Task extends UploadTask {
             mSintomas = estudioAdapter.getSintomasVisitasCasosCovid19(filtro, null);
             mAislamientos = estudioAdapter.getDatosAislamientoVisitasCasosCovid19(filtro, null);
             mParticipantesProc = estudioAdapter.getParticipantesProc(filtro, null);
-
             mTamizajes = estudioAdapter.getTamizajes(filtro, null);
             mCartasConsent = estudioAdapter.getCartasConsentimientos(filtro, null);
             mParticipantes = estudioAdapter.getParticipantes(filtro, null);
             mContactos = estudioAdapter.getContactosParticipantes(filtro, null);
             mVisitasTerrenoP = estudioAdapter.getVisitasTerrenoParticipantes(filtro, null);
+            mVisitasFinales = estudioAdapter.getVisitasFinalesCasosCovid19(filtro, null);
+            mSintomasFinal = estudioAdapter.getSintomasVisitasFinalesCovid19(filtro, null);
 
             publishProgress("Datos completos!", "2", "2");
 
@@ -205,6 +208,20 @@ public class UploadAllCasosCovid19Task extends UploadTask {
             error = cargarDatosAislamientoVisitaCasoCovid19(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, DATOS_AISLAMIENTO_COVID19);
+                return error;
+            }
+
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FINALES_COVID19);
+            error = cargarVisitasFinalesCasoCovid19(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_FINALES_COVID19);
+                return error;
+            }
+
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, SINT_VISITAS_FINALES_COVID19);
+            error = cargarSintomasVisitasFinalesCovid19(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINT_VISITAS_FINALES_COVID19);
                 return error;
             }
         } catch (Exception e1) {
@@ -380,6 +397,28 @@ public class UploadAllCasosCovid19Task extends UploadTask {
                     participanteprc.getMovilInfo().setEstado(estado);
                     estudioAdapter.actualizarParticipanteProcesos(participanteprc);
                     publishProgress("Actualizando procesos participantes en base de datos local", Integer.valueOf(mParticipantesProc.indexOf(participanteprc)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(VISITAS_FINALES_COVID19)){
+            c = mVisitasFinales.size();
+            if(c>0){
+                for (VisitaFinalCasoCovid19 visitaFinalCasoCovid19 : mVisitasFinales) {
+                    visitaFinalCasoCovid19.setEstado(estado.charAt(0));
+                    estudioAdapter.editarVisitaFinalCasoCovid19(visitaFinalCasoCovid19);
+                    publishProgress("Actualizando visitas finales COVID19 en base de datos local", Integer.valueOf(mVisitasFinales.indexOf(visitaFinalCasoCovid19)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(SINT_VISITAS_FINALES_COVID19)){
+            c = mSintomasFinal.size();
+            if(c>0){
+                for (SintomasVisitaFinalCovid19 sintoma : mSintomasFinal) {
+                    sintoma.setEstado(estado.charAt(0));
+                    estudioAdapter.editarSintomasVisitaFinalCovid19(sintoma);
+                    publishProgress("Actualizando síntomas visitas finales COVID19 en base de datos local", Integer.valueOf(mSintomasFinal.indexOf(sintoma)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
@@ -885,6 +924,76 @@ public class UploadAllCasosCovid19Task extends UploadTask {
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<VisitaTerrenoParticipante[]> requestEntity =
                         new HttpEntity<VisitaTerrenoParticipante[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /*************** VisitaFinalCasoCovid19 ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarVisitasFinalesCasoCovid19(String url, String username,
+                                                     String password) throws Exception {
+        try {
+            if(mVisitasFinales.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando visitas finales COVID19!", VISITAS_FINALES_COVID19, TOTAL_TASK_CASOS);
+                final String urlRequest = url + "/movil/visitasFinalesCovid19";
+                VisitaFinalCasoCovid19[] envio = mVisitasFinales.toArray(new VisitaFinalCasoCovid19[mVisitasFinales.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<VisitaFinalCasoCovid19[]> requestEntity =
+                        new HttpEntity<VisitaFinalCasoCovid19[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /*************** SintomasVisitaFinalCovid19 ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarSintomasVisitasFinalesCovid19(String url, String username,
+                                                  String password) throws Exception {
+        try {
+            if(mSintomasFinal.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando síntomas visitas finales COVID19!", SINT_VISITAS_FINALES_COVID19, TOTAL_TASK_CASOS);
+                final String urlRequest = url + "/movil/sintVisitasFinalesCovid19";
+                SintomasVisitaFinalCovid19[] envio = mSintomasFinal.toArray(new SintomasVisitaFinalCovid19[mSintomasFinal.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<SintomasVisitaFinalCovid19[]> requestEntity =
+                        new HttpEntity<SintomasVisitaFinalCovid19[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

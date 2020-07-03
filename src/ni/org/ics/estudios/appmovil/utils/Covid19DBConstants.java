@@ -1,6 +1,7 @@
 package ni.org.ics.estudios.appmovil.utils;
 
 import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.covid19.VisitaSeguimientoCasoCovid19;
 
 import java.util.Date;
@@ -319,5 +320,206 @@ public class Covid19DBConstants {
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigoAislamiento + "));";
+
+
+    //Tabla VisitaFinalCasoCovid19
+    public static final String COVID_VISITA_FINAL_CASO_TABLE = "covid_visita_final_caso";
+
+    //Campos VisitaFinalCasoCovid19
+    public static final String codigoVisitaFinal = "codigoVisitaFinal";
+    public static final String consTerreno = "consTerreno";
+    public static final String referidoCS = "referidoCS";
+    public static final String queAntibiotico = "queAntibiotico";
+    public static final String sintResp = "sintResp";
+    public static final String fueHospitalizado = "fueHospitalizado";
+    public static final String fechaEgreso = "fechaEgreso";
+    public static final String diasHospitalizado = "diasHospitalizado";
+    public static final String utilizoOxigeno = "utilizoOxigeno";
+    public static final String fueIntubado = "fueIntubado";
+    public static final String estadoSalud = "estadoSalud";
+    public static final String faltoTrabajoEscuela = "faltoTrabajoEscuela";
+    public static final String diasFaltoTrabajoEscuela = "diasFaltoTrabajoEscuela";
+
+    //Crear VisitaFinalCasoCovid19
+    public static final String CREATE_COVID_VISITA_FINAL_CASO_TABLE = "create table if not exists "
+            + COVID_VISITA_FINAL_CASO_TABLE + " ("
+            +  codigoVisitaFinal + " text not null, "
+            +  codigoParticipanteCaso + " text not null, "
+            +  fechaVisita + " date, "
+            +  enfermo + " text, "
+            +  consTerreno + " text, "
+            +  referidoCS + " text, "
+            +  tratamiento + " text, "
+            +  queAntibiotico + " text, "
+            +  otroMedicamento + " text, "
+            +  sintResp + " text, "
+            +  fueHospitalizado + " text, "
+            +  fechaIngreso + " date, "
+            +  fechaEgreso + " date, "
+            +  diasHospitalizado + " integer, "
+            +  cualHospital + " text, "
+            +  utilizoOxigeno + " text, "
+            +  fueIntubado + " text, "
+            +  estadoSalud + " text, "
+            +  faltoTrabajoEscuela + " text, "
+            +  diasFaltoTrabajoEscuela + " integer, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + codigoVisitaFinal + "));";
+
+    //Tabla SintomasVisitaFinalCovid19
+    public static final String COVID_SINT_VISITA_FINAL_CASO_TABLE = "covid_sintomas_visita_final_caso";
+
+    //Campos tabla SintomasVisitaFinalCovid19
+    public static final String fiebreFecIni = "fiebreFecIni";
+    public static final String tosFecIni = "tosFecIni";
+    public static final String dolorCabezaFecIni = "dolorCabezaFecIni";
+    public static final String dolorArticularFecIni = "dolorArticularFecIni";
+    public static final String dolorMuscularFecIni = "dolorMuscularFecIni";
+    public static final String dificultadRespiratoriaFecIni = "dificultadRespiratoriaFecIni";
+    public static final String pocoApetitoFecIni = "pocoApetitoFecIni";
+    public static final String dolorGargantaFecIni = "dolorGargantaFecIni";
+    public static final String secrecionNasalFecIni = "secrecionNasalFecIni";
+    public static final String picorGargantaFecIni = "picorGargantaFecIni";
+    public static final String expectoracionFecIni = "expectoracionFecIni";
+    public static final String rashFecIni = "rashFecIni";
+    public static final String urticariaFecIni = "urticariaFecIni";
+    public static final String conjuntivitisFecIni = "conjuntivitisFecIni";
+    public static final String diarreaFecIni = "diarreaFecIni";
+    public static final String vomitoFecIni = "vomitoFecIni";
+    public static final String quedoCamaFecIni = "quedoCamaFecIni";
+    public static final String respiracionRuidosaFecIni = "respiracionRuidosaFecIni";
+    public static final String respiracionRapidaFecIni = "respiracionRapidaFecIni";
+    public static final String perdidaOlfatoFecIni = "perdidaOlfatoFecIni";
+    public static final String congestionNasalFecIni = "congestionNasalFecIni";
+    public static final String perdidaGustoFecIni = "perdidaGustoFecIni";
+    public static final String desmayosFecIni = "desmayosFecIni";
+    public static final String sensacionPechoApretadoFecIni = "sensacionPechoApretadoFecIni";
+    public static final String dolorPechoFecIni = "dolorPechoFecIni";
+    public static final String sensacionFaltaAireFecIni = "sensacionFaltaAireFecIni";
+    public static final String fatigaFecIni = "fatigaFecIni";
+    public static final String fiebreFecFin = "fiebreFecFin";
+    public static final String tosFecFin = "tosFecFin";
+    public static final String dolorCabezaFecFin = "dolorCabezaFecFin";
+    public static final String dolorArticularFecFin = "dolorArticularFecFin";
+    public static final String dolorMuscularFecFin = "dolorMuscularFecFin";
+    public static final String dificultadRespiratoriaFecFin = "dificultadRespiratoriaFecFin";
+    public static final String pocoApetitoFecFin = "pocoApetitoFecFin";
+    public static final String dolorGargantaFecFin = "dolorGargantaFecFin";
+    public static final String secrecionNasalFecFin = "secrecionNasalFecFin";
+    public static final String picorGargantaFecFin = "picorGargantaFecFin";
+    public static final String expectoracionFecFin = "expectoracionFecFin";
+    public static final String rashFecFin = "rashFecFin";
+    public static final String urticariaFecFin = "urticariaFecFin";
+    public static final String conjuntivitisFecFin = "conjuntivitisFecFin";
+    public static final String diarreaFecFin = "diarreaFecFin";
+    public static final String vomitoFecFin = "vomitoFecFin";
+    public static final String quedoCamaFecFin = "quedoCamaFecFin";
+    public static final String respiracionRuidosaFecFin = "respiracionRuidosaFecFin";
+    public static final String respiracionRapidaFecFin = "respiracionRapidaFecFin";
+    public static final String perdidaOlfatoFecFin = "perdidaOlfatoFecFin";
+    public static final String congestionNasalFecFin = "congestionNasalFecFin";
+    public static final String perdidaGustoFecFin = "perdidaGustoFecFin";
+    public static final String desmayosFecFin = "desmayosFecFin";
+    public static final String sensacionPechoApretadoFecFin = "sensacionPechoApretadoFecFin";
+    public static final String dolorPechoFecFin = "dolorPechoFecFin";
+    public static final String sensacionFaltaAireFecFin = "sensacionFaltaAireFecFin";
+    public static final String fatigaFecFin = "fatigaFecFin";
+
+    //Crear SintomasVisitaFinalCovid19
+    public static final String CREATE_COVID_SINT_VISITA_FINAL_CASO_TABLE = "create table if not exists "
+            + COVID_SINT_VISITA_FINAL_CASO_TABLE + " ("
+            + codigoCasoSintoma + " text not null, "
+            + codigoVisitaFinal + " text not null, "
+            + fiebre + " text, "
+            + tos + " text, "
+            + dolorCabeza + " text, "
+            + dolorArticular + " text, "
+            + dolorMuscular + " text, "
+            + dificultadRespiratoria + " text, "
+            + pocoApetito + " text, "
+            + dolorGarganta + " text, "
+            + secrecionNasal + " text, "
+            + picorGarganta + " text, "
+            + expectoracion + " text, "
+            + rash + " text, "
+            + urticaria + " text, "
+            + conjuntivitis + " text, "
+            + diarrea + " text, "
+            + vomito + " text, "
+            + quedoCama + " text, "
+            + respiracionRuidosa + " text, "
+            + respiracionRapida + " text, "
+            + perdidaOlfato + " text, "
+            + congestionNasal + " text, "
+            + perdidaGusto + " text, "
+            + desmayos + " text, "
+            + sensacionPechoApretado + " text, "
+            + dolorPecho + " text, "
+            + sensacionFaltaAire + " text, "
+            + fatiga + " text, "
+            + fiebreFecIni + " date, "
+            + tosFecIni + " date, "
+            + dolorCabezaFecIni + " date, "
+            + dolorArticularFecIni + " date, "
+            + dolorMuscularFecIni + " date, "
+            + dificultadRespiratoriaFecIni + " date, "
+            + pocoApetitoFecIni + " date, "
+            + dolorGargantaFecIni + " date, "
+            + secrecionNasalFecIni + " date, "
+            + picorGargantaFecIni + " date, "
+            + expectoracionFecIni + " date, "
+            + rashFecIni + " date, "
+            + urticariaFecIni + " date, "
+            + conjuntivitisFecIni + " date, "
+            + diarreaFecIni + " date, "
+            + vomitoFecIni + " date, "
+            + quedoCamaFecIni + " date, "
+            + respiracionRuidosaFecIni + " date, "
+            + respiracionRapidaFecIni + " date, "
+            + perdidaOlfatoFecIni + " date, "
+            + congestionNasalFecIni + " date, "
+            + perdidaGustoFecIni + " date, "
+            + desmayosFecIni + " date, "
+            + sensacionPechoApretadoFecIni + " date, "
+            + dolorPechoFecIni + " date, "
+            + sensacionFaltaAireFecIni + " date, "
+            + fatigaFecIni + " date, "
+            + fiebreFecFin + " date, "
+            + tosFecFin + " date, "
+            + dolorCabezaFecFin + " date, "
+            + dolorArticularFecFin + " date, "
+            + dolorMuscularFecFin + " date, "
+            + dificultadRespiratoriaFecFin + " date, "
+            + pocoApetitoFecFin + " date, "
+            + dolorGargantaFecFin + " date, "
+            + secrecionNasalFecFin + " date, "
+            + picorGargantaFecFin + " date, "
+            + expectoracionFecFin + " date, "
+            + rashFecFin + " date, "
+            + urticariaFecFin + " date, "
+            + conjuntivitisFecFin + " date, "
+            + diarreaFecFin + " date, "
+            + vomitoFecFin + " date, "
+            + quedoCamaFecFin + " date, "
+            + respiracionRuidosaFecFin + " date, "
+            + respiracionRapidaFecFin + " date, "
+            + perdidaOlfatoFecFin + " date, "
+            + congestionNasalFecFin + " date, "
+            + perdidaGustoFecFin + " date, "
+            + desmayosFecFin + " date, "
+            + sensacionPechoApretadoFecFin + " date, "
+            + dolorPechoFecFin + " date, "
+            + sensacionFaltaAireFecFin + " date, "
+            + fatigaFecFin + " date, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + codigoCasoSintoma + "));";
 
 }

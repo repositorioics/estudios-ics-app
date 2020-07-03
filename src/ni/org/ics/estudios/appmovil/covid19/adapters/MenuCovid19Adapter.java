@@ -54,6 +54,10 @@ public class MenuCovid19Adapter extends ArrayAdapter<String> {
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
 			case 4:
+				img = getContext().getResources().getDrawable(R.drawable.ic_menu_chat_dashboard);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;
+			case 5:
 				img = getContext().getResources().getDrawable(R.drawable.ic_menu_revert);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;

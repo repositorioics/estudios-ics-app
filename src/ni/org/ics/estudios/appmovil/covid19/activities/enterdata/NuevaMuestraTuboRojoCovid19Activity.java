@@ -24,6 +24,7 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
+import ni.org.ics.estudios.appmovil.domain.covid19.VisitaFinalCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.covid19.VisitaSeguimientoCasoCovid19;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
@@ -63,8 +64,8 @@ public class NuevaMuestraTuboRojoCovid19Activity extends FragmentActivity implem
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
     private static ParticipanteCasoCovid19 participanteCasoCovid19 = new ParticipanteCasoCovid19();
-    private static VisitaSeguimientoCasoCovid19 visitaCaso = new VisitaSeguimientoCasoCovid19();
-    //private static VisitaVacunaUO1 visitaVacuna = new VisitaVacunaUO1();
+    private static VisitaSeguimientoCasoCovid19 visitaCaso = null;
+    private static VisitaFinalCasoCovid19 visitaFinal = null;
     private String username;
     private SharedPreferences settings;
     private static final int EXIT = 1;
@@ -85,12 +86,17 @@ public class NuevaMuestraTuboRojoCovid19Activity extends FragmentActivity implem
                         null);
         infoMovil = new DeviceInfo(NuevaMuestraTuboRojoCovid19Activity.this);
         accion = getIntent().getStringExtra(Constants.ACCION);
-        if (getIntent().getExtras().getSerializable(Constants.VISITA) instanceof VisitaSeguimientoCasoCovid19)
+        if (getIntent().getExtras().getSerializable(Constants.VISITA) instanceof VisitaSeguimientoCasoCovid19){
             visitaCaso = (VisitaSeguimientoCasoCovid19) getIntent().getExtras().getSerializable(Constants.VISITA);
-        /*else
-            visitaVacuna = (VisitaVacunaUO1) getIntent().getExtras().getSerializable(Constants.VISITA);*/
+            visitaFinal = null;
+        }
+        if (getIntent().getExtras().getSerializable(Constants.VISITA) instanceof VisitaFinalCasoCovid19) {
+            visitaFinal = (VisitaFinalCasoCovid19) getIntent().getExtras().getSerializable(Constants.VISITA);
+            visitaCaso = null;
+        }
 
         if (visitaCaso!=null) participanteCasoCovid19 = visitaCaso.getCodigoParticipanteCaso();
+        else participanteCasoCovid19 = visitaFinal.getCodigoParticipanteCaso();
 
         volumenMaximoPermitido = getIntent().getDoubleExtra(Constants.VOLUMEN, 14);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
@@ -179,8 +185,10 @@ public class NuevaMuestraTuboRojoCovid19Activity extends FragmentActivity implem
         vol.setRangeValidation(true, 0, volumenMaximoPermitido.intValue());
         BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoMx());
         pagetmp.setmCodePosicion(1);
-        //if (accion.equalsIgnoreCase(Constants.CODIGO_PROPOSITO_COVID_CP)) //Covid19
-            pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.[C|F|I|S]R[I|F]$");
+        if (visitaCaso!=null)
+            pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.[C|F|I|S]RI$");
+        else
+            pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.[C|F|I|S]RF$");
 
         onPageTreeChanged();
         updateBottomBar();
@@ -490,10 +498,10 @@ public class NuevaMuestraTuboRojoCovid19Activity extends FragmentActivity implem
             muestra.setDescOtraRazonNoToma(descOtraRazonNoToma);
             muestra.setDescOtraObservacion(descOtraObservacion);
             //Metadata
-            if (visitaCaso.getFechaVisita()!=null)
+            if (visitaCaso!=null)
                 muestra.setRecordDate(visitaCaso.getFechaVisita());
-            //else
-                //muestra.setRecordDate(visitaVacuna.getFechaVisita());
+            else
+                muestra.setRecordDate(visitaFinal.getFechaVisita());
             muestra.setRecordUser(username);
             muestra.setDeviceid(infoMovil.getDeviceId());
             muestra.setEstado('0');
@@ -502,15 +510,10 @@ public class NuevaMuestraTuboRojoCovid19Activity extends FragmentActivity implem
             estudiosAdapter.close();
             Intent i;
             Bundle arguments = new Bundle();
-            //if (accion.equalsIgnoreCase(Constants.CODIGO_PROPOSITO_COVID_CP)) {
-                arguments.putSerializable(Constants.VISITA, visitaCaso);
+            if (visitaCaso!=null) arguments.putSerializable(Constants.VISITA, visitaCaso);
+            if (visitaFinal !=null) arguments.putSerializable(Constants.VISITA_FINAL, visitaFinal);
                 i = new Intent(getApplicationContext(),
                         ListaMuestrasParticipanteCasoCovid19Activity.class);
-            /*}else {
-                arguments.putSerializable(Constants.VISITA, visitaVacuna);
-                i = new Intent(getApplicationContext(),
-                        ListaMuestrasVacunasUO1Activity.class);
-            }*/
             i.putExtras(arguments);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);

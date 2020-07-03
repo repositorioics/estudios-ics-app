@@ -34,6 +34,7 @@ public class ListaVisitasParticipanteCasoCovid19Activity extends AbstractAsyncLi
 	private Button mButton;
 	private Button mAddVisitButton;
 	private Button mFailVisitsButton;
+	private Button mFinalVisitButton;
 	private static ParticipanteCasoCovid19 partCaso = new ParticipanteCasoCovid19();
     private VisitaSeguimientoCasoCovid19 visitaCasoCovid19 = new VisitaSeguimientoCasoCovid19();
 	private ArrayAdapter<VisitaSeguimientoCasoCovid19> mVisitaFallidaCasoAdapter;
@@ -74,10 +75,7 @@ public class ListaVisitasParticipanteCasoCovid19Activity extends AbstractAsyncLi
 		mButton = (Button) findViewById(R.id.view_samp_button_cv19);
 		mButton.setVisibility(View.GONE);
 
-		mButton = (Button) findViewById(R.id.final_visit_button_cv19);
-		mButton.setVisibility(View.GONE);
-
-		mButton = (Button) findViewById(R.id.update_cases_cv19);
+		mButton = (Button) findViewById(R.id.send_case_cv19);
 		mButton.setVisibility(View.GONE);
 
 
@@ -106,6 +104,20 @@ public class ListaVisitasParticipanteCasoCovid19Activity extends AbstractAsyncLi
 				arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
 				Intent i = new Intent(getApplicationContext(),
 						ListaVisitasFallidasCasoCovid19Activity.class);
+				i.putExtras(arguments);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				finish();
+			}
+		});
+		mFinalVisitButton = (Button) findViewById(R.id.final_visit_button_cv19);
+		mFinalVisitButton.setOnClickListener(new View.OnClickListener()  {
+			@Override
+			public void onClick(View v) {
+				Bundle arguments = new Bundle();
+				arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
+				Intent i = new Intent(getApplicationContext(),
+						ListaVisitasFinalesCasoCovid19Activity.class);
 				i.putExtras(arguments);
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);

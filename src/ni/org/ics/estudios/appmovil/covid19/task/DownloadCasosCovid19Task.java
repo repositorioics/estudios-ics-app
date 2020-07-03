@@ -6,6 +6,9 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.tasks.DownloadTask
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.covid19.*;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
+import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -35,6 +38,10 @@ public class DownloadCasosCovid19Task extends DownloadTask {
     private List<VisitaFallidaCasoCovid19> mVisitasFall = null;
     private List<CandidatoTransmisionCovid19> mCandidatos = null;
     private List<DatosAislamientoVisitaCasoCovid19> mAislamientos = null;
+    private List<ParticipanteProcesos> mParticipantesProc = null;
+    private List<VisitaFinalCasoCovid19> mVisitasFinales = null;
+    private List<SintomasVisitaFinalCovid19> mSintomasFinal = null;
+
 
     public static final String CASOS_COVID19 = "1";
     public static final String PARTICIPANTE_COVID19 = "2";
@@ -44,8 +51,11 @@ public class DownloadCasosCovid19Task extends DownloadTask {
     public static final String VISITAS_FALL_CASOS_COVID19 = "6";
     public static final String CANDIDATOS_COVID19 = "7";
     public static final String DATOS_AISLAMIENTO_COVID19 = "8";
+    public static final String PARTICIPANTE_PROC = "9";
+    public static final String VISITAS_FINALES_COVID19 = "10";
+    public static final String SINT_VISITAS_FINALES_COVID19 = "11";
 
-    private static final String TOTAL_TASK_CASOS = "8";
+    private static final String TOTAL_TASK_CASOS = "11";
 
 	private String error = null;
 	private String url = null;
@@ -83,6 +93,8 @@ public class DownloadCasosCovid19Task extends DownloadTask {
             estudioAdapter.borrarCandidatoTransmisionCovid19();
             estudioAdapter.borrarSintomasVisitaCasoCovid19();
             estudioAdapter.borrarDatosAislamientoVisitaCasoCovid19();
+            estudioAdapter.borrarVisitaFinalCasoCovid19();
+            estudioAdapter.borrarSintomasVisitaFinalCovid19();
             if (mCasos != null){
                 v = mCasos.size();
                 ListIterator<CasoCovid19> iter = mCasos.listIterator();
@@ -161,8 +173,46 @@ public class DownloadCasosCovid19Task extends DownloadTask {
                     publishProgress("Insertando datos aislamiento COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
-                mCandidatos = null;
+                mAislamientos = null;
             }
+            if (mParticipantesProc != null){
+                v = mParticipantesProc.size();
+                ListIterator<ParticipanteProcesos> iter = mParticipantesProc.listIterator();
+                while (iter.hasNext()){
+                    ParticipanteProcesos proc = iter.next();
+                    if (estudioAdapter.getParticipanteProcesos(ConstantsDB.CODIGO + "="+proc.getCodigo(), null)==null)
+                        estudioAdapter.crearParticipanteProcesos(proc);
+                    else {
+                        //estudioAdapter.borrarProcesoCovid(ConstantsDB.CODIGO + "="+proc.getCodigo());
+                        estudioAdapter.actualizarParticipanteProcesos(proc);
+                    }
+                    publishProgress("Insertando procesos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mParticipantesProc = null;
+            }
+            if (mVisitasFinales != null){
+                v = mVisitasFinales.size();
+                ListIterator<VisitaFinalCasoCovid19> iter = mVisitasFinales.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearVisitaFinalCasoCovid19(iter.next());
+                    publishProgress("Insertando datos visitas finales COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mVisitasFinales = null;
+            }
+
+            if (mSintomasFinal != null){
+                v = mSintomasFinal.size();
+                ListIterator<SintomasVisitaFinalCovid19> iter = mSintomasFinal.listIterator();
+                while (iter.hasNext()){
+                    estudioAdapter.crearSintomasVisitaFinalCovid19(iter.next());
+                    publishProgress("Insertando datos síntomas visitas finales COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                            .valueOf(v).toString());
+                }
+                mSintomasFinal = null;
+            }
+
         } catch (Exception e) {
             // Regresa error al insertar
             e.printStackTrace();
@@ -280,6 +330,43 @@ public class DownloadCasosCovid19Task extends DownloadTask {
 
             // convert the array to a list and return it
             mAislamientos = Arrays.asList(responseEntityDA.getBody());
+
+            //Descargando participantes procesos covid19
+            // The URL for making the GET request
+            urlRequest = url + "/movil/participantesprocesosCovid19";
+            publishProgress("Solicitando procesos de participantes",PARTICIPANTE_PROC,TOTAL_TASK_CASOS);
+
+            // Perform the HTTP GET request
+            ResponseEntity<ParticipanteProcesos[]> responseEntityPartProc = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ParticipanteProcesos[].class);
+
+            // convert the array to a list and return it
+            mParticipantesProc = Arrays.asList(responseEntityPartProc.getBody());
+
+            //Descargando visitas finales covid19
+            // The URL for making the GET request
+            urlRequest = url + "/movil/visitasFinalesCovid19";
+            publishProgress("Solicitando visitas finales COVID19",VISITAS_FINALES_COVID19,TOTAL_TASK_CASOS);
+
+            // Perform the HTTP GET request
+            ResponseEntity<VisitaFinalCasoCovid19[]> responseEntityVF = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    VisitaFinalCasoCovid19[].class);
+
+            // convert the array to a list and return it
+            mVisitasFinales = Arrays.asList(responseEntityVF.getBody());
+
+            //Descargando síntomas visitas finales covid19
+            // The URL for making the GET request
+            urlRequest = url + "/movil/sintVisitasFinalesCovid19";
+            publishProgress("Solicitando síntomas visitas finales COVID19",SINT_VISITAS_FINALES_COVID19,TOTAL_TASK_CASOS);
+
+            // Perform the HTTP GET request
+            ResponseEntity<SintomasVisitaFinalCovid19[]> responseEntitySVF = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    SintomasVisitaFinalCovid19[].class);
+
+            // convert the array to a list and return it
+            mSintomasFinal = Arrays.asList(responseEntitySVF.getBody());
+
 
             return null;
         } catch (Exception e) {

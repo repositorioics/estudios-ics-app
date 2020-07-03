@@ -16,23 +16,6 @@
 
 package ni.org.ics.estudios.appmovil.bluetooth.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ni.org.ics.estudios.appmovil.MyIcsApplication;
-import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.bluetooth.common.logger.Log;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuCasaActivity;
-import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
-import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
-import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -43,28 +26,41 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import ni.org.ics.estudios.appmovil.MyIcsApplication;
+import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.bluetooth.common.logger.Log;
+import ni.org.ics.estudios.appmovil.covid19.activities.list.ListaParticipantesCasoCovid19Activity;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.covid19.CandidatoTransmisionCovid19;
+import ni.org.ics.estudios.appmovil.domain.covid19.CasoCovid19;
+import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
+import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCovid19;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
+import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
+import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.Covid19DBConstants;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * This fragment controls Bluetooth to communicate with other devices.
  */
-public class BluetoothChatFragment extends Fragment {
+public class BluetoothChatCovid19Fragment extends Fragment {
 
-    private static final String TAG = "BluetoothChatFragment";
+    private static final String TAG = "BluetoothChatCovid19Fragment";
 
     // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
@@ -96,23 +92,25 @@ public class BluetoothChatFragment extends Fragment {
     private BluetoothChatService mChatService = null;
     
     private EstudiosAdapter estudiosAdapter;
-    private CasaCohorteFamilia mCasa;
-    private List<ParticipanteCohorteFamilia> mParticipantes = new ArrayList<ParticipanteCohorteFamilia>();
-    private List<ParticipanteSeroprevalencia> mParticipantesSero = new ArrayList<ParticipanteSeroprevalencia>();
-    private List<ParticipanteCohorteFamiliaCaso> mParticipantesCasos = new ArrayList<ParticipanteCohorteFamiliaCaso>();
+    private CasoCovid19 mCaso;
+    private List<Participante> mParticipantes = new ArrayList<Participante>();
+    private List<ParticipanteCohorteFamilia> mParticipantesChf = new ArrayList<ParticipanteCohorteFamilia>();
+    private List<ParticipanteCovid19> mParticipantesCovid = new ArrayList<ParticipanteCovid19>();
+    private List<ParticipanteCasoCovid19> mParticipantesCasos = new ArrayList<ParticipanteCasoCovid19>();
     private int contador = 0;
     private int totalPartEnviar = 0;
+    private int totalPartCovEnviar = 0;
     private int totalPartEnviados = 0;
-    private int totalPartSeroEnviar = 0;
-    private int totalPartSeroEnviados = 0;
     private int totalProcEnviados = 0;
+    private int totalPartCovEnviados = 0;
     private int totalPartCasosEnviar = 0;
     private int totalCasosEnviados = 0;
-    private String casaSQL;
-    private String codigoCHF;
+    private String casoSQL;
+    private String codigoCaso;
     private String[] participantesSQL;
+    private String[] participantesCovidSQL;
     private String[] participantesChfSQL;
-    private String[] participantesSeroSQL;
+    //private String[] participantesSeroSQL;
     private String[] participantesProcSQL;//procesos
     private String[] participantesCasosSQL;//casos seguimiento
     private String accion;
@@ -126,15 +124,16 @@ public class BluetoothChatFragment extends Fragment {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     	String mPass = ((MyIcsApplication) this.getActivity().getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getActivity(),mPass,false,false);
-		mCasa = (CasaCohorteFamilia) getActivity().getIntent().getExtras().getSerializable(Constants.CASA);
+		mCaso = (CasoCovid19) getActivity().getIntent().getExtras().getSerializable(Constants.CASA);
 		accion = getActivity().getIntent().getStringExtra(Constants.ACCION);
-		if(mCasa!=null){
+		if(mCaso !=null){
 			new GetDataCasaTask().execute();
 		}
         // If the adapter is null, then Bluetooth is not supported
 		participantesSQL = new String[30];
+        participantesCovidSQL = new String[30];
 		participantesChfSQL = new String[30];
-		participantesSeroSQL = new String[30];
+		//participantesSeroSQL = new String[30];
         participantesProcSQL = new String[30];
         participantesCasosSQL = new String[30];
         if (mBluetoothAdapter == null) {
@@ -196,7 +195,7 @@ public class BluetoothChatFragment extends Fragment {
         mConversationView = (ListView) view.findViewById(R.id.in);
         mSendButton = (Button) view.findViewById(R.id.button_send);
         if (accion.equals(Constants.SENDING)) {
-        	mSendButton.setText(this.getString(R.string.send_house) + " " + mCasa.getCodigoCHF());
+        	mSendButton.setText(this.getString(R.string.send_house) + " " + mCaso.getCasa().getCodigoCHF());
         	mSendButton.setEnabled(true);
         }
         else{
@@ -227,7 +226,7 @@ public class BluetoothChatFragment extends Fragment {
                         Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
                         return;
                     }
-        			enviarCasa();
+        			enviarCaso();
                 	
                 }
             }
@@ -435,87 +434,80 @@ public class BluetoothChatFragment extends Fragment {
         }
     }
     
-    private void enviarCasa(){
-    	String insertCasaSQL;
+    private void enviarCaso(){
+    	String insertCasoSQL;
     	
-    	String codCasaCHF = "'"+ mCasa.getCodigoCHF() +"'";
-    	Integer codCasa = mCasa.getCasa().getCodigo();
-    	String nom1JF = "'"+ mCasa.getNombre1JefeFamilia()+"'";
-    	String nom2JF = null;
-    	if(mCasa.getNombre2JefeFamilia()!=null) nom2JF  = "'"+ mCasa.getNombre2JefeFamilia()+"'";
-    	String ape1JF = "'"+ mCasa.getApellido1JefeFamilia()+"'";
-    	String ape2JF = null;
-    	if(mCasa.getApellido2JefeFamilia()!=null) ape2JF  = "'"+ mCasa.getApellido2JefeFamilia()+"'";
-    	Double latitud = mCasa.getLatitud();
-    	Double longitud = mCasa.getLongitud();
-    	Long fr = mCasa.getRecordDate().getTime();
+    	String codigoCaso = "'"+ mCaso.getCodigoCaso() +"'";
+    	String casa = "null";
+    	if (mCaso.getCasa()!=null) casa = "'"+ mCaso.getCasa().getCodigoCHF()+"'";
+    	String inactivo = "'"+ mCaso.getInactivo()+"'";
+    	Long fechaIngreso = mCaso.getFechaIngreso().getTime();
+    	Long fr = mCaso.getRecordDate().getTime();
+
     	String userName = null;
-    	if(mCasa.getRecordUser()!=null) userName  = "'"+ mCasa.getRecordUser()+"'";
+    	if(mCaso.getRecordUser()!=null) userName  = "'"+ mCaso.getRecordUser()+"'";
     	String pasivo = null;
-    	if(String.valueOf(mCasa.getPasive())!=null) pasivo  = "'"+ mCasa.getPasive()+"'";
+    	if(String.valueOf(mCaso.getPasive())!=null) pasivo  = "'"+ mCaso.getPasive()+"'";
     	String deviceId = null;
-    	if(mCasa.getDeviceid()!=null) deviceId  = "'"+ mCasa.getDeviceid()+"'";
+    	if(mCaso.getDeviceid()!=null) deviceId  = "'"+ mCaso.getDeviceid()+"'";
     	String enviado = null;
-    	if(String.valueOf(mCasa.getEstado())!=null) enviado  = "'"+ mCasa.getEstado()+"'";
+    	if(String.valueOf(mCaso.getEstado())!=null) enviado  = "'"+ mCaso.getEstado()+"'";
     	
-    	insertCasaSQL = "INSERT INTO chf_casas_cohorte_familia VALUES ("+
-    			codCasaCHF +","+
-    			codCasa +","+
-    			nom1JF +","+
-    			nom2JF +","+
-    			ape1JF +","+
-    			ape2JF +","+
-    			latitud +","+
-    			longitud +","+
-				fr +","+
+    	insertCasoSQL = "INSERT INTO covid_casos VALUES ("+
+                codigoCaso +","+
+                casa +","+
+                inactivo +","+
+                fechaIngreso +","+
+                (mCaso.getFechaInactivo()!=null?mCaso.getFechaInactivo().getTime():"null")+","+
+                fr +","+
 				userName +","+
 				pasivo +","+
 				deviceId +","+
 				enviado +")";
     	//EMISOR----> Envía Casa
-    	sendMessage(insertCasaSQL);
+    	sendMessage(insertCasoSQL);
     }
     
     private void enviarParticipante(int cuenta){
     	String insertParticipanteSQL;
-    	
-    	Integer codigo = mParticipantes.get(cuenta).getParticipante().getCodigo();
-    	String nom1Part = "'"+ mParticipantes.get(cuenta).getParticipante().getNombre1()+"'";
-    	String nom2Part = null;
-    	if(mParticipantes.get(cuenta).getParticipante().getNombre2()!=null) nom2Part  = "'"+ mParticipantes.get(cuenta).getParticipante().getNombre2()+"'";
-    	String ape1Part = "'"+ mParticipantes.get(cuenta).getParticipante().getApellido1() +"'";
-    	String ape2Part = null;
-    	if(mParticipantes.get(cuenta).getParticipante().getApellido2()!=null) ape2Part  = "'"+ mParticipantes.get(cuenta).getParticipante().getApellido2() +"'";
-    	String sexo = "'"+ mParticipantes.get(cuenta).getParticipante().getSexo() +"'";
-    	Long fn = mParticipantes.get(cuenta).getParticipante().getFechaNac().getTime();
-    	String nom1Padre = null;
-    	if(mParticipantes.get(cuenta).getParticipante().getNombre1Padre()!=null) nom1Padre  = "'"+ mParticipantes.get(cuenta).getParticipante().getNombre1Padre()+"'";
-    	String nom2Padre = null;
-    	if(mParticipantes.get(cuenta).getParticipante().getNombre2Padre()!=null) nom2Padre  = "'"+ mParticipantes.get(cuenta).getParticipante().getNombre2Padre()+"'";
-    	String ape1Padre = null;
-    	if(mParticipantes.get(cuenta).getParticipante().getApellido1Padre()!=null) ape1Padre  = "'"+ mParticipantes.get(cuenta).getParticipante().getApellido1Padre()+"'";
-    	String ape2Padre = null;
-    	if(mParticipantes.get(cuenta).getParticipante().getApellido2Padre()!=null) ape2Padre  = "'"+ mParticipantes.get(cuenta).getParticipante().getApellido2Padre()+"'";    	
-    	String nom1Madre = null;
-    	if(mParticipantes.get(cuenta).getParticipante().getNombre1Madre()!=null) nom1Madre  = "'"+ mParticipantes.get(cuenta).getParticipante().getNombre1Madre()+"'";
-    	String nom2Madre = null;
-    	if(mParticipantes.get(cuenta).getParticipante().getNombre2Madre()!=null) nom2Madre  = "'"+ mParticipantes.get(cuenta).getParticipante().getNombre2Madre()+"'";
-    	String ape1Madre = null;
-    	if(mParticipantes.get(cuenta).getParticipante().getApellido1Madre()!=null) ape1Madre  = "'"+ mParticipantes.get(cuenta).getParticipante().getApellido1Madre()+"'";
-    	String ape2Madre = null;
-    	if(mParticipantes.get(cuenta).getParticipante().getApellido2Madre()!=null) ape2Madre  = "'"+ mParticipantes.get(cuenta).getParticipante().getApellido2Madre()+"'";
-    	Integer codCasa = mParticipantes.get(cuenta).getParticipante().getCasa().getCodigo();
-    	Long fr = mParticipantes.get(cuenta).getRecordDate().getTime();
-    	String userName = null;
-    	if(mParticipantes.get(cuenta).getRecordUser()!=null) userName  = "'"+ mParticipantes.get(cuenta).getRecordUser()+"'";
-    	String pasivo = null;
-    	if(String.valueOf(mParticipantes.get(cuenta).getPasive())!=null) pasivo  = "'"+ mParticipantes.get(cuenta).getPasive()+"'";
-    	String deviceId = null;
-    	if(mParticipantes.get(cuenta).getDeviceid()!=null) deviceId  = "'"+ mParticipantes.get(cuenta).getDeviceid()+"'";
-    	String enviado = null;
-    	if(String.valueOf(mParticipantes.get(cuenta).getEstado())!=null) enviado  = "'"+ mParticipantes.get(cuenta).getEstado()+"'";
-    	
-    	insertParticipanteSQL = "INSERT INTO participantes VALUES ("+ 
+
+        Integer codigo = mParticipantes.get(cuenta).getCodigo();
+        String nom1Part = "'"+ mParticipantes.get(cuenta).getNombre1()+"'";
+        String nom2Part = null;
+        if(mParticipantes.get(cuenta).getNombre2()!=null) nom2Part  = "'"+ mParticipantes.get(cuenta).getNombre2()+"'";
+        String ape1Part = "'"+ mParticipantes.get(cuenta).getApellido1() +"'";
+        String ape2Part = null;
+        if(mParticipantes.get(cuenta).getApellido2()!=null) ape2Part  = "'"+ mParticipantes.get(cuenta).getApellido2() +"'";
+        String sexo = "'"+ mParticipantes.get(cuenta).getSexo() +"'";
+        Long fn = mParticipantes.get(cuenta).getFechaNac().getTime();
+        String nom1Padre = null;
+        if(mParticipantes.get(cuenta).getNombre1Padre()!=null) nom1Padre  = "'"+ mParticipantes.get(cuenta).getNombre1Padre()+"'";
+        String nom2Padre = null;
+        if(mParticipantes.get(cuenta).getNombre2Padre()!=null) nom2Padre  = "'"+ mParticipantes.get(cuenta).getNombre2Padre()+"'";
+        String ape1Padre = null;
+        if(mParticipantes.get(cuenta).getApellido1Padre()!=null) ape1Padre  = "'"+ mParticipantes.get(cuenta).getApellido1Padre()+"'";
+        String ape2Padre = null;
+        if(mParticipantes.get(cuenta).getApellido2Padre()!=null) ape2Padre  = "'"+ mParticipantes.get(cuenta).getApellido2Padre()+"'";
+        String nom1Madre = null;
+        if(mParticipantes.get(cuenta).getNombre1Madre()!=null) nom1Madre  = "'"+ mParticipantes.get(cuenta).getNombre1Madre()+"'";
+        String nom2Madre = null;
+        if(mParticipantes.get(cuenta).getNombre2Madre()!=null) nom2Madre  = "'"+ mParticipantes.get(cuenta).getNombre2Madre()+"'";
+        String ape1Madre = null;
+        if(mParticipantes.get(cuenta).getApellido1Madre()!=null) ape1Madre  = "'"+ mParticipantes.get(cuenta).getApellido1Madre()+"'";
+        String ape2Madre = null;
+        if(mParticipantes.get(cuenta).getApellido2Madre()!=null) ape2Madre  = "'"+ mParticipantes.get(cuenta).getApellido2Madre()+"'";
+        Integer codCasa = mParticipantes.get(cuenta).getCasa().getCodigo();
+        Long fr = mParticipantes.get(cuenta).getRecordDate().getTime();
+        String userName = null;
+        if(mParticipantes.get(cuenta).getRecordUser()!=null) userName  = "'"+ mParticipantes.get(cuenta).getRecordUser()+"'";
+        String pasivo = null;
+        if(String.valueOf(mParticipantes.get(cuenta).getPasive())!=null) pasivo  = "'"+ mParticipantes.get(cuenta).getPasive()+"'";
+        String deviceId = null;
+        if(mParticipantes.get(cuenta).getDeviceid()!=null) deviceId  = "'"+ mParticipantes.get(cuenta).getDeviceid()+"'";
+        String enviado = null;
+        if(String.valueOf(mParticipantes.get(cuenta).getEstado())!=null) enviado  = "'"+ mParticipantes.get(cuenta).getEstado()+"'";
+
+        insertParticipanteSQL = "INSERT INTO participantes VALUES ("+
 				codigo +","+
 				nom1Part +","+
 				nom2Part +","+
@@ -539,26 +531,50 @@ public class BluetoothChatFragment extends Fragment {
 				enviado +")";
     	sendMessage(insertParticipanteSQL);
     }
-    
-    
+
     private void enviarParticipanteCHF(int cuenta){
-    	String insertParticipanteChfSQL;
+        String insertParticipanteChfSQL;
+
+        Integer codigo = mParticipantesChf.get(cuenta).getParticipante().getCodigo();
+        String codCasa = mParticipantesChf.get(cuenta).getCasaCHF().getCodigoCHF();
+        Long fr = mParticipantesChf.get(cuenta).getRecordDate().getTime();
+        String userName = null;
+        if(mParticipantesChf.get(cuenta).getRecordUser()!=null) userName  = "'"+ mParticipantesChf.get(cuenta).getRecordUser()+"'";
+        String pasivo = null;
+        if(String.valueOf(mParticipantesChf.get(cuenta).getPasive())!=null) pasivo  = "'"+ mParticipantesChf.get(cuenta).getPasive()+"'";
+        String deviceId = null;
+        if(mParticipantes.get(cuenta).getDeviceid()!=null) deviceId  = "'"+ mParticipantesChf.get(cuenta).getDeviceid()+"'";
+        String enviado = null;
+        if(String.valueOf(mParticipantesChf.get(cuenta).getEstado())!=null) enviado  = "'"+ mParticipantesChf.get(cuenta).getEstado()+"'";
+
+        insertParticipanteChfSQL = "INSERT INTO chf_participantes VALUES ("+
+                codigo +","+
+                codCasa +","+
+                fr +","+
+                userName +","+
+                pasivo +","+
+                deviceId +","+
+                enviado +")";
+        sendMessage(insertParticipanteChfSQL);
+    }
+
+    private void enviarParticipanteCovid(int cuenta){
+        //solo uno
+        String insertParticipanteChfSQL;
     	
-    	Integer codigo = mParticipantes.get(cuenta).getParticipante().getCodigo();
-    	String codCasa = mParticipantes.get(cuenta).getCasaCHF().getCodigoCHF();
-    	Long fr = mParticipantes.get(cuenta).getRecordDate().getTime();
+    	Integer codigo = mParticipantesCovid.get(cuenta).getParticipante().getCodigo();
+    	Long fr = mParticipantesCovid.get(cuenta).getRecordDate().getTime();
     	String userName = null;
-    	if(mParticipantes.get(cuenta).getRecordUser()!=null) userName  = "'"+ mParticipantes.get(cuenta).getRecordUser()+"'";
+    	if(mParticipantesCovid.get(cuenta).getRecordUser()!=null) userName  = "'"+ mParticipantesCovid.get(cuenta).getRecordUser()+"'";
     	String pasivo = null;
-    	if(String.valueOf(mParticipantes.get(cuenta).getPasive())!=null) pasivo  = "'"+ mParticipantes.get(cuenta).getPasive()+"'";
+    	if(String.valueOf(mParticipantesCovid.get(cuenta).getPasive())!=null) pasivo  = "'"+ mParticipantesCovid.get(cuenta).getPasive()+"'";
     	String deviceId = null;
-    	if(mParticipantes.get(cuenta).getDeviceid()!=null) deviceId  = "'"+ mParticipantes.get(cuenta).getDeviceid()+"'";
+    	if(mParticipantes.get(cuenta).getDeviceid()!=null) deviceId  = "'"+ mParticipantesCovid.get(cuenta).getDeviceid()+"'";
     	String enviado = null;
-    	if(String.valueOf(mParticipantes.get(cuenta).getEstado())!=null) enviado  = "'"+ mParticipantes.get(cuenta).getEstado()+"'";
+    	if(String.valueOf(mParticipantesCovid.get(cuenta).getEstado())!=null) enviado  = "'"+ mParticipantesCovid.get(cuenta).getEstado()+"'";
     	
-    	insertParticipanteChfSQL = "INSERT INTO chf_participantes VALUES ("+
+    	insertParticipanteChfSQL = "INSERT INTO covid_participantes VALUES ("+
     									codigo +","+
-    									codCasa +","+
     									fr +","+
     									userName +","+
     									pasivo +","+
@@ -567,21 +583,9 @@ public class BluetoothChatFragment extends Fragment {
     	sendMessage(insertParticipanteChfSQL);
     }
     
-    private void enviarParticipanteSero(int cuenta){
-    	String insertParticipanteSeroSQL;
-    	insertParticipanteSeroSQL = "INSERT INTO sa_participante_seroprevalencia VALUES ("+
-    			mParticipantesSero.get(cuenta).getParticipante().getCodigo()+","+
-    			mParticipantesSero.get(cuenta).getCasaCHF().getCodigoCHF()+","+
-    			mParticipantesSero.get(cuenta).getRecordDate().getTime()+",'"+
-    			mParticipantesSero.get(cuenta).getRecordUser()+"','"+
-    			mParticipantesSero.get(cuenta).getPasive()+"','"+
-    			mParticipantesSero.get(cuenta).getDeviceid()+"','0')";
-    	sendMessage(insertParticipanteSeroSQL);
-    }
-
     private void enviarParticipanteProc(int cuenta){
         String insertParticipanteProcSQL;
-        ParticipanteProcesos mParticipantesProc = mParticipantes.get(cuenta).getParticipante().getProcesos();
+        ParticipanteProcesos mParticipantesProc = mParticipantes.get(cuenta).getProcesos();
         insertParticipanteProcSQL = "INSERT INTO participantes_procesos VALUES ("+
                 mParticipantesProc.getCodigo()+","+
                 mParticipantesProc.getEstPart()+",'"+
@@ -642,12 +646,15 @@ public class BluetoothChatFragment extends Fragment {
 
     private void enviarParticipanteCaso(int cuenta){
         String insertParticipanteCasoSQL;
-        insertParticipanteCasoSQL = "INSERT INTO chf_participantes_casos VALUES ('"+
+        insertParticipanteCasoSQL = "INSERT INTO covid_participantes_casos VALUES ('"+
                 mParticipantesCasos.get(cuenta).getCodigoCasoParticipante()+"','"+
                 mParticipantesCasos.get(cuenta).getCodigoCaso().getCodigoCaso()+"',"+
-                mParticipantesCasos.get(cuenta).getParticipante().getParticipante().getCodigo()+",'"+
+                mParticipantesCasos.get(cuenta).getParticipante().getCodigo()+",'"+
                 mParticipantesCasos.get(cuenta).getEnfermo()+"',"+
-                (mParticipantesCasos.get(cuenta).getFechaEnfermedad()!=null?mParticipantesCasos.get(cuenta).getFechaEnfermedad().getTime():"null")+","+
+                (mParticipantesCasos.get(cuenta).getPositivoPor()!=null?"'"+mParticipantesCasos.get(cuenta).getPositivoPor()+"'":"null")+","+
+                (mParticipantesCasos.get(cuenta).getFif()!=null?mParticipantesCasos.get(cuenta).getFif().getTime():"null")+","+
+                (mParticipantesCasos.get(cuenta).getFis()!=null?mParticipantesCasos.get(cuenta).getFis().getTime():"null")+",'"+
+                mParticipantesCasos.get(cuenta).getConsentimiento()+"',"+
                 mParticipantesCasos.get(cuenta).getRecordDate().getTime()+",'"+
                 mParticipantesCasos.get(cuenta).getRecordUser()+"','"+
                 mParticipantesCasos.get(cuenta).getPasive()+"','"+
@@ -657,11 +664,11 @@ public class BluetoothChatFragment extends Fragment {
     
     private void manageReceiveHandShake(String mensaje){
     	//RECEPTOR---->Recibe Casa
-    	if(mensaje.startsWith("INSERT INTO chf_casas_cohorte_familia")){
-    		casaSQL = mensaje;
-    		int codigoComienza = 47;
-    		int codigoTermina = casaSQL.indexOf(",",0)-1;
-    		codigoCHF = casaSQL.substring(codigoComienza, codigoTermina);
+    	if(mensaje.startsWith("INSERT INTO covid_casos")){
+    		casoSQL = mensaje;
+    		int codigoComienza = 33;
+    		int codigoTermina = casoSQL.indexOf(",",0)-1;
+    		codigoCaso = casoSQL.substring(codigoComienza, codigoTermina);
     		try { Thread.sleep(500); }
     		catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
     		//RECEPTOR---->Manda mensaje fin de casa y comienza participante
@@ -696,7 +703,7 @@ public class BluetoothChatFragment extends Fragment {
     	else if(mensaje.startsWith("INSERT INTO participantes ")){
                 participantesSQL[totalPartEnviados] = mensaje;
     	}
-    	//RECEPTOR---->Recibe participante CHF
+        //RECEPTOR---->Recibe participante CHF
     	else if(mensaje.startsWith("INSERT INTO chf_participantes ")){
     		participantesChfSQL[totalPartEnviados] = mensaje;
     		totalPartEnviados++;
@@ -706,6 +713,41 @@ public class BluetoothChatFragment extends Fragment {
     		////RECEPTOR---->Manda mensaje de enviar otro participante
     		sendMessage(this.getString(R.string.start_part));
     	}
+    	/*ACA VAMOS */
+        //EMISOR---->Recibe mensaje de iniciar procesos participante
+        else if(mensaje.equals(this.getString(R.string.start_partcovid))){
+            //EMISOR---->Consulta si hay participantes por enviar
+            if(totalPartCovEnviar>contador){
+                try { Thread.sleep(500); }
+                catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
+                //EMISOR---->Envía participante covid
+                enviarParticipanteCovid(contador);
+                //Aumenta el contador
+                contador++;
+            }
+            //Si no hay procesos participantes covid inicia procesos
+            else{
+                //EMISOR---->Envia mensaje que terminaron participantes y reinicia contador
+                try { Thread.sleep(500); }
+                catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
+                contador = 0;
+                sendMessage(this.getString(R.string.finished_partcovid));
+            }
+        }//RECEPTOR---->Recibe participante covid
+        else if(mensaje.startsWith("INSERT INTO covid_participantes ")){
+            participantesCovidSQL[totalPartCovEnviados] = mensaje;
+            totalPartCovEnviados++;
+            ////RECEPTOR---->Manda mensaje de enviar otro participante proceso
+            sendMessage(this.getString(R.string.start_partcovid));
+        }
+        //RECEPTOR---->Recibe mensaje de que ya no hay participantes
+        else if(mensaje.equals(this.getString(R.string.finished_partcovid))){
+            //RECEPTOR---->Envia mensaje que inicien participantes procesos
+            try { Thread.sleep(500); }
+            catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
+            sendMessage(this.getString(R.string.start_partproc));
+        }
+        /*TERMINAMOS*/
         //EMISOR---->Recibe mensaje de iniciar procesos participante
         else if(mensaje.equals(this.getString(R.string.start_partproc))){
             //EMISOR---->Consulta si hay participantes por enviar
@@ -738,7 +780,7 @@ public class BluetoothChatFragment extends Fragment {
     		//RECEPTOR---->Envia mensaje que inicien participantes procesos
 			try { Thread.sleep(500); }
     		catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
-			sendMessage(this.getString(R.string.start_partproc));
+			sendMessage(this.getString(R.string.start_partcovid));
     	}
         //RECEPTOR---->Recibe mensaje de que ya no hay participantes
         else if(mensaje.equals(this.getString(R.string.finished_partproc))){
@@ -758,74 +800,39 @@ public class BluetoothChatFragment extends Fragment {
                 //Aumenta el contador
                 contador++;
             }
-            //Si no hay casos de participantes inicia seroprevalencia
+            //Si no hay casos de participantes terminar proceso
             else{
-                //EMISOR---->Envia mensaje que terminaron participantes y reinicia contador
+                //EMISOR---->Envía mensaje de finalizar
                 try { Thread.sleep(500); }
                 catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
-                contador = 0;
-                sendMessage(this.getString(R.string.finished_partcasos));
+                sendMessage(this.getString(R.string.finished));
+                try { Thread.sleep(2000); }
+                catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
+                //finaliza servicio
+                if (mChatService != null) {
+                    mChatService.stop();
+                    mChatService = null;
+                    mBluetoothAdapter.disable();
+                }
+                //Finaliza actividad
+                Bundle arguments = new Bundle();
+                if (mCaso !=null) arguments.putSerializable(Constants.CASA , mCaso);
+                Intent i = new Intent(getActivity(),
+                        ListaParticipantesCasoCovid19Activity.class);
+                i.putExtras(arguments);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                getActivity().finish();
+
             }
         }
         //RECEPTOR---->Recibe caso de participante
-        else if(mensaje.startsWith("INSERT INTO chf_participantes_casos")){
+        else if(mensaje.startsWith("INSERT INTO covid_participantes_casos")){
             participantesCasosSQL[totalCasosEnviados] = mensaje;
             totalCasosEnviados++;
             ////RECEPTOR---->Manda mensaje de enviar otro caso participante
             sendMessage(this.getString(R.string.start_partcasos));
         }
-        //RECEPTOR---->Recibe mensaje de que ya no hay casos
-        else if(mensaje.equals(this.getString(R.string.finished_partcasos))){
-            //RECEPTOR---->Envia mensaje que inicien participantes de seroprevalencia
-            try { Thread.sleep(500); }
-            catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
-            sendMessage(this.getString(R.string.start_partsa));
-        }
-    	//EMISOR---->Recibe mensaje de inicio de seroprevalencia
-    	else if(mensaje.equals(this.getString(R.string.start_partsa))){
-        	//EMISOR---->Consulta si hay participantes seroprev por enviar
-    		if(totalPartSeroEnviar>contador){
-    			//EMISOR---->Envía participante se seroprevalencia
-    			try { Thread.sleep(500); }
-        		catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
-    			enviarParticipanteSero(contador);
-    			//Aumenta el contador
-    			contador++;
-    		}
-    		//Si no hay participantes seroprevalencia finaliza
-    		else{
-    			//EMISOR---->Envía mensaje de finalizar
-    			try { Thread.sleep(500); }
-        		catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
-    			sendMessage(this.getString(R.string.finished));
-    			try { Thread.sleep(2000); }
-        		catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
-    			//finaliza servicio
-    			if (mChatService != null) {
-    	            mChatService.stop();
-    	            mChatService = null;
-    	            mBluetoothAdapter.disable();
-    	        }
-    			//Finaliza actividad
-    			Bundle arguments = new Bundle();
-		        if (mCasa!=null) arguments.putSerializable(Constants.CASA , mCasa);
-		        Intent i = new Intent(getActivity(),
-		        		MenuCasaActivity.class);
-		        i.putExtras(arguments);
-		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		        startActivity(i);
-	        	getActivity().finish();
-    		}
-    	}
-    	//RECEPTOR---->Recibe participante seroprevalencia
-    	else if(mensaje.startsWith("INSERT INTO sa_participante_seroprevalencia")){
-    		participantesSeroSQL[totalPartSeroEnviados] = mensaje;
-    		totalPartSeroEnviados++;
-    		try { Thread.sleep(500); }
-    		catch (InterruptedException ex) { android.util.Log.d(TAG, ex.toString()); }
-    		////RECEPTOR---->Manda mensaje de enviar otro participante
-    		sendMessage(this.getString(R.string.start_partsa));
-    	}
     	//RECEPTOR---->Recibe mensaje de que ya se termino, guarda y finaliza
     	else if(mensaje.equals(this.getString(R.string.finished))){
     		new SaveDataCasaTask().execute();
@@ -854,13 +861,15 @@ public class BluetoothChatFragment extends Fragment {
 		@Override
 		protected String doInBackground(String... arg0) {
 			// TODO Auto-generated method stub
-        	filtro = MainDBConstants.casaCHF + "="+ mCasa.getCodigoCHF();
-            String filtroCasos = CasosDBConstants.participante+" in (select participante from chf_participantes where casaCHF="+ mCasa.getCodigoCHF()+")";
+        	String filtroCaso = Covid19DBConstants.codigoCaso + "='"+ mCaso.getCodigoCaso()+"'";
+            String filtroCHf = Covid19DBConstants.participante+" in (select participante from "+ Covid19DBConstants.COVID_PARTICIPANTES_CASOS_TABLE+" where "+Covid19DBConstants.codigoCaso+"='"+ mCaso.getCodigoCaso()+"')";
+            String filtroPart = MainDBConstants.codigo+" in (select participante from "+ Covid19DBConstants.COVID_PARTICIPANTES_CASOS_TABLE+" where "+Covid19DBConstants.codigoCaso+"='"+ mCaso.getCodigoCaso()+"')";
 			try {
 				estudiosAdapter.open();
-				mParticipantes = estudiosAdapter.getParticipanteCohorteFamilias(filtro, MainDBConstants.participante);
-				mParticipantesSero = estudiosAdapter.getParticipantesSeroprevalencia(filtro, MainDBConstants.participante);
-                mParticipantesCasos = estudiosAdapter.getParticipanteCohorteFamiliaCasos(filtroCasos, CasosDBConstants.participante);
+				mParticipantes = estudiosAdapter.getParticipantes(filtroPart, MainDBConstants.codigo);
+				mParticipantesChf = estudiosAdapter.getParticipanteCohorteFamilias(filtroCHf, MainDBConstants.participante);
+				mParticipantesCovid = estudiosAdapter.getParticipantesCovid19(filtroCHf, MainDBConstants.participante);
+                mParticipantesCasos = estudiosAdapter.getParticipantesCasosCovid19(filtroCaso, CasosDBConstants.participante);
 				estudiosAdapter.close();
 				return "exito";
 			} catch (Exception e) {
@@ -873,7 +882,7 @@ public class BluetoothChatFragment extends Fragment {
 			// after the request completes, hide the progress indicator
 			nDialog.dismiss();
 			totalPartEnviar = mParticipantes.size();
-			totalPartSeroEnviar = mParticipantesSero.size();
+            totalPartCovEnviar = mParticipantesCovid.size();
             totalPartCasosEnviar = mParticipantesCasos.size();
 		}
 	}
@@ -905,8 +914,8 @@ public class BluetoothChatFragment extends Fragment {
 					error = error + e.getMessage();
 				}
 				try {
-                    if (estudiosAdapter.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='"+ codigoCHF +"'",null) == null)
-                        estudiosAdapter.insertarCasaCohorteFamilia(casaSQL);
+                    if (estudiosAdapter.getCasoCovid19(Covid19DBConstants.codigoCaso + "='"+ codigoCaso +"'",null) == null)
+                        estudiosAdapter.insertarCasoCovid19(casoSQL);
 				} catch (Exception e) {
 					Log.e(TAG, e.getLocalizedMessage(), e);
 					error = error + e.getMessage();
@@ -934,13 +943,43 @@ public class BluetoothChatFragment extends Fragment {
 						error = error + e.getMessage();
 					}
 				}
+                for(int i=0; i<totalPartCovEnviados;i++){
+                    try {
+                        int codigoComienza = 40;
+                        int codigoTermina = participantesCovidSQL[i].indexOf(",",0);
+                        String codigoParti = participantesCovidSQL[i].substring(codigoComienza, codigoTermina);
+                        if (estudiosAdapter.getParticipanteCovid19(MainDBConstants.participante + "="+ codigoParti,null) == null)
+                            estudiosAdapter.insertarParticipanteCovid19(participantesCovidSQL[i]);
+                        CandidatoTransmisionCovid19  candidato = estudiosAdapter.getCandidatoTransmisionCovid19(Covid19DBConstants.participante + " = "+codigoParti + " and " + Covid19DBConstants.consentimiento + " = 'PENDIENTE'", null);
+                        if (candidato!=null){
+                            candidato.setConsentimiento("ACEPTA");
+                            candidato.setEstado('0');
+                            estudiosAdapter.editarCandidatoTransmisionCovid19(candidato);
+                        }
+
+                    } catch (Exception e) {
+                        Log.e(TAG, e.getLocalizedMessage(), e);
+                        error = error + e.getMessage();
+                    }
+                }
+
                 for(int i=0; i<totalProcEnviados;i++){
                     try {
                         int codigoComienza = 43;
                         int codigoTermina = participantesProcSQL[i].indexOf(",",0);
                         String codigoParti = participantesProcSQL[i].substring(codigoComienza, codigoTermina);
-                        if (estudiosAdapter.getParticipanteProcesos(ConstantsDB.CODIGO + "=" + codigoParti, null) == null)
+                        ParticipanteProcesos procesos = estudiosAdapter.getParticipanteProcesos(ConstantsDB.CODIGO + "=" + codigoParti, null);
+                        if (procesos == null) {
                             estudiosAdapter.insertarParticipanteProcesos(participantesProcSQL[i]);
+                        }else{
+                            String[] partes = participantesProcSQL[i].split(",");
+                            String estudios = partes[4].replaceAll("'","");
+                            String subEstudio = partes[51].replaceAll("'","");
+                            procesos.setEstudio(estudios);
+                            procesos.setSubEstudios(subEstudio);
+                            procesos.getMovilInfo().setEstado("0");
+                            estudiosAdapter.actualizarParticipanteProcesos(procesos);
+                        }
                     } catch (Exception e) {
                         Log.e(TAG, e.getLocalizedMessage(), e);
                         error = error + e.getMessage();
@@ -948,30 +987,18 @@ public class BluetoothChatFragment extends Fragment {
                 }
                 for(int i=0; i<totalCasosEnviados;i++){
                     try {
-                        int codigoComienza = 44;
+                        int codigoComienza = 46;
                         int codigoTermina = participantesCasosSQL[i].indexOf(",",0);
                         String codigoPartCaso = participantesCasosSQL[i].substring(codigoComienza, codigoTermina);
-                        if (estudiosAdapter.getParticipanteCohorteFamiliaCaso(CasosDBConstants.codigoCasoParticipante + "=" + codigoPartCaso, null) == null)
-                            estudiosAdapter.insertarParticipanteCohorteFamiliaCaso(participantesCasosSQL[i]);
+                        if (estudiosAdapter.getParticipanteCasoCovid19(Covid19DBConstants.codigoCasoParticipante + "=" + codigoPartCaso, null) == null)
+                            estudiosAdapter.insertarParticipanteCasoCovid19(participantesCasosSQL[i]);
                     } catch (Exception e) {
                         Log.e(TAG, e.getLocalizedMessage(), e);
                         error = error + e.getMessage();
                     }
                 }
-				for(int i=0; i<totalPartSeroEnviados;i++){
-					try {
-                        int codigoComienza = 52;
-                        int codigoTermina = participantesSeroSQL[i].indexOf(",",0);
-                        String codigoParti = participantesSeroSQL[i].substring(codigoComienza, codigoTermina);
-                        if (estudiosAdapter.getParticipanteSeroprevalencia(MainDBConstants.participante + "=" + codigoParti, null) == null)
-                            estudiosAdapter.insertarParticipanteSeroprevalencia(participantesSeroSQL[i]);
-					} catch (Exception e) {
-						Log.e(TAG, e.getLocalizedMessage(), e);
-						error = error + e.getMessage();
-					}
-				}
-				String filtro = MainDBConstants.codigoCHF + "='"+ codigoCHF +"'";
-				mCasa = estudiosAdapter.getCasaCohorteFamilia(filtro, null);
+				String filtro = Covid19DBConstants.codigoCaso + "='"+ codigoCaso +"'";
+				mCaso = estudiosAdapter.getCasoCovid19(filtro, null);
 				estudiosAdapter.close();
 				if (error.equals("")) {
 					return getActivity().getString(R.string.success);
@@ -991,9 +1018,9 @@ public class BluetoothChatFragment extends Fragment {
 		            mBluetoothAdapter.disable();
 		        }
 				Bundle arguments = new Bundle();
-		        if (mCasa!=null) arguments.putSerializable(Constants.CASA , mCasa);
+		        if (mCaso !=null) arguments.putSerializable(Constants.CASA , mCaso);
 		        Intent i = new Intent(getActivity(),
-		        		MenuCasaActivity.class);
+		        		ListaParticipantesCasoCovid19Activity.class);
 		        i.putExtras(arguments);
 		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		        startActivity(i);

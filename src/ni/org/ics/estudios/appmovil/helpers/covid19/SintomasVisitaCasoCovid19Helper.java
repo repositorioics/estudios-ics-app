@@ -9,7 +9,7 @@ import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import java.util.Date;
 
 /**
- * Created by William Aviles 6/9/2017.
+ * Created by Miguel Salinas 09/06/2020.
  * V1.0
  */
 public class SintomasVisitaCasoCovid19Helper {

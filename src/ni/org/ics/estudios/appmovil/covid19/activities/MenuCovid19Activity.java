@@ -20,6 +20,8 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.bluetooth.activity.ChatActivity;
+import ni.org.ics.estudios.appmovil.bluetooth.activity.ChatCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.list.ListaCanditatosTransmisionCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.list.ListaCasasCasosCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.list.ListaParticipantesPosCasoCovid19Activity;
@@ -93,6 +95,15 @@ public class MenuCovid19Activity extends AbstractAsyncActivity {
 						createDialog(UPLOAD);
 						break;
 					case 4:
+						Bundle arguments = new Bundle();
+						i = new Intent(getApplicationContext(),
+								ChatCovid19Activity.class);
+						arguments.putSerializable(Constants.CASA , null);
+						i.putExtra(Constants.ACCION, Constants.RECEIVING);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(i);
+						break;
+					case 5:
 						createDialog(EXIT);
 						break;
 					default:

@@ -23,6 +23,7 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MuestraAdapter;
 import ni.org.ics.estudios.appmovil.covid19.activities.MenuVisitaCasoCovid19Activity;
+import ni.org.ics.estudios.appmovil.covid19.activities.MenuVisitaFinalCasoCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevaMuestraRespCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevaMuestraTuboBhcCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevaMuestraTuboPbmcCovid19Activity;
@@ -30,6 +31,7 @@ import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevaMuestraTub
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
+import ni.org.ics.estudios.appmovil.domain.covid19.VisitaFinalCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.covid19.VisitaSeguimientoCasoCovid19;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -52,7 +54,7 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 	private Button mButton;
 	//Viene de la actividad principal
 	private static VisitaSeguimientoCasoCovid19 visitaCaso = new VisitaSeguimientoCasoCovid19();
-    //private static VisitaFinalCaso visitaFinalCaso = new VisitaFinalCaso();
+    private static VisitaFinalCasoCovid19 visitaFinalCaso = new VisitaFinalCasoCovid19();
 	//Tipo de lista
     private static ParticipanteCasoCovid19 participanteCasoCovid19 = new ParticipanteCasoCovid19();
     private static Date fechaVisita = new Date();
@@ -72,15 +74,15 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 		setContentView(R.layout.list_add_casos_covid19);
 		//Obtener objeto que viene del menú
         visitaCaso = (VisitaSeguimientoCasoCovid19) getIntent().getExtras().getSerializable(Constants.VISITA);
-        //visitaFinalCaso = (VisitaFinalCaso) getIntent().getExtras().getSerializable(Constants.VISITA_FINAL);
+        visitaFinalCaso = (VisitaFinalCasoCovid19) getIntent().getExtras().getSerializable(Constants.VISITA_FINAL);
         if (visitaCaso!=null) {
             participanteCasoCovid19 = visitaCaso.getCodigoParticipanteCaso();
             fechaVisita = visitaCaso.getFechaVisita();
         }
-        /*if (visitaFinalCaso!=null) {
-            participantechf= visitaFinalCaso.getCodigoParticipanteCaso().getParticipante();
+        if (visitaFinalCaso!=null) {
+			participanteCasoCovid19= visitaFinalCaso.getCodigoParticipanteCaso();
             fechaVisita = visitaFinalCaso.getFechaVisita();
-        }*/
+        }
         textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_samples_seg);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
@@ -101,7 +103,7 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 		mButton = (Button) findViewById(R.id.final_visit_button_cv19);
 		mButton.setVisibility(View.GONE);
 
-		mButton = (Button) findViewById(R.id.update_cases_cv19);
+		mButton = (Button) findViewById(R.id.send_case_cv19);
 		mButton.setVisibility(View.GONE);
 
 		mAddBhcButton = (Button) findViewById(R.id.new_bhc_button_cv19);
@@ -162,9 +164,10 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 			}
 		});*/
 
-        /*if (visitaFinalCaso!=null){
+        if (visitaFinalCaso!=null){
             mAddRespButton.setVisibility(View.GONE);
-        }*/
+            mAddBhcButton.setVisibility(View.GONE);
+        }
 		
 	}
 
@@ -210,15 +213,15 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 		//Llamar al menu anterior
 		Bundle arguments = new Bundle();
 		Intent i;
-        //if (visitaCaso!=null) {
+        if (visitaCaso!=null) {
             arguments.putSerializable(Constants.VISITA, visitaCaso);
             i = new Intent(getApplicationContext(),
                     MenuVisitaCasoCovid19Activity.class);
-        /*}else{
+        }else{
             arguments.putSerializable(Constants.VISITA_FINAL, visitaFinalCaso);
             i = new Intent(getApplicationContext(),
-                    MenuVisitaFinalCasoActivity.class);
-        }*/
+                    MenuVisitaFinalCasoCovid19Activity.class);
+        }
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.putExtras(arguments);
 		startActivity(i);
@@ -384,13 +387,13 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 			//Actualizar el encabezado de esta view y enlazar el adapter
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-            //if (visitaFinalCaso==null) {
+            if (visitaFinalCaso==null) {
                 textView.setText(getString(R.string.main_4) + "\n" + getString(R.string.follow_up_list_samp) + "\n" +
                         getString(R.string.code) + ": " + participanteCasoCovid19.getParticipante().getCodigo() + " - " + getString(R.string.visit) + ": " + visitaCaso.getVisita());
-            /*}else{
+            }else{
                 textView.setText(getString(R.string.main_4) + "\n" + getString(R.string.follow_up_list_samp) + "\n" +
                         getString(R.string.code) + ": " + participanteCasoCovid19.getParticipante().getCodigo() + " - " + getString(R.string.visit_final));
-            }*/
+            }
 			mMuestraAdapter = new MuestraAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item, mMuestras, mTiposMuestra);
 			setListAdapter(mMuestraAdapter);
 			dismissProgressDialog();
@@ -416,36 +419,37 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 				Bundle arguments = new Bundle();				
 				if (visitaCaso != null) arguments.putSerializable(Constants.VISITA, visitaCaso);
 				arguments.putSerializable(Constants.VOLUMEN , volumenTotalPermitido);
-                //if (visitaFinalCaso != null) arguments.putSerializable(Constants.VISITA, visitaFinalCaso);
+                if (visitaFinalCaso != null) arguments.putSerializable(Constants.VISITA, visitaFinalCaso);
 				Intent i;
-				if(opcion.equals(Constants.CODIGO_TUBO_BHC)){
-					i = new Intent(getApplicationContext(),
-							NuevaMuestraTuboBhcCovid19Activity.class);
-					if (participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19))
-						i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_T_COVID);
-					else i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_COVID_CP);
-				}
-				else if(opcion.equals(Constants.CODIGO_TUBO_ROJO)){
-					i = new Intent(getApplicationContext(),
-							NuevaMuestraTuboRojoCovid19Activity.class);
-					if (participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19))
-						i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_T_COVID);
-					else i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_COVID_CP);
-				}
-				else if(opcion.equals(Constants.CODIGO_TUBO_PBMC)){
-					i = new Intent(getApplicationContext(),
-							NuevaMuestraTuboPbmcCovid19Activity.class);
-					if (participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19))
-						i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_T_COVID);
-					else i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_COVID_CP);
-				}
-				else if(opcion.equals(Constants.CODIGO_TIPO_RESP)){
-					i = new Intent(getApplicationContext(),
-							NuevaMuestraRespCovid19Activity.class);
-					//i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_T_COVID);
-				}
-				else{
-					return "error";
+				switch (opcion) {
+					case Constants.CODIGO_TUBO_BHC:
+						i = new Intent(getApplicationContext(),
+								NuevaMuestraTuboBhcCovid19Activity.class);
+						if (participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19))
+							i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_T_COVID);
+						else i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_COVID_CP);
+						break;
+					case Constants.CODIGO_TUBO_ROJO:
+						i = new Intent(getApplicationContext(),
+								NuevaMuestraTuboRojoCovid19Activity.class);
+						if (participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19))
+							i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_T_COVID);
+						else i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_COVID_CP);
+						break;
+					case Constants.CODIGO_TUBO_PBMC:
+						i = new Intent(getApplicationContext(),
+								NuevaMuestraTuboPbmcCovid19Activity.class);
+						if (participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19))
+							i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_T_COVID);
+						else i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_COVID_CP);
+						break;
+					case Constants.CODIGO_TIPO_RESP:
+						i = new Intent(getApplicationContext(),
+								NuevaMuestraRespCovid19Activity.class);
+						//i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_T_COVID);
+						break;
+					default:
+						return "error";
 				}
 				i.putExtras(arguments);
 		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

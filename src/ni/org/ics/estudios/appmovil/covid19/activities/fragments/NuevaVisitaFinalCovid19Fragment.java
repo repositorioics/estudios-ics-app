@@ -4,11 +4,8 @@ package ni.org.ics.estudios.appmovil.covid19.activities.fragments;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
-import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -24,11 +21,9 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.covid19.activities.list.ListaVisitasFinalesCasoCovid19Activity;
-import ni.org.ics.estudios.appmovil.covid19.activities.list.ListaVisitasParticipanteCasoCovid19Activity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.covid19.VisitaFinalCasoCovid19;
-import ni.org.ics.estudios.appmovil.domain.covid19.VisitaSeguimientoCasoCovid19;
 import ni.org.ics.estudios.appmovil.multiselector.gui.MultiSpinner;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
@@ -51,7 +46,7 @@ public class NuevaVisitaFinalCovid19Fragment extends Fragment {
 	private VisitaFinalCasoCovid19 vsc = new VisitaFinalCasoCovid19();
 	private List<MessageResource> mCatalogoSn;
 	private List<MessageResource> mCatalogoEstSalud;
-	private List<String> mMedicamentos = new ArrayList<String>();
+	private List<String> mTratamientos = new ArrayList<String>();
 	private TextView mTitleView;
 	private TextView mNameView;
 	private TextView inputFechaVisita;
@@ -711,7 +706,20 @@ public class NuevaVisitaFinalCovid19Fragment extends Fragment {
         	vsc.setEnfermo(enfermo);
         	vsc.setConsTerreno(consTerreno);
 			vsc.setReferidoCS(referidoCS);
-			vsc.setTratamiento(tratamiento);
+			estudiosAdapter.open();
+			if (tratamiento!=null && !tratamiento.isEmpty()) {
+				String keysTx = "";
+				tratamiento = tratamiento.replaceAll(",", "','");
+				List<MessageResource> catMedi = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + tratamiento + "') and "
+						+ CatalogosDBConstants.catRoot + "='COVID_TRATAMIENTO_VFC'", null);
+				for (MessageResource ms : catMedi) {
+					keysTx += ms.getCatKey() + ",";
+				}
+				if (!keysTx.isEmpty())
+					keysTx = keysTx.substring(0, keysTx.length() - 1);
+				vsc.setTratamiento(keysTx);
+			}
+			estudiosAdapter.close();
 			vsc.setQueAntibiotico(queAntibiotico);
 			vsc.setOtroMedicamento(otroMedicamento);
 			vsc.setSintResp(sintResp);
@@ -757,7 +765,7 @@ public class NuevaVisitaFinalCovid19Fragment extends Fragment {
 				estudiosAdapter.open();
 				mCatalogoSn = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", CatalogosDBConstants.order);
 				mCatalogoEstSalud = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='COVID_ESTSALUD_HOSP'", CatalogosDBConstants.order);
-				mMedicamentos = Arrays.asList(estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='COVID_TRATAMIENTO_VFC'", CatalogosDBConstants.order));
+				mTratamientos = Arrays.asList(estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='COVID_TRATAMIENTO_VFC'", CatalogosDBConstants.order));
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
 				return "error";
@@ -792,15 +800,15 @@ public class NuevaVisitaFinalCovid19Fragment extends Fragment {
 			spinEstadoSalud.setAdapter(dataAdapter2);
 			spinFaltoTrabajoEscuela.setAdapter(dataAdapter);
 
-			spinTratamiento.setItems(mMedicamentos, getString(R.string.select), new MultiSpinner.MultiSpinnerListener() {
+			spinTratamiento.setItems(mTratamientos, getString(R.string.select), new MultiSpinner.MultiSpinnerListener() {
 				@Override
 				public void onItemsSelected(boolean[] selected) {
 					int indice = 0;
 					tratamiento = null;
 					for(boolean item : selected){
 						if (item) {
-							if (tratamiento==null) tratamiento = mMedicamentos.get(indice);
-							else  tratamiento += "," + mMedicamentos.get(indice);
+							if (tratamiento==null) tratamiento = mTratamientos.get(indice);
+							else  tratamiento += "," + mTratamientos.get(indice);
 						}
 						indice++;
 					}

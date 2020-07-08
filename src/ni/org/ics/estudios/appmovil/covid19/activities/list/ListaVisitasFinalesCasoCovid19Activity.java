@@ -10,10 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
@@ -91,14 +88,18 @@ public class ListaVisitasFinalesCasoCovid19Activity extends AbstractAsyncListAct
 		mAddVisitButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
-				Bundle arguments = new Bundle();
-				arguments.putSerializable(Constants.PARTICIPANTE , partCaso);
-				Intent i = new Intent(getApplicationContext(),
-						NuevaVisitaFinalCovid19Activity.class);
-				i.putExtras(arguments);
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(i);
-				finish();
+				if (mVisitasFinales.size()>0) {
+					Toast.makeText(getApplicationContext(), R.string.finalVisitExist ,Toast.LENGTH_LONG).show();
+				}else {
+					Bundle arguments = new Bundle();
+					arguments.putSerializable(Constants.PARTICIPANTE, partCaso);
+					Intent i = new Intent(getApplicationContext(),
+							NuevaVisitaFinalCovid19Activity.class);
+					i.putExtras(arguments);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(i);
+					finish();
+				}
 			}
 		});
 

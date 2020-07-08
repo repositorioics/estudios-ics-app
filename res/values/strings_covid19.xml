@@ -175,4 +175,5 @@
     <string name="fatigaFecFin">Fecha Termina Fatiga </string>
 
     <string name="sintVFExist">Síntomas ya fueron ingresados</string>
+    <string name="finalVisitExist">Visita Final ya fue ingresada</string>
 </resources>

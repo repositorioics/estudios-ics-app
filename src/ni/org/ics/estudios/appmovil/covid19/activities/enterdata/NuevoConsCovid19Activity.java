@@ -1310,14 +1310,17 @@ public class NuevoConsCovid19Activity extends FragmentActivity implements
                         }
                         estudiosAdapter.actualizarParticipanteProcesos(procesos);
 
-                        ParticipanteCovid19 participanteCovid19 = new ParticipanteCovid19();
-                        participanteCovid19.setParticipante(participante);
-                        participanteCovid19.setRecordDate(new Date());
-                        participanteCovid19.setRecordUser(username);
-                        participanteCovid19.setDeviceid(infoMovil.getDeviceId());
-                        participanteCovid19.setEstado('0');
-                        participanteCovid19.setPasive('0');
-                        estudiosAdapter.crearParticipanteCovid19(participanteCovid19);
+                        //si no existe participante covid19, crearlo
+                        if (estudiosAdapter.getParticipanteCovid19(Covid19DBConstants.participante + "="+participante.getCodigo() ,null)==null) {
+                            ParticipanteCovid19 participanteCovid19 = new ParticipanteCovid19();
+                            participanteCovid19.setParticipante(participante);
+                            participanteCovid19.setRecordDate(new Date());
+                            participanteCovid19.setRecordUser(username);
+                            participanteCovid19.setDeviceid(infoMovil.getDeviceId());
+                            participanteCovid19.setEstado('0');
+                            participanteCovid19.setPasive('0');
+                            estudiosAdapter.crearParticipanteCovid19(participanteCovid19);
+                        }
 
                         Intent i = new Intent(getApplicationContext(),
                                 MenuInfoActivity.class);

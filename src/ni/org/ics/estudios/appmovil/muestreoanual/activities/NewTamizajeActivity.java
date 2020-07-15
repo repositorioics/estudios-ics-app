@@ -2350,14 +2350,17 @@ public class NewTamizajeActivity extends FragmentActivity implements
                                 estudiosAdapter.crearCartaConsentimiento(cc);
 
                                 if (aceptaCohorteUO1ParteDCovid.equalsIgnoreCase(Constants.YES)) {
-                                    ParticipanteCovid19 participanteCovid19 = new ParticipanteCovid19();
-                                    participanteCovid19.setParticipante(participante);
-                                    participanteCovid19.setRecordDate(new Date());
-                                    participanteCovid19.setRecordUser(username);
-                                    participanteCovid19.setDeviceid(infoMovil.getDeviceId());
-                                    participanteCovid19.setEstado('0');
-                                    participanteCovid19.setPasive('0');
-                                    estudiosAdapter.crearParticipanteCovid19(participanteCovid19);
+                                    //si no existe participante covid19, crearlo
+                                    if (estudiosAdapter.getParticipanteCovid19(Covid19DBConstants.participante + "="+participante.getCodigo() ,null)==null) {
+                                        ParticipanteCovid19 participanteCovid19 = new ParticipanteCovid19();
+                                        participanteCovid19.setParticipante(participante);
+                                        participanteCovid19.setRecordDate(new Date());
+                                        participanteCovid19.setRecordUser(username);
+                                        participanteCovid19.setDeviceid(infoMovil.getDeviceId());
+                                        participanteCovid19.setEstado('0');
+                                        participanteCovid19.setPasive('0');
+                                        estudiosAdapter.crearParticipanteCovid19(participanteCovid19);
+                                    }
                                     procesos.setSubEstudios(Constants.SUB_ESTUDIO_COVID19);//Covid-19
                                     estudiosAdapter.actualizarParticipanteProcesos(procesos);
                                 }

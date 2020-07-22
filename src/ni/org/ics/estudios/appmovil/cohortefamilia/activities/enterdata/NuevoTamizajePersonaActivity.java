@@ -1378,8 +1378,14 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         procesos.setPesoTalla(Constants.YES);
                         //si no pertenece a la pediatrica poner datos de muestra, sino que conserve los datos de muestra actuales
                         if (estudios.isEmpty()) {
-                            procesos.setConmx(Constants.NO);
-                            procesos.setConmxbhc(Constants.NO);
+                            //solo pedir muestra a los que tengan >= 6 meses
+                            if (participante.getEdadMeses()>=6){
+                                procesos.setConmx(Constants.NO);
+                                procesos.setConmxbhc(Constants.NO);
+                            }else {
+                                procesos.setConmx(Constants.YES);
+                                procesos.setConmxbhc(Constants.YES);
+                            }
                             procesos.setPbmc(Constants.NO);
                             procesos.setPaxgene(Constants.YES);
                         }

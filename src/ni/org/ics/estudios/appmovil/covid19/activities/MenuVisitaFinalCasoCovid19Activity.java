@@ -82,16 +82,20 @@ public class MenuVisitaFinalCasoCovid19Activity extends AbstractAsyncActivity {
                         finish();
                         break;
                     case 1:
-                        if (!existeSintoma) {
-                            arguments.putSerializable(Constants.VISITA_FINAL, visitaFinal);
-                            i = new Intent(getApplicationContext(),
-                                    NuevoSintomasVisitaFinalCovid19Activity.class);
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            i.putExtras(arguments);
-                            startActivity(i);
-                            finish();
-                        }else{
-                            Toast.makeText(getApplicationContext(), R.string.sintVFExist ,Toast.LENGTH_LONG).show();
+                        if (visitaFinal.getSintResp().equals("1")){//si presentó sintomas
+                            if (!existeSintoma) {
+                                arguments.putSerializable(Constants.VISITA_FINAL, visitaFinal);
+                                i = new Intent(getApplicationContext(),
+                                        NuevoSintomasVisitaFinalCovid19Activity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                i.putExtras(arguments);
+                                startActivity(i);
+                                finish();
+                            }else{
+                                Toast.makeText(getApplicationContext(), R.string.sintVFExist ,Toast.LENGTH_LONG).show();
+                            }
+                        }else {
+                            Toast.makeText(getApplicationContext(), R.string.noHaySintVF ,Toast.LENGTH_LONG).show();
                         }
                         break;
                     default:

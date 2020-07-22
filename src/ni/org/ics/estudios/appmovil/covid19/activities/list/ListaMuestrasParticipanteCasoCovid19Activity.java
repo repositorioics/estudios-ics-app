@@ -310,7 +310,7 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 			} else { //< de 6 meses
 				labelMuestra = getString(R.string.pbmc_covid19_6m);
 				labelVolumenPermitido = getString(R.string.pbmc_covid19_6m_perm);
-				volumenTotalPermitido = 0D;
+				volumenTotalPermitido = 3D;//permitir 1 ml de desviación
 			}
 
 		}

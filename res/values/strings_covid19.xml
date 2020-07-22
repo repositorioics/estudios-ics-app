@@ -175,5 +175,6 @@
     <string name="fatigaFecFin">Fecha Termina Fatiga </string>
 
     <string name="sintVFExist">Síntomas ya fueron ingresados</string>
+    <string name="noHaySintVF">El participante no presentó síntomas respiratorios en el periodo que no fue visitado por el personal del CSSFV</string>
     <string name="finalVisitExist">Visita Final ya fue ingresada</string>
 </resources>

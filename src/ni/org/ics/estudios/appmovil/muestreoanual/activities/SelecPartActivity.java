@@ -3,7 +3,6 @@ package ni.org.ics.estudios.appmovil.muestreoanual.activities;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.*;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -12,22 +11,20 @@ import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.*;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuParticipanteActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.dto.DatosCHF;
+import ni.org.ics.estudios.appmovil.covid19.dto.DatosCovid19;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaVisitasVacunaUO1Activity;
 import ni.org.ics.estudios.appmovil.influenzauo1.dto.DatosUO1;
-import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.ParticipanteAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
@@ -279,6 +276,16 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 							}
 							mParticipante.setDatosUO1(datosUO1);
 						}
+						//procesos Covid19
+						if (mParticipante.getProcesos().getSubEstudios().contains("2")) {
+							ParticipanteCasoCovid19 casoUO1 = estudiosAdapter.getParticipanteCasoCovid19(Covid19DBConstants.participante + "=" + mParticipante.getCodigo(), null);
+							DatosCovid19 datosCovid19 = new DatosCovid19();
+							if (casoUO1 != null) {
+								datosCovid19.setSeguimiento(true);
+								datosCovid19.setMensajeSeguimiento((mParticipante.getProcesos().getEstudio().contains(Constants.T_COVID19)?getString(R.string.enTransmisionCovid19):getString(R.string.enSeguimientoCovid19)));
+							}
+							mParticipante.setDatosCovid19(datosCovid19);
+						}
 						if (desdeMenuPrincipal){
                             ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos(); //ca.getParticipanteProceso(codigoScanned);
                             if (mParticipanteProc != null && (mParticipanteProc.getEstudio() != null && !mParticipanteProc.getEstudio().isEmpty())
@@ -517,6 +524,16 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 
 						}
 						mParticipantes.get(indice).setDatosUO1(datosUO1);
+					}
+					//procesos Covid19
+					if (p.getProcesos().getSubEstudios().contains("2")) {
+						ParticipanteCasoCovid19 casoUO1 = estudiosAdapter.getParticipanteCasoCovid19(Covid19DBConstants.participante + "=" + p.getCodigo(), null);
+						DatosCovid19 datosCovid19 = new DatosCovid19();
+						if (casoUO1 != null) {
+							datosCovid19.setSeguimiento(true);
+							datosCovid19.setMensajeSeguimiento((p.getProcesos().getEstudio().contains(Constants.T_COVID19)?getString(R.string.enTransmisionCovid19):getString(R.string.enSeguimientoCovid19)));
+						}
+						mParticipantes.get(indice).setDatosCovid19(datosCovid19);
 					}
                 	indice++;
 				}

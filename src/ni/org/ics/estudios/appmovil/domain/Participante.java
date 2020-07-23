@@ -1,6 +1,7 @@
 package ni.org.ics.estudios.appmovil.domain;
 
 import ni.org.ics.estudios.appmovil.cohortefamilia.dto.DatosCHF;
+import ni.org.ics.estudios.appmovil.covid19.dto.DatosCovid19;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.influenzauo1.dto.DatosUO1;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -43,6 +44,7 @@ public class Participante extends BaseMetaData implements Serializable{
     private ParticipanteProcesos procesos;
     private DatosUO1 datosUO1;
     private DatosCHF datosCHF;
+    private DatosCovid19 datosCovid19;
 
 	public Integer getCodigo() {
 		return codigo;
@@ -199,9 +201,18 @@ public class Participante extends BaseMetaData implements Serializable{
         this.datosCHF = datosCHF;
     }
 
+    @JsonIgnore
+    public DatosCovid19 getDatosCovid19() {
+        return datosCovid19;
+    }
+
+    public void setDatosCovid19(DatosCovid19 datosCovid19) {
+        this.datosCovid19 = datosCovid19;
+    }
+
     /*
-            Calcular edad del participante según su fecha de nacimiento y fecha actual del sistema
-             */
+                Calcular edad del participante según su fecha de nacimiento y fecha actual del sistema
+                 */
     @JsonIgnore
     public String getEdad() {
         if (this.getFechaNac()!=null) {

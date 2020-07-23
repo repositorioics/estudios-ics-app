@@ -33,13 +33,14 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObs
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoRecon18AniosActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.dto.DatosCHF;
 import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoConsCovid19Activity;
-import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoTamizajeTransmisionCovid19Activity;
+import ni.org.ics.estudios.appmovil.covid19.dto.DatosCovid19;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.DatosCoordenadas;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
@@ -1061,6 +1062,16 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             }
             mParticipante.setDatosUO1(datosUO1);
         }
+        //procesos Covid19
+        if (mParticipante.getProcesos().getSubEstudios().contains("2")) {
+            ParticipanteCasoCovid19 casoUO1 = estudiosAdapter.getParticipanteCasoCovid19(Covid19DBConstants.participante + "=" + mParticipante.getCodigo(), null);
+            DatosCovid19 datosCovid19 = new DatosCovid19();
+            if (casoUO1 != null) {
+                datosCovid19.setSeguimiento(true);
+                datosCovid19.setMensajeSeguimiento((mParticipante.getProcesos().getEstudio().contains(Constants.T_COVID19)?getString(R.string.enTransmisionCovid19):getString(R.string.enSeguimientoCovid19)));
+            }
+            mParticipante.setDatosCovid19(datosCovid19);
+        }
         estudiosAdapter.close();
     }
 
@@ -1103,6 +1114,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             }
             if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isVacunado() && mParticipante.getDatosUO1().getDiasVacuna() < 30){
                 labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font></small><br />";
+            }
+            if (mParticipante.getDatosCovid19()!=null &&  mParticipante.getDatosCovid19().isSeguimiento()){
+                labelHeader = labelHeader + "<small><font color='red'>"+mParticipante.getDatosCovid19().getMensajeSeguimiento()+"</font></small><br />";
             }
 
             if (mParticipante.getProcesos().getConsFlu().matches("Si")|| mParticipante.getProcesos().getPesoTalla().matches("Si")

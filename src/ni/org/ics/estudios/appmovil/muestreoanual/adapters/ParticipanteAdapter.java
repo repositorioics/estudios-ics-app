@@ -90,7 +90,11 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                 if (participante.getDatosUO1()!=null &&  participante.getDatosUO1().isVacunado() && participante.getDatosUO1().getDiasVacuna() < 30){
                     labelHeader = labelHeader + "<font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font><br />";
                 }
-				if (procesos.getConsFlu().matches("Si")|| procesos.getPesoTalla().matches("Si")
+                if (participante.getDatosCovid19()!=null &&  participante.getDatosCovid19().isSeguimiento()){
+                    labelHeader = labelHeader + "<font color='red'>"+participante.getDatosCovid19().getMensajeSeguimiento()+"</font><br />";
+                }
+
+                if (procesos.getConsFlu().matches("Si")|| procesos.getPesoTalla().matches("Si")
 						|| procesos.getEnCasa().matches("Si")||procesos.getEncPart().matches("Si")
                         || procesos.getEnCasaChf().matches("Si") //MA2020|| procesos.getEnCasaSa().matches("Si") || procesos.getEncPartSa().matches("Si")
 						|| procesos.getEncLacMat().matches("Si")||procesos.getInfoVacuna().matches("Si")

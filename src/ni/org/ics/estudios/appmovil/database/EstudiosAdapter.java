@@ -173,6 +173,8 @@ public class EstudiosAdapter {
 			db.execSQL(Covid19DBConstants.CREATE_COVID_DATOS_AISLAMIENTO_VC_TABLE);
 			db.execSQL(Covid19DBConstants.CREATE_COVID_VISITA_FINAL_CASO_TABLE);
 			db.execSQL(Covid19DBConstants.CREATE_COVID_SINT_VISITA_FINAL_CASO_TABLE);
+			//MA Adicional covid19 CHF
+			db.execSQL(Covid19DBConstants.CREATE_COVID_CUESTIONARIO_TABLE);
 		}
 
 		@Override

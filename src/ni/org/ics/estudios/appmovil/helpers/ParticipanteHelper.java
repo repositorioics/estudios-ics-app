@@ -129,6 +129,10 @@ public class ParticipanteHelper {
         //Covid19
         mPart.setConsCovid19(participantes.getString(participantes.getColumnIndex(ConstantsDB.consCovid19)));
         mPart.setSubEstudios(participantes.getString(participantes.getColumnIndex(ConstantsDB.subEstudios)));
+        //Parte E CHF para toma mx adicional Covid19
+        mPart.setConsChf(participantes.getString(participantes.getColumnIndex(ConstantsDB.consChf)));
+        mPart.setCuestCovid(participantes.getString(participantes.getColumnIndex(ConstantsDB.cuestCovid)));
+        mPart.setMuestraCovid(participantes.getString(participantes.getColumnIndex(ConstantsDB.muestraCovid)));
 
         Boolean borrado = participantes.getInt(participantes.getColumnIndex(ConstantsDB.DELETED))>0;
 		mPart.setMovilInfo(new MovilInfo(participantes.getInt(participantes.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
@@ -208,6 +212,10 @@ public class ParticipanteHelper {
         //Covid19
         cv.put(ConstantsDB.consCovid19, participante.getConsCovid19());
         cv.put(ConstantsDB.subEstudios, participante.getSubEstudios());
+        //Parte E CHF para toma mx adicional Covid19
+        cv.put(ConstantsDB.consChf, participante.getConsChf());
+        cv.put(ConstantsDB.cuestCovid, participante.getCuestCovid());
+        cv.put(ConstantsDB.muestraCovid, participante.getMuestraCovid());
 
         cv.put(ConstantsDB.ID_INSTANCIA, participante.getMovilInfo().getIdInstancia());
         cv.put(ConstantsDB.FILE_PATH, participante.getMovilInfo().getInstancePath());

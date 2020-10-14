@@ -34,7 +34,7 @@ public class CartaConsentimiento extends BaseMetaData {
     private String aceptaParteB; //Consentimiento para almacenamiento y uso de muestras en estudios futuros
     private String aceptaParteC; //Consentimiento adicional para estudios genéticos
     private String aceptaParteD; //Consentimiento adicional para ZIKA (Estudio Cohorte Dengue)
-    private String aceptaParteE; //Consentimiento para almacenamiento y uso de meustras en estudios futuros EstudioFLu
+    private String aceptaParteE; //Consentimiento para almacenamiento y uso de meustras en estudios futuros EstudioFLu, muestra adicional chf para covid19
     private String version; //Indicar la versión actual al momento de registrar la carta
     //reconsentimiento dengue 2018
     private String otroMotivoRechazoParteA;
@@ -52,6 +52,10 @@ public class CartaConsentimiento extends BaseMetaData {
     private String apellido1MxSuperficie;
     private String apellido2MxSuperficie;
     private String casaChf;
+    //muestra adicional chf covid19
+    private String motivoRechazoParteE;
+    private String otroMotivoRechazoParteE;
+
 
     public String getCodigo() {
         return codigo;
@@ -357,6 +361,22 @@ public class CartaConsentimiento extends BaseMetaData {
 
     public void setAceptaParteE(String aceptaParteE) {
         this.aceptaParteE = aceptaParteE;
+    }
+
+    public String getMotivoRechazoParteE() {
+        return motivoRechazoParteE;
+    }
+
+    public void setMotivoRechazoParteE(String motivoRechazoParteE) {
+        this.motivoRechazoParteE = motivoRechazoParteE;
+    }
+
+    public String getOtroMotivoRechazoParteE() {
+        return otroMotivoRechazoParteE;
+    }
+
+    public void setOtroMotivoRechazoParteE(String otroMotivoRechazoParteE) {
+        this.otroMotivoRechazoParteE = otroMotivoRechazoParteE;
     }
 
     @Override

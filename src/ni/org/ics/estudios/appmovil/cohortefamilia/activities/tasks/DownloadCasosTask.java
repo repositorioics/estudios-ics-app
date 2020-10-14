@@ -101,7 +101,7 @@ public class DownloadCasosTask extends DownloadTask {
         estudioAdapter.borrarVisitaFinalCaso();
         estudioAdapter.borrarObsequiosGenerales();
         estudioAdapter.borrarSensoresCasos();
-        /*estudioAdapter.borrarInformacionNoCompletaCaso();
+        /*
         estudioAdapter.borrarFormularioContactoCaso();
         estudioAdapter.borrarMuestrasTx();*/
         
@@ -210,17 +210,7 @@ public class DownloadCasosTask extends DownloadTask {
                 }
                 mFormularioContactoCasos = null;
             }
-            
-            if (mInformacionNoCompletaCasos != null){
-                v = mInformacionNoCompletaCasos.size();
-                ListIterator<InformacionNoCompletaCaso> iter = mInformacionNoCompletaCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearInformacionNoCompletaCaso(iter.next());
-                    publishProgress("Insertando no data de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mInformacionNoCompletaCasos = null;
-            }
+
             if (mMuestras != null){
                 v = mMuestras.size();
                 ListIterator<Muestra> iter = mMuestras.listIterator();
@@ -229,7 +219,7 @@ public class DownloadCasosTask extends DownloadTask {
                     publishProgress("Insertando muestras de transmision de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
                             .valueOf(v).toString());
                 }
-                mInformacionNoCompletaCasos = null;
+                mMuestras = null;
             }*/
         } catch (Exception e) {
             // Regresa error al insertar
@@ -414,16 +404,6 @@ public class DownloadCasosTask extends DownloadTask {
             // convert the array to a list and return it
             mFormularioContactoCasos = Arrays.asList(responseEntityFormularioContactoCaso.getBody());
             responseEntityFormularioContactoCaso = null;
-            
-            //Descargar info de no data de casas con casos
-            urlRequest = url + "/movil/visitasnodatacasos/";
-            publishProgress("Solicitando registros sin datos de los participantes de casas de casos",NODATA_CASOS,TOTAL_TASK_CASOS);
-            // Perform the HTTP GET request
-            ResponseEntity<InformacionNoCompletaCaso[]> responseEntityInformacionNoCompletaCaso = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		InformacionNoCompletaCaso[].class);
-            // convert the array to a list and return it
-            mInformacionNoCompletaCasos = Arrays.asList(responseEntityInformacionNoCompletaCaso.getBody());
-            responseEntityInformacionNoCompletaCaso = null;
             
             //Descargar muestras de tx de casas con casos
             urlRequest = url + "/movil/mxstx/";

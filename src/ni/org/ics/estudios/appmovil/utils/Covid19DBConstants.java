@@ -522,4 +522,194 @@ public class Covid19DBConstants {
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigoCasoSintoma + "));";
 
+    //Tabla covid_cuestionario
+    public static final String COVID_CUESTIONARIO_TABLE = "covid_cuestionario";
+
+    //Campos tabla covid_cuestionario
+    public static final String feb20Febricula = "feb20Febricula";
+    public static final String feb20Fiebre = "feb20Fiebre";
+    public static final String feb20Escalofrio = "feb20Escalofrio";
+    public static final String feb20TemblorEscalofrio = "feb20TemblorEscalofrio";
+    public static final String feb20DolorMuscular = "feb20DolorMuscular";
+    public static final String feb20DolorArticular = "feb20DolorArticular";
+    public static final String feb20SecresionNasal = "feb20SecresionNasal";
+    public static final String feb20DolorGarganta = "feb20DolorGarganta";
+    public static final String feb20Tos = "feb20Tos";
+    public static final String feb20DificultadResp = "feb20DificultadResp";
+    public static final String feb20DolorPecho = "feb20DolorPecho";
+    public static final String feb20NauseasVomito = "feb20NauseasVomito";
+    public static final String feb20DolorCabeza = "feb20DolorCabeza";
+    public static final String feb20DolorAbdominal = "feb20DolorAbdominal";
+    public static final String feb20Diarrea = "feb20Diarrea";
+    public static final String feb20DificultadDormir = "feb20DificultadDormir";
+    public static final String feb20Debilidad = "feb20Debilidad";
+    public static final String feb20PerdidaOlfatoGusto = "feb20PerdidaOlfatoGusto";
+    public static final String feb20Mareo = "feb20Mareo";
+    public static final String feb20Sarpullido = "feb20Sarpullido";
+    public static final String feb20Desmayo = "feb20Desmayo";
+    public static final String feb20QuedoCama = "feb20QuedoCama";
+    public static final String sabeFIS = "sabeFIS";
+    public static final String mesInicioSintoma = "mesInicioSintoma";
+    public static final String anioInicioSintoma = "anioInicioSintoma";
+    public static final String padecidoCovid19 = "padecidoCovid19";
+    public static final String conoceLugarExposicion = "conoceLugarExposicion";
+    public static final String lugarExposicion = "lugarExposicion";
+    public static final String buscoAyuda = "buscoAyuda";
+    public static final String dondeBuscoAyuda = "dondeBuscoAyuda";
+    public static final String nombreCentroSalud = "nombreCentroSalud";
+    public static final String nombreHospital = "nombreHospital";
+    public static final String recibioSeguimiento = "recibioSeguimiento";
+    public static final String tipoSeguimiento = "tipoSeguimiento";
+    public static final String tmpDespuesBuscoAyuda = "tmpDespuesBuscoAyuda";
+    public static final String unaNocheHospital = "unaNocheHospital";
+    public static final String queHospital = "queHospital";
+    public static final String sabeCuantasNoches = "sabeCuantasNoches";
+    public static final String cuantasNochesHosp = "cuantasNochesHosp";
+    public static final String sabeFechaAdmision = "sabeFechaAdmision";
+    public static final String fechaAdmisionHosp = "fechaAdmisionHosp";
+    public static final String sabeFechaAlta = "sabeFechaAlta";
+    public static final String fechaAltaHosp = "fechaAltaHosp";
+    public static final String estuvoUCI = "estuvoUCI";
+    public static final String recuperadoCovid19 = "recuperadoCovid19";
+    public static final String febricula = "febricula";
+    public static final String cansancio = "cansancio";
+    public static final String dificultadRespirar = "dificultadRespirar";
+    public static final String palpitaciones = "palpitaciones";
+    public static final String dolorArticulaciones = "dolorArticulaciones";
+    public static final String paralisis = "paralisis";
+    public static final String mareos = "mareos";
+    public static final String pensamientoNublado = "pensamientoNublado";
+    public static final String problemasDormir = "problemasDormir";
+    public static final String depresion = "depresion";
+    public static final String otrosSintomas = "otrosSintomas";
+    public static final String cualesSintomas = "cualesSintomas";
+    public static final String sabeTiempoRecuperacion= "sabeTiempoRecuperacion";
+    public static final String tiempoRecuperacion = "tiempoRecuperacion";
+    public static final String tiempoRecuperacionEn = "tiempoRecuperacionEn";
+    public static final String severidadEnfermedad = "severidadEnfermedad";
+    public static final String tomoMedicamento = "tomoMedicamento";
+    public static final String queMedicamento = "queMedicamento";
+    public static final String padeceEnfisema = "padeceEnfisema";
+    public static final String padeceAsma = "padeceAsma";
+    public static final String padeceDiabetes = "padeceDiabetes";
+    public static final String padeceEnfCoronaria = "padeceEnfCoronaria";
+    public static final String padecePresionAlta = "padecePresionAlta";
+    public static final String padeceEnfHigado = "padeceEnfHigado";
+    public static final String padeceEnfRenal = "padeceEnfRenal";
+    public static final String padeceInfartoDerrameCer = "padeceInfartoDerrameCer";
+    public static final String padeceCancer = "padeceCancer";
+    public static final String padeceCondicionInmuno = "padeceCondicionInmuno";
+    public static final String padeceEnfAutoinmune = "padeceEnfAutoinmune";
+    public static final String padeceDiscapacidadFis = "padeceDiscapacidadFis";
+    public static final String padeceCondPsicPsiq = "padeceCondPsicPsiq";
+    public static final String padeceOtraCondicion = "padeceOtraCondicion";
+    public static final String queOtraCondicion = "queOtraCondicion";
+    public static final String fumado = "fumado";
+    public static final String fumadoCienCigarrillos = "fumadoCienCigarrillos";
+    public static final String fumadoPrevioEnfermedad = "fumadoPrevioEnfermedad";
+    public static final String fumaActualmente = "fumaActualmente";
+
+    //Crear SintomasVisitaFinalCovid19
+    public static final String CREATE_COVID_CUESTIONARIO_TABLE = "create table if not exists "
+            + COVID_CUESTIONARIO_TABLE + " ("
+            + codigo + " text not null, "
+            + participante + " integer not null, "
+            + feb20Febricula + " text, "
+            + feb20Fiebre + " text, "
+            + feb20Escalofrio + " text, "
+            + feb20TemblorEscalofrio + " text, "
+            + feb20DolorMuscular + " text, "
+            + feb20DolorArticular + " text, "
+            + feb20SecresionNasal + " text, "
+            + feb20DolorGarganta + " text, "
+            + feb20Tos + " text, "
+            + feb20DificultadResp + " text, "
+            + feb20DolorPecho + " text, "
+            + feb20NauseasVomito + " text, "
+            + feb20DolorCabeza + " text, "
+            + feb20DolorAbdominal + " text, "
+            + feb20Diarrea + " text, "
+            + feb20DificultadDormir + " text, "
+            + feb20Debilidad + " text, "
+            + feb20PerdidaOlfatoGusto + " text, "
+            + feb20Mareo + " text, "
+            + feb20Sarpullido + " text, "
+            + feb20Desmayo + " text, "
+            + feb20QuedoCama + " text, "
+            + sabeFIS + " text, "
+            + fis + " date, "
+            + mesInicioSintoma + " text, "
+            + anioInicioSintoma + " text, "
+            + padecidoCovid19 + " text, "
+            + conoceLugarExposicion + " text, "
+            + lugarExposicion + " text, "
+            + buscoAyuda + " text, "
+            + dondeBuscoAyuda + " text, "
+            + nombreCentroSalud + " text, "
+            + nombreHospital + " text, "
+            + recibioSeguimiento + " text, "
+            + tipoSeguimiento + " text, "
+            + tmpDespuesBuscoAyuda + " text, "
+            + unaNocheHospital + " text, "
+            + queHospital + " text, "
+            + sabeCuantasNoches + " text, "
+            + cuantasNochesHosp + " integer, "
+            + sabeFechaAdmision + " text, "
+            + fechaAdmisionHosp + " date, "
+            + sabeFechaAlta + " text, "
+            + fechaAltaHosp + " date, "
+            + utilizoOxigeno + " text, "
+            + estuvoUCI + " text, "
+            + fueIntubado + " text, "
+            + recuperadoCovid19 + " text, "
+            + febricula + " text, "
+            + cansancio + " text, "
+            + dolorCabeza + " text, "
+            + perdidaOlfato + " text, "
+            + perdidaGusto + " text, "
+            + tos + " text, "
+            + dificultadRespirar + " text, "
+            + dolorPecho + " text, "
+            + palpitaciones + " text, "
+            + dolorArticulaciones + " text, "
+            + paralisis + " text, "
+            + mareos + " text, "
+            + pensamientoNublado + " text, "
+            + problemasDormir + " text, "
+            + depresion + " text, "
+            + otrosSintomas + " text, "
+            + cualesSintomas + " text, "
+            + sabeTiempoRecuperacion + " text, "
+            + tiempoRecuperacion + " text, "
+            + tiempoRecuperacionEn + " text, "
+            + severidadEnfermedad + " text, "
+            + tomoMedicamento + " text, "
+            + queMedicamento + " text, "
+            + otroMedicamento + " text, "
+            + padeceEnfisema + " text, "
+            + padeceAsma + " text, "
+            + padeceDiabetes + " text, "
+            + padeceEnfCoronaria + " text, "
+            + padecePresionAlta + " text, "
+            + padeceEnfHigado + " text, "
+            + padeceEnfRenal + " text, "
+            + padeceInfartoDerrameCer + " text, "
+            + padeceCancer + " text, "
+            + padeceCondicionInmuno + " text, "
+            + padeceEnfAutoinmune + " text, "
+            + padeceDiscapacidadFis + " text, "
+            + padeceCondPsicPsiq + " text, "
+            + padeceOtraCondicion + " text, "
+            + queOtraCondicion + " text, "
+            + fumado + " text, "
+            + fumadoCienCigarrillos + " text, "
+            + fumadoPrevioEnfermedad + " text, "
+            + fumaActualmente + " text, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + codigo + "));";
+
 }

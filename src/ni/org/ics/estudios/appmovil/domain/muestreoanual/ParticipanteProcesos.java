@@ -66,6 +66,10 @@ public class ParticipanteProcesos implements Serializable {
     //Covid19
     private String consCovid19;
     private String subEstudios;
+    //Parte E CHF para toma mx adicional Covid19
+    private String consChf;
+    private String cuestCovid;
+    private String muestraCovid;
 
     private MovilInfo movilInfo;
 
@@ -467,6 +471,30 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setSubEstudios(String subEstudios) {
         this.subEstudios = subEstudios;
+    }
+
+    public String getConsChf() {
+        return consChf;
+    }
+
+    public void setConsChf(String consChf) {
+        this.consChf = consChf;
+    }
+
+    public String getCuestCovid() {
+        return cuestCovid;
+    }
+
+    public void setCuestCovid(String cuestCovid) {
+        this.cuestCovid = cuestCovid;
+    }
+
+    public String getMuestraCovid() {
+        return muestraCovid;
+    }
+
+    public void setMuestraCovid(String muestraCovid) {
+        this.muestraCovid = muestraCovid;
     }
 }
 

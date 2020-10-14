@@ -57,6 +57,8 @@ public class CartaConsentimientoHelper {
         cv.put(MainDBConstants.apellido2MxSuperficie, carta.getApellido2MxSuperficie());
         //covid19
         cv.put(MainDBConstants.aceptaParteE, carta.getAceptaParteE());
+        cv.put(MainDBConstants.motivoRechazoParteE, carta.getMotivoRechazoParteE());
+        cv.put(MainDBConstants.otroMotivoRechazoParteE, carta.getOtroMotivoRechazoParteE());
 
         if (carta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, carta.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, carta.getRecordUser());
@@ -110,6 +112,8 @@ public class CartaConsentimientoHelper {
         mCarta.setApellido2MxSuperficie(cursor.getString(cursor.getColumnIndex(MainDBConstants.apellido2MxSuperficie)));
         //Covid19
         mCarta.setAceptaParteE(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParteE)));
+        mCarta.setMotivoRechazoParteE(cursor.getString(cursor.getColumnIndex(MainDBConstants.motivoRechazoParteE)));
+        mCarta.setOtroMotivoRechazoParteE(cursor.getString(cursor.getColumnIndex(MainDBConstants.otroMotivoRechazoParteE)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mCarta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mCarta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

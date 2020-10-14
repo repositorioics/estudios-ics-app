@@ -356,6 +356,14 @@ public class EstudiosAdapter {
 				db.execSQL(Covid19DBConstants.CREATE_COVID_VISITA_FINAL_CASO_TABLE);
 				db.execSQL(Covid19DBConstants.CREATE_COVID_SINT_VISITA_FINAL_CASO_TABLE);
 			}
+			if (oldVersion==33){
+				db.execSQL(Covid19DBConstants.CREATE_COVID_CUESTIONARIO_TABLE);
+				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.consChf + " text");
+				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.cuestCovid + " text");
+				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.muestraCovid + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.motivoRechazoParteE + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.otroMotivoRechazoParteE + " text");
+			}
 		}
 	}
 
@@ -3076,6 +3084,9 @@ public class EstudiosAdapter {
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
 		c = crearCursor(Covid19DBConstants.COVID_SINTOMAS_VISITA_CASO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+		c = crearCursor(Covid19DBConstants.COVID_CUESTIONARIO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
 
@@ -7871,4 +7882,58 @@ public class EstudiosAdapter {
 		if (!cursor.isClosed()) cursor.close();
 		return mSintomasVisitaFinalCovid19s;
 	}
+
+	//Crear nuevo CuestionarioCovid19 en la base de datos
+	public void crearCuestionarioCovid19(CuestionarioCovid19 partcaso) throws Exception {
+		ContentValues cv = CuestionarioCovid19Helper.crearCuestionarioCovid19ContentValues(partcaso);
+		mDb.insertOrThrow(Covid19DBConstants.COVID_CUESTIONARIO_TABLE, null, cv);
+	}
+
+	//Crear nuevo CuestionarioCovid19 en la base de datos desde otro equipo
+	public void insertarCuestionarioCovid19(String participanteCohorteFamiliaCasoSQL) {
+		mDb.execSQL(participanteCohorteFamiliaCasoSQL);
+	}
+
+	//Editar CuestionarioCovid19 existente en la base de datos
+	public boolean editarCuestionarioCovid19(CuestionarioCovid19 partcaso) throws Exception{
+		ContentValues cv = CuestionarioCovid19Helper.crearCuestionarioCovid19ContentValues(partcaso);
+		return mDb.update(Covid19DBConstants.COVID_CUESTIONARIO_TABLE, cv, Covid19DBConstants.codigo + "='"
+				+ partcaso.getCodigo() + "'", null) > 0;
+	}
+	//Limpiar la tabla de CuestionarioCovid19 de la base de datos
+	public boolean borrarCuestionarioCovid19() {
+		return mDb.delete(Covid19DBConstants.COVID_CUESTIONARIO_TABLE, null, null) > 0;
+	}
+	//Obtener un CuestionarioCovid19 de la base de datos
+	public CuestionarioCovid19 getCuestionarioCovid19(String filtro, String orden) throws SQLException {
+		CuestionarioCovid19 mCuestionarioCovid19 = null;
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_CUESTIONARIO_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mCuestionarioCovid19=CuestionarioCovid19Helper.crearCuestionarioCovid19(cursor);
+			Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(Covid19DBConstants.participante)), null);
+			mCuestionarioCovid19.setParticipante(participante);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mCuestionarioCovid19;
+	}
+	//Obtener una lista de CuestionarioCovid19 de la base de datos
+	public List<CuestionarioCovid19> getCuestionariosCovid19(String filtro, String orden) throws SQLException {
+		List<CuestionarioCovid19> mCuestionarioCovid19s = new ArrayList<CuestionarioCovid19>();
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_CUESTIONARIO_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mCuestionarioCovid19s.clear();
+			do{
+				CuestionarioCovid19 mCuestionarioCovid19 = null;
+				mCuestionarioCovid19 = CuestionarioCovid19Helper.crearCuestionarioCovid19(cursor);
+				Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(Covid19DBConstants.participante)), null);
+				mCuestionarioCovid19.setParticipante(participante);
+				mCuestionarioCovid19s.add(mCuestionarioCovid19);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mCuestionarioCovid19s;
+	}
+
 }

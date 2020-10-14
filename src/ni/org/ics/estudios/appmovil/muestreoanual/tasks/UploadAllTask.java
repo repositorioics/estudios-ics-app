@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.*;
+import ni.org.ics.estudios.appmovil.domain.covid19.CuestionarioCovid19;
 import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCovid19;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.VisitaTerreno;
@@ -11,6 +12,7 @@ import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeropreva
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -62,6 +64,8 @@ public class UploadAllTask extends UploadTask {
     private List<EnfermedadCronica> mEnfermedades = new ArrayList<EnfermedadCronica>();
     private List<ObsequioGeneral> mObsequiosGeneral = new ArrayList<ObsequioGeneral>();
     private List<ParticipanteCovid19> mParticipantesCovid19 = new ArrayList<ParticipanteCovid19>();
+    private List<CuestionarioCovid19> mCuestionariosCovid19 = new ArrayList<CuestionarioCovid19>();
+    private List<ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra> mMuestrasAdiCovid19 = new ArrayList<ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra>();
 
     private String url = null;
     private String username = null;
@@ -402,6 +406,24 @@ public class UploadAllTask extends UploadTask {
             }
             try {
                 error = cargarParticipantesCovid19(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
+            try {
+                error = cargarCuestionariosCovid19(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
+            try {
+                error = cargarMuestrasAdicionalesCovid19(url, username, password);
                 if (!error.matches("Datos recibidos!")) {
                     return error;
                 }
@@ -779,6 +801,35 @@ public class UploadAllTask extends UploadTask {
             participante.setEstado(estado.charAt(0));
             estudioAdapter.editarParticipanteCovid19(participante);
             publishProgress("Actualizando participantes Covid19", Integer.valueOf(mParticipantesCovid19.indexOf(participante)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+    }
+
+    private void getCuestionariosCovid19() {
+        mCuestionariosCovid19 = estudioAdapter.getCuestionariosCovid19(MainDBConstants.estado + "= '" + Constants.STATUS_NOT_SUBMITTED+ "'", null);
+    }
+
+    private void saveCuestionariosCovid19(String estado) throws Exception {
+        int c = mCuestionariosCovid19.size();
+        for (CuestionarioCovid19 cuestionarioCovid19 : mCuestionariosCovid19) {
+            cuestionarioCovid19.setEstado(estado.charAt(0));
+            estudioAdapter.editarCuestionarioCovid19(cuestionarioCovid19);
+            publishProgress("Actualizando cuestionarios Covid19", Integer.valueOf(mCuestionariosCovid19.indexOf(cuestionarioCovid19)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+    }
+
+    private void getMuestrasAdicCovid19() {
+        mMuestrasAdiCovid19 = estudioAdapter.getMuestras(MainDBConstants.estado + "= '" + Constants.STATUS_NOT_SUBMITTED+ "' and "+
+                MuestrasDBConstants.proposito +" = '"+ Constants.CODIGO_PROPOSITO_ADIC_COVID + "'", null);
+    }
+
+    private void saveMuestrasAdicCovid19(String estado) throws Exception {
+        int c = mMuestrasAdiCovid19.size();
+        for (ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra muestra : mMuestrasAdiCovid19) {
+            muestra.setEstado(estado.charAt(0));
+            estudioAdapter.editarMuestras(muestra);
+            publishProgress("Actualizando muestras adicionales Covid19", Integer.valueOf(mMuestrasAdiCovid19.indexOf(muestra)).toString(), Integer
                     .valueOf(c).toString());
         }
     }
@@ -2116,7 +2167,91 @@ public class UploadAllTask extends UploadTask {
             }
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
-            saveParticipantes(Constants.STATUS_NOT_SUBMITTED);
+            saveParticipantesCovid19(Constants.STATUS_NOT_SUBMITTED);
+            return e.getMessage();
+        }
+
+    }
+
+    /***************************************************/
+    /*************** CuestionarioCovid19 ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarCuestionariosCovid19(String url, String username,
+                                                String password) throws Exception {
+        try {
+            getCuestionariosCovid19();
+            if(mCuestionariosCovid19.size()>0){
+                saveCuestionariosCovid19(Constants.STATUS_SUBMITTED);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/cuestionariosCovid19";
+                CuestionarioCovid19[] envio = mCuestionariosCovid19.toArray(new CuestionarioCovid19[mCuestionariosCovid19.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<CuestionarioCovid19[]> requestEntity =
+                        new HttpEntity<CuestionarioCovid19[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    saveCuestionariosCovid19(Constants.STATUS_NOT_SUBMITTED);
+                }
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            saveCuestionariosCovid19(Constants.STATUS_NOT_SUBMITTED);
+            return e.getMessage();
+        }
+
+    }
+
+    /***************************************************/
+    /*************** Muestras CHF Covid19 ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarMuestrasAdicionalesCovid19(String url, String username,
+                                                String password) throws Exception {
+        try {
+            getMuestrasAdicCovid19();
+            if(mMuestrasAdiCovid19.size()>0){
+                saveMuestrasAdicCovid19(Constants.STATUS_SUBMITTED);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/muestras";
+                ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra[] envio = mMuestrasAdiCovid19.toArray(new ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra[mMuestrasAdiCovid19.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra[]> requestEntity =
+                        new HttpEntity<ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    saveMuestrasAdicCovid19(Constants.STATUS_NOT_SUBMITTED);
+                }
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            saveMuestrasAdicCovid19(Constants.STATUS_NOT_SUBMITTED);
             return e.getMessage();
         }
 

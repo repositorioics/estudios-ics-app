@@ -106,7 +106,10 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         || !procesos.getCoordenadas().equals("0")
                         || procesos.getObsequioChf().matches("Si")
                         || (procesos.getReConsChf18()!=null && procesos.getReConsChf18().matches("Si"))
-                        || procesos.getConsCovid19().matches("Si")){
+                        || procesos.getConsCovid19().matches("Si")
+                        || (procesos.getConsChf()!=null && procesos.getConsChf().matches("Si"))
+                        || (procesos.getCuestCovid()!=null && procesos.getCuestCovid().matches("Si"))
+                        || (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si"))){
 
 					labelHeader = labelHeader + "<font color='red'>Pendiente: <br /></font>";
 
@@ -308,6 +311,10 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                                 }
                             }
                         }
+                        //Muestra adicional CHF para Covid19
+                        if (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si")){
+                            labelHeader += getVolumenCHFAdicionalCovid19(participante);
+                        }
 					}
 					
 					//Nuevo orden
@@ -318,6 +325,8 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                     //MA2020 if (procesos.getEncPartSa().matches("Si")) labelHeader = labelHeader + this.getContext().getString(R.string.partsa_survey_missing) + "<br />";
                     if (procesos.getEncPart().matches("Si")) labelHeader = labelHeader + "Encuesta de Participante<br />";
                     if (procesos.getConsCovid19().matches("Si")) labelHeader = labelHeader + (!procesos.getEstudio().trim().contains("Influenza")?"Consentimiento COVID19<br />":"Reconsentimiento Influenza<br />");
+                    if (procesos.getConsChf()!=null && procesos.getConsChf().matches("Si")) labelHeader = labelHeader + this.getContext().getString(R.string.chfpartee_missing) + "<br />";
+                    if (procesos.getCuestCovid()!=null && procesos.getCuestCovid().matches("Si")) labelHeader = labelHeader + this.getContext().getString(R.string.cuest_covid19_missing) + "<br />";
 					if (procesos.getConsFlu().matches("Si")) labelHeader = labelHeader + "Consentimiento UO1<br />";
                     if (procesos.getConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue A,B,C<br />";
                     if (procesos.getReConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue D<br />";
@@ -665,6 +674,24 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                     labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                 }
             }
+        }
+        return labelHeader;
+    }
+
+    private String getVolumenCHFAdicionalCovid19(Participante mParticipante) {
+        String labelHeader = "";
+        //menores de 6 meses
+        if (mParticipante.getEdadMeses() < 6) {
+            labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+        } //De 6 meses a <2 años
+        else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
+            labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
+        }  //De 2 años - < 14 Años
+        else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
+            labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+        } else //De 14 años y más
+        {
+            labelHeader = labelHeader + "<small><font color='red'>Tomar 14cc en tubo Rojo<br /></font></small>";
         }
         return labelHeader;
     }

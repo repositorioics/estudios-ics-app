@@ -42,6 +42,9 @@
     <string name="info_conflu_uo1">Consentimiento UO1</string>
     <string name="info_cons_covid19">Consentimiento COVID19</string>
     <string name="info_cons_covid19_flu">Reconsentimiento Influenza</string>
+    <string name="info_cons_partee_chf">Consentimiento ParteE CHF</string>
+    <string name="info_cuest_covid19">Cuestionario COVID19</string>
+    <string name="info_mxadi_covid19">Mx Adicional COVID19</string>
 
     <string name="house_survey_missing">Realizar encuesta de casa</string>
     <string name="part_survey_missing">Realizar encuesta de participante</string>
@@ -143,6 +146,8 @@
     <string name="activos">Descargar solo activos</string>
     <string name="terreno">Descargar solo participantes</string>
     <string name="cons_missing_covid19">Realizar Consentimiento COVID19</string>
+    <string name="chfpartee_missing">Realizar Consentimiento ParteE CHF</string>
+    <string name="cuest_covid19_missing">Realizar Cuestionario Covid19</string>
 
     <string name="sinRelacFam">Sin Relación Familiar</string>
 </resources>

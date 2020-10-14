@@ -32,7 +32,10 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActiv
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObsequioActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoRecon18AniosActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.dto.DatosCHF;
+import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevaMuestraAdicRojoCovid19Activity;
+import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoConsCHFParteECovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoConsCovid19Activity;
+import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoCuestionarioCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.dto.DatosCovid19;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.DatosCoordenadas;
@@ -110,6 +113,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private MenuItem recon18ChfItem;
     private MenuItem consFluUO1Item;
     private MenuItem consCovid19;
+    private MenuItem consParteEChf;
+    private MenuItem cuestCovid19;
+    private MenuItem mxAdicionalCovid19;
 
     private EstudiosAdapter estudiosAdapter;
 
@@ -169,7 +175,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         if (mParticipante!=null) arguments.putSerializable(Constants.OBJECTO , mParticipante);
                         i = new Intent(getApplicationContext(),
                                 ReviewActivity.class);
-                        break;
+                                break;
                     case 1:
                         arguments.putString(Constants.TITLE, getString(R.string.info_visit));
                         if (mVisitasTerreno!=null) arguments.putSerializable(Constants.OBJECTO , mVisitasTerreno);
@@ -333,6 +339,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             recon18ChfItem = menu.findItem(R.id.RECONS_CHF);
             consFluUO1Item = menu.findItem(R.id.CONSFLUUO1);
             consCovid19 = menu.findItem(R.id.CONSCOVID19);
+            consParteEChf = menu.findItem(R.id.CONS_PARTEE_CHF);
+            cuestCovid19 = menu.findItem(R.id.CUESTCOVID19);
+            mxAdicionalCovid19 = menu.findItem(R.id.MXADICOVID19);
         }
         return true;
     }
@@ -458,7 +467,66 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     toast.show();
                 }
                 return true;
-
+            case R.id.CONS_PARTEE_CHF:
+                if(mUser.getConsentimiento()){
+                    if(mParticipante.getProcesos().getConsChf().matches("Si")){
+                        i = new Intent(getApplicationContext(),
+                                NuevoConsCHFParteECovid19Activity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(Constants.PARTICIPANTE, mParticipante);
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                        startActivity(i);
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                return true;
+            case R.id.CUESTCOVID19:
+                if(mUser.getConsentimiento()){
+                    if(mParticipante.getProcesos().getCuestCovid().matches("Si")){
+                        i = new Intent(getApplicationContext(),
+                                NuevoCuestionarioCovid19Activity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(Constants.PARTICIPANTE, mParticipante);
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                        startActivity(i);
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                return true;
+            case R.id.MXADICOVID19:
+                if(mUser.getMuestra()){
+                    if(mParticipante.getProcesos().getMuestraCovid().matches("Si")){
+                        i = new Intent(getApplicationContext(),
+                                NuevaMuestraAdicRojoCovid19Activity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(Constants.PARTICIPANTE, mParticipante);
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                        startActivity(i);
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                return true;
             case R.id.CONSFLUUO1:
                 if(mUser.getConsentimiento()){
                     if(mParticipante.getProcesos().getConsFlu().matches("Si")){
@@ -933,6 +1001,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         recon18ChfItem.setVisible(false);
         consFluUO1Item.setVisible(false);
         consCovid19.setVisible(false);
+        consParteEChf.setVisible(false);
+        cuestCovid19.setVisible(false);
+        mxAdicionalCovid19.setVisible(false);
         if (!mParticipante.getProcesos().getEstudio().trim().contains("Influenza")){
             consCovid19.setTitle(R.string.info_cons_covid19);
         }else{
@@ -949,6 +1020,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     && mUser.getMuestra()
                     && (mParticipante.getEdadMeses()>5
                     || (mParticipante.getEdadMeses()<=5 && mParticipante.getProcesos().getEstudio().contains("UO1")))) muestraItem.setVisible(true);
+
             if((mParticipante.getProcesos().getEnCasa().matches("Si") && mUser.getEncuestaCasa())) encCasaItem.setVisible(true);
             if((mParticipante.getProcesos().getEncPart().matches("Si") && mUser.getEncuestaParticipante())) encPartItem.setVisible(true);
             //if ((mParticipante.getProcesos().getConsFlu().matches("Si") && mUser.getConsentimiento())) reConsFluItem.setVisible(true);
@@ -967,6 +1039,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             //MA2020 if((mParticipante.getProcesos().getEncPartSa().matches("Si") && mUser.getEncuestaParticipante())) encPartSaItem.setVisible(true);
             if ((mParticipante.getProcesos().getReConsChf18()!=null && mParticipante.getProcesos().getReConsChf18().matches("Si") && mUser.getConsentimiento())) recon18ChfItem.setVisible(true);
             visitaItem.setVisible(false);
+            if ((mParticipante.getProcesos().getConsChf()!=null && mParticipante.getProcesos().getConsChf().matches("Si") && mUser.getConsentimiento())) consParteEChf.setVisible(true);
+            if ((mParticipante.getProcesos().getCuestCovid()!=null && mParticipante.getProcesos().getCuestCovid().matches("Si") && mUser.getEncuestaParticipante())) cuestCovid19.setVisible(true);
+            if ((mParticipante.getProcesos().getMuestraCovid()!=null && mParticipante.getProcesos().getMuestraCovid().matches("Si") && mUser.getMuestra())) mxAdicionalCovid19.setVisible(true);
         }
         return true;
     }
@@ -1131,7 +1206,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || !mParticipante.getProcesos().getCoordenadas().equals("0")
                     || mParticipante.getProcesos().getObsequioChf().matches("Si")
                     || (mParticipante.getProcesos().getReConsChf18()!=null && mParticipante.getProcesos().getReConsChf18().matches("Si"))
-                    || mParticipante.getProcesos().getConsCovid19().matches("Si")){
+                    || mParticipante.getProcesos().getConsCovid19().matches("Si")
+                    || (mParticipante.getProcesos().getConsChf() != null && mParticipante.getProcesos().getConsChf().matches("Si"))
+                    || (mParticipante.getProcesos().getCuestCovid() != null && mParticipante.getProcesos().getCuestCovid().matches("Si"))
+                    || (mParticipante.getProcesos().getMuestraCovid() != null && mParticipante.getProcesos().getMuestraCovid().matches("Si"))){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
 
@@ -1357,11 +1435,15 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 }
                             }
                         }
+                        //Muestra adicional CHF para Covid19
+                        if (mParticipante.getProcesos().getMuestraCovid()!=null && mParticipante.getProcesos().getMuestraCovid().matches("Si")){
+                            labelHeader += getVolumenCHFAdicionalCovid19();
+                            pendiente=true;
+                        }
                     }
                 }
 
                 //Nuevo orden
-
                 if (mParticipante.getProcesos().getEnCasa().matches("Si") && mUser.getEncuestaCasa()) {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.house_survey_missing) + "</font></small><br />";
                     pendiente=true;
@@ -1390,6 +1472,14 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     }else{
                         labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.reconsflu_missing) + "</font></small><br />";
                     }
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getConsChf()!=null && mParticipante.getProcesos().getConsChf().matches("Si") && mUser.getConsentimiento()){
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.chfpartee_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getCuestCovid()!=null && mParticipante.getProcesos().getCuestCovid().matches("Si")){
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.cuest_covid19_missing) + "</font></small><br />";
                     pendiente=true;
                 }
 
@@ -1815,6 +1905,28 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                 }
             }
+        }
+        return labelHeader;
+    }
+
+    private String getVolumenCHFAdicionalCovid19() {
+        String labelHeader = "";
+        //menores de 6 meses
+        if (mParticipante.getEdadMeses() < 6) {
+            labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+            pendiente = true;
+        } //De 6 meses a <2 años
+        else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
+            labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
+            pendiente = true;
+        }  //De 2 años - < 14 Años
+        else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
+            labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+            pendiente = true;
+        } else //De 14 años y más
+        {
+            labelHeader = labelHeader + "<small><font color='red'>Tomar 14cc en tubo Rojo<br /></font></small>";
+            pendiente = true;
         }
         return labelHeader;
     }

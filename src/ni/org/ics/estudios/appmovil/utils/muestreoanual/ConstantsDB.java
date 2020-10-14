@@ -158,6 +158,10 @@ public class ConstantsDB {
     //Covid19
     public static final String consCovid19 = "consCovid19";
     public static final String subEstudios = "subEstudios";
+    //Parte E CHF para toma mx adicional Covid19
+    public static final String consChf = "consChf";
+    public static final String cuestCovid = "cuestCovid";
+    public static final String muestraCovid = "muestraCovid";
 
     //Campos encuesta casa
     public static final String FECHA_ENC_CASA = "fecha_encuesta";
@@ -1001,6 +1005,9 @@ public class ConstantsDB {
             + antecedenteTutorCP  + " text, "
             + consCovid19 + " text, "
             + subEstudios + " text, "
+            + consChf + " text, "
+            + cuestCovid + " text, "
+            + muestraCovid + " text, "
             + ID_INSTANCIA + " integer,"
             + FILE_PATH + " text,"
             + STATUS + " text, "

@@ -89,6 +89,7 @@ public class Constants {
     public static final String CODIGO_PROPOSITO_VC_UO1 = "5"; //VACUNA UO1
     public static final String CODIGO_PROPOSITO_COVID_CP = "7";//Covid Flu y UO1
     public static final String CODIGO_PROPOSITO_T_COVID = "8"; //Seguimiento Transmisión Covid
+    public static final String CODIGO_PROPOSITO_ADIC_COVID = "9"; //Muestra adicional CHF Covid19
     //public static final String CODIGO_PROPOSITO_UO1_CHF = "6"; //Compartido Positivo UO1 y positivo familia
     public static final String CODIGO_TIPO_SANGRE = "1";
     public static final String CODIGO_TIPO_RESP = "9";

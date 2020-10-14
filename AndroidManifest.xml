@@ -416,6 +416,12 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".covid19.activities.enterdata.NuevoSintomasVisitaFinalCovid19Activity"
                   android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevoCuestionarioCovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevoConsCHFParteECovid19Activity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevaMuestraAdicRojoCovid19Activity"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

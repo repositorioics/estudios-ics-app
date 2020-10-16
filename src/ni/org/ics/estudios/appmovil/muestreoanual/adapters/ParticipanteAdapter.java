@@ -691,7 +691,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
             labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
         } else //De 14 años y más
         {
-            labelHeader = labelHeader + "<small><font color='red'>Tomar 14cc en tubo Rojo<br /></font></small>";
+            labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
         }
         return labelHeader;
     }

@@ -3538,6 +3538,8 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
                 }
             });
             AlertDialog alertDialog = builder.create();
+            alertDialog.setCancelable(false);
+            alertDialog.setCanceledOnTouchOutside(false);
             alertDialog.show();
         }
     }

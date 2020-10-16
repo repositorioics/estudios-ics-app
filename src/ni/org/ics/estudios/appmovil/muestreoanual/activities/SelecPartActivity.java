@@ -298,6 +298,7 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
                                 i.putExtra(ConstantsDB.VIS_EXITO, false);
                                 i.putExtras(arguments);
                                 startActivity(i);
+                                finish();
                             }else{
                                 showToast("("+codigoScanned+") - " + getString(R.string.retired_error));
                             }
@@ -388,6 +389,7 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
                     i.putExtra(ConstantsDB.VIS_EXITO, false);
                     i.putExtras(arguments);
                     startActivity(i);
+                    finish();
                 } else {
                     showToast("(" + codigo + ") - " + getString(R.string.retired_error));
                 }

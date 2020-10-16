@@ -180,7 +180,7 @@ public class NuevaMuestraAdicRojoCovid19Activity extends FragmentActivity implem
 
         } else //De 14 años y más
         {
-            volumenMaximoPermitido = 15D; //14 requerido +1 de desviación
+            volumenMaximoPermitido = 13D; //12 requerido +1 de desviación
         }
         NumberPage vol = (NumberPage) mWizardModel.findByKey(labels.getVolumen());
         vol.setRangeValidation(true, 0, volumenMaximoPermitido.intValue());

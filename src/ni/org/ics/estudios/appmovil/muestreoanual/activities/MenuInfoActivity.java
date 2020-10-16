@@ -393,6 +393,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     createDialog(EXIT);
                 }
                 else{
+                    i = new Intent(getApplicationContext(),
+                            SelecPartActivity.class);
+                    i.putExtra(Constants.MENU_INFO, true);
+                    startActivity(i);
                     finish();
                 }
                 return true;
@@ -939,6 +943,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             createDialog(EXIT);
         }
         else{
+            Intent i = new Intent(getApplicationContext(),
+                    SelecPartActivity.class);
+            i.putExtra(Constants.MENU_INFO, true);
+            startActivity(i);
             finish();
         }
     }
@@ -1925,7 +1933,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             pendiente = true;
         } else //De 14 años y más
         {
-            labelHeader = labelHeader + "<small><font color='red'>Tomar 14cc en tubo Rojo<br /></font></small>";
+            labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
             pendiente = true;
         }
         return labelHeader;

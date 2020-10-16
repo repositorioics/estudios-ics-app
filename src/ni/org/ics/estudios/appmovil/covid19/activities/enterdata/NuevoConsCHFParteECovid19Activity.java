@@ -72,6 +72,7 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
     private List<MessageResource> catRelacionFamiliar = new ArrayList<MessageResource>();
     private String[] catVerifTutAlf; //cosas a verificar cuando tutor es alfabeto
     private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
+    private int totalVerifTutor = 0;
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -300,29 +301,35 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                 break;
             }
             if ((!page.isRequired() && !page.getData().isEmpty()) || (page.isRequired() && page.isCompleted())) {
-                if(clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")){
-                    if (!page.getData().getString(NumberPage.SIMPLE_DATA_KEY).matches("")){
+                if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")) {
+                    if (!page.getData().getString(NumberPage.SIMPLE_DATA_KEY).matches("")) {
                         NumberPage np = (NumberPage) page;
                         if ((np.ismValRange() || np.ismValPattern())) {
                             String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                            if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Integer.valueOf(valor) || np.getmLowerOrEqualsThan() < Integer.valueOf(valor)))
-                                    || (np.ismValPattern() && !valor.matches(np.getmPattern()))){
+                            if ((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Integer.valueOf(valor) || np.getmLowerOrEqualsThan() < Integer.valueOf(valor)))
+                                    || (np.ismValPattern() && !valor.matches(np.getmPattern()))) {
                                 cutOffPage = i;
                                 break;
                             }
                         }
                     }
-                }
-                else if(clase.equals("ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
-                    if (!page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("")){
+                } else if (clase.equals("ni.org.ics.estudios.appmovil.wizard.model.TextPage")) {
+                    if (!page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("")) {
                         TextPage tp = (TextPage) page;
                         if (tp.ismValPattern()) {
                             String valor = tp.getData().getString(TextPage.SIMPLE_DATA_KEY);
-                            if(!valor.matches(tp.getmPattern())){
+                            if (!valor.matches(tp.getmPattern())) {
                                 cutOffPage = i;
                                 break;
                             }
                         }
+                    }
+                } else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")) {
+                    ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
+                    //validación solo para la pregunta de verificación del tutor
+                    if (page.getTitle().equalsIgnoreCase(this.getString(R.string.verifTutor)) && test.size() != totalVerifTutor) {
+                        cutOffPage = i;
+                        break;
                     }
                 }
             }
@@ -558,6 +565,7 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                 notificarCambios = false;
                 MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
                 pagetmp.setChoices(visible?catVerifTutNoAlf:catVerifTutAlf);
+                totalVerifTutor = visible?catVerifTutNoAlf.length:catVerifTutAlf.length;
 
                 onPageTreeChanged();
             }
@@ -692,6 +700,7 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                 notificarCambios = false;
                 onPageTreeChanged();
             }
+
 
     	}catch (Exception ex){
             ex.printStackTrace();

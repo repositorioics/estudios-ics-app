@@ -480,6 +480,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         i.putExtra(Constants.PARTICIPANTE, mParticipante);
                         i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
                         startActivity(i);
+                        finish();
                     }
                     else{
                         Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);

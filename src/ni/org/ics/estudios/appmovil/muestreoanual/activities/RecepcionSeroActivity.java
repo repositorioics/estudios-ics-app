@@ -222,8 +222,8 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 					catch(Exception e){
 						return;
 					}
-
-					if (!(volumen>=0.5 && volumen<=12)){
+					//volumen permitido hasta 16ml. 20/10/2020. Solicitado para Muestreo covid19
+					if (!(volumen>=0.5 && volumen<=16)){
 						labelVolumen.setText("Volumen Inválido");
 						labelVolumen.setTextColor(Color.RED);
 					}
@@ -391,8 +391,8 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 		else if (lugarText.matches("Seleccionar..")){
 			showToast(this.getString( R.string.error_lugar),1);
 			return false;
-		}
-		else if (!(volumen>=0.5 && volumen<=12)){
+		}//volumen permitido hasta 16ml. 20/10/2020. Solicitado para Muestreo covid19
+		else if (!(volumen>=0.5 && volumen<=16)){
 			showToast(this.getString( R.string.error_volumen),1);
 			return false;
 		}

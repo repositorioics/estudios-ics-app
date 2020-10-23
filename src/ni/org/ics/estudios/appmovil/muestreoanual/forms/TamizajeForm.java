@@ -209,11 +209,11 @@ public class TamizajeForm extends AbstractWizardModel {
         Page tieneTelefono = new SingleFixedChoicePage(this,labels.getTieneTelefono(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page tipoTel1 = new SingleFixedChoicePage(this,labels.getTipoTelefono1(),labels.getTipoTelefono1Hint(), Constants.WIZARD, false).setChoices(catTipo).setRequired(true);
         Page operadoraTel1 = new SingleFixedChoicePage(this,labels.getOperadoraTelefono1(),labels.getOperadoraTelefono1Hint(), Constants.WIZARD, false).setChoices(catOperadora).setRequired(true);
-        Page numeroTel1 = new TextPage(this,labels.getNumTelefono1(),labels.getNumTelefono1Hint(), Constants.WIZARD, false).setPatternValidation(true, "^$|^[8|5|7|2]{1}\\d{7}$").setRequired(true);
+        Page numeroTel1 = new TextPage(this,labels.getNumTelefono1(),labels.getNumTelefono1Hint(), Constants.WIZARD, false).setPatternValidation(true, "^$|^[3|8|5|7|2]{1}\\d{7}$").setRequired(true);
         Page tieneOtroTelefono = new SingleFixedChoicePage(this,labels.getTieneOtroTelefono(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page tipoTel2 = new SingleFixedChoicePage(this,labels.getTipoTelefono2(),labels.getTipoTelefono2Hint(), Constants.WIZARD, false).setChoices(catTipo).setRequired(true);
         Page operadoraTel2 = new SingleFixedChoicePage(this,labels.getOperadoraTelefono2(),labels.getOperadoraTelefono2Hint(), Constants.WIZARD, false).setChoices(catOperadora).setRequired(true);
-        Page numeroTel2 = new TextPage(this,labels.getNumTelefono2(),labels.getNumTelefono2Hint(), Constants.WIZARD, false).setPatternValidation(true, "^$|^[8|5|7|2]{1}\\d{7}$").setRequired(true);
+        Page numeroTel2 = new TextPage(this,labels.getNumTelefono2(),labels.getNumTelefono2Hint(), Constants.WIZARD, false).setPatternValidation(true, "^$|^[3|8|5|7|2]{1}\\d{7}$").setRequired(true);
         Page verifTutor = new MultipleFixedChoicePage(this,labels.getVerifTutor(), "", Constants.WIZARD, false).setChoices(catVerificaTutor).setRequired(true);
 
         Page finTamizajeLabel = new LabelPage(this,labels.getFinTamizajeLabel(),"", Constants.WIZARD, true).setRequired(false);

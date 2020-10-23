@@ -26,6 +26,7 @@ import ni.org.ics.estudios.appmovil.domain.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuInfoActivity;
+import ni.org.ics.estudios.appmovil.muestreoanual.activities.SelecPartActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
@@ -626,9 +627,9 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Celular");
                 NumberPage pagetmp = (NumberPage) mWizardModel.findByKey(labels.getTelefonoCel1());
                 if (visible){
-                    pagetmp.setRangeValidation(true, 50000000, 89999999);
+                    pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CELULAR, Constants.MAXIMO_NUM_CELULAR);
                 }else{
-                    pagetmp.setRangeValidation(true, 20000000, 29999999);
+                    pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper1()), visible);
                 notificarCambios = false;
@@ -648,9 +649,9 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Celular");
                 NumberPage pagetmp = (NumberPage) mWizardModel.findByKey(labels.getTelefonoCel2());
                 if (visible){
-                    pagetmp.setRangeValidation(true, 50000000, 89999999);
+                    pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CELULAR, Constants.MAXIMO_NUM_CELULAR);
                 }else{
-                    pagetmp.setRangeValidation(true, 20000000, 29999999);
+                    pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper2()), visible);
                 notificarCambios = false;
@@ -668,9 +669,9 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Celular");
                 NumberPage pagetmp = (NumberPage) mWizardModel.findByKey(labels.getTelefonoCel3());
                 if (visible){
-                    pagetmp.setRangeValidation(true, 50000000, 89999999);
+                    pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CELULAR, Constants.MAXIMO_NUM_CELULAR);
                 }else{
-                    pagetmp.setRangeValidation(true, 20000000, 29999999);
+                    pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper3()), visible);
                 notificarCambios = false;
@@ -725,7 +726,10 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
 
     private void resetForm(int preg){
         try {
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), false);
             if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getAceptaCHFParteECovid()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteE()), false);
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteE()), false);
             if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), false);
             if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getTutor()), false);
             if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), false);
@@ -1166,6 +1170,10 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
             }else {
                 Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.visitaNoExitosa)+ " " +razonVisNoExit, Toast.LENGTH_LONG);
                 toast.show();
+                Intent i = new Intent(getApplicationContext(),
+                        SelecPartActivity.class);
+                i.putExtra(Constants.MENU_INFO, true);
+                startActivity(i);
                 finish();
             }
 

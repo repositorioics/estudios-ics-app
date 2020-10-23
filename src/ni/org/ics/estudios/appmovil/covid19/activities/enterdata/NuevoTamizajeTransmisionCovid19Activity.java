@@ -696,9 +696,9 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Celular");
                 NumberPage pagetmp = (NumberPage) mWizardModel.findByKey(labels.getTelefonoCel1());
                 if (visible){
-                    pagetmp.setRangeValidation(true, 50000000, 89999999);
+                    pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CELULAR, Constants.MAXIMO_NUM_CELULAR);
                 }else{
-                    pagetmp.setRangeValidation(true, 20000000, 29999999);
+                    pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper1()), visible);
                 notificarCambios = false;
@@ -718,9 +718,9 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Celular");
                 NumberPage pagetmp = (NumberPage) mWizardModel.findByKey(labels.getTelefonoCel2());
                 if (visible){
-                    pagetmp.setRangeValidation(true, 50000000, 89999999);
+                    pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CELULAR, Constants.MAXIMO_NUM_CELULAR);
                 }else{
-                    pagetmp.setRangeValidation(true, 20000000, 29999999);
+                    pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper2()), visible);
                 notificarCambios = false;
@@ -738,9 +738,9 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Celular");
                 NumberPage pagetmp = (NumberPage) mWizardModel.findByKey(labels.getTelefonoCel3());
                 if (visible){
-                    pagetmp.setRangeValidation(true, 50000000, 89999999);
+                    pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CELULAR, Constants.MAXIMO_NUM_CELULAR);
                 }else{
-                    pagetmp.setRangeValidation(true, 20000000, 29999999);
+                    pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper3()), visible);
                 notificarCambios = false;

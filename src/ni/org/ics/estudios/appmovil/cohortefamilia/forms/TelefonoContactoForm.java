@@ -52,7 +52,7 @@ public class TelefonoContactoForm extends AbstractWizardModel {
     	
 		Page tipo = new SingleFixedChoicePage(this,labels.getTipo(),"", Constants.WIZARD, true).setChoices(catTipo).setRequired(true);
 		Page operadora = new SingleFixedChoicePage(this,labels.getOperadora(),"", Constants.WIZARD, false).setChoices(catOperadora).setRequired(true);	
-		Page numero = new TextPage(this,labels.getNumero(),"", Constants.WIZARD, true).setPatternValidation(true, "^$|^[8|5|7|2]{1}\\d{7}$").setRequired(true);
+		Page numero = new TextPage(this,labels.getNumero(),"", Constants.WIZARD, true).setPatternValidation(true, "^$|^[3|8|5|7|2]{1}\\d{7}$").setRequired(true);
 		Page participante = new SelectParticipantPage(this,labels.getParticipante(),"", Constants.WIZARD, true).setRequired(false);	
         return new PageList(tipo,operadora,numero,participante);
     }

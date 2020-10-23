@@ -135,6 +135,12 @@ public class Constants {
     public static final String SUB_ESTUDIO_COVID19 = "2";
     public static final String T_COVID19 = "Tcovid";
     public static final String PRIMER_SINTOMA = "primer_sintoma";
+
+    public static final int MINIMO_NUM_CELULAR = 30000000;
+    public static final int MAXIMO_NUM_CELULAR = 89999999;
+    public static final int MINIMO_NUM_CONVENCIONAL = 20000000;
+    public static final int MAXIMO_NUM_CONVENCIONAL = 29999999;
+
 }
 
     

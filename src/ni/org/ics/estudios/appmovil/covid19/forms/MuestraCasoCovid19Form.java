@@ -20,7 +20,7 @@ public class MuestraCasoCovid19Form extends AbstractWizardModel {
     private String[] catSiNo;
     private String[] catRazon;
     private String[] catObservacion;
-    //private String[] catPinchazos;
+    private String[] catPinchazos;
 
     private MuestrasFormLabels labels;
     private EstudiosAdapter estudiosAdapter;
@@ -49,7 +49,7 @@ public class MuestraCasoCovid19Form extends AbstractWizardModel {
         catSiNo = fillCatalog("CHF_CAT_SINO");
         catRazon = fillCatalog("CHF_CAT_RAZON_NO_MX");
         catObservacion = fillCatalog("CHF_CAT_OBSERV_MX");
-        //catPinchazos = fillCatalog("CHF_CAT_PINCH_MX");
+        catPinchazos = fillCatalog("CHF_CAT_PINCH_MX");
 
         estudiosAdapter.close();
 
@@ -60,9 +60,9 @@ public class MuestraCasoCovid19Form extends AbstractWizardModel {
         Page npVolumen = new NumberPage(this, labels.getVolumen(), labels.getVolumenHint(), Constants.WIZARD, false).setRangeValidation(true, 0, 6).setRequired(true);
         Page scObservacion = new SingleFixedChoicePage(this, labels.getObservacion(), "", Constants.WIZARD, false).setChoices(catObservacion).setRequired(true);
         Page tpDescOtraObservacion = new TextPage(this, labels.getDescOtraObservacion(), labels.getDescOtraObservacionHint(), Constants.WIZARD, false).setRequired(true);
-        //Page scNumPinchazos = new SingleFixedChoicePage(this, labels.getNumPinchazos(), "", Constants.WIZARD, false).setChoices(catPinchazos).setRequired(true);
+        Page scNumPinchazos = new SingleFixedChoicePage(this, labels.getNumPinchazos(), "", Constants.WIZARD, false).setChoices(catPinchazos).setRequired(true);
 
         return new PageList(scTomaMxSn,scRazonNoToma,tpDescOtraRazonNoToma, bcCodigoMx,
-                npVolumen, scObservacion, tpDescOtraObservacion);
+                npVolumen, scObservacion, tpDescOtraObservacion, scNumPinchazos);
     }
 }

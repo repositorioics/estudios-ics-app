@@ -13,7 +13,7 @@
 
     <string name="app_preferences">Configuración Aplicación</string>
     <string name="update_app_preferences">Actualizar Aplicación</string>
-    <string name="version_app_preferences">Versión 5.7.0.1</string>
-    <string name="versiondate_app_preferences">Oct 23, 2020</string>
+    <string name="version_app_preferences">Versión 5.7.0.2</string>
+    <string name="versiondate_app_preferences">Oct 29, 2020</string>
 
 </resources>

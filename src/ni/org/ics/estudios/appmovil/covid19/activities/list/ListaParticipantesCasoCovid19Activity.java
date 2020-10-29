@@ -218,6 +218,7 @@ public class ListaParticipantesCasoCovid19Activity extends AbstractAsyncListActi
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			i.putExtras(arguments);
 			i.putExtra(Constants.ES_CANDIDATO, false);
+			i.putExtra(Constants.CASACHF, casaCaso.getCasa().getCodigoCHF());
 			startActivity(i);
 			//finish();
 		}else {

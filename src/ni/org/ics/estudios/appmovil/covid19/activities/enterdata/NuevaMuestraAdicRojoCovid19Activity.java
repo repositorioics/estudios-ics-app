@@ -360,6 +360,8 @@ public class NuevaMuestraAdicRojoCovid19Activity extends FragmentActivity implem
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible);
                 notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getNumPinchazos()), visible);
+                notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoToma()), visible);
                 if (visible) horaTomaMx = null;
@@ -449,6 +451,7 @@ public class NuevaMuestraAdicRojoCovid19Activity extends FragmentActivity implem
             String descOtraObservacion = datos.getString(this.getString(R.string.descOtraObservacion));
             String razonNoToma = datos.getString(this.getString(R.string.razonNoToma));
             String descOtraRazonNoToma = datos.getString(this.getString(R.string.descOtraRazonNoToma));
+            String numPinchazos = datos.getString(this.getString(R.string.numPinchazos));
 
             String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
             estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
@@ -476,6 +479,12 @@ public class NuevaMuestraAdicRojoCovid19Activity extends FragmentActivity implem
                         + CatalogosDBConstants.catRoot + "='CHF_CAT_RAZON_NO_MX'", null);
                 if (msrazonNoToma != null) muestra.setRazonNoToma(msrazonNoToma.getCatKey());
             }
+            /*Se deben pedir pinchazos. Brenda 27/10/2020*/
+            if (tieneValor(numPinchazos)){
+                MessageResource msPinchazos = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + numPinchazos + "' and "
+                        + CatalogosDBConstants.catRoot + "='CHF_CAT_PINCH_MX'", null);
+                if (msPinchazos != null) muestra.setNumPinchazos(msPinchazos.getCatKey());
+            }
             //Numericos
             if (tieneValor(volumen)) muestra.setVolumen(Double.valueOf(volumen));
             //textos
@@ -497,7 +506,7 @@ public class NuevaMuestraAdicRojoCovid19Activity extends FragmentActivity implem
             movilInfo.setUsername(username);
             movilInfo.setToday(new Date());
             ParticipanteProcesos procesos = participante.getProcesos();
-            procesos.setMuestraCovid(Constants.NO);
+            if (tieneValor(tomaMxSn)) procesos.setMuestraCovid(tomaMxSn.equalsIgnoreCase(Constants.YES)?Constants.NO:Constants.YES);
             procesos.setMovilInfo(movilInfo);
             estudiosAdapter.actualizarParticipanteProcesos(procesos);
             estudiosAdapter.close();

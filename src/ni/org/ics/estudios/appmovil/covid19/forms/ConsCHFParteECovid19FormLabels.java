@@ -13,6 +13,8 @@ public class ConsCHFParteECovid19FormLabels {
 
     private String visExit;
     private String razonVisNoExit;
+    private String otraRazonVisitaNoExitosa;
+    private String otraRazonVisitaNoExitosaHint;
     private String personaCasa;
     private String personaCasaHint;
     private String relacionFamPersonaCasa;
@@ -90,6 +92,8 @@ public class ConsCHFParteECovid19FormLabels {
         Resources res = MyIcsApplication.getContext().getResources();
         visExit = res.getString(R.string.visExit);
         razonVisNoExit = res.getString(R.string.razonVisNoExit);
+        otraRazonVisitaNoExitosa = res.getString(R.string.otraRazonVisitaNoExitosa);
+        otraRazonVisitaNoExitosaHint = res.getString(R.string.otraRazonVisitaNoExitosaHint);
 
         personaCasa = res.getString(R.string.personaCasa);
         personaCasaHint = res.getString(R.string.personaCasaHint);
@@ -176,6 +180,14 @@ public class ConsCHFParteECovid19FormLabels {
 
     public String getRazonVisNoExit() {
         return razonVisNoExit;
+    }
+
+    public String getOtraRazonVisitaNoExitosa() {
+        return otraRazonVisitaNoExitosa;
+    }
+
+    public String getOtraRazonVisitaNoExitosaHint() {
+        return otraRazonVisitaNoExitosaHint;
     }
 
     public String getPersonaCasa() {

@@ -1050,7 +1050,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             visitaItem.setVisible(false);
             if ((mParticipante.getProcesos().getConsChf()!=null && mParticipante.getProcesos().getConsChf().matches("Si") && mUser.getConsentimiento())) consParteEChf.setVisible(true);
             if ((mParticipante.getProcesos().getCuestCovid()!=null && mParticipante.getProcesos().getCuestCovid().matches("Si") && mUser.getEncuestaParticipante())) cuestCovid19.setVisible(true);
-            if ((mParticipante.getProcesos().getMuestraCovid()!=null && mParticipante.getProcesos().getMuestraCovid().matches("Si") && mUser.getMuestra())) mxAdicionalCovid19.setVisible(true);
+            if ((mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) &&
+                    (mParticipante.getProcesos().getMuestraCovid()!=null && mParticipante.getProcesos().getMuestraCovid().matches("Si") && mUser.getMuestra())) mxAdicionalCovid19.setVisible(true);
         }
         return true;
     }
@@ -1920,22 +1921,25 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
 
     private String getVolumenCHFAdicionalCovid19() {
         String labelHeader = "";
-        //menores de 6 meses
-        if (mParticipante.getEdadMeses() < 6) {
-            labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
-            pendiente = true;
-        } //De 6 meses a <2 años
-        else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
-            labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
-            pendiente = true;
-        }  //De 2 años - < 14 Años
-        else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
-            labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
-            pendiente = true;
-        } else //De 14 años y más
-        {
-            labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
-            pendiente = true;
+        //no tiene que tener pendiente mx principal
+        if (mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) {
+            //menores de 6 meses
+            if (mParticipante.getEdadMeses() < 6) {
+                labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                pendiente = true;
+            } //De 6 meses a <2 años
+            else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
+                labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
+                pendiente = true;
+            }  //De 2 años - < 14 Años
+            else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
+                labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+                pendiente = true;
+            } else //De 14 años y más
+            {
+                labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                pendiente = true;
+            }
         }
         return labelHeader;
     }

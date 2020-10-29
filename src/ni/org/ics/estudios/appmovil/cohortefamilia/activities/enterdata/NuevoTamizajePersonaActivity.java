@@ -1425,6 +1425,11 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         //Covid19
                         procesos.setConsCovid19(Constants.NO);
                         procesos.setSubEstudios("0");
+                        //Parte E. 28/10/2020
+                        procesos.setConsChf(Constants.YES);
+                        procesos.setCuestCovid(Constants.NO);
+                        procesos.setMuestraCovid(Constants.NO);
+
                         MovilInfo movilInfo = new MovilInfo();
                         movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
                         movilInfo.setDeviceid(infoMovil.getDeviceId());

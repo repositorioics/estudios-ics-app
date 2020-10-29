@@ -71,11 +71,15 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
 	private boolean notificarCambios = true;
 	private static Participante participante = new Participante();
     private ParticipanteCasoCovid19 participanteCasoCovid19 = null;
+    private CandidatoTransmisionCovid19 candidato = null;
+    private CasoCovid19 casoCovid19 = null;
     private Integer edadMeses = 0;
     private boolean esElegible = true;
     private boolean visExitosa = false;
     private boolean esIndice;
+    private boolean existeCaso;
     private boolean desdeMenuInfo;
+    private String codigoCasaCHF;
     private List<MessageResource> catRelacionFamiliar = new ArrayList<MessageResource>();
     private List<MessageResource> catMeses = new ArrayList<MessageResource>();
     private String[] catVerifTutAlf; //cosas a verificar cuando tutor es alfabeto
@@ -91,6 +95,7 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
         setContentView(R.layout.activity_data_enter);
         participante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         esIndice = getIntent().getBooleanExtra(Constants.ES_CANDIDATO, false);
+        codigoCasaCHF = getIntent().getStringExtra(Constants.CASACHF);
         desdeMenuInfo = getIntent().getBooleanExtra(Constants.MENU_INFO, false);
         visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
         settings =
@@ -188,11 +193,17 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
         catVerifTutNoAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
         catVerifTutAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catKey + " in ('1','2','3','6') and " + CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
         participanteCasoCovid19 = estudiosAdapter.getParticipanteCasoCovid19(Covid19DBConstants.participante+" = "+participante.getCodigo() + " and "+MainDBConstants.pasive + "='0'", null);
+        //verificar si es otro candidato de la misma casa, de ser asi deberá registrarse como miembro del hogar, pero positivo
+        candidato = estudiosAdapter.getCandidatoTransmisionCovid19(Covid19DBConstants.participante + "=" + participante.getCodigo() + " and " + Covid19DBConstants.consentimiento + " = 'PENDIENTE'", null);
+        esIndice = candidato != null;
+        if (codigoCasaCHF!=null && !codigoCasaCHF.isEmpty())
+            casoCovid19 = estudiosAdapter.getCasoCovid19(Covid19DBConstants.casa + "='" + codigoCasaCHF + "' and " + Covid19DBConstants.inactivo + "='0'", null);
+        existeCaso = casoCovid19!=null;
         estudiosAdapter.close();
         SingleFixedChoicePage pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaParteB());
         //SingleFixedChoicePage pageCIIndice = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCriteriosInclusionIndice());
         //SingleFixedChoicePage pageCIMiembro = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getCriteriosInclusionMiembro());
-        if (esIndice){
+        if (esIndice && !existeCaso){
             pagetmp.setHint(labels.getAceptaParteBIndiceHint());
             pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaParteA());
             pagetmp.setHint(labels.getAceptaParteAIndiceHint());
@@ -426,9 +437,9 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                 notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), !visible);
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusionIndice()), visible && esIndice);
+                changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusionIndice()), visible && (esIndice && !existeCaso));
                 notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusionMiembro()), visible && !esIndice);
+                changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusionMiembro()), visible && (!esIndice || existeCaso));
                 notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -1244,56 +1255,69 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                             }
 
                             //si es el caso indice se debe crear un caso
-                            CasoCovid19 casoCovid19 = null;
                             if (esIndice) {
                                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                                 //crear caso
-                                CandidatoTransmisionCovid19 candidato = estudiosAdapter.getCandidatoTransmisionCovid19(Covid19DBConstants.participante + "=" + participante.getCodigo() + " and " + Covid19DBConstants.consentimiento + " = 'PENDIENTE'", null);
                                 CasaCohorteFamilia casaCohorteFamilia = estudiosAdapter.getCasaCohorteFamilia(MainDBConstants.codigoCHF + "='" + candidato.getCasaCHF() + "'", null);
-                                casoCovid19 = new CasoCovid19();
-                                casoCovid19.setCodigoCaso(infoMovil.getId());
-                                casoCovid19.setCasa(casaCohorteFamilia);
-                                casoCovid19.setInactivo("0");
-                                if (candidato.getFechaIngreso()!=null){
-                                    casoCovid19.setFechaIngreso(candidato.getFechaIngreso());
-                                }else
-                                    casoCovid19.setFechaIngreso(formatter.parse(formatter.format(new Date())));
-                                //Metadata
-                                casoCovid19.setRecordDate(new Date());
-                                casoCovid19.setRecordUser(username);
-                                casoCovid19.setDeviceid(infoMovil.getDeviceId());
-                                casoCovid19.setEstado('0');
-                                casoCovid19.setPasive('0');
-                                estudiosAdapter.crearCasoCovid19(casoCovid19);
+                                if (!existeCaso) {
+                                    casoCovid19 = new CasoCovid19();
+                                    casoCovid19.setCodigoCaso(infoMovil.getId());
+                                    casoCovid19.setCasa(casaCohorteFamilia);
+                                    casoCovid19.setInactivo("0");
+                                    if (candidato.getFechaIngreso() != null) {
+                                        casoCovid19.setFechaIngreso(candidato.getFechaIngreso());
+                                    } else
+                                        casoCovid19.setFechaIngreso(formatter.parse(formatter.format(new Date())));
+                                    //Metadata
+                                    casoCovid19.setRecordDate(new Date());
+                                    casoCovid19.setRecordUser(username);
+                                    casoCovid19.setDeviceid(infoMovil.getDeviceId());
+                                    casoCovid19.setEstado('0');
+                                    casoCovid19.setPasive('0');
+                                    estudiosAdapter.crearCasoCovid19(casoCovid19);
+                                }
 
                                 List<ParticipanteCohorteFamilia> participantesCasaChf = estudiosAdapter.getParticipanteCohorteFamilias(MainDBConstants.casaCHF + "='" + candidato.getCasaCHF() + "'", null);
+                                ParticipanteCasoCovid19 indice = null;
+                                if (existeCaso) indice = estudiosAdapter.getParticipanteCasoCovid19(Covid19DBConstants.codigoCaso+ "='"+ casoCovid19.getCodigoCaso()+"' and " + Covid19DBConstants.enfermo + " = 'I'" , null);
                                 for (ParticipanteCohorteFamilia partChf : participantesCasaChf) {
-                                    ParticipanteCasoCovid19 partCasoCovid19 = new ParticipanteCasoCovid19();
-                                    partCasoCovid19.setCodigoCasoParticipante(infoMovil.getId());
-                                    partCasoCovid19.setCodigoCaso(casoCovid19);
-                                    partCasoCovid19.setParticipante(partChf.getParticipante());
-                                    //Metadata
-                                    partCasoCovid19.setRecordDate(new Date());
-                                    partCasoCovid19.setRecordUser(username);
-                                    partCasoCovid19.setDeviceid(infoMovil.getDeviceId());
-                                    partCasoCovid19.setEstado('0');
-                                    partCasoCovid19.setPasive('0');
-                                    //es el indice
-                                    if (partChf.getParticipante().getCodigo().equals(participante.getCodigo())) {
-                                        partCasoCovid19.setEnfermo("I");//Indice
-                                        partCasoCovid19.setFis(candidato.getFis());
-                                        partCasoCovid19.setFif(candidato.getFif());
-                                        partCasoCovid19.setPositivoPor(candidato.getPositivoPor());
-                                        partCasoCovid19.setConsentimiento("1");
-                                        participanteCasoCovid19 = partCasoCovid19;
-                                    } else {//es miembro
-                                        partCasoCovid19.setEnfermo("N");
-                                        partCasoCovid19.setFis(null);
-                                        partCasoCovid19.setFif(null);
-                                        partCasoCovid19.setPositivoPor(null);
-                                        partCasoCovid19.setConsentimiento("2");
+                                    //si es un segundo positivo en la casa, ya existe el caso entonces validar si ya existe el participante en el caso.
+                                    ParticipanteCasoCovid19 partCasoCovid19 = estudiosAdapter.getParticipanteCasoCovid19(Covid19DBConstants.participante+" = "+partChf.getParticipante().getCodigo() + " and "+MainDBConstants.pasive + "='0'", null);
+                                    if (partCasoCovid19 == null || partChf.getParticipante().getCodigo().equals(participante.getCodigo())) {
+                                        if (partCasoCovid19 == null) {
+                                            partCasoCovid19 = new ParticipanteCasoCovid19();
+                                            partCasoCovid19.setCodigoCasoParticipante(infoMovil.getId());
+                                        }
+                                        partCasoCovid19.setCodigoCaso(casoCovid19);
+                                        partCasoCovid19.setParticipante(partChf.getParticipante());
+                                        //Metadata
+                                        partCasoCovid19.setRecordDate(new Date());
+                                        partCasoCovid19.setRecordUser(username);
+                                        partCasoCovid19.setDeviceid(infoMovil.getDeviceId());
+                                        partCasoCovid19.setEstado('0');
+                                        partCasoCovid19.setPasive('0');
+                                        //es el indice
+                                        if (partChf.getParticipante().getCodigo().equals(participante.getCodigo())) {
+                                            partCasoCovid19.setEnfermo(existeCaso ? "S" : "I");//si existe caso es positivo, si no existe es Indice
+                                            partCasoCovid19.setFis(candidato.getFis());
+                                            partCasoCovid19.setFif(candidato.getFif());
+                                            partCasoCovid19.setPositivoPor(candidato.getPositivoPor());
+                                            partCasoCovid19.setConsentimiento("1");
+                                            participanteCasoCovid19 = partCasoCovid19;
+                                        } else {//es miembro
+                                            partCasoCovid19.setEnfermo("N");
+                                            partCasoCovid19.setFis(null);
+                                            partCasoCovid19.setFif(null);
+                                            partCasoCovid19.setPositivoPor(null);
+                                            partCasoCovid19.setConsentimiento("2");
+                                        }
+                                        //ya existe el caso y es positivo. Ya fue registrado como miembro, actualizar los datos de FIS, FIF, ENFERMO, POSITIVO POR
+                                        if (existeCaso && esIndice) {
+                                            estudiosAdapter.editarParticipanteCasoCovid19(partCasoCovid19);
+                                        } else {
+                                            estudiosAdapter.crearParticipanteCasoCovid19(partCasoCovid19);
+                                        }
                                     }
-                                    estudiosAdapter.crearParticipanteCasoCovid19(partCasoCovid19);
                                 }
                                 candidato.setConsentimiento("ACEPTA");
                                 candidato.setEstado('0');

@@ -267,6 +267,7 @@ public class ListaCanditatosTransmisionCovid19Activity extends AbstractAsyncList
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				i.putExtras(arguments);
 				i.putExtra(Constants.ES_CANDIDATO, true);
+				i.putExtra(Constants.CASACHF, candidatoTransmisionCovid19.getCasaCHF());
 				startActivity(i);
 				finish();
 			} catch (Exception e) {

@@ -680,18 +680,21 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 
     private String getVolumenCHFAdicionalCovid19(Participante mParticipante) {
         String labelHeader = "";
-        //menores de 6 meses
-        if (mParticipante.getEdadMeses() < 6) {
-            labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
-        } //De 6 meses a <2 años
-        else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
-            labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
-        }  //De 2 años - < 14 Años
-        else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
-            labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
-        } else //De 14 años y más
-        {
-            labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+        //no tiene que tener pendiente mx principal
+        if (mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) {
+            //menores de 6 meses
+            if (mParticipante.getEdadMeses() < 6) {
+                labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+            } //De 6 meses a <2 años
+            else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
+                labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
+            }  //De 2 años - < 14 Años
+            else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
+                labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+            } else //De 14 años y más
+            {
+                labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+            }
         }
         return labelHeader;
     }

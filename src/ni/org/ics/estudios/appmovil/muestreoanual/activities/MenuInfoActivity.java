@@ -29,7 +29,6 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoConsSeroprevalenciaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObsequioActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoRecon18AniosActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.dto.DatosCHF;

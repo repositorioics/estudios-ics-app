@@ -29,6 +29,7 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoConsSeroprevalenciaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObsequioActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoRecon18AniosActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.dto.DatosCHF;
@@ -52,6 +53,7 @@ import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.influenzauo1.dto.DatosUO1;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.MenuInfoAdapter;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+import ni.org.ics.estudios.appmovil.seroprevalencia.activities.NuevoConsentimientoSAActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
@@ -116,6 +118,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private MenuItem consParteEChf;
     private MenuItem cuestCovid19;
     private MenuItem mxAdicionalCovid19;
+    private MenuItem consSAItem;
 
     private EstudiosAdapter estudiosAdapter;
 
@@ -342,6 +345,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             consParteEChf = menu.findItem(R.id.CONS_PARTEE_CHF);
             cuestCovid19 = menu.findItem(R.id.CUESTCOVID19);
             mxAdicionalCovid19 = menu.findItem(R.id.MXADICOVID19);
+            consSAItem = menu.findItem(R.id.CONSSA);
         }
         return true;
     }
@@ -933,6 +937,27 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.e_error), Toast.LENGTH_LONG);
                     toast.show();
                 }
+                return true;
+            case R.id.CONSSA:
+                if(mUser.getConsentimiento()){
+                    if(mParticipante.getProcesos().getConsSa().matches("Si")){
+                        i = new Intent(getApplicationContext(),
+                                NuevoConsentimientoSAActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(Constants.PARTICIPANTE, mParticipante);
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                        startActivity(i);
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -1013,6 +1038,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         consParteEChf.setVisible(false);
         cuestCovid19.setVisible(false);
         mxAdicionalCovid19.setVisible(false);
+        consSAItem.setVisible(false);
         if (!mParticipante.getProcesos().getEstudio().trim().contains("Influenza")){
             consCovid19.setTitle(R.string.info_cons_covid19);
         }else{
@@ -1052,6 +1078,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if ((mParticipante.getProcesos().getCuestCovid()!=null && mParticipante.getProcesos().getCuestCovid().matches("Si") && mUser.getEncuestaParticipante())) cuestCovid19.setVisible(true);
             if ((mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) &&
                     (mParticipante.getProcesos().getMuestraCovid()!=null && mParticipante.getProcesos().getMuestraCovid().matches("Si") && mUser.getMuestra())) mxAdicionalCovid19.setVisible(true);
+            if ((mParticipante.getProcesos().getConsSa()!=null && mParticipante.getProcesos().getConsSa().matches("Si") && mUser.getConsentimiento()))consSAItem.setVisible(true);
         }
         return true;
     }
@@ -1219,7 +1246,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || mParticipante.getProcesos().getConsCovid19().matches("Si")
                     || (mParticipante.getProcesos().getConsChf() != null && mParticipante.getProcesos().getConsChf().matches("Si"))
                     || (mParticipante.getProcesos().getCuestCovid() != null && mParticipante.getProcesos().getCuestCovid().matches("Si"))
-                    || (mParticipante.getProcesos().getMuestraCovid() != null && mParticipante.getProcesos().getMuestraCovid().matches("Si"))){
+                    || (mParticipante.getProcesos().getMuestraCovid() != null && mParticipante.getProcesos().getMuestraCovid().matches("Si"))
+                    || (mParticipante.getProcesos().getConsSa() != null && mParticipante.getProcesos().getConsSa().matches("Si"))
+            ){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
 
@@ -1511,6 +1540,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getZika().matches("Si") && mUser.getConsentimiento()) {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.zika_missing) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getConsSa()!=null && mParticipante.getProcesos().getConsSa().matches("Si") && mUser.getConsentimiento()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.cons_sa_missing) + "</font></small><br />";
                     pendiente=true;
                 }
                 if (mParticipante.getProcesos().getEncLacMat().matches("Si") && mUser.getEncuestaLactancia()){

@@ -29,7 +29,7 @@
             <item android:id="@+id/RECONS" android:title="@string/info_recon"/>
             <item android:id="@+id/RECONS_CHF" android:title="@string/info_recon_chf"/>
             <item android:id="@+id/ZIKA" android:title="@string/info_zika"/>
-            <!--<item android:id="@+id/CONSSA" android:title="@string/info_sa"/>-->
+            <item android:id="@+id/CONSSA" android:title="@string/info_sa"/>
             <item android:id="@+id/SURVEY3" android:title="@string/info_survey3"/>
             <item android:id="@+id/WEIGHT" android:title="@string/info_weight"/>
 			<item android:id="@+id/PARTO" android:title="@string/datos_parto"/>

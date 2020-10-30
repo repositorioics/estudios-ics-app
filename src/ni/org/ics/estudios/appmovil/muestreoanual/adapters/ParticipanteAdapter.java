@@ -109,7 +109,9 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         || procesos.getConsCovid19().matches("Si")
                         || (procesos.getConsChf()!=null && procesos.getConsChf().matches("Si"))
                         || (procesos.getCuestCovid()!=null && procesos.getCuestCovid().matches("Si"))
-                        || (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si"))){
+                        || (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si"))
+                        || (procesos.getConsSa() != null && procesos.getConsSa().matches("Si"))
+                ){
 
 					labelHeader = labelHeader + "<font color='red'>Pendiente: <br /></font>";
 
@@ -332,6 +334,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                     if (procesos.getReConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue D<br />";
                     if (procesos.getReConsChf18()!=null && procesos.getReConsChf18().matches("Si")) labelHeader = labelHeader + "Reconsentimiento CHF 18<br />";
 					if (procesos.getZika().matches("Si")) labelHeader = labelHeader + "Consentimiento Zika<br />";
+                    if (procesos.getConsSa()!=null && procesos.getConsSa().matches("Si")) labelHeader = labelHeader + this.getContext().getString(R.string.info_sa) + "<br />";
 					if (procesos.getEncLacMat().matches("Si")) labelHeader = labelHeader + "Encuesta de Lactancia Materna<br />";
 					if (procesos.getPesoTalla().matches("Si")) labelHeader = labelHeader + "Peso y Talla <br />";
 					if (procesos.getDatosParto().matches("Si") || procesos.getcDatosParto().matches("Si")) labelHeader = labelHeader + "Datos Parto BB<br />";

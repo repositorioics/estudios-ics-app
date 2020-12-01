@@ -162,6 +162,9 @@ public class ConstantsDB {
     public static final String consChf = "consChf";
     public static final String cuestCovid = "cuestCovid";
     public static final String muestraCovid = "muestraCovid";
+    //Texto que indica si el participante ha sido positivo para Covid19(SARS-COV2)
+    public static final String posCovid = "posCovid";
+
 
     //Campos encuesta casa
     public static final String FECHA_ENC_CASA = "fecha_encuesta";
@@ -1008,6 +1011,7 @@ public class ConstantsDB {
             + consChf + " text, "
             + cuestCovid + " text, "
             + muestraCovid + " text, "
+            + posCovid + " text, "
             + ID_INSTANCIA + " integer,"
             + FILE_PATH + " text,"
             + STATUS + " text, "

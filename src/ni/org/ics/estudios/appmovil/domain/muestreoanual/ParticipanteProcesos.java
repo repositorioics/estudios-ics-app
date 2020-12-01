@@ -70,6 +70,8 @@ public class ParticipanteProcesos implements Serializable {
     private String consChf;
     private String cuestCovid;
     private String muestraCovid;
+    //Texto que indica si el participante ha sido positivo para Covid19(SARS-COV2)
+    private String posCovid;
 
     private MovilInfo movilInfo;
 
@@ -495,6 +497,14 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setMuestraCovid(String muestraCovid) {
         this.muestraCovid = muestraCovid;
+    }
+
+    public String getPosCovid() {
+        return posCovid;
+    }
+
+    public void setPosCovid(String posCovid) {
+        this.posCovid = posCovid;
     }
 }
 

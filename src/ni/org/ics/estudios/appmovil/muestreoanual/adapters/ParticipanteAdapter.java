@@ -90,6 +90,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                 if (participante.getDatosUO1()!=null &&  participante.getDatosUO1().isVacunado() && participante.getDatosUO1().getDiasVacuna() < 30){
                     labelHeader = labelHeader + "<font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font><br />";
                 }
+                if (procesos.getPosCovid()!=null) labelHeader = labelHeader + "<font color='red'>"+procesos.getPosCovid()+"</font><br />";
                 if (participante.getDatosCovid19()!=null &&  participante.getDatosCovid19().isSeguimiento()){
                     labelHeader = labelHeader + "<font color='red'>"+participante.getDatosCovid19().getMensajeSeguimiento()+"</font><br />";
                 }

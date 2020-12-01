@@ -6,6 +6,7 @@ import ni.org.ics.estudios.appmovil.domain.ContactoParticipante;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
+import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
@@ -133,6 +134,8 @@ public class ParticipanteHelper {
         mPart.setConsChf(participantes.getString(participantes.getColumnIndex(ConstantsDB.consChf)));
         mPart.setCuestCovid(participantes.getString(participantes.getColumnIndex(ConstantsDB.cuestCovid)));
         mPart.setMuestraCovid(participantes.getString(participantes.getColumnIndex(ConstantsDB.muestraCovid)));
+        //Mostrar si es positivo Covid19
+        mPart.setPosCovid(participantes.getString(participantes.getColumnIndex(ConstantsDB.posCovid)));
 
         Boolean borrado = participantes.getInt(participantes.getColumnIndex(ConstantsDB.DELETED))>0;
 		mPart.setMovilInfo(new MovilInfo(participantes.getInt(participantes.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
@@ -216,6 +219,8 @@ public class ParticipanteHelper {
         cv.put(ConstantsDB.consChf, participante.getConsChf());
         cv.put(ConstantsDB.cuestCovid, participante.getCuestCovid());
         cv.put(ConstantsDB.muestraCovid, participante.getMuestraCovid());
+        //Mostrar si es positivo Covid19
+        cv.put(ConstantsDB.posCovid, participante.getPosCovid());
 
         cv.put(ConstantsDB.ID_INSTANCIA, participante.getMovilInfo().getIdInstancia());
         cv.put(ConstantsDB.FILE_PATH, participante.getMovilInfo().getInstancePath());

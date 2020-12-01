@@ -1226,6 +1226,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isVacunado() && mParticipante.getDatosUO1().getDiasVacuna() < 30){
                 labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font></small><br />";
             }
+            if (mParticipante.getProcesos().getPosCovid()!=null) labelHeader = labelHeader + "<small><font color='red'>"+mParticipante.getProcesos().getPosCovid()+"</font></small><br />";
             if (mParticipante.getDatosCovid19()!=null &&  mParticipante.getDatosCovid19().isSeguimiento()){
                 labelHeader = labelHeader + "<small><font color='red'>"+mParticipante.getDatosCovid19().getMensajeSeguimiento()+"</font></small><br />";
             }

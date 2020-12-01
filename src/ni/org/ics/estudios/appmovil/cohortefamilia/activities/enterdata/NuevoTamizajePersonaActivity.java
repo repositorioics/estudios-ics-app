@@ -1429,6 +1429,8 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         procesos.setConsChf(Constants.YES);
                         procesos.setCuestCovid(Constants.NO);
                         procesos.setMuestraCovid(Constants.NO);
+                        //PosCovid defecto null
+                        procesos.setPosCovid(null);
 
                         MovilInfo movilInfo = new MovilInfo();
                         movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);

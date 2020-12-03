@@ -45,6 +45,8 @@
     <string name="info_cons_partee_chf">Consentimiento ParteE CHF</string>
     <string name="info_cuest_covid19">Cuestionario COVID19</string>
     <string name="info_mxadi_covid19">Mx Adicional COVID19</string>
+    <string name="info_cons_partee_den">Consentimiento DEN ParteE</string>
+    <string name="info_mx_partee_den">Mx Adicional DEN ParteE</string>
 
     <string name="house_survey_missing">Realizar encuesta de casa</string>
     <string name="part_survey_missing">Realizar encuesta de participante</string>
@@ -148,6 +150,7 @@
     <string name="cons_missing_covid19">Realizar Consentimiento COVID19</string>
     <string name="chfpartee_missing">Realizar Consentimiento ParteE CHF</string>
     <string name="cuest_covid19_missing">Realizar Cuestionario Covid19</string>
+    <string name="consden_missing_e">Realizar Consentimiento Dengue E</string>
 
     <string name="sinRelacFam">Sin Relación Familiar</string>
 </resources>

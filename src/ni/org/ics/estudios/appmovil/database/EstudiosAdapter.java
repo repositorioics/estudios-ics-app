@@ -369,6 +369,11 @@ public class EstudiosAdapter {
 			if (oldVersion==34){
 				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.posCovid + " text");
 			}
+			if (oldVersion==35){
+				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.consDenParteE + " text");
+				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.mxDenParteE + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.tipoAsentimiento + " text");
+			}
 		}
 	}
 

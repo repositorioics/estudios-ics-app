@@ -164,6 +164,9 @@ public class ConstantsDB {
     public static final String muestraCovid = "muestraCovid";
     //Texto que indica si el participante ha sido positivo para Covid19(SARS-COV2)
     public static final String posCovid = "posCovid";
+    //Parte E Dengue. MUESTRA DE SANGRE ADICIONAL
+    public static final  String consDenParteE = "consDenParteE";
+    public static final  String mxDenParteE = "mxDenParteE";
 
 
     //Campos encuesta casa
@@ -1012,6 +1015,8 @@ public class ConstantsDB {
             + cuestCovid + " text, "
             + muestraCovid + " text, "
             + posCovid + " text, "
+            + consDenParteE + " text, "
+            + mxDenParteE + " text, "
             + ID_INSTANCIA + " integer,"
             + FILE_PATH + " text,"
             + STATUS + " text, "

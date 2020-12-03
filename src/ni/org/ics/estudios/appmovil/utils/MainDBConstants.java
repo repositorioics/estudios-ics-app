@@ -28,7 +28,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 35;
+	public static final int DATABASE_VERSION = 36;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -437,6 +437,7 @@ public class MainDBConstants {
     public static final String otraRazonEmancipacion = "otraRazonEmancipacion";
     public static final String enfermedadCronica = "enfermedadCronica";
     public static final String codigoParticipanteRecon = "codigoParticipanteRecon";
+    public static final String tipoAsentimiento = "tipoAsentimiento"; //Para Niños de 13 a 17 años
     //crear tabla tamizaje
     public static final String CREATE_TAMIZAJE_TABLE = "create table if not exists "
             + TAMIZAJE_TABLE + " ("
@@ -480,6 +481,7 @@ public class MainDBConstants {
             + otraRazonEmancipacion + " text, "
             + enfermedadCronica + " text, "
             + codigoParticipanteRecon + " integer, "
+            + tipoAsentimiento + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "

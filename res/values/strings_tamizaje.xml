@@ -35,6 +35,8 @@
     <string name="razonNoAceptaParticiparHint"></string>
     <string name="asentimientoVerbal">Dió el niño Asentimiento verbal</string>
     <string name="asentimientoVerbalHint">(Para Niños de 6 a 17 años)</string>
+    <string name="tipoAsentimiento">Tipo de asentimiento</string>
+    <string name="noAsentimientoVerbEsc">Niño no da asentimiento verbal o escrito. No puede participar en el estudio</string>
     <string name="enfermedadInmuno">El niño padece de alguna enfermedad con compromiso inmunologico?</string>
     <string name="cualEnfermedad">Cuál enfermedad?</string>
     <string name="tratamientoIngreso">Toma algun tratamiento?</string>
@@ -161,6 +163,11 @@
     <string name="aceptaParteCDengueHint">¿Acepta Parte C Obtención de muestras ADN?</string>
     <string name="aceptaParteDDengue">Parte D Dengue</string>
     <string name="aceptaParteDDengueHint">¿Acepta Parte D-Zika estudio Cohorte pediátrica de Dengue?</string>
+    <!--Consentimiento parte E Dengue-->
+    <string name="aceptaParteEDengue">Parte E Dengue</string>
+    <string name="aceptaParteEDengueHint">PERMISO PARA OBTENER UNA MUESTRA DE SANGRE ADICIONAL</string>
+    <string name="formato712Asentimiento">Recuerde Adjuntar formato de asentimiento de 7 a 12 años</string>
+    <string name="formato1317Asentimiento">Recuerde Adjuntar formato de asentimiento de 13 a 17 años</string>
 
     <string name="aceptaParteBInf">Parte B Influenza</string>
     <string name="aceptaParteBInfHint">¿Acepta Parte B Almacenamiento y uso de Muestras en Estudios Futuros?</string>

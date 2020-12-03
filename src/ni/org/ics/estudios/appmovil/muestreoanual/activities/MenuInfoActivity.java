@@ -118,6 +118,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private MenuItem cuestCovid19;
     private MenuItem mxAdicionalCovid19;
     private MenuItem consSAItem;
+    private MenuItem consDenParteEItem;
+    private MenuItem mxDenParteEItem;
 
     private EstudiosAdapter estudiosAdapter;
 
@@ -345,6 +347,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             cuestCovid19 = menu.findItem(R.id.CUESTCOVID19);
             mxAdicionalCovid19 = menu.findItem(R.id.MXADICOVID19);
             consSAItem = menu.findItem(R.id.CONSSA);
+            consDenParteEItem = menu.findItem(R.id.CONS_PARTEE_DEN);
+            mxDenParteEItem = menu.findItem(R.id.MX_PARTEE_DEN);
         }
         return true;
     }
@@ -672,6 +676,46 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtra(Constants.PARTICIPANTE, mParticipante);
                         //i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                        startActivity(i);
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                return true;
+            case R.id.CONS_PARTEE_DEN:
+                if(mUser.getConsentimiento()){
+                    if(mParticipante.getProcesos().getConsDenParteE().matches("Si")){
+                        i = new Intent(getApplicationContext(),
+                                NuevoConsDENParteEActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(Constants.PARTICIPANTE, mParticipante);
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                        startActivity(i);
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                return true;
+            case R.id.MX_PARTEE_DEN:
+                if(mUser.getMuestra()){
+                    if(mParticipante.getProcesos().getMxDenParteE().matches("Si")){
+                        i = new Intent(getApplicationContext(),
+                                NuevaMuestraAdicRojoDenActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(Constants.PARTICIPANTE, mParticipante);
                         i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
                         startActivity(i);
                     }
@@ -1038,6 +1082,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         cuestCovid19.setVisible(false);
         mxAdicionalCovid19.setVisible(false);
         consSAItem.setVisible(false);
+        consDenParteEItem.setVisible(false);
+        mxDenParteEItem.setVisible(false);
+
         if (!mParticipante.getProcesos().getEstudio().trim().contains("Influenza")){
             consCovid19.setTitle(R.string.info_cons_covid19);
         }else{
@@ -1078,6 +1125,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if ((mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) &&
                     (mParticipante.getProcesos().getMuestraCovid()!=null && mParticipante.getProcesos().getMuestraCovid().matches("Si") && mUser.getMuestra())) mxAdicionalCovid19.setVisible(true);
             if ((mParticipante.getProcesos().getConsSa()!=null && mParticipante.getProcesos().getConsSa().matches("Si") && mUser.getConsentimiento()))consSAItem.setVisible(true);
+            //ParteE Dengue
+            if ((mParticipante.getProcesos().getConsDenParteE()!=null && mParticipante.getProcesos().getConsDenParteE().matches("Si") && mUser.getEncuestaParticipante())) consDenParteEItem.setVisible(true);
+            if ((mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) &&
+                    (mParticipante.getProcesos().getMxDenParteE()!=null && mParticipante.getProcesos().getMxDenParteE().matches("Si") && mUser.getMuestra())) mxDenParteEItem.setVisible(true);
         }
         return true;
     }
@@ -1248,6 +1299,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || (mParticipante.getProcesos().getCuestCovid() != null && mParticipante.getProcesos().getCuestCovid().matches("Si"))
                     || (mParticipante.getProcesos().getMuestraCovid() != null && mParticipante.getProcesos().getMuestraCovid().matches("Si"))
                     || (mParticipante.getProcesos().getConsSa() != null && mParticipante.getProcesos().getConsSa().matches("Si"))
+                    || (mParticipante.getProcesos().getConsDenParteE()!=null && mParticipante.getProcesos().getConsDenParteE().matches("Si"))
+                    || (mParticipante.getProcesos().getMxDenParteE()!=null && mParticipante.getProcesos().getMxDenParteE().matches("Si"))
             ){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
@@ -1479,6 +1532,13 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                             labelHeader += getVolumenCHFAdicionalCovid19();
                             pendiente=true;
                         }
+                        //Muestra adicional Dengue parte E
+                        if (mParticipante.getProcesos().getMxDenParteE()!=null && mParticipante.getProcesos().getMxDenParteE().matches("Si")){
+                            if (mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) {
+                                labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                                pendiente=true;
+                            }
+                        }
                     }
                 }
 
@@ -1532,6 +1592,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getReConsDeng().matches("Si") && mUser.getConsentimiento()) {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consden_missing_d) + "</font></small><br />";
+                    pendiente=true;
+                }
+                if (mParticipante.getProcesos().getConsDenParteE()!=null && mParticipante.getProcesos().getConsDenParteE().matches("Si")) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consden_missing_e) + "</font></small><br />";
                     pendiente=true;
                 }
                 if (mParticipante.getProcesos().getReConsChf18()!=null && mParticipante.getProcesos().getReConsChf18().matches("Si") && mUser.getConsentimiento()) {

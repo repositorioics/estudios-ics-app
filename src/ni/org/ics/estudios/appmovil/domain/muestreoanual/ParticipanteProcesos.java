@@ -72,6 +72,9 @@ public class ParticipanteProcesos implements Serializable {
     private String muestraCovid;
     //Texto que indica si el participante ha sido positivo para Covid19(SARS-COV2)
     private String posCovid;
+    //Parte E Dengue. MUESTRA DE SANGRE ADICIONAL
+    private String consDenParteE;
+    private String mxDenParteE;
 
     private MovilInfo movilInfo;
 
@@ -505,6 +508,22 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setPosCovid(String posCovid) {
         this.posCovid = posCovid;
+    }
+
+    public String getConsDenParteE() {
+        return consDenParteE;
+    }
+
+    public void setConsDenParteE(String consDenParteE) {
+        this.consDenParteE = consDenParteE;
+    }
+
+    public String getMxDenParteE() {
+        return mxDenParteE;
+    }
+
+    public void setMxDenParteE(String mxDenParteE) {
+        this.mxDenParteE = mxDenParteE;
     }
 }
 

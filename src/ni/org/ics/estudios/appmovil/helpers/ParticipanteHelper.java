@@ -136,6 +136,9 @@ public class ParticipanteHelper {
         mPart.setMuestraCovid(participantes.getString(participantes.getColumnIndex(ConstantsDB.muestraCovid)));
         //Mostrar si es positivo Covid19
         mPart.setPosCovid(participantes.getString(participantes.getColumnIndex(ConstantsDB.posCovid)));
+        //ParteE Dengue
+        mPart.setConsDenParteE(participantes.getString(participantes.getColumnIndex(ConstantsDB.consDenParteE)));
+        mPart.setMxDenParteE(participantes.getString(participantes.getColumnIndex(ConstantsDB.mxDenParteE)));
 
         Boolean borrado = participantes.getInt(participantes.getColumnIndex(ConstantsDB.DELETED))>0;
 		mPart.setMovilInfo(new MovilInfo(participantes.getInt(participantes.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
@@ -221,6 +224,9 @@ public class ParticipanteHelper {
         cv.put(ConstantsDB.muestraCovid, participante.getMuestraCovid());
         //Mostrar si es positivo Covid19
         cv.put(ConstantsDB.posCovid, participante.getPosCovid());
+        //Parte E Dengue
+        cv.put(ConstantsDB.consDenParteE, participante.getConsDenParteE());
+        cv.put(ConstantsDB.mxDenParteE, participante.getMxDenParteE());
 
         cv.put(ConstantsDB.ID_INSTANCIA, participante.getMovilInfo().getIdInstancia());
         cv.put(ConstantsDB.FILE_PATH, participante.getMovilInfo().getInstancePath());

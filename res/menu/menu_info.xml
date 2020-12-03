@@ -27,6 +27,8 @@
             <item android:id="@+id/MXADICOVID19" android:title="@string/info_mxadi_covid19"/>
             <item android:id="@+id/CONSFLUUO1" android:title="@string/info_conflu_uo1"/>
             <item android:id="@+id/RECONS" android:title="@string/info_recon"/>
+            <item android:id="@+id/CONS_PARTEE_DEN" android:title="@string/info_cons_partee_den"/>
+            <item android:id="@+id/MX_PARTEE_DEN" android:title="@string/info_mx_partee_den"/>
             <item android:id="@+id/RECONS_CHF" android:title="@string/info_recon_chf"/>
             <item android:id="@+id/ZIKA" android:title="@string/info_zika"/>
             <item android:id="@+id/CONSSA" android:title="@string/info_sa"/>

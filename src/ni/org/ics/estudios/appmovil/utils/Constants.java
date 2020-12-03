@@ -80,6 +80,7 @@ public class Constants {
     public static final String VERSION_CC_UO1 = "1"; //COHORTE UO1
     public static final String VERSION_CC_UO1_COVID = "1"; //COHORTE UO1 + consentimiento covid
     public static final String VERSION_CC_TCOVID = "1"; //Transmisión Covid
+    public static final String VERSION_CC_CD_E = "1"; //COHORTE DENGUE PERMISO PARA OBTENER UNA MUESTRA DE SANGRE ADICIONAL
 
     public static final String PARTICIPANTE_SA = "participanteSA";
 
@@ -90,6 +91,7 @@ public class Constants {
     public static final String CODIGO_PROPOSITO_COVID_CP = "7";//Covid Flu y UO1
     public static final String CODIGO_PROPOSITO_T_COVID = "8"; //Seguimiento Transmisión Covid
     public static final String CODIGO_PROPOSITO_ADIC_COVID = "9"; //Muestra adicional CHF Covid19
+    public static final String CODIGO_PROPOSITO_ADIC_DEN = "10"; //Muestra adicional Dengue Parte E
     //public static final String CODIGO_PROPOSITO_UO1_CHF = "6"; //Compartido Positivo UO1 y positivo familia
     public static final String CODIGO_TIPO_SANGRE = "1";
     public static final String CODIGO_TIPO_RESP = "9";

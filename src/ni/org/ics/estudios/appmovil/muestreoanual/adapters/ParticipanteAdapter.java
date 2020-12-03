@@ -112,6 +112,8 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         || (procesos.getCuestCovid()!=null && procesos.getCuestCovid().matches("Si"))
                         || (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si"))
                         || (procesos.getConsSa() != null && procesos.getConsSa().matches("Si"))
+                        || (procesos.getConsDenParteE()!=null && procesos.getConsDenParteE().matches("Si"))
+                        || (procesos.getMxDenParteE()!=null && procesos.getMxDenParteE().matches("Si"))
                 ){
 
 					labelHeader = labelHeader + "<font color='red'>Pendiente: <br /></font>";
@@ -318,6 +320,12 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         if (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si")){
                             labelHeader += getVolumenCHFAdicionalCovid19(participante);
                         }
+                        //Muestra adicional Dengue parte E
+                        if (procesos.getMxDenParteE()!=null && procesos.getMxDenParteE().matches("Si")){
+                            if (procesos.getConmx().matches("Si") && procesos.getConmxbhc().matches("Si")) {
+                                labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                            }
+                        }
 					}
 					
 					//Nuevo orden
@@ -333,6 +341,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 					if (procesos.getConsFlu().matches("Si")) labelHeader = labelHeader + "Consentimiento UO1<br />";
                     if (procesos.getConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue A,B,C<br />";
                     if (procesos.getReConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue D<br />";
+                    if (procesos.getConsDenParteE()!=null && procesos.getConsDenParteE().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue E<br />";
                     if (procesos.getReConsChf18()!=null && procesos.getReConsChf18().matches("Si")) labelHeader = labelHeader + "Reconsentimiento CHF 18<br />";
 					if (procesos.getZika().matches("Si")) labelHeader = labelHeader + "Consentimiento Zika<br />";
                     if (procesos.getConsSa()!=null && procesos.getConsSa().matches("Si")) labelHeader = labelHeader + this.getContext().getString(R.string.info_sa) + "<br />";

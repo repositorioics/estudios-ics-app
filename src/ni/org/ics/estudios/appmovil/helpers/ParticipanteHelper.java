@@ -84,6 +84,7 @@ public class ParticipanteHelper {
         mPart.setConPto(participantes.getString(participantes.getColumnIndex(ConstantsDB.CONPTO)));
         mPart.setEstPart(participantes.getInt(participantes.getColumnIndex(ConstantsDB.ESTADO_PAR)));
         mPart.setEstudio(participantes.getString(participantes.getColumnIndex(ConstantsDB.ESTUDIO)));
+        if (mPart.getEstudio() == null) mPart.setEstudio("");
         mPart.setPbmc(participantes.getString(participantes.getColumnIndex(ConstantsDB.PBMC)));
         mPart.setConsDeng(participantes.getString(participantes.getColumnIndex(ConstantsDB.CONSDENG)));
         mPart.setZika(participantes.getString(participantes.getColumnIndex(ConstantsDB.ZIKA)));

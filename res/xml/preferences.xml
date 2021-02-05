@@ -14,8 +14,7 @@
         <CheckBoxPreference android:id="@+id/activos" android:key="activos" android:title="@string/activos" />
         <CheckBoxPreference android:id="@+id/terreno" android:key="terreno" android:title="@string/terreno" />
 		<Preference android:title="@string/update_app_preferences" >
-		    <intent android:action="android.intent.action.VIEW"
-		            android:data="http://192.168.1.98:8080/estudios-ics/resources/apk/estudios-ics-app.apk" />
+		    <intent android:targetPackage="ni.org.ics.estudios.appmovil" android:targetClass="ni.org.ics.estudios.appmovil.update.DescargarApkActivity"/>
 		</Preference>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/version_app_preferences"></PreferenceCategory>

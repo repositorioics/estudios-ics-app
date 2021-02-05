@@ -1304,7 +1304,8 @@ public class NuevoConsCovid19Activity extends FragmentActivity implements
                             procesos.setEstudio(estudios.replaceAll("Influenza","UO1"));
                         }*/
                         if (procesos.getSubEstudios()!=null && !procesos.getSubEstudios().equalsIgnoreCase("0")){
-                            procesos.setSubEstudios(procesos.getSubEstudios()+","+Constants.SUB_ESTUDIO_COVID19);
+                            if (!procesos.getSubEstudios().contains("2"))
+                                procesos.setSubEstudios(procesos.getSubEstudios()+","+Constants.SUB_ESTUDIO_COVID19);
                         }else{
                             procesos.setSubEstudios(Constants.SUB_ESTUDIO_COVID19);
                         }

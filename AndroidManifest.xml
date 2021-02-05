@@ -13,6 +13,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -44,6 +45,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+                android:name="android.support.v4.content.FileProvider"
+                android:authorities="ni.org.ics.estudios.appmovil.provider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/provider_paths"/>
+        </provider>
         <activity android:name="ni.org.ics.estudios.appmovil.MainActivity" 
             android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.bluetooth.activity.ChatActivity" 
@@ -219,9 +229,9 @@
             android:screenOrientation="portrait" />
         <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.server.DownloadCatalogosActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="ni.org.ics.estudios.appmovil.activities.DataEnterActivity" 
+        <activity android:name="ni.org.ics.estudios.appmovil.activities.DataEnterActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="ni.org.ics.estudios.appmovil.preferences.PreferencesActivity" 
+        <activity android:name="ni.org.ics.estudios.appmovil.preferences.PreferencesActivity"
             android:screenOrientation="portrait" />
         <!-- Muestreo anual-->
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.DocumentosActivity"
@@ -425,6 +435,10 @@
         <activity android:name=".muestreoanual.activities.NuevoConsDENParteEActivity"
                   android:screenOrientation="portrait" />
         <activity android:name=".muestreoanual.activities.NuevaMuestraAdicRojoDenActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".muestreoanual.activities.ParticipantPhotographActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".update.DescargarApkActivity"
                   android:screenOrientation="portrait" />
     </application>
 

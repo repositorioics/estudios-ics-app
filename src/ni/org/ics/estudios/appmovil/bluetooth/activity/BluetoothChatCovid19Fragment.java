@@ -635,7 +635,7 @@ public class BluetoothChatCovid19Fragment extends Fragment {
                 (mParticipantesProc.getMostrarNumParto()!=null?"'"+mParticipantesProc.getMostrarNumParto()+"'":"null")+"," +
                 (mParticipantesProc.getAntecedenteTutorCP()!=null?"'"+mParticipantesProc.getAntecedenteTutorCP()+"'":"null")+"," +
                 (mParticipantesProc.getConsCovid19()!=null?"'"+mParticipantesProc.getConsCovid19()+"'":"null")+"," +
-                (mParticipantesProc.getSubEstudios()!=null?"'"+mParticipantesProc.getSubEstudios()+"'":"null")+"," +
+                (mParticipantesProc.getSubEstudios()!=null?"'"+mParticipantesProc.getSubEstudios()+"'":"'0'")+"," +
                 (mParticipantesProc.getConsChf()!=null?"'"+mParticipantesProc.getConsChf()+"'":"null")+"," +
                 (mParticipantesProc.getCuestCovid()!=null?"'"+mParticipantesProc.getCuestCovid()+"'":"null")+"," +
                 (mParticipantesProc.getMuestraCovid()!=null?"'"+mParticipantesProc.getMuestraCovid()+"'":"null")+"," +
@@ -980,9 +980,11 @@ public class BluetoothChatCovid19Fragment extends Fragment {
                         }else{
                             String[] partes = participantesProcSQL[i].split(",");
                             String estudios = partes[4].replaceAll("'","");
-                            String subEstudio = partes[51].replaceAll("'","");
+                            String subEstudio = partes[49].replaceAll("'","");
                             procesos.setEstudio(estudios);
-                            procesos.setSubEstudios(subEstudio);
+                            if (procesos.getSubEstudios() == null || procesos.getSubEstudios().equalsIgnoreCase("0")) {
+                                procesos.setSubEstudios(subEstudio);
+                            }
                             procesos.getMovilInfo().setEstado("0");
                             estudiosAdapter.actualizarParticipanteProcesos(procesos);
                         }

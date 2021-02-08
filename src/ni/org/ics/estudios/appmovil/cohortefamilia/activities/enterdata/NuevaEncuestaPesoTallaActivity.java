@@ -329,7 +329,7 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getImc3()), visible, null);
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoTomoMedidas()), visible, null);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTalla1())) {
@@ -347,7 +347,7 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
                         }
                     }
                     changeStatus(mWizardModel.findByKey(labels.getImc1()), visible, String.valueOf(imc));
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTalla2())) {
@@ -383,18 +383,18 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
                                 difTalla = ((((dTalla2 - dTalla1) * 10 - 0.5) / 10) / dTalla1 * 100);
                         }
                     changeStatus(mWizardModel.findByKey(labels.getImc2()), visible, String.valueOf(imc));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     visible = difPeso >= 5 || difTalla >= 5;
                     changeStatus(mWizardModel.findByKey(labels.getDifMediciones()), visible, null);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getPeso3()), visible, null);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTalla3()), visible, null);
 
                 }
-                notificarCambios = false;
-                //changeStatus(mWizardModel.findByKey(labels.getImc3()), visible, null);
                 //notificarCambios = false;
+                //changeStatus(mWizardModel.findByKey(labels.getImc3()), visible, null);
+                ////notificarCambios = false;
                 onPageTreeChanged();
             }
 
@@ -412,7 +412,7 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
                     }
                 }
                 changeStatus(mWizardModel.findByKey(labels.getImc3()), visible, String.valueOf(imc));
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
         }catch (Exception ex){
@@ -594,7 +594,7 @@ public class NuevaEncuestaPesoTallaActivity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

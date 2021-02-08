@@ -391,9 +391,9 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
             if (page.getTitle().equals(labels.getVisExit())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRazonVisNoExit()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (!visible) {
                     resetForm(100);
                     esElegible =false;
@@ -412,44 +412,44 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                                 || page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Padres Ausentes o Adultos Ausentes")
                                 || page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Acude a Consulta Medica sin Tutor")));
                 changeStatus(mWizardModel.findByKey(labels.getPersonaCasa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelacionFamPersonaCasa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoPersonaCasa()), (opcion7 || visible));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtraRelacionPersonaCasa()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRelacionFamPersonaCasa())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra relación familiar");
                 changeStatus(mWizardModel.findByKey(labels.getOtraRelacionPersonaCasa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAceptaTamizajePersona())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && (edadMeses >= 72 && edadMeses < 216));//6 y menores de 18
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusionIndice()), visible && (esIndice && !existeCaso));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusionMiembro()), visible && (!esIndice || existeCaso));
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getCriteriosInclusionIndice())){
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                 visible = test!=null && test.size()==2;
                 changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && (edadMeses >= 72 && edadMeses < 216));//6 y menores de 18
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if(!visible){
                     resetForm(99);
                     if (test!=null) {
@@ -457,16 +457,16 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                         toast.show();
                     }
                 }
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getCriteriosInclusionMiembro())){
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                 visible =test!=null && test.size()==2;
                 changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && (edadMeses >= 72 && edadMeses < 216));//6 y menores de 18
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if(!visible){
                     resetForm(99);
                     if (test!=null) {
@@ -474,40 +474,40 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                         toast.show();
                     }
                 }
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAceptaParteA())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteA()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 //if (visible && edadMeses < 72){
                     changeStatus(mWizardModel.findByKey(labels.getTutor()), visible && edadMeses < 216);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible && edadMeses < 216);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDomicilio()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getPadre()), visible && edadMeses < 216);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible && edadMeses < 216);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getMadre()), visible && edadMeses < 216);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible && edadMeses < 216);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
 
                     LabelPage pagetmp = (LabelPage) mWizardModel.findByKey(labels.getDomicilio());
                     String domicilio;
@@ -547,35 +547,35 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
             if (page.getTitle().equals(labels.getRazonNoAceptaParteA())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros motivos");
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteA()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAsentimiento())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDomicilio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getPadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 LabelPage pagetmp = (LabelPage) mWizardModel.findByKey(labels.getDomicilio());
                 String domicilio;
@@ -614,37 +614,37 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
             if (page.getTitle().equals(labels.getMismoTutorSN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getNombrept()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombrept2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidopt()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidopt2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelacionFam()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMotivoDifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getMotivoDifTutor())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro Motivo");
                 changeStatus(mWizardModel.findByKey(labels.getOtroMotivoDifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAlfabetoTutor())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getTestigoSN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombretest1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombretest2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidotest1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidotest2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
                 pagetmp.setChoices(visible?catVerifTutNoAlf:catVerifTutAlf);
 
@@ -653,29 +653,29 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
             if (page.getTitle().equals(labels.getTestigoSN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNombretest1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombretest2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidotest1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidotest2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDomicilio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible && edadMeses < 216);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible && edadMeses < 216);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getPadre()), visible && edadMeses < 216);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMadre()), visible && edadMeses < 216);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (!visible) {
                     Toast toast = Toast.makeText(getApplicationContext(), labels.getNoCumpleIncDen(), Toast.LENGTH_LONG);
                     toast.show();
@@ -688,19 +688,19 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
             if (page.getTitle().equals(labels.getCmDomicilio())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNotaCmDomicilio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefono1SN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoCel1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono2SN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefonoClasif1())) {
@@ -712,17 +712,17 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                     pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefono2SN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoCel2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono3SN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefonoClasif2())) {
@@ -734,15 +734,15 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                     pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefono3SN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif3()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoCel3()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefonoClasif3())) {
@@ -754,31 +754,31 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                     pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper3()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCambiarPadre())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNombrepadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombrepadre2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidopadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidopadre2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCambiarMadre())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNombremadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombremadre2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidomadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidomadre2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
 
@@ -1585,7 +1585,7 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

@@ -402,7 +402,7 @@ public class EditarPersonaCamaActivity extends FragmentActivity implements
 				changeStatus(mWizardModel.findByKey(labels.getEdad()), !visible);
 				changeStatus(mWizardModel.findByKey(labels.getParticipante()), visible);
 				changeStatus(mWizardModel.findByKey(labels.getSexo()), !visible);
-	            notificarCambios = false;
+	            //notificarCambios = false;
 	            onPageTreeChanged();
 	        }
     		
@@ -561,7 +561,7 @@ public class EditarPersonaCamaActivity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

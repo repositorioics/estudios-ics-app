@@ -338,21 +338,21 @@ public class NuevoSensorCasoActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getSensorSN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumSensor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnHabitacion()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getFechaSensor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoColocaSensor()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
     		if (page.getTitle().equals(labels.getEnHabitacion())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getHabitacionSensor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAreaSensor()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
     		
@@ -520,7 +520,7 @@ public class NuevoSensorCasoActivity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

@@ -356,35 +356,35 @@ public class NuevaMuestraTuboPbmcUO1Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getTomaMxSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoMx()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible);
-                notificarCambios = false;
-                //changeStatus(mWizardModel.findByKey(labels.getNumPinchazos()), visible);
                 //notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible);
+                //notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible);
+                //notificarCambios = false;
+                //changeStatus(mWizardModel.findByKey(labels.getNumPinchazos()), visible);
+                ////notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoToma()), visible);
                 if (visible) horaTomaMx = null;
-                notificarCambios = false;
+                //notificarCambios = false;
                 horaTomaMx = DateToString(new Date(), "HH:mm:ss");
                 onPageTreeChanged();
             }
             /*if (page.getTitle().equals(labels.getCodigoMx())) {
                 horaTomaMx = DateToString(new Date(), "HH:mm:ss");
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }*/
             if (page.getTitle().equals(labels.getObservacion())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRazonNoToma())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraRazonNoToma()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             }catch (Exception ex){
@@ -587,7 +587,7 @@ public class NuevaMuestraTuboPbmcUO1Activity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

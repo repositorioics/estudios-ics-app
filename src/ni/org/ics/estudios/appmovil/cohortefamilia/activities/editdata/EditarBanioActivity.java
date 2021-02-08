@@ -382,7 +382,7 @@ public class EditarBanioActivity extends FragmentActivity implements
                 else{
                     mWizardModel.findByKey(labels.getTotalM2()).setHint("");
                 }
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getLargo())) {
@@ -393,7 +393,7 @@ public class EditarBanioActivity extends FragmentActivity implements
                 else{
                     mWizardModel.findByKey(labels.getTotalM2()).setHint("");
                 }
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
         }catch (Exception ex){
@@ -539,7 +539,7 @@ public class EditarBanioActivity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

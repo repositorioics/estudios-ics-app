@@ -908,148 +908,148 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
             if (page.getTitle().equals(labels.getEstaEmbarazada())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getSemanasEmbarazo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTrabaja())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTipoTrabajo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOcupacionActual()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getVaNinoEscuela())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getGradoCursa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTurno()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCentroEstudio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getDondeCuidanNino()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCantNinosLugarCuidan()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCentroEstudio())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra");
                 changeStatus(mWizardModel.findByKey(labels.getNombreCentroEstudio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getNinoTrabaja())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getOcupacionActualNino()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getPadreEnEstudio())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoPadreEstudio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getPadreAlfabeto()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTrabajaPadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getPadreAlfabeto())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNivelEducacionPadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTrabajaPadre())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTipoTrabajoPadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getMadreEnEstudio())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoMadreEstudio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getMadreAlfabeto()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTrabajaMadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getMadreAlfabeto())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNivelEducacionMadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTrabajaMadre())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTipoTrabajoMadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFuma())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getPeriodicidadFuma()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrillos()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getFumaDentroCasa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTuberculosisPulmonarActual())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioFechaDiagnosticoTubPulActual()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMesFechaDiagnosticoTubPulActual()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTomaTratamientoTubPulActual()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCompletoTratamientoTubPulActual()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTuberculosisPulmonarPasado())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getFechaDiagnosticoTubPulPasadoSn()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTuberculosisPulmonarPasado())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCompletoTratamientoTubPulPasado()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFechaDiagnosticoTubPulPasadoSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioFechaDiagnosticoTubPulPasado()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMesFechaDiagnosticoTubPulPasado()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCrisisAsma())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCantidadCrisisAsma()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getOtrasEnfermedades())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getDescOtrasEnfermedades()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getVacunaInfluenza())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioVacunaInfluenza()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
 
@@ -1607,7 +1607,7 @@ public class EditarEncuestaParticipanteActivity extends FragmentActivity impleme
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

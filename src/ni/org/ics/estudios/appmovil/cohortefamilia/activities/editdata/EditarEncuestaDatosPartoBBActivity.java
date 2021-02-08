@@ -523,31 +523,31 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
             if (page.getTitle().equals(labels.getTiempoEmbSndr())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTiempoEmbSemana()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDocMedTiempoEmbSn()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDocMedEdadGestSn()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDocMedTiempoEmbSn())) {
                 if (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null) {
                     visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                     changeStatus(mWizardModel.findByKey(labels.getDocMedTiempoEmb()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getFum()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoSn()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), visible);
                 }
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDocMedTiempoEmb())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroDocMedTiempoEmb()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFum())) {
@@ -557,58 +557,58 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
                     int semanaGest = diferenciaEnSemanas(encuesta.getParticipante().getParticipante().getFechaNac(), dFum);
                     if (semanaGest < 25 || semanaGest > 45) visible = true;
                     changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoSn()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                 }
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFumFueraRangoSn())) {
                 if (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null) {
                     changeStatus(mWizardModel.findByKey(labels.getFumFueraRangoRazon()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getReingresarFUM()), page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO));
                 }
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDocMedEdadGestSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getEdadGest()), visible);
-                //notificarCambios = false;
+                ////notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDocMedEdadGest()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtroDocMedEdadGest()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDocMedEdadGest())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroDocMedEdadGest()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getPesoBBSndr())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getPesoBB()), visible);
-                //notificarCambios = false;
+                ////notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDocMedPesoBB()), false);
                 changeStatus(mWizardModel.findByKey(labels.getDocMedPesoBBSn()), visible);
                 //changeStatus(mWizardModel.findByKey(labels.getOtroDocMedPesoBB()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDocMedPesoBBSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getDocMedPesoBB()), visible);
                 //changeStatus(mWizardModel.findByKey(labels.getOtroDocMedPesoBB()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDocMedPesoBB())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroDocMedPesoBB()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
 
@@ -861,7 +861,7 @@ public class EditarEncuestaDatosPartoBBActivity extends FragmentActivity impleme
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

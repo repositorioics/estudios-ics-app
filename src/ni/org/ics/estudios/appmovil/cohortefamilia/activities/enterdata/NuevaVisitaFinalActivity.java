@@ -359,13 +359,13 @@ public class NuevaVisitaFinalActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getReferidoCs()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTratamiento()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getCualAntibiotico()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTratamiento())) {
                 visible = page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains("Antibiótico");
                 changeStatus(mWizardModel.findByKey(labels.getCualAntibiotico()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getSintResp())) {
@@ -374,14 +374,14 @@ public class NuevaVisitaFinalActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getFiebre()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDolorGarganta()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getSecrecionNasal()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFiebre())) {
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(Constants.YES));
                 changeStatus(mWizardModel.findByKey(labels.getFif()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getFff()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFif()) && page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null) {
@@ -395,7 +395,7 @@ public class NuevaVisitaFinalActivity extends FragmentActivity implements
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(Constants.YES));
                 changeStatus(mWizardModel.findByKey(labels.getFitos()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getFftos()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFitos()) && page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null) {
@@ -409,7 +409,7 @@ public class NuevaVisitaFinalActivity extends FragmentActivity implements
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(Constants.YES));
                 changeStatus(mWizardModel.findByKey(labels.getFigg()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getFfgg()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFigg()) && page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null) {
@@ -423,7 +423,7 @@ public class NuevaVisitaFinalActivity extends FragmentActivity implements
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(Constants.YES));
                 changeStatus(mWizardModel.findByKey(labels.getFisn()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getFfsn()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFisn()) && page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null) {
@@ -697,7 +697,7 @@ public class NuevaVisitaFinalActivity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

@@ -367,7 +367,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     tipoIngreso = TIPO_INFLUENZA_UO1;
                 }
                 changeStatus(mWizardModel.findByKey(labels.getFechaNacimiento()), true);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getFechaNacimiento())) {
@@ -387,9 +387,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 edadSemanas = calEdad.getEdadSemanas();
                 if (!(edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && !(edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO)){
                     changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), false);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), true);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noEsElegible) + " Dengue o Influenza", Toast.LENGTH_LONG);
                     toast.show();
                     resetForm(99);
@@ -409,37 +409,37 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     if (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)){
                         if (!(edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO)) {
                             changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), false);
-                            notificarCambios = false;
+                            //notificarCambios = false;
                             changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), true);
-                            notificarCambios = false;
+                            //notificarCambios = false;
                             resetForm(99);
                         }else{
                             changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), true);
-                            notificarCambios = false;
+                            //notificarCambios = false;
                         }
                     }
                     if (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)){
                         if (!(edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO)) {
                             changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), false);
-                            notificarCambios = false;
+                            //notificarCambios = false;
                             changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), true);
-                            notificarCambios = false;
+                            //notificarCambios = false;
                             resetForm(99);
                         }else{
                             changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), true);
-                            notificarCambios = false;
+                            //notificarCambios = false;
                         }
                     }
                     if (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)){
                         if (edadSemanas > EDAD_MAXIMA_FLU_UO1) {
                             changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), false);
-                            notificarCambios = false;
+                            //notificarCambios = false;
                             changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), true);
-                            notificarCambios = false;
+                            //notificarCambios = false;
                             resetForm(99);
                         }else{
                             changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), true);
-                            notificarCambios = false;
+                            //notificarCambios = false;
                         }
                     }
                 }
@@ -450,11 +450,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
             if(page.getTitle().equals(labels.getAceptaTamizajePersona())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusion()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoParticipaPersona()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if(!visible) {
                     resetForm(100);
                     Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noAceptaTamizajePersona),Toast.LENGTH_LONG);
@@ -465,30 +465,30 @@ public class NewTamizajeActivity extends FragmentActivity implements
             if(page.getTitle().equals(labels.getRazonNoParticipaPersona())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoParticipaPersona()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getCriteriosInclusion())){
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                 visible = test!=null && test.size()==2;
                 changeStatus(mWizardModel.findByKey(labels.getVivienda()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), visible && (edadSemanas <= EDAD_MAXIMA_FLU_UO1 && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)));
-                notificarCambios = false;
+                //notificarCambios = false;
                 if(test!=null && test.size()!=2){
                     resetForm(99);
                     Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noCumpleCriteriosInclusion),Toast.LENGTH_LONG);
@@ -510,21 +510,21 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         resetForm(99);
                     }
                     changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible && tiempoValido));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), (visible && tiempoValido));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), (visible && tiempoValido));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), (visible && tiempoValido));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), (visible && tiempoValido) && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), (visible && tiempoValido) && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), (visible && tiempoValido) && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), (visible && tiempoValido) && (edadSemanas <= EDAD_MAXIMA_FLU_UO1 && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     //es alquilada y tiene tiempo valido
                     if (!visible) {
                         tiempoValido = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Dos Años ó Más");
@@ -534,21 +534,21 @@ public class NewTamizajeActivity extends FragmentActivity implements
                             resetForm(99);
                         }
                         changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), tiempoValido);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), tiempoValido);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), tiempoValido);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), tiempoValido);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), tiempoValido && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), tiempoValido && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)));
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), tiempoValido && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)));
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), tiempoValido && (edadSemanas <= EDAD_MAXIMA_FLU_UO1 && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)));
-                        notificarCambios = false;
+                        //notificarCambios = false;
                     }
                 }
                 onPageTreeChanged();
@@ -565,21 +565,21 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     resetForm(99);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (esPropia && visible));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), (esPropia && visible));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), (esPropia && visible));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), (esPropia && visible));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), (esPropia && visible) && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), (esPropia && visible) && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), (esPropia && visible) && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), (esPropia && visible) && (edadSemanas <= EDAD_MAXIMA_FLU_UO1 && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)));
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 if (!esPropia){
                     visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Dos Años ó Más");
@@ -589,21 +589,21 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         resetForm(99);
                     }
                     changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDondeAsisteProblemasSalud()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getEnfermedad()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDiagDengue()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible && edadAnios>5 && edadAnios < EDAD_LIMITE_INGRESO); //10 porque es el limite de edad q se va a permitir al momento del desarrollo (marzo 2018)
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), visible && (edadSemanas <= EDAD_MAXIMA_FLU_UO1 && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                 }
                 onPageTreeChanged();
             }
@@ -611,47 +611,47 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 if(page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null) {
                     if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Centro de Salud Sócrates Flores")) {
                         changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true); //aunque sea CSF preguntar si esta dispuesto a ir solamente al CSF
                     } else if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro centro de salud")) {
                         changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true);
                     } else if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Puesto de Salud")) {
                         changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true);
                     } else {
                         changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), true);
                     }
                 }else{
                     changeStatus(mWizardModel.findByKey(labels.getOtroCentroSalud()), false);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getPuestoSalud()), false);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), false);
                 }
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getEnfermedad())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCualEnfermedad()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTratamiento()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtroTratamiento()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 Calendar fechas = Calendar.getInstance();
                 int anioActual = fechas.get(Calendar.YEAR);
@@ -747,133 +747,133 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                 visible = test != null && test.contains("Cáncer de cualquier tipo");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Cardiopatías");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Enfermedades hematológicas");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio3()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes3()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Enfermedades Inmunosupresoras");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio4()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes4()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Enfermedades Renales");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio5()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes5()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Epilepsia");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio6()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes6()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Leucemia");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio7()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes7()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Metabólica crónica (Diabetes)");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio8()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes8()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Otra");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio9()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes9()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtraEnfCronica()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Trastornos Psiquiatricos/Depresión");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio10()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes10()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Asma");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio11()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes11()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Hipertensión arterial");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio12()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes12()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Artritis Reumatoide");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio13()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes13()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Tuberculosis");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio14()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes14()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDiagDengue())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getFechaDiagDengue()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getHospDengue()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getHospDengue())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getFechaHospDengue()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTratamiento())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCualTratamiento()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCualTratamiento())) {
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                 visible = test != null && test.contains(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroTratamiento()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getAsentimientoVerbal())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Si");
                 changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteDengue()), visible && (edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE)));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenza()), visible && (edadAnios >= EDAD_MINIMA_FLU && edadAnios < EDAD_LIMITE_INGRESO) && (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA)));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1()), visible && (edadSemanas <= EDAD_MAXIMA_FLU_UO1 && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1)));
-                notificarCambios = false;
+                //notificarCambios = false;
                 if(!visible) {
                     resetForm(98);
                     Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noDaAsentimiento),Toast.LENGTH_LONG);
                     toast.show();
                 }
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getAceptaCohorteDengue())){
@@ -889,131 +889,131 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 boolean esPretermino = pagetmp3.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp3.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
 
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 //En nuevo ingreso ya no se pregunta por parte D. 08/2018
                 //changeStatus(mWizardModel.findByKey(labels.getAceptaParteD()), visible || (visibleInf && !esInmuno && !esPretermino));
-                //notificarCambios = false;
+                ////notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCasaPerteneceCohorte()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCodigoNuevaCasaCohorte()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre1JefeFamilia()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2JefeFamilia()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido1JefeFamilia()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2JefeFamilia()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getBarrio()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getManzana()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDireccion()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCodigoNuevoParticipante()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre1()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido1()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre1Padre()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2Padre()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido1Padre()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Padre()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre1Madre()), (visible || (visibleInf && !esInmuno && !esPretermino))&& edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2Madre()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido1Madre()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Madre()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), (visible || (visibleInf && !esInmuno && !esPretermino)) && edadAnios<18);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombreContacto()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDireccionContacto()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTieneTelefono()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNumTelefono1()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono1()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTipoTelefono1()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTieneOtroTelefono()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNumTelefono2()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible || (visibleInf && !esInmuno && !esPretermino));
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaDengue()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getRazonNoAceptaDengue())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaDengue()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getAceptaCohorteInfluenza())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getPretermino()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
-                notificarCambios = false;
-                //changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible);
                 //notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), visible);
+                //notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), visible);
+                //notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
+                //notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
+                //notificarCambios = false;
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible);
+                ////notificarCambios = false;
                 //changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaInfluenza()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenza()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (!visible) {
                     Page pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteDengue());
                     boolean visibleDen = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
@@ -1026,24 +1026,24 @@ public class NewTamizajeActivity extends FragmentActivity implements
             if(page.getTitle().equals(labels.getAceptaCohorteInfluenzaUO1())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getPretermino()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
-                notificarCambios = false;
-                //changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible);
                 //notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getEnfermedadInmuno()), visible);
+                //notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), visible);
+                //notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
+                //notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
+                //notificarCambios = false;
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible);
+                ////notificarCambios = false;
                 //changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaInfluenzaUO1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenzaUO1()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (!visible) {
                     Page pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteDengue());
                     boolean visibleDen = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
@@ -1068,95 +1068,95 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     boolean esInmuno = pagetmp2.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp2.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
 
                     changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteUO1ParteDCovid()), ((visible && !esInmuno) || visibleDen) && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCasaPerteneceCohorte()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCodigoNuevaCasaCohorte()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre1JefeFamilia()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre2JefeFamilia()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido1JefeFamilia()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido2JefeFamilia()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getBarrio()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getManzana()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDireccion()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCodigoNuevoParticipante()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre1()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre2()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido1()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido2()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre1Padre()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre2Padre()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido1Padre()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido2Padre()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre1Madre()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre2Madre()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido1Madre()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido2Madre()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), ((visible && !esInmuno) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombreContacto()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDireccionContacto()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTieneTelefono()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNumTelefono1()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono1()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTipoTelefono1()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTieneOtroTelefono()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNumTelefono2()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), (visible && !esInmuno) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                 }
                 onPageTreeChanged();
             }
@@ -1175,207 +1175,207 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     boolean esPretermino = pagetmp2.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp2.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
 
                     changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteUO1ParteDCovid()), ((visible && !esPretermino) || visibleDen) && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCasaPerteneceCohorte()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCodigoNuevoParticipante()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre1()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre2()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido1()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido2()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre1Padre()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre2Padre()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido1Padre()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido2Padre()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre1Madre()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre2Madre()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido1Madre()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido2Madre()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), ((visible && !esPretermino) || visibleDen) && edadAnios < 18);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombreContacto()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDireccionContacto()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTieneTelefono()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNumTelefono1()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono1()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTipoTelefono1()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTieneOtroTelefono()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNumTelefono2()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCodigoNuevaCasaCohorte()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre1JefeFamilia()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNombre2JefeFamilia()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido1JefeFamilia()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getApellido2JefeFamilia()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getBarrio()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getManzana()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDireccion()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), (visible && !esPretermino) || visibleDen);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                 }
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getRazonNoAceptaInfluenza())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenza()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getRazonNoAceptaInfluenzaUO1())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaInfluenzaUO1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAceptaCohorteUO1ParteDCovid())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteD()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRazonNoAceptaParteD())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros motivos");
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteD()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getCasaPerteneceCohorte())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoCasaCohorte()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoNuevaCasaCohorte()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre1JefeFamilia()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2JefeFamilia()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido1JefeFamilia()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2JefeFamilia()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getBarrio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getManzana()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDireccion()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getParticipanteOTutorAlfabeto())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getTestigoPresente()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
                 pagetmp.setChoices(visible?catVerifTutNoAlf:catVerifTutAlf);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getTestigoPresente())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 Page pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteDengue());
                 boolean visibleTmp = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible && visibleTmp);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible && visibleTmp);
-                notificarCambios = false;
+                //notificarCambios = false;
                 //En nuevo ingreso ya no se pregunta por parte D. 08/2018
                 //changeStatus(mWizardModel.findByKey(labels.getAceptaParteD()), visible && visibleTmp);
-                //notificarCambios = false;
+                ////notificarCambios = false;
 
                 pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteInfluenza());
                 visibleTmp = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible && visibleTmp);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), visible && visibleTmp);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteUO1ParteDCovid()), visible && visibleTmp && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1));
-                notificarCambios = false;
+                //notificarCambios = false;
                 //si no es influenza, es influenza UO1
                 if (pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) == null || pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).isEmpty()) {
                     pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAceptaCohorteInfluenzaUO1());
                     visibleTmp = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                     changeStatus(mWizardModel.findByKey(labels.getAceptaParteBInf()), visible && visibleTmp);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaParteCInf()), visible && visibleTmp);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteUO1ParteDCovid()), visible && visibleTmp && tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                 }
 
                 onPageTreeChanged();
@@ -1383,26 +1383,26 @@ public class NewTamizajeActivity extends FragmentActivity implements
             if(page.getTitle().equals(labels.getTieneTelefono())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTipoTelefono1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNumTelefono1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTieneOtroTelefono()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNumTelefono2()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getTipoTelefono1())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Celular");
                 changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 TextPage pagetmp = (TextPage) mWizardModel.findByKey(labels.getNumTelefono1());
                 if (visible){
                     pagetmp.setPatternValidation(true, "^$|^[8|5|7]{1}\\d{7}$");
@@ -1415,7 +1415,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
             if(page.getTitle().equals(labels.getTipoTelefono2())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Celular");
                 changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 TextPage pagetmp = (TextPage) mWizardModel.findByKey(labels.getNumTelefono2());
                 if (visible){
                     pagetmp.setPatternValidation(true, "^$|^[8|5|7]{1}\\d{7}$");
@@ -1427,11 +1427,11 @@ public class NewTamizajeActivity extends FragmentActivity implements
             if(page.getTitle().equals(labels.getTieneOtroTelefono())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTipoTelefono2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOperadoraTelefono2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNumTelefono2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
         }catch (Exception ex){
@@ -2589,7 +2589,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

@@ -359,7 +359,7 @@ public class NuevoObsequioActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getPersonaRecibe()), visible);
                 TextPage observacion = (TextPage)mWizardModel.findByKey(labels.getObservaciones());
                 observacion.setRequired(!visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
     	}catch (Exception ex){
@@ -539,7 +539,7 @@ public class NuevoObsequioActivity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

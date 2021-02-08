@@ -345,7 +345,7 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
     		if (page.getTitle().equals(labels.getTipo())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Celular");
                 changeStatus(mWizardModel.findByKey(labels.getOperadora()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
     		
@@ -489,7 +489,7 @@ public class NuevoTelefonoContactoActivity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

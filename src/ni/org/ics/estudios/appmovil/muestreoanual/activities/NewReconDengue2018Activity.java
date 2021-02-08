@@ -349,9 +349,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getVisExit())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRazonVisNoExit()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParticipar()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (!visible) {
                     resetForm(100);
                     esElegible =false;
@@ -365,47 +365,47 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getRazonVisNoExit())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("No se encontro tutor");
                 changeStatus(mWizardModel.findByKey(labels.getDejoCarta()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 boolean opcion7 = visible;
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null &&
                         (page.getData().getString(TextPage.SIMPLE_DATA_KEY).contains("Niño ausente")
                                 || page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Padres Ausentes o Adultos Ausentes")
                                 || page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Acude a Consulta Medica sin Tutor")));
                 changeStatus(mWizardModel.findByKey(labels.getPersonaCasa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelacionFamPersonaCasa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoPersonaCasa()), (opcion7 || visible));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNoDejoCarta()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getPersonaDejoCarta()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelFamPersonaDejoCarta()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtraRelacionPersonaCasa()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getDejoCarta())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getPersonaDejoCarta()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelFamPersonaDejoCarta()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getNoDejoCarta()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getPersonaCasa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelacionFamPersonaCasa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRelacionFamPersonaCasa())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra relación familiar");
                 changeStatus(mWizardModel.findByKey(labels.getOtraRelacionPersonaCasa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
 
@@ -413,31 +413,31 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 //emancipado solo se pregunta de 14 a mas
                 changeStatus(mWizardModel.findByKey(labels.getEmancipado()), visible && edadMeses>=168);
-                notificarCambios = false;
+                //notificarCambios = false;
                 //Sólo se preguntará a los retirados
                 changeStatus(mWizardModel.findByKey(labels.getIncDen()), (visible && retirado));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible && retirado));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (visible && edadMeses<168){
                     changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAsiste()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     //de 2 a 14 anio
                     changeStatus(mWizardModel.findByKey(labels.getParteADen()), consentimiento);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     //de 2 a 14 anio
                     changeStatus(mWizardModel.findByKey(labels.getParteBDen()), consentimiento);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     //de 2 a 14 anio
                     changeStatus(mWizardModel.findByKey(labels.getParteCDen()), consentimiento);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
                     changeStatus(mWizardModel.findByKey(labels.getParteDDen()), reconsentimiento);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                 }
                 esElegible = visible;
                 if (!visible){
@@ -450,15 +450,15 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getRazonNoAceptaDengue())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros motivos");
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaDengue()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getEmancipado())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRazonEmancipacion()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getIncDen()), (!visible && retirado));
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (visible){
                     SingleFixedChoicePage pagetmp = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getRazonEmancipacion());
                     if (participante.getSexo().equals("M")) {
@@ -469,28 +469,28 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     resetForm(98);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAsiste()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteADen()), !visible && consentimiento);
-                notificarCambios = false;
+                //notificarCambios = false;
                 //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteBDen()), !visible && consentimiento);
-                notificarCambios = false;
+                //notificarCambios = false;
                 //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteCDen()), !visible && consentimiento);
-                notificarCambios = false;
+                //notificarCambios = false;
                 //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
                 changeStatus(mWizardModel.findByKey(labels.getParteDDen()), !visible && reconsentimiento);
-                notificarCambios = false;
+                //notificarCambios = false;
                 esElegible = !visible;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRazonEmancipacion())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro");
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonEmancipacion()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Embarazada");
                 if (!visible){
                     Toast toast = Toast.makeText(getApplicationContext(), R.string.informarEmancipado, Toast.LENGTH_LONG);
@@ -503,12 +503,12 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 visible = test.size() > 1;
                 //Sólo se preguntará a los retirados
                 changeStatus(mWizardModel.findByKey(labels.getVivienda()), (visible && retirado));
-                notificarCambios = false;
+                //notificarCambios = false;
                 //Sólo se preguntará a los retirados
                 changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), (visible && retirado));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (!visible){
                     Toast toast = Toast.makeText(getApplicationContext(),labels.getNoCumpleIncDen(),Toast.LENGTH_LONG);
                     toast.show();
@@ -532,11 +532,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     }
                     esElegible = visible && tiempoValido;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible && tiempoValido && retirado));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), (visible && tiempoValido));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAsiste()), (visible && tiempoValido));
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     //es alquilada y tiene tiempo valido
                     if (!visible) {
                         tiempoValido = pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && pagetmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Dos Años ó Más");
@@ -547,11 +547,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         }
                         esElegible = tiempoValido;
                         changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), tiempoValido && retirado);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), tiempoValido);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getAsiste()), tiempoValido);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                     }
                 }
                 onPageTreeChanged();
@@ -569,11 +569,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 }
                 esElegible = esPropia && visible;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (esPropia && visible && retirado));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), (esPropia && visible));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAsiste()), (esPropia && visible));
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 if (!esPropia){
                     visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Dos Años ó Más");
@@ -584,11 +584,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     }
                     esElegible = visible;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), visible && retirado);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAsiste()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
 
                 }
                 onPageTreeChanged();
@@ -602,33 +602,33 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 }
                 esElegible = visible;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAsiste()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteADen()), visible && consentimiento);
-                notificarCambios = false;
+                //notificarCambios = false;
                 //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteBDen()), visible && consentimiento);
-                notificarCambios = false;
+                //notificarCambios = false;
                 //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteCDen()), visible && consentimiento);
-                notificarCambios = false;
+                //notificarCambios = false;
                 //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
                 changeStatus(mWizardModel.findByKey(labels.getParteDDen()), visible && reconsentimiento);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getEnfCronSN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronica()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTomaTx()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCualesTx()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtroTx()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 Calendar fechas = Calendar.getInstance();
                 int anioActual = fechas.get(Calendar.YEAR);
@@ -725,181 +725,181 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                 visible = test != null && test.contains("Cáncer de cualquier tipo");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Cardiopatías");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Enfermedades hematológicas");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio3()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes3()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Enfermedades Inmunosupresoras");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio4()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes4()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Enfermedades Renales");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio5()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes5()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Epilepsia");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio6()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes6()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Leucemia");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio7()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes7()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Metabólica crónica (Diabetes)");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio8()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes8()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Otra");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio9()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes9()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getoEnfCronica()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Trastornos Psiquiatricos/Depresión");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio10()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes10()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Asma");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio11()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes11()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Hipertensión arterial");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio12()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes12()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 visible = test != null && test.contains("Artritis Reumatoide");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio13()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes13()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
 
                 visible = test != null && test.contains("Tuberculosis");
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaAnio14()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronicaMes14()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTomaTx())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCualesTx()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCualesTx())) {
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                 visible = test != null && test.contains(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtroTx()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAsiste())) {
                 if(page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null) {
                     if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Centro de Salud Sócrates Flores")) {
                         changeStatus(mWizardModel.findByKey(labels.getOcentrosalud()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getPuestosalud()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                     } else if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro centro de salud")) {
                         changeStatus(mWizardModel.findByKey(labels.getOcentrosalud()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getPuestosalud()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                     } else if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Puesto de Salud")) {
                         changeStatus(mWizardModel.findByKey(labels.getOcentrosalud()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getPuestosalud()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                     } else {
                         changeStatus(mWizardModel.findByKey(labels.getOcentrosalud()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getPuestosalud()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                     }
                 }else{
                     changeStatus(mWizardModel.findByKey(labels.getOcentrosalud()), false);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getPuestosalud()), false);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                 }
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getParteADen())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRechDen()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && edadMeses >= 72);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (visible && edadMeses < 72){
                     changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDomicilio()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getJefeFam()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getDireContacto()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getPadre()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getMadre()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                    notificarCambios = false;
+                    //notificarCambios = false;
 
                     LabelPage pagetmp = (LabelPage) mWizardModel.findByKey(labels.getDomicilio());
                     String domicilio;
@@ -940,13 +940,13 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getRechDen())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros motivos");
                 changeStatus(mWizardModel.findByKey(labels.getOtroRechDen()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getParteDDen())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRechDenExtEdad()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (retirado && !visible){
                     Toast toast = Toast.makeText(getApplicationContext(), R.string.noAceptaParticipar, Toast.LENGTH_LONG);
                     toast.show();
@@ -955,7 +955,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 }else {
                     esElegible = true;
                     changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), edadMeses >= 72);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                 }
 
                 onPageTreeChanged();
@@ -963,45 +963,45 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getRechDenExtEdad())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros motivos");
                 changeStatus(mWizardModel.findByKey(labels.getOtroRechDenExtEdad()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAsentimiento())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDomicilio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getJefeFam()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDireContacto()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getPadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 LabelPage pagetmp = (LabelPage) mWizardModel.findByKey(labels.getDomicilio());
                 String domicilio;
@@ -1047,37 +1047,37 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getMismoTutorSN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getNombrept()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombrept2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidopt()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidopt2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelacionFam()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMotivoDifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getMotivoDifTutor())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro Motivo");
                 changeStatus(mWizardModel.findByKey(labels.getOtroMotivoDifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAlfabetoTutor())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getTestigoSN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombretest1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombretest2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidotest1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidotest2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
                 pagetmp.setChoices(visible?catVerifTutNoAlf:catVerifTutAlf);
 
@@ -1086,41 +1086,41 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getTestigoSN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNombretest1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombretest2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidotest1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidotest2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDomicilio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getJefeFam()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getPadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNomContacto()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getBarrioContacto()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getDireContacto()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelContacto1SN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (!visible) {
                     Toast toast = Toast.makeText(getApplicationContext(), labels.getNoCumpleIncDen(), Toast.LENGTH_LONG);
                     toast.show();
@@ -1133,51 +1133,51 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getCmDomicilio())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNotaCmDomicilio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             /*if (page.getTitle().equals(labels.getBarrio())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Fuera de Sector");
                 changeStatus(mWizardModel.findByKey(labels.getOtrobarrio()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAutsup()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getJefeFam()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getPadre()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMadre()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAutsup())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getJefeFam()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarJefe()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getPadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (!visible) {
                     Toast toast = Toast.makeText(getApplicationContext(), labels.getAutsupHint(), Toast.LENGTH_LONG);
                     toast.show();
@@ -1189,13 +1189,13 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getTelefono1SN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoCel1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono2SN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefonoClasif1())) {
@@ -1207,17 +1207,17 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefono2SN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoCel2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefono3SN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefonoClasif2())) {
@@ -1229,15 +1229,15 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefono3SN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoClasif3()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoCel3()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelefonoClasif3())) {
@@ -1249,31 +1249,31 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoOper3()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCambiarJefe())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getJefenom()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getJefenom2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getJefeap()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getJefeap2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelContacto1SN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTelContacto1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelContactoCel1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelContactoOper1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelContacto2SN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelContacto1())) {
@@ -1285,15 +1285,15 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelContactoOper1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelContacto2SN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTelContactoClasif2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelContactoCel2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTelContactoClasif2())) {
@@ -1305,44 +1305,44 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     pagetmp.setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CONVENCIONAL);
                 }
                 changeStatus(mWizardModel.findByKey(labels.getTelContactoOper2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCambiarPadre())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNombrepadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombrepadre2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidopadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidopadre2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCambiarMadre())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNombremadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombremadre2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidomadre()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidomadre2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             //datos de cambio de domicilio se pasan a formulario independiente
             /*if (page.getTitle().equals(labels.getGeoref())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getGeoref_razon()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getGeoref_razon())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getGeoref_otraRazon()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }*/
 
@@ -2365,7 +2365,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

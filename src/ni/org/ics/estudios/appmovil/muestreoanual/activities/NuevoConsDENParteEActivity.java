@@ -358,9 +358,9 @@ public class NuevoConsDENParteEActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getVisExit())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRazonVisNoExit()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (!visible) {
                     resetForm(100);
                     esElegible =false;
@@ -379,33 +379,33 @@ public class NuevoConsDENParteEActivity extends FragmentActivity implements
                                 || page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Padres Ausentes o Adultos Ausentes")
                                 || page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Acude a Consulta Medica sin Tutor")));
                 changeStatus(mWizardModel.findByKey(labels.getPersonaCasa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelacionFamPersonaCasa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTelefonoPersonaCasa()), (opcion7 || visible));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtraRelacionPersonaCasa()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null &&
                         page.getData().getString(TextPage.SIMPLE_DATA_KEY).contains("Otro motivo"));
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonVisitaNoExitosa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRelacionFamPersonaCasa())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra relación familiar");
                 changeStatus(mWizardModel.findByKey(labels.getOtraRelacionPersonaCasa()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAceptaTamizajePersona())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTipoAsentimiento()), visible && (edadMeses >= 72 && edadMeses < 216));//6 y menores de 18
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaDengueParteE()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (!visible) {
                     resetForm(94);
                     esElegible =false;
@@ -415,15 +415,15 @@ public class NuevoConsDENParteEActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getAceptaDengueParteE())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteE()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTutor()), visible && edadMeses < 216);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible && edadMeses < 216);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 String relacion = getRelacionFamiliar(participante.getProcesos().getRelacionFam());
                 LabelPage pagetmp = (LabelPage) mWizardModel.findByKey(labels.getTutor());
@@ -440,25 +440,25 @@ public class NuevoConsDENParteEActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getRazonNoAceptaParteE())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros motivos");
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteE()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTipoAsentimiento())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("No da asentimiento");
                 /*changeStatus(mWizardModel.findByKey(labels.getAceptaDengueParteE()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTutor()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), !visible);
-                notificarCambios = false;*/
+                //notificarCambios = false;*/
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getFormato712Asentimiento()), !visible && (edadMeses >= 72 && edadMeses < 156));
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getFormato1317Asentimiento()), !visible && (edadMeses >= 156 && edadMeses < 216));
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 /*String relacion = getRelacionFamiliar(participante.getProcesos().getRelacionFam());
                 LabelPage pagetmp = (LabelPage) mWizardModel.findByKey(labels.getTutor());
@@ -475,37 +475,37 @@ public class NuevoConsDENParteEActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getMismoTutorSN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getNombrept()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombrept2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidopt()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidopt2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRelacionFam()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getMotivoDifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getMotivoDifTutor())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro Motivo");
                 changeStatus(mWizardModel.findByKey(labels.getOtroMotivoDifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAlfabetoTutor())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getTestigoSN()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombretest1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombretest2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidotest1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidotest2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
                 pagetmp.setChoices(visible?catVerifTutNoAlf:catVerifTutAlf);
                 totalVerifTutor = visible?catVerifTutNoAlf.length:catVerifTutAlf.length;
@@ -515,17 +515,17 @@ public class NuevoConsDENParteEActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getTestigoSN())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNombretest1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombretest2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidotest1()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellidotest2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTipoAsentimiento()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if (!visible) {
                     Toast toast = Toast.makeText(getApplicationContext(), labels.getNoCumpleIncDen(), Toast.LENGTH_LONG);
                     toast.show();
@@ -971,7 +971,7 @@ public class NuevoConsDENParteEActivity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

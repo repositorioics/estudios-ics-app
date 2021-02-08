@@ -353,39 +353,39 @@ public class NuevoTamizajeMxSuperficieActivity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getAceptaParticipar())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParticipar()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParticipar()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if(edadAnios>5 && edadAnios<18){
                     changeStatus(mWizardModel.findByKey(labels.getAsentimientoVerbal()), visible);
                 }
                 if (visible) {
                     if (edadAnios > 17) {
                         changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), false);
                     } else {
                         changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                     }
                     changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), true);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), true);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                 }else {
                     resetForm(97);
                     Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noAceptaParticipar),Toast.LENGTH_LONG);
@@ -396,7 +396,7 @@ public class NuevoTamizajeMxSuperficieActivity extends FragmentActivity implemen
             if(page.getTitle().equals(labels.getRazonNoAceptaParticipar())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParticipar()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getAsentimientoVerbal())){
@@ -408,30 +408,30 @@ public class NuevoTamizajeMxSuperficieActivity extends FragmentActivity implemen
                 }else {
                     if (edadAnios > 17) {
                         changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), false);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), false);
                     } else {
                         changeStatus(mWizardModel.findByKey(labels.getNombre1Tutor()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getNombre2Tutor()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getApellido1Tutor()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getApellido2Tutor()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getRelacionFamiliarTutor()), true);
-                        notificarCambios = false;
+                        //notificarCambios = false;
                     }
                     changeStatus(mWizardModel.findByKey(labels.getParticipanteOTutorAlfabeto()), true);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), true);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                 }
                 onPageTreeChanged();
             }
@@ -439,20 +439,20 @@ public class NuevoTamizajeMxSuperficieActivity extends FragmentActivity implemen
             if(page.getTitle().equals(labels.getParticipanteOTutorAlfabeto())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteDChf()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTestigoPresente()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
                 pagetmp.setChoices(!visible?catVerifTutNoAlf:catVerifTutAlf);
-                notificarCambios = false;
+                //notificarCambios = false;
                 if(!visible) {
                     resetForm(95);
                     Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noDaAsentimiento),Toast.LENGTH_LONG);
@@ -463,41 +463,41 @@ public class NuevoTamizajeMxSuperficieActivity extends FragmentActivity implemen
             if(page.getTitle().equals(labels.getTestigoPresente())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNombre1Testigo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteDChf()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getAceptaParteDChf())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteDChf()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getRazonNoAceptaParteDChf())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.OTRO);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteDChf()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getAsentimientoVerbalMxSuper())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNombre1MxSuperficie()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getNombre2MxSuperficie()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido1MxSuperficie()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getApellido2MxSuperficie()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
         }catch (Exception ex){
@@ -885,7 +885,7 @@ public class NuevoTamizajeMxSuperficieActivity extends FragmentActivity implemen
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

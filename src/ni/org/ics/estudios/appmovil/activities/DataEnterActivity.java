@@ -229,7 +229,7 @@ public class DataEnterActivity extends FragmentActivity implements
             changeStatus(mWizardModel.findByKey(labels.getTp5()), visible);
             changeStatus(mWizardModel.findByKey(labels.getTp4()), !visible);
             changeStatus(mWizardModel.findByKey(labels.getTp6()), !visible);
-            notificarCambios = false;
+            //notificarCambios = false;
             onPageTreeChanged();
         }
     }
@@ -353,7 +353,7 @@ public class DataEnterActivity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

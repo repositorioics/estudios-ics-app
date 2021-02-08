@@ -358,32 +358,32 @@ public class NuevaMuestraRespCovid19Activity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getTomaMxSn())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoMx()), visible, null);
-                notificarCambios = false;
-                //changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible, null);
                 //notificarCambios = false;
+                //changeStatus(mWizardModel.findByKey(labels.getVolumen()), visible, null);
+                ////notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible, null);
-                notificarCambios = false;
+                //notificarCambios = false;
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoToma()), visible, null);
                 if (visible) horaTomaMx = null;
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getCodigoMx())) {
                 horaTomaMx = DateToString(new Date(), "HH:mm:ss");
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getObservacion())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), visible, null);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRazonNoToma())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra razon");
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraRazonNoToma()), visible, null);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             }catch (Exception ex){
@@ -548,7 +548,7 @@ public class NuevaMuestraRespCovid19Activity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence != null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

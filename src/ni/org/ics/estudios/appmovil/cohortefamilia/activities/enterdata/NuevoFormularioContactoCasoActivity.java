@@ -114,7 +114,15 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
                 minDate = new DateMidnight(fechaEnfermedad);
             else //sino tomar la fecha de inicio
                 minDate = new DateMidnight(fechaInicio);
-        }else {
+        } else if (visitaCaso.getCodigoParticipanteCaso().getFis()!=null){
+            Date fechaInicio = visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio();
+            Date fis = visitaCaso.getCodigoParticipanteCaso().getFis();
+            //si la fis es menor a la fecha de inicio, tomar la fecha de enfermedad
+            if (fechaInicio.compareTo(fis)>=0)
+                minDate = new DateMidnight(fis);
+            else //sino tomar la fecha de inicio
+                minDate = new DateMidnight(fechaInicio);
+        } else {
             minDate = new DateMidnight(visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
         }
         //pageFecha.setmLaterThan(minDate);
@@ -390,52 +398,52 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
                 if (valor!=null && !valor.isEmpty()){
                     int dias = Integer.valueOf(valor);
                     changeStatus(mWizardModel.findByKey(labels.getFechaContacto2()), dias>1);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTiempoInteraccion2()), dias>1);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getFechaContacto3()), dias>2);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTiempoInteraccion3()), dias>2);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getFechaContacto4()), dias>3);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTiempoInteraccion4()), dias>3);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getFechaContacto5()), dias>4);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getTiempoInteraccion5()), dias>4);
-                    notificarCambios = false;
+                    //notificarCambios = false;
                 }
                 onPageTreeChanged();
             }
     		if (page.getTitle().equals(labels.getTiempoInteraccion())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && !page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("No tuvo contacto");
                 changeStatus(mWizardModel.findByKey(labels.getTipoInteraccion()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTiempoInteraccion2())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && !page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("No tuvo contacto");
                 changeStatus(mWizardModel.findByKey(labels.getTipoInteraccion2()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTiempoInteraccion3())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && !page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("No tuvo contacto");
                 changeStatus(mWizardModel.findByKey(labels.getTipoInteraccion3()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTiempoInteraccion4())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && !page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("No tuvo contacto");
                 changeStatus(mWizardModel.findByKey(labels.getTipoInteraccion4()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTiempoInteraccion5())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && !page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("No tuvo contacto");
                 changeStatus(mWizardModel.findByKey(labels.getTipoInteraccion5()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
     		
@@ -714,7 +722,7 @@ public class NuevoFormularioContactoCasoActivity extends FragmentActivity implem
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence!=null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

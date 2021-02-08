@@ -20,6 +20,7 @@ public class ParticipanteCohorteFamiliaCaso extends BaseMetaData {
 	private ParticipanteCohorteFamilia participante;
 	private String enfermo;
 	private Date fechaEnfermedad;
+	private Date fis;
 	
 	public String getCodigoCasoParticipante() {
 		return codigoCasoParticipante;
@@ -60,6 +61,15 @@ public class ParticipanteCohorteFamiliaCaso extends BaseMetaData {
 	public void setFechaEnfermedad(Date fechaEnfermedad) {
 		this.fechaEnfermedad = fechaEnfermedad;
 	}
+
+	public Date getFis() {
+		return fis;
+	}
+
+	public void setFis(Date fis) {
+		this.fis = fis;
+	}
+
 	@Override
 	public String toString(){
 		return codigoCaso.getCasa().getCodigoCHF() + "-" + participante.getParticipante().getCodigo() + "-" + codigoCaso.getFechaInicio();

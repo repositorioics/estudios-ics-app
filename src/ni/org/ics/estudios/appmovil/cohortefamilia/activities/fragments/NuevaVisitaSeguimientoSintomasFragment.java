@@ -769,7 +769,15 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
                     minDate = new DateMidnight(fechaEnfermedad);
                 else //sino tomar la fecha de inicio
                     minDate = new DateMidnight(fechaInicio);
-            }else {
+            } else if (mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFis()!=null){
+				Date fechaInicio = mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio();
+				Date fis = mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFis();
+				//si la fis es menor a la fecha de inicio, tomar la fecha de enfermedad
+				if (fechaInicio.compareTo(fis)>=0)
+					minDate = new DateMidnight(fis);
+				else //sino tomar la fecha de inicio
+					minDate = new DateMidnight(fechaInicio);
+			} else {
                 minDate = new DateMidnight(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
             }
 			maxDate = new DateMidnight(mVisitaSeguimientoCaso.getFechaVisita());
@@ -793,7 +801,15 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
                     minDate = new DateMidnight(fechaEnfermedad);
                 else //sino tomar la fecha de inicio
                     minDate = new DateMidnight(fechaInicio);
-            }else {
+            }  else if (mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFis()!=null){
+				Date fechaInicio = mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio();
+				Date fis = mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFis();
+				//si la fis es menor a la fecha de inicio, tomar la fecha de enfermedad
+				if (fechaInicio.compareTo(fis)>=0)
+					minDate = new DateMidnight(fis);
+				else //sino tomar la fecha de inicio
+					minDate = new DateMidnight(fechaInicio);
+			} else {
                 minDate = new DateMidnight(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio());
             }
             maxDate = new DateMidnight(mVisitaSeguimientoCaso.getFechaVisita());
@@ -923,14 +939,18 @@ public class NuevaVisitaSeguimientoSintomasFragment extends Fragment {
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.cualAntibiotico)),Toast.LENGTH_LONG).show();
             return false;
         }
-        else if (mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFechaEnfermedad()==null && formatter.parse(fechaSintoma).before(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio())){
+        else if (mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFechaEnfermedad()==null && mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFis()==null && formatter.parse(fechaSintoma).before(mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getCodigoCaso().getFechaInicio())){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.fecBefRegistro,getActivity().getString(R.string.fecha_sintoma),getActivity().getString(R.string.fechaInicio)),Toast.LENGTH_LONG).show();
             return false;
         }
-        else if (fiebre.equals(Constants.YESKEYSND) && (formatter.parse(fif).after(formatter.parse(fechaSintoma)))){
+        else if (mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFechaEnfermedad()!=null && fiebre.equals(Constants.YESKEYSND) && (formatter.parse(fif).after(formatter.parse(fechaSintoma)))){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.fecAftRegistro,getActivity().getString(R.string.fif),getActivity().getString(R.string.fecha_sintoma)),Toast.LENGTH_LONG).show();
             return false;
         }
+		else if (mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFis()!=null && (mVisitaSeguimientoCaso.getCodigoParticipanteCaso().getFis().after(formatter.parse(fechaSintoma)))){
+			Toast.makeText(getActivity(), getActivity().getString(R.string.fecAftRegistro,getActivity().getString(R.string.fis),getActivity().getString(R.string.fecha_sintoma)),Toast.LENGTH_LONG).show();
+			return false;
+		}
         else{
         	vscs.setCodigoCasoSintoma(infoMovil.getId());
         	vscs.setCodigoVisitaCaso(mVisitaSeguimientoCaso);

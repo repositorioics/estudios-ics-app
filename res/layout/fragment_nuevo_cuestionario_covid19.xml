@@ -842,6 +842,65 @@
                      android:layout_height="wrap_content"
                      android:layout_marginBottom="20dp"/>
 
+            <!-- MA2021--><!--
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textEmbarazada"
+                      android:text="@string/embarazada" />
+            <Spinner android:id="@+id/spinEmbarazada"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textRecuerdaSemanasEmb"
+                      android:text="@string/recuerdaSemanasEmb" />
+            <Spinner android:id="@+id/spinRecuerdaSemanasEmb"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textSemanasEmbarazo"
+                      android:text="@string/semanasEmbarazo" />
+            <EditText android:id="@+id/inputSemanasEmbarazo"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textFinalEmbarazo"
+                      android:text="@string/finalEmbarazo" />
+            <Spinner android:id="@+id/spinFinalEmbarazo"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textOtroFinalEmbarazo"
+                      android:text="@string/otroFinalEmbarazo" />
+            <EditText android:id="@+id/inputOtroFinalEmbarazo"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDabaPecho"
+                      android:text="@string/dabaPecho" />
+            <Spinner android:id="@+id/spinDabaPecho"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textTrabajadorSalud"
+                      android:text="@string/trabajadorSalud" />
+            <Spinner android:id="@+id/spinTrabajadorSalud"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+-->
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

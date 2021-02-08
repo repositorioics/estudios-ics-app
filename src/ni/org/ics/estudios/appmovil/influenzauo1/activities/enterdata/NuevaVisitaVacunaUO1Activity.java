@@ -356,19 +356,19 @@ public class NuevaVisitaVacunaUO1Activity extends FragmentActivity implements
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("Inicial"));
                 changeStatus(mWizardModel.findByKey(labels.getVacuna()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getFechaVacuna()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTomaMxAntes()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoTomaMx()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getVisitaExitosa()), !visible);
                 changeStatus(mWizardModel.findByKey(labels.getRazonVisitaFallida()), false);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazon()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getSegundaDosis()), !visible);
                 changeStatus(mWizardModel.findByKey(labels.getFechaSegundaDosis()), false);
                 changeStatus(mWizardModel.findByKey(labels.getReprogramarTomaMx()), false);
                 changeStatus(mWizardModel.findByKey(labels.getFechaReprogramacionTomaMx()), false);
-                notificarCambios = false;
+                //notificarCambios = false;
 
                 onPageTreeChanged();
             }
@@ -377,35 +377,35 @@ public class NuevaVisitaVacunaUO1Activity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getRazonVisitaFallida()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazon()), false);
                 changeStatus(mWizardModel.findByKey(labels.getSegundaDosis()), !visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRazonVisitaFallida())) {
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("Otra razon"));
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazon()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getVacuna())) {
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(Constants.YES));
                 changeStatus(mWizardModel.findByKey(labels.getFechaVacuna()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTomaMxAntes())) {
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(Constants.NO));
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoTomaMx()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getSegundaDosis())) {
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(Constants.YES));
                 changeStatus(mWizardModel.findByKey(labels.getFechaSegundaDosis()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getReprogramarTomaMx()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getFechaReprogramacionTomaMx()), visible);
-                notificarCambios = false;
+                //notificarCambios = false;
                 onPageTreeChanged();
             }
         }catch (Exception ex){
@@ -655,7 +655,7 @@ public class NuevaVisitaVacunaUO1Activity extends FragmentActivity implements
 
         @Override
         public int getCount() {
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            return Math.min(mCutOffPage + 1, (mCurrentPageSequence!=null ? mCurrentPageSequence.size() : 0) + 1);
         }
 
         public void setCutOffPage(int cutOffPage) {

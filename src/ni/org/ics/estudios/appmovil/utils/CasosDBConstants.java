@@ -38,6 +38,7 @@ public class CasosDBConstants {
     public static final String participante = "participante";
     public static final String enfermo = "enfermo";
     public static final String fechaEnfermedad = "fechaEnfermedad";
+    public static final String fis = "fis";
 
     //Crear ParticipanteCohorteFamiliaCaso
     public static final String CREATE_PARTICIPANTES_CASOS_TABLE = "create table if not exists "
@@ -47,6 +48,7 @@ public class CasosDBConstants {
             + participante + " integer not null, "
             + enfermo + " text, "
             + fechaEnfermedad + " date, "
+            + fis + " date, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

@@ -654,6 +654,7 @@ public class BluetoothChatFragment extends Fragment {
                 mParticipantesCasos.get(cuenta).getParticipante().getParticipante().getCodigo()+",'"+
                 mParticipantesCasos.get(cuenta).getEnfermo()+"',"+
                 (mParticipantesCasos.get(cuenta).getFechaEnfermedad()!=null?mParticipantesCasos.get(cuenta).getFechaEnfermedad().getTime():"null")+","+
+                (mParticipantesCasos.get(cuenta).getFis()!=null?mParticipantesCasos.get(cuenta).getFis().getTime():"null")+","+
                 mParticipantesCasos.get(cuenta).getRecordDate().getTime()+",'"+
                 mParticipantesCasos.get(cuenta).getRecordUser()+"','"+
                 mParticipantesCasos.get(cuenta).getPasive()+"','"+

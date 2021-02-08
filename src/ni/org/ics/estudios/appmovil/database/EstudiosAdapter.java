@@ -374,6 +374,9 @@ public class EstudiosAdapter {
 				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.mxDenParteE + " text");
 				db.execSQL("ALTER TABLE " + MainDBConstants.TAMIZAJE_TABLE + " ADD COLUMN " + MainDBConstants.tipoAsentimiento + " text");
 			}
+			if (oldVersion==36){
+				db.execSQL("ALTER TABLE " + CasosDBConstants.PARTICIPANTES_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.fis + " text");
+			}
 		}
 	}
 

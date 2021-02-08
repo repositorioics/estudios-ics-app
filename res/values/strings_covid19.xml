@@ -286,4 +286,13 @@
 
     <string name="confirmarValor">¿Confirma respuesta \"<xliff:g id="variable">%1$s</xliff:g>\" para la pregunta \"<xliff:g id="variable2">%2$s</xliff:g>\"?</string>
 
+    <!--MA 2021 -->
+    <string name="embarazada">25 ¿Usted estaba embarazada al momento de ser diagnosticada o sospechosa de COVID19?</string>
+    <string name="recuerdaSemanasEmb">¿Recuerda las semanas de embarazo que tenía?</string>
+    <string name="semanasEmbarazoCovid">Indicar las semanas de embarazo que tenía</string>
+    <string name="finalEmbarazo">como finalizó el embarazo?</string>
+    <string name="otroFinalEmbarazo">Otro final</string>
+    <string name="dabaPecho">26 Si estaba embarazada recientemente al momento de ser diagnosticada con COVID19, ¿Usted estaba dando pecho materno?</string>
+    <string name="trabajadorSalud">27 ¿Usted estuvo empleado como trabajador de la salud desde el 1 de febrero de 2020?</string>
+
 </resources>

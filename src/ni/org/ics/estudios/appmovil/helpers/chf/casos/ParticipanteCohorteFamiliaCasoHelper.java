@@ -21,6 +21,7 @@ public class ParticipanteCohorteFamiliaCasoHelper {
         cv.put(CasosDBConstants.participante, participanteCaso.getParticipante().getParticipante().getCodigo());
         cv.put(CasosDBConstants.enfermo, participanteCaso.getEnfermo());
         if (participanteCaso.getFechaEnfermedad() != null) cv.put(CasosDBConstants.fechaEnfermedad, participanteCaso.getFechaEnfermedad().getTime());
+        if (participanteCaso.getFis() != null) cv.put(CasosDBConstants.fis, participanteCaso.getFis().getTime());
         
         if (participanteCaso.getRecordDate() != null) cv.put(MainDBConstants.recordDate, participanteCaso.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, participanteCaso.getRecordUser());
@@ -38,6 +39,7 @@ public class ParticipanteCohorteFamiliaCasoHelper {
         mParticipanteCohorteFamiliaCaso.setParticipante(null);
         mParticipanteCohorteFamiliaCaso.setEnfermo(cursor.getString(cursor.getColumnIndex(CasosDBConstants.enfermo)));
         if(cursor.getLong(cursor.getColumnIndex(CasosDBConstants.fechaEnfermedad))>0) mParticipanteCohorteFamiliaCaso.setFechaEnfermedad(new Date(cursor.getLong(cursor.getColumnIndex(CasosDBConstants.fechaEnfermedad))));
+        if(cursor.getLong(cursor.getColumnIndex(CasosDBConstants.fis))>0) mParticipanteCohorteFamiliaCaso.setFis(new Date(cursor.getLong(cursor.getColumnIndex(CasosDBConstants.fis))));
         
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mParticipanteCohorteFamiliaCaso.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mParticipanteCohorteFamiliaCaso.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

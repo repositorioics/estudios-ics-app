@@ -608,6 +608,14 @@ public class Covid19DBConstants {
     public static final String fumadoCienCigarrillos = "fumadoCienCigarrillos";
     public static final String fumadoPrevioEnfermedad = "fumadoPrevioEnfermedad";
     public static final String fumaActualmente = "fumaActualmente";
+    //MA2021
+    public static final String embarazada = "embarazada";
+    public static final String recuerdaSemanasEmb = "recuerdaSemanasEmb";
+    public static final String semanasEmbarazo = "semanasEmbarazo";
+    public static final String finalEmbarazo = "finalEmbarazo";
+    public static final String otroFinalEmbarazo = "otroFinalEmbarazo";
+    public static final String dabaPecho = "dabaPecho";
+    public static final String trabajadorSalud = "trabajadorSalud";
 
     //Crear SintomasVisitaFinalCovid19
     public static final String CREATE_COVID_CUESTIONARIO_TABLE = "create table if not exists "
@@ -705,6 +713,13 @@ public class Covid19DBConstants {
             + fumadoCienCigarrillos + " text, "
             + fumadoPrevioEnfermedad + " text, "
             + fumaActualmente + " text, "
+            + embarazada + " text, "
+            + recuerdaSemanasEmb + " text, "
+            + semanasEmbarazo + " integer, "
+            + finalEmbarazo + " text, "
+            + otroFinalEmbarazo + " text, "
+            + dabaPecho + " text, "
+            + trabajadorSalud + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

@@ -105,6 +105,14 @@ public class CuestionarioCovid19Helper {
         cv.put(Covid19DBConstants.fumadoCienCigarrillos, cuestionario.getFumadoCienCigarrillos());
         cv.put(Covid19DBConstants.fumadoPrevioEnfermedad, cuestionario.getFumadoPrevioEnfermedad());
         cv.put(Covid19DBConstants.fumaActualmente, cuestionario.getFumaActualmente());
+        //MA2021
+        cv.put(Covid19DBConstants.embarazada, cuestionario.getEmbarazada());
+        cv.put(Covid19DBConstants.recuerdaSemanasEmb, cuestionario.getRecuerdaSemanasEmb());
+        cv.put(Covid19DBConstants.semanasEmbarazo, cuestionario.getSemanasEmbarazo());
+        cv.put(Covid19DBConstants.finalEmbarazo, cuestionario.getFinalEmbarazo());
+        cv.put(Covid19DBConstants.otroFinalEmbarazo, cuestionario.getOtroFinalEmbarazo());
+        cv.put(Covid19DBConstants.dabaPecho, cuestionario.getDabaPecho());
+        cv.put(Covid19DBConstants.trabajadorSalud, cuestionario.getTrabajadorSalud());
 
         if (cuestionario.getRecordDate() != null) cv.put(MainDBConstants.recordDate, cuestionario.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, cuestionario.getRecordUser());
@@ -210,7 +218,14 @@ public class CuestionarioCovid19Helper {
         cuestionarioCovid19.setFumadoCienCigarrillos(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.fumadoCienCigarrillos)));
         cuestionarioCovid19.setFumadoPrevioEnfermedad(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.fumadoPrevioEnfermedad)));
         cuestionarioCovid19.setFumaActualmente(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.fumaActualmente)));
-
+        //MA2021
+        cuestionarioCovid19.setEmbarazada(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.embarazada)));
+        cuestionarioCovid19.setRecuerdaSemanasEmb(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.recuerdaSemanasEmb)));
+        if(cursor.getLong(cursor.getColumnIndex(Covid19DBConstants.semanasEmbarazo))>0) cuestionarioCovid19.setSemanasEmbarazo(cursor.getInt(cursor.getColumnIndex(Covid19DBConstants.semanasEmbarazo)));
+        cuestionarioCovid19.setFinalEmbarazo(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.finalEmbarazo)));
+        cuestionarioCovid19.setOtroFinalEmbarazo(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.otroFinalEmbarazo)));
+        cuestionarioCovid19.setDabaPecho(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.dabaPecho)));
+        cuestionarioCovid19.setTrabajadorSalud(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.trabajadorSalud)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) cuestionarioCovid19.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         cuestionarioCovid19.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

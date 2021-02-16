@@ -59,6 +59,7 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 	private Integer codigoComun;
 	private Integer codigoCasa;
 	private Integer codigoCasaAnt;
+	private String codigoParticipante;
 
     private EstudiosAdapter estudiosAdapter;
 
@@ -94,6 +95,7 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 		desdeMenuUO1 = getIntent().getBooleanExtra(Constants.MENU_UO1, false);
 		codigoCasa = getIntent().getIntExtra(ConstantsDB.COD_CASA,-1);
 		codigoComun = getIntent().getIntExtra(ConstantsDB.CODIGO,-1);
+		codigoParticipante = getIntent().getStringExtra(Constants.PARTICIPANTE);
 		
 		mMetodoView = (Spinner) findViewById(R.id.metodo_busqueda);
 		List<String> list = new ArrayList<String>();
@@ -106,6 +108,8 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 				android.R.layout.simple_spinner_item, list);
 		dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
 		mMetodoView.setAdapter(dataAdapter);
+
+		mCodigoView = (EditText) findViewById(R.id.codigo);
 
 		mMetodoView.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
@@ -187,14 +191,23 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 			}
 		});
 
-		mFindButton.setVisibility(View.GONE);
+		if (codigoParticipante != null) {
+			mBarcodeButton.setVisibility(View.GONE);
+			mFindButton.setVisibility(View.VISIBLE);
+			mCodigoView.setVisibility(View.VISIBLE);
+			mCodigoView.setText(codigoParticipante);
+			mMetodoView.setSelection(1, false);
+			opcion = 1;
+			mFindButton.callOnClick();
+		}else {
+			mFindButton.setVisibility(View.GONE);
+			mCodigoView.setVisibility(View.GONE);
+		}
+
 		mSelectButton.setVisibility(View.GONE);
-
-		mCodigoView = (EditText) findViewById(R.id.codigo);
-		mCodigoView.setVisibility(View.GONE);
-
 		mPartTextView = (TextView) findViewById(R.id.participante);
 		mPartTextView.setVisibility(View.GONE);
+
 
 
 	}

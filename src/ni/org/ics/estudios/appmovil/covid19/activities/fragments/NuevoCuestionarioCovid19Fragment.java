@@ -135,7 +135,11 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
     protected static final String FUMADOCIENCIGARRILLOS_CONS = "FUMADOCIENCIGARRILLOS";
     protected static final String FUMADOPREVIOENFERMEDAD_CONS = "FUMADOPREVIOENFERMEDAD";
     protected static final String FUMAACTUALMENTE_CONS = "FUMAACTUALMENTE";
-
+    protected static final String EMBARAZADA_CONS = "EMBARAZADA_CONS";
+    protected static final String RECUERDASEMANASEMB_CONS = "RECUERDASEMANASEMB_CONS";
+    protected static final String FINALEMBARAZO_CONS = "FINALEMBARAZO_CONS";
+    protected static final String DABAPECHO_CONS = "DABAPECHO_CONS";
+    protected static final String TRABAJADORSALUD_CONS = "TRABAJADORSALUD_CONS";
 
     //Base de datos
     private EstudiosAdapter estudiosAdapter;
@@ -162,6 +166,7 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
     private List<MessageResource> mCatalogoTipoSeg;
     private List<MessageResource> mCatalogoUnidadMedTR;
     private List<MessageResource> mCatalogoMeses = new ArrayList<MessageResource>();
+    private List<MessageResource> mCatalogoFinalEmb;
 
     //Objeto que se va a hacer
     private CuestionarioCovid19 mCuestionario = new CuestionarioCovid19();
@@ -264,6 +269,14 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
     private TextView textSabeFechaAlta;
     private TextView textSabeFechaAdmision;
     private TextView textSabeCuantasNoches;
+    //MA2021
+    private TextView textEmbarazada;
+    private TextView textRecuerdaSemanasEmb;
+    private TextView textSemanasEmbarazo;
+    private TextView textFinalEmbarazo;
+    private TextView textOtroFinalEmbarazo;
+    private TextView textDabaPecho;
+    private TextView textTrabajadorSalud;
 
     private Spinner spinFeb20Febricula;
     private Spinner spinFeb20Fiebre;
@@ -357,6 +370,14 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
     private Spinner spinSabeFechaAlta;
     private Spinner spinSabeFechaAdmision;
     private Spinner spinSabeCuantasNoches;
+    //MA2021
+    private Spinner spinEmbarazada;
+    private Spinner spinRecuerdaSemanasEmb;
+    private EditText inputSemanasEmbarazo;
+    private Spinner spinFinalEmbarazo;
+    private EditText inputOtroFinalEmbarazo;
+    private Spinner spinDabaPecho;
+    private Spinner spinTrabajadorSalud;
 
     private ImageButton imbFIS;
     private ImageButton imbFechaAdmisionHosp;
@@ -456,6 +477,13 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
     private int fumadoCienCigarrillosPos = 0;
     private int fumadoPrevioEnfermedadPos = 0;
     private int fumaActualmentePos = 0;
+    //MA2021
+    private int embarazadaPos = 0;
+    private int recuerdaSemanasEmbPos = 0;
+    private int finalEmbarazoPos = 0;
+    private int dabaPechoPos = 0;
+    private int trabajadorSaludPos = 0;
+
     private String feb20Febricula;
     private String feb20Fiebre;
     private String feb20Escalofrio;
@@ -547,7 +575,14 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
     private String fumadoCienCigarrillos;
     private String fumadoPrevioEnfermedad;
     private String fumaActualmente;
-
+    //MA2021
+    private String embarazada;
+    private String recuerdaSemanasEmb;
+    private Integer semanasEmbarazo;
+    private String finalEmbarazo;
+    private String otroFinalEmbarazo;
+    private String dabaPecho;
+    private String trabajadorSalud;
 
     public static NuevoCuestionarioCovid19Fragment create() {
         NuevoCuestionarioCovid19Fragment fragment = new NuevoCuestionarioCovid19Fragment();
@@ -728,6 +763,19 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
         textSabeFechaAdmision.setVisibility(View.GONE);
         textSabeCuantasNoches = (TextView) rootView.findViewById(R.id.textSabeCuantasNoches);
         textSabeCuantasNoches.setVisibility(View.GONE);
+        textEmbarazada = (TextView) rootView.findViewById(R.id.textEmbarazada);
+        textEmbarazada.setVisibility(View.GONE);
+        textRecuerdaSemanasEmb = (TextView) rootView.findViewById(R.id.textRecuerdaSemanasEmb);
+        textRecuerdaSemanasEmb.setVisibility(View.GONE);
+        textSemanasEmbarazo = (TextView) rootView.findViewById(R.id.textSemanasEmbarazo);
+        textSemanasEmbarazo.setVisibility(View.GONE);
+        textFinalEmbarazo = (TextView) rootView.findViewById(R.id.textFinalEmbarazo);
+        textFinalEmbarazo.setVisibility(View.GONE);
+        textOtroFinalEmbarazo = (TextView) rootView.findViewById(R.id.textOtroFinalEmbarazo);
+        textOtroFinalEmbarazo.setVisibility(View.GONE);
+        textDabaPecho = (TextView) rootView.findViewById(R.id.textDabaPecho);
+        textDabaPecho.setVisibility(View.GONE);
+        textTrabajadorSalud = (TextView) rootView.findViewById(R.id.textTrabajadorSalud);
 
         spinFeb20Febricula = (Spinner) rootView.findViewById(R.id.spinFeb20Febricula);
         spinFeb20Fiebre = (Spinner) rootView.findViewById(R.id.spinFeb20Fiebre);
@@ -826,6 +874,13 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
         spinSabeFechaAlta = (Spinner) rootView.findViewById(R.id.spinSabeFechaAlta);
         spinSabeFechaAdmision = (Spinner) rootView.findViewById(R.id.spinSabeFechaAdmision);
         spinSabeCuantasNoches = (Spinner) rootView.findViewById(R.id.spinSabeCuantasNoches);
+        spinEmbarazada = (Spinner) rootView.findViewById(R.id.spinEmbarazada);
+        spinRecuerdaSemanasEmb = (Spinner) rootView.findViewById(R.id.spinRecuerdaSemanasEmb);
+        inputSemanasEmbarazo = (EditText) rootView.findViewById(R.id.inputSemanasEmbarazo);
+        spinFinalEmbarazo = (Spinner) rootView.findViewById(R.id.spinFinalEmbarazo);
+        inputOtroFinalEmbarazo = (EditText) rootView.findViewById(R.id.inputOtroFinalEmbarazo);
+        spinDabaPecho = (Spinner) rootView.findViewById(R.id.spinDabaPecho);
+        spinTrabajadorSalud = (Spinner) rootView.findViewById(R.id.spinTrabajadorSalud);
 
         inputFIS.setVisibility(View.GONE);
         spinMesInicioSintoma.setVisibility(View.GONE);
@@ -887,6 +942,16 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
         imbFIS.setVisibility(View.GONE);
         imbFechaAltaHosp.setVisibility(View.GONE);
         imbFechaAdmisionHosp.setVisibility(View.GONE);
+        spinEmbarazada.setVisibility(View.GONE);
+        spinRecuerdaSemanasEmb.setVisibility(View.GONE);
+        inputSemanasEmbarazo.setVisibility(View.GONE);
+        spinFinalEmbarazo.setVisibility(View.GONE);
+        inputOtroFinalEmbarazo.setVisibility(View.GONE);
+        spinDabaPecho.setVisibility(View.GONE);
+        if (participante.getEdadMeses() < 216) {//menores de 18
+            textTrabajadorSalud.setVisibility(View.GONE);
+            spinTrabajadorSalud.setVisibility(View.GONE);
+        }
 
         imbFIS.setOnClickListener(new View.OnClickListener()  {
             @Override
@@ -1037,6 +1102,33 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 queOtraCondicion = inputQueOtraCondicion.getText().toString();
+            }
+        });
+
+        inputSemanasEmbarazo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (inputSemanasEmbarazo.getText()!= null && !inputSemanasEmbarazo.getText().toString().isEmpty())
+                    semanasEmbarazo = Integer.valueOf(inputSemanasEmbarazo.getText().toString());
+            }
+        });
+
+        inputOtroFinalEmbarazo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                otroFinalEmbarazo = inputOtroFinalEmbarazo.getText().toString();
             }
         });
 
@@ -1605,6 +1697,13 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
                     MostrarOcultarPregunta15(View.VISIBLE);
                     MostrarOcultarPregunta18(View.VISIBLE);
                     MostrarOcultarPregunta19(View.VISIBLE);
+                    if (participante.getSexo().equalsIgnoreCase("F")) {//solo si es mujer
+                        MostrarOcultarPregunta25(View.VISIBLE);
+                        MostrarOcultarPregunta26(View.VISIBLE);
+                    } else {
+                        MostrarOcultarPregunta25(View.GONE);
+                        MostrarOcultarPregunta26(View.GONE);
+                    }
                 }
                 else{ //vaya a pregunta 20
                     spinPadecidoCovid19.setBackgroundColor(Color.WHITE);
@@ -1613,6 +1712,8 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
                     MostrarOcultarPregunta15(View.GONE);
                     MostrarOcultarPregunta18(View.GONE);
                     MostrarOcultarPregunta19(View.GONE);
+                    MostrarOcultarPregunta25(View.GONE);
+                    MostrarOcultarPregunta26(View.GONE);
                 }
             }
             @Override
@@ -2632,6 +2733,109 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
             }
         });
 
+        spinEmbarazada.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                //Pedir confirmación para cada respuesta
+                createConfirmDialog(EMBARAZADA_CONS, getString(R.string.embarazada), embarazada, mr.getCatKey(), mr.getSpanish(), spinner.getSelectedItemPosition());
+                mostrarConfirmacion = true;
+                embarazada = mr.getCatKey();
+                if(embarazada.equals(Constants.YESKEYSND)){
+                    spinEmbarazada.setBackgroundColor(Color.RED);
+                    MostrarOcultarPregunta25A(View.VISIBLE);
+                    MostrarOcultarPregunta25B(View.VISIBLE);
+                }
+                else{
+                    spinEmbarazada.setBackgroundColor(Color.WHITE);
+                    MostrarOcultarPregunta25A(View.GONE);
+                    MostrarOcultarPregunta25B(View.GONE);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+        spinRecuerdaSemanasEmb.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                //Pedir confirmación para cada respuesta
+                createConfirmDialog(RECUERDASEMANASEMB_CONS, getString(R.string.recuerdaSemanasEmb), recuerdaSemanasEmb, mr.getCatKey(), mr.getSpanish(), spinner.getSelectedItemPosition());
+                mostrarConfirmacion = true;
+                recuerdaSemanasEmb = mr.getCatKey();
+                if(recuerdaSemanasEmb.equals(Constants.YESKEYSND)){
+                    spinRecuerdaSemanasEmb.setBackgroundColor(Color.RED);
+                    MostrarOcultarPregunta25A1(View.VISIBLE);
+                }
+                else{
+                    spinRecuerdaSemanasEmb.setBackgroundColor(Color.WHITE);
+                    MostrarOcultarPregunta25A1(View.GONE);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+        spinFinalEmbarazo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                //Pedir confirmación para cada respuesta
+                createConfirmDialog(FINALEMBARAZO_CONS, getString(R.string.finalEmbarazo), finalEmbarazo, mr.getCatKey(), mr.getSpanish(), spinner.getSelectedItemPosition());
+                mostrarConfirmacion = true;
+                finalEmbarazo = mr.getCatKey();
+                if(finalEmbarazo.equals(Constants.YESKEYSND)){
+                    spinFinalEmbarazo.setBackgroundColor(Color.RED);
+                    MostrarOcultarPregunta25B1(View.VISIBLE);
+                }
+                else{
+                    spinFinalEmbarazo.setBackgroundColor(Color.WHITE);
+                    MostrarOcultarPregunta25B1(View.GONE);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+        spinDabaPecho.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                //Pedir confirmación para cada respuesta
+                createConfirmDialog(DABAPECHO_CONS, getString(R.string.dabaPecho), dabaPecho, mr.getCatKey(), mr.getSpanish(), spinner.getSelectedItemPosition());
+                mostrarConfirmacion = true;
+                dabaPecho = mr.getCatKey();
+                spinDabaPecho.setBackgroundColor(dabaPecho.equals(Constants.YESKEYSND) ? Color.RED : Color.WHITE);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+        spinTrabajadorSalud.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                //Pedir confirmación para cada respuesta
+                createConfirmDialog(TRABAJADORSALUD_CONS, getString(R.string.trabajadorSalud), trabajadorSalud, mr.getCatKey(), mr.getSpanish(), spinner.getSelectedItemPosition());
+                mostrarConfirmacion = true;
+                trabajadorSalud = mr.getCatKey();
+                spinTrabajadorSalud.setBackgroundColor(trabajadorSalud.equals(Constants.YESKEYSND) ? Color.RED : Color.WHITE);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
         mSaveView = (Button) getActivity().findViewById(R.id.save_button);
         mSaveView.setOnClickListener(new View.OnClickListener()  {
             @Override
@@ -2886,6 +3090,46 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
         if (estado == View.GONE) spinFumaActualmente.setSelection(0, false);
         textFumaActualmente.setVisibility(estado);
         spinFumaActualmente.setVisibility(estado);
+    }
+
+    private void MostrarOcultarPregunta25(int estado){
+        if (estado == View.GONE) spinEmbarazada.setSelection(0, false);
+        textEmbarazada.setVisibility(estado);
+        spinEmbarazada.setVisibility(estado);
+    }
+
+    private void MostrarOcultarPregunta25A(int estado){
+        if (estado == View.GONE) spinRecuerdaSemanasEmb.setSelection(0, false);
+        textRecuerdaSemanasEmb.setVisibility(estado);
+        spinRecuerdaSemanasEmb.setVisibility(estado);
+    }
+
+    private void MostrarOcultarPregunta25A1(int estado){
+        textSemanasEmbarazo.setVisibility(estado);
+        inputSemanasEmbarazo.setVisibility(estado);
+    }
+
+    private void MostrarOcultarPregunta25B(int estado){
+        if (estado == View.GONE) spinFinalEmbarazo.setSelection(0, false);
+        textFinalEmbarazo.setVisibility(estado);
+        spinFinalEmbarazo.setVisibility(estado);
+    }
+
+    private void MostrarOcultarPregunta25B1(int estado){
+        textOtroFinalEmbarazo.setVisibility(estado);
+        inputOtroFinalEmbarazo.setVisibility(estado);
+    }
+
+    private void MostrarOcultarPregunta26(int estado){
+        if (estado == View.GONE) spinDabaPecho.setSelection(0, false);
+        textDabaPecho.setVisibility(estado);
+        spinDabaPecho.setVisibility(estado);
+    }
+
+    private void MostrarOcultarPregunta27(int estado){
+        if (estado == View.GONE) spinTrabajadorSalud.setSelection(0, false);
+        textTrabajadorSalud.setVisibility(estado);
+        spinTrabajadorSalud.setVisibility(estado);
     }
 
     private void createConfirmDialog(final String pregunta, String textoPregunta, String valorActual, final String nuevoValor, final String nuevoTexto, final int position){
@@ -3261,6 +3505,26 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
                             fumaActualmente = nuevoValor;
                             fumaActualmentePos = position;
                             break;
+                        case EMBARAZADA_CONS:
+                            embarazada = nuevoValor;
+                            embarazadaPos = position;
+                            break;
+                        case RECUERDASEMANASEMB_CONS:
+                            recuerdaSemanasEmb = nuevoValor;
+                            recuerdaSemanasEmbPos = position;
+                            break;
+                        case FINALEMBARAZO_CONS:
+                            finalEmbarazo = nuevoValor;
+                            finalEmbarazoPos = position;
+                            break;
+                        case DABAPECHO_CONS:
+                            dabaPecho = nuevoValor;
+                            dabaPechoPos = position;
+                            break;
+                        case TRABAJADORSALUD_CONS:
+                            trabajadorSalud = nuevoValor;
+                            trabajadorSaludPos = position;
+                            break;
                         default: break;
                     }
                 }
@@ -3532,6 +3796,21 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
                         case FUMAACTUALMENTE_CONS:
                             spinFumaActualmente.setSelection(fumaActualmentePos, false);
                             break;
+                        case EMBARAZADA_CONS:
+                            spinEmbarazada.setSelection(embarazadaPos, false);
+                            break;
+                        case RECUERDASEMANASEMB_CONS:
+                            spinRecuerdaSemanasEmb.setSelection(recuerdaSemanasEmbPos, false);
+                            break;
+                        case FINALEMBARAZO_CONS:
+                            spinFinalEmbarazo.setSelection(finalEmbarazoPos, false);
+                            break;
+                        case DABAPECHO_CONS:
+                            spinDabaPecho.setSelection(dabaPechoPos, false);
+                            break;
+                        case TRABAJADORSALUD_CONS:
+                            spinTrabajadorSalud.setSelection(trabajadorSaludPos, false);
+                            break;
                         default: break;
                     }
                     dialog.dismiss();
@@ -3543,6 +3822,7 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
             alertDialog.show();
         }
     }
+
     private void createDialog(int dialog) {
         final DatePickerDialog dpD;
         DateMidnight minDate;
@@ -3697,7 +3977,13 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
         else if ((fechaAdmisionHosp!=null && !fechaAdmisionHosp.isEmpty()) && (fechaAltaHosp!=null && !fechaAltaHosp.isEmpty()) && formatter.parse(fechaAltaHosp).before(formatter.parse(fechaAdmisionHosp))){
             Toast.makeText(getActivity(), getActivity().getString(R.string.fecBefRegistro, "Fecha Alta", "Fecha Admisión"),Toast.LENGTH_LONG).show();
             return false;
-        }else {
+        }
+        else if (participante.getSexo().equalsIgnoreCase("F") && faltaDatoRequeridoHijo(embarazada, R.string.embarazada, padecidoCovid19)) return false;
+        else if (faltaDatoRequeridoHijo(recuerdaSemanasEmb, R.string.recuerdaSemanasEmb, embarazada)) return false;
+        else if (faltaDatoRequeridoHijo(semanasEmbarazo, R.string.semanasEmbarazoCovid, recuerdaSemanasEmb)) return false;
+        else if (participante.getSexo().equalsIgnoreCase("F") && faltaDatoRequeridoHijo(dabaPecho, R.string.dabaPecho, padecidoCovid19)) return false;
+        else if (participante.getEdadMeses() >= 216 && faltaDatoRequerido(trabajadorSalud, R.string.trabajadorSalud)) return false; //18 anios
+        else {
             mCuestionario.setCodigo(infoMovil.getId());
             mCuestionario.setParticipante(participante);
 
@@ -3805,6 +4091,13 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
             mCuestionario.setFumadoCienCigarrillos(fumadoCienCigarrillos);
             mCuestionario.setFumadoPrevioEnfermedad(fumadoPrevioEnfermedad);
             mCuestionario.setFumaActualmente(fumaActualmente);
+            mCuestionario.setEmbarazada(embarazada);
+            mCuestionario.setRecuerdaSemanasEmb(recuerdaSemanasEmb);
+            mCuestionario.setSemanasEmbarazo(semanasEmbarazo);
+            mCuestionario.setFinalEmbarazo(finalEmbarazo);
+            mCuestionario.setOtroFinalEmbarazo(otroFinalEmbarazo);
+            mCuestionario.setDabaPecho(dabaPecho);
+            mCuestionario.setTrabajadorSalud(trabajadorSalud);
 
             mCuestionario.setRecordDate(new Date());
             mCuestionario.setRecordUser(username);
@@ -3899,6 +4192,7 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
                         mCatalogoMeses.add(mes);
                     }
                 }
+                mCatalogoFinalEmb = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='COVID_CAT_FINAL_EMB'", CatalogosDBConstants.order);
                 estudiosAdapter.close();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
@@ -3966,6 +4260,11 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
             Collections.sort(mCatalogoMeses);
             ArrayAdapter<MessageResource> dataAdapterMeses = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, mCatalogoMeses);
             dataAdapterMeses.setDropDownViewResource(R.layout.spinner_item);
+
+            mCatalogoFinalEmb.add(new MessageResource("",0,getActivity().getString(R.string.select)));
+            Collections.sort(mCatalogoFinalEmb);
+            ArrayAdapter<MessageResource> dataAdapterFinalEmbarazo = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, mCatalogoFinalEmb);
+            dataAdapterFinalEmbarazo.setDropDownViewResource(R.layout.spinner_item);
 
             spinBuscoAyuda.setAdapter(dataAdapterSiNoNc);
             spinRecibioSeguimiento.setAdapter(dataAdapterSiNo);
@@ -4044,6 +4343,12 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
             spinPadeceCondPsicPsiq.setAdapter(dataAdapterSiNoNsNc);
             spinPadeceOtraCondicion.setAdapter(dataAdapterSiNoNsNc);
             spinFumadoCienCigarrillos.setAdapter(dataAdapterSiNoNsNc);
+            spinEmbarazada.setAdapter(dataAdapterSiNoNc);
+            spinRecuerdaSemanasEmb.setAdapter(dataAdapterSiNo);
+            spinDabaPecho.setAdapter(dataAdapterSiNoNc);
+            spinTrabajadorSalud.setAdapter(dataAdapterSiNoNc);
+            spinFinalEmbarazo.setAdapter(dataAdapterFinalEmbarazo);
+
             spinQueMedicamento.setItems(mMedicamentos, getString(R.string.select), new MultiSpinner.MultiSpinnerListener() {
                 @Override
                 public void onItemsSelected(boolean[] selected) {

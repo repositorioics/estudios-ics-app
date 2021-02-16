@@ -131,7 +131,7 @@ public class CuestionarioCovid19 extends BaseMetaData {
     private String embarazada;
     /*Si es Si, Recuerda las semanas de embarazo que tenia*/
     private String recuerdaSemanasEmb;
-    private String semanasEmbarazoCovid;
+    private Integer semanasEmbarazo;
     /*Si es Si, como finalizo el embarzo*/
     private String finalEmbarazo;
     private String otroFinalEmbarazo;
@@ -900,12 +900,12 @@ public class CuestionarioCovid19 extends BaseMetaData {
         this.recuerdaSemanasEmb = recuerdaSemanasEmb;
     }
 
-    public String getSemanasEmbarazoCovid() {
-        return semanasEmbarazoCovid;
+    public Integer getSemanasEmbarazo() {
+        return semanasEmbarazo;
     }
 
-    public void setSemanasEmbarazoCovid(String semanasEmbarazoCovid) {
-        this.semanasEmbarazoCovid = semanasEmbarazoCovid;
+    public void setSemanasEmbarazo(Integer semanasEmbarazo) {
+        this.semanasEmbarazo = semanasEmbarazo;
     }
 
     public String getFinalEmbarazo() {

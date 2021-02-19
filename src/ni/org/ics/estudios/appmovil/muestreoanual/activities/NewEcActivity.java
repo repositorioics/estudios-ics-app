@@ -197,7 +197,7 @@ public class NewEcActivity extends AbstractAsyncActivity {
 			//mEC.setEncCasaId(ecId);
             EncuestaCasa mEC = new EncuestaCasa();
             mEC.setCodigo(infoMovil.getId());
-            if (casaId!=null && casaId > 0) mEC.setCodCasa(mParticipante.getCasa().getCodigo());
+            mEC.setCodCasa(mParticipante.getCasa().getCodigo()); //siempre poner codigo casa pediatrica. Brenda 11/02/2021
             mEC.setCodCasaChf(casaChfId);
             mEC.setFechaEncCasa(new Date());
 			mEC.setCvivencasa1(em.getCvivencasa1());

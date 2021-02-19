@@ -131,7 +131,7 @@ public class CuestionarioCovid19 extends BaseMetaData {
     private String embarazada;
     /*Si es Si, Recuerda las semanas de embarazo que tenia*/
     private String recuerdaSemanasEmb;
-    private String semanasEmbarazoCovid;
+    private Integer semanasEmbarazo;
     /*Si es Si, como finalizo el embarzo*/
     private String finalEmbarazo;
     private String otroFinalEmbarazo;
@@ -139,6 +139,7 @@ public class CuestionarioCovid19 extends BaseMetaData {
     private String dabaPecho;
     /*27. ¿Usted estuvo empleado como trabajador de la salud desde el 1 de febrero de 2020?*/
     private String trabajadorSalud;
+    private String periodoSintomas;//Almacena desde que perido se estan preguntando los sintomas de la pregunta 1
 
     public String getCodigo() {
         return codigo;
@@ -900,12 +901,12 @@ public class CuestionarioCovid19 extends BaseMetaData {
         this.recuerdaSemanasEmb = recuerdaSemanasEmb;
     }
 
-    public String getSemanasEmbarazoCovid() {
-        return semanasEmbarazoCovid;
+    public Integer getSemanasEmbarazo() {
+        return semanasEmbarazo;
     }
 
-    public void setSemanasEmbarazoCovid(String semanasEmbarazoCovid) {
-        this.semanasEmbarazoCovid = semanasEmbarazoCovid;
+    public void setSemanasEmbarazo(Integer semanasEmbarazo) {
+        this.semanasEmbarazo = semanasEmbarazo;
     }
 
     public String getFinalEmbarazo() {
@@ -938,6 +939,14 @@ public class CuestionarioCovid19 extends BaseMetaData {
 
     public void setTrabajadorSalud(String trabajadorSalud) {
         this.trabajadorSalud = trabajadorSalud;
+    }
+
+    public String getPeriodoSintomas() {
+        return periodoSintomas;
+    }
+
+    public void setPeriodoSintomas(String periodoSintomas) {
+        this.periodoSintomas = periodoSintomas;
     }
 
     @Override

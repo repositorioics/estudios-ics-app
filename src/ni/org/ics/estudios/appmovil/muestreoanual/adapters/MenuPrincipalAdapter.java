@@ -32,31 +32,35 @@ public class MenuPrincipalAdapter extends ArrayAdapter<String> {
 
 		// Change icon based on position
 		Drawable img = null;
-		switch (position){
-		case 0: 
-			img=getContext().getResources().getDrawable( R.drawable.ic_view);
-			textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-			break;
-		case 1: 
-			img=getContext().getResources().getDrawable( R.drawable.ic_search);
-			textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-			break;
-		case 2: 
-			img=getContext().getResources().getDrawable( R.drawable.ic_super);
-			textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-			break;
-		case 3: 
-			img=getContext().getResources().getDrawable( R.drawable.ic_usersat);
-			textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-			break;
-		case 4:
-			img=getContext().getResources().getDrawable( R.drawable.ic_ingreso);
-			textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-			break;
-		default:
-			img=getContext().getResources().getDrawable( R.drawable.ic_launcher);
-			textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-			break;
+		switch (position) {
+			case 0:
+				img = getContext().getResources().getDrawable(R.drawable.ic_view);
+				textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+				break;
+			case 1:
+				img = getContext().getResources().getDrawable(R.drawable.ic_search);
+				textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+				break;
+			case 2:
+				img = getContext().getResources().getDrawable(R.drawable.ic_super);
+				textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+				break;
+			case 3:
+				img = getContext().getResources().getDrawable(R.drawable.ic_usersat);
+				textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+				break;
+			case 4:
+				img = getContext().getResources().getDrawable(R.drawable.ic_ingreso);
+				textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+				break;
+			case 5:
+				img = getContext().getResources().getDrawable(R.drawable.ic_face_recognition);
+				textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+				break;
+			default:
+				img = getContext().getResources().getDrawable(R.drawable.ic_launcher);
+				textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+				break;
 		}
 
 		return v;

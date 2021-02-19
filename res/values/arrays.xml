@@ -75,6 +75,7 @@
         <item>@string/main_super</item>
         <item>@string/main_survey</item>
         <item>@string/main_ingreso</item>
+        <item>@string/main_photography</item>
     </string-array>
 
     <string-array name="menu_info">

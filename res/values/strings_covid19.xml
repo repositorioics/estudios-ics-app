@@ -184,6 +184,7 @@
     <!--Cuestionario Covid19 -->
     <string name="covid19_questionnaire">Cuestionario Covid19</string>
     <string name="feb20">1.	¿Desde febrero de 2020 ha tenido usted o su niño/a alguno de los siguientes síntomas?</string>
+    <string name="oct20">1.	¿Desde octubre de 2020 ha tenido usted o su niño/a alguno de los siguientes síntomas?</string>
     <string name="feb20Febricula">Sintió febrícula con o sin presencia de temperatura</string>
     <string name="feb20Fiebre">Fiebre > 38C</string>
     <string name="feb20Escalofrio">Escalofríos</string>
@@ -294,5 +295,6 @@
     <string name="otroFinalEmbarazo">Otro final</string>
     <string name="dabaPecho">26 Si estaba embarazada recientemente al momento de ser diagnosticada con COVID19, ¿Usted estaba dando pecho materno?</string>
     <string name="trabajadorSalud">27 ¿Usted estuvo empleado como trabajador de la salud desde el 1 de febrero de 2020?</string>
+    <string name="wrongYear">Año inválido. Debe ser entre <xliff:g id="year1">%1$s</xliff:g> y <xliff:g id="year2">%2$s</xliff:g></string>
 
 </resources>

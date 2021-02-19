@@ -192,6 +192,11 @@ public class MenuMuestreoAnualActivity extends ListActivity {
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 break;
+            case 5:
+                i = new Intent(getApplicationContext(),
+                        ParticipantPhotographActivity.class);
+                startActivity(i);
+                break;
             default:
                 String s = (String) getListAdapter().getItem(position);
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();

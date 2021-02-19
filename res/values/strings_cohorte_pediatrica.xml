@@ -153,4 +153,7 @@
     <string name="consden_missing_e">Realizar Consentimiento Dengue E</string>
 
     <string name="sinRelacFam">Sin Relación Familiar</string>
+
+    <string name="photograph_notfound">No se encontró fotografía para el código <xliff:g id="code">%1$s</xliff:g></string>
+
 </resources>

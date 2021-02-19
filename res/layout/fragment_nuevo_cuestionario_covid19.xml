@@ -22,6 +22,7 @@
                       android:inputType="text" />
 
             <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDesdeSintomas"
                       android:text="@string/feb20" android:layout_marginBottom="20dp" />
 
             <TextView style="@style/WizardFormLabel"
@@ -241,21 +242,21 @@
                      android:layout_height="wrap_content"
                      android:layout_marginBottom="20dp"/>-->
             <TextView style="@style/WizardFormLabel"
-                      android:id="@+id/textMesInicioSintoma"
-                      android:text="@string/mesInicioSintoma" />
-            <Spinner android:id="@+id/spinMesInicioSintoma"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_marginBottom="20dp"/>
-
-            <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textAnioInicioSintoma"
                       android:text="@string/anioInicioSintoma" />
             <EditText android:id="@+id/inputAnioInicioSintoma"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginBottom="20dp"
-                      android:inputType="text" />
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textMesInicioSintoma"
+                      android:text="@string/mesInicioSintoma" />
+            <Spinner android:id="@+id/spinMesInicioSintoma"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
 
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textPadecidoCovid19"
@@ -842,7 +843,7 @@
                      android:layout_height="wrap_content"
                      android:layout_marginBottom="20dp"/>
 
-            <!-- MA2021--><!--
+            <!-- MA2021-->
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textEmbarazada"
                       android:text="@string/embarazada" />
@@ -861,7 +862,7 @@
 
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textSemanasEmbarazo"
-                      android:text="@string/semanasEmbarazo" />
+                      android:text="@string/semanasEmbarazoCovid" />
             <EditText android:id="@+id/inputSemanasEmbarazo"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
@@ -900,7 +901,7 @@
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:layout_marginBottom="20dp"/>
--->
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

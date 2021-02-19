@@ -109,7 +109,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         || (procesos.getReConsChf18()!=null && procesos.getReConsChf18().matches("Si"))
                         || procesos.getConsCovid19().matches("Si")
                         || (procesos.getConsChf()!=null && procesos.getConsChf().matches("Si"))
-                        || (procesos.getCuestCovid()!=null && procesos.getCuestCovid().matches("Si"))
+                        || (procesos.getCuestCovid()!=null && !procesos.getCuestCovid().matches("No"))
                         || (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si"))
                         || (procesos.getConsSa() != null && procesos.getConsSa().matches("Si"))
                         || (procesos.getConsDenParteE()!=null && procesos.getConsDenParteE().matches("Si"))
@@ -274,29 +274,29 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                                         }
                                     }
                                 }
-                            }//MA 2018
-                            else if (procesos.getEstudio().equals("CH Familia")) {
+                            }//MA 2018 //MA2021
+                            else if (procesos.getEstudio().equals("CH Familia") || procesos.getEstudio().equals("CH Familia  Tcovid")) {
                                 labelHeader += getVolumenCHF(participante);
 
                             } else if (procesos.getEstudio().equals("Influenza  CH Familia")) {
                                 labelHeader += getVolumenInfluenzaCHF(participante);
 
-                            } else if (procesos.getEstudio().equals("Dengue    CH Familia")) {
+                            } else if (procesos.getEstudio().equals("Dengue    CH Familia") || procesos.getEstudio().equals("Dengue    CH Familia  Tcovid")) {
                                 labelHeader += getVolumenDengueCHF(participante);
 
-                            } else if (procesos.getEstudio().equals("Dengue  Influenza  CH Familia")) {
+                            } else if (procesos.getEstudio().equals("Dengue  Influenza  CH Familia") || procesos.getEstudio().equals("Dengue  Influenza  CH Familia  Tcovid")) {
                                 labelHeader += getVolumenDengueInfluenzaCHF(participante);
                              //MA2020 Volumnes UO1 y combinaciones
                             } else if (procesos.getEstudio().equals("UO1")) {
                                 labelHeader += getVolumenUO1(participante);
 
-                            } else if (procesos.getEstudio().equals("UO1  CH Familia")) {
+                            } else if (procesos.getEstudio().equals("UO1  CH Familia") || procesos.getEstudio().equals("UO1  CH Familia  Tcovid")) {
                                 labelHeader += getVolumenUO1CHF(participante);
 
                             } else if (procesos.getEstudio().equals("Dengue  UO1")) {
                                 labelHeader += getVolumenUO1DengueOrUO1CHFDengue(participante);
 
-                            } else if (procesos.getEstudio().equals("Dengue  UO1  CH Familia")) {
+                            } else if (procesos.getEstudio().equals("Dengue  UO1  CH Familia") || procesos.getEstudio().equals("Dengue  UO1  CH Familia  Tcovid")) {
                                 labelHeader += getVolumenUO1DengueOrUO1CHFDengue(participante);
 
                             }
@@ -337,7 +337,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                     if (procesos.getEncPart().matches("Si")) labelHeader = labelHeader + "Encuesta de Participante<br />";
                     if (procesos.getConsCovid19().matches("Si")) labelHeader = labelHeader + (!procesos.getEstudio().trim().contains("Influenza")?"Consentimiento COVID19<br />":"Reconsentimiento Influenza<br />");
                     if (procesos.getConsChf()!=null && procesos.getConsChf().matches("Si")) labelHeader = labelHeader + this.getContext().getString(R.string.chfpartee_missing) + "<br />";
-                    if (procesos.getCuestCovid()!=null && procesos.getCuestCovid().matches("Si")) labelHeader = labelHeader + this.getContext().getString(R.string.cuest_covid19_missing) + "<br />";
+                    if (procesos.getCuestCovid()!=null && !procesos.getCuestCovid().matches("No")) labelHeader = labelHeader + this.getContext().getString(R.string.cuest_covid19_missing) + "<br />";
 					if (procesos.getConsFlu().matches("Si")) labelHeader = labelHeader + "Consentimiento UO1<br />";
                     if (procesos.getConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue A,B,C<br />";
                     if (procesos.getReConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue D<br />";
@@ -581,7 +581,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                     } else {
                         //if ()
-                        labelHeader = labelHeader + "<font color='red'>No tomar sorología<br /></font>";
+                        labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                     }
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
@@ -594,7 +594,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                             labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
                             labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                         } else {
-                            labelHeader = labelHeader + "<font color='red'>No tomar sorología<br /></font>";
+                            labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                         }
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
@@ -634,7 +634,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                         labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                     } else {
-                        labelHeader = labelHeader + "<font color='red'>No tomar sorología<br /></font>";
+                        labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                     }
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
@@ -647,7 +647,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                             labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
                             labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                         } else {
-                            labelHeader = labelHeader + "<font color='red'>No tomar sorología<br /></font>";
+                            labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                         }
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
@@ -673,7 +673,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                     labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
                     labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                 } else {
-                    labelHeader = labelHeader + "<font color='red'>No tomar sorología<br /></font>";
+                    labelHeader = labelHeader + "<font color='red'>No tomar serología<br /></font>";
                 }
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No")) {

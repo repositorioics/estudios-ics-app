@@ -1073,12 +1073,12 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                         estudiosAdapter.crearCartaConsentimiento(cc);
 
                         procesos.setConsChf(Constants.NO);
-                        procesos.setCuestCovid(Constants.YES);
+                        procesos.setCuestCovid(Constants.PERIODO_CUEST_COVID19_1);
                         procesos.setMuestraCovid(Constants.YES);
                         procesos.setMovilInfo(movilInfo);
                         //estudiosAdapter.actualizarParticipanteProcesos(procesos);
                         if (esElegible) {
-                            int ceroDefaul = 0;
+                            int ceroDefault = 0;
                             if (tieneValor(cmDomicilio) && cmDomicilio.equals(Constants.YES)) {
                                 procesos.setCoordenadas("2");
                             } else {
@@ -1120,7 +1120,7 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                                     if (catRelacionFamiliarTutor != null)
                                         procesos.setRelacionFam(Integer.valueOf(catRelacionFamiliarTutor.getCatKey()));
                                 } else {
-                                    procesos.setRelacionFam(ceroDefaul);
+                                    procesos.setRelacionFam(ceroDefault);
                                 }
                             }
                             if (procesos.getEstPart().equals(0)) {

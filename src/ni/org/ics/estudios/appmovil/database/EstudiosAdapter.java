@@ -377,6 +377,18 @@ public class EstudiosAdapter {
 			if (oldVersion==36){
 				db.execSQL("ALTER TABLE " + CasosDBConstants.PARTICIPANTES_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.fis + " text");
 			}
+			if (oldVersion==37){
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.embarazada + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.recuerdaSemanasEmb + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.semanasEmbarazo + " integer");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.finalEmbarazo + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.otroFinalEmbarazo + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.dabaPecho + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.trabajadorSalud + " text");
+			}
+			if (oldVersion==38) {
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.periodoSintomas + " text");
+			}
 		}
 	}
 

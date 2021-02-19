@@ -90,6 +90,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private boolean visExitosa = false;
     private boolean ingresoChf = false;
     private boolean pendiente = false;
+    private boolean desdeFotografia = false;
     private static final String EXIT_SHOWING = "exitshowing";
     public static final int VISITA =100;
     private MenuItem reConsFluItem;
@@ -120,6 +121,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private MenuItem consSAItem;
     private MenuItem consDenParteEItem;
     private MenuItem mxDenParteEItem;
+    private MenuItem documentosItem;
 
     private EstudiosAdapter estudiosAdapter;
 
@@ -152,6 +154,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         codigo = getIntent().getIntExtra(ConstantsDB.CODIGO,-1);
         visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
         ingresoChf = getIntent().getBooleanExtra(Constants.INGRESO_CHF,false);
+        desdeFotografia = getIntent().getBooleanExtra(Constants.DESDE_FOTO,false);
         //mParticipante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         textView = (TextView) findViewById(R.id.label);
         gridView = (GridView) findViewById(R.id.gridView1);
@@ -349,6 +352,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             consSAItem = menu.findItem(R.id.CONSSA);
             consDenParteEItem = menu.findItem(R.id.CONS_PARTEE_DEN);
             mxDenParteEItem = menu.findItem(R.id.MX_PARTEE_DEN);
+            documentosItem = menu.findItem(R.id.DOC);
         }
         return true;
     }
@@ -400,9 +404,14 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     createDialog(EXIT);
                 }
                 else{
-                    i = new Intent(getApplicationContext(),
-                            SelecPartActivity.class);
-                    i.putExtra(Constants.MENU_INFO, true);
+                    if (desdeFotografia){
+                        i = new Intent(getApplicationContext(),
+                                ParticipantPhotographActivity.class);
+                    } else {
+                        i = new Intent(getApplicationContext(),
+                                SelecPartActivity.class);
+                        i.putExtra(Constants.MENU_INFO, true);
+                    }
                     startActivity(i);
                     finish();
                 }
@@ -501,7 +510,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 return true;
             case R.id.CUESTCOVID19:
                 if(mUser.getConsentimiento()){
-                    if(mParticipante.getProcesos().getCuestCovid().matches("Si")){
+                    if(!mParticipante.getProcesos().getCuestCovid().matches("No")){
                         i = new Intent(getApplicationContext(),
                                 NuevoCuestionarioCovid19Activity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -1012,9 +1021,15 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             createDialog(EXIT);
         }
         else{
-            Intent i = new Intent(getApplicationContext(),
-                    SelecPartActivity.class);
-            i.putExtra(Constants.MENU_INFO, true);
+            Intent i;
+            if (desdeFotografia){
+                i = new Intent(getApplicationContext(),
+                        ParticipantPhotographActivity.class);
+            } else {
+                i = new Intent(getApplicationContext(),
+                        SelecPartActivity.class);
+                i.putExtra(Constants.MENU_INFO, true);
+            }
             startActivity(i);
             finish();
         }
@@ -1084,6 +1099,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         consSAItem.setVisible(false);
         consDenParteEItem.setVisible(false);
         mxDenParteEItem.setVisible(false);
+        documentosItem.setVisible(false); //siempre oculto
 
         if (!mParticipante.getProcesos().getEstudio().trim().contains("Influenza")){
             consCovid19.setTitle(R.string.info_cons_covid19);
@@ -1121,7 +1137,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if ((mParticipante.getProcesos().getReConsChf18()!=null && mParticipante.getProcesos().getReConsChf18().matches("Si") && mUser.getConsentimiento())) recon18ChfItem.setVisible(true);
             visitaItem.setVisible(false);
             if ((mParticipante.getProcesos().getConsChf()!=null && mParticipante.getProcesos().getConsChf().matches("Si") && mUser.getConsentimiento())) consParteEChf.setVisible(true);
-            if ((mParticipante.getProcesos().getCuestCovid()!=null && mParticipante.getProcesos().getCuestCovid().matches("Si") && mUser.getEncuestaParticipante())) cuestCovid19.setVisible(true);
+            if ((mParticipante.getProcesos().getCuestCovid()!=null && !mParticipante.getProcesos().getCuestCovid().matches("No") && mUser.getEncuestaParticipante())) cuestCovid19.setVisible(true);
             if ((mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) &&
                     (mParticipante.getProcesos().getMuestraCovid()!=null && mParticipante.getProcesos().getMuestraCovid().matches("Si") && mUser.getMuestra())) mxAdicionalCovid19.setVisible(true);
             if ((mParticipante.getProcesos().getConsSa()!=null && mParticipante.getProcesos().getConsSa().matches("Si") && mUser.getConsentimiento()))consSAItem.setVisible(true);
@@ -1296,7 +1312,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || (mParticipante.getProcesos().getReConsChf18()!=null && mParticipante.getProcesos().getReConsChf18().matches("Si"))
                     || mParticipante.getProcesos().getConsCovid19().matches("Si")
                     || (mParticipante.getProcesos().getConsChf() != null && mParticipante.getProcesos().getConsChf().matches("Si"))
-                    || (mParticipante.getProcesos().getCuestCovid() != null && mParticipante.getProcesos().getCuestCovid().matches("Si"))
+                    || (mParticipante.getProcesos().getCuestCovid() != null && !mParticipante.getProcesos().getCuestCovid().matches("No"))
                     || (mParticipante.getProcesos().getMuestraCovid() != null && mParticipante.getProcesos().getMuestraCovid().matches("Si"))
                     || (mParticipante.getProcesos().getConsSa() != null && mParticipante.getProcesos().getConsSa().matches("Si"))
                     || (mParticipante.getProcesos().getConsDenParteE()!=null && mParticipante.getProcesos().getConsDenParteE().matches("Si"))
@@ -1480,29 +1496,29 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 }
                             }
                             //MA 2018
-                            else if (mParticipante.getProcesos().getEstudio().equals("CH Familia")) {
+                            else if (mParticipante.getProcesos().getEstudio().equals("CH Familia") || mParticipante.getProcesos().getEstudio().equals("CH Familia  Tcovid")) {
                                 labelHeader += getVolumenCHF();
 
                             } else if (mParticipante.getProcesos().getEstudio().equals("Influenza  CH Familia")) {
                                 labelHeader += getVolumenInfluenzaCHF();
 
-                            } else if (mParticipante.getProcesos().getEstudio().equals("Dengue    CH Familia")) {
+                            } else if (mParticipante.getProcesos().getEstudio().equals("Dengue    CH Familia") || mParticipante.getProcesos().getEstudio().equals("Dengue    CH Familia  Tcovid")) {
                                 labelHeader += getVolumenDengueCHF();
 
-                            } else if (mParticipante.getProcesos().getEstudio().equals("Dengue  Influenza  CH Familia")) {
+                            } else if (mParticipante.getProcesos().getEstudio().equals("Dengue  Influenza  CH Familia") || mParticipante.getProcesos().getEstudio().equals("Dengue  Influenza  CH Familia  Tcovid")) {
                                 labelHeader += getVolumenDengueInfluenzaCHF();
 
                                 //MA2020 Volumnes UO1 y combinaciones
                             } else if (mParticipante.getProcesos().getEstudio().equals("UO1")) {
                                 labelHeader += getVolumenUO1(mParticipante);
 
-                            } else if (mParticipante.getProcesos().getEstudio().equals("UO1  CH Familia")) {
+                            } else if (mParticipante.getProcesos().getEstudio().equals("UO1  CH Familia") || mParticipante.getProcesos().getEstudio().equals("UO1  CH Familia  Tcovid")) {
                                 labelHeader += getVolumenUO1CHF(mParticipante);
 
                             } else if (mParticipante.getProcesos().getEstudio().equals("Dengue  UO1")) {
                                 labelHeader += getVolumenUO1DengueOrUO1CHFDengue(mParticipante);
 
-                            } else if (mParticipante.getProcesos().getEstudio().equals("Dengue  UO1  CH Familia")) {
+                            } else if (mParticipante.getProcesos().getEstudio().equals("Dengue  UO1  CH Familia") || mParticipante.getProcesos().getEstudio().equals("Dengue  UO1  CH Familia  Tcovid")) {
                                 labelHeader += getVolumenUO1DengueOrUO1CHFDengue(mParticipante);
 
                             }
@@ -1577,7 +1593,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.chfpartee_missing) + "</font></small><br />";
                     pendiente=true;
                 }
-                if (mParticipante.getProcesos().getCuestCovid()!=null && mParticipante.getProcesos().getCuestCovid().matches("Si")){
+                if (mParticipante.getProcesos().getCuestCovid()!=null && !mParticipante.getProcesos().getCuestCovid().matches("No")){
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.cuest_covid19_missing) + "</font></small><br />";
                     pendiente=true;
                 }

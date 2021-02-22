@@ -808,6 +808,7 @@ public class NuevoConsentimientoSAActivity extends FragmentActivity implements
                     if (esElegible) {
                         ParticipanteSeroprevalencia pSA = new ParticipanteSeroprevalencia();
                         pSA.setParticipante(participante);
+
                         pSA.setCasaCHF(participanteChf.getCasaCHF());
                         pSA.setRecordDate(new Date());
                         pSA.setRecordUser(username);

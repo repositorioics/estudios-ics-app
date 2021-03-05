@@ -1352,6 +1352,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                             procesos.setInfoVacuna(Constants.YES);
                             procesos.setCuantasPers(0);
                             procesos.setVolRetoma(null);
+                            procesos.setCuestCovid("1a");//nuevos ingresos familia activar cuestionario covid19.Brenda MA2021 04/03/2021
                         }
 
                         if (participante.getEdadMeses() < 216)
@@ -1427,7 +1428,6 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         procesos.setSubEstudios("0");
                         //Parte E. 28/10/2020
                         procesos.setConsChf(Constants.YES);
-                        procesos.setCuestCovid(Constants.NO);
                         procesos.setMuestraCovid(Constants.NO);
                         //PosCovid defecto null
                         procesos.setPosCovid(null);

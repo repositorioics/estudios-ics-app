@@ -831,6 +831,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         if (mCasasCHF != null) arguments.putSerializable(Constants.CASACHF, mCasasCHF);
                         arguments.putSerializable(Constants.PARTICIPANTE, mParticipante.getCodigo());
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
                         i.putExtras(arguments);
                         startActivity(i);
                     }

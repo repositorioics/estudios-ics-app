@@ -27,12 +27,14 @@ public class NuevoCuestionarioCovid19Activity extends FragmentActivity {
     private static final int EXIT = 1;
     private AlertDialog alertDialog;
     private Participante mParticipante;
+    private boolean visExitosa = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_data_enter);
         mParticipante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
         mCancelView = (Button) this.findViewById(R.id.cancel_button);
         mCancelView.setOnClickListener(new View.OnClickListener()  {
             @Override
@@ -67,7 +69,7 @@ public class NuevoCuestionarioCovid19Activity extends FragmentActivity {
                         Intent i = new Intent(getApplicationContext(),
                                 MenuInfoActivity.class);
                         i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());
-                        i.putExtra(ConstantsDB.VIS_EXITO, true);
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);

@@ -1073,7 +1073,8 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                         estudiosAdapter.crearCartaConsentimiento(cc);
 
                         procesos.setConsChf(Constants.NO);
-                        procesos.setCuestCovid(Constants.PERIODO_CUEST_COVID19_1);
+                        if (procesos.getCuestCovid() == null || procesos.getCuestCovid().equalsIgnoreCase("No"))
+                            procesos.setCuestCovid("1a");
                         procesos.setMuestraCovid(Constants.YES);
                         procesos.setMovilInfo(movilInfo);
                         //estudiosAdapter.actualizarParticipanteProcesos(procesos);

@@ -2174,8 +2174,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                                 estudios = "UO1";
                             } else
                                 estudios += "  " + "UO1";
-                            procesos.setConmx(Constants.YES);
-                            procesos.setConmxbhc(Constants.YES);
+                            procesos.setConmx(Constants.NO);
+                            procesos.setConmxbhc(Constants.NO);
                         }
 
                         procesos.setEstudio(estudios);
@@ -2195,6 +2195,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         procesos.setMostrarNumParto(Constants.YES);
                         //Covid19
                         procesos.setSubEstudios("0");
+                        if (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1))//nuevos ingresos UO1 activar cuestionario covid19.Brenda MA2021 04/03/2021
+                            procesos.setCuestCovid("1a");
+
                         estudiosAdapter.crearParticipanteProcesos(procesos);
 
                         CartaConsentimiento cc = new CartaConsentimiento();

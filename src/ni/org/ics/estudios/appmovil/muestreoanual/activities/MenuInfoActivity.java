@@ -831,6 +831,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         if (mCasasCHF != null) arguments.putSerializable(Constants.CASACHF, mCasasCHF);
                         arguments.putSerializable(Constants.PARTICIPANTE, mParticipante.getCodigo());
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
                         i.putExtras(arguments);
                         startActivity(i);
                     }
@@ -1316,7 +1317,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || (mParticipante.getProcesos().getMuestraCovid() != null && mParticipante.getProcesos().getMuestraCovid().matches("Si"))
                     || (mParticipante.getProcesos().getConsSa() != null && mParticipante.getProcesos().getConsSa().matches("Si"))
                     || (mParticipante.getProcesos().getConsDenParteE()!=null && mParticipante.getProcesos().getConsDenParteE().matches("Si"))
-                    || (mParticipante.getProcesos().getMxDenParteE()!=null && mParticipante.getProcesos().getMxDenParteE().matches("Si"))
+                    //|| (mParticipante.getProcesos().getMxDenParteE()!=null && mParticipante.getProcesos().getMxDenParteE().matches("Si")) //se deshabilita para MA2021
             ){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
@@ -1543,6 +1544,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 }
                             }
                         }
+                        /* //deshabilitar adicional CHF para Covid19 y Muestra adicional Dengue parte E para MA2021
                         //Muestra adicional CHF para Covid19
                         if (mParticipante.getProcesos().getMuestraCovid()!=null && mParticipante.getProcesos().getMuestraCovid().matches("Si")){
                             labelHeader += getVolumenCHFAdicionalCovid19();
@@ -1554,7 +1556,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
                                 pendiente=true;
                             }
-                        }
+                        }*/
                     }
                 }
 

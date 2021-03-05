@@ -71,6 +71,7 @@ public class NuevoObsequioActivity extends FragmentActivity implements
 	private AlertDialog alertDialog;
 	private boolean notificarCambios = true;
 	private ObsequioFormLabels labels = new ObsequioFormLabels();
+    private boolean visExitosa = false;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class NuevoObsequioActivity extends FragmentActivity implements
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
+        visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
 		infoMovil = new DeviceInfo(NuevoObsequioActivity.this);
 		if (getIntent().getExtras().getSerializable(Constants.VISITA)!=null) visita = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
         if (getIntent().getExtras().getSerializable(Constants.VISITA_FINAL)!=null) visitaFinal = (VisitaFinalCaso) getIntent().getExtras().getSerializable(Constants.VISITA_FINAL);
@@ -492,7 +494,7 @@ public class NuevoObsequioActivity extends FragmentActivity implements
                     MenuInfoActivity.class);
             i.putExtra(ConstantsDB.COD_CASA, casaChf.getCasa().getCodigo());
             i.putExtra(ConstantsDB.CODIGO, codigoParticipante);
-            i.putExtra(ConstantsDB.VIS_EXITO, true);
+            i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
         }
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);

@@ -149,6 +149,7 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
     private DeviceInfo infoMovil;
     private String username;
     private SharedPreferences settings;
+    private boolean visExitosa = false;
 
     //Viene de la llamada
     private Participante participante;
@@ -602,6 +603,7 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
         estudiosAdapter = new EstudiosAdapter(this.getActivity(),mPass,false,false);
         participante = (Participante)getActivity().getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         infoMovil = new DeviceInfo(getActivity());
+        visExitosa = getActivity().getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
         settings =
                 PreferenceManager.getDefaultSharedPreferences(getActivity());
         username =
@@ -4019,10 +4021,10 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
             Toast.makeText(getActivity(), getActivity().getString(R.string.fecBefRegistro, "Fecha Alta", "Fecha Admisión"),Toast.LENGTH_LONG).show();
             return false;
         }
-        else if (participante.getSexo().equalsIgnoreCase("F") && faltaDatoRequeridoHijo(embarazada, R.string.embarazada, padecidoCovid19)) return false;
+        else if ((participante.getSexo().equalsIgnoreCase("F") && participante.getEdadMeses() >= 216 &&  participante.getEdadMeses() <= 600) && faltaDatoRequeridoHijo(embarazada, R.string.embarazada, padecidoCovid19)) return false;
         else if (faltaDatoRequeridoHijo(recuerdaSemanasEmb, R.string.recuerdaSemanasEmb, embarazada)) return false;
         else if (faltaDatoRequeridoHijo(semanasEmbarazo, R.string.semanasEmbarazoCovid, recuerdaSemanasEmb)) return false;
-        else if (participante.getSexo().equalsIgnoreCase("F") && faltaDatoRequeridoHijo(dabaPecho, R.string.dabaPecho, padecidoCovid19)) return false;
+        else if ((participante.getSexo().equalsIgnoreCase("F") && participante.getEdadMeses() >= 216 &&  participante.getEdadMeses() <= 600) && faltaDatoRequeridoHijo(dabaPecho, R.string.dabaPecho, padecidoCovid19)) return false;
         else if (participante.getEdadMeses() >= 216 && faltaDatoRequerido(trabajadorSalud, R.string.trabajadorSalud)) return false; //18 anios
         else {
             mCuestionario.setCodigo(infoMovil.getId());
@@ -4475,7 +4477,7 @@ public class NuevoCuestionarioCovid19Fragment extends Fragment {
                 Intent i = new Intent(getActivity(),
                         MenuInfoActivity.class);
                 i.putExtra(ConstantsDB.CODIGO, participante.getCodigo());
-                i.putExtra(ConstantsDB.VIS_EXITO, true);
+                i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.putExtras(arguments);
                 startActivity(i);

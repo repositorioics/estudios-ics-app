@@ -113,7 +113,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         || (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si"))
                         || (procesos.getConsSa() != null && procesos.getConsSa().matches("Si"))
                         || (procesos.getConsDenParteE()!=null && procesos.getConsDenParteE().matches("Si"))
-                        || (procesos.getMxDenParteE()!=null && procesos.getMxDenParteE().matches("Si"))
+                        //|| (procesos.getMxDenParteE()!=null && procesos.getMxDenParteE().matches("Si")) //se deshabilita para MA2021
                 ){
 
 					labelHeader = labelHeader + "<font color='red'>Pendiente: <br /></font>";
@@ -316,6 +316,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                                 }
                             }
                         }
+                        /* //deshabilitar adicional CHF para Covid19 y Muestra adicional Dengue parte E para MA2021
                         //Muestra adicional CHF para Covid19
                         if (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si")){
                             labelHeader += getVolumenCHFAdicionalCovid19(participante);
@@ -325,7 +326,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                             if (procesos.getConmx().matches("Si") && procesos.getConmxbhc().matches("Si")) {
                                 labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
                             }
-                        }
+                        }*/
 					}
 					
 					//Nuevo orden

@@ -76,6 +76,7 @@ public class NuevoConsentimientoSAActivity extends FragmentActivity implements
     private String[] catVerifTutAlf; //cosas a verificar cuando tutor es alfabeto
     private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
     private int totalVerifTutor = 0;
+    private boolean visExitosa = false;
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +87,7 @@ public class NuevoConsentimientoSAActivity extends FragmentActivity implements
 		}
         setContentView(R.layout.activity_data_enter);
         participante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
         settings =
 				PreferenceManager.getDefaultSharedPreferences(this);
 		username =
@@ -808,6 +810,7 @@ public class NuevoConsentimientoSAActivity extends FragmentActivity implements
                     if (esElegible) {
                         ParticipanteSeroprevalencia pSA = new ParticipanteSeroprevalencia();
                         pSA.setParticipante(participante);
+
                         pSA.setCasaCHF(participanteChf.getCasaCHF());
                         pSA.setRecordDate(new Date());
                         pSA.setRecordUser(username);
@@ -896,7 +899,7 @@ public class NuevoConsentimientoSAActivity extends FragmentActivity implements
         Intent i = new Intent(getApplicationContext(),
                 MenuInfoActivity.class);
         i.putExtra(ConstantsDB.CODIGO, participante.getCodigo());
-        i.putExtra(ConstantsDB.VIS_EXITO, true);
+        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }

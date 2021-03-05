@@ -847,7 +847,7 @@ public class NuevoConsDENParteEActivity extends FragmentActivity implements
                         estudiosAdapter.crearCartaConsentimiento(cc);
 
                         procesos.setConsDenParteE(Constants.NO);
-                        procesos.setMxDenParteE(Constants.YES);
+                        procesos.setMxDenParteE(Constants.NO);//procesos.setMxDenParteE(Constants.YES);//se deshabilita para MA2021
                         procesos.setMovilInfo(movilInfo);
                         if (esElegible) {
                             int ceroDefaul = 0;

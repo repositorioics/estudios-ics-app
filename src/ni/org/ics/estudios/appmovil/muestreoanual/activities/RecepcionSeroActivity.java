@@ -89,9 +89,9 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recepcionsero_pdcs);
 		editCodigo = (EditText) findViewById(R.id.codigo);
-		editCodigo.setFocusable(true);
+		/*editCodigo.setFocusable(true);
 		editCodigo.setEnabled(false);
-		editCodigo.requestFocus();
+		editCodigo.requestFocus();*/
 		mBarcodeButton = (ImageButton) findViewById(R.id.barcode_button);
 		mBarcodeButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -201,7 +201,13 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
                         editCodigo.setText(null);
                         codigo = null;
                         showToast("Código Inválido!!!!",1);
-                    }
+                    } else {
+						if (!validarMaximoRegistrosPermitidos()) {
+							editCodigo.setText(null);
+							codigo = null;
+							showToast("Ya ingresó dos registros para este código!!!!",1);
+						}
+					}
                 }
             }
         });
@@ -359,15 +365,11 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 				}
 			}
 			if (codigo !=null & codigo>0 && codigo <=15000){
-				/*ca.open();
-				Cursor c  = null;
-				c = ca.buscarRecepcionSero(codigo, todayWithZeroTime);
-				if (c != null && c.getCount() > 0) {
-					showToast("Ya ingresó este código!!!!",1);
-				}else{*/
+				if (!validarMaximoRegistrosPermitidos()) {
+					showToast("Ya ingresó dos registros para este código!!!!",1);
+				} else {
 					editCodigo.setText(codigo.toString());
-				/*}
-				ca.close();*/
+				}
 			}
 			else
 			{
@@ -403,6 +405,23 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 		else{
 			return true;
 		}
+	}
+
+	/****
+	 * Valida si ya re registraron la cantidad de registros permitidos por dia para un participante.
+	 * El máximo son dos registros
+	 * @return true no se ha llegado al máximo, false ya se llegó al máximo
+	 */
+	private boolean validarMaximoRegistrosPermitidos(){
+		boolean permitido = true;
+		ca.open();
+		Cursor c  = null;
+		c = ca.buscarRecepcionSero(codigo, todayWithZeroTime);
+		if (c != null && c.getCount() > 1) {
+			permitido = false;
+		}
+		ca.close();
+		return permitido;
 	}
 
 	private void reiniciar(){

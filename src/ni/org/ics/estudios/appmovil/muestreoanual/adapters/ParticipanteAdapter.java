@@ -110,7 +110,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         || procesos.getConsCovid19().matches("Si")
                         || (procesos.getConsChf()!=null && procesos.getConsChf().matches("Si"))
                         || (procesos.getCuestCovid()!=null && !procesos.getCuestCovid().matches("No"))
-                        || (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si"))
+                        //|| (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si"))//se deshabilita para MA2021
                         || (procesos.getConsSa() != null && procesos.getConsSa().matches("Si"))
                         || (procesos.getConsDenParteE()!=null && procesos.getConsDenParteE().matches("Si"))
                         //|| (procesos.getMxDenParteE()!=null && procesos.getMxDenParteE().matches("Si")) //se deshabilita para MA2021

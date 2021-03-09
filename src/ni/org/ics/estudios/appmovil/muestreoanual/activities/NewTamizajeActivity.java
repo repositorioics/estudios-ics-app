@@ -2094,7 +2094,9 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         procesos.setRetoma(Constants.NO);
                         procesos.setAdn(Constants.NO);
                         procesos.setPbmc(Constants.NO);
-                        procesos.setPaxgene(Constants.YES);
+                        if (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE))
+                            procesos.setPaxgene(Constants.NO);
+                        else procesos.setPaxgene(Constants.YES);
                         procesos.setConPto(Constants.NO);
                         procesos.setConsDeng(Constants.NO);
                         procesos.setObsequio(Constants.YES);

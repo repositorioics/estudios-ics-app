@@ -1607,7 +1607,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     pendiente=true;
                 }
                 if (mParticipante.getProcesos().getConsDeng().matches("Si") && mUser.getConsentimiento()) {
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consden_missing_abc) + "</font></small><br />";
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consden_missing) + "</font></small><br />";//MA2021
                     pendiente=true;
                 }
                 if (mParticipante.getProcesos().getReConsDeng().matches("Si") && mUser.getConsentimiento()) {

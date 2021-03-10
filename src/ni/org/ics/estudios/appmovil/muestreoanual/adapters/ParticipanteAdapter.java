@@ -340,7 +340,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                     if (procesos.getConsChf()!=null && procesos.getConsChf().matches("Si")) labelHeader = labelHeader + this.getContext().getString(R.string.chfpartee_missing) + "<br />";
                     if (procesos.getCuestCovid()!=null && !procesos.getCuestCovid().matches("No")) labelHeader = labelHeader + this.getContext().getString(R.string.cuest_covid19_missing) + "<br />";
 					if (procesos.getConsFlu().matches("Si")) labelHeader = labelHeader + "Consentimiento UO1<br />";
-                    if (procesos.getConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue A,B,C<br />";
+                    if (procesos.getConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue<br />";//MA2021
                     if (procesos.getReConsDeng().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue D<br />";
                     if (procesos.getConsDenParteE()!=null && procesos.getConsDenParteE().matches("Si")) labelHeader = labelHeader + "Consentimiento Dengue E<br />";
                     if (procesos.getReConsChf18()!=null && procesos.getReConsChf18().matches("Si")) labelHeader = labelHeader + "Reconsentimiento CHF 18<br />";

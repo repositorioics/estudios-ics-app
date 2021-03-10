@@ -1947,12 +1947,12 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     }
                     cc.setReconsentimiento(Constants.YESKEYSND);
                     cc.setTamizaje(tamizaje);
-                    /*if (tieneValor(parteADen)) { //Se indica no se debe registrar ésta carta. MA2020 Brenda
+                    if (tieneValor(parteADen)) { //Se indica no se debe registrar ésta carta. MA2020 Brenda//Con version 14, si preguntar esta carta. Brenda MA2021
                         cc.setCodigo(infoMovil.getId());
                         cc.setVersion(Constants.VERSION_CC_CD);
                         //crear carta de consentimiento para dengue
                         estudiosAdapter.crearCartaConsentimiento(cc);
-                    }*/
+                    }
                     //si se preguntó por la parte D entonces crear nuevo tamizaje y nueva carta para la parte D
                     if (tieneValor(parteDDen)) {
                         //solo crear nuevo tamizaje si se pregunto por la parte A
@@ -1992,9 +1992,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     movilInfo.setToday(new Date());
                     ParticipanteProcesos procesos = participante.getProcesos();
                     if (procesos.getReConsDeng() != null) {
-                        procesos.setReConsDeng("No");
+                        procesos.setReConsDeng(Constants.NO);
                     }
-                    procesos.setConsDeng("No");
+                    procesos.setConsDeng(Constants.NO);
                     procesos.setMovilInfo(movilInfo);
                     estudiosAdapter.actualizarParticipanteProcesos(procesos);
                     if (esElegible) {
@@ -2097,9 +2097,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     movilInfo.setToday(new Date());
                     ParticipanteProcesos procesos = participante.getProcesos();
                     if (procesos.getReConsDeng() != null) {
-                        procesos.setReConsDeng("No");
+                        procesos.setReConsDeng(Constants.NO);
                     }
-                    procesos.setConsDeng("No");
+                    procesos.setConsDeng(Constants.NO);
                     procesos.setMovilInfo(movilInfo);
                     estudiosAdapter.actualizarParticipanteProcesos(procesos);
                     Intent i = new Intent(getApplicationContext(),

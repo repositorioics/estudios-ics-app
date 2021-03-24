@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.covid19;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.domain.covid19.VisitaSeguimientoCasoCovid19;
 import ni.org.ics.estudios.appmovil.utils.Covid19DBConstants;
@@ -58,6 +59,26 @@ public class VisitaSeguimientoCasoCovid19Helper {
         mVisitaSeguimientoCaso.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mVisitaSeguimientoCaso.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mVisitaSeguimientoCaso;
+    }
+
+    public static void fillVisitaSeguimientoCasoCovid19Statement(SQLiteStatement stat, VisitaSeguimientoCasoCovid19 visitaCaso){
+        if (visitaCaso.getCodigoCasoVisita() != null) stat.bindString(1, visitaCaso.getCodigoCasoVisita());
+        if (visitaCaso.getCodigoParticipanteCaso() != null) stat.bindString(2, visitaCaso.getCodigoParticipanteCaso().getCodigoCasoParticipante());
+        if (visitaCaso.getFechaVisita() != null) stat.bindLong(3, visitaCaso.getFechaVisita().getTime());
+        if (visitaCaso.getVisita() != null) stat.bindString(4, visitaCaso.getVisita());
+        if (visitaCaso.getHoraProbableVisita() != null) stat.bindString(5, visitaCaso.getHoraProbableVisita());
+        if (visitaCaso.getExpCS() != null) stat.bindString(6, visitaCaso.getExpCS());
+        if (visitaCaso.getTemp() != null) stat.bindDouble(7, visitaCaso.getTemp());
+        if (visitaCaso.getSaturacionO2() != null) stat.bindLong(8, visitaCaso.getSaturacionO2());
+        if (visitaCaso.getFrecResp() != null) stat.bindLong(9, visitaCaso.getFrecResp());
+        if (visitaCaso.getFecIniPrimerSintoma() != null) stat.bindLong(10, visitaCaso.getFecIniPrimerSintoma().getTime());
+        if (visitaCaso.getPrimerSintoma() != null) stat.bindString(11, visitaCaso.getPrimerSintoma());
+
+        if (visitaCaso.getRecordDate() != null) stat.bindLong(12, visitaCaso.getRecordDate().getTime());
+        if (visitaCaso.getRecordUser() != null) stat.bindString(13, visitaCaso.getRecordUser());
+        stat.bindString(14, String.valueOf(visitaCaso.getPasive()));
+        if (visitaCaso.getDeviceid() != null) stat.bindString(15, visitaCaso.getDeviceid());
+        stat.bindString(16, String.valueOf(visitaCaso.getEstado()));
     }
 
 }

@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import java.util.Date;
 
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cuarto;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
@@ -37,6 +38,18 @@ public class CuartoHelper {
 		mCuarto.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
 		mCuarto.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 		return mCuarto;
+	}
+
+	public static void fillCuartoStatement(SQLiteStatement stat, Cuarto cuarto){
+		stat.bindString(1, cuarto.getCodigo());
+		if (cuarto.getCasa() != null) stat.bindString(2, cuarto.getCasa().getCodigoCHF());
+		if (cuarto.getCantidadCamas() > 0) stat.bindLong(3, cuarto.getCantidadCamas());
+		if (cuarto.getCodigoHabitacion() != null) stat.bindString(4, cuarto.getCodigoHabitacion());
+		if (cuarto.getRecordDate() != null) stat.bindLong(5, cuarto.getRecordDate().getTime());
+		if (cuarto.getRecordUser() != null) stat.bindString(6, cuarto.getRecordUser());
+		stat.bindString(7, String.valueOf(cuarto.getPasive()));
+		if (cuarto.getDeviceid() != null) stat.bindString(8, cuarto.getDeviceid());
+		stat.bindString(9, String.valueOf(cuarto.getEstado()));
 	}
 	
 }

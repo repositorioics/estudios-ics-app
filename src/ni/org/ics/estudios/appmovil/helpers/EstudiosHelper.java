@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import java.util.Date;
 
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -34,6 +35,17 @@ public class EstudiosHelper {
 		mEstudio.setEstado(cursorEstudio.getString(cursorEstudio.getColumnIndex(MainDBConstants.estado)).charAt(0));
 		mEstudio.setDeviceid(cursorEstudio.getString(cursorEstudio.getColumnIndex(MainDBConstants.deviceId)));
 		return mEstudio;
+	}
+
+	public static void fillEstudioStatement(SQLiteStatement stat, Estudio estudio) {
+		stat.bindLong(1, estudio.getCodigo());
+		stat.bindString(2, estudio.getNombre());
+		if (estudio.getRecordDate() != null) stat.bindLong(3, estudio.getRecordDate().getTime());
+		if (estudio.getRecordUser() != null) stat.bindString(4, estudio.getRecordUser());
+		stat.bindString(5, String.valueOf(estudio.getPasive()));
+		stat.bindString(6, String.valueOf(estudio.getEstado()));
+		if (estudio.getDeviceid() != null) stat.bindString(7, estudio.getDeviceid());
+
 	}
 	
 }

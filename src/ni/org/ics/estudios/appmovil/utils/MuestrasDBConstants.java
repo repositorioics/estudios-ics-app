@@ -111,4 +111,50 @@ public class MuestrasDBConstants {
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigo + "));";
 
+    /***BULK INSERT**/
+
+    public static final String INSERT_MUESTRA_TABLE = "insert into "
+            + MUESTRA_TABLE + " ("
+            + codigo + ","
+            + tomaMxSn + ","
+            + codigoMx + ","
+            + hora + ","
+            + horaFin + ","
+            + volumen + ","
+            + observacion + ","
+            + descOtraObservacion + ","
+            + numPinchazos + ","
+            + razonNoToma + ","
+            + descOtraRazonNoToma + ","
+            + tubo + ","
+            + tipoMuestra + ","
+            + proposito + ","
+            + participante + ","
+            + realizaPaxgene + ","
+            + horaInicioPax + ","
+            + horaFinPax + ","
+            + MainDBConstants.recordDate + ","
+            + MainDBConstants.recordUser + ","
+            + MainDBConstants.pasive + ","
+            + MainDBConstants.deviceId + ","
+            + MainDBConstants.estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    public static final String INSERT_MUESTRA_SUPERFICIE_TABLE = "insert into "
+            + MUESTRA_SUPERFICIE_TABLE + " ("
+            + codigo + ","
+            + tipoMuestra + ","
+            + otraSuperficie + ","
+            + codigoMx + ","
+            + casaChf + ","
+            + participanteChf + ","
+            + visita + ","
+            + caso + ","
+            + MainDBConstants.recordDate + ","
+            + MainDBConstants.recordUser + ","
+            + MainDBConstants.pasive + ","
+            + MainDBConstants.deviceId + ","
+            + MainDBConstants.estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
 }

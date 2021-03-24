@@ -36,21 +36,21 @@ public class DownloadChfEncuestasTask extends DownloadTask {
 	protected static final String TAG = DownloadChfEncuestasTask.class.getSimpleName();
 	private EstudiosAdapter estudioAdapter = null;
 	
-    private List<EncuestaParticipante> mEncuestasParticipante = null;
-    private List<EncuestaDatosPartoBB> mEncuestasDatosPartoBB = null;
-    private List<EncuestaPesoTalla> mEncuestasPesoTalla = null;
-    private List<EncuestaLactanciaMaterna> mEncuestasLacMat = null;
+    //private List<EncuestaParticipante> mEncuestasParticipante = null;
+    //private List<EncuestaDatosPartoBB> mEncuestasDatosPartoBB = null;
+    //private List<EncuestaPesoTalla> mEncuestasPesoTalla = null;
+    //private List<EncuestaLactanciaMaterna> mEncuestasLacMat = null;
     private List<Muestra> mMuestras = null;
     private List<TelefonoContacto> mTelefonos = null;
     
-	public static final String ENCUESTA_PARTICIPANTECHF = "1";
-    public static final String ENCUESTA_DATOSPBB = "2";
-    public static final String ENCUESTA_PESOTALLA = "3";
-    public static final String ENCUESTA_LACTMAT = "4";
-    public static final String MUESTRAS = "5";
-    public static final String TELEFONOS = "6";
+	//public static final String ENCUESTA_PARTICIPANTECHF = "1";
+    //public static final String ENCUESTA_DATOSPBB = "2";
+    //public static final String ENCUESTA_PESOTALLA = "3";
+    //public static final String ENCUESTA_LACTMAT = "4";
+    public static final String MUESTRAS = "1";
+    public static final String TELEFONOS = "2";
     
-    private static final String TOTAL_TASK_RECLUTAMIENTO_CHF = "6";
+    private static final String TOTAL_TASK_RECLUTAMIENTO_CHF = "2";
     
 	private String error = null;
 	private String url = null;
@@ -85,65 +85,13 @@ public class DownloadChfEncuestasTask extends DownloadTask {
         estudioAdapter.borrarVisitasTerreno();
         estudioAdapter.borrarTelefonoContacto();
         try {
-            if (mEncuestasParticipante != null){
-                v = mEncuestasParticipante.size();
-                ListIterator<EncuestaParticipante> iter = mEncuestasParticipante.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearEncuestasParticipante(iter.next());
-                    publishProgress("Insertando encuestas de participantes en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mEncuestasParticipante = null;
-            }
-            if (mEncuestasDatosPartoBB != null){
-                v = mEncuestasDatosPartoBB.size();
-                ListIterator<EncuestaDatosPartoBB> iter = mEncuestasDatosPartoBB.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearEncuestasDatosPartoBB(iter.next());
-                    publishProgress("Insertando encuestas de datos partos BB en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mEncuestasDatosPartoBB = null;
-            }
-            if (mEncuestasPesoTalla != null){
-                v = mEncuestasPesoTalla.size();
-                ListIterator<EncuestaPesoTalla> iter = mEncuestasPesoTalla.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearEncuestasPesoTalla(iter.next());
-                    publishProgress("Insertando encuestas de peso y talla en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mEncuestasPesoTalla = null;
-            }
-            if (mEncuestasLacMat != null){
-                v = mEncuestasLacMat.size();
-                ListIterator<EncuestaLactanciaMaterna> iter = mEncuestasLacMat.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearEncuestasLactanciaMaterna(iter.next());
-                    publishProgress("Insertando encuestas de lactancia materna en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mEncuestasLacMat = null;
-            }
             if (mMuestras != null){
-                v = mMuestras.size();
-                ListIterator<Muestra> iter = mMuestras.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearMuestras(iter.next());
-                    publishProgress("Insertando muestras en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mMuestras = null;
+                publishProgress("Insertando muestras en la base de datos...", MUESTRAS, TOTAL_TASK_RECLUTAMIENTO_CHF);
+                estudioAdapter.bulkInsertMuestrasChfBySql(mMuestras);
             }
             if (mTelefonos != null){
-                v = mTelefonos.size();
-                ListIterator<TelefonoContacto> iter = mTelefonos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearTelefonoContacto(iter.next());
-                    publishProgress("Insertando telefonos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mTelefonos = null;
+                publishProgress("Insertando teléfonos en la base de datos...", TELEFONOS, TOTAL_TASK_RECLUTAMIENTO_CHF);
+                estudioAdapter.bulkInsertTelefonosContactoBySql(mTelefonos);
             }
             
 		} catch (Exception e) {
@@ -174,42 +122,6 @@ public class DownloadChfEncuestasTask extends DownloadTask {
             // Create a new RestTemplate instance
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-            //Descargar encuestasParticipante
-            urlRequest = url + "/movil/encuestasParticipante/";
-            publishProgress("Solicitando Encuestas de Participantes",ENCUESTA_PARTICIPANTECHF,TOTAL_TASK_RECLUTAMIENTO_CHF);
-            // Perform the HTTP GET request
-            ResponseEntity<EncuestaParticipante[]> responseEntityEncPar = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    EncuestaParticipante[].class);
-            // convert the array to a list and return it
-            mEncuestasParticipante = Arrays.asList(responseEntityEncPar.getBody());
-            responseEntityEncPar = null;
-            //Descargar encuestas datos parto bb
-            urlRequest = url + "/movil/encuestasDatosPartoBB/";
-            publishProgress("Solicitando Encuestas de datos parto BB",ENCUESTA_DATOSPBB,TOTAL_TASK_RECLUTAMIENTO_CHF);
-            // Perform the HTTP GET request
-            ResponseEntity<EncuestaDatosPartoBB[]> responseEntityEncParto = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    EncuestaDatosPartoBB[].class);
-            // convert the array to a list and return it
-            mEncuestasDatosPartoBB = Arrays.asList(responseEntityEncParto.getBody());
-            responseEntityEncParto = null;
-            //Descargar encuestas peso y talla
-            urlRequest = url + "/movil/encuestasPesoTalla/";
-            publishProgress("Solicitando Encuestas de peso y talla",ENCUESTA_PESOTALLA,TOTAL_TASK_RECLUTAMIENTO_CHF);
-            // Perform the HTTP GET request
-            ResponseEntity<EncuestaPesoTalla[]> responseEntityEncPT = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    EncuestaPesoTalla[].class);
-            // convert the array to a list and return it
-            mEncuestasPesoTalla = Arrays.asList(responseEntityEncPT.getBody());
-            responseEntityEncPT = null;
-            //Descargar encuestas peso y talla
-            urlRequest = url + "/movil/encuestasLactanciaMaterna/";
-            publishProgress("Solicitando Encuestas de lactancia materna",ENCUESTA_LACTMAT,TOTAL_TASK_RECLUTAMIENTO_CHF);
-            // Perform the HTTP GET request
-            ResponseEntity<EncuestaLactanciaMaterna[]> responseEntityEncLactMat = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    EncuestaLactanciaMaterna[].class);
-            // convert the array to a list and return it
-            mEncuestasLacMat = Arrays.asList(responseEntityEncLactMat.getBody());
-            responseEntityEncLactMat = null;
             //Descargar muestras
             urlRequest = url + "/movil/muestras/";
             publishProgress("Solicitando Muestras",MUESTRAS,TOTAL_TASK_RECLUTAMIENTO_CHF);

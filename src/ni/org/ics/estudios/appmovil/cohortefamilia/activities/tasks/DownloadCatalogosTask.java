@@ -65,13 +65,8 @@ public class DownloadCatalogosTask extends DownloadTask {
         
 		try {
 			if (mCatalogos != null){
-				v = mCatalogos.size();
-				ListIterator<MessageResource> iter = mCatalogos.listIterator();
-				while (iter.hasNext()){
-					estudioAdapter.crearMessageResource(iter.next());
-					publishProgress("Insertando catalogos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-							.valueOf(v).toString());
-				}
+				publishProgress("Insertando catalogos", CATALOGOS, TOTAL_TASK);
+				estudioAdapter.bulkInsertMessageResourceBySql(mCatalogos);
 			}
 
 		} catch (Exception e) {

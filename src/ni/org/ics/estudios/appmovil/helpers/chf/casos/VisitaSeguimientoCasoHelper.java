@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.chf.casos;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -51,4 +52,20 @@ public class VisitaSeguimientoCasoHelper {
         return mVisitaSeguimientoCaso;
     }
 
+    public static void fillVisitaSeguimientoCasoStatement(SQLiteStatement stat, VisitaSeguimientoCaso visitaCaso){
+        stat.bindString(1, visitaCaso.getCodigoCasoVisita());
+        stat.bindString(2, visitaCaso.getCodigoParticipanteCaso().getCodigoCasoParticipante());
+        if (visitaCaso.getFechaVisita() != null) stat.bindLong(3, visitaCaso.getFechaVisita().getTime());
+        if (visitaCaso.getVisita() != null) stat.bindString(4, visitaCaso.getVisita());
+        if (visitaCaso.getHoraProbableVisita() != null) stat.bindString(5, visitaCaso.getHoraProbableVisita());
+        if (visitaCaso.getExpCS() != null) stat.bindString(6, visitaCaso.getExpCS());
+        stat.bindDouble(7, visitaCaso.getTemp());
+
+        if (visitaCaso.getRecordDate() != null) stat.bindLong(8, visitaCaso.getRecordDate().getTime());
+        if (visitaCaso.getRecordUser() != null) stat.bindString(9, visitaCaso.getRecordUser());
+        stat.bindString(10, String.valueOf(visitaCaso.getPasive()));
+        if (visitaCaso.getDeviceid() != null) stat.bindString(11, visitaCaso.getDeviceid());
+        stat.bindString(12, String.valueOf(visitaCaso.getEstado()));
+
+    }
 }

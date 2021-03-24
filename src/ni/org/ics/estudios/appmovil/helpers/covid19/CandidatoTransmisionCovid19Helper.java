@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.covid19;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.covid19.CandidatoTransmisionCovid19;
 import ni.org.ics.estudios.appmovil.utils.Covid19DBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -48,5 +49,23 @@ public class CandidatoTransmisionCovid19Helper {
         mCandidato.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mCandidato.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mCandidato;
+    }
+
+    public static void fillCandidatoTransmisionCovid19Statement(SQLiteStatement stat, CandidatoTransmisionCovid19 candidato){
+        if (candidato.getCodigo() != null) stat.bindString(1, candidato.getCodigo());
+        if (candidato.getParticipante() != null) stat.bindLong(2, candidato.getParticipante().getCodigo());
+        if (candidato.getCasaCHF() != null) stat.bindString(3, candidato.getCasaCHF());
+        if (candidato.getFis() != null) stat.bindLong(4, candidato.getFis().getTime());
+        if (candidato.getFif() != null) stat.bindLong(5, candidato.getFif().getTime());
+        if (candidato.getPositivoPor() != null) stat.bindString(6, candidato.getPositivoPor());
+        if (candidato.getConsentimiento() != null) stat.bindString(7, candidato.getConsentimiento());
+        if (candidato.getEstActuales() != null) stat.bindString(8, candidato.getEstActuales());
+        if (candidato.getFechaIngreso() != null) stat.bindLong(9, candidato.getFechaIngreso().getTime());
+
+        if (candidato.getRecordDate() != null) stat.bindLong(10, candidato.getRecordDate().getTime());
+        if (candidato.getRecordUser() != null) stat.bindString(11, candidato.getRecordUser());
+        stat.bindString(12, String.valueOf(candidato.getPasive()));
+        if (candidato.getDeviceid() != null) stat.bindString(13, candidato.getDeviceid());
+        stat.bindString(14, String.valueOf(candidato.getEstado()));
     }
 }

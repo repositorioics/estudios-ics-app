@@ -145,7 +145,7 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 			Uri instanceUri = intent.getData();
 			//Busca la instancia resultado
 			String[] projection = new String[] {
-					"_id","instanceFilePath", "status","displaySubtext"};
+					"_id","instanceFilePath", "status","displaySubtext"};//"_id","instanceFilePath", "status"};
 			Cursor c = getContentResolver().query(instanceUri, projection,
 					null, null, null);
 			c.moveToFirst();
@@ -153,7 +153,8 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 			Integer idInstancia = c.getInt(c.getColumnIndex("_id"));
 			String instanceFilePath = c.getString(c.getColumnIndex("instanceFilePath"));
 			String complete = c.getString(c.getColumnIndex("status"));
-			String cambio = c.getString(c.getColumnIndex("displaySubtext"));
+			//String cambio = null;
+			String cambio = c.getString(c.getColumnIndex("date"));
 			//cierra el cursor
 			if (c != null) {
 				c.close();
@@ -260,35 +261,42 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 	 */
     private void addVisita() {
         try{
-            //campos de proveedor de collect
-            String[] projection = new String[] {
-                    "_id","jrFormId","displayName"};
-            //cursor que busca el formulario
-            Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
-                    "jrFormId = 'VisitaParticipante' and displayName = 'VisitaParticipante'", null, null);
-            c.moveToFirst();
-            //captura el id del formulario
-            Integer id = Integer.parseInt(c.getString(0));
-            //cierra el cursor
-            if (c != null) {
-                c.close();
-            }
-            //forma el uri para ODK Collect
-            Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
-            //Arranca la actividad ODK Collect en busca de resultado
-            Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-            String valores[] = new String[2];
-            valores[0] = "edad";
-            valores[1] = mParticipante.getEdadMeses().toString();
-            odkA.putExtra("vc", valores);
-            startActivityForResult(odkA,VISITA);
+            openODKForm();
         }
+		catch(NullPointerException e){
+        	openODKForm();
+		}
         catch(Exception e){
             //No existe el formulario en el equipo
             Log.e(TAG, e.getMessage(), e);
             showToast(e.getLocalizedMessage(),1);
         }
     }
+
+    private void openODKForm() {
+		//campos de proveedor de collect
+		String[] projection = new String[] {
+				"_id","jrFormId","displayName"};
+		//cursor que busca el formulario
+		Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
+				"jrFormId = 'VisitaParticipante' and displayName = 'VisitaParticipante'", null, null);
+		c.moveToFirst();
+		//captura el id del formulario
+		Integer id = Integer.parseInt(c.getString(0));
+		//cierra el cursor
+		if (c != null) {
+			c.close();
+		}
+		//forma el uri para ODK Collect
+		Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
+		//Arranca la actividad ODK Collect en busca de resultado
+		Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
+		String valores[] = new String[2];
+		valores[0] = "edad";
+		valores[1] = mParticipante.getEdadMeses().toString();
+		odkA.putExtra("vc", valores);
+		startActivityForResult(odkA,VISITA);
+	}
 
     private void getData() {
         estudiosAdapter.open();

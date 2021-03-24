@@ -8,6 +8,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.covid19.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.Covid19DBConstants;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
@@ -84,6 +85,7 @@ public class DownloadCasosCovid19Task extends DownloadTask {
 		try {
             estudioAdapter.open();
             //Borrar los datos de la base de datos
+            estudioAdapter.borrarTodosParticipantesProcesos();
             estudioAdapter.borrarParticipanteCovid19();
             estudioAdapter.borrarCasoCovid19();
             estudioAdapter.borrarParticipanteCasoCovid19();
@@ -96,121 +98,48 @@ public class DownloadCasosCovid19Task extends DownloadTask {
             estudioAdapter.borrarVisitaFinalCasoCovid19();
             estudioAdapter.borrarSintomasVisitaFinalCovid19();
             if (mCasos != null){
-                v = mCasos.size();
-                ListIterator<CasoCovid19> iter = mCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearCasoCovid19(iter.next());
-                    publishProgress("Insertando seguimientos COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mCasos = null;
+                publishProgress("Insertando seguimientos COVID19 en la base de datos...",CASOS_COVID19 , TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.COVID_CASOS_TABLE, mCasos);
             }
             if (mParticipantesCasos != null){
-                v = mParticipantesCasos.size();
-                ListIterator<ParticipanteCasoCovid19> iter = mParticipantesCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearParticipanteCasoCovid19(iter.next());
-                    publishProgress("Insertando participantes en seguimiento COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mParticipantesCasos = null;
+                publishProgress("Insertando participantes en seguimiento COVID19 en la base de datos...", PARTICIPANTE_COVID19, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.COVID_PARTICIPANTES_CASOS_TABLE, mParticipantesCasos);
             }
             if (mVisitas != null){
-                v = mVisitas.size();
-                ListIterator<VisitaSeguimientoCasoCovid19> iter = mVisitas.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearVisitaSeguimientoCasoCovid19(iter.next());
-                    publishProgress("Insertando visitas de participantes en seguimiento COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mVisitas = null;
+                publishProgress("Insertando visitas de participantes en seguimiento COVID19 en la base de datos...", VISITAS_CASOS_COVID19, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.COVID_VISITAS_CASOS_TABLE, mVisitas);
             }
             if (mMuestras != null){
-                v = mMuestras.size();
-                ListIterator<Muestra> iter = mMuestras.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearMuestras(iter.next());
-                    publishProgress("Insertando muestras de casos COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mMuestras = null;
+                publishProgress("Insertando muestras de casos COVID19 en la base de datos...", MUESTRAS_COVID19, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertMuestrasChfBySql(mMuestras);
             }
             if (mSintomas != null){
-                v = mSintomas.size();
-                ListIterator<SintomasVisitaCasoCovid19> iter = mSintomas.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearSintomasVisitaCasoCovid19(iter.next());
-                    publishProgress("Insertando sintomas de participantes en seguimiento COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mSintomas = null;
+                publishProgress("Insertando sintomas de participantes en seguimiento COVID19 en la base de datos...", SINT_VISITAS_CASOS_COVID19, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.COVID_SINTOMAS_VISITA_CASO_TABLE, mSintomas);
             }
             if (mVisitasFall != null){
-                v = mVisitasFall.size();
-                ListIterator<VisitaFallidaCasoCovid19> iter = mVisitasFall.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearVisitaFallidaCasoCovid19(iter.next());
-                    publishProgress("Insertando visitas fallidas de casos COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mVisitasFall = null;
+                publishProgress("Insertando visitas fallidas de casos COVID19 en la base de datos...", VISITAS_FALL_CASOS_COVID19, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.COVID_VISITAS_FALLIDAS_CASOS_TABLE, mVisitasFall);
             }
             if (mCandidatos != null){
-                v = mCandidatos.size();
-                ListIterator<CandidatoTransmisionCovid19> iter = mCandidatos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearCandidatoTransmisionCovid19(iter.next());
-                    publishProgress("Insertando candidatos transmisión COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mCandidatos = null;
+                publishProgress("Insertando candidatos transmisión COVID19 en la base de datos...", CANDIDATOS_COVID19, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.COVID_CANDIDATO_TRANSMISION_TABLE, mCandidatos);
             }
             if (mAislamientos != null){
-                v = mAislamientos.size();
-                ListIterator<DatosAislamientoVisitaCasoCovid19> iter = mAislamientos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearDatosAislamientoVisitaCasoCovid19(iter.next());
-                    publishProgress("Insertando datos aislamiento COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mAislamientos = null;
+                publishProgress("Insertando datos aislamiento COVID19 en la base de datos...", DATOS_AISLAMIENTO_COVID19, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.COVID_DATOS_AISLAMIENTO_VC_TABLE, mAislamientos);
             }
             if (mParticipantesProc != null){
-                v = mParticipantesProc.size();
-                ListIterator<ParticipanteProcesos> iter = mParticipantesProc.listIterator();
-                while (iter.hasNext()){
-                    ParticipanteProcesos proc = iter.next();
-                    if (estudioAdapter.getParticipanteProcesos(ConstantsDB.CODIGO + "="+proc.getCodigo(), null)==null)
-                        estudioAdapter.crearParticipanteProcesos(proc);
-                    else {
-                        //estudioAdapter.borrarProcesoCovid(ConstantsDB.CODIGO + "="+proc.getCodigo());
-                        estudioAdapter.actualizarParticipanteProcesos(proc);
-                    }
-                    publishProgress("Insertando procesos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mParticipantesProc = null;
+                publishProgress("Insertando procesos en la base de datpos...", PARTICIPANTE_PROC, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertParticipantesProcBySql(mParticipantesProc);
             }
             if (mVisitasFinales != null){
-                v = mVisitasFinales.size();
-                ListIterator<VisitaFinalCasoCovid19> iter = mVisitasFinales.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearVisitaFinalCasoCovid19(iter.next());
-                    publishProgress("Insertando datos visitas finales COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mVisitasFinales = null;
+                publishProgress("Insertando datos visitas finales COVID19 en la base de datos...", VISITAS_FINALES_COVID19, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.COVID_VISITA_FINAL_CASO_TABLE, mVisitasFinales);
             }
-
             if (mSintomasFinal != null){
-                v = mSintomasFinal.size();
-                ListIterator<SintomasVisitaFinalCovid19> iter = mSintomasFinal.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearSintomasVisitaFinalCovid19(iter.next());
-                    publishProgress("Insertando datos síntomas visitas finales COVID19 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mSintomasFinal = null;
+                publishProgress("Insertando datos síntomas visitas finales COVID19 en la base de datos...", SINT_VISITAS_FINALES_COVID19, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.COVID_SINT_VISITA_FINAL_CASO_TABLE, mSintomasFinal);
             }
 
         } catch (Exception e) {
@@ -333,7 +262,7 @@ public class DownloadCasosCovid19Task extends DownloadTask {
 
             //Descargando participantes procesos covid19
             // The URL for making the GET request
-            urlRequest = url + "/movil/participantesprocesosCovid19";
+            urlRequest = url + "/movil/participantesprocesos";
             publishProgress("Solicitando procesos de participantes",PARTICIPANTE_PROC,TOTAL_TASK_CASOS);
 
             // Perform the HTTP GET request

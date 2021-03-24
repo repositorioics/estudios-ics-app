@@ -36,11 +36,7 @@ public class DownloadBaseTask extends DownloadTask {
 	protected static final String TAG = DownloadBaseTask.class.getSimpleName();
 	private EstudiosAdapter estudioAdapter = null;
 	private List<Estudio> mEstudios = null;
-	//private List<Barrio> mBarrios = null;
-	//private List<Casa> mCasas = null;
-	//private List<Participante> mParticipantes = null;
-	
-	
+
 	public static final String ESTUDIO = "1";
 	public static final String BARRIO = "2";
 	public static final String CASA = "3";
@@ -72,51 +68,12 @@ public class DownloadBaseTask extends DownloadTask {
 		estudioAdapter.open();
 		//Borrar los datos de la base de datos
 		estudioAdapter.borrarEstudios();
-		//estudioAdapter.borrarBarrios();
-		//estudioAdapter.borrarCasas();
-		//estudioAdapter.borrarParticipantes();
 		try {
 			if (mEstudios != null){
-				v = mEstudios.size();
-				ListIterator<Estudio> iter = mEstudios.listIterator();
-				while (iter.hasNext()){
-					estudioAdapter.crearEstudio(iter.next());
-					publishProgress("Insertando estudios en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-							.valueOf(v).toString());
-				}
-				mEstudios = null;
+				publishProgress("Insertando estudios en la base de datos","1","1");
+				estudioAdapter.bulkInsertEstutiosBySql(mEstudios);
 			}
-			/*if (mBarrios != null){
-				v = mBarrios.size();
-				ListIterator<Barrio> iter = mBarrios.listIterator();
-				while (iter.hasNext()){
-					estudioAdapter.crearBarrio(iter.next());
-					publishProgress("Insertando barrios en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-							.valueOf(v).toString());
-				}
-				mBarrios = null;
-			}
-			if (mCasas != null){
-				v = mCasas.size();
-				ListIterator<Casa> iter = mCasas.listIterator();
-				while (iter.hasNext()){
-					estudioAdapter.crearCasa(iter.next());
-					publishProgress("Insertando casas en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-							.valueOf(v).toString());
-				}
-				mCasas = null;
-			}
-			if (mParticipantes != null){
-				v = mParticipantes.size();
-				ListIterator<Participante> iter = mParticipantes.listIterator();
-				while (iter.hasNext()){
-					estudioAdapter.crearParticipante(iter.next());
-					publishProgress("Insertando participantes en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-							.valueOf(v).toString());
-				}
-				mParticipantes = null;
-			}*/
-            
+
 		} catch (Exception e) {
 			// Regresa error al insertar
 			e.printStackTrace();
@@ -153,35 +110,6 @@ public class DownloadBaseTask extends DownloadTask {
             // convert the array to a list and return it
             mEstudios = Arrays.asList(responseEntityEstudio.getBody());
             responseEntityEstudio = null;
-            /*
-            //Descargar barrios
-            urlRequest = url + "/movil/barrios/";
-            publishProgress("Solicitando barrios",BARRIO,TOTAL_TASK_GENERALES);
-            // Perform the HTTP GET request
-            ResponseEntity<Barrio[]> responseEntityBarrio = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		Barrio[].class);
-            // convert the array to a list and return it
-            mBarrios = Arrays.asList(responseEntityBarrio.getBody());
-            responseEntityBarrio = null;
-            //Descargar casas
-            urlRequest = url + "/movil/casas/";
-            publishProgress("Solicitando casas",CASA,TOTAL_TASK_GENERALES);
-            // Perform the HTTP GET request
-            ResponseEntity<Casa[]> responseEntityCasa = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		Casa[].class);
-            // convert the array to a list and return it
-            mCasas = Arrays.asList(responseEntityCasa.getBody());
-            responseEntityCasa = null;
-            //Descargar participantes
-            urlRequest = url + "/movil/participantes/";
-            publishProgress("Solicitando participantes",PARTICIPANTE,TOTAL_TASK_GENERALES);
-            // Perform the HTTP GET request
-            ResponseEntity<Participante[]> responseEntityParticipante = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		Participante[].class);
-            // convert the array to a list and return it
-            mParticipantes = Arrays.asList(responseEntityParticipante.getBody());
-            responseEntityParticipante = null;
-            */
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

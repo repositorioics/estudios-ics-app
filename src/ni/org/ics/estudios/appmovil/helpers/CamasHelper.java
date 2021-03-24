@@ -4,6 +4,7 @@ import java.util.Date;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Cama;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.PersonaCama;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -71,5 +72,30 @@ public class CamasHelper {
         personaCama.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 
         return personaCama;
+    }
+
+    public static void fillCamaStatement(SQLiteStatement stat, Cama cama){
+        stat.bindString(1, cama.getCodigoCama());
+        if (cama.getCuarto()!=null) stat.bindString(2, cama.getCuarto().getCodigo());
+        if (cama.getDescCama() != null) stat.bindString(3, cama.getDescCama());
+        if (cama.getRecordDate() != null) stat.bindLong(4, cama.getRecordDate().getTime());
+        if (cama.getRecordUser() != null) stat.bindString(5, cama.getRecordUser());
+        stat.bindString(6, String.valueOf(cama.getPasive()));
+        if (cama.getDeviceid() != null) stat.bindString(7, cama.getDeviceid());
+        stat.bindString(8, String.valueOf(cama.getEstado()));
+    }
+
+    public static void fillPersonaCamaStatement(SQLiteStatement stat, PersonaCama personaCama){
+        stat.bindString(1, personaCama.getCodigoPersona());
+        if (personaCama.getCama() != null) stat.bindString(2, personaCama.getCama().getCodigoCama());
+        if (personaCama.getEstaEnEstudio() != null) stat.bindString(3, personaCama.getEstaEnEstudio());
+        if (personaCama.getParticipante() != null) stat.bindLong(4, personaCama.getParticipante().getCodigo());
+        if (personaCama.getEdad() != null) stat.bindLong(5, personaCama.getEdad());
+        if (personaCama.getSexo() != null) stat.bindString(6, personaCama.getSexo());
+        if (personaCama.getRecordDate() != null) stat.bindLong(7, personaCama.getRecordDate().getTime());
+        if (personaCama.getRecordUser() != null) stat.bindString(8, personaCama.getRecordUser());
+        stat.bindString(9, String.valueOf(personaCama.getPasive()));
+        if (personaCama.getDeviceid() != null) stat.bindString(10, personaCama.getDeviceid());
+        stat.bindString(11, String.valueOf(personaCama.getEstado()));
     }
 }

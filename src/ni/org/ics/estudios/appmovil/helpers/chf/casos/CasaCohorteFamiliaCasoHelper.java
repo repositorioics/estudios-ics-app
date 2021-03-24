@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.chf.casos;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -45,6 +46,19 @@ public class CasaCohorteFamiliaCasoHelper {
         mCasaCohorteFamiliaCaso.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mCasaCohorteFamiliaCaso.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mCasaCohorteFamiliaCaso;
+    }
+
+    public static void fillCasaCohorteFamiliaCasoStatement(SQLiteStatement stat, CasaCohorteFamiliaCaso casaCaso){
+        stat.bindString(1, casaCaso.getCodigoCaso());
+        if (casaCaso.getCasa() != null) stat.bindString(2, casaCaso.getCasa().getCodigoCHF());
+        if (casaCaso.getFechaInicio() != null) stat.bindLong(3, casaCaso.getFechaInicio().getTime());
+        if (casaCaso.getInactiva() != null) stat.bindString(4, casaCaso.getInactiva());
+        if (casaCaso.getFechaInactiva() != null) stat.bindLong(5, casaCaso.getFechaInactiva().getTime());
+        if (casaCaso.getRecordDate() != null) stat.bindLong(6, casaCaso.getRecordDate().getTime());
+        if (casaCaso.getRecordUser() != null) stat.bindString(7, casaCaso.getRecordUser());
+        stat.bindString(8, String.valueOf(casaCaso.getPasive()));
+        if (casaCaso.getDeviceid() != null) stat.bindString(9, casaCaso.getDeviceid());
+        stat.bindString(10, String.valueOf(casaCaso.getEstado()));
     }
 
 }

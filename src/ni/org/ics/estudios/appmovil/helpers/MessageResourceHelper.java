@@ -1,5 +1,6 @@
 package ni.org.ics.estudios.appmovil.helpers;
 
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -33,6 +34,17 @@ public class MessageResourceHelper {
 		mMessageResource.setSpanish(cursorMessageResource.getString(cursorMessageResource.getColumnIndex(CatalogosDBConstants.spanish)));
 		mMessageResource.setEnglish(cursorMessageResource.getString(cursorMessageResource.getColumnIndex(CatalogosDBConstants.english)));
 		return mMessageResource;
+	}
+
+	public static void fillMessageResourceStatement(SQLiteStatement stat, MessageResource messageResource) {
+		stat.bindString(1, messageResource.getMessageKey());
+		if (messageResource.getCatRoot() != null)	stat.bindString(2, messageResource.getCatRoot());
+		if (messageResource.getCatKey() != null) stat.bindString(3, messageResource.getCatKey());
+		stat.bindString(4, String.valueOf(messageResource.getIsCat()));
+		stat.bindLong(5, messageResource.getOrder());
+		stat.bindString(6, messageResource.getSpanish());
+		if (messageResource.getEnglish() != null)	stat.bindString(7, messageResource.getEnglish());
+		stat.bindString(8, String.valueOf(messageResource.getPasive()));
 	}
 	
 }

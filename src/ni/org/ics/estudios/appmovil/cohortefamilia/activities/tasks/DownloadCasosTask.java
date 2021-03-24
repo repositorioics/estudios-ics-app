@@ -11,6 +11,9 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.MuestraSuperficie;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
+import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -59,14 +62,14 @@ public class DownloadCasosTask extends DownloadTask {
     public static final String SINTOMAS_CASOS = "6";
     public static final String VISITAS_FINALES = "7";
     public static final String OBSEQUIOS = "8";
-    public static final String CONTACTOS_CASOS = "1";
-    public static final String MUESTRAS = "2";
-    public static final String NODATA_CASOS = "3";
-    public static final String MUESTRAS_SUP = "4";
-    public static final String SENSORES_CASOS = "9";
+    public static final String CONTACTOS_CASOS = "9";
+    public static final String MUESTRAS = "1";
+    //public static final String NODATA_CASOS = "3";
+    public static final String MUESTRAS_SUP = "2";
+    public static final String SENSORES_CASOS = "3";
 
     private static final String TOTAL_TASK_CASOS = "9";
-    private static final String TOTAL_TASK_CASOS_CONTACTO = "4";
+    private static final String TOTAL_TASK_CASOS_CONTACTO = "3";
 
 	private String error = null;
 	private String url = null;
@@ -101,126 +104,44 @@ public class DownloadCasosTask extends DownloadTask {
         estudioAdapter.borrarVisitaFinalCaso();
         estudioAdapter.borrarObsequiosGenerales();
         estudioAdapter.borrarSensoresCasos();
-        /*
-        estudioAdapter.borrarFormularioContactoCaso();
-        estudioAdapter.borrarMuestrasTx();*/
-        
+
 		try {
             if (mParticipantesProc != null){
-                v = mParticipantesProc.size();
-                ListIterator<ParticipanteProcesos> iter = mParticipantesProc.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearParticipanteProcesos(iter.next());
-                    publishProgress("Insertando procesos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mParticipantesProc = null;
+                publishProgress("Insertando procesos en la base de datos...", PARTICIPANTE_PROC, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertParticipantesProcBySql(mParticipantesProc);
             }
             if (mCasaCohorteFamiliaCasos != null){
-                v = mCasaCohorteFamiliaCasos.size();
-                ListIterator<CasaCohorteFamiliaCaso> iter = mCasaCohorteFamiliaCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearCasaCohorteFamiliaCaso(iter.next());
-                    publishProgress("Insertando casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mCasaCohorteFamiliaCasos = null;
+                publishProgress("Insertando casas con casos en la base de datos...", CASAS_CASOS, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertCasaCohorteFamiliaCasoBySql(mCasaCohorteFamiliaCasos);
             }
             if (mParticipanteCohorteFamiliaCasos != null){
-                v = mParticipanteCohorteFamiliaCasos.size();
-                ListIterator<ParticipanteCohorteFamiliaCaso> iter = mParticipanteCohorteFamiliaCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearParticipanteCohorteFamiliaCaso(iter.next());
-                    publishProgress("Insertando participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mParticipanteCohorteFamiliaCasos = null;
+                publishProgress("Insertando participantes casas con casos en la base de datos...", PART_CASOS, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertParticipantesCohorteFamiliaCasoBySql(mParticipanteCohorteFamiliaCasos);
             }
-            
             if (mVisitaSeguimientoCasos != null){
-                v = mVisitaSeguimientoCasos.size();
-                ListIterator<VisitaSeguimientoCaso> iter = mVisitaSeguimientoCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearVisitaSeguimientoCaso(iter.next());
-                    publishProgress("Insertando visitas de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mVisitaSeguimientoCasos = null;
+                publishProgress("Insertando visitas de los participantes de casas con casos en la base de datos...", VISITAS_CASOS, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertVisitasSeguimientoCasoBySql(mVisitaSeguimientoCasos);
             }
-            
             if (mVisitaFallidaCasos != null){
-                v = mVisitaFallidaCasos.size();
-                ListIterator<VisitaFallidaCaso> iter = mVisitaFallidaCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearVisitaFallidaCaso(iter.next());
-                    publishProgress("Insertando visitas fallidas de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mVisitaFallidaCasos = null;
+                publishProgress("Insertando visitas fallidas de los participantes de casas con casos en la base de datos...", VISITAS_FALLIDAS_CASOS, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertVisitasFallidaCasoBySql(mVisitaFallidaCasos);
             }
-
             if (mVisitaSeguimientoSintomasCasos != null){
-                v = mVisitaSeguimientoSintomasCasos.size();
-                ListIterator<VisitaSeguimientoCasoSintomas> iter = mVisitaSeguimientoSintomasCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearVisitaSeguimientoCasoSintomas(iter.next());
-                    publishProgress("Insertando sintomas de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mVisitaSeguimientoSintomasCasos = null;
+                publishProgress("Insertando sintomas de los participantes de casas con casos en la base de datos...", SINTOMAS_CASOS, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertVisitasSeguimientoCasoSintomasBySql(mVisitaSeguimientoSintomasCasos);
             }
             if (mVisitaFinalCasos != null){
-                v = mVisitaFinalCasos.size();
-                ListIterator<VisitaFinalCaso> iter = mVisitaFinalCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearVisitaFinalCaso(iter.next());
-                    publishProgress("Insertando visitas finales de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mVisitaFinalCasos = null;
+                publishProgress("Insertando visitas finales de los participantes de casas con casos en la base de datos...", VISITAS_FINALES, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertBySql(CasosDBConstants.VISITAS_FINALES_CASOS_TABLE, mVisitaFinalCasos);
             }
             if (mObsequios != null){
-                v = mObsequios.size();
-                ListIterator<ObsequioGeneral> iter = mObsequios.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearObsequioGeneral(iter.next());
-                    publishProgress("Insertando obsequios en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mObsequios = null;
+                publishProgress("Insertando obsequios en la base de datos...", OBSEQUIOS, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertBySql(MainDBConstants.OBSEQUIOS_TABLE, mObsequios);
             }
             if (mSensoresCasos != null){
-                v = mSensoresCasos.size();
-                ListIterator<SensorCaso> iter = mSensoresCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearSensorCaso(iter.next());
-                    publishProgress("Insertando sensores de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mSensoresCasos = null;
+                publishProgress("Insertando sensores de casas con casos en la base de datos...", SENSORES_CASOS, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertSensoresCasoBySql(mSensoresCasos);
             }
-            /*
-            if (mFormularioContactoCasos != null){
-                v = mFormularioContactoCasos.size();
-                ListIterator<FormularioContactoCaso> iter = mFormularioContactoCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearFormularioContactoCaso(iter.next());
-                    publishProgress("Insertando contactos de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mFormularioContactoCasos = null;
-            }
-
-            if (mMuestras != null){
-                v = mMuestras.size();
-                ListIterator<Muestra> iter = mMuestras.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearMuestras(iter.next());
-                    publishProgress("Insertando muestras de transmision de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mMuestras = null;
-            }*/
         } catch (Exception e) {
             // Regresa error al insertar
             e.printStackTrace();
@@ -246,35 +167,17 @@ public class DownloadCasosTask extends DownloadTask {
         try {
 
             if (mFormularioContactoCasos != null){
-                v = mFormularioContactoCasos.size();
-                ListIterator<FormularioContactoCaso> iter = mFormularioContactoCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearFormularioContactoCaso(iter.next());
-                    publishProgress("Insertando contactos de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mFormularioContactoCasos = null;
+                publishProgress("Insertando contactos de los participantes de casas con casos en la base de datos...", CONTACTOS_CASOS, TOTAL_TASK_CASOS_CONTACTO);
+                estudioAdapter.bulkInsertBySql(CasosDBConstants.CONTACTOS_CASOS_TABLE, mFormularioContactoCasos);
             }
 
             if (mMuestras != null){
-                v = mMuestras.size();
-                ListIterator<Muestra> iter = mMuestras.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearMuestras(iter.next());
-                    publishProgress("Insertando muestras de transmision de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mMuestras = null;
+                publishProgress("Insertando muestras de transmision de los participantes de casas con casos en la base de datos...", MUESTRAS, TOTAL_TASK_CASOS_CONTACTO);
+                estudioAdapter.bulkInsertMuestrasChfBySql(mMuestras);
             }
             if (mMuestrasSup != null){
-                v = mMuestrasSup.size();
-                ListIterator<MuestraSuperficie> iter = mMuestrasSup.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearMuestraSuperficie(iter.next());
-                    publishProgress("Insertando muestras de superficie de casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mMuestrasSup = null;
+                publishProgress("Insertando muestras de superficie de casos en la base de datos...", MUESTRAS_SUP, TOTAL_TASK_CASOS_CONTACTO);
+                estudioAdapter.bulkInsertBySql(MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE, mMuestrasSup);
             }
 
         } catch (Exception e) {
@@ -394,27 +297,6 @@ public class DownloadCasosTask extends DownloadTask {
             // convert the array to a list and return it
             mSensoresCasos = Arrays.asList(responseEntitySensores.getBody());
             responseEntitySensores = null;
-            /*
-            //Descargar contactos de casas con casos
-            urlRequest = url + "/movil/contactoscasos/";
-            publishProgress("Solicitando contactos de los participantes de casas de casos",CONTACTOS_CASOS,TOTAL_TASK_CASOS);
-            // Perform the HTTP GET request
-            ResponseEntity<FormularioContactoCaso[]> responseEntityFormularioContactoCaso = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		FormularioContactoCaso[].class);
-            // convert the array to a list and return it
-            mFormularioContactoCasos = Arrays.asList(responseEntityFormularioContactoCaso.getBody());
-            responseEntityFormularioContactoCaso = null;
-            
-            //Descargar muestras de tx de casas con casos
-            urlRequest = url + "/movil/mxstx/";
-            publishProgress("Solicitando muestras de tx de los participantes de casas de casos",NODATA_CASOS,TOTAL_TASK_CASOS);
-            // Perform the HTTP GET request
-            ResponseEntity<Muestra[]> responseEntityMuestraCaso = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-            		Muestra[].class);
-            // convert the array to a list and return it
-            mMuestras = Arrays.asList(responseEntityMuestraCaso.getBody());
-            responseEntityMuestraCaso = null;
-            */
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

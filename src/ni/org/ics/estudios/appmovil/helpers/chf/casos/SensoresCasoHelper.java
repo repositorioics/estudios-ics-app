@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.chf.casos;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.SensorCaso;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -59,4 +60,24 @@ public class SensoresCasoHelper {
         return mSensor;
     }
 
+    public static void fillSensorCasoStatement(SQLiteStatement stat, SensorCaso sensor){
+        stat.bindString(1, sensor.getCodigoSensor());
+        stat.bindString(2, sensor.getCodigoCaso().getCodigoCaso());
+        if (sensor.getNumeroSensor() != null) stat.bindString(3, sensor.getNumeroSensor());
+        if (sensor.getArea()!=null)stat.bindString(4, sensor.getArea().getCodigo());
+        if (sensor.getCuarto()!=null)stat.bindString(5, sensor.getCuarto().getCodigo());
+        if (sensor.getFechaColocacion() !=null) stat.bindLong(6, sensor.getFechaColocacion().getTime());
+        if (sensor.getFechaRetiro() !=null) stat.bindLong(7, sensor.getFechaRetiro().getTime());
+        if (sensor.getHoraRetiro() != null) stat.bindString(8, sensor.getHoraRetiro());
+        if (sensor.getObservacionRetiro() != null) stat.bindString(9, sensor.getObservacionRetiro());
+        if (sensor.getSensorSN() != null) stat.bindString(10, sensor.getSensorSN());
+        if (sensor.getRazonNoColocaSensor() != null) stat.bindString(11, sensor.getRazonNoColocaSensor());
+
+        if (sensor.getRecordDate() !=null) stat.bindLong(12, sensor.getRecordDate().getTime());
+        if (sensor.getRecordUser() != null) stat.bindString(13, sensor.getRecordUser());
+        stat.bindString(14, String.valueOf(sensor.getPasive()));
+        if (sensor.getDeviceid() != null) stat.bindString(15, sensor.getDeviceid());
+        stat.bindString(16, String.valueOf(sensor.getEstado()));
+
+    }
 }

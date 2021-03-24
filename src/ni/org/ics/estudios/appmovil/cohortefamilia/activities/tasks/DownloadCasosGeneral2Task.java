@@ -9,6 +9,9 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.MuestraSuperficie;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.FormularioContactoCaso;
+import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -76,34 +79,16 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
         estudioAdapter.borrarMuestrasSuperficie();
 		try {
             if (mFormularioContactoCasos != null){
-                v = mFormularioContactoCasos.size();
-                ListIterator<FormularioContactoCaso> iter = mFormularioContactoCasos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearFormularioContactoCaso(iter.next());
-                    publishProgress("Insertando contactos de los participantes de casas con casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mFormularioContactoCasos = null;
+                publishProgress("Insertando contactos de los participantes de casas con casos en la base de datos...", CONTACTOS_CASOS, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertBySql(CasosDBConstants.CONTACTOS_CASOS_TABLE, mFormularioContactoCasos);
             }
             if (mObsequios != null){
-                v = mObsequios.size();
-                ListIterator<ObsequioGeneral> iter = mObsequios.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearObsequioGeneral(iter.next());
-                    publishProgress("Insertando obsequios en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mObsequios = null;
+                publishProgress("Insertando obsequios en la base de datos...", OBSEQUIOS, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertBySql(MainDBConstants.OBSEQUIOS_TABLE, mObsequios);
             }
             if (mMuestrasSup != null){
-                v = mMuestrasSup.size();
-                ListIterator<MuestraSuperficie> iter = mMuestrasSup.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearMuestraSuperficie(iter.next());
-                    publishProgress("Insertando muestras de superficie de casos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mMuestrasSup = null;
+                publishProgress("Insertando muestras de superficie de casos en la base de datos...", MUESTRAS_SUP, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertBySql(MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE, mMuestrasSup);
             }
 		} catch (Exception e) {
 			// Regresa error al insertar

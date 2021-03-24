@@ -12,11 +12,13 @@ import ni.org.ics.estudios.appmovil.domain.ContactoParticipante;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCovid19;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
+import ni.org.ics.estudios.appmovil.utils.Covid19DBConstants;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -51,6 +53,7 @@ public class DownloadBaseTask extends DownloadTask {
     private List<ParticipanteProcesos> mParticipantesProc = null;
     private List<MessageResource> mCatalogos = null;
     private List<ContactoParticipante> mContactosParticipante = null;
+    private List<ParticipanteCovid19> mParticipantesCovid = null;
 
     public static final String CATALOGOS = "1";
     public static final String USUARIOS = "2";
@@ -65,7 +68,8 @@ public class DownloadBaseTask extends DownloadTask {
     public static final String PARTICIPANTE_CHF = "11";
     public static final String PARTICIPANTE_SA = "12";
     public static final String CONTACTOS_PART = "13";
-    private static final String TOTAL_TASK_GENERALES = "13";
+    public static final String PARTICIPANTE_CV = "14";
+    private static final String TOTAL_TASK_GENERALES = "15";
 	
 	private String error = null;
 	private String url = null;
@@ -86,6 +90,7 @@ public class DownloadBaseTask extends DownloadTask {
             error = descargarChf();
             error = descargarDatosSeroprevalencia();
             error = descargarContactosParticipantes();
+            error = descargarParticipantesCovid();
 			if (error!=null) return error;
 		} catch (Exception e) {
 			// Regresa error al descargar
@@ -174,136 +179,61 @@ public class DownloadBaseTask extends DownloadTask {
         estudioAdapter.borrarSintomasVisitaFinalCovid19();
         try {
             if (mCatalogos != null){
-                v = mCatalogos.size();
-                ListIterator<MessageResource> iter = mCatalogos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearMessageResource(iter.next());
-                    publishProgress("Insertando catalogos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
+                publishProgress("Insertando catalogos", CATALOGOS, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertMessageResourceBySql(mCatalogos);
             }
             if (usuarios != null){
-                try {
-                    addUsuarios(usuarios);
-                } catch (Exception e) {
-                    // Regresa error al insertar
-                    e.printStackTrace();
-                    return e.getLocalizedMessage();
-                }
+                publishProgress("Insertando usuarios", USUARIOS, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertUsuariosBySql(usuarios);
              }
             if (roles != null){
-                try {
-                    addRoles(roles);
-                } catch (Exception e) {
-                    // Regresa error al insertar
-                    e.printStackTrace();
-                    return e.getLocalizedMessage();
-                }
+                publishProgress("Insertando roles", ROLES, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertRolesBySql(roles);
             }
-
             if (permisos != null){
-                try {
-                    addPermisos(permisos);
-                } catch (Exception e) {
-                    // Regresa error al insertar
-                    e.printStackTrace();
-                    return e.getLocalizedMessage();
-                }
+                publishProgress("Insertando permisos", USU_PERMISOS, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertUserPermissionsBySql(permisos);
             }
-
             if (mEstudios != null){
-				v = mEstudios.size();
-				ListIterator<Estudio> iter = mEstudios.listIterator();
-				while (iter.hasNext()){
-					estudioAdapter.crearEstudio(iter.next());
-					publishProgress("Insertando estudios en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-							.valueOf(v).toString());
-				}
-				mEstudios = null;
-			}
-			if (mBarrios != null){
-				v = mBarrios.size();
-				ListIterator<Barrio> iter = mBarrios.listIterator();
-				while (iter.hasNext()){
-					estudioAdapter.crearBarrio(iter.next());
-					publishProgress("Insertando barrios en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-							.valueOf(v).toString());
-				}
-				mBarrios = null;
-			}
-			if (mCasas != null){
-				v = mCasas.size();
-				ListIterator<Casa> iter = mCasas.listIterator();
-				while (iter.hasNext()){
-					estudioAdapter.crearCasa(iter.next());
-					publishProgress("Insertando casas en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-							.valueOf(v).toString());
-				}
-				mCasas = null;
-			}
-			if (mParticipantes != null){
-				v = mParticipantes.size();
-				ListIterator<Participante> iter = mParticipantes.listIterator();
-				while (iter.hasNext()){
-					estudioAdapter.crearParticipante(iter.next());
-					publishProgress("Insertando participantes en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-							.valueOf(v).toString());
-				}
-				mParticipantes = null;
-			}
-            if (mParticipantesProc != null) {
-                // download and insert
-                try {
-                    addParticipantesProcesos(mParticipantesProc);
-                } catch (Exception e) {
-                    // Regresa error al insertar
-                    e.printStackTrace();
-                    return e.getLocalizedMessage();
-                }
+                publishProgress("Insertando estudios", ESTUDIO, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertEstutiosBySql(mEstudios);
             }
-
+            if (mBarrios != null){
+                publishProgress("Insertando barrios", BARRIO, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertBarriosBySql(mBarrios);
+            }
+            if (mCasas != null){
+                publishProgress("Insertando casas", CASA, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertCasasBySql(mCasas);
+            }
+            if (mParticipantes != null){
+                publishProgress("Insertando participantes", PARTICIPANTE, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertParticipantesBySql(mParticipantes);
+            }
+            if (mParticipantesProc != null){
+                publishProgress("Insertando procesos participantes", PARTICIPANTE_PROC, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertParticipantesProcBySql(mParticipantesProc);
+            }
             if (mCasasCHF != null){
-                v = mCasasCHF.size();
-                ListIterator<CasaCohorteFamilia> iter = mCasasCHF.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearCasaCohorteFamilia(iter.next());
-                    publishProgress("Insertando casas cohorte familia en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mCasasCHF = null;
+                publishProgress("Insertando casas CHF", CASA_CHF, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertCasasChfBySql(mCasasCHF);
             }
-
             if (mParticipantesCHF != null){
-                v = mParticipantesCHF.size();
-                ListIterator<ParticipanteCohorteFamilia> iter = mParticipantesCHF.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearParticipanteCohorteFamilia(iter.next());
-                    publishProgress("Insertando participantes cohorte familia en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mParticipantesCHF = null;
+                publishProgress("Insertando participantes CHF", PARTICIPANTE_CHF, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertParticipantesChfBySql(mParticipantesCHF);
             }
             if (mParticipantesSA != null){
-                v = mParticipantesSA.size();
-                ListIterator<ParticipanteSeroprevalencia> iter = mParticipantesSA.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearParticipanteSeroprevalencia(iter.next());
-                    publishProgress("Insertando participantes seroprevalencia en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mParticipantesSA = null;
+                publishProgress("Insertando participantes SA", PARTICIPANTE_SA, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertParticipantesSABySql(mParticipantesSA);
             }
             if (mContactosParticipante != null){
-                v = mContactosParticipante.size();
-                ListIterator<ContactoParticipante> iter = mContactosParticipante.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearContactoParticipante(iter.next());
-                    publishProgress("Insertando teléfonos participantes en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mContactosParticipante = null;
+                publishProgress("Insertando contactos participantes", CONTACTOS_PART, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertContactoParticipantesBySql(mContactosParticipante);
             }
-
+            if (mParticipantesCovid != null){
+                publishProgress("Insertando contactos participantes", PARTICIPANTE_CV, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.PARTICIPANTE_COVID_TABLE, mParticipantesCovid);
+            }
         } catch (Exception e) {
 			// Regresa error al insertar
 			e.printStackTrace();
@@ -314,7 +244,6 @@ public class DownloadBaseTask extends DownloadTask {
         }
 		return error;
 	}
-
 
     // url, username, password
     protected String descargarCatalogos() throws Exception {
@@ -347,7 +276,6 @@ public class DownloadBaseTask extends DownloadTask {
             return e.getLocalizedMessage();
         }
     }
-
 
     // url, username, password
     protected String descargarUsuarios() throws Exception {
@@ -601,56 +529,38 @@ public class DownloadBaseTask extends DownloadTask {
             return e.getLocalizedMessage();
         }
     }
-    private void addUsuarios(List<UserSistema> usuarios) throws Exception {
-        int v = usuarios.size();
-        ListIterator<UserSistema> iter = usuarios.listIterator();
 
-        while (iter.hasNext()){
-            UserSistema usuario = iter.next();
-            if (!estudioAdapter.existeUsuario(usuario.getUsername())){
-                estudioAdapter.crearUsuario(usuario);
-            }
-            else{
-                estudioAdapter.actualizarUsuario(usuario);
-            }
-            publishProgress("Insertando Usuarios", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                    .valueOf(v).toString());
+    // url, username, password
+    protected String descargarParticipantesCovid() throws Exception {
+        try {
+            // The URL for making the GET request
+            String urlRequest;
+            // Set the Accept header for "application/json"
+            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+            HttpHeaders requestHeaders = new HttpHeaders();
+            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+            requestHeaders.setAccept(acceptableMediaTypes);
+            requestHeaders.setAuthorization(authHeader);
+            // Populate the headers in an HttpEntity object to use for the request
+            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+
+            //Descargar participantes seroprevalencia
+            urlRequest = url + "/movil/participantesCovid19/";
+            publishProgress("Solicitando participantes covid",PARTICIPANTE_CV,TOTAL_TASK_GENERALES);
+            // Perform the HTTP GET request
+            ResponseEntity<ParticipanteCovid19[]> responseEntityCovid = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    ParticipanteCovid19[].class);
+            // convert the array to a list and return it
+            mParticipantesCovid = Arrays.asList(responseEntityCovid.getBody());
+            responseEntityCovid = null;
+            return null;
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getLocalizedMessage();
         }
     }
-
-    private void addRoles(List<Authority> roles) throws Exception {
-
-        int v = roles.size();
-
-        ListIterator<Authority> iter = roles.listIterator();
-
-        while (iter.hasNext()){
-            estudioAdapter.crearRol(iter.next());
-            publishProgress("Insertando Roles", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                    .valueOf(v).toString());
-        }
-
-    }
-
-    private void addPermisos(List<UserPermissions> permisos) throws Exception {
-        int v = permisos.size();
-        ListIterator<UserPermissions> iter = permisos.listIterator();
-
-        while (iter.hasNext()){
-            estudioAdapter.crearPermisosUsuario(iter.next());
-            publishProgress("Insertando Permisos", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                    .valueOf(v).toString());
-        }
-    }
-
-    private void addParticipantesProcesos(List<ParticipanteProcesos> participantes) throws Exception {
-        int v = participantes.size();
-        ListIterator<ParticipanteProcesos> iter = participantes.listIterator();
-        while (iter.hasNext()){
-            estudioAdapter.crearParticipanteProcesos(iter.next());
-            publishProgress("Insertando Procesos de Participantes", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                    .valueOf(v).toString());
-        }
-    }
-
 }

@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.chf.casos;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.FormularioContactoCaso;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -47,6 +48,21 @@ public class FormularioContactoCasoHelper {
         mFormularioContactoCaso.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mFormularioContactoCaso.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mFormularioContactoCaso;
+    }
+
+    public static void fillFormularioContactoCasoStatement(SQLiteStatement stat, FormularioContactoCaso contactoCaso){
+        stat.bindString(1, contactoCaso.getCodigoCasoContacto());
+        stat.bindString(2, contactoCaso.getCodigoVisitaCaso().getCodigoCasoVisita());
+        stat.bindLong(3, contactoCaso.getPartContacto().getParticipante().getCodigo());
+        if (contactoCaso.getFechaContacto() != null) stat.bindLong(4, contactoCaso.getFechaContacto().getTime());
+        if (contactoCaso.getTiempoInteraccion() != null) stat.bindString(5, contactoCaso.getTiempoInteraccion());
+        if (contactoCaso.getTipoInteraccion() != null) stat.bindString(6, contactoCaso.getTipoInteraccion());
+
+        if (contactoCaso.getRecordDate() != null) stat.bindLong(7, contactoCaso.getRecordDate().getTime());
+        if (contactoCaso.getRecordUser() != null) stat.bindString(8, contactoCaso.getRecordUser());
+        stat.bindString(9, String.valueOf(contactoCaso.getPasive()));
+        if (contactoCaso.getDeviceid() != null) stat.bindString(10, contactoCaso.getDeviceid());
+        stat.bindString(11, String.valueOf(contactoCaso.getEstado()));
     }
 	
 }

@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.covid19;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
 import ni.org.ics.estudios.appmovil.utils.Covid19DBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -46,5 +47,21 @@ public class ParticipanteCasoCovid19Helper {
         mParticipanteCasoCovid19.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mParticipanteCasoCovid19.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mParticipanteCasoCovid19;
+    }
+
+    public static void fillParticipanteCasoCovid19Statement(SQLiteStatement stat, ParticipanteCasoCovid19 participanteCaso){
+        if (participanteCaso.getCodigoCasoParticipante() != null) stat.bindString(1, participanteCaso.getCodigoCasoParticipante());
+        if (participanteCaso.getCodigoCaso() != null) stat.bindString(2, participanteCaso.getCodigoCaso().getCodigoCaso());
+        if (participanteCaso.getParticipante() != null) stat.bindLong(3, participanteCaso.getParticipante().getCodigo());
+        if (participanteCaso.getEnfermo() != null) stat.bindString(4, participanteCaso.getEnfermo());
+        if (participanteCaso.getPositivoPor() != null) stat.bindString(5, participanteCaso.getPositivoPor());
+        if (participanteCaso.getFis() != null) stat.bindLong(6, participanteCaso.getFis().getTime());
+        if (participanteCaso.getFif() != null) stat.bindLong(7, participanteCaso.getFif().getTime());
+        if (participanteCaso.getConsentimiento() != null) stat.bindString(8, participanteCaso.getConsentimiento());
+        if (participanteCaso.getRecordDate() != null) stat.bindLong(9, participanteCaso.getRecordDate().getTime());
+        if (participanteCaso.getRecordUser() != null) stat.bindString(10, participanteCaso.getRecordUser());
+        stat.bindString(11, String.valueOf(participanteCaso.getPasive()));
+        stat.bindString(12, String.valueOf(participanteCaso.getEstado()));
+        if (participanteCaso.getDeviceid() != null) stat.bindString(13, participanteCaso.getDeviceid());
     }
 }

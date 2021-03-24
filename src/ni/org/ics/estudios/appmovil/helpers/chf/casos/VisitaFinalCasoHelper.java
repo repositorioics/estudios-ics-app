@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.chf.casos;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -77,6 +78,36 @@ public class VisitaFinalCasoHelper {
         mVisitaFinalCaso.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mVisitaFinalCaso.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mVisitaFinalCaso;
+    }
+
+    public static void fillVisitaFinalCasoStatement(SQLiteStatement stat, VisitaFinalCaso visitaFinalCaso){
+        stat.bindString(1, visitaFinalCaso.getCodigoParticipanteCaso().getCodigoCasoParticipante());
+        if (visitaFinalCaso.getFechaVisita() != null) stat.bindLong(2, visitaFinalCaso.getFechaVisita().getTime());
+        if (visitaFinalCaso.getEnfermo() != null) stat.bindString(3, visitaFinalCaso.getEnfermo());
+        if (visitaFinalCaso.getConsTerreno() != null) stat.bindString(4, visitaFinalCaso.getConsTerreno());
+        if (visitaFinalCaso.getReferidoCs() != null) stat.bindString(5, visitaFinalCaso.getReferidoCs());
+        if (visitaFinalCaso.getTratamiento() != null) stat.bindString(6, visitaFinalCaso.getTratamiento());
+        if (visitaFinalCaso.getCualAntibiotico() != null) stat.bindString(7, visitaFinalCaso.getCualAntibiotico());
+        if (visitaFinalCaso.getSintResp() != null) stat.bindString(8, visitaFinalCaso.getSintResp());
+        if (visitaFinalCaso.getFiebre() != null) stat.bindString(9, visitaFinalCaso.getFiebre());
+        if (visitaFinalCaso.getTos() != null) stat.bindString(10, visitaFinalCaso.getTos());
+        if (visitaFinalCaso.getDolorGarganta() != null) stat.bindString(11, visitaFinalCaso.getDolorGarganta());
+        if (visitaFinalCaso.getSecrecionNasal() != null) stat.bindString(12, visitaFinalCaso.getSecrecionNasal());
+
+        if (visitaFinalCaso.getFif() != null) stat.bindLong(13, visitaFinalCaso.getFif().getTime());
+        if (visitaFinalCaso.getFff() != null) stat.bindLong(14, visitaFinalCaso.getFff().getTime());
+        if (visitaFinalCaso.getFitos() != null) stat.bindLong(15, visitaFinalCaso.getFitos().getTime());
+        if (visitaFinalCaso.getFftos() != null) stat.bindLong(16, visitaFinalCaso.getFftos().getTime());
+        if (visitaFinalCaso.getFigg() != null) stat.bindLong(17, visitaFinalCaso.getFigg().getTime());
+        if (visitaFinalCaso.getFfgg() != null) stat.bindLong(18, visitaFinalCaso.getFfgg().getTime());
+        if (visitaFinalCaso.getFisn() != null) stat.bindLong(19, visitaFinalCaso.getFisn().getTime());
+        if (visitaFinalCaso.getFfsn() != null) stat.bindLong(20, visitaFinalCaso.getFfsn().getTime());
+
+        if (visitaFinalCaso.getRecordDate() != null) stat.bindLong(21, visitaFinalCaso.getRecordDate().getTime());
+        if (visitaFinalCaso.getRecordUser() != null) stat.bindString(22, visitaFinalCaso.getRecordUser());
+        stat.bindString(23, String.valueOf(visitaFinalCaso.getPasive()));
+        if (visitaFinalCaso.getDeviceid() != null) stat.bindString(24, visitaFinalCaso.getDeviceid());
+        stat.bindString(25, String.valueOf(visitaFinalCaso.getEstado()));
     }
 
 }

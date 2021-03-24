@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.covid19;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCovid19;
 import ni.org.ics.estudios.appmovil.utils.Covid19DBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -33,5 +34,14 @@ public class ParticipanteCovid19Helper {
         mParticipanteCasoCovid19.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mParticipanteCasoCovid19.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mParticipanteCasoCovid19;
+    }
+
+    public static void fillParticipanteCovid19Statement(SQLiteStatement stat, ParticipanteCovid19 participanteCaso){
+        stat.bindLong(1, participanteCaso.getParticipante().getCodigo());
+        if (participanteCaso.getRecordDate() != null) stat.bindLong(2, participanteCaso.getRecordDate().getTime());
+        if (participanteCaso.getRecordUser() != null) stat.bindString(3, participanteCaso.getRecordUser());
+        stat.bindString(4, String.valueOf(participanteCaso.getPasive()));
+        if (participanteCaso.getDeviceid() != null) stat.bindString(5, participanteCaso.getDeviceid());
+        stat.bindString(6, String.valueOf(participanteCaso.getEstado()));
     }
 }

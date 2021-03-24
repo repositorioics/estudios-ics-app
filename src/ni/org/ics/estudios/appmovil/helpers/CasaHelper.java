@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import java.util.Date;
 
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
@@ -50,5 +51,23 @@ public class CasaHelper {
 		mCasa.setDeviceid(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.deviceId)));
 		return mCasa;
 	}
-	
+
+	public static void fillCasaStatement(SQLiteStatement stat, Casa casa){
+		stat.bindLong(1, casa.getCodigo());
+		stat.bindLong(2, casa.getBarrio().getCodigo());
+		stat.bindString(3, casa.getDireccion());
+		stat.bindString(4, casa.getManzana());
+		if (casa.getLatitud() != null) stat.bindDouble(5, casa.getLatitud());
+		if (casa.getLongitud() != null) stat.bindDouble(6, casa.getLongitud());
+		stat.bindString(7, casa.getNombre1JefeFamilia());
+		if (casa.getNombre2JefeFamilia() != null) stat.bindString(8, casa.getNombre2JefeFamilia());
+		stat.bindString(9, casa.getApellido1JefeFamilia());
+		if (casa.getApellido2JefeFamilia() != null) stat.bindString(10, casa.getApellido2JefeFamilia());
+		if (casa.getRecordDate() != null) stat.bindLong(11, casa.getRecordDate().getTime());
+		if (casa.getRecordUser() != null) stat.bindString(12, casa.getRecordUser());
+		stat.bindString(13, String.valueOf(casa.getPasive()));
+		stat.bindString(14, String.valueOf(casa.getEstado()));
+		if (casa.getDeviceid() != null) stat.bindString(15, casa.getDeviceid());
+	}
+
 }

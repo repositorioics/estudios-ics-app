@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.covid19;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.covid19.CandidatoTransmisionCovid19;
 import ni.org.ics.estudios.appmovil.domain.covid19.DatosAislamientoVisitaCasoCovid19;
 import ni.org.ics.estudios.appmovil.utils.Covid19DBConstants;
@@ -53,5 +54,25 @@ public class DatosAislamientoVisitaCasoCovid19Helper {
         mCandidato.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mCandidato.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mCandidato;
+    }
+
+    public static void fillDatosAislamientoVisitaCasoCovid19Statement(SQLiteStatement stat, DatosAislamientoVisitaCasoCovid19 aislamientoVisitaCasoCovid19){
+        if (aislamientoVisitaCasoCovid19.getCodigoAislamiento() != null) stat.bindString(1, aislamientoVisitaCasoCovid19.getCodigoAislamiento());
+        if (aislamientoVisitaCasoCovid19.getCodigoCasoVisita() != null) stat.bindString(2, aislamientoVisitaCasoCovid19.getCodigoCasoVisita().getCodigoCasoVisita());
+        if (aislamientoVisitaCasoCovid19.getFechaDato() != null) stat.bindLong(3, aislamientoVisitaCasoCovid19.getFechaDato().getTime());
+        if (aislamientoVisitaCasoCovid19.getAislado() != null) stat.bindString(4, aislamientoVisitaCasoCovid19.getAislado());
+        if (aislamientoVisitaCasoCovid19.getDormirSoloComparte() != null) stat.bindString(5, aislamientoVisitaCasoCovid19.getDormirSoloComparte());
+        if (aislamientoVisitaCasoCovid19.getBanioPropioComparte() != null) stat.bindString(6, aislamientoVisitaCasoCovid19.getBanioPropioComparte());
+        if (aislamientoVisitaCasoCovid19.getAlejadoFamilia() != null) stat.bindString(7, aislamientoVisitaCasoCovid19.getAlejadoFamilia());
+        if (aislamientoVisitaCasoCovid19.getTieneContacto() != null) stat.bindString(8, aislamientoVisitaCasoCovid19.getTieneContacto());
+        if (aislamientoVisitaCasoCovid19.getConQuienTieneContacto() != null) stat.bindString(9, aislamientoVisitaCasoCovid19.getConQuienTieneContacto());
+        if (aislamientoVisitaCasoCovid19.getLugares() != null) stat.bindString(10, aislamientoVisitaCasoCovid19.getLugares());
+        if (aislamientoVisitaCasoCovid19.getOtrosLugares() != null) stat.bindString(11, aislamientoVisitaCasoCovid19.getOtrosLugares());
+
+        if (aislamientoVisitaCasoCovid19.getRecordDate() != null) stat.bindLong(12, aislamientoVisitaCasoCovid19.getRecordDate().getTime());
+        if (aislamientoVisitaCasoCovid19.getRecordUser() != null) stat.bindString(13, aislamientoVisitaCasoCovid19.getRecordUser());
+        stat.bindString(14, String.valueOf(aislamientoVisitaCasoCovid19.getPasive()));
+        if (aislamientoVisitaCasoCovid19.getDeviceid() != null) stat.bindString(15, aislamientoVisitaCasoCovid19.getDeviceid());
+        stat.bindString(16, String.valueOf(aislamientoVisitaCasoCovid19.getEstado()));
     }
 }

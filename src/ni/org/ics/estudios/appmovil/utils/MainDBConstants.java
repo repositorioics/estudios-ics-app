@@ -764,4 +764,226 @@ public class MainDBConstants {
             + estado + " text not null, "
             + "primary key (" + id + "));";
 
+    /**BULLCK INSERT**/
+
+    public static final String INSERT_PARTICIPANTE_TABLE = "insert into " + PARTICIPANTE_TABLE + "("
+            + codigo + ","
+            + nombre1 + ","
+            + nombre2 + ","
+            + apellido1 + ","
+            + apellido2 + ","
+            + sexo + ","
+            + fechaNac + ","
+            + nombre1Padre + ","
+            + nombre2Padre + ","
+            + apellido1Padre + ","
+            + apellido2Padre + ","
+            + nombre1Madre + ","
+            + nombre2Madre + ","
+            + apellido1Madre + ","
+            + apellido2Madre + ","
+            + casa + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") " + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    //Crear tabla usuarios
+    public static final String INSERT_USER_TABLE = "insert into "
+            + USER_TABLE + " ("
+            + username + ","
+            + created + ","
+            + modified + ","
+            + lastAccess + ","
+            + password + ","
+            + completeName + ","
+            + email + ","
+            + enabled  + ","
+            + accountNonExpired  + ","
+            + credentialsNonExpired  + ","
+            + lastCredentialChange + ","
+            + accountNonLocked  + ","
+            + createdBy + ","
+            + modifiedBy
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    public static final String INSERT_ROLE_TABLE = "insert into "
+            + ROLE_TABLE + " ("
+            + username + ","
+            + role
+            + ") values (?,?)";
+
+    //Crear tabla casas
+    public static final String INSERT_CASA_TABLE = "insert into "
+            + CASA_TABLE + " ("
+            + codigo + ","
+            + barrio + ","
+            + direccion + ","
+            + manzana + ","
+            + latitud + ","
+            + longitud + ","
+            + nombre1JefeFamilia + ","
+            + nombre2JefeFamilia + ","
+            + apellido1JefeFamilia + ","
+            + apellido2JefeFamilia + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    public static final String INSERT_CASA_CHF_TABLE = "insert into "
+            + CASA_CHF_TABLE + " ("
+            + codigoCHF + ","
+            + casa + ","
+            + nombre1JefeFamilia + ","
+            + nombre2JefeFamilia + ","
+            + apellido1JefeFamilia + ","
+            + apellido2JefeFamilia + ","
+            + latitud + ","
+            + longitud + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    public static final String INSERT_PARTICIPANTE_CHF_TABLE = "insert into "
+            + PARTICIPANTE_CHF_TABLE + " ("
+            + participante + ","
+            + casaCHF + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?)";
+
+    public static final String INSERT_CONTACTO_PARTICIPANTE_TABLE = "insert into "
+            + CONTACTO_PARTICIPANTE_TABLE + " ("
+            + id + ","
+            + nombre1 + ","
+            + direccion + ","
+            + barrio + ","
+            + numero1 + ","
+            + operadora1 + ","
+            + tipo1 + ","
+            + numero2 + ","
+            + operadora2 + ","
+            + tipo2 + ","
+            + numero3 + ","
+            + operadora3 + ","
+            + tipo3 + ","
+            + esPropio + ","
+            + otroBarrio + ","
+            + participante + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    public static final String INSERT_AREA_AMBIENTE_TABLE = "insert into "
+            + AREA_AMBIENTE_TABLE + " ("
+            + codigo + ","
+            + casa + ","
+            + largo + ","
+            + ancho + ","
+            + totalM2 + ","
+            + numVentanas + ","
+            + tipo + ","
+            + conVentana + ","
+            + cantidadCamas + ","
+            + areaAmbiente + ","
+            + abierta + ","
+            + codigoHabitacion + ","
+            + numeroCuarto + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    public static final String INSERT_CUARTO_TABLE = "insert into "
+            + CUARTO_TABLE + " ("
+            + codigo + ","
+            + casa + ","
+            + cantidadCamas + ","
+            + codigoHabitacion + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?)";
+
+    public static final String INSERT_CAMA_TABLE = "insert into "
+            + CAMA_TABLE + " ("
+            + codigoCama + ","
+            + habitacion + ","
+            + descCama + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?)";
+
+    public static final String INSERT_PERSONACAMA_TABLE = "insert into "
+            + PERSONACAMA_TABLE + " ("
+            + codigoPersona + ","
+            + cama + ","
+            + estaEnEstudio + ","
+            + participante + ","
+            + edad + ","
+            + sexo + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?)";
+
+    public static final String INSERT_TELEFONO_CONTACTO_TABLE = "insert into "
+            + TELEFONO_CONTACTO_TABLE + " ("
+            + id + ","
+            + numero + ","
+            + operadora + ","
+            + tipotel + ","
+            + casa + ","
+            + participante + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?)";
+
+    public static final String INSERT_OBSEQUIOS_TABLE = "insert into "
+            + OBSEQUIOS_TABLE + " ("
+            + id + ","
+            + participante + ","
+            + casa + ","
+            + casaCHF + ","
+            + seguimiento + ","
+            + numVisitaSeguimiento + ","
+            + motivo + ","
+            + obsequioSN + ","
+            + personaRecibe + ","
+            + relacionFam + ","
+            + otraRelacionFam + ","
+            + telefono + ","
+            + observaciones + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 }

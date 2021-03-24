@@ -186,4 +186,18 @@ public class SeroprevalenciaDBConstants {
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigo + "));";
 
+
+    /****BULK INSERT***/
+
+    public static final String INSERT_PARTICIPANTESA_TABLE = "insert into "
+            + PARTICIPANTESA_TABLE + " ("
+            + participante + ","
+            + casaCHF + ","
+            + MainDBConstants.recordDate + ","
+            + MainDBConstants.recordUser + ","
+            + MainDBConstants.pasive + ","
+            + MainDBConstants.deviceId + ","
+            + MainDBConstants.estado
+            + ") values (?,?,?,?,?,?,?)";
+
 }

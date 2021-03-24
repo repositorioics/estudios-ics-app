@@ -67,8 +67,8 @@
     <string name="sample_paxgene_missing">Tomar muestra Paxgene</string>
     <string name="retoma">Es retoma de muestra, volumen requerido</string>
     <string name="confirm_pendiente">Hay datos pendientes, confirma que desea salir?</string>
-    <string name="convless14">Convalesciente con menos de 14 días. No tomar muestra</string>
-    <string name="convmore14">Tomar muestra de convalesciente.</string>
+    <string name="convless14">Convaleciente con menos de 14 días. No tomar muestra</string>
+    <string name="convmore14">Tomar muestra de convaleciente.</string>
     <string name="reconsflu_missing">Realizar Reconsentimiento Influenza</string>
     <string name="retired_error">El participante está retirado. Anote el código para reportar al supervisor en caso de ser necesario.</string>
     <string name="housechf_survey_missing">Realizar encuesta de casa Chf</string>

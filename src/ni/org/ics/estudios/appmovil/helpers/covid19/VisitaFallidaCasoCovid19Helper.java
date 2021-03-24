@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.covid19;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFallidaCaso;
 import ni.org.ics.estudios.appmovil.domain.covid19.VisitaFallidaCasoCovid19;
 import ni.org.ics.estudios.appmovil.utils.Covid19DBConstants;
@@ -48,6 +49,21 @@ public class VisitaFallidaCasoCovid19Helper {
         mVisitaFallidaCaso.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mVisitaFallidaCaso.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mVisitaFallidaCaso;
+    }
+
+    public static void fillVisitaFallidaCasoCovid19Statement(SQLiteStatement stat, VisitaFallidaCasoCovid19 visitaFallida){
+        if (visitaFallida.getCodigoFallaVisita() != null) stat.bindString(1, visitaFallida.getCodigoFallaVisita());
+        if (visitaFallida.getCodigoParticipanteCaso() != null) stat.bindString(2, visitaFallida.getCodigoParticipanteCaso().getCodigoCasoParticipante());
+        if (visitaFallida.getFechaVisita() != null) stat.bindLong(3, visitaFallida.getFechaVisita().getTime());
+        if (visitaFallida.getRazonVisitaFallida() != null) stat.bindString(4, visitaFallida.getRazonVisitaFallida());
+        if (visitaFallida.getOtraRazon() != null) stat.bindString(5, visitaFallida.getOtraRazon());
+        if (visitaFallida.getVisita() != null) stat.bindString(6, visitaFallida.getVisita());
+
+        if (visitaFallida.getRecordDate() != null) stat.bindLong(7, visitaFallida.getRecordDate().getTime());
+        if (visitaFallida.getRecordUser() != null) stat.bindString(8, visitaFallida.getRecordUser());
+        stat.bindString(9, String.valueOf(visitaFallida.getPasive()));
+        if (visitaFallida.getDeviceid() != null) stat.bindString(10, visitaFallida.getDeviceid());
+        stat.bindString(11, String.valueOf(visitaFallida.getEstado()));
     }
 
 }

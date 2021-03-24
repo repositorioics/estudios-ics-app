@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import java.util.Date;
 
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.AuthorityId;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
@@ -129,5 +130,44 @@ public class UserSistemaHelper {
         mUser.setCasazika(casazika);
         mUser.setDatosparto(parto);
         return mUser;
+    }
+
+    public static void fillUserSistemaStatement(SQLiteStatement stat, UserSistema userSistema) {
+        stat.bindString(1, userSistema.getUsername());
+        if (userSistema.getCreated() != null)	stat.bindLong(2, userSistema.getCreated().getTime());
+        if (userSistema.getModified() != null) stat.bindLong(3, userSistema.getModified().getTime());
+        stat.bindString(4, String.valueOf(userSistema.getLastAccess()));
+        stat.bindString(5, userSistema.getPassword());
+        stat.bindString(6, userSistema.getCompleteName());
+        if (userSistema.getEmail() != null)	stat.bindString(7, userSistema.getEmail());
+        stat.bindString(8, String.valueOf(userSistema.getEnabled()));
+        stat.bindLong(9, (userSistema.getAccountNonExpired()? 1 : 0));
+        stat.bindLong(10, (userSistema.getCredentialsNonExpired()? 1 : 0));
+        stat.bindLong(11, (userSistema.getAccountNonLocked()? 1 : 0));
+        stat.bindString(12, userSistema.getCreatedBy());
+        stat.bindString(13, userSistema.getModifiedBy());
+    }
+
+    public static void fillRoleStatement(SQLiteStatement stat, Authority remoteappinfo) {
+        stat.bindString(1, remoteappinfo.getAuthId().getUsername());
+        stat.bindString(2, remoteappinfo.getAuthId().getAuthority());
+    }
+
+    public static void fillUserPermissionStatement(SQLiteStatement stat, UserPermissions userPermissions) {
+        stat.bindString(1, userPermissions.getUsername());
+        stat.bindLong(2, (userPermissions.getMuestra()?1:0));
+        stat.bindLong(3, (userPermissions.getEncuestaCasa()?1:0));
+        stat.bindLong(4, (userPermissions.getEncuestaParticipante()?1:0));
+        stat.bindLong(5, (userPermissions.getEncuestaLactancia()?1:0));
+        stat.bindLong(6, (userPermissions.getEncuestaSatisfaccion()?1:0));
+        stat.bindLong(7, (userPermissions.getObsequio()?1:0));
+        stat.bindLong(8, (userPermissions.getPesoTalla()?1:0));
+        stat.bindLong(9, (userPermissions.getVacunas()?1:0));
+        stat.bindLong(10, (userPermissions.getVisitas()?1:0));
+        stat.bindLong(11, (userPermissions.getRecepcion()?1:0));
+        stat.bindLong(12, (userPermissions.getConsentimiento()?1:0));
+        stat.bindLong(13, (userPermissions.getCasazika()?1:0));
+        stat.bindLong(14, (userPermissions.getTamizajezika()?1:0));
+        stat.bindLong(15, (userPermissions.getDatosparto()?1:0));
     }
 }

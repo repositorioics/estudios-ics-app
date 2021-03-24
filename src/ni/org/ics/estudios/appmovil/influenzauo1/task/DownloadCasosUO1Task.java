@@ -13,6 +13,7 @@ import ni.org.ics.estudios.appmovil.domain.influenzauo1.SintomasVisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
+import ni.org.ics.estudios.appmovil.utils.InfluenzaUO1DBConstants;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -82,54 +83,24 @@ public class DownloadCasosUO1Task extends DownloadTask {
             estudioAdapter.borrarVisitaVacunaUO1();
             estudioAdapter.borrarSintomasVisitaCasoUO1();
             if (mParticipantesUO1 != null){
-                v = mParticipantesUO1.size();
-                ListIterator<ParticipanteCasoUO1> iter = mParticipantesUO1.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearParticipanteCasoUO1(iter.next());
-                    publishProgress("Insertando positivos UO1 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mParticipantesUO1 = null;
+                publishProgress("Insertando positivos UO1 en la base de datos...", PARTICIPANTE_UO1, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertU01BySql(InfluenzaUO1DBConstants.UO1_PARTICIPANTES_CASOS_TABLE, mParticipantesUO1);
             }
             if (mVisitasUO1 != null){
-                v = mVisitasUO1.size();
-                ListIterator<VisitaCasoUO1> iter = mVisitasUO1.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearVisitaCasoUO1(iter.next());
-                    publishProgress("Insertando visitas de casos UO1 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mVisitasUO1 = null;
+                publishProgress("Insertando visitas de casos UO1 en la base de datos...", VISITAS_UO1, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertU01BySql(InfluenzaUO1DBConstants.UO1_VISITAS_CASOS_TABLE, mVisitasUO1);
             }
             if (mVisitasVacunasUO1 != null){
-                v = mVisitasVacunasUO1.size();
-                ListIterator<VisitaVacunaUO1> iter = mVisitasVacunasUO1.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearVisitaVacunaUO1(iter.next());
-                    publishProgress("Insertando visitas de vacunas UO1 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mVisitasVacunasUO1 = null;
+                publishProgress("Insertando visitas de vacunas UO1 en la base de datos...", VISITAS_VAC_UO1, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertU01BySql(InfluenzaUO1DBConstants.UO1_VISITAS_VACUNAS_TABLE, mVisitasVacunasUO1);
             }
             if (mMuestras != null){
-                v = mMuestras.size();
-                ListIterator<Muestra> iter = mMuestras.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearMuestras(iter.next());
-                    publishProgress("Insertando muestras de casos UO1 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mMuestras = null;
+                publishProgress("Insertando muestras de casos UO1 en la base de datos...", MUESTRAS_UO1, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertMuestrasChfBySql(mMuestras);
             }
             if (mSintomas != null){
-                v = mSintomas.size();
-                ListIterator<SintomasVisitaCasoUO1> iter = mSintomas.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearSintomasVisitaCasoUO1(iter.next());
-                    publishProgress("Insertando sintomas de casos UO1 en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mSintomas = null;
+                publishProgress("Insertando sintomas de casos UO1 en la base de datos...", SINTOMAS_UO1, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertU01BySql(InfluenzaUO1DBConstants.UO1_SINTOMAS_VISITA_CASO_TABLE,mSintomas);
             }
         } catch (Exception e) {
             // Regresa error al insertar

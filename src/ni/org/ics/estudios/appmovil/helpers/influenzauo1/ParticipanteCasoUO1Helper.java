@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.influenzauo1;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.utils.InfluenzaUO1DBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -46,6 +47,22 @@ public class ParticipanteCasoUO1Helper {
         mParticipanteCasoUO1.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mParticipanteCasoUO1.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mParticipanteCasoUO1;
+    }
+
+    public static void fillParticipanteCasoUO1Statement(SQLiteStatement stat, ParticipanteCasoUO1 part){
+        stat.bindString(1, part.getCodigoCasoParticipante());
+        if (part.getParticipante()!=null) stat.bindLong(2, part.getParticipante().getCodigo());
+        if (part.getPositivoPor() != null) stat.bindString(3, part.getPositivoPor());
+        if (part.getFif() != null) stat.bindLong(4, part.getFif().getTime());
+        if (part.getFechaIngreso() != null) stat.bindLong(5, part.getFechaIngreso().getTime());
+        if (part.getFechaDesactivacion() != null) stat.bindLong(6, part.getFechaDesactivacion().getTime());
+        if (part.getActivo() != null) stat.bindString(7, part.getActivo());
+
+        if (part.getRecordDate() != null) stat.bindLong(8, part.getRecordDate().getTime());
+        if (part.getRecordUser() != null) stat.bindString(9, part.getRecordUser());
+        stat.bindString(10, String.valueOf(part.getPasive()));
+        if (part.getDeviceid() != null) stat.bindString(11, part.getDeviceid());
+        stat.bindString(12, String.valueOf(part.getEstado()));
     }
 
 }

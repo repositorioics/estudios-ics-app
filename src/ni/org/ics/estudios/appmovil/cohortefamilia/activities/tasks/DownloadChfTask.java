@@ -34,9 +34,6 @@ public class DownloadChfTask extends DownloadTask {
 	protected static final String TAG = DownloadChfTask.class.getSimpleName();
 	private EstudiosAdapter estudioAdapter = null;
 	
-    //private List<CasaCohorteFamilia> mCasasCHF = null;
-    //private List<ParticipanteCohorteFamilia> mParticipantesCHF = null;
-    private List<EncuestaCasa> mEncuestasCasas = null;
     private List<Cocina> mCocinas = null;
     private List<Comedor> mComedores = null;
     private List<Sala> mSalas = null;
@@ -47,22 +44,17 @@ public class DownloadChfTask extends DownloadTask {
     private List<Cama> mCamas = null;
     private List<PersonaCama> mPersonaCamas = null;
     
+    public static final String COCINA = "1";
+    public static final String COMEDOR = "2";
+    public static final String SALA = "3";
+    public static final String HABITACION = "4";
+    public static final String BANIOS = "5";
+    public static final String VENTANAS = "6";
+    public static final String CUARTOS = "7";
+    public static final String CAMAS = "8";
+    public static final String PERSONAS_CAMA = "9";
     
-    
-	public static final String CASACHF = "1";
-    public static final String PARTICIPANTECHF = "2";
-    public static final String ENCUESTA_CASACHF = "3";
-    public static final String COCINA = "4";
-    public static final String COMEDOR = "5";
-    public static final String SALA = "6";
-    public static final String HABITACION = "7";
-    public static final String BANIOS = "8";
-    public static final String VENTANAS = "9";
-    public static final String CUARTOS = "10";
-    public static final String CAMAS = "11";
-    public static final String PERSONAS_CAMA = "12";
-    
-    private static final String TOTAL_TASK_RECLUTAMIENTO = "12";
+    private static final String TOTAL_TASK_RECLUTAMIENTO = "9";
     
 	private String error = null;
 	private String url = null;
@@ -96,125 +88,41 @@ public class DownloadChfTask extends DownloadTask {
         estudioAdapter.borrarCamas();
         estudioAdapter.borrarPersonasCama();
         try {
-            /*if (mCasasCHF != null){
-                v = mCasasCHF.size();
-                ListIterator<CasaCohorteFamilia> iter = mCasasCHF.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearCasaCohorteFamilia(iter.next());
-                    publishProgress("Insertando casas cohorte familia en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mCasasCHF = null;
-            }
-            if (mParticipantesCHF != null){
-                v = mParticipantesCHF.size();
-                ListIterator<ParticipanteCohorteFamilia> iter = mParticipantesCHF.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearParticipanteCohorteFamilia(iter.next());
-                    publishProgress("Insertando participantes cohorte familia en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mParticipantesCHF = null;
-            }*/
-            if (mEncuestasCasas != null){
-                v = mEncuestasCasas.size();
-                ListIterator<EncuestaCasa> iter = mEncuestasCasas.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearEncuestaCasa(iter.next());
-                    publishProgress("Insertando encuestas de casas en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mEncuestasCasas = null;
-            }
             if (mCocinas != null){
-                v = mCocinas.size();
-                ListIterator<Cocina> iter = mCocinas.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearCocina(iter.next());
-                    publishProgress("Insertando cocinas en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mCocinas = null;
+                estudioAdapter.bulkInsertCocinasBySql(mCocinas);
+                publishProgress("Insertando cocinas en la base de datos...", COCINA, TOTAL_TASK_RECLUTAMIENTO);
             }
             if (mComedores != null){
-                v = mComedores.size();
-                ListIterator<Comedor> iter = mComedores.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearComedor(iter.next());
-                    publishProgress("Insertando comedores en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mComedores = null;
+                estudioAdapter.bulkInsertComedoresBySql(mComedores);
+                publishProgress("Insertando comedores en la base de datos...", COMEDOR, TOTAL_TASK_RECLUTAMIENTO);
             }
             if (mSalas != null){
-                v = mSalas.size();
-                ListIterator<Sala> iter = mSalas.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearSala(iter.next());
-                    publishProgress("Insertando salas en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mSalas = null;
+                estudioAdapter.bulkInsertSalasBySql(mSalas);
+                publishProgress("Insertando salas en la base de datos...", SALA, TOTAL_TASK_RECLUTAMIENTO);
             }
             if (mHabitaciones != null){
-                v = mHabitaciones.size();
-                ListIterator<Habitacion> iter = mHabitaciones.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearHabitacion(iter.next());
-                    publishProgress("Insertando habitaciones en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mHabitaciones = null;
+                estudioAdapter.bulkInsertHabitacionesBySql(mHabitaciones);
+                publishProgress("Insertando habitaciones en la base de datos...", HABITACION, TOTAL_TASK_RECLUTAMIENTO);
             }
             if (mBanios != null){
-                v = mBanios.size();
-                ListIterator<Banio> iter = mBanios.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearBanio(iter.next());
-                    publishProgress("Insertando baños en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mBanios = null;
+                estudioAdapter.bulkInsertBaniosBySql(mBanios);
+                publishProgress("Insertando baños en la base de datos...", BANIOS, TOTAL_TASK_RECLUTAMIENTO);
             }
             if (mVentanas != null){
-                v = mVentanas.size();
-                ListIterator<Ventana> iter = mVentanas.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearVentana(iter.next());
-                    publishProgress("Insertando ventanas en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mVentanas = null;
+                estudioAdapter.bulkInsertVentanasBySql(mVentanas);
+                publishProgress("Insertando ventanas en la base de datos...", VENTANAS, TOTAL_TASK_RECLUTAMIENTO);
             }
             if (mCuartos != null){
-                v = mCuartos.size();
-                ListIterator<Cuarto> iter = mCuartos.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearCuarto(iter.next());
-                    publishProgress("Insertando cuartos en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mCuartos = null;
+                estudioAdapter.bulkInsertCuartosBySql(mCuartos);
+                publishProgress("Insertando cuartos en la base de datos...", CUARTOS, TOTAL_TASK_RECLUTAMIENTO);
             }
             if (mCamas != null){
-                v = mCamas.size();
-                ListIterator<Cama> iter = mCamas.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearCama(iter.next());
-                    publishProgress("Insertando camas en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mCamas = null;
+                estudioAdapter.bulkInsertCamasBySql(mCamas);
+                publishProgress("Insertando camas en la base de datos...", CAMAS, TOTAL_TASK_RECLUTAMIENTO);
             }
             if (mPersonaCamas != null){
-                v = mPersonaCamas.size();
-                ListIterator<PersonaCama> iter = mPersonaCamas.listIterator();
-                while (iter.hasNext()){
-                    estudioAdapter.crearPersonaCama(iter.next());
-                    publishProgress("Insertando asociación persona cama en la base de datos...", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                            .valueOf(v).toString());
-                }
-                mPersonaCamas = null;
+                estudioAdapter.bulkInsertPersonasCamasBySql(mPersonaCamas);
+                publishProgress("Insertando asociación persona cama en la base de datos...", PERSONAS_CAMA, TOTAL_TASK_RECLUTAMIENTO);
             }
 		} catch (Exception e) {
 			// Regresa error al insertar
@@ -244,35 +152,6 @@ public class DownloadChfTask extends DownloadTask {
             // Create a new RestTemplate instance
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-            /*
-            //Descargar casascohorte familia
-            urlRequest = url + "/movil/casasCHF/";
-            publishProgress("Solicitando casas cohorte familia",CASACHF,TOTAL_TASK_RECLUTAMIENTO);
-            // Perform the HTTP GET request
-            ResponseEntity<CasaCohorteFamilia[]> responseEntityCasasCHF = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    CasaCohorteFamilia[].class);
-            // convert the array to a list and return it
-            mCasasCHF = Arrays.asList(responseEntityCasasCHF.getBody());
-            responseEntityCasasCHF = null;
-            //Descargar participantes cohorte
-            urlRequest = url + "/movil/participantesCHF/";
-            publishProgress("Solicitando participantes de cohorte familia",PARTICIPANTECHF,TOTAL_TASK_RECLUTAMIENTO);
-            // Perform the HTTP GET request
-            ResponseEntity<ParticipanteCohorteFamilia[]> responseEntityParticipantesCHF = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    ParticipanteCohorteFamilia[].class);
-            // convert the array to a list and return it
-            mParticipantesCHF = Arrays.asList(responseEntityParticipantesCHF.getBody());
-            responseEntityParticipantesCHF = null;
-            */
-            //Descargar encuestas de casa
-            urlRequest = url + "/movil/encuestasCasa/";
-            publishProgress("Solicitando encuestas de casas",ENCUESTA_CASACHF,TOTAL_TASK_RECLUTAMIENTO);
-            // Perform the HTTP GET request
-            ResponseEntity<EncuestaCasa[]> responseEntityEncCasa = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
-                    EncuestaCasa[].class);
-            // convert the array to a list and return it
-            mEncuestasCasas = Arrays.asList(responseEntityEncCasa.getBody());
-            responseEntityEncCasa = null;
             //Descargar cocinas
             urlRequest = url + "/movil/cocinas/";
             publishProgress("Solicitando cocinas",COCINA,TOTAL_TASK_RECLUTAMIENTO);

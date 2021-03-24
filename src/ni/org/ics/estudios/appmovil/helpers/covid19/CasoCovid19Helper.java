@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.covid19;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.covid19.CasoCovid19;
 import ni.org.ics.estudios.appmovil.utils.Covid19DBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -40,5 +41,19 @@ public class CasoCovid19Helper {
         mCasoCovid19.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mCasoCovid19.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mCasoCovid19;
+    }
+
+    public static void fillCasoCovid19Statement(SQLiteStatement stat, CasoCovid19 casaCaso){
+        if (casaCaso.getCodigoCaso() != null) stat.bindString(1, casaCaso.getCodigoCaso());
+        if (casaCaso.getCasa() != null) stat.bindString(2, casaCaso.getCasa().getCodigoCHF());
+        if (casaCaso.getCasa() != null) stat.bindString(3, casaCaso.getInactivo());
+        if (casaCaso.getFechaIngreso() != null) stat.bindLong(4, casaCaso.getFechaIngreso().getTime());
+        if (casaCaso.getFechaInactivo() != null) stat.bindLong(5, casaCaso.getFechaInactivo().getTime());
+
+        if (casaCaso.getRecordDate() != null) stat.bindLong(6, casaCaso.getRecordDate().getTime());
+        if (casaCaso.getRecordUser() != null) stat.bindString(7, casaCaso.getRecordUser());
+        stat.bindString(8, String.valueOf(casaCaso.getPasive()));
+        if (casaCaso.getDeviceid() != null) stat.bindString(9, casaCaso.getDeviceid());
+        stat.bindString(10, String.valueOf(casaCaso.getEstado()));
     }
 }

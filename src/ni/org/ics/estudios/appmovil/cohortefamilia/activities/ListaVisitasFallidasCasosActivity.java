@@ -167,7 +167,7 @@ public class ListaVisitasFallidasCasosActivity extends AbstractAsyncListActivity
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
-        visitaFallidaCaso = (VisitaFallidaCaso)this.getListAdapter().getItem(position);
+        /*visitaFallidaCaso = (VisitaFallidaCaso)this.getListAdapter().getItem(position);
         // Opcion de menu seleccionada
         Bundle arguments = new Bundle();
 		Intent i;
@@ -177,7 +177,7 @@ public class ListaVisitasFallidasCasosActivity extends AbstractAsyncListActivity
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.putExtras(arguments);
 		startActivity(i);
-		finish();
+		finish();*/
 	}
 	
 	@Override

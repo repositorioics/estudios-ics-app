@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
@@ -65,5 +66,27 @@ public class ObsequioHelper {
         mObsequio.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 
         return mObsequio;
+    }
+
+    public static void fillObsequioStatement(SQLiteStatement stat, ObsequioGeneral obsequio){
+        stat.bindString(1, obsequio.getId());
+        if (obsequio.getParticipante() != null) stat.bindLong(2, obsequio.getParticipante());
+        if (obsequio.getCasa() != null) stat.bindString(3, obsequio.getCasa());
+        if (obsequio.getCasaChf() != null) stat.bindString(4, obsequio.getCasaChf());
+        if (obsequio.getSeguimiento() != null) stat.bindString(5, obsequio.getSeguimiento());
+        if (obsequio.getNumVisitaSeguimiento() != null) stat.bindString(6, obsequio.getNumVisitaSeguimiento());
+        if (obsequio.getMotivo() != null) stat.bindString(7, obsequio.getMotivo());
+        if (obsequio.getObsequioSN() != null) stat.bindLong(8, obsequio.getObsequioSN());
+        if (obsequio.getPersonaRecibe() != null) stat.bindString(9, obsequio.getPersonaRecibe());
+        if (obsequio.getRelacionFam() != null) stat.bindLong(10, obsequio.getRelacionFam());
+        if (obsequio.getOtraRelacionFam() != null) stat.bindString(11, obsequio.getOtraRelacionFam());
+        if (obsequio.getTelefono() != null) stat.bindString(12, obsequio.getTelefono());
+        if (obsequio.getObservaciones() != null) stat.bindString(13, obsequio.getObservaciones());
+
+        if (obsequio.getRecordDate() != null) stat.bindLong(14, obsequio.getRecordDate().getTime());
+        if (obsequio.getRecordUser() != null) stat.bindString(15, obsequio.getRecordUser());
+        stat.bindString(16, String.valueOf(obsequio.getPasive()));
+        if (obsequio.getDeviceid() != null) stat.bindString(17, obsequio.getDeviceid());
+        stat.bindString(18, String.valueOf(obsequio.getEstado()));
     }
 }

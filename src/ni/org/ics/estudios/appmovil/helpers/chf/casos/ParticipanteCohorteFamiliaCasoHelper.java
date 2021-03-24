@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.chf.casos;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -47,6 +48,20 @@ public class ParticipanteCohorteFamiliaCasoHelper {
         mParticipanteCohorteFamiliaCaso.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mParticipanteCohorteFamiliaCaso.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mParticipanteCohorteFamiliaCaso;
+    }
+
+    public static void fillParticipanteCohorteFamiliaCasoStatement(SQLiteStatement stat, ParticipanteCohorteFamiliaCaso participanteCaso){
+        stat.bindString(1, participanteCaso.getCodigoCasoParticipante());
+        stat.bindString(2, participanteCaso.getCodigoCaso().getCodigoCaso());
+        stat.bindLong(3, participanteCaso.getParticipante().getParticipante().getCodigo());
+        if (participanteCaso.getEnfermo() != null) stat.bindString(4, participanteCaso.getEnfermo());
+        if (participanteCaso.getFechaEnfermedad() != null) stat.bindLong(5, participanteCaso.getFechaEnfermedad().getTime());
+        if (participanteCaso.getFis() != null) stat.bindLong(6, participanteCaso.getFis().getTime());
+        if (participanteCaso.getRecordDate() != null) stat.bindLong(7, participanteCaso.getRecordDate().getTime());
+        if (participanteCaso.getRecordUser() != null) stat.bindString(8, participanteCaso.getRecordUser());
+        stat.bindString(9, String.valueOf(participanteCaso.getPasive()));
+        if (participanteCaso.getDeviceid() != null) stat.bindString(10, participanteCaso.getDeviceid());
+        stat.bindString(11, String.valueOf(participanteCaso.getEstado()));
     }
 
 }

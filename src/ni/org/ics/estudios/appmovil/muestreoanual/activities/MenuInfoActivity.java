@@ -1291,7 +1291,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if ((mParticipante.getDatosCHF()!=null && mParticipante.getDatosCHF().isEnMonitoreoIntensivo()) || mParticipante.getProcesos().getMi().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante en monitoreo intensivo CHF</b></font><br />";
             if (mParticipante.getProcesos().getPosDengue()!=null) labelHeader = labelHeader + "<small><font color='red'>"+mParticipante.getProcesos().getPosDengue()+"</font></small><br />";
             if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isConvalesciente() && mParticipante.getDatosUO1().getDiasConvalesciente() < 30){
-                labelHeader = labelHeader + "<small><font color='red'>Convalesciente UO1 con menos de 30 días. No tomar muestra</font></small><br />";
+                labelHeader = labelHeader + "<small><font color='red'>Convaleciente UO1 con menos de 30 días. No tomar muestra</font></small><br />";
             }
             if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isVacunado() && mParticipante.getDatosUO1().getDiasVacuna() < 30){
                 labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font></small><br />";
@@ -1526,18 +1526,20 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
 
                             }
                             if (mParticipante.getProcesos().getConvalesciente().matches("Si") && mParticipante.getEdadMeses() >= 24) {
-                                if (mParticipante.getProcesos().getEstudio().contains("UO1")) {//MA2020 solo tomar convalesciente si es PBMC
+                                //MA2021. Quitar restriccion para UO1-PBMC. Mostrar siempre mensaje convaleciente
+                                /*if (mParticipante.getProcesos().getEstudio().contains("UO1")) {//MA2020 solo tomar convaleciente si es PBMC
                                     if (mParticipante.getProcesos().getConmx().matches("No") && mParticipante.getProcesos().getPbmc().matches("Si"))
                                         labelHeader = labelHeader + "<font color='#de3163'>Tomar 5cc de convaleciente (Tubo rojo o PBMC)<br /></font>";
-                                }else if (!mParticipante.getProcesos().getEstudio().equals("Influenza  CH Familia")) {
+                                }else*/
+                                if (!mParticipante.getProcesos().getEstudio().equals("Influenza  CH Familia")) {
                                     //AL finalizar MA 2018, se solicita siempre muestre mensaje de muestra convasleciente.  28062018
                                     //if (mParticipante.getProcesos().getConmx().matches("No")) {
                                     //if (mParticipante.getProcesos().getPbmc().matches("Si")) {
                                     labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente (Tubo rojo o PBMC)<br /></font></small>";
                                     /*} else {
                                         labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
-                                    }
-                                }*/
+                                        }
+                                    }*/
                                 }
                             }
                             if ((mParticipante.getProcesos().getRetoma() != null && mParticipante.getProcesos().getVolRetoma() != null)) {

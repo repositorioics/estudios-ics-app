@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.influenzauo1;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFallidaCaso;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
@@ -61,6 +62,28 @@ public class VisitaCasoUO1Helper {
         mVisitaCasoUO1.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         mVisitaCasoUO1.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return mVisitaCasoUO1;
+    }
+
+    public static void fillVisitaCasoUO1Statement(SQLiteStatement stat, VisitaCasoUO1 visitaCasoUO1){
+        stat.bindString(1, visitaCasoUO1.getCodigoCasoVisita());
+        stat.bindString(2, visitaCasoUO1.getParticipanteCasoUO1().getCodigoCasoParticipante());
+        if (visitaCasoUO1.getFechaVisita() != null) stat.bindLong(3, visitaCasoUO1.getFechaVisita().getTime());
+        if (visitaCasoUO1.getVisita() != null) stat.bindString(4, visitaCasoUO1.getVisita());
+        if (visitaCasoUO1.getLugar() != null) stat.bindString(5, visitaCasoUO1.getLugar());
+        if (visitaCasoUO1.getVisitaExitosa() != null) stat.bindString(6, visitaCasoUO1.getVisitaExitosa());
+        if (visitaCasoUO1.getRazonVisitaFallida() != null) stat.bindString(7, visitaCasoUO1.getRazonVisitaFallida());
+        if (visitaCasoUO1.getOtraRazon() != null) stat.bindString(8, visitaCasoUO1.getOtraRazon());
+        if (visitaCasoUO1.getPositivoPor() != null) stat.bindString(9, visitaCasoUO1.getPositivoPor());
+        if (visitaCasoUO1.getFif() != null) stat.bindLong(10, visitaCasoUO1.getFif().getTime());
+        if (visitaCasoUO1.getVacunaFlu3Semanas() != null) stat.bindString(11, visitaCasoUO1.getVacunaFlu3Semanas());
+        if (visitaCasoUO1.getFechaVacuna() != null) stat.bindLong(12, visitaCasoUO1.getFechaVacuna().getTime());
+
+        if (visitaCasoUO1.getRecordDate() != null) stat.bindLong(13, visitaCasoUO1.getRecordDate().getTime());
+        if (visitaCasoUO1.getRecordUser() != null) stat.bindString(14, visitaCasoUO1.getRecordUser());
+        stat.bindString(15, String.valueOf(visitaCasoUO1.getPasive()));
+        if (visitaCasoUO1.getDeviceid() != null) stat.bindString(16, visitaCasoUO1.getDeviceid());
+        stat.bindString(17, String.valueOf(visitaCasoUO1.getEstado()));
+
     }
 
 }

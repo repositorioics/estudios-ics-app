@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
@@ -274,6 +275,69 @@ public class AreaAmbienteHelper {
         objeto.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         objeto.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
         return objeto;
+    }
+
+    public static void fillAreaAmbienteStatement(SQLiteStatement stat, AreaAmbiente objeto){
+        stat.bindString(1, objeto.getCodigo());
+        if (objeto.getCasa() != null) stat.bindString(2, objeto.getCasa().getCodigoCHF());
+        if (objeto.getLargo() != null) stat.bindDouble(3, objeto.getLargo());
+        if (objeto.getAncho() != null) stat.bindDouble(4, objeto.getAncho());
+        if (objeto.getTotalM2() != null) stat.bindDouble(5, objeto.getTotalM2());
+        if (objeto.getNumVentanas() != null) stat.bindLong(6, objeto.getNumVentanas());
+        if (objeto.getTipo() != null) stat.bindString(7, objeto.getTipo());
+        //con ventana 8
+        //cantidad camas 9
+        //areaambiente 10
+        //abierta 11
+        //codigohabitacion 12
+        if (objeto.getNumeroCuarto() != null) stat.bindString(13, objeto.getNumeroCuarto());//MA2020
+        if (objeto.getRecordDate() != null) stat.bindLong(14, objeto.getRecordDate().getTime());
+        if (objeto.getRecordUser() != null) stat.bindString(15, objeto.getRecordUser());
+        stat.bindString(16, String.valueOf(objeto.getPasive()));
+        if (objeto.getDeviceid() != null) stat.bindString(17, objeto.getDeviceid());
+        stat.bindString(18, String.valueOf(objeto.getEstado()));
+    }
+
+    public static void fillBanioStatement(SQLiteStatement stat, Banio objeto){
+        stat.bindString(1, objeto.getCodigo());
+        if (objeto.getCasa() != null) stat.bindString(2, objeto.getCasa().getCodigoCHF());
+        if (objeto.getLargo() != null) stat.bindDouble(3, objeto.getLargo());
+        if (objeto.getAncho() != null) stat.bindDouble(4, objeto.getAncho());
+        if (objeto.getTotalM2() != null) stat.bindDouble(5, objeto.getTotalM2());
+        if (objeto.getNumVentanas() != null) stat.bindLong(6, objeto.getNumVentanas());
+        if (objeto.getTipo() != null) stat.bindString(7, objeto.getTipo());
+        if (objeto.getConVentana() != null) stat.bindString(8, objeto.getConVentana());
+        //cantidad camas 9
+        if (objeto.getAreaAmbiente() != null) stat.bindString(10, objeto.getAreaAmbiente().getCodigo());
+        //abierta 11
+        //codigohabitacion 12
+        if (objeto.getNumeroCuarto() != null) stat.bindString(13, objeto.getNumeroCuarto());//MA2020
+        if (objeto.getRecordDate() != null) stat.bindLong(14, objeto.getRecordDate().getTime());
+        if (objeto.getRecordUser() != null) stat.bindString(15, objeto.getRecordUser());
+        stat.bindString(16, String.valueOf(objeto.getPasive()));
+        if (objeto.getDeviceid() != null) stat.bindString(17, objeto.getDeviceid());
+        stat.bindString(18, String.valueOf(objeto.getEstado()));
+    }
+
+    public static void fillVentanaStatement(SQLiteStatement stat, Ventana objeto){
+        stat.bindString(1, objeto.getCodigo());
+        if (objeto.getCasa() != null) stat.bindString(2, objeto.getCasa().getCodigoCHF());
+        if (objeto.getLargo() != null) stat.bindDouble(3, objeto.getLargo());
+        if (objeto.getAncho() != null) stat.bindDouble(4, objeto.getAncho());
+        if (objeto.getTotalM2() != null) stat.bindDouble(5, objeto.getTotalM2());
+        if (objeto.getNumVentanas() != null) stat.bindLong(6, objeto.getNumVentanas());
+        if (objeto.getTipo() != null) stat.bindString(7, objeto.getTipo());
+        //con ventana 8
+        //cantidad camas 9
+        if (objeto.getAreaAmbiente() != null) stat.bindString(10, objeto.getAreaAmbiente().getCodigo());
+        if (objeto.getAbierta() != null) stat.bindString(11, objeto.getAbierta());
+        //codigohabitacion 12
+        if (objeto.getNumeroCuarto() != null) stat.bindString(13, objeto.getNumeroCuarto());//MA2020
+        if (objeto.getRecordDate() != null) stat.bindLong(14, objeto.getRecordDate().getTime());
+        if (objeto.getRecordUser() != null) stat.bindString(15, objeto.getRecordUser());
+        stat.bindString(16, String.valueOf(objeto.getPasive()));
+        if (objeto.getDeviceid() != null) stat.bindString(17, objeto.getDeviceid());
+        stat.bindString(18, String.valueOf(objeto.getEstado()));
     }
 
 }

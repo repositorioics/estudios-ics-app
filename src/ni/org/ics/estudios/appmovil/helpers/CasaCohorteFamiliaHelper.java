@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
@@ -44,6 +45,22 @@ public class CasaCohorteFamiliaHelper {
 		mCasaCHF.setEstado(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.estado)).charAt(0));
 		mCasaCHF.setDeviceid(cursorCasa.getString(cursorCasa.getColumnIndex(MainDBConstants.deviceId)));
 		return mCasaCHF;
+	}
+
+	public static void fillCasaCohorteFamiliaStatement(SQLiteStatement stmt,CasaCohorteFamilia casaCHF){
+		stmt.bindString(1, casaCHF.getCodigoCHF());
+		stmt.bindLong(2, casaCHF.getCasa().getCodigo());
+		if (casaCHF.getNombre1JefeFamilia() != null) stmt.bindString(3, casaCHF.getNombre1JefeFamilia());
+		if (casaCHF.getNombre2JefeFamilia() != null) stmt.bindString(4, casaCHF.getNombre2JefeFamilia());
+		if (casaCHF.getApellido1JefeFamilia() != null) stmt.bindString(5, casaCHF.getApellido1JefeFamilia());
+		if (casaCHF.getApellido2JefeFamilia() != null) stmt.bindString(6, casaCHF.getApellido2JefeFamilia());
+		if (casaCHF.getLatitud() != null) stmt.bindDouble(7, casaCHF.getLatitud());
+		if (casaCHF.getLongitud() != null) stmt.bindDouble(8, casaCHF.getLongitud());
+		if (casaCHF.getRecordDate() != null) stmt.bindLong(9, casaCHF.getRecordDate().getTime());
+		if (casaCHF.getRecordUser() != null) stmt.bindString(10, casaCHF.getRecordUser());
+		stmt.bindString(11, String.valueOf(casaCHF.getPasive()));
+		if (casaCHF.getDeviceid() != null) stmt.bindString(12, casaCHF.getDeviceid());
+		stmt.bindString(13, String.valueOf(casaCHF.getEstado()));
 	}
 	
 }

@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers.seroprevalencia;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.SeroprevalenciaDBConstants;
@@ -42,5 +43,15 @@ public class ParticipanteSeroprevalenciaHelper {
         mParticipanteSeroprevalencia.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 
         return mParticipanteSeroprevalencia;
+    }
+
+    public static void fillParticipanteSeroprevalenciaStatement(SQLiteStatement stat, ParticipanteSeroprevalencia seroprevalencia){
+        stat.bindLong(1, seroprevalencia.getParticipante().getCodigo());
+        if (seroprevalencia.getCasaCHF() != null) stat.bindString(2, seroprevalencia.getCasaCHF().getCodigoCHF());
+        if (seroprevalencia.getRecordDate() != null) stat.bindLong(3, seroprevalencia.getRecordDate().getTime());
+        if (seroprevalencia.getRecordUser() != null) stat.bindString(4, seroprevalencia.getRecordUser());
+        stat.bindString(5, String.valueOf(seroprevalencia.getPasive()));
+        if (seroprevalencia.getDeviceid() != null) stat.bindString(6, seroprevalencia.getDeviceid());
+        stat.bindString(7, String.valueOf(seroprevalencia.getEstado()));
     }
 }

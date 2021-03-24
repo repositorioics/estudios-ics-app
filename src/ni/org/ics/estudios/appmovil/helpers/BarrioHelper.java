@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import java.util.Date;
 
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -24,7 +25,6 @@ public class BarrioHelper {
 	}	
 	
 	public static Barrio crearBarrio(Cursor cursorBarrio){
-		
 		Barrio mBarrio = new Barrio();
 		mBarrio.setCodigo(cursorBarrio.getInt(cursorBarrio.getColumnIndex(CatalogosDBConstants.codigo)));
 		mBarrio.setNombre(cursorBarrio.getString(cursorBarrio.getColumnIndex(CatalogosDBConstants.nombre)));
@@ -35,5 +35,14 @@ public class BarrioHelper {
 		mBarrio.setDeviceid(cursorBarrio.getString(cursorBarrio.getColumnIndex(MainDBConstants.deviceId)));
 		return mBarrio;
 	}
-	
+
+	public static void fillBarrioStatement(SQLiteStatement stat, Barrio barrio){
+		stat.bindLong(1, barrio.getCodigo());
+		stat.bindString(2, barrio.getNombre());
+		if (barrio.getRecordDate() != null) stat.bindLong(3, barrio.getRecordDate().getTime());
+		if (barrio.getRecordUser() != null) stat.bindString(4, barrio.getRecordUser());
+		stat.bindString(5, String.valueOf(barrio.getPasive()));
+		stat.bindString(6, String.valueOf(barrio.getEstado()));
+		if (barrio.getDeviceid() != null) stat.bindString(7, barrio.getDeviceid());
+	}
 }

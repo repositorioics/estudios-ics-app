@@ -60,13 +60,8 @@ public class DownloadProcessesTask extends DownloadTask {
         try {
             if (mParticipantesProc != null) {
                 // download and insert
-                try {
-                    addParticipantesProcesos(mParticipantesProc);
-                } catch (Exception e) {
-                    // Regresa error al insertar
-                    e.printStackTrace();
-                    return e.getLocalizedMessage();
-                }
+                publishProgress("Insertando procesos participantes","1","1");
+                estudioAdapter.bulkInsertParticipantesProcBySql(mParticipantesProc);
             }
         } catch (Exception e) {
 			// Regresa error al insertar

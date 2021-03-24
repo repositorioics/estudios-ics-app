@@ -2,6 +2,7 @@ package ni.org.ics.estudios.appmovil.helpers;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.TelefonoContacto;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
@@ -48,4 +49,18 @@ public class TelefonoContactoHelper {
 
         return mTelefonoContacto;
     }
+
+    public static void fillTelefContactoStatement(SQLiteStatement stat, TelefonoContacto telefonoContacto){
+        stat.bindString(1, telefonoContacto.getId());
+        if (telefonoContacto.getNumero() != null) stat.bindString(2, telefonoContacto.getNumero());
+        if (telefonoContacto.getOperadora() != null) stat.bindString(3, telefonoContacto.getOperadora());
+        if (telefonoContacto.getTipo() != null) stat.bindString(4, telefonoContacto.getTipo());
+        if (telefonoContacto.getCasa() != null) stat.bindLong(5, telefonoContacto.getCasa().getCodigo());
+        if (telefonoContacto.getParticipante() != null) stat.bindLong(6, telefonoContacto.getParticipante().getCodigo());
+        if (telefonoContacto.getRecordDate() != null) stat.bindLong(7, telefonoContacto.getRecordDate().getTime());
+        if (telefonoContacto.getRecordUser() != null) stat.bindString(8, telefonoContacto.getRecordUser());
+        stat.bindString(9, String.valueOf(telefonoContacto.getPasive()));
+        if (telefonoContacto.getDeviceid() != null) stat.bindString(10, telefonoContacto.getDeviceid());
+        stat.bindString(11, String.valueOf(telefonoContacto.getEstado()));
+        }
 }

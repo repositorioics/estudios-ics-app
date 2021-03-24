@@ -32,9 +32,9 @@ public class CatalogosDBConstants {
 	//Crear tabla barrios
 	public static final String CREATE_BARRIO_TABLE = "create table if not exists "
 			+ BARRIO_TABLE + " ("
-			+ codigo + " integer not null, "  
+			+ codigo + " integer not null, "
 			+ nombre + " text not null, "
-			+ MainDBConstants.recordDate + " date, " 
+			+ MainDBConstants.recordDate + " date, "
 			+ MainDBConstants.recordUser + " text, "
 			+ MainDBConstants.pasive + " text, "
 			+ MainDBConstants.estado + " text, "
@@ -78,6 +78,39 @@ public class CatalogosDBConstants {
 			+ spanish + " text not null, "
 			+ english + " text , "
 			+ MainDBConstants.pasive + " text, "
-			+ "primary key (" + messageKey + "));";	
+			+ "primary key (" + messageKey + "));";
 
+	/**BULLCK INSERT**/
+	public static final String INSERT_MESSAGES_TABLE = "insert into " + MESSAGES_TABLE + "("
+			+ messageKey + ","
+			+ catRoot + ","
+			+ catKey + ","
+			+ isCat + ","
+			+ order + ","
+			+ spanish + ","
+			+ english + ","
+			+ MainDBConstants.pasive
+			+ ") values(?,?,?,?,?,?,?,?)";
+
+	public static final String INSERT_ESTUDIO_TABLE = "insert into "
+			+ ESTUDIO_TABLE + " ("
+			+ codigo + ","
+			+ nombre + ","
+			+ MainDBConstants.recordDate + ","
+			+ MainDBConstants.recordUser +  ","
+			+ MainDBConstants.pasive +  ","
+			+ MainDBConstants.estado +  ","
+			+ MainDBConstants.deviceId
+			+ ") values (?,?,?,?,?,?,?)";
+
+	public static final String INSERT_BARRIO_TABLE = "insert into "
+			+ BARRIO_TABLE + " ("
+			+ codigo + ","
+			+ nombre + ","
+			+ MainDBConstants.recordDate + ","
+			+ MainDBConstants.recordUser + ","
+			+ MainDBConstants.pasive + ","
+			+ MainDBConstants.estado + ","
+			+ MainDBConstants.deviceId
+			+ ") values (?,?,?,?,?,?,?)";
 }

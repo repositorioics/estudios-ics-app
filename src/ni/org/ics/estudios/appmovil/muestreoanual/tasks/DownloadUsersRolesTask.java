@@ -26,7 +26,11 @@ public class DownloadUsersRolesTask extends DownloadTask {
 	private List<UserSistema> usuarios = null;
 	private List<Authority> roles = null;
     private List<UserPermissions> permisos = null;
+	public static final String USUARIOS = "1";
+	public static final String ROLES= "2";
+	public static final String USU_PERMISOS = "3";
 
+	private static final String TOTAL_TASK = "3";
     private EstudiosAdapter ca = null;
 
     private final Context mContext;
@@ -58,7 +62,8 @@ public class DownloadUsersRolesTask extends DownloadTask {
 				if (usuarios != null){
 					ca.borrarTodosUsuarios();
 					try {
-						addUsuarios(usuarios);
+						publishProgress("Insertando usuarios", USUARIOS, TOTAL_TASK);
+						ca.bulkInsertUsuariosBySql(usuarios);
 					} catch (Exception e) {
 						// Regresa error al insertar
 						e.printStackTrace();
@@ -77,7 +82,8 @@ public class DownloadUsersRolesTask extends DownloadTask {
 				if (roles != null){
 					ca.borrarTodosRoles();
 					try {
-						addRoles(roles);
+						publishProgress("Insertando roles", ROLES, TOTAL_TASK);
+						ca.bulkInsertRolesBySql(roles);
 					} catch (Exception e) {
 						// Regresa error al insertar
 						e.printStackTrace();
@@ -99,7 +105,8 @@ public class DownloadUsersRolesTask extends DownloadTask {
                     ca.borrarTodosPermisos();
                     // download and insert barrios
                     try {
-                        addPermisos(permisos);
+						publishProgress("Insertando permisos", USU_PERMISOS, TOTAL_TASK);
+                    	ca.bulkInsertUserPermissionsBySql(permisos);
                     } catch (Exception e) {
                         // Regresa error al insertar
                         e.printStackTrace();
@@ -156,27 +163,6 @@ public class DownloadUsersRolesTask extends DownloadTask {
 		}
 	}
 
-	private void addUsuarios(List<UserSistema> usuarios) throws Exception {
-
-
-		int v = usuarios.size();
-
-		ListIterator<UserSistema> iter = usuarios.listIterator();
-
-		while (iter.hasNext()){
-            UserSistema usuario = iter.next();
-			if (!ca.existeUsuario(usuario.getUsername())){
-				ca.crearUsuario(usuario);
-			}
-			else{
-				ca.actualizarUsuario(usuario);
-			}
-			publishProgress("Usuarios", Integer.valueOf(iter.nextIndex()).toString(), Integer
-					.valueOf(v).toString());
-		}
-
-	}
-
 	// url, username, password
 	protected String descargarUsuarios() throws Exception {
 		try {
@@ -210,20 +196,6 @@ public class DownloadUsersRolesTask extends DownloadTask {
 			Log.e(TAG, e.getMessage(), e);
 			return e.getLocalizedMessage();	
 		}
-	}
-
-	private void addRoles(List<Authority> roles) throws Exception {
-
-		int v = roles.size();
-
-		ListIterator<Authority> iter = roles.listIterator();
-
-		while (iter.hasNext()){
-			ca.crearRol(iter.next());
-			publishProgress("Roles", Integer.valueOf(iter.nextIndex()).toString(), Integer
-					.valueOf(v).toString());
-		}
-
 	}
 
 	// url, username, password
@@ -260,20 +232,6 @@ public class DownloadUsersRolesTask extends DownloadTask {
 			return e.getLocalizedMessage();	
 		}
 	}
-
-    private void addPermisos(List<UserPermissions> permisos) throws Exception {
-
-        int v = permisos.size();
-
-        ListIterator<UserPermissions> iter = permisos.listIterator();
-
-        while (iter.hasNext()){
-            ca.crearPermisosUsuario(iter.next());
-            publishProgress("Permisos", Integer.valueOf(iter.nextIndex()).toString(), Integer
-                    .valueOf(v).toString());
-        }
-
-    }
 
     // url, username, password
     protected String descargarPermisosUsuarios() throws Exception {

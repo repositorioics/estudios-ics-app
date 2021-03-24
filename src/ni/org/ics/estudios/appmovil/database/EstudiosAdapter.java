@@ -13,9 +13,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.widget.Switch;
+import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
+import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.FormularioContactoCasoAdapter;
 import ni.org.ics.estudios.appmovil.domain.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
@@ -2579,7 +2582,7 @@ public class EstudiosAdapter {
     }
 
     //Editar ParticipanteCohorteFamiliaCaso existente en la base de datos
-    public boolean editarParticipanteCohorteFamiliaCaso(ParticipanteCohorteFamiliaCaso partcaso) throws Exception{
+    public boolean editarParticipanteCohorteFamiliaCaso(ParticipanteCohorteFamiliaCaso partcaso) throws Exception {
         ContentValues cv = ParticipanteCohorteFamiliaCasoHelper.crearParticipanteCohorteFamiliaCasoContentValues(partcaso);
         return mDb.update(CasosDBConstants.PARTICIPANTES_CASOS_TABLE , cv, CasosDBConstants.codigoCasoParticipante + "='"
                 + partcaso.getCodigoCasoParticipante() + "'", null) > 0;
@@ -4204,8 +4207,9 @@ public class EstudiosAdapter {
 
     public boolean existeUsuario(String user) throws SQLException {
         Cursor c = null;
-        c = mDb.query(true, MainDBConstants.USER_TABLE, null,
-                ConstantsDB.USERNAME + "='" + user +"'", null, null, null, null, null);
+        c = crearCursor(MainDBConstants.USER_TABLE, ConstantsDB.USERNAME + "='" + user +"'", null, null);
+        //c = mDb.query(true, MainDBConstants.USER_TABLE, null,
+        //        ConstantsDB.USERNAME + "='" + user +"'", null, null, null, null, null);
 
         if (c != null && c.getCount()>0) {
             c.moveToFirst();
@@ -7960,5 +7964,1075 @@ public class EstudiosAdapter {
 		if (!cursor.isClosed()) cursor.close();
 		return mCuestionarioCovid19s;
 	}
+
+	public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		//SQLiteDatabase db = null;
+		try {
+			//db = openHelper.getWritableDatabase();
+			SQLiteStatement stat = mDb.compileStatement(CatalogosDBConstants.INSERT_MESSAGES_TABLE);
+			mDb.beginTransaction();
+			for (MessageResource remoteAppInfo : list) {
+				MessageResourceHelper.fillMessageResourceStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertUsuariosBySql(List<UserSistema> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		//SQLiteDatabase db = null;
+		try {
+			//db = openHelper.getWritableDatabase();
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_USER_TABLE);
+			mDb.beginTransaction();
+			for (UserSistema remoteAppInfo : list) {
+				UserSistemaHelper.fillUserSistemaStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertRolesBySql(List<Authority> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_ROLE_TABLE);
+			mDb.beginTransaction();
+			for (Authority remoteAppInfo : list) {
+				UserSistemaHelper.fillRoleStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertUserPermissionsBySql(List<UserPermissions> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(ConstantsDB.INSERT_USER_PERM_TABLE);
+			mDb.beginTransaction();
+			for (UserPermissions remoteAppInfo : list) {
+				UserSistemaHelper.fillUserPermissionStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertEstutiosBySql(List<Estudio> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(CatalogosDBConstants.INSERT_ESTUDIO_TABLE);
+			mDb.beginTransaction();
+			for (Estudio remoteAppInfo : list) {
+				EstudiosHelper.fillEstudioStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertBarriosBySql(List<Barrio> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(CatalogosDBConstants.INSERT_BARRIO_TABLE);
+			mDb.beginTransaction();
+			for (Barrio remoteAppInfo : list) {
+				BarrioHelper.fillBarrioStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertCasasBySql(List<Casa> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_CASA_TABLE);
+			mDb.beginTransaction();
+			for (Casa remoteAppInfo : list) {
+				CasaHelper.fillCasaStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertParticipantesBySql(List<Participante> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_PARTICIPANTE_TABLE);
+			mDb.beginTransaction();
+			for (Participante remoteAppInfo : list) {
+				ParticipanteHelper.fillParticipanteStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertParticipantesProcBySql(List<ParticipanteProcesos> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(ConstantsDB.INSERT_PARTPROC_TABLE);
+			mDb.beginTransaction();
+			for (ParticipanteProcesos remoteAppInfo : list) {
+				ParticipanteHelper.fillParticipanteProcesosStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertCasasChfBySql(List<CasaCohorteFamilia> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_CASA_CHF_TABLE);
+			mDb.beginTransaction();
+			for (CasaCohorteFamilia remoteAppInfo : list) {
+				CasaCohorteFamiliaHelper.fillCasaCohorteFamiliaStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertParticipantesChfBySql(List<ParticipanteCohorteFamilia> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_PARTICIPANTE_CHF_TABLE);
+			mDb.beginTransaction();
+			for (ParticipanteCohorteFamilia remoteAppInfo : list) {
+				ParticipanteCohorteFamiliaHelper.fillParticipanteCohorteFamiliaStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertParticipantesSABySql(List<ParticipanteSeroprevalencia> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(SeroprevalenciaDBConstants.INSERT_PARTICIPANTESA_TABLE);
+			mDb.beginTransaction();
+			for (ParticipanteSeroprevalencia remoteAppInfo : list) {
+				ParticipanteSeroprevalenciaHelper.fillParticipanteSeroprevalenciaStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertContactoParticipantesBySql(List<ContactoParticipante> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_CONTACTO_PARTICIPANTE_TABLE);
+			mDb.beginTransaction();
+			for (ContactoParticipante remoteAppInfo : list) {
+				ParticipanteHelper.fillContactoParticipanteStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertCocinasBySql(List<Cocina> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_AREA_AMBIENTE_TABLE);
+			mDb.beginTransaction();
+			for (AreaAmbiente remoteAppInfo : list) {
+				AreaAmbienteHelper.fillAreaAmbienteStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertComedoresBySql(List<Comedor> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_AREA_AMBIENTE_TABLE);
+			mDb.beginTransaction();
+			for (AreaAmbiente remoteAppInfo : list) {
+				AreaAmbienteHelper.fillAreaAmbienteStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertSalasBySql(List<Sala> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_AREA_AMBIENTE_TABLE);
+			mDb.beginTransaction();
+			for (AreaAmbiente remoteAppInfo : list) {
+				AreaAmbienteHelper.fillAreaAmbienteStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertHabitacionesBySql(List<Habitacion> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_AREA_AMBIENTE_TABLE);
+			mDb.beginTransaction();
+			for (AreaAmbiente remoteAppInfo : list) {
+				AreaAmbienteHelper.fillAreaAmbienteStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertBaniosBySql(List<Banio> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_AREA_AMBIENTE_TABLE);
+			mDb.beginTransaction();
+			for (Banio remoteAppInfo : list) {
+				AreaAmbienteHelper.fillBanioStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertVentanasBySql(List<Ventana> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_AREA_AMBIENTE_TABLE);
+			mDb.beginTransaction();
+			for (Ventana remoteAppInfo : list) {
+				AreaAmbienteHelper.fillVentanaStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertCuartosBySql(List<Cuarto> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_CUARTO_TABLE);
+			mDb.beginTransaction();
+			for (Cuarto remoteAppInfo : list) {
+				CuartoHelper.fillCuartoStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertCamasBySql(List<Cama> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_CAMA_TABLE);
+			mDb.beginTransaction();
+			for (Cama remoteAppInfo : list) {
+				CamasHelper.fillCamaStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertPersonasCamasBySql(List<PersonaCama> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_PERSONACAMA_TABLE);
+			mDb.beginTransaction();
+			for (PersonaCama remoteAppInfo : list) {
+				CamasHelper.fillPersonaCamaStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertMuestrasChfBySql(List<Muestra> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MuestrasDBConstants.INSERT_MUESTRA_TABLE);
+			mDb.beginTransaction();
+			for (Muestra remoteAppInfo : list) {
+				MuestraHelper.fillMuestraChfStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertTelefonosContactoBySql(List<TelefonoContacto> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_TELEFONO_CONTACTO_TABLE);
+			mDb.beginTransaction();
+			for (TelefonoContacto remoteAppInfo : list) {
+				TelefonoContactoHelper.fillTelefContactoStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertCasaCohorteFamiliaCasoBySql(List<CasaCohorteFamiliaCaso> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(CasosDBConstants.INSERT_CASAS_CASOS_TABLE);
+			mDb.beginTransaction();
+			for (CasaCohorteFamiliaCaso remoteAppInfo : list) {
+				CasaCohorteFamiliaCasoHelper.fillCasaCohorteFamiliaCasoStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertParticipantesCohorteFamiliaCasoBySql(List<ParticipanteCohorteFamiliaCaso> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(CasosDBConstants.INSERT_PARTICIPANTES_CASOS_TABLE);
+			mDb.beginTransaction();
+			for (ParticipanteCohorteFamiliaCaso remoteAppInfo : list) {
+				ParticipanteCohorteFamiliaCasoHelper.fillParticipanteCohorteFamiliaCasoStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertVisitasSeguimientoCasoBySql(List<VisitaSeguimientoCaso> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(CasosDBConstants.INSERT_VISITAS_CASOS_TABLE);
+			mDb.beginTransaction();
+			for (VisitaSeguimientoCaso remoteAppInfo : list) {
+				VisitaSeguimientoCasoHelper.fillVisitaSeguimientoCasoStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertVisitasFallidaCasoBySql(List<VisitaFallidaCaso> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(CasosDBConstants.INSERT_VISITAS_FALLIDAS_CASOS_TABLE);
+			mDb.beginTransaction();
+			for (VisitaFallidaCaso remoteAppInfo : list) {
+				VisitaFallidaCasoHelper.fillVisitaFallidaCasoStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertVisitasSeguimientoCasoSintomasBySql(List<VisitaSeguimientoCasoSintomas> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(CasosDBConstants.INSERT_SINTOMAS_CASOS_TABLE);
+			mDb.beginTransaction();
+			for (VisitaSeguimientoCasoSintomas remoteAppInfo : list) {
+				VisitaSeguimientoCasoSintomasHelper.fillVisitaSeguimientoCasoSintomasStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertSensoresCasoBySql(List<SensorCaso> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(CasosDBConstants.INSERT_SENSORES_CASOS_TABLE);
+			mDb.beginTransaction();
+			for (SensorCaso remoteAppInfo : list) {
+				SensoresCasoHelper.fillSensorCasoStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertBySql(String tabla, List<?> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			mDb.beginTransaction();
+			SQLiteStatement stat = null;
+			switch (tabla) {
+				case CasosDBConstants.VISITAS_FINALES_CASOS_TABLE:
+					stat = mDb.compileStatement(CasosDBConstants.INSERT_VISITAS_FINALES_CASOS_TABLE);
+					for (Object remoteAppInfo : list) {
+						VisitaFinalCasoHelper.fillVisitaFinalCasoStatement(stat, (VisitaFinalCaso) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case CasosDBConstants.CONTACTOS_CASOS_TABLE:
+					stat = mDb.compileStatement(CasosDBConstants.INSERT_CONTACTOS_CASOS_TABLE);
+					for (Object remoteAppInfo : list) {
+						FormularioContactoCasoHelper.fillFormularioContactoCasoStatement(stat, (FormularioContactoCaso) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case MainDBConstants.OBSEQUIOS_TABLE:
+					stat = mDb.compileStatement(MainDBConstants.INSERT_OBSEQUIOS_TABLE);
+					for (Object remoteAppInfo : list) {
+						ObsequioHelper.fillObsequioStatement(stat, (ObsequioGeneral) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE:
+					stat = mDb.compileStatement(MuestrasDBConstants.INSERT_MUESTRA_SUPERFICIE_TABLE);
+					for (Object remoteAppInfo : list) {
+						MuestraHelper.fillMuestraSuperficieStatement(stat, (MuestraSuperficie) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				default:
+					break;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertU01BySql(String tabla, List<?> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			mDb.beginTransaction();
+			SQLiteStatement stat = null;
+			switch (tabla) {
+				case InfluenzaUO1DBConstants.UO1_PARTICIPANTES_CASOS_TABLE:
+					stat = mDb.compileStatement(InfluenzaUO1DBConstants.INSERT_UO1_PARTICIPANTES_CASOS_TABLE);
+					for (Object remoteAppInfo : list) {
+						ParticipanteCasoUO1Helper.fillParticipanteCasoUO1Statement(stat, (ParticipanteCasoUO1) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case InfluenzaUO1DBConstants.UO1_VISITAS_CASOS_TABLE:
+					stat = mDb.compileStatement(InfluenzaUO1DBConstants.INSERT_UO1_VISITAS_CASOS_TABLE);
+					for (Object remoteAppInfo : list) {
+						VisitaCasoUO1Helper.fillVisitaCasoUO1Statement(stat, (VisitaCasoUO1) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case InfluenzaUO1DBConstants.UO1_VISITAS_VACUNAS_TABLE:
+					stat = mDb.compileStatement(InfluenzaUO1DBConstants.INSERT_UO1_VISITAS_VACUNAS_TABLE);
+					for (Object remoteAppInfo : list) {
+						VisitaVacunaUO1Helper.fillVisitaVacunaUO1ContentValues(stat, (VisitaVacunaUO1) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case InfluenzaUO1DBConstants.UO1_SINTOMAS_VISITA_CASO_TABLE:
+					stat = mDb.compileStatement(InfluenzaUO1DBConstants.INSERT_UO1_SINTOMAS_VISITA_CASO_TABLE);
+					for (Object remoteAppInfo : list) {
+						SintomasVisitaCasoUO1Helper.fillSintomasVisitaCasoUO1Statement(stat, (SintomasVisitaCasoUO1) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				default:
+					break;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertCovidBySql(String tabla, List<?> list) {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			mDb.beginTransaction();
+			SQLiteStatement stat = null;
+			switch (tabla) {
+				case Covid19DBConstants.PARTICIPANTE_COVID_TABLE:
+					stat = mDb.compileStatement(Covid19DBConstants.INSERT_PARTICIPANTE_COVID_TABLE);
+					for (Object remoteAppInfo : list) {
+						ParticipanteCovid19Helper.fillParticipanteCovid19Statement(stat, (ParticipanteCovid19) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case Covid19DBConstants.COVID_CASOS_TABLE:
+					stat = mDb.compileStatement(Covid19DBConstants.INSERT_COVID_CASOS_TABLE);
+					for (Object remoteAppInfo : list) {
+						CasoCovid19Helper.fillCasoCovid19Statement(stat, (CasoCovid19) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case Covid19DBConstants.COVID_PARTICIPANTES_CASOS_TABLE:
+					stat = mDb.compileStatement(Covid19DBConstants.INSERT_COVID_PARTICIPANTES_CASOS_TABLE);
+					for (Object remoteAppInfo : list) {
+						ParticipanteCasoCovid19Helper.fillParticipanteCasoCovid19Statement(stat, (ParticipanteCasoCovid19) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case Covid19DBConstants.COVID_VISITAS_CASOS_TABLE:
+					stat = mDb.compileStatement(Covid19DBConstants.INSERT_COVID_VISITAS_CASOS_TABLE);
+					for (Object remoteAppInfo : list) {
+						VisitaSeguimientoCasoCovid19Helper.fillVisitaSeguimientoCasoCovid19Statement(stat, (VisitaSeguimientoCasoCovid19) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case Covid19DBConstants.COVID_SINTOMAS_VISITA_CASO_TABLE:
+					stat = mDb.compileStatement(Covid19DBConstants.INSERT_COVID_SINTOMAS_VISITA_CASO_TABLE);
+					for (Object remoteAppInfo : list) {
+						SintomasVisitaCasoCovid19Helper.fillSintomasVisitaCasoCovid19Statement(stat, (SintomasVisitaCasoCovid19) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case Covid19DBConstants.COVID_VISITAS_FALLIDAS_CASOS_TABLE:
+					stat = mDb.compileStatement(Covid19DBConstants.INSERT_COVID_VISITAS_FALLIDAS_CASOS_TABLE);
+					for (Object remoteAppInfo : list) {
+						VisitaFallidaCasoCovid19Helper.fillVisitaFallidaCasoCovid19Statement(stat, (VisitaFallidaCasoCovid19) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case Covid19DBConstants.COVID_CANDIDATO_TRANSMISION_TABLE:
+					stat = mDb.compileStatement(Covid19DBConstants.INSERT_COVID_CANDIDATO_TRANSMISION_TABLE);
+					for (Object remoteAppInfo : list) {
+						CandidatoTransmisionCovid19Helper.fillCandidatoTransmisionCovid19Statement(stat, (CandidatoTransmisionCovid19) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case Covid19DBConstants.COVID_DATOS_AISLAMIENTO_VC_TABLE:
+					stat = mDb.compileStatement(Covid19DBConstants.INSERT_COVID_DATOS_AISLAMIENTO_VC_TABLE);
+					for (Object remoteAppInfo : list) {
+						DatosAislamientoVisitaCasoCovid19Helper.fillDatosAislamientoVisitaCasoCovid19Statement(stat, (DatosAislamientoVisitaCasoCovid19) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case Covid19DBConstants.COVID_VISITA_FINAL_CASO_TABLE:
+					stat = mDb.compileStatement(Covid19DBConstants.INSERT_COVID_VISITA_FINAL_CASO_TABLE);
+					for (Object remoteAppInfo : list) {
+						VisitaFinalCasoCovid19Helper.fillVisitaFinalCasoCovid19Statement(stat, (VisitaFinalCasoCovid19) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case Covid19DBConstants.COVID_SINT_VISITA_FINAL_CASO_TABLE:
+					stat = mDb.compileStatement(Covid19DBConstants.INSERT_COVID_SINT_VISITA_FINAL_CASO_TABLE);
+					for (Object remoteAppInfo : list) {
+						SintomasVisitaFinalCovid19Helper.fillSintomasVisitaFinalCovid19Statement(stat, (SintomasVisitaFinalCovid19) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				default:
+					break;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
 
 }

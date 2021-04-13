@@ -38,10 +38,26 @@ public class ParticipanteCovid19Helper {
 
     public static void fillParticipanteCovid19Statement(SQLiteStatement stat, ParticipanteCovid19 participanteCaso){
         stat.bindLong(1, participanteCaso.getParticipante().getCodigo());
-        if (participanteCaso.getRecordDate() != null) stat.bindLong(2, participanteCaso.getRecordDate().getTime());
-        if (participanteCaso.getRecordUser() != null) stat.bindString(3, participanteCaso.getRecordUser());
+        bindDate(stat, 2, participanteCaso.getRecordDate());
+        bindString(stat, 3, participanteCaso.getRecordUser());
         stat.bindString(4, String.valueOf(participanteCaso.getPasive()));
-        if (participanteCaso.getDeviceid() != null) stat.bindString(5, participanteCaso.getDeviceid());
+        bindString(stat, 5, participanteCaso.getDeviceid());
         stat.bindString(6, String.valueOf(participanteCaso.getEstado()));
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
     }
 }

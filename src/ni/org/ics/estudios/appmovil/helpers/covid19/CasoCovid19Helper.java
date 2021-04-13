@@ -44,16 +44,32 @@ public class CasoCovid19Helper {
     }
 
     public static void fillCasoCovid19Statement(SQLiteStatement stat, CasoCovid19 casaCaso){
-        if (casaCaso.getCodigoCaso() != null) stat.bindString(1, casaCaso.getCodigoCaso());
-        if (casaCaso.getCasa() != null) stat.bindString(2, casaCaso.getCasa().getCodigoCHF());
-        if (casaCaso.getCasa() != null) stat.bindString(3, casaCaso.getInactivo());
-        if (casaCaso.getFechaIngreso() != null) stat.bindLong(4, casaCaso.getFechaIngreso().getTime());
-        if (casaCaso.getFechaInactivo() != null) stat.bindLong(5, casaCaso.getFechaInactivo().getTime());
+        bindString(stat,1, casaCaso.getCodigoCaso());
+        if (casaCaso.getCasa() != null) bindString(stat,2, casaCaso.getCasa().getCodigoCHF()); else stat.bindNull(2);
+        bindString(stat,3, casaCaso.getInactivo());
+        bindDate(stat,4, casaCaso.getFechaIngreso());
+        bindDate(stat,5, casaCaso.getFechaInactivo());
 
-        if (casaCaso.getRecordDate() != null) stat.bindLong(6, casaCaso.getRecordDate().getTime());
-        if (casaCaso.getRecordUser() != null) stat.bindString(7, casaCaso.getRecordUser());
+        bindDate(stat,6, casaCaso.getRecordDate());
+        bindString(stat,7, casaCaso.getRecordUser());
         stat.bindString(8, String.valueOf(casaCaso.getPasive()));
-        if (casaCaso.getDeviceid() != null) stat.bindString(9, casaCaso.getDeviceid());
+        bindString(stat,9, casaCaso.getDeviceid());
         stat.bindString(10, String.valueOf(casaCaso.getEstado()));
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
     }
 }

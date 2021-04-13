@@ -38,13 +38,21 @@ public class MessageResourceHelper {
 
 	public static void fillMessageResourceStatement(SQLiteStatement stat, MessageResource messageResource) {
 		stat.bindString(1, messageResource.getMessageKey());
-		if (messageResource.getCatRoot() != null)	stat.bindString(2, messageResource.getCatRoot());
-		if (messageResource.getCatKey() != null) stat.bindString(3, messageResource.getCatKey());
-		stat.bindString(4, String.valueOf(messageResource.getIsCat()));
+		bindString(stat,2, messageResource.getCatRoot());
+		bindString(stat,3, messageResource.getCatKey());
+		bindString(stat,4, String.valueOf(messageResource.getIsCat()));
 		stat.bindLong(5, messageResource.getOrder());
-		stat.bindString(6, messageResource.getSpanish());
-		if (messageResource.getEnglish() != null)	stat.bindString(7, messageResource.getEnglish());
-		stat.bindString(8, String.valueOf(messageResource.getPasive()));
+		bindString(stat,6, messageResource.getSpanish());
+		bindString(stat,7, messageResource.getEnglish());
+		bindString(stat,8, String.valueOf(messageResource.getPasive()));
 	}
-	
+
+	public static void bindString(SQLiteStatement stat, int index, String value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindString(index, value);
+		}
+	}
+
 }

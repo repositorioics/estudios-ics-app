@@ -94,35 +94,51 @@ public class SintomasVisitaCasoUO1Helper {
     public static void fillSintomasVisitaCasoUO1Statement(SQLiteStatement stat, SintomasVisitaCasoUO1 sintomaCaso){
         stat.bindString(1, sintomaCaso.getCodigoSintoma());
         stat.bindString(2, sintomaCaso.getCodigoCasoVisita().getCodigoCasoVisita());
-        if (sintomaCaso.getFechaSintomas() != null) stat.bindLong(3, sintomaCaso.getFechaSintomas().getTime());
-        if (sintomaCaso.getDia() != null) stat.bindString(4, sintomaCaso.getDia());
-        if (sintomaCaso.getConsultaInicial() != null) stat.bindString(5, sintomaCaso.getConsultaInicial());
-        if (sintomaCaso.getFiebre() != null) stat.bindString(6, sintomaCaso.getFiebre());
-        if (sintomaCaso.getFiebreIntensidad() != null) stat.bindString(7, sintomaCaso.getFiebreIntensidad());
-        if (sintomaCaso.getTos() != null) stat.bindString(8, sintomaCaso.getTos());
-        if (sintomaCaso.getTosIntensidad() != null) stat.bindString(9, sintomaCaso.getTosIntensidad());
-        if (sintomaCaso.getSecrecionNasal() != null) stat.bindString(10, sintomaCaso.getSecrecionNasal());
-        if (sintomaCaso.getSecrecionNasalIntensidad() != null) stat.bindString(11, sintomaCaso.getSecrecionNasalIntensidad());
-        if (sintomaCaso.getDolorGarganta() != null) stat.bindString(12, sintomaCaso.getDolorGarganta());
-        if (sintomaCaso.getDolorGargantaIntensidad() != null) stat.bindString(13, sintomaCaso.getDolorGargantaIntensidad());
-        if (sintomaCaso.getCongestionNasal() != null) stat.bindString(14, sintomaCaso.getCongestionNasal());
-        if (sintomaCaso.getDolorCabeza() != null) stat.bindString(15, sintomaCaso.getDolorCabeza());
-        if (sintomaCaso.getDolorCabezaIntensidad() != null) stat.bindString(16, sintomaCaso.getDolorCabezaIntensidad());
-        if (sintomaCaso.getFaltaApetito() != null) stat.bindString(17, sintomaCaso.getFaltaApetito());
-        if (sintomaCaso.getDolorMuscular() != null) stat.bindString(18, sintomaCaso.getDolorMuscular());
-        if (sintomaCaso.getDolorMuscularIntensidad() != null) stat.bindString(19, sintomaCaso.getDolorMuscularIntensidad());
-        if (sintomaCaso.getDolorArticular() != null) stat.bindString(20, sintomaCaso.getDolorArticular());
-        if (sintomaCaso.getDolorArticularIntensidad() != null) stat.bindString(21, sintomaCaso.getDolorArticularIntensidad());
-        if (sintomaCaso.getDolorOido() != null) stat.bindString(22, sintomaCaso.getDolorOido());
-        if (sintomaCaso.getRespiracionRapida() != null) stat.bindString(23, sintomaCaso.getRespiracionRapida());
-        if (sintomaCaso.getDificultadRespiratoria() != null) stat.bindString(24, sintomaCaso.getDificultadRespiratoria());
-        if (sintomaCaso.getFaltaEscuelta() != null) stat.bindString(25, sintomaCaso.getFaltaEscuelta());
-        if (sintomaCaso.getQuedoCama() != null) stat.bindString(26, sintomaCaso.getQuedoCama());
+        bindDate(stat,3, sintomaCaso.getFechaSintomas());
+        bindString(stat,4, sintomaCaso.getDia());
+        bindString(stat,5, sintomaCaso.getConsultaInicial());
+        bindString(stat,6, sintomaCaso.getFiebre());
+        bindString(stat,7, sintomaCaso.getFiebreIntensidad());
+        bindString(stat,8, sintomaCaso.getTos());
+        bindString(stat,9, sintomaCaso.getTosIntensidad());
+        bindString(stat,10, sintomaCaso.getSecrecionNasal());
+        bindString(stat,11, sintomaCaso.getSecrecionNasalIntensidad());
+        bindString(stat,12, sintomaCaso.getDolorGarganta());
+        bindString(stat,13, sintomaCaso.getDolorGargantaIntensidad());
+        bindString(stat,14, sintomaCaso.getCongestionNasal());
+        bindString(stat,15, sintomaCaso.getDolorCabeza());
+        bindString(stat,16, sintomaCaso.getDolorCabezaIntensidad());
+        bindString(stat,17, sintomaCaso.getFaltaApetito());
+        bindString(stat,18, sintomaCaso.getDolorMuscular());
+        bindString(stat,19, sintomaCaso.getDolorMuscularIntensidad());
+        bindString(stat,20, sintomaCaso.getDolorArticular());
+        bindString(stat,21, sintomaCaso.getDolorArticularIntensidad());
+        bindString(stat,22, sintomaCaso.getDolorOido());
+        bindString(stat,23, sintomaCaso.getRespiracionRapida());
+        bindString(stat,24, sintomaCaso.getDificultadRespiratoria());
+        bindString(stat,25, sintomaCaso.getFaltaEscuelta());
+        bindString(stat,26, sintomaCaso.getQuedoCama());
 
-        if (sintomaCaso.getRecordDate() != null) stat.bindLong(27, sintomaCaso.getRecordDate().getTime());
-        if (sintomaCaso.getRecordUser() != null) stat.bindString(28, sintomaCaso.getRecordUser());
+        bindDate(stat,27, sintomaCaso.getRecordDate());
+        bindString(stat,28, sintomaCaso.getRecordUser());
         stat.bindString(29, String.valueOf(sintomaCaso.getPasive()));
-        if (sintomaCaso.getDeviceid() != null) stat.bindString(30, sintomaCaso.getDeviceid());
+        bindString(stat,30, sintomaCaso.getDeviceid());
         stat.bindString(31, String.valueOf(sintomaCaso.getEstado()));
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
     }
 }

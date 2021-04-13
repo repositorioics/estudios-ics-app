@@ -207,95 +207,110 @@ public class SintomasVisitaFinalCovid19Helper {
     }
 
     public static void fillSintomasVisitaFinalCovid19Statement(SQLiteStatement stat, SintomasVisitaFinalCovid19 sintomaCaso){
+        stat.bindString(1, sintomaCaso.getCodigoCasoSintoma());
+        bindString(stat,2, sintomaCaso.getCodigoVisitaFinal().getCodigoVisitaFinal());
+        bindString(stat,3, sintomaCaso.getFiebre());
+        bindString(stat,4, sintomaCaso.getTos());
+        bindString(stat,5, sintomaCaso.getDolorCabeza());
+        bindString(stat,6, sintomaCaso.getDolorArticular());
+        bindString(stat,7, sintomaCaso.getDolorMuscular());
+        bindString(stat,8, sintomaCaso.getDificultadRespiratoria());
+        bindString(stat,9, sintomaCaso.getPocoApetito());
+        bindString(stat,10, sintomaCaso.getDolorGarganta());
+        bindString(stat,11, sintomaCaso.getSecrecionNasal());
+        bindString(stat,12, sintomaCaso.getPicorGarganta());
+        bindString(stat,13, sintomaCaso.getExpectoracion());
+        bindString(stat,14, sintomaCaso.getRash());
+        bindString(stat,15, sintomaCaso.getUrticaria());
+        bindString(stat,16, sintomaCaso.getConjuntivitis());
+        bindString(stat,17, sintomaCaso.getDiarrea());
+        bindString(stat,18, sintomaCaso.getVomito());
+        bindString(stat,19, sintomaCaso.getQuedoCama());
+        bindString(stat,20, sintomaCaso.getRespiracionRuidosa());
+        bindString(stat,21, sintomaCaso.getRespiracionRapida());
+        bindString(stat,22, sintomaCaso.getPerdidaOlfato());
+        bindString(stat,23, sintomaCaso.getCongestionNasal());
+        bindString(stat,24, sintomaCaso.getPerdidaGusto());
+        bindString(stat,25, sintomaCaso.getDesmayos());
+        bindString(stat,26, sintomaCaso.getSensacionPechoApretado());
+        bindString(stat,27, sintomaCaso.getDolorPecho());
+        bindString(stat,28, sintomaCaso.getSensacionFaltaAire());
+        bindString(stat,29, sintomaCaso.getFatiga());
+        bindDate(stat,30, sintomaCaso.getFiebreFecIni());
+        bindDate(stat,31, sintomaCaso.getTosFecIni());
+        bindDate(stat,32, sintomaCaso.getDolorCabezaFecIni());
+        bindDate(stat,33, sintomaCaso.getDolorArticularFecIni());
+        bindDate(stat,34, sintomaCaso.getDolorMuscularFecIni());
+        bindDate(stat,35, sintomaCaso.getDificultadRespiratoriaFecIni());
+        bindDate(stat,36, sintomaCaso.getPocoApetitoFecIni());
+        bindDate(stat,37, sintomaCaso.getDolorGargantaFecIni());
+        bindDate(stat,38, sintomaCaso.getSecrecionNasalFecIni());
+        bindDate(stat,39, sintomaCaso.getPicorGargantaFecIni());
+        bindDate(stat,40, sintomaCaso.getExpectoracionFecIni());
+        bindDate(stat,41, sintomaCaso.getRashFecIni());
+        bindDate(stat,42, sintomaCaso.getUrticariaFecIni());
+        bindDate(stat,43, sintomaCaso.getConjuntivitisFecIni());
+        bindDate(stat,44, sintomaCaso.getDiarreaFecIni());
+        bindDate(stat,45, sintomaCaso.getVomitoFecIni());
+        bindDate(stat,46, sintomaCaso.getQuedoCamaFecIni());
+        bindDate(stat,47, sintomaCaso.getRespiracionRuidosaFecIni());
+        bindDate(stat,48, sintomaCaso.getRespiracionRapidaFecIni());
+        bindDate(stat,49, sintomaCaso.getPerdidaOlfatoFecIni());
+        bindDate(stat,50, sintomaCaso.getCongestionNasalFecIni());
+        bindDate(stat,51, sintomaCaso.getPerdidaGustoFecIni());
+        bindDate(stat,52, sintomaCaso.getDesmayosFecIni());
+        bindDate(stat,53, sintomaCaso.getSensacionPechoApretadoFecIni());
+        bindDate(stat,54, sintomaCaso.getDolorPechoFecIni());
+        bindDate(stat,55, sintomaCaso.getSensacionFaltaAireFecIni());
+        bindDate(stat,56, sintomaCaso.getFatigaFecIni());
+        bindDate(stat,57, sintomaCaso.getFiebreFecFin());
+        bindDate(stat,58, sintomaCaso.getTosFecFin());
+        bindDate(stat,59, sintomaCaso.getDolorCabezaFecFin());
+        bindDate(stat,60, sintomaCaso.getDolorArticularFecFin());
+        bindDate(stat,61, sintomaCaso.getDolorMuscularFecFin());
+        bindDate(stat,62, sintomaCaso.getDificultadRespiratoriaFecFin());
+        bindDate(stat,63, sintomaCaso.getPocoApetitoFecFin());
+        bindDate(stat,64, sintomaCaso.getDolorGargantaFecFin());
+        bindDate(stat,65, sintomaCaso.getSecrecionNasalFecFin());
+        bindDate(stat,66, sintomaCaso.getPicorGargantaFecFin());
+        bindDate(stat,67, sintomaCaso.getExpectoracionFecFin());
+        bindDate(stat,68, sintomaCaso.getRashFecFin());
+        bindDate(stat,69, sintomaCaso.getUrticariaFecFin());
+        bindDate(stat,70, sintomaCaso.getConjuntivitisFecFin());
+        bindDate(stat,71, sintomaCaso.getDiarreaFecFin());
+        bindDate(stat,72, sintomaCaso.getVomitoFecFin());
+        bindDate(stat,73, sintomaCaso.getQuedoCamaFecFin());
+        bindDate(stat,74, sintomaCaso.getRespiracionRuidosaFecFin());
+        bindDate(stat,75, sintomaCaso.getRespiracionRapidaFecFin());
+        bindDate(stat,76, sintomaCaso.getPerdidaOlfatoFecFin());
+        bindDate(stat,77, sintomaCaso.getCongestionNasalFecFin());
+        bindDate(stat,78, sintomaCaso.getPerdidaGustoFecFin());
+        bindDate(stat,79, sintomaCaso.getDesmayosFecFin());
+        bindDate(stat,80, sintomaCaso.getSensacionPechoApretadoFecFin());
+        bindDate(stat,81, sintomaCaso.getDolorPechoFecFin());
+        bindDate(stat,82, sintomaCaso.getSensacionFaltaAireFecFin());
+        bindDate(stat,83, sintomaCaso.getFatigaFecFin());
 
-        if (sintomaCaso.getCodigoCasoSintoma() != null) stat.bindString(1, sintomaCaso.getCodigoCasoSintoma());
-        if (sintomaCaso.getCodigoVisitaFinal() != null) stat.bindString(2, sintomaCaso.getCodigoVisitaFinal().getCodigoVisitaFinal());
-        if (sintomaCaso.getFiebre() != null) stat.bindString(3, sintomaCaso.getFiebre());
-        if (sintomaCaso.getTos() != null) stat.bindString(4, sintomaCaso.getTos());
-        if (sintomaCaso.getDolorCabeza() != null) stat.bindString(5, sintomaCaso.getDolorCabeza());
-        if (sintomaCaso.getDolorArticular() != null) stat.bindString(6, sintomaCaso.getDolorArticular());
-        if (sintomaCaso.getDolorMuscular() != null) stat.bindString(7, sintomaCaso.getDolorMuscular());
-        if (sintomaCaso.getDificultadRespiratoria() != null) stat.bindString(8, sintomaCaso.getDificultadRespiratoria());
-        if (sintomaCaso.getPocoApetito() != null) stat.bindString(9, sintomaCaso.getPocoApetito());
-        if (sintomaCaso.getDolorGarganta() != null) stat.bindString(10, sintomaCaso.getDolorGarganta());
-        if (sintomaCaso.getSecrecionNasal() != null) stat.bindString(11, sintomaCaso.getSecrecionNasal());
-        if (sintomaCaso.getPicorGarganta() != null) stat.bindString(12, sintomaCaso.getPicorGarganta());
-        if (sintomaCaso.getExpectoracion() != null) stat.bindString(13, sintomaCaso.getExpectoracion());
-        if (sintomaCaso.getRash() != null) stat.bindString(14, sintomaCaso.getRash());
-        if (sintomaCaso.getUrticaria() != null) stat.bindString(15, sintomaCaso.getUrticaria());
-        if (sintomaCaso.getConjuntivitis() != null) stat.bindString(16, sintomaCaso.getConjuntivitis());
-        if (sintomaCaso.getDiarrea() != null) stat.bindString(17, sintomaCaso.getDiarrea());
-        if (sintomaCaso.getVomito() != null) stat.bindString(18, sintomaCaso.getVomito());
-        if (sintomaCaso.getQuedoCama() != null) stat.bindString(19, sintomaCaso.getQuedoCama());
-        if (sintomaCaso.getRespiracionRuidosa() != null) stat.bindString(20, sintomaCaso.getRespiracionRuidosa());
-        if (sintomaCaso.getRespiracionRapida() != null) stat.bindString(21, sintomaCaso.getRespiracionRapida());
-        if (sintomaCaso.getPerdidaOlfato() != null) stat.bindString(22, sintomaCaso.getPerdidaOlfato());
-        if (sintomaCaso.getCongestionNasal() != null) stat.bindString(23, sintomaCaso.getCongestionNasal());
-        if (sintomaCaso.getPerdidaGusto() != null) stat.bindString(24, sintomaCaso.getPerdidaGusto());
-        if (sintomaCaso.getDesmayos() != null) stat.bindString(25, sintomaCaso.getDesmayos());
-        if (sintomaCaso.getSensacionPechoApretado() != null) stat.bindString(26, sintomaCaso.getSensacionPechoApretado());
-        if (sintomaCaso.getDolorPecho() != null) stat.bindString(27, sintomaCaso.getDolorPecho());
-        if (sintomaCaso.getSensacionFaltaAire() != null) stat.bindString(28, sintomaCaso.getSensacionFaltaAire());
-        if (sintomaCaso.getFatiga() != null) stat.bindString(29, sintomaCaso.getFatiga());
-        if (sintomaCaso.getFiebreFecIni() != null) stat.bindLong(30, sintomaCaso.getFiebreFecIni().getTime());
-        if (sintomaCaso.getTosFecIni() != null) stat.bindLong(31, sintomaCaso.getTosFecIni().getTime());
-        if (sintomaCaso.getDolorCabezaFecIni() != null) stat.bindLong(32, sintomaCaso.getDolorCabezaFecIni().getTime());
-        if (sintomaCaso.getDolorArticularFecIni() != null) stat.bindLong(33, sintomaCaso.getDolorArticularFecIni().getTime());
-        if (sintomaCaso.getDolorMuscularFecIni() != null) stat.bindLong(34, sintomaCaso.getDolorMuscularFecIni().getTime());
-        if (sintomaCaso.getDificultadRespiratoriaFecIni() != null) stat.bindLong(35, sintomaCaso.getDificultadRespiratoriaFecIni().getTime());
-        if (sintomaCaso.getPocoApetitoFecIni() != null) stat.bindLong(36, sintomaCaso.getPocoApetitoFecIni().getTime());
-        if (sintomaCaso.getDolorGargantaFecIni() != null) stat.bindLong(37, sintomaCaso.getDolorGargantaFecIni().getTime());
-        if (sintomaCaso.getSecrecionNasalFecIni() != null) stat.bindLong(38, sintomaCaso.getSecrecionNasalFecIni().getTime());
-        if (sintomaCaso.getPicorGargantaFecIni() != null) stat.bindLong(39, sintomaCaso.getPicorGargantaFecIni().getTime());
-        if (sintomaCaso.getExpectoracionFecIni() != null) stat.bindLong(40, sintomaCaso.getExpectoracionFecIni().getTime());
-        if (sintomaCaso.getRashFecIni() != null) stat.bindLong(41, sintomaCaso.getRashFecIni().getTime());
-        if (sintomaCaso.getUrticariaFecIni() != null) stat.bindLong(42, sintomaCaso.getUrticariaFecIni().getTime());
-        if (sintomaCaso.getConjuntivitisFecIni() != null) stat.bindLong(43, sintomaCaso.getConjuntivitisFecIni().getTime());
-        if (sintomaCaso.getDiarreaFecIni() != null) stat.bindLong(44, sintomaCaso.getDiarreaFecIni().getTime());
-        if (sintomaCaso.getVomitoFecIni() != null) stat.bindLong(45, sintomaCaso.getVomitoFecIni().getTime());
-        if (sintomaCaso.getQuedoCamaFecIni() != null) stat.bindLong(46, sintomaCaso.getQuedoCamaFecIni().getTime());
-        if (sintomaCaso.getRespiracionRuidosaFecIni() != null) stat.bindLong(47, sintomaCaso.getRespiracionRuidosaFecIni().getTime());
-        if (sintomaCaso.getRespiracionRapidaFecIni() != null) stat.bindLong(48, sintomaCaso.getRespiracionRapidaFecIni().getTime());
-        if (sintomaCaso.getPerdidaOlfatoFecIni() != null) stat.bindLong(49, sintomaCaso.getPerdidaOlfatoFecIni().getTime());
-        if (sintomaCaso.getCongestionNasalFecIni() != null) stat.bindLong(50, sintomaCaso.getCongestionNasalFecIni().getTime());
-        if (sintomaCaso.getPerdidaGustoFecIni() != null) stat.bindLong(51, sintomaCaso.getPerdidaGustoFecIni().getTime());
-        if (sintomaCaso.getDesmayosFecIni() != null) stat.bindLong(52, sintomaCaso.getDesmayosFecIni().getTime());
-        if (sintomaCaso.getSensacionPechoApretadoFecIni() != null) stat.bindLong(53, sintomaCaso.getSensacionPechoApretadoFecIni().getTime());
-        if (sintomaCaso.getDolorPechoFecIni() != null) stat.bindLong(54, sintomaCaso.getDolorPechoFecIni().getTime());
-        if (sintomaCaso.getSensacionFaltaAireFecIni() != null) stat.bindLong(55, sintomaCaso.getSensacionFaltaAireFecIni().getTime());
-        if (sintomaCaso.getFatigaFecIni() != null) stat.bindLong(56, sintomaCaso.getFatigaFecIni().getTime());
-        if (sintomaCaso.getFiebreFecFin() != null) stat.bindLong(57, sintomaCaso.getFiebreFecFin().getTime());
-        if (sintomaCaso.getTosFecFin() != null) stat.bindLong(58, sintomaCaso.getTosFecFin().getTime());
-        if (sintomaCaso.getDolorCabezaFecFin() != null) stat.bindLong(59, sintomaCaso.getDolorCabezaFecFin().getTime());
-        if (sintomaCaso.getDolorArticularFecFin() != null) stat.bindLong(60, sintomaCaso.getDolorArticularFecFin().getTime());
-        if (sintomaCaso.getDolorMuscularFecFin() != null) stat.bindLong(61, sintomaCaso.getDolorMuscularFecFin().getTime());
-        if (sintomaCaso.getDificultadRespiratoriaFecFin() != null) stat.bindLong(62, sintomaCaso.getDificultadRespiratoriaFecFin().getTime());
-        if (sintomaCaso.getPocoApetitoFecFin() != null) stat.bindLong(63, sintomaCaso.getPocoApetitoFecFin().getTime());
-        if (sintomaCaso.getDolorGargantaFecFin() != null) stat.bindLong(64, sintomaCaso.getDolorGargantaFecFin().getTime());
-        if (sintomaCaso.getSecrecionNasalFecFin() != null) stat.bindLong(65, sintomaCaso.getSecrecionNasalFecFin().getTime());
-        if (sintomaCaso.getPicorGargantaFecFin() != null) stat.bindLong(66, sintomaCaso.getPicorGargantaFecFin().getTime());
-        if (sintomaCaso.getExpectoracionFecFin() != null) stat.bindLong(67, sintomaCaso.getExpectoracionFecFin().getTime());
-        if (sintomaCaso.getRashFecFin() != null) stat.bindLong(68, sintomaCaso.getRashFecFin().getTime());
-        if (sintomaCaso.getUrticariaFecFin() != null) stat.bindLong(69, sintomaCaso.getUrticariaFecFin().getTime());
-        if (sintomaCaso.getConjuntivitisFecFin() != null) stat.bindLong(70, sintomaCaso.getConjuntivitisFecFin().getTime());
-        if (sintomaCaso.getDiarreaFecFin() != null) stat.bindLong(71, sintomaCaso.getDiarreaFecFin().getTime());
-        if (sintomaCaso.getVomitoFecFin() != null) stat.bindLong(72, sintomaCaso.getVomitoFecFin().getTime());
-        if (sintomaCaso.getQuedoCamaFecFin() != null) stat.bindLong(73, sintomaCaso.getQuedoCamaFecFin().getTime());
-        if (sintomaCaso.getRespiracionRuidosaFecFin() != null) stat.bindLong(74, sintomaCaso.getRespiracionRuidosaFecFin().getTime());
-        if (sintomaCaso.getRespiracionRapidaFecFin() != null) stat.bindLong(75, sintomaCaso.getRespiracionRapidaFecFin().getTime());
-        if (sintomaCaso.getPerdidaOlfatoFecFin() != null) stat.bindLong(76, sintomaCaso.getPerdidaOlfatoFecFin().getTime());
-        if (sintomaCaso.getCongestionNasalFecFin() != null) stat.bindLong(77, sintomaCaso.getCongestionNasalFecFin().getTime());
-        if (sintomaCaso.getPerdidaGustoFecFin() != null) stat.bindLong(78, sintomaCaso.getPerdidaGustoFecFin().getTime());
-        if (sintomaCaso.getDesmayosFecFin() != null) stat.bindLong(79, sintomaCaso.getDesmayosFecFin().getTime());
-        if (sintomaCaso.getSensacionPechoApretadoFecFin() != null) stat.bindLong(80, sintomaCaso.getSensacionPechoApretadoFecFin().getTime());
-        if (sintomaCaso.getDolorPechoFecFin() != null) stat.bindLong(81, sintomaCaso.getDolorPechoFecFin().getTime());
-        if (sintomaCaso.getSensacionFaltaAireFecFin() != null) stat.bindLong(82, sintomaCaso.getSensacionFaltaAireFecFin().getTime());
-        if (sintomaCaso.getFatigaFecFin() != null) stat.bindLong(83, sintomaCaso.getFatigaFecFin().getTime());
-
-        if (sintomaCaso.getRecordDate() != null) stat.bindLong(84, sintomaCaso.getRecordDate().getTime());
-        if (sintomaCaso.getRecordUser() != null) stat.bindString(85, sintomaCaso.getRecordUser());
+        bindDate(stat,84, sintomaCaso.getRecordDate());
+        bindString(stat,85, sintomaCaso.getRecordUser());
         stat.bindString(86, String.valueOf(sintomaCaso.getPasive()));
-        if (sintomaCaso.getDeviceid() != null) stat.bindString(87, sintomaCaso.getDeviceid());
+        bindString(stat,87, sintomaCaso.getDeviceid());
         stat.bindString(88, String.valueOf(sintomaCaso.getEstado()));
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
     }
 }

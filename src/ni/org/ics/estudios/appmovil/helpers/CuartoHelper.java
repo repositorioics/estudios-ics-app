@@ -42,14 +42,37 @@ public class CuartoHelper {
 
 	public static void fillCuartoStatement(SQLiteStatement stat, Cuarto cuarto){
 		stat.bindString(1, cuarto.getCodigo());
-		if (cuarto.getCasa() != null) stat.bindString(2, cuarto.getCasa().getCodigoCHF());
-		if (cuarto.getCantidadCamas() > 0) stat.bindLong(3, cuarto.getCantidadCamas());
-		if (cuarto.getCodigoHabitacion() != null) stat.bindString(4, cuarto.getCodigoHabitacion());
-		if (cuarto.getRecordDate() != null) stat.bindLong(5, cuarto.getRecordDate().getTime());
-		if (cuarto.getRecordUser() != null) stat.bindString(6, cuarto.getRecordUser());
+		bindString(stat,2, cuarto.getCasa().getCodigoCHF());
+		bindInteger(stat,3, cuarto.getCantidadCamas());
+		bindString(stat,4, cuarto.getCodigoHabitacion());
+		bindDate(stat,5, cuarto.getRecordDate());
+		bindString(stat,6, cuarto.getRecordUser());
 		stat.bindString(7, String.valueOf(cuarto.getPasive()));
-		if (cuarto.getDeviceid() != null) stat.bindString(8, cuarto.getDeviceid());
+		bindString(stat,8, cuarto.getDeviceid());
 		stat.bindString(9, String.valueOf(cuarto.getEstado()));
 	}
-	
+
+	public static void bindString(SQLiteStatement stat, int index, String value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindString(index, value);
+		}
+	}
+
+	public static void bindDate(SQLiteStatement stat, int index, Date value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindLong(index, value.getTime());
+		}
+	}
+
+	public static void bindInteger(SQLiteStatement stat, int index, Integer value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindLong(index, value);
+		}
+	}
 }

@@ -47,11 +47,27 @@ public class ParticipanteSeroprevalenciaHelper {
 
     public static void fillParticipanteSeroprevalenciaStatement(SQLiteStatement stat, ParticipanteSeroprevalencia seroprevalencia){
         stat.bindLong(1, seroprevalencia.getParticipante().getCodigo());
-        if (seroprevalencia.getCasaCHF() != null) stat.bindString(2, seroprevalencia.getCasaCHF().getCodigoCHF());
-        if (seroprevalencia.getRecordDate() != null) stat.bindLong(3, seroprevalencia.getRecordDate().getTime());
-        if (seroprevalencia.getRecordUser() != null) stat.bindString(4, seroprevalencia.getRecordUser());
+        bindString(stat,2, seroprevalencia.getCasaCHF().getCodigoCHF());
+        bindDate(stat, 3, seroprevalencia.getRecordDate());
+        bindString(stat,4, seroprevalencia.getRecordUser());
         stat.bindString(5, String.valueOf(seroprevalencia.getPasive()));
-        if (seroprevalencia.getDeviceid() != null) stat.bindString(6, seroprevalencia.getDeviceid());
+        bindString(stat,6, seroprevalencia.getDeviceid());
         stat.bindString(7, String.valueOf(seroprevalencia.getEstado()));
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
     }
 }

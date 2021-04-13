@@ -82,32 +82,47 @@ public class VisitaFinalCasoHelper {
 
     public static void fillVisitaFinalCasoStatement(SQLiteStatement stat, VisitaFinalCaso visitaFinalCaso){
         stat.bindString(1, visitaFinalCaso.getCodigoParticipanteCaso().getCodigoCasoParticipante());
-        if (visitaFinalCaso.getFechaVisita() != null) stat.bindLong(2, visitaFinalCaso.getFechaVisita().getTime());
-        if (visitaFinalCaso.getEnfermo() != null) stat.bindString(3, visitaFinalCaso.getEnfermo());
-        if (visitaFinalCaso.getConsTerreno() != null) stat.bindString(4, visitaFinalCaso.getConsTerreno());
-        if (visitaFinalCaso.getReferidoCs() != null) stat.bindString(5, visitaFinalCaso.getReferidoCs());
-        if (visitaFinalCaso.getTratamiento() != null) stat.bindString(6, visitaFinalCaso.getTratamiento());
-        if (visitaFinalCaso.getCualAntibiotico() != null) stat.bindString(7, visitaFinalCaso.getCualAntibiotico());
-        if (visitaFinalCaso.getSintResp() != null) stat.bindString(8, visitaFinalCaso.getSintResp());
-        if (visitaFinalCaso.getFiebre() != null) stat.bindString(9, visitaFinalCaso.getFiebre());
-        if (visitaFinalCaso.getTos() != null) stat.bindString(10, visitaFinalCaso.getTos());
-        if (visitaFinalCaso.getDolorGarganta() != null) stat.bindString(11, visitaFinalCaso.getDolorGarganta());
-        if (visitaFinalCaso.getSecrecionNasal() != null) stat.bindString(12, visitaFinalCaso.getSecrecionNasal());
+        bindDate(stat,2, visitaFinalCaso.getFechaVisita());
+        bindString(stat,3, visitaFinalCaso.getEnfermo());
+        bindString(stat,4, visitaFinalCaso.getConsTerreno());
+        bindString(stat,5, visitaFinalCaso.getReferidoCs());
+        bindString(stat,6, visitaFinalCaso.getTratamiento());
+        bindString(stat,7, visitaFinalCaso.getCualAntibiotico());
+        bindString(stat,8, visitaFinalCaso.getSintResp());
+        bindString(stat,9, visitaFinalCaso.getFiebre());
+        bindString(stat,10, visitaFinalCaso.getTos());
+        bindString(stat,11, visitaFinalCaso.getDolorGarganta());
+        bindString(stat,12, visitaFinalCaso.getSecrecionNasal());
 
-        if (visitaFinalCaso.getFif() != null) stat.bindLong(13, visitaFinalCaso.getFif().getTime());
-        if (visitaFinalCaso.getFff() != null) stat.bindLong(14, visitaFinalCaso.getFff().getTime());
-        if (visitaFinalCaso.getFitos() != null) stat.bindLong(15, visitaFinalCaso.getFitos().getTime());
-        if (visitaFinalCaso.getFftos() != null) stat.bindLong(16, visitaFinalCaso.getFftos().getTime());
-        if (visitaFinalCaso.getFigg() != null) stat.bindLong(17, visitaFinalCaso.getFigg().getTime());
-        if (visitaFinalCaso.getFfgg() != null) stat.bindLong(18, visitaFinalCaso.getFfgg().getTime());
-        if (visitaFinalCaso.getFisn() != null) stat.bindLong(19, visitaFinalCaso.getFisn().getTime());
-        if (visitaFinalCaso.getFfsn() != null) stat.bindLong(20, visitaFinalCaso.getFfsn().getTime());
+        bindDate(stat,13, visitaFinalCaso.getFif());
+        bindDate(stat,14, visitaFinalCaso.getFff());
+        bindDate(stat,15, visitaFinalCaso.getFitos());
+        bindDate(stat,16, visitaFinalCaso.getFftos());
+        bindDate(stat,17, visitaFinalCaso.getFigg());
+        bindDate(stat,18, visitaFinalCaso.getFfgg());
+        bindDate(stat,19, visitaFinalCaso.getFisn());
+        bindDate(stat,20, visitaFinalCaso.getFfsn());
 
-        if (visitaFinalCaso.getRecordDate() != null) stat.bindLong(21, visitaFinalCaso.getRecordDate().getTime());
-        if (visitaFinalCaso.getRecordUser() != null) stat.bindString(22, visitaFinalCaso.getRecordUser());
+        bindDate(stat,21, visitaFinalCaso.getRecordDate());
+        bindString(stat,22, visitaFinalCaso.getRecordUser());
         stat.bindString(23, String.valueOf(visitaFinalCaso.getPasive()));
-        if (visitaFinalCaso.getDeviceid() != null) stat.bindString(24, visitaFinalCaso.getDeviceid());
+        bindString(stat,24, visitaFinalCaso.getDeviceid());
         stat.bindString(25, String.valueOf(visitaFinalCaso.getEstado()));
     }
 
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
 }

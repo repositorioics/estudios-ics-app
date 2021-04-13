@@ -54,15 +54,30 @@ public class FormularioContactoCasoHelper {
         stat.bindString(1, contactoCaso.getCodigoCasoContacto());
         stat.bindString(2, contactoCaso.getCodigoVisitaCaso().getCodigoCasoVisita());
         stat.bindLong(3, contactoCaso.getPartContacto().getParticipante().getCodigo());
-        if (contactoCaso.getFechaContacto() != null) stat.bindLong(4, contactoCaso.getFechaContacto().getTime());
-        if (contactoCaso.getTiempoInteraccion() != null) stat.bindString(5, contactoCaso.getTiempoInteraccion());
-        if (contactoCaso.getTipoInteraccion() != null) stat.bindString(6, contactoCaso.getTipoInteraccion());
+        bindDate(stat,4, contactoCaso.getFechaContacto());
+        bindString(stat,5, contactoCaso.getTiempoInteraccion());
+        bindString(stat,6, contactoCaso.getTipoInteraccion());
 
-        if (contactoCaso.getRecordDate() != null) stat.bindLong(7, contactoCaso.getRecordDate().getTime());
-        if (contactoCaso.getRecordUser() != null) stat.bindString(8, contactoCaso.getRecordUser());
+        bindDate(stat,7, contactoCaso.getRecordDate());
+        bindString(stat,8, contactoCaso.getRecordUser());
         stat.bindString(9, String.valueOf(contactoCaso.getPasive()));
-        if (contactoCaso.getDeviceid() != null) stat.bindString(10, contactoCaso.getDeviceid());
+        bindString(stat,10, contactoCaso.getDeviceid());
         stat.bindString(11, String.valueOf(contactoCaso.getEstado()));
     }
-	
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
 }

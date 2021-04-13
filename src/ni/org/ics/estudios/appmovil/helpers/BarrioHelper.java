@@ -38,11 +38,27 @@ public class BarrioHelper {
 
 	public static void fillBarrioStatement(SQLiteStatement stat, Barrio barrio){
 		stat.bindLong(1, barrio.getCodigo());
-		stat.bindString(2, barrio.getNombre());
-		if (barrio.getRecordDate() != null) stat.bindLong(3, barrio.getRecordDate().getTime());
-		if (barrio.getRecordUser() != null) stat.bindString(4, barrio.getRecordUser());
+		bindString(stat,2, barrio.getNombre());
+		bindDate(stat,3, barrio.getRecordDate());
+		bindString(stat,4, barrio.getRecordUser());
 		stat.bindString(5, String.valueOf(barrio.getPasive()));
 		stat.bindString(6, String.valueOf(barrio.getEstado()));
-		if (barrio.getDeviceid() != null) stat.bindString(7, barrio.getDeviceid());
+		bindString(stat,7, barrio.getDeviceid());
+	}
+
+	public static void bindString(SQLiteStatement stat, int index, String value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindString(index, value);
+		}
+	}
+
+	public static void bindDate(SQLiteStatement stat, int index, Date value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindLong(index, value.getTime());
+		}
 	}
 }

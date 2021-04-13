@@ -50,15 +50,31 @@ public class CasaCohorteFamiliaCasoHelper {
 
     public static void fillCasaCohorteFamiliaCasoStatement(SQLiteStatement stat, CasaCohorteFamiliaCaso casaCaso){
         stat.bindString(1, casaCaso.getCodigoCaso());
-        if (casaCaso.getCasa() != null) stat.bindString(2, casaCaso.getCasa().getCodigoCHF());
-        if (casaCaso.getFechaInicio() != null) stat.bindLong(3, casaCaso.getFechaInicio().getTime());
-        if (casaCaso.getInactiva() != null) stat.bindString(4, casaCaso.getInactiva());
-        if (casaCaso.getFechaInactiva() != null) stat.bindLong(5, casaCaso.getFechaInactiva().getTime());
-        if (casaCaso.getRecordDate() != null) stat.bindLong(6, casaCaso.getRecordDate().getTime());
-        if (casaCaso.getRecordUser() != null) stat.bindString(7, casaCaso.getRecordUser());
+        bindString(stat,2, casaCaso.getCasa().getCodigoCHF());
+        bindDate(stat,3, casaCaso.getFechaInicio());
+        bindString(stat,4, casaCaso.getInactiva());
+        bindDate(stat,5, casaCaso.getFechaInactiva());
+        bindDate(stat,6, casaCaso.getRecordDate());
+        bindString(stat,7, casaCaso.getRecordUser());
         stat.bindString(8, String.valueOf(casaCaso.getPasive()));
-        if (casaCaso.getDeviceid() != null) stat.bindString(9, casaCaso.getDeviceid());
+        bindString(stat,9, casaCaso.getDeviceid());
         stat.bindString(10, String.valueOf(casaCaso.getEstado()));
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
     }
 
 }

@@ -47,20 +47,43 @@ public class CasaCohorteFamiliaHelper {
 		return mCasaCHF;
 	}
 
-	public static void fillCasaCohorteFamiliaStatement(SQLiteStatement stmt,CasaCohorteFamilia casaCHF){
-		stmt.bindString(1, casaCHF.getCodigoCHF());
-		stmt.bindLong(2, casaCHF.getCasa().getCodigo());
-		if (casaCHF.getNombre1JefeFamilia() != null) stmt.bindString(3, casaCHF.getNombre1JefeFamilia());
-		if (casaCHF.getNombre2JefeFamilia() != null) stmt.bindString(4, casaCHF.getNombre2JefeFamilia());
-		if (casaCHF.getApellido1JefeFamilia() != null) stmt.bindString(5, casaCHF.getApellido1JefeFamilia());
-		if (casaCHF.getApellido2JefeFamilia() != null) stmt.bindString(6, casaCHF.getApellido2JefeFamilia());
-		if (casaCHF.getLatitud() != null) stmt.bindDouble(7, casaCHF.getLatitud());
-		if (casaCHF.getLongitud() != null) stmt.bindDouble(8, casaCHF.getLongitud());
-		if (casaCHF.getRecordDate() != null) stmt.bindLong(9, casaCHF.getRecordDate().getTime());
-		if (casaCHF.getRecordUser() != null) stmt.bindString(10, casaCHF.getRecordUser());
-		stmt.bindString(11, String.valueOf(casaCHF.getPasive()));
-		if (casaCHF.getDeviceid() != null) stmt.bindString(12, casaCHF.getDeviceid());
-		stmt.bindString(13, String.valueOf(casaCHF.getEstado()));
+	public static void fillCasaCohorteFamiliaStatement(SQLiteStatement stat,CasaCohorteFamilia casaCHF){
+		stat.bindString(1, casaCHF.getCodigoCHF());
+		stat.bindLong(2, casaCHF.getCasa().getCodigo());
+		bindString(stat,3, casaCHF.getNombre1JefeFamilia());
+		bindString(stat,4, casaCHF.getNombre2JefeFamilia());
+		bindString(stat,5, casaCHF.getApellido1JefeFamilia());
+		bindString(stat,6, casaCHF.getApellido2JefeFamilia());
+		bindDouble(stat, 7, casaCHF.getLatitud());
+		bindDouble(stat, 8, casaCHF.getLongitud());
+		bindDate( stat,9, casaCHF.getRecordDate());
+		bindString(stat,10, casaCHF.getRecordUser());
+		stat.bindString(11, String.valueOf(casaCHF.getPasive()));
+		bindString(stat,12, casaCHF.getDeviceid());
+		stat.bindString(13, String.valueOf(casaCHF.getEstado()));
 	}
-	
+
+	public static void bindString(SQLiteStatement stat, int index, String value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindString(index, value);
+		}
+	}
+
+	public static void bindDate(SQLiteStatement stat, int index, Date value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindLong(index, value.getTime());
+		}
+	}
+
+	public static void bindDouble(SQLiteStatement stat, int index, Double value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindDouble(index, value);
+		}
+	}
 }

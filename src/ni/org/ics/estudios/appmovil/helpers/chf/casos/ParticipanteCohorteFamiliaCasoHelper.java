@@ -54,14 +54,29 @@ public class ParticipanteCohorteFamiliaCasoHelper {
         stat.bindString(1, participanteCaso.getCodigoCasoParticipante());
         stat.bindString(2, participanteCaso.getCodigoCaso().getCodigoCaso());
         stat.bindLong(3, participanteCaso.getParticipante().getParticipante().getCodigo());
-        if (participanteCaso.getEnfermo() != null) stat.bindString(4, participanteCaso.getEnfermo());
-        if (participanteCaso.getFechaEnfermedad() != null) stat.bindLong(5, participanteCaso.getFechaEnfermedad().getTime());
-        if (participanteCaso.getFis() != null) stat.bindLong(6, participanteCaso.getFis().getTime());
-        if (participanteCaso.getRecordDate() != null) stat.bindLong(7, participanteCaso.getRecordDate().getTime());
-        if (participanteCaso.getRecordUser() != null) stat.bindString(8, participanteCaso.getRecordUser());
+        bindString(stat,4, participanteCaso.getEnfermo());
+        bindDate(stat,5, participanteCaso.getFechaEnfermedad());
+        bindDate(stat,6, participanteCaso.getFis());
+        bindDate(stat,7, participanteCaso.getRecordDate());
+        bindString(stat,8, participanteCaso.getRecordUser());
         stat.bindString(9, String.valueOf(participanteCaso.getPasive()));
-        if (participanteCaso.getDeviceid() != null) stat.bindString(10, participanteCaso.getDeviceid());
+        bindString(stat,10, participanteCaso.getDeviceid());
         stat.bindString(11, String.valueOf(participanteCaso.getEstado()));
     }
 
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
 }

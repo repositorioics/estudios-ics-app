@@ -63,21 +63,36 @@ public class SensoresCasoHelper {
     public static void fillSensorCasoStatement(SQLiteStatement stat, SensorCaso sensor){
         stat.bindString(1, sensor.getCodigoSensor());
         stat.bindString(2, sensor.getCodigoCaso().getCodigoCaso());
-        if (sensor.getNumeroSensor() != null) stat.bindString(3, sensor.getNumeroSensor());
-        if (sensor.getArea()!=null)stat.bindString(4, sensor.getArea().getCodigo());
-        if (sensor.getCuarto()!=null)stat.bindString(5, sensor.getCuarto().getCodigo());
-        if (sensor.getFechaColocacion() !=null) stat.bindLong(6, sensor.getFechaColocacion().getTime());
-        if (sensor.getFechaRetiro() !=null) stat.bindLong(7, sensor.getFechaRetiro().getTime());
-        if (sensor.getHoraRetiro() != null) stat.bindString(8, sensor.getHoraRetiro());
-        if (sensor.getObservacionRetiro() != null) stat.bindString(9, sensor.getObservacionRetiro());
-        if (sensor.getSensorSN() != null) stat.bindString(10, sensor.getSensorSN());
-        if (sensor.getRazonNoColocaSensor() != null) stat.bindString(11, sensor.getRazonNoColocaSensor());
+        bindString(stat,3, sensor.getNumeroSensor());
+        bindString(stat,4, sensor.getArea().getCodigo());
+        bindString(stat,5, sensor.getCuarto().getCodigo());
+        bindDate(stat,6, sensor.getFechaColocacion());
+        bindDate(stat,7, sensor.getFechaRetiro());
+        bindString(stat,8, sensor.getHoraRetiro());
+        bindString(stat,9, sensor.getObservacionRetiro());
+        bindString(stat,10, sensor.getSensorSN());
+        bindString(stat,11, sensor.getRazonNoColocaSensor());
 
-        if (sensor.getRecordDate() !=null) stat.bindLong(12, sensor.getRecordDate().getTime());
-        if (sensor.getRecordUser() != null) stat.bindString(13, sensor.getRecordUser());
+        bindDate(stat,12, sensor.getRecordDate());
+        bindString(stat,13, sensor.getRecordUser());
         stat.bindString(14, String.valueOf(sensor.getPasive()));
-        if (sensor.getDeviceid() != null) stat.bindString(15, sensor.getDeviceid());
+        bindString(stat,15, sensor.getDeviceid());
         stat.bindString(16, String.valueOf(sensor.getEstado()));
+    }
 
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
     }
 }

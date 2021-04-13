@@ -40,12 +40,27 @@ public class EstudiosHelper {
 	public static void fillEstudioStatement(SQLiteStatement stat, Estudio estudio) {
 		stat.bindLong(1, estudio.getCodigo());
 		stat.bindString(2, estudio.getNombre());
-		if (estudio.getRecordDate() != null) stat.bindLong(3, estudio.getRecordDate().getTime());
-		if (estudio.getRecordUser() != null) stat.bindString(4, estudio.getRecordUser());
+		bindDate(stat,3, estudio.getRecordDate());
+		bindString(stat,4, estudio.getRecordUser());
 		stat.bindString(5, String.valueOf(estudio.getPasive()));
 		stat.bindString(6, String.valueOf(estudio.getEstado()));
-		if (estudio.getDeviceid() != null) stat.bindString(7, estudio.getDeviceid());
+		bindString(stat,7, estudio.getDeviceid());
 
 	}
-	
+
+	public static void bindString(SQLiteStatement stat, int index, String value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindString(index, value);
+		}
+	}
+
+	public static void bindDate(SQLiteStatement stat, int index, Date value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindLong(index, value.getTime());
+		}
+	}
 }

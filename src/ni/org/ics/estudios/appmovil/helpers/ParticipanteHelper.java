@@ -302,121 +302,145 @@ public class ParticipanteHelper {
     
     public static void fillParticipanteStatement(SQLiteStatement stat, Participante participante){
         stat.bindLong(1, participante.getCodigo());
-        stat.bindString(2, participante.getNombre1());
-        if (participante.getNombre2() != null)	stat.bindString(3, participante.getNombre2());
-        stat.bindString(4, participante.getApellido1());
-        if (participante.getApellido2() != null) stat.bindString(5, participante.getApellido2());
-        if (participante.getSexo() != null) stat.bindString(6, participante.getSexo());
-        if (participante.getFechaNac() != null) stat.bindLong(7, participante.getFechaNac().getTime());
-        stat.bindString(8, participante.getNombre1Padre());
-        if (participante.getNombre2Padre() != null) stat.bindString(9, participante.getNombre2Padre());
-        stat.bindString(10, participante.getApellido1Padre());
-        if (participante.getApellido2Padre() != null) stat.bindString(11, participante.getApellido2Padre());
-        stat.bindString(12, participante.getNombre1Madre());
-        if (participante.getNombre2Madre() != null) stat.bindString(13, participante.getNombre2Madre());
-        stat.bindString(14, participante.getApellido1Madre());
-        if (participante.getApellido2Madre() != null) stat.bindString(15, participante.getApellido2Madre());
+        bindString(stat,2, participante.getNombre1());
+        bindString(stat, 3, participante.getNombre2()); //if (participante.getNombre2() != null)	stat.bindString(3, participante.getNombre2());
+        bindString(stat,4, participante.getApellido1());
+        bindString(stat, 5, participante.getApellido2());//if (participante.getApellido2() != null) stat.bindString(5, participante.getApellido2());
+        bindString(stat,6, participante.getSexo());
+        bindDate(stat,7, participante.getFechaNac());
+        bindString(stat,8, participante.getNombre1Padre());
+        bindString(stat,9, participante.getNombre2Padre());
+        bindString(stat,10, participante.getApellido1Padre());
+        bindString(stat,11, participante.getApellido2Padre());
+        bindString(stat,12, participante.getNombre1Madre());
+        bindString(stat,13, participante.getNombre2Madre());
+        bindString(stat,14, participante.getApellido1Madre());
+        bindString(stat,15, participante.getApellido2Madre());
         stat.bindLong(16, participante.getCasa().getCodigo());
         stat.bindLong(17, participante.getRecordDate().getTime());
-        stat.bindString(18, participante.getRecordUser());
+        bindString(stat,18, participante.getRecordUser());
         stat.bindString(19, String.valueOf(participante.getPasive()));
-        if (participante.getDeviceid() != null) stat.bindString(20, participante.getDeviceid());
+        bindString(stat,20, participante.getDeviceid());
         stat.bindString(21, String.valueOf(participante.getEstado()));
     }
 
     public static void fillParticipanteProcesosStatement(SQLiteStatement stat, ParticipanteProcesos participante) {
         stat.bindLong(1, participante.getCodigo());
-        if ( participante.getEstPart() != null ) stat.bindLong(2, participante.getEstPart());
-        if ( participante.getReConsDeng() != null ) stat.bindString(3, participante.getReConsDeng());
-        if ( participante.getConPto() != null ) stat.bindString(4, participante.getConPto());
-        if ( participante.getEstudio() != null ) stat.bindString(5, participante.getEstudio());
-        if ( participante.getPbmc() != null ) stat.bindString(6, participante.getPbmc());
-        if ( participante.getConsDeng() != null ) stat.bindString(7, participante.getConsDeng());
-        if ( participante.getConsFlu() != null ) stat.bindString(8, participante.getConsFlu());
-        if ( participante.getConsChik() != null ) stat.bindString(9, participante.getConsChik());
-        if ( participante.getConmx() != null ) stat.bindString(10, participante.getConmx());
-        if ( participante.getConmxbhc() != null ) stat.bindString(11, participante.getConmxbhc());
-        if ( participante.getEncLacMat() != null ) stat.bindString(12, participante.getEncLacMat());
-        if ( participante.getPesoTalla() != null ) stat.bindString(13, participante.getPesoTalla());
-        if ( participante.getEncPart() != null ) stat.bindString(14, participante.getEncPart());
-        if ( participante.getEnCasa() != null ) stat.bindString(15, participante.getEnCasa());
-        if ( participante.getObsequio() != null ) stat.bindString(16, participante.getObsequio());
-        if ( participante.getConvalesciente() != null ) stat.bindString(17, participante.getConvalesciente());
-        if ( participante.getInfoVacuna() != null ) stat.bindString(18, participante.getInfoVacuna());
-        if ( participante.getPaxgene() != null ) stat.bindString(19, participante.getPaxgene());
-        if ( participante.getRetoma() != null ) stat.bindString(20, participante.getRetoma());
-        if ( participante.getVolRetoma()!=null ) stat.bindDouble(21, participante.getVolRetoma());
-        if ( participante.getVolRetomaPbmc()!=null ) stat.bindDouble(22, participante.getVolRetomaPbmc());
-        if ( participante.getZika() != null ) stat.bindString(23, participante.getZika());
-        if ( participante.getAdn() != null ) stat.bindString(24, participante.getAdn());
-        if ( participante.getRelacionFam() != null ) stat.bindLong(25, participante.getRelacionFam());
-        if ( participante.getCuantasPers() != null ) stat.bindLong(26, participante.getCuantasPers());
-        if ( participante.getDatosParto() != null ) stat.bindString(27, participante.getDatosParto());
-        if ( participante.getPosZika() != null ) stat.bindString(28, participante.getPosZika());
-        if ( participante.getDatosVisita() != null ) stat.bindString(29, participante.getDatosVisita());
-        if ( participante.getMi() != null ) stat.bindString(30, participante.getMi());
-        if ( participante.getCasaCHF() != null ) stat.bindString(31, participante.getCasaCHF());
-        if ( participante.getEnCasaChf() != null ) stat.bindString(32, participante.getEnCasaChf());
-        if ( participante.getEnCasaSa() != null ) stat.bindString(33, participante.getEnCasaSa());
-        if ( participante.getEncPartSa() != null ) stat.bindString(34, participante.getEncPartSa());
-        if ( participante.getTutor() != null ) stat.bindString(35, participante.getTutor());
-        if ( participante.getCoordenadas() != null ) stat.bindString(36, participante.getCoordenadas());
-        if ( participante.getConsSa() != null ) stat.bindString(37, participante.getConsSa());
-        if ( participante.getObsequioChf() != null ) stat.bindString(38, participante.getObsequioChf());
-        if ( participante.getcDatosParto() != null ) stat.bindString(39, participante.getcDatosParto());
-        if ( participante.getReConsChf18() != null ) stat.bindString(40, participante.getReConsChf18());
-        if ( participante.getPosDengue() != null ) stat.bindString(41, participante.getPosDengue());
-        if ( participante.getMxSuperficie() != null ) stat.bindString(42, participante.getMxSuperficie());
-        if ( participante.getMostrarAlfabeto() != null ) stat.bindString(43, participante.getMostrarAlfabeto());
-        if ( participante.getMostrarMadreAlfabeta() != null ) stat.bindString(44, participante.getMostrarMadreAlfabeta());
-        if ( participante.getMostrarNumParto() != null ) stat.bindString(45, participante.getMostrarNumParto());
-        if ( participante.getMostrarPadreAlfabeto() != null ) stat.bindString(46, participante.getMostrarPadreAlfabeto());
-        if ( participante.getAntecedenteTutorCP() != null ) stat.bindString(47, participante.getAntecedenteTutorCP());
-        if ( participante.getConsCovid19() != null ) stat.bindString(48, participante.getConsCovid19());
-        if ( participante.getSubEstudios() != null ) stat.bindString(49, participante.getSubEstudios());
-        if ( participante.getConsChf() != null ) stat.bindString(50, participante.getConsChf());
-        if ( participante.getCuestCovid() != null ) stat.bindString(51, participante.getCuestCovid());
-        if ( participante.getMuestraCovid() != null ) stat.bindString(52, participante.getMuestraCovid());
-        if ( participante.getPosCovid() != null ) stat.bindString(53, participante.getPosCovid());
-        if ( participante.getConsDenParteE() != null ) stat.bindString(54, participante.getConsDenParteE());
-        if ( participante.getMxDenParteE() != null ) stat.bindString(55, participante.getMxDenParteE());
-        if ( participante.getMovilInfo().getIdInstancia() != null ) stat.bindLong(56, participante.getMovilInfo().getIdInstancia());
-        if ( participante.getMovilInfo().getInstancePath() != null ) stat.bindString(57, participante.getMovilInfo().getInstancePath());
-        if ( participante.getMovilInfo().getEstado() != null ) stat.bindString(58, participante.getMovilInfo().getEstado());
-        if ( participante.getMovilInfo().getUltimoCambio() != null ) stat.bindString(59, participante.getMovilInfo().getUltimoCambio());
-        if ( participante.getMovilInfo().getStart() != null ) stat.bindString(60, participante.getMovilInfo().getStart());
-        if ( participante.getMovilInfo().getEnd() != null ) stat.bindString(61, participante.getMovilInfo().getEnd());
-        if ( participante.getMovilInfo().getDeviceid() != null ) stat.bindString(62, participante.getMovilInfo().getDeviceid());
-        if ( participante.getMovilInfo().getSimserial() != null ) stat.bindString(63, participante.getMovilInfo().getSimserial());
-        if ( participante.getMovilInfo().getPhonenumber() != null ) stat.bindString(64, participante.getMovilInfo().getPhonenumber());
-        if ( participante.getMovilInfo().getToday() != null ) stat.bindLong(65, participante.getMovilInfo().getToday().getTime());
-        if ( participante.getMovilInfo().getUsername() != null ) stat.bindString(66, participante.getMovilInfo().getUsername());
-        if ( participante.getMovilInfo().getEliminado() != null ) stat.bindLong(67, (participante.getMovilInfo().getEliminado() ? 1 : 0));
-        if ( participante.getMovilInfo().getRecurso1() != null ) stat.bindLong(68, participante.getMovilInfo().getRecurso1());
-        if ( participante.getMovilInfo().getRecurso2() != null ) stat.bindLong(69, participante.getMovilInfo().getRecurso2());
+        if ( participante.getEstPart() != null ) stat.bindLong(2, participante.getEstPart()); else stat.bindNull(2);
+        if ( participante.getReConsDeng() != null ) stat.bindString(3, participante.getReConsDeng()); else stat.bindNull(3);
+        if ( participante.getConPto() != null ) stat.bindString(4, participante.getConPto()); else stat.bindNull(4);
+        if ( participante.getEstudio() != null ) stat.bindString(5, participante.getEstudio()); else stat.bindNull(5);
+        if ( participante.getPbmc() != null ) stat.bindString(6, participante.getPbmc()); else stat.bindNull(6);
+        if ( participante.getConsDeng() != null ) stat.bindString(7, participante.getConsDeng()); else stat.bindNull(7);
+        if ( participante.getConsFlu() != null ) stat.bindString(8, participante.getConsFlu()); else stat.bindNull(8);
+        if ( participante.getConsChik() != null ) stat.bindString(9, participante.getConsChik()); else stat.bindNull(9);
+        if ( participante.getConmx() != null ) stat.bindString(10, participante.getConmx()); else stat.bindNull(10);
+        if ( participante.getConmxbhc() != null ) stat.bindString(11, participante.getConmxbhc()); else stat.bindNull(11);
+        if ( participante.getEncLacMat() != null ) stat.bindString(12, participante.getEncLacMat()); else stat.bindNull(12);
+        if ( participante.getPesoTalla() != null ) stat.bindString(13, participante.getPesoTalla()); else stat.bindNull(13);
+        if ( participante.getEncPart() != null ) stat.bindString(14, participante.getEncPart()); else stat.bindNull(14);
+        if ( participante.getEnCasa() != null ) stat.bindString(15, participante.getEnCasa()); else stat.bindNull(15);
+        if ( participante.getObsequio() != null ) stat.bindString(16, participante.getObsequio()); else stat.bindNull(16);
+        if ( participante.getConvalesciente() != null ) stat.bindString(17, participante.getConvalesciente()); else stat.bindNull(17);
+        if ( participante.getInfoVacuna() != null ) stat.bindString(18, participante.getInfoVacuna()); else stat.bindNull(18);
+        if ( participante.getPaxgene() != null ) stat.bindString(19, participante.getPaxgene()); else stat.bindNull(19);
+        if ( participante.getRetoma() != null ) stat.bindString(20, participante.getRetoma()); else stat.bindNull(20);
+        if ( participante.getVolRetoma()!=null ) stat.bindDouble(21, participante.getVolRetoma()); else stat.bindNull(21);
+        if ( participante.getVolRetomaPbmc()!=null ) stat.bindDouble(22, participante.getVolRetomaPbmc()); else stat.bindNull(22);
+        if ( participante.getZika() != null ) stat.bindString(23, participante.getZika()); else stat.bindNull(23);
+        if ( participante.getAdn() != null ) stat.bindString(24, participante.getAdn()); else stat.bindNull(24);
+        if ( participante.getRelacionFam() != null ) stat.bindLong(25, participante.getRelacionFam()); else stat.bindNull(25);
+        if ( participante.getCuantasPers() != null ) stat.bindLong(26, participante.getCuantasPers()); else stat.bindNull(26);
+        if ( participante.getDatosParto() != null ) stat.bindString(27, participante.getDatosParto()); else stat.bindNull(27);
+        if ( participante.getPosZika() != null ) stat.bindString(28, participante.getPosZika()); else stat.bindNull(28);
+        if ( participante.getDatosVisita() != null ) stat.bindString(29, participante.getDatosVisita()); else stat.bindNull(29);
+        if ( participante.getMi() != null ) stat.bindString(30, participante.getMi()); else stat.bindNull(30);
+        if ( participante.getCasaCHF() != null ) stat.bindString(31, participante.getCasaCHF()); else stat.bindNull(31);
+        if ( participante.getEnCasaChf() != null ) stat.bindString(32, participante.getEnCasaChf()); else stat.bindNull(32);
+        if ( participante.getEnCasaSa() != null ) stat.bindString(33, participante.getEnCasaSa()); else stat.bindNull(33);
+        if ( participante.getEncPartSa() != null ) stat.bindString(34, participante.getEncPartSa()); else stat.bindNull(34);
+        if ( participante.getTutor() != null ) stat.bindString(35, participante.getTutor()); else stat.bindNull(35);
+        if ( participante.getCoordenadas() != null ) stat.bindString(36, participante.getCoordenadas()); else stat.bindNull(36);
+        if ( participante.getConsSa() != null ) stat.bindString(37, participante.getConsSa()); else stat.bindNull(37);
+        if ( participante.getObsequioChf() != null ) stat.bindString(38, participante.getObsequioChf()); else stat.bindNull(38);
+        if ( participante.getcDatosParto() != null ) stat.bindString(39, participante.getcDatosParto()); else stat.bindNull(39);
+        if ( participante.getReConsChf18() != null ) stat.bindString(40, participante.getReConsChf18()); else stat.bindNull(40);
+        if ( participante.getPosDengue() != null ) stat.bindString(41, participante.getPosDengue()); else stat.bindNull(41);
+        if ( participante.getMxSuperficie() != null ) stat.bindString(42, participante.getMxSuperficie()); else stat.bindNull(42);
+        if ( participante.getMostrarAlfabeto() != null ) stat.bindString(43, participante.getMostrarAlfabeto()); else stat.bindNull(43);
+        if ( participante.getMostrarMadreAlfabeta() != null ) stat.bindString(44, participante.getMostrarMadreAlfabeta()); else stat.bindNull(44);
+        if ( participante.getMostrarNumParto() != null ) stat.bindString(45, participante.getMostrarNumParto()); else stat.bindNull(45);
+        if ( participante.getMostrarPadreAlfabeto() != null ) stat.bindString(46, participante.getMostrarPadreAlfabeto()); else stat.bindNull(46);
+        if ( participante.getAntecedenteTutorCP() != null ) stat.bindString(47, participante.getAntecedenteTutorCP()); else stat.bindNull(47);
+        if ( participante.getConsCovid19() != null ) stat.bindString(48, participante.getConsCovid19()); else stat.bindNull(48);
+        if ( participante.getSubEstudios() != null ) stat.bindString(49, participante.getSubEstudios()); else stat.bindNull(49);
+        if ( participante.getConsChf() != null ) stat.bindString(50, participante.getConsChf()); else stat.bindNull(50);
+        if ( participante.getCuestCovid() != null ) stat.bindString(51, participante.getCuestCovid()); else stat.bindNull(51);
+        if ( participante.getMuestraCovid() != null ) stat.bindString(52, participante.getMuestraCovid()); else stat.bindNull(52);
+        if ( participante.getPosCovid() != null ) stat.bindString(53, participante.getPosCovid()); else stat.bindNull(53);
+        if ( participante.getConsDenParteE() != null ) stat.bindString(54, participante.getConsDenParteE()); else stat.bindNull(54);
+        if ( participante.getMxDenParteE() != null ) stat.bindString(55, participante.getMxDenParteE()); else stat.bindNull(55);
+        if ( participante.getMovilInfo().getIdInstancia() != null ) stat.bindLong(56, participante.getMovilInfo().getIdInstancia()); else stat.bindNull(56);
+        if ( participante.getMovilInfo().getInstancePath() != null ) stat.bindString(57, participante.getMovilInfo().getInstancePath()); else stat.bindNull(57);
+        if ( participante.getMovilInfo().getEstado() != null ) stat.bindString(58, participante.getMovilInfo().getEstado()); else stat.bindNull(58);
+        if ( participante.getMovilInfo().getUltimoCambio() != null ) stat.bindString(59, participante.getMovilInfo().getUltimoCambio()); else stat.bindNull(59);
+        if ( participante.getMovilInfo().getStart() != null ) stat.bindString(60, participante.getMovilInfo().getStart()); else stat.bindNull(60);
+        if ( participante.getMovilInfo().getEnd() != null ) stat.bindString(61, participante.getMovilInfo().getEnd()); else stat.bindNull(61);
+        if ( participante.getMovilInfo().getDeviceid() != null ) stat.bindString(62, participante.getMovilInfo().getDeviceid()); else stat.bindNull(62);
+        if ( participante.getMovilInfo().getSimserial() != null ) stat.bindString(63, participante.getMovilInfo().getSimserial()); else stat.bindNull(63);
+        if ( participante.getMovilInfo().getPhonenumber() != null ) stat.bindString(64, participante.getMovilInfo().getPhonenumber()); else stat.bindNull(64);
+        if ( participante.getMovilInfo().getToday() != null ) stat.bindLong(65, participante.getMovilInfo().getToday().getTime()); else stat.bindNull(65);
+        if ( participante.getMovilInfo().getUsername() != null ) stat.bindString(66, participante.getMovilInfo().getUsername()); else stat.bindNull(66);
+        if ( participante.getMovilInfo().getEliminado() != null ) stat.bindLong(67, (participante.getMovilInfo().getEliminado() ? 1 : 0)); else stat.bindNull(67);
+        if ( participante.getMovilInfo().getRecurso1() != null ) stat.bindLong(68, participante.getMovilInfo().getRecurso1()); else stat.bindNull(68);
+        if ( participante.getMovilInfo().getRecurso2() != null ) stat.bindLong(69, participante.getMovilInfo().getRecurso2()); else stat.bindNull(69);
     }
 
     public static void fillContactoParticipanteStatement(SQLiteStatement stat, ContactoParticipante contactoParticipante){
         stat.bindString(1, contactoParticipante.getId());
-        if (contactoParticipante.getNombre() != null) stat.bindString(2, contactoParticipante.getNombre());
-        if (contactoParticipante.getDireccion() != null) stat.bindString(3, contactoParticipante.getDireccion());
-        if (contactoParticipante.getBarrio() != null) stat.bindLong(4, contactoParticipante.getBarrio().getCodigo());
-        if (contactoParticipante.getNumero1() != null) stat.bindString(5, contactoParticipante.getNumero1());
-        if (contactoParticipante.getOperadora1() != null) stat.bindString(6, contactoParticipante.getOperadora1());
-        if (contactoParticipante.getTipo1() != null) stat.bindString(7, contactoParticipante.getTipo1());
-        if (contactoParticipante.getNumero2() != null) stat.bindString(8, contactoParticipante.getNumero2());
-        if (contactoParticipante.getOperadora2() != null) stat.bindString(9, contactoParticipante.getOperadora2());
-        if (contactoParticipante.getTipo2() != null) stat.bindString(10, contactoParticipante.getTipo2());
-        if (contactoParticipante.getNumero3() != null) stat.bindString(11, contactoParticipante.getNumero3());
-        if (contactoParticipante.getOperadora3() != null) stat.bindString(12, contactoParticipante.getOperadora3());
-        if (contactoParticipante.getTipo3() != null) stat.bindString(13, contactoParticipante.getTipo3());
-        if (contactoParticipante.getEsPropio() != null) stat.bindString(14, contactoParticipante.getEsPropio());
-        if (contactoParticipante.getOtroBarrio() != null) stat.bindString(15, contactoParticipante.getOtroBarrio());
-        if (contactoParticipante.getParticipante() != null) stat.bindLong(16, contactoParticipante.getParticipante().getCodigo());
-        if (contactoParticipante.getRecordDate() != null) stat.bindLong(17, contactoParticipante.getRecordDate().getTime());
-        if (contactoParticipante.getRecordUser() != null) stat.bindString(18, contactoParticipante.getRecordUser());
+        bindString(stat,2, contactoParticipante.getNombre());
+        bindString(stat,3, contactoParticipante.getDireccion());
+        if (contactoParticipante.getBarrio() != null) stat.bindLong(4, contactoParticipante.getBarrio().getCodigo()); else stat.bindNull(4);
+        bindString(stat,5, contactoParticipante.getNumero1());
+        bindString(stat,6, contactoParticipante.getOperadora1());
+        bindString(stat,7, contactoParticipante.getTipo1());
+        bindString(stat,8, contactoParticipante.getNumero2());
+        bindString(stat,9, contactoParticipante.getOperadora2());
+        bindString(stat,10, contactoParticipante.getTipo2());
+        bindString(stat,11, contactoParticipante.getNumero3());
+        bindString(stat,12, contactoParticipante.getOperadora3());
+        bindString(stat,13, contactoParticipante.getTipo3());
+        bindString(stat,14, contactoParticipante.getEsPropio());
+        bindString(stat,15, contactoParticipante.getOtroBarrio());
+        bindInteger(stat,16, contactoParticipante.getParticipante().getCodigo());
+        bindDate(stat, 17, contactoParticipante.getRecordDate());
+        bindString(stat,18, contactoParticipante.getRecordUser());
         stat.bindString(19, String.valueOf(contactoParticipante.getPasive()));
-        if (contactoParticipante.getDeviceid() != null) stat.bindString(20, contactoParticipante.getDeviceid());
+        bindString(stat,20, contactoParticipante.getDeviceid());
         stat.bindString(21, String.valueOf(contactoParticipante.getEstado()));
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
+
+    public static void bindInteger(SQLiteStatement stat, int index, Integer value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value);
+        }
     }
 }

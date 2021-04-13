@@ -279,65 +279,97 @@ public class AreaAmbienteHelper {
 
     public static void fillAreaAmbienteStatement(SQLiteStatement stat, AreaAmbiente objeto){
         stat.bindString(1, objeto.getCodigo());
-        if (objeto.getCasa() != null) stat.bindString(2, objeto.getCasa().getCodigoCHF());
-        if (objeto.getLargo() != null) stat.bindDouble(3, objeto.getLargo());
-        if (objeto.getAncho() != null) stat.bindDouble(4, objeto.getAncho());
-        if (objeto.getTotalM2() != null) stat.bindDouble(5, objeto.getTotalM2());
-        if (objeto.getNumVentanas() != null) stat.bindLong(6, objeto.getNumVentanas());
-        if (objeto.getTipo() != null) stat.bindString(7, objeto.getTipo());
+        bindString(stat,2, objeto.getCasa().getCodigoCHF());
+        bindDouble(stat,3, objeto.getLargo());
+        bindDouble(stat,4, objeto.getAncho());
+        bindDouble(stat,5, objeto.getTotalM2());
+        bindInteger(stat,6, objeto.getNumVentanas());
+        bindString(stat,7, objeto.getTipo());
         //con ventana 8
         //cantidad camas 9
         //areaambiente 10
         //abierta 11
         //codigohabitacion 12
-        if (objeto.getNumeroCuarto() != null) stat.bindString(13, objeto.getNumeroCuarto());//MA2020
-        if (objeto.getRecordDate() != null) stat.bindLong(14, objeto.getRecordDate().getTime());
-        if (objeto.getRecordUser() != null) stat.bindString(15, objeto.getRecordUser());
+        bindString(stat,13, objeto.getNumeroCuarto());//MA2020
+        bindDate(stat,14, objeto.getRecordDate());
+        bindString(stat,15, objeto.getRecordUser());
         stat.bindString(16, String.valueOf(objeto.getPasive()));
-        if (objeto.getDeviceid() != null) stat.bindString(17, objeto.getDeviceid());
+        bindString(stat,17, objeto.getDeviceid());
         stat.bindString(18, String.valueOf(objeto.getEstado()));
     }
 
     public static void fillBanioStatement(SQLiteStatement stat, Banio objeto){
         stat.bindString(1, objeto.getCodigo());
-        if (objeto.getCasa() != null) stat.bindString(2, objeto.getCasa().getCodigoCHF());
-        if (objeto.getLargo() != null) stat.bindDouble(3, objeto.getLargo());
-        if (objeto.getAncho() != null) stat.bindDouble(4, objeto.getAncho());
-        if (objeto.getTotalM2() != null) stat.bindDouble(5, objeto.getTotalM2());
-        if (objeto.getNumVentanas() != null) stat.bindLong(6, objeto.getNumVentanas());
-        if (objeto.getTipo() != null) stat.bindString(7, objeto.getTipo());
-        if (objeto.getConVentana() != null) stat.bindString(8, objeto.getConVentana());
+        bindString(stat,2, objeto.getCasa().getCodigoCHF());
+        bindDouble(stat,3, objeto.getLargo());
+        bindDouble(stat,4, objeto.getAncho());
+        bindDouble(stat,5, objeto.getTotalM2());
+        bindInteger(stat,6, objeto.getNumVentanas());
+        bindString(stat,7, objeto.getTipo());
+        bindString(stat,8, objeto.getConVentana());
         //cantidad camas 9
-        if (objeto.getAreaAmbiente() != null) stat.bindString(10, objeto.getAreaAmbiente().getCodigo());
+        if (objeto.getAreaAmbiente() != null) bindString(stat,10, objeto.getAreaAmbiente().getCodigo()); else stat.bindNull(10);
         //abierta 11
         //codigohabitacion 12
-        if (objeto.getNumeroCuarto() != null) stat.bindString(13, objeto.getNumeroCuarto());//MA2020
-        if (objeto.getRecordDate() != null) stat.bindLong(14, objeto.getRecordDate().getTime());
-        if (objeto.getRecordUser() != null) stat.bindString(15, objeto.getRecordUser());
+        bindString(stat,13, objeto.getNumeroCuarto());//MA2020
+        bindDate(stat,14, objeto.getRecordDate());
+        bindString(stat,15, objeto.getRecordUser());
         stat.bindString(16, String.valueOf(objeto.getPasive()));
-        if (objeto.getDeviceid() != null) stat.bindString(17, objeto.getDeviceid());
+        bindString(stat,17, objeto.getDeviceid());
         stat.bindString(18, String.valueOf(objeto.getEstado()));
     }
 
     public static void fillVentanaStatement(SQLiteStatement stat, Ventana objeto){
         stat.bindString(1, objeto.getCodigo());
-        if (objeto.getCasa() != null) stat.bindString(2, objeto.getCasa().getCodigoCHF());
-        if (objeto.getLargo() != null) stat.bindDouble(3, objeto.getLargo());
-        if (objeto.getAncho() != null) stat.bindDouble(4, objeto.getAncho());
-        if (objeto.getTotalM2() != null) stat.bindDouble(5, objeto.getTotalM2());
-        if (objeto.getNumVentanas() != null) stat.bindLong(6, objeto.getNumVentanas());
-        if (objeto.getTipo() != null) stat.bindString(7, objeto.getTipo());
+        bindString(stat,2, objeto.getCasa().getCodigoCHF());
+        bindDouble(stat,3, objeto.getLargo());
+        bindDouble(stat,4, objeto.getAncho());
+        bindDouble(stat,5, objeto.getTotalM2());
+        bindInteger(stat,6, objeto.getNumVentanas());
+        bindString(stat,7, objeto.getTipo());
         //con ventana 8
         //cantidad camas 9
-        if (objeto.getAreaAmbiente() != null) stat.bindString(10, objeto.getAreaAmbiente().getCodigo());
-        if (objeto.getAbierta() != null) stat.bindString(11, objeto.getAbierta());
+        if (objeto.getAreaAmbiente() != null) bindString(stat,10, objeto.getAreaAmbiente().getCodigo()); else stat.bindNull(10);
+        bindString(stat,11, objeto.getAbierta());
         //codigohabitacion 12
-        if (objeto.getNumeroCuarto() != null) stat.bindString(13, objeto.getNumeroCuarto());//MA2020
-        if (objeto.getRecordDate() != null) stat.bindLong(14, objeto.getRecordDate().getTime());
-        if (objeto.getRecordUser() != null) stat.bindString(15, objeto.getRecordUser());
+        bindString(stat,13, objeto.getNumeroCuarto());//MA2020
+        bindDate(stat,14, objeto.getRecordDate());
+        bindString(stat,15, objeto.getRecordUser());
         stat.bindString(16, String.valueOf(objeto.getPasive()));
-        if (objeto.getDeviceid() != null) stat.bindString(17, objeto.getDeviceid());
+        bindString(stat,17, objeto.getDeviceid());
         stat.bindString(18, String.valueOf(objeto.getEstado()));
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
+
+    public static void bindDouble(SQLiteStatement stat, int index, Double value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindDouble(index, value);
+        }
+    }
+
+    public static void bindInteger(SQLiteStatement stat, int index, Integer value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value);
+        }
     }
 
 }

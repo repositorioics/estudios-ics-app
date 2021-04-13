@@ -53,19 +53,35 @@ public class CandidatoTransmisionCovid19Helper {
 
     public static void fillCandidatoTransmisionCovid19Statement(SQLiteStatement stat, CandidatoTransmisionCovid19 candidato){
         if (candidato.getCodigo() != null) stat.bindString(1, candidato.getCodigo());
-        if (candidato.getParticipante() != null) stat.bindLong(2, candidato.getParticipante().getCodigo());
-        if (candidato.getCasaCHF() != null) stat.bindString(3, candidato.getCasaCHF());
-        if (candidato.getFis() != null) stat.bindLong(4, candidato.getFis().getTime());
-        if (candidato.getFif() != null) stat.bindLong(5, candidato.getFif().getTime());
-        if (candidato.getPositivoPor() != null) stat.bindString(6, candidato.getPositivoPor());
-        if (candidato.getConsentimiento() != null) stat.bindString(7, candidato.getConsentimiento());
-        if (candidato.getEstActuales() != null) stat.bindString(8, candidato.getEstActuales());
-        if (candidato.getFechaIngreso() != null) stat.bindLong(9, candidato.getFechaIngreso().getTime());
+        stat.bindLong(2, candidato.getParticipante().getCodigo());
+        bindString(stat,3, candidato.getCasaCHF());
+        bindDate(stat,4, candidato.getFis());
+        bindDate(stat,5, candidato.getFif());
+        bindString(stat,6, candidato.getPositivoPor());
+        bindString(stat,7, candidato.getConsentimiento());
+        bindString(stat,8, candidato.getEstActuales());
+        bindDate(stat,9, candidato.getFechaIngreso());
 
-        if (candidato.getRecordDate() != null) stat.bindLong(10, candidato.getRecordDate().getTime());
-        if (candidato.getRecordUser() != null) stat.bindString(11, candidato.getRecordUser());
+        bindDate(stat,10, candidato.getRecordDate());
+        bindString(stat,11, candidato.getRecordUser());
         stat.bindString(12, String.valueOf(candidato.getPasive()));
-        if (candidato.getDeviceid() != null) stat.bindString(13, candidato.getDeviceid());
+        bindString(stat,13, candidato.getDeviceid());
         stat.bindString(14, String.valueOf(candidato.getEstado()));
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
     }
 }

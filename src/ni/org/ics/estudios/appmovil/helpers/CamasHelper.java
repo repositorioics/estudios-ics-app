@@ -76,26 +76,51 @@ public class CamasHelper {
 
     public static void fillCamaStatement(SQLiteStatement stat, Cama cama){
         stat.bindString(1, cama.getCodigoCama());
-        if (cama.getCuarto()!=null) stat.bindString(2, cama.getCuarto().getCodigo());
-        if (cama.getDescCama() != null) stat.bindString(3, cama.getDescCama());
-        if (cama.getRecordDate() != null) stat.bindLong(4, cama.getRecordDate().getTime());
-        if (cama.getRecordUser() != null) stat.bindString(5, cama.getRecordUser());
+        bindString(stat,2, cama.getCuarto().getCodigo());
+        bindString(stat,3, cama.getDescCama());
+        bindDate(stat,4, cama.getRecordDate());
+        bindString(stat,5, cama.getRecordUser());
         stat.bindString(6, String.valueOf(cama.getPasive()));
-        if (cama.getDeviceid() != null) stat.bindString(7, cama.getDeviceid());
+        bindString(stat,7, cama.getDeviceid());
         stat.bindString(8, String.valueOf(cama.getEstado()));
     }
 
     public static void fillPersonaCamaStatement(SQLiteStatement stat, PersonaCama personaCama){
         stat.bindString(1, personaCama.getCodigoPersona());
-        if (personaCama.getCama() != null) stat.bindString(2, personaCama.getCama().getCodigoCama());
-        if (personaCama.getEstaEnEstudio() != null) stat.bindString(3, personaCama.getEstaEnEstudio());
-        if (personaCama.getParticipante() != null) stat.bindLong(4, personaCama.getParticipante().getCodigo());
-        if (personaCama.getEdad() != null) stat.bindLong(5, personaCama.getEdad());
-        if (personaCama.getSexo() != null) stat.bindString(6, personaCama.getSexo());
-        if (personaCama.getRecordDate() != null) stat.bindLong(7, personaCama.getRecordDate().getTime());
-        if (personaCama.getRecordUser() != null) stat.bindString(8, personaCama.getRecordUser());
+        bindString(stat,2, personaCama.getCama().getCodigoCama());
+        bindString(stat,3, personaCama.getEstaEnEstudio());
+        if (personaCama.getParticipante() != null) stat.bindLong(4, personaCama.getParticipante().getCodigo()); else stat.bindNull(4);
+        bindInteger(stat,5, personaCama.getEdad());
+        bindString(stat,6, personaCama.getSexo());
+        bindDate(stat,7, personaCama.getRecordDate());
+        bindString(stat,8, personaCama.getRecordUser());
         stat.bindString(9, String.valueOf(personaCama.getPasive()));
-        if (personaCama.getDeviceid() != null) stat.bindString(10, personaCama.getDeviceid());
+        bindString(stat,10, personaCama.getDeviceid());
         stat.bindString(11, String.valueOf(personaCama.getEstado()));
     }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
+
+    public static void bindInteger(SQLiteStatement stat, int index, Integer value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value);
+        }
+    }
+
 }

@@ -115,44 +115,77 @@ public class MuestraHelper {
 
     public static void fillMuestraChfStatement(SQLiteStatement stat, Muestra muestra){
         stat.bindString(1, muestra.getCodigo());
-        if (muestra.getTomaMxSn() != null) stat.bindString(2, muestra.getTomaMxSn());
-        if (muestra.getCodigoMx() != null) stat.bindString(3, muestra.getCodigoMx());
-        if (muestra.getHora() != null) stat.bindString(4, muestra.getHora());
-        if (muestra.getHoraFin() != null) stat.bindString(5, muestra.getHoraFin());
-        if (muestra.getVolumen() != null) stat.bindDouble(6, muestra.getVolumen());
-        if (muestra.getObservacion() != null) stat.bindString(7, muestra.getObservacion());
-        if (muestra.getDescOtraObservacion() != null) stat.bindString(8, muestra.getDescOtraObservacion());
-        if (muestra.getNumPinchazos() != null) stat.bindString(9, muestra.getNumPinchazos());
-        if (muestra.getRazonNoToma() != null) stat.bindString(10, muestra.getRazonNoToma());
-        if (muestra.getDescOtraRazonNoToma() != null) stat.bindString(11, muestra.getDescOtraRazonNoToma());
-        if (muestra.getTubo() != null) stat.bindString(12, muestra.getTubo());
-        if (muestra.getTipoMuestra() != null) stat.bindString(13, muestra.getTipoMuestra());
-        if (muestra.getProposito() != null) stat.bindString(14, muestra.getProposito());
-        if (muestra.getParticipante() != null) stat.bindLong(15, muestra.getParticipante().getCodigo());
-        if (muestra.getRealizaPaxgene() != null) stat.bindString(16, muestra.getRealizaPaxgene());
-        if (muestra.getHoraInicioPax() != null) stat.bindString(17, muestra.getHoraInicioPax());
-        if (muestra.getHoraFinPax() != null) stat.bindString(18, muestra.getHoraFinPax());
+        bindString(stat,2, muestra.getTomaMxSn());
+        bindString(stat,3, muestra.getCodigoMx());
+        bindString(stat,4, muestra.getHora());
+        bindString(stat,5, muestra.getHoraFin());
+        bindDouble(stat,6, muestra.getVolumen());
+        bindString(stat,7, muestra.getObservacion());
+        bindString(stat,8, muestra.getDescOtraObservacion());
+        bindString(stat,9, muestra.getNumPinchazos());
+        bindString(stat,10, muestra.getRazonNoToma());
+        bindString(stat,11, muestra.getDescOtraRazonNoToma());
+        bindString(stat,12, muestra.getTubo());
+        bindString(stat,13, muestra.getTipoMuestra());
+        bindString(stat,14, muestra.getProposito());
+        bindInteger(stat,15, muestra.getParticipante().getCodigo());
+        bindString(stat,16, muestra.getRealizaPaxgene());
+        bindString(stat,17, muestra.getHoraInicioPax());
+        bindString(stat,18, muestra.getHoraFinPax());
 
-        if (muestra.getRecordDate() != null) stat.bindLong(19, muestra.getRecordDate().getTime());
-        if (muestra.getRecordUser() != null) stat.bindString(20, muestra.getRecordUser());
+        bindDate(stat,19, muestra.getRecordDate());
+        bindString(stat,20, muestra.getRecordUser());
         stat.bindString(21, String.valueOf(muestra.getPasive()));
-        if (muestra.getDeviceid() != null) stat.bindString(22, muestra.getDeviceid());
+        bindString(stat,22, muestra.getDeviceid());
         stat.bindString(23, String.valueOf(muestra.getEstado()));
     }
 
     public static void fillMuestraSuperficieStatement(SQLiteStatement stat, MuestraSuperficie muestra){
         stat.bindString(1, muestra.getCodigo());
-        if (muestra.getTipoMuestra() != null) stat.bindString(2, muestra.getTipoMuestra());
-        if (muestra.getOtraSuperficie() != null) stat.bindString(3, muestra.getOtraSuperficie());
-        if (muestra.getCodigoMx() != null) stat.bindString(4, muestra.getCodigoMx());
-        if (muestra.getCasaChf()!=null) stat.bindString(5, muestra.getCasaChf().getCodigoCHF());
-        if (muestra.getParticipanteChf()!=null) stat.bindLong(6, muestra.getParticipanteChf().getParticipante().getCodigo());
-        if (muestra.getVisita() != null) stat.bindString(7, muestra.getVisita());
-        if (muestra.getCaso() != null) stat.bindString(8, muestra.getCaso());
-        if (muestra.getRecordDate() != null) stat.bindLong(9, muestra.getRecordDate().getTime());
-        if (muestra.getRecordUser() != null) stat.bindString(10, muestra.getRecordUser());
+        bindString(stat,2, muestra.getTipoMuestra());
+        bindString(stat,3, muestra.getOtraSuperficie());
+        bindString(stat,4, muestra.getCodigoMx());
+        bindString(stat,5, muestra.getCasaChf().getCodigoCHF());
+        if (muestra.getParticipanteChf() != null) bindInteger(stat,6, muestra.getParticipanteChf().getParticipante().getCodigo()); else stat.bindNull(6);
+        bindString(stat,7, muestra.getVisita());
+        bindString(stat,8, muestra.getCaso());
+        bindDate(stat,9, muestra.getRecordDate());
+        bindString(stat,10, muestra.getRecordUser());
         stat.bindString(11, String.valueOf(muestra.getPasive()));
-        if (muestra.getDeviceid() != null) stat.bindString(12, muestra.getDeviceid());
+        bindString(stat,12, muestra.getDeviceid());
         stat.bindString(13, String.valueOf(muestra.getEstado()));
     }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
+
+    public static void bindInteger(SQLiteStatement stat, int index, Integer value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value);
+        }
+    }
+
+    public static void bindDouble(SQLiteStatement stat, int index, Double value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindDouble(index, value);
+        }
+    }
+
 }

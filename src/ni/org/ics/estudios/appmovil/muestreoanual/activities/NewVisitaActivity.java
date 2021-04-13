@@ -41,7 +41,7 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 	protected static final String TAG = NewVisitaActivity.class.getSimpleName();
 
 	private static Integer casaId = 0;
-	
+
 	private static Integer codigo = 0;
 	public static final int VISITA =100;
 	private String username;
@@ -50,7 +50,7 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 	private static VisitaTerreno mVisitaTerreno = new VisitaTerreno();
 	Dialog dialogInit;
 
-    private EstudiosAdapter estudiosAdapter;
+	private EstudiosAdapter estudiosAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +66,8 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
 
-        String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
 		casaId = getIntent().getIntExtra(ConstantsDB.COD_CASA,-1);
 		codigo = getIntent().getIntExtra(ConstantsDB.CODIGO,-1);
@@ -80,8 +80,8 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 	 */
 
 	private void createInitDialog() {
-		dialogInit = new Dialog(this, R.style.FullHeightDialog); 
-		dialogInit.setContentView(R.layout.yesno); 
+		dialogInit = new Dialog(this, R.style.FullHeightDialog);
+		dialogInit.setContentView(R.layout.yesno);
 		dialogInit.setCancelable(false);
 
 		//to set the message
@@ -121,31 +121,31 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.MENU_BACK:
-			finish();
-			return true;
-		case R.id.MENU_HOME:
-			Intent i = new Intent(getApplicationContext(),
-					MenuMuestreoAnualActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+			case R.id.MENU_BACK:
+				finish();
+				return true;
+			case R.id.MENU_HOME:
+				Intent i = new Intent(getApplicationContext(),
+						MenuMuestreoAnualActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent) {
+									Intent intent) {
 
 		//Si todo salio bien en ODK Collect
 		if (resultCode == RESULT_OK) {
 			Uri instanceUri = intent.getData();
 			//Busca la instancia resultado
 			String[] projection = new String[] {
-					"_id","instanceFilePath", "status","displaySubtext"};//"_id","instanceFilePath", "status"};
+					"_id","instanceFilePath", "status","displaySubtext"};
 			Cursor c = getContentResolver().query(instanceUri, projection,
 					null, null, null);
 			c.moveToFirst();
@@ -153,8 +153,7 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 			Integer idInstancia = c.getInt(c.getColumnIndex("_id"));
 			String instanceFilePath = c.getString(c.getColumnIndex("instanceFilePath"));
 			String complete = c.getString(c.getColumnIndex("status"));
-			//String cambio = null;
-			String cambio = c.getString(c.getColumnIndex("date"));
+			String cambio = c.getString(c.getColumnIndex("displaySubtext"));
 			//cierra el cursor
 			if (c != null) {
 				c.close();
@@ -179,41 +178,41 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 		File source = new File(instanceFilePath);
 		try {
 			boolean modPart = false;
-            VisitaParticipanteXml em = new VisitaParticipanteXml();
-            em = serializer.read(VisitaParticipanteXml.class, source);
-            VisitaTerrenoId vtId = new VisitaTerrenoId();
-            vtId.setCodigo(codigo);
-            vtId.setFechaVisita(new Date());
-            mVisitaTerreno.setVisitaId(vtId);
-            mVisitaTerreno.setVisitaSN(em.getVisitaSN());
-            mVisitaTerreno.setMotNoVisita(em.getMotNoVisita());
+			VisitaParticipanteXml em = new VisitaParticipanteXml();
+			em = serializer.read(VisitaParticipanteXml.class, source);
+			VisitaTerrenoId vtId = new VisitaTerrenoId();
+			vtId.setCodigo(codigo);
+			vtId.setFechaVisita(new Date());
+			mVisitaTerreno.setVisitaId(vtId);
+			mVisitaTerreno.setVisitaSN(em.getVisitaSN());
+			mVisitaTerreno.setMotNoVisita(em.getMotNoVisita());
 			mVisitaTerreno.setOtroMotNoVisita(em.getOtroMotNoVisita());//MA2020
-            mVisitaTerreno.setAcomp(em.getAcomp());
-            mVisitaTerreno.setRelacionFam(em.getRelacionFam());
-            mVisitaTerreno.setAsentimiento(em.getAsentimiento());
+			mVisitaTerreno.setAcomp(em.getAcomp());
+			mVisitaTerreno.setRelacionFam(em.getRelacionFam());
+			mVisitaTerreno.setAsentimiento(em.getAsentimiento());
 
-            mVisitaTerreno.setOtrorecurso1(em.getOtrorecurso1());
-            mVisitaTerreno.setOtrorecurso2(em.getOtrorecurso2());
+			mVisitaTerreno.setOtrorecurso1(em.getOtrorecurso1());
+			mVisitaTerreno.setOtrorecurso2(em.getOtrorecurso2());
 
-            mVisitaTerreno.setOtraRelacionFam(em.getOtraRelacionFam());
-            mVisitaTerreno.setCarnetSN(em.getCarnetSN());
+			mVisitaTerreno.setOtraRelacionFam(em.getOtraRelacionFam());
+			mVisitaTerreno.setCarnetSN(em.getCarnetSN());
 			//para peso y talla muestreo 2020
 			mVisitaTerreno.setEstudiaSN(em.getEstudiaSN());
 			mVisitaTerreno.setnEscuela(em.getnEscuela());
 			mVisitaTerreno.setOtraEscuela(em.getOtraEscuela());
 			mVisitaTerreno.setTurno(em.getTurno());
-            mVisitaTerreno.setMovilInfo(new MovilInfo(idInstancia,
-                    instanceFilePath,
-                    Constants.STATUS_NOT_SUBMITTED,
-                    ultimoCambio,
-                    em.getStart(),
-                    em.getEnd(),
-                    em.getDeviceid(),
-                    em.getSimserial(),
-                    em.getPhonenumber(),
-                    em.getToday(),
-                    username,
-                    false, em.getRecurso1(), em.getRecurso2()));
+			mVisitaTerreno.setMovilInfo(new MovilInfo(idInstancia,
+					instanceFilePath,
+					Constants.STATUS_NOT_SUBMITTED,
+					ultimoCambio,
+					em.getStart(),
+					em.getEnd(),
+					em.getDeviceid(),
+					em.getSimserial(),
+					em.getPhonenumber(),
+					em.getToday(),
+					username,
+					false, em.getRecurso1(), em.getRecurso2()));
 
 
 			//Guarda en la base de datos local
@@ -231,7 +230,7 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 			}
 			else if (mVisitaTerreno.getAsentimiento()!=null && mVisitaTerreno.getAsentimiento()==0){
 				Intent i = new Intent(getApplicationContext(),
-                        MenuMuestreoAnualActivity.class);
+						MenuMuestreoAnualActivity.class);
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
 				finish();
@@ -255,54 +254,47 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 
 	}
 
-	
-	/**
-	 * 
-	 */
-    private void addVisita() {
-        try{
-            openODKForm();
-        }
-		catch(NullPointerException e){
-        	openODKForm();
-		}
-        catch(Exception e){
-            //No existe el formulario en el equipo
-            Log.e(TAG, e.getMessage(), e);
-            showToast(e.getLocalizedMessage(),1);
-        }
-    }
 
-    private void openODKForm() {
-		//campos de proveedor de collect
-		String[] projection = new String[] {
-				"_id","jrFormId","displayName"};
-		//cursor que busca el formulario
-		Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
-				"jrFormId = 'VisitaParticipante' and displayName = 'VisitaParticipante'", null, null);
-		c.moveToFirst();
-		//captura el id del formulario
-		Integer id = Integer.parseInt(c.getString(0));
-		//cierra el cursor
-		if (c != null) {
-			c.close();
+	/**
+	 *
+	 */
+	private void addVisita() {
+		try{
+			//campos de proveedor de collect
+			String[] projection = new String[] {
+					"_id","jrFormId","displayName"};
+			//cursor que busca el formulario
+			Cursor c = getContentResolver().query(Constants.CONTENT_URI, projection,
+					"jrFormId = 'VisitaParticipante' and displayName = 'VisitaParticipante'", null, null);
+			c.moveToFirst();
+			//captura el id del formulario
+			Integer id = Integer.parseInt(c.getString(0));
+			//cierra el cursor
+			if (c != null) {
+				c.close();
+			}
+			//forma el uri para ODK Collect
+			Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
+			//Arranca la actividad ODK Collect en busca de resultado
+			Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
+			String valores[] = new String[2];
+			valores[0] = "edad";
+			valores[1] = mParticipante.getEdadMeses().toString();
+			odkA.putExtra("vc", valores);
+			startActivityForResult(odkA,VISITA);
 		}
-		//forma el uri para ODK Collect
-		Uri formUri = ContentUris.withAppendedId(Constants.CONTENT_URI,id);
-		//Arranca la actividad ODK Collect en busca de resultado
-		Intent odkA =  new Intent(Intent.ACTION_EDIT,formUri);
-		String valores[] = new String[2];
-		valores[0] = "edad";
-		valores[1] = mParticipante.getEdadMeses().toString();
-		odkA.putExtra("vc", valores);
-		startActivityForResult(odkA,VISITA);
+		catch(Exception e){
+			//No existe el formulario en el equipo
+			Log.e(TAG, e.getMessage(), e);
+			showToast(e.getLocalizedMessage(),1);
+		}
 	}
 
-    private void getData() {
-        estudiosAdapter.open();
-        mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo + "=" + codigo, null);
-        estudiosAdapter.close();
-    }
+	private void getData() {
+		estudiosAdapter.open();
+		mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo + "=" + codigo, null);
+		estudiosAdapter.close();
+	}
 
 	private void showToast(String mensaje, int numImage){
 		LayoutInflater inflater = getLayoutInflater();
@@ -313,15 +305,15 @@ public class NewVisitaActivity extends AbstractAsyncActivity {
 		ImageView image = (ImageView) layout.findViewById(R.id.image);
 
 		switch(numImage){
-		case 0:
-			image.setImageResource(R.drawable.ic_ok);
-			break;
-		case 1:
-			image.setImageResource(R.drawable.ic_error);
-			break;
-		default:
-			image.setImageResource(R.drawable.ic_launcher);
-			break;
+			case 0:
+				image.setImageResource(R.drawable.ic_ok);
+				break;
+			case 1:
+				image.setImageResource(R.drawable.ic_error);
+				break;
+			default:
+				image.setImageResource(R.drawable.ic_launcher);
+				break;
 		}
 
 

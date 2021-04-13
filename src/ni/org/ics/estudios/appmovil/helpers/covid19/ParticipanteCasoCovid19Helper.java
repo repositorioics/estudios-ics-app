@@ -51,17 +51,33 @@ public class ParticipanteCasoCovid19Helper {
 
     public static void fillParticipanteCasoCovid19Statement(SQLiteStatement stat, ParticipanteCasoCovid19 participanteCaso){
         if (participanteCaso.getCodigoCasoParticipante() != null) stat.bindString(1, participanteCaso.getCodigoCasoParticipante());
-        if (participanteCaso.getCodigoCaso() != null) stat.bindString(2, participanteCaso.getCodigoCaso().getCodigoCaso());
-        if (participanteCaso.getParticipante() != null) stat.bindLong(3, participanteCaso.getParticipante().getCodigo());
-        if (participanteCaso.getEnfermo() != null) stat.bindString(4, participanteCaso.getEnfermo());
-        if (participanteCaso.getPositivoPor() != null) stat.bindString(5, participanteCaso.getPositivoPor());
-        if (participanteCaso.getFis() != null) stat.bindLong(6, participanteCaso.getFis().getTime());
-        if (participanteCaso.getFif() != null) stat.bindLong(7, participanteCaso.getFif().getTime());
-        if (participanteCaso.getConsentimiento() != null) stat.bindString(8, participanteCaso.getConsentimiento());
-        if (participanteCaso.getRecordDate() != null) stat.bindLong(9, participanteCaso.getRecordDate().getTime());
-        if (participanteCaso.getRecordUser() != null) stat.bindString(10, participanteCaso.getRecordUser());
+        bindString(stat,2, participanteCaso.getCodigoCaso().getCodigoCaso());
+        stat.bindLong(3, participanteCaso.getParticipante().getCodigo());
+        bindString(stat,4, participanteCaso.getEnfermo());
+        bindString(stat,5, participanteCaso.getPositivoPor());
+        bindDate(stat,6, participanteCaso.getFis());
+        bindDate(stat,7, participanteCaso.getFif());
+        bindString(stat,8, participanteCaso.getConsentimiento());
+        bindDate(stat,9, participanteCaso.getRecordDate());
+        bindString(stat,10, participanteCaso.getRecordUser());
         stat.bindString(11, String.valueOf(participanteCaso.getPasive()));
-        stat.bindString(12, String.valueOf(participanteCaso.getEstado()));
-        if (participanteCaso.getDeviceid() != null) stat.bindString(13, participanteCaso.getDeviceid());
+        bindString(stat,12, participanteCaso.getDeviceid());
+        stat.bindString(13, String.valueOf(participanteCaso.getEstado()));
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
     }
 }

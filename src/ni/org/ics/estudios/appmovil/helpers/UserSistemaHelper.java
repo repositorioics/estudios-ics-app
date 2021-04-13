@@ -134,23 +134,23 @@ public class UserSistemaHelper {
 
     public static void fillUserSistemaStatement(SQLiteStatement stat, UserSistema userSistema) {
         stat.bindString(1, userSistema.getUsername());
-        if (userSistema.getCreated() != null)	stat.bindLong(2, userSistema.getCreated().getTime());
-        if (userSistema.getModified() != null) stat.bindLong(3, userSistema.getModified().getTime());
+        bindDate(stat, 2, userSistema.getCreated());
+        bindDate(stat, 3, userSistema.getModified());
         stat.bindString(4, String.valueOf(userSistema.getLastAccess()));
-        stat.bindString(5, userSistema.getPassword());
-        stat.bindString(6, userSistema.getCompleteName());
-        if (userSistema.getEmail() != null)	stat.bindString(7, userSistema.getEmail());
+        bindString(stat,5, userSistema.getPassword());
+        bindString(stat,6, userSistema.getCompleteName());
+        bindString(stat, 7, userSistema.getEmail());
         stat.bindString(8, String.valueOf(userSistema.getEnabled()));
         stat.bindLong(9, (userSistema.getAccountNonExpired()? 1 : 0));
         stat.bindLong(10, (userSistema.getCredentialsNonExpired()? 1 : 0));
         stat.bindLong(11, (userSistema.getAccountNonLocked()? 1 : 0));
-        stat.bindString(12, userSistema.getCreatedBy());
-        stat.bindString(13, userSistema.getModifiedBy());
+        bindString(stat,12, userSistema.getCreatedBy());
+        bindString(stat,13, userSistema.getModifiedBy());
     }
 
     public static void fillRoleStatement(SQLiteStatement stat, Authority remoteappinfo) {
-        stat.bindString(1, remoteappinfo.getAuthId().getUsername());
-        stat.bindString(2, remoteappinfo.getAuthId().getAuthority());
+        bindString(stat,1, remoteappinfo.getAuthId().getUsername());
+        bindString(stat,2, remoteappinfo.getAuthId().getAuthority());
     }
 
     public static void fillUserPermissionStatement(SQLiteStatement stat, UserPermissions userPermissions) {
@@ -170,4 +170,22 @@ public class UserSistemaHelper {
         stat.bindLong(14, (userPermissions.getTamizajezika()?1:0));
         stat.bindLong(15, (userPermissions.getDatosparto()?1:0));
     }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
+
+
 }

@@ -51,18 +51,33 @@ public class ParticipanteCasoUO1Helper {
 
     public static void fillParticipanteCasoUO1Statement(SQLiteStatement stat, ParticipanteCasoUO1 part){
         stat.bindString(1, part.getCodigoCasoParticipante());
-        if (part.getParticipante()!=null) stat.bindLong(2, part.getParticipante().getCodigo());
-        if (part.getPositivoPor() != null) stat.bindString(3, part.getPositivoPor());
-        if (part.getFif() != null) stat.bindLong(4, part.getFif().getTime());
-        if (part.getFechaIngreso() != null) stat.bindLong(5, part.getFechaIngreso().getTime());
-        if (part.getFechaDesactivacion() != null) stat.bindLong(6, part.getFechaDesactivacion().getTime());
-        if (part.getActivo() != null) stat.bindString(7, part.getActivo());
+        stat.bindLong(2, part.getParticipante().getCodigo());
+        bindString(stat,3, part.getPositivoPor());
+        bindDate(stat,4, part.getFif());
+        bindDate(stat,5, part.getFechaIngreso());
+        bindDate(stat,6, part.getFechaDesactivacion());
+        bindString(stat,7, part.getActivo());
 
-        if (part.getRecordDate() != null) stat.bindLong(8, part.getRecordDate().getTime());
-        if (part.getRecordUser() != null) stat.bindString(9, part.getRecordUser());
+        bindDate(stat,8, part.getRecordDate());
+        bindString(stat,9, part.getRecordUser());
         stat.bindString(10, String.valueOf(part.getPasive()));
-        if (part.getDeviceid() != null) stat.bindString(11, part.getDeviceid());
+        bindString(stat,11, part.getDeviceid());
         stat.bindString(12, String.valueOf(part.getEstado()));
     }
 
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
 }

@@ -55,17 +55,40 @@ public class VisitaSeguimientoCasoHelper {
     public static void fillVisitaSeguimientoCasoStatement(SQLiteStatement stat, VisitaSeguimientoCaso visitaCaso){
         stat.bindString(1, visitaCaso.getCodigoCasoVisita());
         stat.bindString(2, visitaCaso.getCodigoParticipanteCaso().getCodigoCasoParticipante());
-        if (visitaCaso.getFechaVisita() != null) stat.bindLong(3, visitaCaso.getFechaVisita().getTime());
-        if (visitaCaso.getVisita() != null) stat.bindString(4, visitaCaso.getVisita());
-        if (visitaCaso.getHoraProbableVisita() != null) stat.bindString(5, visitaCaso.getHoraProbableVisita());
-        if (visitaCaso.getExpCS() != null) stat.bindString(6, visitaCaso.getExpCS());
-        stat.bindDouble(7, visitaCaso.getTemp());
+        bindDate(stat,3, visitaCaso.getFechaVisita());
+        bindString(stat,4, visitaCaso.getVisita());
+        bindString(stat,5, visitaCaso.getHoraProbableVisita());
+        bindString(stat,6, visitaCaso.getExpCS());
+        bindFloat(stat,7, visitaCaso.getTemp());
 
-        if (visitaCaso.getRecordDate() != null) stat.bindLong(8, visitaCaso.getRecordDate().getTime());
-        if (visitaCaso.getRecordUser() != null) stat.bindString(9, visitaCaso.getRecordUser());
+        bindDate(stat,8, visitaCaso.getRecordDate());
+        bindString(stat,9, visitaCaso.getRecordUser());
         stat.bindString(10, String.valueOf(visitaCaso.getPasive()));
-        if (visitaCaso.getDeviceid() != null) stat.bindString(11, visitaCaso.getDeviceid());
+        bindString(stat,11, visitaCaso.getDeviceid());
         stat.bindString(12, String.valueOf(visitaCaso.getEstado()));
+    }
 
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
+
+    public static void bindFloat(SQLiteStatement stat, int index, Float value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindDouble(index, value);
+        }
     }
 }

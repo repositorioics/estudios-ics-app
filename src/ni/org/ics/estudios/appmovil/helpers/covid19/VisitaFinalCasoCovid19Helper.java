@@ -79,32 +79,55 @@ public class VisitaFinalCasoCovid19Helper {
     }
 
     public static void fillVisitaFinalCasoCovid19Statement(SQLiteStatement stat, VisitaFinalCasoCovid19 visitaCaso){
-        if (visitaCaso.getCodigoVisitaFinal() != null) stat.bindString(1, visitaCaso.getCodigoVisitaFinal());
-        if (visitaCaso.getCodigoParticipanteCaso() != null) stat.bindString(2, visitaCaso.getCodigoParticipanteCaso().getCodigoCasoParticipante());
-        if (visitaCaso.getFechaVisita() != null) stat.bindLong(3, visitaCaso.getFechaVisita().getTime());
-        if (visitaCaso.getEnfermo() != null) stat.bindString(4, visitaCaso.getEnfermo());
-        if (visitaCaso.getConsTerreno() != null) stat.bindString(5, visitaCaso.getConsTerreno());
-        if (visitaCaso.getReferidoCS() != null) stat.bindString(6, visitaCaso.getReferidoCS());
-        if (visitaCaso.getTratamiento() != null) stat.bindString(7, visitaCaso.getTratamiento());
-        if (visitaCaso.getQueAntibiotico() != null) stat.bindString(8, visitaCaso.getQueAntibiotico());
-        if (visitaCaso.getOtroMedicamento() != null) stat.bindString(9, visitaCaso.getOtroMedicamento());
-        if (visitaCaso.getSintResp() != null) stat.bindString(10, visitaCaso.getSintResp());
-        if (visitaCaso.getFueHospitalizado() != null) stat.bindString(11, visitaCaso.getFueHospitalizado());
-        if (visitaCaso.getFechaIngreso() != null) stat.bindLong(12, visitaCaso.getFechaIngreso().getTime());
-        if (visitaCaso.getFechaEgreso() != null) stat.bindLong(13, visitaCaso.getFechaEgreso().getTime());
-        if (visitaCaso.getDiasHospitalizado() != null) stat.bindLong(14, visitaCaso.getDiasHospitalizado());
-        if (visitaCaso.getCualHospital() != null) stat.bindString(15, visitaCaso.getCualHospital());
-        if (visitaCaso.getUtilizoOxigeno() != null) stat.bindString(16, visitaCaso.getUtilizoOxigeno());
-        if (visitaCaso.getFueIntubado() != null) stat.bindString(17, visitaCaso.getFueIntubado());
-        if (visitaCaso.getEstadoSalud() != null) stat.bindString(18, visitaCaso.getEstadoSalud());
-        if (visitaCaso.getFaltoTrabajoEscuela() != null) stat.bindString(19, visitaCaso.getFaltoTrabajoEscuela());
-        if (visitaCaso.getDiasFaltoTrabajoEscuela() != null) stat.bindLong(20, visitaCaso.getDiasFaltoTrabajoEscuela());
+        stat.bindString(1, visitaCaso.getCodigoVisitaFinal());
+        bindString(stat,2, visitaCaso.getCodigoParticipanteCaso().getCodigoCasoParticipante());
+        bindDate(stat,3, visitaCaso.getFechaVisita());
+        bindString(stat,4, visitaCaso.getEnfermo());
+        bindString(stat,5, visitaCaso.getConsTerreno());
+        bindString(stat,6, visitaCaso.getReferidoCS());
+        bindString(stat,7, visitaCaso.getTratamiento());
+        bindString(stat,8, visitaCaso.getQueAntibiotico());
+        bindString(stat,9, visitaCaso.getOtroMedicamento());
+        bindString(stat,10, visitaCaso.getSintResp());
+        bindString(stat,11, visitaCaso.getFueHospitalizado());
+        bindDate(stat,12, visitaCaso.getFechaIngreso());
+        bindDate(stat,13, visitaCaso.getFechaEgreso());
+        bindInteger(stat,14, visitaCaso.getDiasHospitalizado());
+        bindString(stat,15, visitaCaso.getCualHospital());
+        bindString(stat,16, visitaCaso.getUtilizoOxigeno());
+        bindString(stat,17, visitaCaso.getFueIntubado());
+        bindString(stat,18, visitaCaso.getEstadoSalud());
+        bindString(stat,19, visitaCaso.getFaltoTrabajoEscuela());
+        bindInteger(stat,20, visitaCaso.getDiasFaltoTrabajoEscuela());
 
-        if (visitaCaso.getRecordDate() != null) stat.bindLong(21, visitaCaso.getRecordDate().getTime());
-        if (visitaCaso.getRecordUser() != null) stat.bindString(22, visitaCaso.getRecordUser());
+        bindDate(stat,21, visitaCaso.getRecordDate());
+        bindString(stat,22, visitaCaso.getRecordUser());
         stat.bindString(23, String.valueOf(visitaCaso.getPasive()));
-        if (visitaCaso.getDeviceid() != null) stat.bindString(24, visitaCaso.getDeviceid());
+        bindString(stat,24, visitaCaso.getDeviceid());
         stat.bindString(25, String.valueOf(visitaCaso.getEstado()));
     }
 
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
+
+    public static void bindInteger(SQLiteStatement stat, int index, Integer value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value);
+        }
+    }
 }

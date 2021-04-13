@@ -71,22 +71,46 @@ public class ObsequioHelper {
     public static void fillObsequioStatement(SQLiteStatement stat, ObsequioGeneral obsequio){
         stat.bindString(1, obsequio.getId());
         if (obsequio.getParticipante() != null) stat.bindLong(2, obsequio.getParticipante());
-        if (obsequio.getCasa() != null) stat.bindString(3, obsequio.getCasa());
-        if (obsequio.getCasaChf() != null) stat.bindString(4, obsequio.getCasaChf());
-        if (obsequio.getSeguimiento() != null) stat.bindString(5, obsequio.getSeguimiento());
-        if (obsequio.getNumVisitaSeguimiento() != null) stat.bindString(6, obsequio.getNumVisitaSeguimiento());
-        if (obsequio.getMotivo() != null) stat.bindString(7, obsequio.getMotivo());
-        if (obsequio.getObsequioSN() != null) stat.bindLong(8, obsequio.getObsequioSN());
-        if (obsequio.getPersonaRecibe() != null) stat.bindString(9, obsequio.getPersonaRecibe());
-        if (obsequio.getRelacionFam() != null) stat.bindLong(10, obsequio.getRelacionFam());
-        if (obsequio.getOtraRelacionFam() != null) stat.bindString(11, obsequio.getOtraRelacionFam());
-        if (obsequio.getTelefono() != null) stat.bindString(12, obsequio.getTelefono());
-        if (obsequio.getObservaciones() != null) stat.bindString(13, obsequio.getObservaciones());
+        bindString(stat,3, obsequio.getCasa());
+        bindString(stat,4, obsequio.getCasaChf());
+        bindString(stat,5, obsequio.getSeguimiento());
+        bindString(stat,6, obsequio.getNumVisitaSeguimiento());
+        bindString(stat,7, obsequio.getMotivo());
+        bindInteger(stat,8, obsequio.getObsequioSN());
+        bindString(stat,9, obsequio.getPersonaRecibe());
+        bindInteger(stat,10, obsequio.getRelacionFam());
+        bindString(stat,11, obsequio.getOtraRelacionFam());
+        bindString(stat,12, obsequio.getTelefono());
+        bindString(stat,13, obsequio.getObservaciones());
 
-        if (obsequio.getRecordDate() != null) stat.bindLong(14, obsequio.getRecordDate().getTime());
-        if (obsequio.getRecordUser() != null) stat.bindString(15, obsequio.getRecordUser());
+        bindDate(stat,14, obsequio.getRecordDate());
+        bindString(stat,15, obsequio.getRecordUser());
         stat.bindString(16, String.valueOf(obsequio.getPasive()));
-        if (obsequio.getDeviceid() != null) stat.bindString(17, obsequio.getDeviceid());
+        bindString(stat,17, obsequio.getDeviceid());
         stat.bindString(18, String.valueOf(obsequio.getEstado()));
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
+
+    public static void bindInteger(SQLiteStatement stat, int index, Integer value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value);
+        }
     }
 }

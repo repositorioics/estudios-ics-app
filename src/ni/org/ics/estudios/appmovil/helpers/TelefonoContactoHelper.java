@@ -52,15 +52,39 @@ public class TelefonoContactoHelper {
 
     public static void fillTelefContactoStatement(SQLiteStatement stat, TelefonoContacto telefonoContacto){
         stat.bindString(1, telefonoContacto.getId());
-        if (telefonoContacto.getNumero() != null) stat.bindString(2, telefonoContacto.getNumero());
-        if (telefonoContacto.getOperadora() != null) stat.bindString(3, telefonoContacto.getOperadora());
-        if (telefonoContacto.getTipo() != null) stat.bindString(4, telefonoContacto.getTipo());
-        if (telefonoContacto.getCasa() != null) stat.bindLong(5, telefonoContacto.getCasa().getCodigo());
-        if (telefonoContacto.getParticipante() != null) stat.bindLong(6, telefonoContacto.getParticipante().getCodigo());
-        if (telefonoContacto.getRecordDate() != null) stat.bindLong(7, telefonoContacto.getRecordDate().getTime());
-        if (telefonoContacto.getRecordUser() != null) stat.bindString(8, telefonoContacto.getRecordUser());
+        bindString(stat,2, telefonoContacto.getNumero());
+        bindString(stat,3, telefonoContacto.getOperadora());
+        bindString(stat,4, telefonoContacto.getTipo());
+        bindInteger(stat,5, telefonoContacto.getCasa().getCodigo());
+        if (telefonoContacto.getParticipante() != null) stat.bindLong(6, telefonoContacto.getParticipante().getCodigo()); else stat.bindNull(6);
+        bindDate(stat,7, telefonoContacto.getRecordDate());
+        bindString(stat,8, telefonoContacto.getRecordUser());
         stat.bindString(9, String.valueOf(telefonoContacto.getPasive()));
-        if (telefonoContacto.getDeviceid() != null) stat.bindString(10, telefonoContacto.getDeviceid());
+        bindString(stat,10, telefonoContacto.getDeviceid());
         stat.bindString(11, String.valueOf(telefonoContacto.getEstado()));
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
         }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
+
+    public static void bindInteger(SQLiteStatement stat, int index, Integer value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value);
+        }
+    }
 }

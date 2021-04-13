@@ -43,12 +43,28 @@ public class ParticipanteCohorteFamiliaHelper {
 
     public static void fillParticipanteCohorteFamiliaStatement(SQLiteStatement stat, ParticipanteCohorteFamilia participanteCHF){
         stat.bindLong(1, participanteCHF.getParticipante().getCodigo());
-        if (participanteCHF.getCasaCHF() != null) stat.bindString(2, participanteCHF.getCasaCHF().getCodigoCHF());
-        if (participanteCHF.getRecordDate() != null) stat.bindLong(3, participanteCHF.getRecordDate().getTime());
-        if (participanteCHF.getRecordUser() != null) stat.bindString(4, participanteCHF.getRecordUser());
+        bindString(stat, 2, participanteCHF.getCasaCHF().getCodigoCHF());
+        bindDate(stat, 3, participanteCHF.getRecordDate());
+        bindString(stat,4, participanteCHF.getRecordUser());
         stat.bindString(5, String.valueOf(participanteCHF.getPasive()));
-        if (participanteCHF.getDeviceid() != null) stat.bindString(6, participanteCHF.getDeviceid());
+        bindString(stat,6, participanteCHF.getDeviceid());
         stat.bindString(7, String.valueOf(participanteCHF.getEstado()));
 
+    }
+
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
     }
 }

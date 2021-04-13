@@ -3,7 +3,6 @@ package ni.org.ics.estudios.appmovil.cohortefamilia.activities.tasks;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
 
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
@@ -80,15 +79,15 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
 		try {
             if (mFormularioContactoCasos != null){
                 publishProgress("Insertando contactos de los participantes de casas con casos en la base de datos...", CONTACTOS_CASOS, TOTAL_TASK_CASOS);
-                estudioAdapter.bulkInsertBySql(CasosDBConstants.CONTACTOS_CASOS_TABLE, mFormularioContactoCasos);
+                estudioAdapter.bulkInsertCasosChfBySql(CasosDBConstants.CONTACTOS_CASOS_TABLE, mFormularioContactoCasos);
             }
             if (mObsequios != null){
                 publishProgress("Insertando obsequios en la base de datos...", OBSEQUIOS, TOTAL_TASK_CASOS);
-                estudioAdapter.bulkInsertBySql(MainDBConstants.OBSEQUIOS_TABLE, mObsequios);
+                estudioAdapter.bulkInsertCasosChfBySql(MainDBConstants.OBSEQUIOS_TABLE, mObsequios);
             }
             if (mMuestrasSup != null){
                 publishProgress("Insertando muestras de superficie de casos en la base de datos...", MUESTRAS_SUP, TOTAL_TASK_CASOS);
-                estudioAdapter.bulkInsertBySql(MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE, mMuestrasSup);
+                estudioAdapter.bulkInsertCasosChfBySql(MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE, mMuestrasSup);
             }
 		} catch (Exception e) {
 			// Regresa error al insertar

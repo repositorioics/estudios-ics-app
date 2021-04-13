@@ -57,17 +57,62 @@ public class CasaHelper {
 		stat.bindLong(2, casa.getBarrio().getCodigo());
 		stat.bindString(3, casa.getDireccion());
 		stat.bindString(4, casa.getManzana());
-		if (casa.getLatitud() != null) stat.bindDouble(5, casa.getLatitud());
-		if (casa.getLongitud() != null) stat.bindDouble(6, casa.getLongitud());
+		bindDouble(stat,5, casa.getLatitud());
+		bindDouble(stat,6, casa.getLongitud());
 		stat.bindString(7, casa.getNombre1JefeFamilia());
-		if (casa.getNombre2JefeFamilia() != null) stat.bindString(8, casa.getNombre2JefeFamilia());
+		bindString(stat,8, casa.getNombre2JefeFamilia());
 		stat.bindString(9, casa.getApellido1JefeFamilia());
-		if (casa.getApellido2JefeFamilia() != null) stat.bindString(10, casa.getApellido2JefeFamilia());
-		if (casa.getRecordDate() != null) stat.bindLong(11, casa.getRecordDate().getTime());
-		if (casa.getRecordUser() != null) stat.bindString(12, casa.getRecordUser());
+		bindString(stat,10, casa.getApellido2JefeFamilia());
+		bindDate(stat, 11, casa.getRecordDate());
+		bindString(stat, 12, casa.getRecordUser());
 		stat.bindString(13, String.valueOf(casa.getPasive()));
-		stat.bindString(14, String.valueOf(casa.getEstado()));
-		if (casa.getDeviceid() != null) stat.bindString(15, casa.getDeviceid());
+		bindString(stat,14, casa.getDeviceid());
+		stat.bindString(15, String.valueOf(casa.getEstado()));
 	}
 
+	/**
+	 * Seter string
+ 	 * @param stat SQLiteStatement
+	 * @param index posicion en stat
+	 * @param value valor a setear
+	 */
+	public static void bindString(SQLiteStatement stat, int index, String value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindString(index, value);
+		}
+	}
+
+	public static void bindDate(SQLiteStatement stat, int index, Date value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindLong(index, value.getTime());
+		}
+	}
+
+	public static void bindInteger(SQLiteStatement stat, int index, Integer value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindLong(index, value);
+		}
+	}
+
+	public static void bindLong(SQLiteStatement stat, int index, Long value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindLong(index, value);
+		}
+	}
+
+	public static void bindDouble(SQLiteStatement stat, int index, Double value){
+		if (value == null) {
+			stat.bindNull(index);
+		} else {
+			stat.bindDouble(index, value);
+		}
+	}
 }

@@ -69,23 +69,38 @@ public class VisitaVacunaUO1Helper {
     public static void fillVisitaVacunaUO1ContentValues(SQLiteStatement stat, VisitaVacunaUO1 visitaVacunaUO1){
         stat.bindString(1, visitaVacunaUO1.getCodigoVisita());
         stat.bindLong(2, visitaVacunaUO1.getParticipante().getCodigo());
-        if (visitaVacunaUO1.getFechaVisita() != null) stat.bindLong(3, visitaVacunaUO1.getFechaVisita().getTime());
-        if (visitaVacunaUO1.getVisita() != null) stat.bindString(4, visitaVacunaUO1.getVisita());
-        if (visitaVacunaUO1.getVisitaExitosa() != null) stat.bindString(5, visitaVacunaUO1.getVisitaExitosa());
-        if (visitaVacunaUO1.getRazonVisitaFallida() != null) stat.bindString(6, visitaVacunaUO1.getRazonVisitaFallida());
-        if (visitaVacunaUO1.getOtraRazon() != null) stat.bindString(7, visitaVacunaUO1.getOtraRazon());
-        if (visitaVacunaUO1.getVacuna() != null) stat.bindString(8, visitaVacunaUO1.getVacuna());
-        if (visitaVacunaUO1.getFechaVacuna() != null) stat.bindLong(9, visitaVacunaUO1.getFechaVacuna().getTime());
-        if (visitaVacunaUO1.getTomaMxAntes() != null) stat.bindString(10, visitaVacunaUO1.getTomaMxAntes());
-        if (visitaVacunaUO1.getRazonNoTomaMx() != null) stat.bindString(11, visitaVacunaUO1.getRazonNoTomaMx());
-        if (visitaVacunaUO1.getSegundaDosis() != null) stat.bindString(12, visitaVacunaUO1.getSegundaDosis());
-        if (visitaVacunaUO1.getFechaSegundaDosis() != null) stat.bindLong(13, visitaVacunaUO1.getFechaSegundaDosis().getTime());
-        if (visitaVacunaUO1.getFechaReprogramacion() != null) stat.bindLong(14, visitaVacunaUO1.getFechaReprogramacion().getTime());
-        if (visitaVacunaUO1.getRecordDate() != null) stat.bindLong(15, visitaVacunaUO1.getRecordDate().getTime());
-        if (visitaVacunaUO1.getRecordUser() != null) stat.bindString(16, visitaVacunaUO1.getRecordUser());
+        bindDate(stat,3, visitaVacunaUO1.getFechaVisita());
+        bindString(stat,4, visitaVacunaUO1.getVisita());
+        bindString(stat,5, visitaVacunaUO1.getVisitaExitosa());
+        bindString(stat,6, visitaVacunaUO1.getRazonVisitaFallida());
+        bindString(stat,7, visitaVacunaUO1.getOtraRazon());
+        bindString(stat,8, visitaVacunaUO1.getVacuna());
+        bindDate(stat,9, visitaVacunaUO1.getFechaVacuna());
+        bindString(stat,10, visitaVacunaUO1.getTomaMxAntes());
+        bindString(stat,11, visitaVacunaUO1.getRazonNoTomaMx());
+        bindString(stat,12, visitaVacunaUO1.getSegundaDosis());
+        bindDate(stat,13, visitaVacunaUO1.getFechaSegundaDosis());
+        bindDate(stat,14, visitaVacunaUO1.getFechaReprogramacion());
+        bindDate(stat,15, visitaVacunaUO1.getRecordDate());
+        bindString(stat,16, visitaVacunaUO1.getRecordUser());
         stat.bindString(17, String.valueOf(visitaVacunaUO1.getPasive()));
-        if (visitaVacunaUO1.getDeviceid() != null) stat.bindString(18, visitaVacunaUO1.getDeviceid());
+        bindString(stat,18, visitaVacunaUO1.getDeviceid());
         stat.bindString(19, String.valueOf(visitaVacunaUO1.getEstado()));
     }
 
+    public static void bindString(SQLiteStatement stat, int index, String value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindString(index, value);
+        }
+    }
+
+    public static void bindDate(SQLiteStatement stat, int index, Date value){
+        if (value == null) {
+            stat.bindNull(index);
+        } else {
+            stat.bindLong(index, value.getTime());
+        }
+    }
 }

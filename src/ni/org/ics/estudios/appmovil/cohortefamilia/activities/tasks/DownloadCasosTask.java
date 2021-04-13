@@ -3,7 +3,6 @@ package ni.org.ics.estudios.appmovil.cohortefamilia.activities.tasks;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
 
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
@@ -112,35 +111,35 @@ public class DownloadCasosTask extends DownloadTask {
             }
             if (mCasaCohorteFamiliaCasos != null){
                 publishProgress("Insertando casas con casos en la base de datos...", CASAS_CASOS, TOTAL_TASK_CASOS);
-                estudioAdapter.bulkInsertCasaCohorteFamiliaCasoBySql(mCasaCohorteFamiliaCasos);
+                estudioAdapter.bulkInsertCasosChfBySql(CasosDBConstants.CASAS_CASOS_TABLE, mCasaCohorteFamiliaCasos);
             }
             if (mParticipanteCohorteFamiliaCasos != null){
                 publishProgress("Insertando participantes casas con casos en la base de datos...", PART_CASOS, TOTAL_TASK_CASOS);
-                estudioAdapter.bulkInsertParticipantesCohorteFamiliaCasoBySql(mParticipanteCohorteFamiliaCasos);
+                estudioAdapter.bulkInsertCasosChfBySql(CasosDBConstants.PARTICIPANTES_CASOS_TABLE, mParticipanteCohorteFamiliaCasos);
             }
             if (mVisitaSeguimientoCasos != null){
                 publishProgress("Insertando visitas de los participantes de casas con casos en la base de datos...", VISITAS_CASOS, TOTAL_TASK_CASOS);
-                estudioAdapter.bulkInsertVisitasSeguimientoCasoBySql(mVisitaSeguimientoCasos);
+                estudioAdapter.bulkInsertCasosChfBySql(CasosDBConstants.VISITAS_CASOS_TABLE, mVisitaSeguimientoCasos);
             }
             if (mVisitaFallidaCasos != null){
                 publishProgress("Insertando visitas fallidas de los participantes de casas con casos en la base de datos...", VISITAS_FALLIDAS_CASOS, TOTAL_TASK_CASOS);
-                estudioAdapter.bulkInsertVisitasFallidaCasoBySql(mVisitaFallidaCasos);
+                estudioAdapter.bulkInsertCasosChfBySql(CasosDBConstants.VISITAS_FALLIDAS_CASOS_TABLE, mVisitaFallidaCasos);
             }
             if (mVisitaSeguimientoSintomasCasos != null){
                 publishProgress("Insertando sintomas de los participantes de casas con casos en la base de datos...", SINTOMAS_CASOS, TOTAL_TASK_CASOS);
-                estudioAdapter.bulkInsertVisitasSeguimientoCasoSintomasBySql(mVisitaSeguimientoSintomasCasos);
+                estudioAdapter.bulkInsertCasosChfBySql(CasosDBConstants.SINTOMAS_CASOS_TABLE, mVisitaSeguimientoSintomasCasos);
             }
             if (mVisitaFinalCasos != null){
                 publishProgress("Insertando visitas finales de los participantes de casas con casos en la base de datos...", VISITAS_FINALES, TOTAL_TASK_CASOS);
-                estudioAdapter.bulkInsertBySql(CasosDBConstants.VISITAS_FINALES_CASOS_TABLE, mVisitaFinalCasos);
+                estudioAdapter.bulkInsertCasosChfBySql(CasosDBConstants.VISITAS_FINALES_CASOS_TABLE, mVisitaFinalCasos);
             }
             if (mObsequios != null){
                 publishProgress("Insertando obsequios en la base de datos...", OBSEQUIOS, TOTAL_TASK_CASOS);
-                estudioAdapter.bulkInsertBySql(MainDBConstants.OBSEQUIOS_TABLE, mObsequios);
+                estudioAdapter.bulkInsertCasosChfBySql(MainDBConstants.OBSEQUIOS_TABLE, mObsequios);
             }
             if (mSensoresCasos != null){
                 publishProgress("Insertando sensores de casas con casos en la base de datos...", SENSORES_CASOS, TOTAL_TASK_CASOS);
-                estudioAdapter.bulkInsertSensoresCasoBySql(mSensoresCasos);
+                estudioAdapter.bulkInsertCasosChfBySql(CasosDBConstants.SENSORES_CASOS_TABLE, mSensoresCasos);
             }
         } catch (Exception e) {
             // Regresa error al insertar
@@ -168,7 +167,7 @@ public class DownloadCasosTask extends DownloadTask {
 
             if (mFormularioContactoCasos != null){
                 publishProgress("Insertando contactos de los participantes de casas con casos en la base de datos...", CONTACTOS_CASOS, TOTAL_TASK_CASOS_CONTACTO);
-                estudioAdapter.bulkInsertBySql(CasosDBConstants.CONTACTOS_CASOS_TABLE, mFormularioContactoCasos);
+                estudioAdapter.bulkInsertCasosChfBySql(CasosDBConstants.CONTACTOS_CASOS_TABLE, mFormularioContactoCasos);
             }
 
             if (mMuestras != null){
@@ -177,7 +176,7 @@ public class DownloadCasosTask extends DownloadTask {
             }
             if (mMuestrasSup != null){
                 publishProgress("Insertando muestras de superficie de casos en la base de datos...", MUESTRAS_SUP, TOTAL_TASK_CASOS_CONTACTO);
-                estudioAdapter.bulkInsertBySql(MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE, mMuestrasSup);
+                estudioAdapter.bulkInsertCasosChfBySql(MuestrasDBConstants.MUESTRA_SUPERFICIE_TABLE, mMuestrasSup);
             }
 
         } catch (Exception e) {

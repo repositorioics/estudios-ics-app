@@ -642,6 +642,7 @@ public class BluetoothChatCovid19Fragment extends Fragment {
                 (mParticipantesProc.getPosCovid()!=null?"'"+mParticipantesProc.getPosCovid()+"'":"null")+"," +
                 (mParticipantesProc.getConsDenParteE()!=null?"'"+mParticipantesProc.getConsDenParteE()+"'":"null")+"," +
                 (mParticipantesProc.getMxDenParteE()!=null?"'"+mParticipantesProc.getMxDenParteE()+"'":"null")+"," +
+                (mParticipantesProc.getInformacionRetiro()!=null?"'"+mParticipantesProc.getInformacionRetiro()+"'":"null")+"," +
                 "0,null,'"+
                 mParticipantesProc.getMovilInfo().getEstado()+"',null,null,null,'"+
                 mParticipantesProc.getMovilInfo().getDeviceid()+"',null,null,"+

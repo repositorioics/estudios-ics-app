@@ -167,6 +167,7 @@ public class ConstantsDB {
     //Parte E Dengue. MUESTRA DE SANGRE ADICIONAL
     public static final  String consDenParteE = "consDenParteE";
     public static final  String mxDenParteE = "mxDenParteE";
+    public static final  String informacionRetiro = "informacionRetiro";
 
 
     //Campos encuesta casa
@@ -1017,6 +1018,7 @@ public class ConstantsDB {
             + posCovid + " text, "
             + consDenParteE + " text, "
             + mxDenParteE + " text, "
+            + informacionRetiro + " text, "
             + ID_INSTANCIA + " integer,"
             + FILE_PATH + " text,"
             + STATUS + " text, "
@@ -1888,6 +1890,7 @@ public class ConstantsDB {
             + posCovid + ","
             + consDenParteE + ","
             + mxDenParteE + ","
+            + informacionRetiro + ","
             + ID_INSTANCIA + ","
             + FILE_PATH + ","
             + STATUS + ","
@@ -1902,5 +1905,5 @@ public class ConstantsDB {
             + DELETED  + ","
             + REC1    + ","
             + REC2
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 }

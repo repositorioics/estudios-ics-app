@@ -74,7 +74,9 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 			labelHeader = labelHeader + "Personas en la casa: " + procesos.getCuantasPers()+"<br />";
 			labelHeader = labelHeader + "------------<br />";
             if (procesos.getEstPart().equals(0) && (procesos.getReConsDeng()==null || procesos.getReConsDeng().matches("No"))){
-				labelHeader = labelHeader + "<br /><font color='red'>Participante retirado</font>";
+				labelHeader = labelHeader + "<br /><font color='red'>Participante retirado</font><br />";
+				if (procesos.getInformacionRetiro() != null)
+				    labelHeader = labelHeader + "<font color='red'>" + procesos.getInformacionRetiro() + "</font><br />";
 			}
 			else{
                 if (procesos.getEstPart().equals(0) && (procesos.getReConsDeng()!=null && procesos.getReConsDeng().matches("Si"))){

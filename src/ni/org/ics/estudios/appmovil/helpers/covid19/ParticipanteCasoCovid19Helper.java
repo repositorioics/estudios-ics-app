@@ -55,8 +55,8 @@ public class ParticipanteCasoCovid19Helper {
         stat.bindLong(3, participanteCaso.getParticipante().getCodigo());
         bindString(stat,4, participanteCaso.getEnfermo());
         bindString(stat,5, participanteCaso.getPositivoPor());
-        bindDate(stat,6, participanteCaso.getFis());
-        bindDate(stat,7, participanteCaso.getFif());
+        bindDate(stat,6, participanteCaso.getFif());
+        bindDate(stat,7, participanteCaso.getFis());
         bindString(stat,8, participanteCaso.getConsentimiento());
         bindDate(stat,9, participanteCaso.getRecordDate());
         bindString(stat,10, participanteCaso.getRecordUser());

@@ -1282,6 +1282,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
 
         if (mParticipante.getProcesos().getEstPart().equals(0) && (mParticipante.getProcesos().getReConsDeng()==null || mParticipante.getProcesos().getReConsDeng().matches("No"))){
             labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.retired_error) + "</font></small><br />";
+            if (mParticipante.getProcesos().getInformacionRetiro() != null)
+                labelHeader = labelHeader + "<small><font color='red'>" + mParticipante.getProcesos().getInformacionRetiro() + "</font></small><br />";
         }
         else{
             if (mParticipante.getProcesos().getEstPart().equals(0) && (mParticipante.getProcesos().getReConsDeng()!=null && mParticipante.getProcesos().getReConsDeng().matches("Si"))){

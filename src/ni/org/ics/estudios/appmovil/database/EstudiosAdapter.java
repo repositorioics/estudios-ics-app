@@ -392,6 +392,9 @@ public class EstudiosAdapter {
 			if (oldVersion==38) {
 				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.periodoSintomas + " text");
 			}
+			if (oldVersion==39) {
+				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.informacionRetiro + " text");
+			}
 		}
 	}
 

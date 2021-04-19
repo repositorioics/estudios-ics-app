@@ -142,6 +142,7 @@ public class ParticipanteHelper {
         //ParteE Dengue
         mPart.setConsDenParteE(participantes.getString(participantes.getColumnIndex(ConstantsDB.consDenParteE)));
         mPart.setMxDenParteE(participantes.getString(participantes.getColumnIndex(ConstantsDB.mxDenParteE)));
+        mPart.setInformacionRetiro(participantes.getString(participantes.getColumnIndex(ConstantsDB.informacionRetiro)));
 
         Boolean borrado = participantes.getInt(participantes.getColumnIndex(ConstantsDB.DELETED))>0;
 		mPart.setMovilInfo(new MovilInfo(participantes.getInt(participantes.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
@@ -230,6 +231,8 @@ public class ParticipanteHelper {
         //Parte E Dengue
         cv.put(ConstantsDB.consDenParteE, participante.getConsDenParteE());
         cv.put(ConstantsDB.mxDenParteE, participante.getMxDenParteE());
+
+        cv.put(ConstantsDB.informacionRetiro, participante.getInformacionRetiro());
 
         cv.put(ConstantsDB.ID_INSTANCIA, participante.getMovilInfo().getIdInstancia());
         cv.put(ConstantsDB.FILE_PATH, participante.getMovilInfo().getInstancePath());
@@ -380,20 +383,21 @@ public class ParticipanteHelper {
         if ( participante.getPosCovid() != null ) stat.bindString(53, participante.getPosCovid()); else stat.bindNull(53);
         if ( participante.getConsDenParteE() != null ) stat.bindString(54, participante.getConsDenParteE()); else stat.bindNull(54);
         if ( participante.getMxDenParteE() != null ) stat.bindString(55, participante.getMxDenParteE()); else stat.bindNull(55);
-        if ( participante.getMovilInfo().getIdInstancia() != null ) stat.bindLong(56, participante.getMovilInfo().getIdInstancia()); else stat.bindNull(56);
-        if ( participante.getMovilInfo().getInstancePath() != null ) stat.bindString(57, participante.getMovilInfo().getInstancePath()); else stat.bindNull(57);
-        if ( participante.getMovilInfo().getEstado() != null ) stat.bindString(58, participante.getMovilInfo().getEstado()); else stat.bindNull(58);
-        if ( participante.getMovilInfo().getUltimoCambio() != null ) stat.bindString(59, participante.getMovilInfo().getUltimoCambio()); else stat.bindNull(59);
-        if ( participante.getMovilInfo().getStart() != null ) stat.bindString(60, participante.getMovilInfo().getStart()); else stat.bindNull(60);
-        if ( participante.getMovilInfo().getEnd() != null ) stat.bindString(61, participante.getMovilInfo().getEnd()); else stat.bindNull(61);
-        if ( participante.getMovilInfo().getDeviceid() != null ) stat.bindString(62, participante.getMovilInfo().getDeviceid()); else stat.bindNull(62);
-        if ( participante.getMovilInfo().getSimserial() != null ) stat.bindString(63, participante.getMovilInfo().getSimserial()); else stat.bindNull(63);
-        if ( participante.getMovilInfo().getPhonenumber() != null ) stat.bindString(64, participante.getMovilInfo().getPhonenumber()); else stat.bindNull(64);
-        if ( participante.getMovilInfo().getToday() != null ) stat.bindLong(65, participante.getMovilInfo().getToday().getTime()); else stat.bindNull(65);
-        if ( participante.getMovilInfo().getUsername() != null ) stat.bindString(66, participante.getMovilInfo().getUsername()); else stat.bindNull(66);
-        if ( participante.getMovilInfo().getEliminado() != null ) stat.bindLong(67, (participante.getMovilInfo().getEliminado() ? 1 : 0)); else stat.bindNull(67);
-        if ( participante.getMovilInfo().getRecurso1() != null ) stat.bindLong(68, participante.getMovilInfo().getRecurso1()); else stat.bindNull(68);
-        if ( participante.getMovilInfo().getRecurso2() != null ) stat.bindLong(69, participante.getMovilInfo().getRecurso2()); else stat.bindNull(69);
+        if ( participante.getInformacionRetiro() != null ) stat.bindString(56, participante.getInformacionRetiro()); else stat.bindNull(56);
+        if ( participante.getMovilInfo().getIdInstancia() != null ) stat.bindLong(57, participante.getMovilInfo().getIdInstancia()); else stat.bindNull(57);
+        if ( participante.getMovilInfo().getInstancePath() != null ) stat.bindString(58, participante.getMovilInfo().getInstancePath()); else stat.bindNull(58);
+        if ( participante.getMovilInfo().getEstado() != null ) stat.bindString(59, participante.getMovilInfo().getEstado()); else stat.bindNull(59);
+        if ( participante.getMovilInfo().getUltimoCambio() != null ) stat.bindString(60, participante.getMovilInfo().getUltimoCambio()); else stat.bindNull(60);
+        if ( participante.getMovilInfo().getStart() != null ) stat.bindString(61, participante.getMovilInfo().getStart()); else stat.bindNull(61);
+        if ( participante.getMovilInfo().getEnd() != null ) stat.bindString(62, participante.getMovilInfo().getEnd()); else stat.bindNull(62);
+        if ( participante.getMovilInfo().getDeviceid() != null ) stat.bindString(63, participante.getMovilInfo().getDeviceid()); else stat.bindNull(63);
+        if ( participante.getMovilInfo().getSimserial() != null ) stat.bindString(64, participante.getMovilInfo().getSimserial()); else stat.bindNull(64);
+        if ( participante.getMovilInfo().getPhonenumber() != null ) stat.bindString(65, participante.getMovilInfo().getPhonenumber()); else stat.bindNull(65);
+        if ( participante.getMovilInfo().getToday() != null ) stat.bindLong(66, participante.getMovilInfo().getToday().getTime()); else stat.bindNull(66);
+        if ( participante.getMovilInfo().getUsername() != null ) stat.bindString(67, participante.getMovilInfo().getUsername()); else stat.bindNull(67);
+        if ( participante.getMovilInfo().getEliminado() != null ) stat.bindLong(68, (participante.getMovilInfo().getEliminado() ? 1 : 0)); else stat.bindNull(68);
+        if ( participante.getMovilInfo().getRecurso1() != null ) stat.bindLong(69, participante.getMovilInfo().getRecurso1()); else stat.bindNull(69);
+        if ( participante.getMovilInfo().getRecurso2() != null ) stat.bindLong(70, participante.getMovilInfo().getRecurso2()); else stat.bindNull(70);
     }
 
     public static void fillContactoParticipanteStatement(SQLiteStatement stat, ContactoParticipante contactoParticipante){

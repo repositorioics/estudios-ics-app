@@ -75,6 +75,7 @@ public class ParticipanteProcesos implements Serializable {
     //Parte E Dengue. MUESTRA DE SANGRE ADICIONAL
     private String consDenParteE;
     private String mxDenParteE;
+    private String informacionRetiro;
 
     private MovilInfo movilInfo;
 
@@ -524,6 +525,14 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setMxDenParteE(String mxDenParteE) {
         this.mxDenParteE = mxDenParteE;
+    }
+
+    public String getInformacionRetiro() {
+        return informacionRetiro;
+    }
+
+    public void setInformacionRetiro(String informacionRetiro) {
+        this.informacionRetiro = informacionRetiro;
     }
 }
 

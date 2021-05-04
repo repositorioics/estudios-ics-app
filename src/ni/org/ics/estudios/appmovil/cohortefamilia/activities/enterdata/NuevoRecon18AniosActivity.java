@@ -694,8 +694,6 @@ public class NuevoRecon18AniosActivity extends FragmentActivity implements
                     String apellido1 = datos.getString(this.getString(R.string.apellido1));
                     String apellido2 = datos.getString(this.getString(R.string.apellido2));
 
-                    String tutor = "";
-
                     //Obtener datos del bundle para el consentimiento
 
                     String relacionFamiliarTutor = datos.getString(this.getString(R.string.relacionFamiliarTutor));
@@ -720,19 +718,15 @@ public class NuevoRecon18AniosActivity extends FragmentActivity implements
                     cc.setParticipante(participanteCHF.getParticipante());
                     if (tieneValor(nombre1)) {
                         cc.setNombre1Tutor(nombre1);
-                        tutor += nombre1;
                     }
                     if (tieneValor(nombre2)) {
                         cc.setNombre2Tutor(nombre2);
-                        tutor += " " + nombre2;
                     }
                     if (tieneValor(apellido1)) {
                         cc.setApellido1Tutor(apellido1);
-                        tutor += " " + apellido1;
                     }
                     if (tieneValor(apellido2)) {
                         cc.setApellido2Tutor(apellido2);
-                        tutor += " " + apellido2;
                     }
                     if (tieneValor(relacionFamiliarTutor)) {
                         MessageResource catRelacionFamiliarTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + relacionFamiliarTutor + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_RFTUTOR'", null);
@@ -833,17 +827,27 @@ public class NuevoRecon18AniosActivity extends FragmentActivity implements
                     participante.setNombre2(nombre2);
                     participante.setApellido1(apellido1);
                     participante.setApellido2(apellido2);
+                    //ahora datos de tutor en tabla participante
+                    if (tieneValor(cc.getRelacionFamiliarTutor())) {
+                        participante.setRelacionFamiliarTutor(cc.getRelacionFamiliarTutor());
+                        participante.setNombre1Tutor(cc.getNombre1Tutor());
+                        participante.setNombre2Tutor(cc.getNombre2Tutor());
+                        participante.setApellido1Tutor(cc.getApellido1Tutor());
+                        participante.setApellido2Tutor(cc.getApellido2Tutor());
+                    } else {
+                        participante.setRelacionFamiliarTutor(Constants.REL_FAM_MISMO_PART);//El mismo Participante
+                        participante.setNombre1Tutor(participante.getNombre1());
+                        participante.setNombre2Tutor(participante.getNombre2());
+                        participante.setApellido1Tutor(participante.getApellido1());
+                        participante.setApellido2Tutor(participante.getApellido2());
+                    }
+                    participante.setRecordDate(new Date());
+                    participante.setRecordUser(username);
+                    participante.setDeviceid(infoMovil.getDeviceId());
+                    participante.setEstado('0');
+                    participante.setPasive('0');
                     estudiosAdapter.editarParticipante(participante);
                     ParticipanteProcesos procesos = participanteCHF.getParticipante().getProcesos();
-                    if (tieneValor(cc.getRelacionFamiliarTutor()))
-                        procesos.setRelacionFam(Integer.valueOf(cc.getRelacionFamiliarTutor()));
-                    else {
-                        procesos.setRelacionFam(8);//El mismo Participante
-                    }
-                    if (tieneValor(tutor))
-                        procesos.setTutor(tutor);
-                    else
-                        procesos.setTutor(Constants.NA);
                     procesos.setReConsChf18(Constants.NO);
                     MovilInfo movilInfo = new MovilInfo();
                     movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
@@ -852,7 +856,6 @@ public class NuevoRecon18AniosActivity extends FragmentActivity implements
                     movilInfo.setToday(new Date());
                     procesos.setMovilInfo(movilInfo);
                     estudiosAdapter.actualizarParticipanteProcesos(procesos);
-
 
                     Intent i = new Intent(getApplicationContext(),
                             MenuInfoActivity.class);

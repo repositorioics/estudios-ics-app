@@ -456,9 +456,9 @@ public class NuevoConsCovid19Activity extends FragmentActivity implements
                         domicilio = participante.getCasa().getDireccion();
                     pagetmp.setHint(domicilio);
 
-                    String relacion = getRelacionFamiliar(participante.getProcesos().getRelacionFam());
+                    String relacion = MessageResourceUtil.getRelacionFamiliar(catRelacionFamiliar, participante.getRelacionFamiliarTutor());
                     pagetmp = (LabelPage) mWizardModel.findByKey(labels.getTutor());
-                    pagetmp.setHint(participante.getProcesos().getTutor()+" - ("+ relacion +")");
+                    pagetmp.setHint(participante.getTutor()+" - ("+ relacion +")");
 
                     pagetmp = (LabelPage) mWizardModel.findByKey(labels.getPadre());
                     String padre = participante.getNombre1Padre();
@@ -530,9 +530,9 @@ public class NuevoConsCovid19Activity extends FragmentActivity implements
                     domicilio = participante.getCasa().getDireccion();
                 pagetmp.setHint(domicilio);
 
-                String relacion = getRelacionFamiliar(participante.getProcesos().getRelacionFam());
+                String relacion = MessageResourceUtil.getRelacionFamiliar(catRelacionFamiliar, participante.getRelacionFamiliarTutor());
                 pagetmp = (LabelPage) mWizardModel.findByKey(labels.getTutor());
-                pagetmp.setHint(participante.getProcesos().getTutor()+" - ("+ relacion +")");
+                pagetmp.setHint(participante.getTutor()+" - ("+ relacion +")");
 
                 pagetmp = (LabelPage) mWizardModel.findByKey(labels.getPadre());
                 String padre = participante.getNombre1Padre();
@@ -803,21 +803,6 @@ public class NuevoConsCovid19Activity extends FragmentActivity implements
             }
         }
         return esValido;
-    }
-
-    public String getRelacionFamiliar(Integer codigo) {
-        String relacionFamiliar = this.getApplicationContext().getString(R.string.sinRelacFam);
-        try {
-            for (MessageResource message : catRelacionFamiliar) {
-                if (message.getCatKey().equalsIgnoreCase(String.valueOf(codigo))) {
-                    relacionFamiliar = message.getSpanish();
-                    break;
-                }
-            }
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return relacionFamiliar;
     }
 
     public Integer getMes(String mes) {
@@ -1166,6 +1151,13 @@ public class NuevoConsCovid19Activity extends FragmentActivity implements
                     if (tieneValor(mismoTutorSN)) {
                         MessageResource catMismoTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + mismoTutorSN + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                         if (catMismoTutor != null) cc.setMismoTutor(catMismoTutor.getCatKey());
+                        if (mismoTutorSN.equals(Constants.YES)) { //Si es el mismo tutor, poner el tutor actual en la carta y no dejar en blanco
+                            cc.setNombre1Tutor(participante.getNombre1Tutor());
+                            cc.setNombre2Tutor(participante.getNombre2Tutor());
+                            cc.setApellido1Tutor(participante.getApellido1Tutor());
+                            cc.setApellido2Tutor(participante.getApellido2Tutor());
+                            cc.setRelacionFamiliarTutor(participante.getRelacionFamiliarTutor());
+                        }
                     }
                     if (tieneValor(motivoDifTutor)) {
                         MessageResource catDifTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + motivoDifTutor + "' and " + CatalogosDBConstants.catRoot + "='CP_CAT_DIFTUTOR'", null);
@@ -1265,6 +1257,13 @@ public class NuevoConsCovid19Activity extends FragmentActivity implements
                             if (tieneValor(apellidomadre)) participante.setApellido1Madre(apellidomadre);
                             if (tieneValor(apellidomadre2)) participante.setApellido2Madre(apellidomadre2);
                         }
+                        if (tieneValor(mismoTutorSN) && mismoTutorSN.equals(Constants.NO)) {
+                            participante.setRelacionFamiliarTutor(cc.getRelacionFamiliarTutor());
+                            participante.setNombre1Tutor(cc.getNombre1Tutor());
+                            participante.setNombre2Tutor(cc.getNombre2Tutor());
+                            participante.setApellido1Tutor(cc.getApellido1Tutor());
+                            participante.setApellido2Tutor(cc.getApellido2Tutor());
+                        }
                         participante.setRecordDate(new Date());
                         participante.setRecordUser(username);
                         participante.setDeviceid(infoMovil.getDeviceId());
@@ -1280,20 +1279,6 @@ public class NuevoConsCovid19Activity extends FragmentActivity implements
                         /*guardarContactoParticipante(Constants.NOKEYSND, nomContacto, direContacto, barrioContacto, otrobarrioContacto,
                                 telContactoCel1, telContacto1, telContactoOper1, telContactoCel2, telContactoClasif2, telContactoOper2, null, null, null);*/
 
-                        if (tieneValor(mismoTutorSN) && mismoTutorSN.equals(Constants.NO)) {
-                            String nombreTutor = nombrept;
-                            if (tieneValor(nombrept2)) nombreTutor = nombreTutor + " " + nombrept2;
-                            nombreTutor = nombreTutor + " " + apellidopt;
-                            if (tieneValor(apellidopt2)) nombreTutor = nombreTutor + " " + apellidopt2;
-                            procesos.setTutor(nombreTutor);
-                            if (tieneValor(relacionFam)) {
-                                MessageResource catRelacionFamiliarTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + relacionFam + "' and " + CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", null);
-                                if (catRelacionFamiliarTutor != null)
-                                    procesos.setRelacionFam(Integer.valueOf(catRelacionFamiliarTutor.getCatKey()));
-                            } else {
-                                procesos.setRelacionFam(ceroDefaul);
-                            }
-                        }
                         if (procesos.getEstPart().equals(0)) {
                             procesos.setEstPart(1);
                         }

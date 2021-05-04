@@ -1170,21 +1170,6 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         return age;
     }
 
-    public String getRelacionFamiliar(Integer codigo) {
-        String relacionFamiliar = this.getApplicationContext().getString(R.string.sinRelacFam);
-        try {
-            for (MessageResource message : catRelacionFamiliar) {
-                if (message.getCatKey().equalsIgnoreCase(String.valueOf(codigo))) {
-                    relacionFamiliar = message.getSpanish();
-                    break;
-                }
-            }
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return relacionFamiliar;
-    }
-
     private void getParticipanteData() {
         estudiosAdapter.open();
         if (mParticipante == null)
@@ -1272,11 +1257,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             labelHeader = labelHeader +" - "+ edad +"A</b><br />";
         }
 
+        String relacion = MessageResourceUtil.getRelacionFamiliar(catRelacionFamiliar, mParticipante.getRelacionFamiliarTutor());
 
-        Integer relacionFam = mParticipante.getProcesos().getRelacionFam();
-        String relacion = getRelacionFamiliar(relacionFam);
-
-        labelHeader = labelHeader + "<small><font color='black'>"+mParticipante.getProcesos().getTutor();
+        labelHeader = labelHeader + "<small><font color='black'>"+mParticipante.getTutor();
         labelHeader = labelHeader +" - ("+ relacion +")" +"</font></small><br />";
         labelHeader = labelHeader + "<small><font color='black'>Personas en casa: "+mParticipante.getProcesos().getCuantasPers()+"</font></small><br />";
 

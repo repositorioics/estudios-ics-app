@@ -497,6 +497,14 @@ public class BluetoothChatCovid19Fragment extends Fragment {
         String ape2Madre = null;
         if(mParticipantes.get(cuenta).getApellido2Madre()!=null) ape2Madre  = "'"+ mParticipantes.get(cuenta).getApellido2Madre()+"'";
         Integer codCasa = mParticipantes.get(cuenta).getCasa().getCodigo();
+        String nom1Tut = "'"+ mParticipantes.get(cuenta).getNombre1Tutor()+"'";
+        String nom2Tut = null;
+        if(mParticipantes.get(cuenta).getNombre2Tutor()!=null) nom2Tut  = "'"+ mParticipantes.get(cuenta).getNombre2Tutor()+"'";
+        String ape1Tut = "'"+ mParticipantes.get(cuenta).getApellido1Tutor() +"'";
+        String ape2Tut = null;
+        if(mParticipantes.get(cuenta).getApellido2Tutor()!=null) ape2Tut  = "'"+ mParticipantes.get(cuenta).getApellido2Tutor() +"'";
+        String relFam = "'" + mParticipantes.get(cuenta).getRelacionFamiliarTutor() + "'";
+
         Long fr = mParticipantes.get(cuenta).getRecordDate().getTime();
         String userName = null;
         if(mParticipantes.get(cuenta).getRecordUser()!=null) userName  = "'"+ mParticipantes.get(cuenta).getRecordUser()+"'";
@@ -524,6 +532,11 @@ public class BluetoothChatCovid19Fragment extends Fragment {
 				ape1Madre +","+
 				ape2Madre +","+
 				codCasa +","+
+                nom1Tut +","+
+                nom2Tut +","+
+                ape1Tut +","+
+                ape2Tut +","+
+                relFam+","+
 				fr +","+
 				userName +","+
 				pasivo +","+
@@ -611,7 +624,7 @@ public class BluetoothChatCovid19Fragment extends Fragment {
                 mParticipantesProc.getVolRetomaPbmc()+",null,'"+
                 mParticipantesProc.getZika()+"','"+
                 mParticipantesProc.getAdn()+"',"+
-                mParticipantesProc.getRelacionFam()+","+
+                //mParticipantesProc.getRelacionFam()+","+
                 mParticipantesProc.getCuantasPers()+",'"+
                 mParticipantesProc.getDatosParto()+"','"+
                 mParticipantesProc.getPosZika()+"','"+
@@ -621,7 +634,7 @@ public class BluetoothChatCovid19Fragment extends Fragment {
                 mParticipantesProc.getEnCasaChf()+"','"+
                 mParticipantesProc.getEnCasaSa()+"','"+
                 mParticipantesProc.getEncPartSa()+"','"+
-                mParticipantesProc.getTutor()+"','"+
+                //mParticipantesProc.getTutor()+"','"+
                 mParticipantesProc.getCoordenadas()+"',"+
                 (mParticipantesProc.getConsSa()!=null?"'"+mParticipantesProc.getConsSa()+"'":"null")+",'"+
                 mParticipantesProc.getObsequioChf()+"','"+

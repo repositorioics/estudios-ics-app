@@ -40,13 +40,13 @@ public class ParticipanteProcesos implements Serializable {
     private String datosParto;
     private String mi;
     private String casaCHF;
-    private Integer relacionFam;
+    //private Integer relacionFam;
     private Integer cuantasPers;
     private String posZika;
     private String enCasaChf;
     private String enCasaSa;
     private String encPartSa;
-    private String tutor;
+    //private String tutor;
     private String consSa;
     private String coordenadas; //cambio de domicilio
     //MA2019
@@ -295,13 +295,13 @@ public class ParticipanteProcesos implements Serializable {
         this.casaCHF = casaCHF;
     }
 
-    public Integer getRelacionFam() {
+    /*public Integer getRelacionFam() {
         return relacionFam;
     }
 
     public void setRelacionFam(Integer relacionFam) {
         this.relacionFam = relacionFam;
-    }
+    }*/
 
     public Integer getCuantasPers() {
         return cuantasPers;
@@ -351,13 +351,13 @@ public class ParticipanteProcesos implements Serializable {
         this.encPartSa = encPartSa;
     }
 
-    public String getTutor() {
+    /*public String getTutor() {
         return tutor;
     }
 
     public void setTutor(String tutor) {
         this.tutor = tutor;
-    }
+    }*/
 
     public Double getVolRetomaPbmc() {
         return volRetomaPbmc;

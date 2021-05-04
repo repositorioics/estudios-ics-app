@@ -137,11 +137,11 @@ public class ConstantsDB {
     public static final String mi = "mi";
     public static final String cand = "cand";
     public static final String casaCHF = "casaCHF";
-    public static final String RELFAMT = "relacion_fam";
+    //public static final String RELFAMT = "relacion_fam";
     public static final String enCasaChf = "enCasaChf";
     public static final String enCasaSa = "enCasaSa";
     public static final String encPartSa = "encPartSa";
-    public static final String tutor = "tutor";
+    //public static final String tutor = "tutor";
     public static final String coordenada = "coordenada"; //indica si tomar coordenadas por ingreso, por cambio de domicilio o por falta de punto
     public static final String consSa = "consSa"; //Consentimiento Seroprevalencia
     public static final String OBSEQUIOCHF = "obsequioChf"; //MA2019
@@ -987,7 +987,7 @@ public class ConstantsDB {
             + telefono + " text, "
             + ZIKA  + " text, "
             + ADN  + " text, "
-            + RELFAMT  + " integer not null, "
+            //+ RELFAMT  + " integer not null, "
             + NUMPERS  + " integer, "
             + datosParto  + " text, "
             + posZika  + " text, "
@@ -997,7 +997,7 @@ public class ConstantsDB {
             + enCasaChf  + " text, "
             + enCasaSa  + " text, "
             + encPartSa  + " text, "
-            + tutor  + " text, "
+            //+ tutor  + " text, "
             + coordenada + " text, "
             + consSa  + " text, "
             + OBSEQUIOCHF  + " text, "
@@ -1859,7 +1859,7 @@ public class ConstantsDB {
             + VOLRETOMAPBMC  + ","
             + ZIKA  + ","
             + ADN  + ","
-            + RELFAMT  + ","
+            //+ RELFAMT  + ","
             + NUMPERS  + ","
             + datosParto  + ","
             + posZika  + ","
@@ -1869,7 +1869,7 @@ public class ConstantsDB {
             + enCasaChf  + ","
             + enCasaSa  + ","
             + encPartSa  + ","
-            + tutor  + ","
+            //+ tutor  + ","
             + coordenada + ","
             + consSa  + ","
             + OBSEQUIOCHF  + ","
@@ -1905,5 +1905,5 @@ public class ConstantsDB {
             + DELETED  + ","
             + REC1    + ","
             + REC2
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 }

@@ -140,6 +140,11 @@ public class MainDBConstants {
     public static final String apellido1Madre = "apellido1Madre";
     public static final String apellido2Madre = "apellido2Madre";
     public static final String casa = "casa";
+    public static final String nombre1Tutor = "nombre1Tutor";
+    public static final String nombre2Tutor = "nombre2Tutor";
+    public static final String apellido1Tutor = "apellido1Tutor";
+    public static final String apellido2Tutor = "apellido2Tutor";
+    public static final String relacionFamiliarTutor = "relacionFamiliarTutor";
 
     //Crear tabla participantes
     public static final String CREATE_PARTICIPANTE_TALBE = "create table if not exists "
@@ -160,6 +165,11 @@ public class MainDBConstants {
             + apellido1Madre + " text not null, "
             + apellido2Madre + " text, "
             + casa + " integer not null, "
+            + nombre1Tutor + " text, "
+            + nombre2Tutor + " text, "
+            + apellido1Tutor + " text, "
+            + apellido2Tutor + " text, "
+            + relacionFamiliarTutor + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -306,11 +316,6 @@ public class MainDBConstants {
     //Campos cartas_consentimientos
     public static final String fechaFirma = "fechaFirma";
     public static final String tamizaje = "tamizaje";
-    public static final String nombre1Tutor = "nombre1Tutor";
-    public static final String nombre2Tutor = "nombre2Tutor";
-    public static final String apellido1Tutor = "apellido1Tutor";
-    public static final String apellido2Tutor = "apellido2Tutor";
-    public static final String relacionFamiliarTutor = "relacionFamiliarTutor";
     public static final String participanteOTutorAlfabeto = "participanteOTutorAlfabeto";
     public static final String testigoPresente = "testigoPresente";
     public static final String nombre1Testigo = "nombre1Testigo";
@@ -783,12 +788,17 @@ public class MainDBConstants {
             + apellido1Madre + ","
             + apellido2Madre + ","
             + casa + ","
+            + nombre1Tutor + ","
+            + nombre2Tutor + ","
+            + apellido1Tutor + ","
+            + apellido2Tutor + ","
+            + relacionFamiliarTutor + ","
             + recordDate + ","
             + recordUser + ","
             + pasive + ","
             + deviceId + ","
             + estado
-            + ") " + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + ") " + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     //Crear tabla usuarios
     public static final String INSERT_USER_TABLE = "insert into "

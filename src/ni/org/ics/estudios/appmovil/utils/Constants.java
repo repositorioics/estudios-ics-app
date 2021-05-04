@@ -147,6 +147,8 @@ public class Constants {
 
     public static final String DESDE_FOTO = "desde_fotografia";
 
+    public static final String REL_FAM_MISMO_PART = "8";
+
 }
 
     

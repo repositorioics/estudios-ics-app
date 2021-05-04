@@ -505,6 +505,14 @@ public class BluetoothChatFragment extends Fragment {
     	String ape2Madre = null;
     	if(mParticipantes.get(cuenta).getParticipante().getApellido2Madre()!=null) ape2Madre  = "'"+ mParticipantes.get(cuenta).getParticipante().getApellido2Madre()+"'";
     	Integer codCasa = mParticipantes.get(cuenta).getParticipante().getCasa().getCodigo();
+        String nom1Tut = "'"+ mParticipantes.get(cuenta).getParticipante().getNombre1Tutor()+"'";
+        String nom2Tut = null;
+        if(mParticipantes.get(cuenta).getParticipante().getNombre2Tutor()!=null) nom2Tut  = "'"+ mParticipantes.get(cuenta).getParticipante().getNombre2Tutor()+"'";
+        String ape1Tut = "'"+ mParticipantes.get(cuenta).getParticipante().getApellido1Tutor() +"'";
+        String ape2Tut = null;
+        if(mParticipantes.get(cuenta).getParticipante().getApellido2Tutor()!=null) ape2Tut  = "'"+ mParticipantes.get(cuenta).getParticipante().getApellido2Tutor() +"'";
+        String relFam = "'" + mParticipantes.get(cuenta).getParticipante().getRelacionFamiliarTutor() + "'";
+
     	Long fr = mParticipantes.get(cuenta).getRecordDate().getTime();
     	String userName = null;
     	if(mParticipantes.get(cuenta).getRecordUser()!=null) userName  = "'"+ mParticipantes.get(cuenta).getRecordUser()+"'";
@@ -532,6 +540,11 @@ public class BluetoothChatFragment extends Fragment {
 				ape1Madre +","+
 				ape2Madre +","+
 				codCasa +","+
+                nom1Tut +","+
+                nom2Tut +","+
+                ape1Tut +","+
+                ape2Tut +","+
+                relFam+","+
 				fr +","+
 				userName +","+
 				pasivo +","+
@@ -607,7 +620,7 @@ public class BluetoothChatFragment extends Fragment {
                 mParticipantesProc.getVolRetomaPbmc()+",null,'"+
                 mParticipantesProc.getZika()+"','"+
                 mParticipantesProc.getAdn()+"',"+
-                mParticipantesProc.getRelacionFam()+","+
+                //mParticipantesProc.getRelacionFam()+","+
                 mParticipantesProc.getCuantasPers()+",'"+
                 mParticipantesProc.getDatosParto()+"','"+
                 mParticipantesProc.getPosZika()+"','"+
@@ -617,7 +630,7 @@ public class BluetoothChatFragment extends Fragment {
                 mParticipantesProc.getEnCasaChf()+"','"+
                 mParticipantesProc.getEnCasaSa()+"','"+
                 mParticipantesProc.getEncPartSa()+"','"+
-                mParticipantesProc.getTutor()+"','"+
+                //mParticipantesProc.getTutor()+"','"+
                 mParticipantesProc.getCoordenadas()+"',"+
                 (mParticipantesProc.getConsSa()!=null?"'"+mParticipantesProc.getConsSa()+"'":"null")+",'"+
                 mParticipantesProc.getObsequioChf()+"','"+

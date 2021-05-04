@@ -2051,6 +2051,29 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         participante.setDeviceid(infoMovil.getDeviceId());
                         participante.setEstado('0');
                         participante.setPasive('0');
+                        //ahora datos de tutor en tabla participante
+                        if (tieneValor(nombre1Tutor)) {
+                            participante.setNombre1Tutor(nombre1Tutor);
+                        }
+                        if (tieneValor(nombre2Tutor)) {
+                            participante.setNombre2Tutor(nombre2Tutor);
+                        }
+                        if (tieneValor(apellido1Tutor)) {
+                            participante.setApellido1Tutor(apellido1Tutor);
+                        }
+                        if (tieneValor(apellido2Tutor)) {
+                            participante.setApellido2Tutor(apellido2Tutor);
+                        }
+                        if (tieneValor(relacionFamiliarTutor)) {
+                            MessageResource catRelacionFamiliarTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + relacionFamiliarTutor + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_RFTUTOR'", null);
+                            if (catRelacionFamiliarTutor!=null) participante.setRelacionFamiliarTutor(catRelacionFamiliarTutor.getCatKey());
+                        } else {
+                            participante.setRelacionFamiliarTutor(Constants.REL_FAM_MISMO_PART);
+                            participante.setNombre1Tutor(participante.getNombre1());
+                            participante.setNombre2Tutor(participante.getNombre2());
+                            participante.setApellido1Tutor(participante.getApellido1());
+                            participante.setApellido2Tutor(participante.getApellido2());
+                        }
                         //Guarda nuevo participante
                         estudiosAdapter.crearParticipante(participante);
 
@@ -2142,19 +2165,6 @@ public class NewTamizajeActivity extends FragmentActivity implements
 
                         procesos.setCasaCHF(null);
                         procesos.setEnCasaChf(Constants.NO);
-
-                        String nombreTutor = nombre1Tutor;
-                        if (tieneValor(nombre2Tutor)) nombreTutor = nombreTutor + " " + nombre2Tutor;
-                        nombreTutor = nombreTutor + " " + apellido1Tutor;
-                        if (tieneValor(apellido2Tutor)) nombreTutor = nombreTutor + " " + apellido2Tutor;
-                        procesos.setTutor(nombreTutor);
-                        if (tieneValor(relacionFamiliarTutor)) {
-                            MessageResource catRelacionFamiliarTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + relacionFamiliarTutor + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_RFTUTOR'", null);
-                            if (catRelacionFamiliarTutor != null)
-                                procesos.setRelacionFam(Integer.valueOf(catRelacionFamiliarTutor.getCatKey()));
-                        } else {
-                            procesos.setRelacionFam(ceroDefaul);
-                        }
                         procesos.setCuantasPers(0);
                         procesos.setVolRetoma(null);
                         procesos.setVolRetomaPbmc(null);

@@ -990,7 +990,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         String razonNoAceptaDengue = datos.getString(this.getString(R.string.razonNoAceptaDengue));
                         String otraRazonNoAceptaDengue = datos.getString(this.getString(R.string.otraRazonNoAceptaDengue));
 
-                        String tutor = "";
+                        //String tutor = "";
                         Boolean aceptaInfluenza = false;
                         Boolean aceptaDengue = false;
                         String estudios = "";
@@ -1080,26 +1080,33 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         cc.setParticipante(participante);
                         if (tieneValor(nombre1Tutor)) {
                             cc.setNombre1Tutor(nombre1Tutor);
-                            tutor += nombre1Tutor;
+                            participante.setNombre1Tutor(nombre1Tutor);
                         }
                         if (tieneValor(nombre2Tutor)) {
                             cc.setNombre2Tutor(nombre2Tutor);
-                            tutor += " " + nombre2Tutor;
+                            participante.setNombre2Tutor(nombre2Tutor);
                         }
                         if (tieneValor(apellido1Tutor)) {
                             cc.setApellido1Tutor(apellido1Tutor);
-                            tutor += " " + apellido1Tutor;
+                            participante.setApellido1Tutor(apellido1Tutor);
                         }
                         if (tieneValor(apellido2Tutor)) {
                             cc.setApellido2Tutor(apellido2Tutor);
-                            tutor += " " + apellido2Tutor;
+                            participante.setApellido2Tutor(apellido2Tutor);
                         }
                         if (tieneValor(relacionFamiliarTutor)) {
                             MessageResource catRelacionFamiliarTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + relacionFamiliarTutor + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_RFTUTOR'", null);
-                            if (catRelacionFamiliarTutor != null)
+                            if (catRelacionFamiliarTutor != null) {
                                 cc.setRelacionFamiliarTutor(catRelacionFamiliarTutor.getCatKey());
+                                participante.setRelacionFamiliarTutor(catRelacionFamiliarTutor.getCatKey());
+                            }
                         } else {
-                            cc.setRelacionFamiliarTutor("8");//El mismo participante
+                            cc.setRelacionFamiliarTutor(Constants.REL_FAM_MISMO_PART);//El mismo participante
+                            participante.setRelacionFamiliarTutor(Constants.REL_FAM_MISMO_PART);//El mismo participante
+                            participante.setNombre1Tutor(participante.getNombre1());
+                            participante.setNombre2Tutor(participante.getNombre2());
+                            participante.setApellido1Tutor(participante.getApellido1());
+                            participante.setApellido2Tutor(participante.getApellido2());
                         }
                         if (tieneValor(participanteOTutorAlfabeto)) {
                             MessageResource catParticipanteOTutorAlfabeto = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + participanteOTutorAlfabeto + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -1165,6 +1172,13 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         cc.setPasive('0');
                         //Ingresa la carta
                         estudiosAdapter.crearCartaConsentimiento(cc);
+                        //actualizar datos de tutor
+                        participante.setRecordDate(new Date());
+                        participante.setRecordUser(username);
+                        participante.setDeviceid(infoMovil.getDeviceId());
+                        participante.setEstado('0');
+                        participante.setPasive('0');
+                        estudiosAdapter.editarParticipante(participante);
                         //Crea un nuevo participantes de chf
                         ParticipanteCohorteFamilia pchf = new ParticipanteCohorteFamilia();
                         pchf.setParticipante(participante);
@@ -1392,16 +1406,6 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         }
                         procesos.setCasaCHF(casaCHF.getCodigoCHF());
                         procesos.setEstPart(1);
-                        if (tieneValor(cc.getRelacionFamiliarTutor()))
-                            procesos.setRelacionFam(Integer.valueOf(cc.getRelacionFamiliarTutor()));
-                        else {
-                            procesos.setRelacionFam(8);//El mismo Participante
-                        }
-                        if (tieneValor(tutor))
-                            procesos.setTutor(tutor);
-                        else
-                            procesos.setTutor(Constants.NA);
-
                         //05-09-2018. En ingreso de familia ya no preguntar por dengue o influenza
                     /*if (aceptaDengue)
                         estudios = "Dengue";

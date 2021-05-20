@@ -88,7 +88,7 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
         infoMovil = new DeviceInfo(NuevaMuestraTuboRojoActivity.this);
         accion = getIntent().getStringExtra(Constants.ACCION);
         desdeMenuInfo = getIntent().getBooleanExtra(Constants.MENU_INFO,false);
-        if(accion.equals(Constants.CODIGO_PROPOSITO_TX)){
+        if(accion.equals(Constants.CODIGO_PROPOSITO_TX)){//ya solo se usa para TX (2021)
             if (getIntent().getExtras().getSerializable(Constants.VISITA) instanceof VisitaSeguimientoCaso){
                 visitaCaso = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
                 visitaFinalCaso = null;
@@ -190,7 +190,9 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
         //seter el máximo permitido para el volumen de la muestra
         NumberPage vol = (NumberPage)mWizardModel.findByKey(labels.getVolumen());
         vol.setRangeValidation(true, 0, volumenMaximoPermitido.intValue());
-
+        BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoMx());
+        pagetmp.setmCodePosicion(1);
+        pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.TR[I|F]$");
         onPageTreeChanged();
         updateBottomBar();
     }
@@ -327,6 +329,28 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
                     if(!valor.matches(tp.getmPattern())){
                         cutOffPage = i;
                         break;
+                    }
+                }
+            }
+            if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")) {
+                BarcodePage tp = (BarcodePage) page;
+                if (tp.ismValPattern()) {
+                    String valor = tp.getData().getString(BarcodePage.SIMPLE_DATA_KEY);
+                    if(!valor.matches(tp.getmPattern())){
+                        Toast.makeText( this.getApplicationContext(),R.string.error1CodigoMx, Toast.LENGTH_LONG).show();
+                        cutOffPage = i;
+                        break;
+                    } else {
+                        String codigoTmp = valor;
+                        if (valor.contains(".")){
+                            codigoTmp = valor.substring(0,valor.indexOf(".",0));
+                        }
+                        if (!codigoTmp.equalsIgnoreCase(participanteCHF.getParticipante().getCodigo().toString())){
+                            Toast.makeText( this.getApplicationContext(),this.getString(R.string.error2CodigoMx,
+                                    participanteCHF.getParticipante().getCodigo().toString()), Toast.LENGTH_LONG).show();
+                            cutOffPage = i;
+                            break;
+                        }
                     }
                 }
             }

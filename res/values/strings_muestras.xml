@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="new_sample">Muestra</string>
     <string name="new_sample_bhc">Muestra BHC</string>
@@ -118,5 +118,7 @@
     <string name="codigoMx13">Escanee código de muestra 13</string>
     <string name="positiveMxHands">Muestra de ambas manos sólo del positivo</string>
 
+    <string name="error1CodigoMx">Código de muestra no válido</string>
+    <string name="error2CodigoMx">Código de muestra no pertenece al participante: <xliff:g id="codigo">%1$s</xliff:g></string>
 
 </resources>

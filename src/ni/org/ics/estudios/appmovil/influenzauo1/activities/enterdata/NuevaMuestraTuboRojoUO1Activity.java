@@ -189,9 +189,9 @@ public class NuevaMuestraTuboRojoUO1Activity extends FragmentActivity implements
         BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoMx());
         pagetmp.setmCodePosicion(1);
         if (accion.equalsIgnoreCase(Constants.CODIGO_PROPOSITO_UO1)) //positivo
-            pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.U[P|R][I|F]$");
+            pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.UR[I|F]$");
         else //vacuna. permitir código de mx o código de participante
-            pagetmp.setPatternValidation(true, "(^\\d{1,5}\\.\\d{2}\\.V[P|R][I|F]$)|(^\\d{1,5}?$)");
+            pagetmp.setPatternValidation(true, "(^\\d{1,5}\\.\\d{2}\\.VR[I|F]$)|(^\\d{1,5}?$)");
 
         onPageTreeChanged();
         updateBottomBar();
@@ -337,8 +337,20 @@ public class NuevaMuestraTuboRojoUO1Activity extends FragmentActivity implements
                 if (tp.ismValPattern()) {
                     String valor = tp.getData().getString(BarcodePage.SIMPLE_DATA_KEY);
                     if(!valor.matches(tp.getmPattern())){
+                        Toast.makeText( this.getApplicationContext(),R.string.error1CodigoMx, Toast.LENGTH_LONG).show();
                         cutOffPage = i;
                         break;
+                    } else {
+                        String codigoTmp = valor;
+                        if (valor.contains(".")){
+                            codigoTmp = valor.substring(0,valor.indexOf(".",0));
+                        }
+                        if (!codigoTmp.equalsIgnoreCase(participanteCasoUO1.getParticipante().getCodigo().toString())){
+                            Toast.makeText( this.getApplicationContext(),this.getString(R.string.error2CodigoMx,
+                                    participanteCasoUO1.getParticipante().getCodigo().toString()), Toast.LENGTH_LONG).show();
+                            cutOffPage = i;
+                            break;
+                        }
                     }
                 }
             }

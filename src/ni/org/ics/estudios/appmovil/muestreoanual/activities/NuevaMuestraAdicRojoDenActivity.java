@@ -319,8 +319,20 @@ public class NuevaMuestraAdicRojoDenActivity extends FragmentActivity implements
                 if (tp.ismValPattern()) {
                     String valor = tp.getData().getString(BarcodePage.SIMPLE_DATA_KEY);
                     if(!valor.matches(tp.getmPattern())){
+                        Toast.makeText( this.getApplicationContext(),R.string.error1CodigoMx, Toast.LENGTH_LONG).show();
                         cutOffPage = i;
                         break;
+                    } else {
+                        String codigoTmp = valor;
+                        if (valor.contains(".")){
+                            codigoTmp = valor.substring(0,valor.indexOf(".",0));
+                        }
+                        if (!codigoTmp.equalsIgnoreCase(participante.getCodigo().toString())){
+                            Toast.makeText( this.getApplicationContext(),this.getString(R.string.error2CodigoMx,
+                                    participante.getCodigo().toString()), Toast.LENGTH_LONG).show();
+                            cutOffPage = i;
+                            break;
+                        }
                     }
                 }
             }

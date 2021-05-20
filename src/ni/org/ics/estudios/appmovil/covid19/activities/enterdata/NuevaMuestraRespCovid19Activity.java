@@ -177,6 +177,8 @@ public class NuevaMuestraRespCovid19Activity extends FragmentActivity implements
         if (tipoMx!=null) tipoMx.setmVisible(false);
         BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoMx());
         pagetmp.setmCodePosicion(1);//tomar la segunda parte del código
+        pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.SR[1-6]$");
+
         onPageTreeChanged();
         updateBottomBar();
     }
@@ -314,6 +316,28 @@ public class NuevaMuestraRespCovid19Activity extends FragmentActivity implements
                     if(!valor.matches(tp.getmPattern())){
                         cutOffPage = i;
                         break;
+                    }
+                }
+            }
+            if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.BarcodePage")) {
+                BarcodePage tp = (BarcodePage) page;
+                if (tp.ismValPattern()) {
+                    String valor = tp.getData().getString(BarcodePage.SIMPLE_DATA_KEY);
+                    if(!valor.matches(tp.getmPattern())){
+                        Toast.makeText( this.getApplicationContext(),R.string.error1CodigoMx, Toast.LENGTH_LONG).show();
+                        cutOffPage = i;
+                        break;
+                    } else {
+                        String codigoTmp = valor;
+                        if (valor.contains(".")){
+                            codigoTmp = valor.substring(0,valor.indexOf(".",0));
+                        }
+                        if (!codigoTmp.equalsIgnoreCase(participanteCasoCovid19.getParticipante().getCodigo().toString())){
+                            Toast.makeText( this.getApplicationContext(),this.getString(R.string.error2CodigoMx,
+                                    participanteCasoCovid19.getParticipante().getCodigo().toString()), Toast.LENGTH_LONG).show();
+                            cutOffPage = i;
+                            break;
+                        }
                     }
                 }
             }

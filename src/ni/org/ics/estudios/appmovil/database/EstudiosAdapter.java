@@ -7968,7 +7968,7 @@ public class EstudiosAdapter {
 		return mCuestionarioCovid19s;
 	}
 
-	public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) {
+	public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -7985,7 +7985,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -7998,7 +7998,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertUsuariosBySql(List<UserSistema> list) {
+	public boolean bulkInsertUsuariosBySql(List<UserSistema> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8015,7 +8015,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8028,7 +8028,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertRolesBySql(List<Authority> list) {
+	public boolean bulkInsertRolesBySql(List<Authority> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8043,7 +8043,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8056,7 +8056,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertUserPermissionsBySql(List<UserPermissions> list) {
+	public boolean bulkInsertUserPermissionsBySql(List<UserPermissions> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8071,7 +8071,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8084,7 +8084,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertEstutiosBySql(List<Estudio> list) {
+	public boolean bulkInsertEstutiosBySql(List<Estudio> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8099,7 +8099,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8112,7 +8112,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertBarriosBySql(List<Barrio> list) {
+	public boolean bulkInsertBarriosBySql(List<Barrio> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8127,7 +8127,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8140,7 +8140,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertCasasBySql(List<Casa> list) {
+	public boolean bulkInsertCasasBySql(List<Casa> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8155,7 +8155,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8168,7 +8168,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertParticipantesBySql(List<Participante> list) {
+	public boolean bulkInsertParticipantesBySql(List<Participante> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8183,7 +8183,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8196,7 +8196,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertParticipantesProcBySql(List<ParticipanteProcesos> list) {
+	public boolean bulkInsertParticipantesProcBySql(List<ParticipanteProcesos> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8211,7 +8211,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8224,7 +8224,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertCasasChfBySql(List<CasaCohorteFamilia> list) {
+	public boolean bulkInsertCasasChfBySql(List<CasaCohorteFamilia> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8239,7 +8239,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8252,7 +8252,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertParticipantesChfBySql(List<ParticipanteCohorteFamilia> list) {
+	public boolean bulkInsertParticipantesChfBySql(List<ParticipanteCohorteFamilia> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8267,7 +8267,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8280,7 +8280,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertParticipantesSABySql(List<ParticipanteSeroprevalencia> list) {
+	public boolean bulkInsertParticipantesSABySql(List<ParticipanteSeroprevalencia> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8295,7 +8295,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8308,7 +8308,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertContactoParticipantesBySql(List<ContactoParticipante> list) {
+	public boolean bulkInsertContactoParticipantesBySql(List<ContactoParticipante> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8323,7 +8323,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8336,7 +8336,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertCocinasBySql(List<Cocina> list) {
+	public boolean bulkInsertCocinasBySql(List<Cocina> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8351,7 +8351,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8364,7 +8364,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertComedoresBySql(List<Comedor> list) {
+	public boolean bulkInsertComedoresBySql(List<Comedor> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8379,7 +8379,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8392,7 +8392,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertSalasBySql(List<Sala> list) {
+	public boolean bulkInsertSalasBySql(List<Sala> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8407,7 +8407,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8420,7 +8420,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertHabitacionesBySql(List<Habitacion> list) {
+	public boolean bulkInsertHabitacionesBySql(List<Habitacion> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8435,7 +8435,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8448,7 +8448,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertBaniosBySql(List<Banio> list) {
+	public boolean bulkInsertBaniosBySql(List<Banio> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8463,7 +8463,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8476,7 +8476,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertVentanasBySql(List<Ventana> list) {
+	public boolean bulkInsertVentanasBySql(List<Ventana> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8491,7 +8491,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8504,7 +8504,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertCuartosBySql(List<Cuarto> list) {
+	public boolean bulkInsertCuartosBySql(List<Cuarto> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8519,7 +8519,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8532,7 +8532,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertCamasBySql(List<Cama> list) {
+	public boolean bulkInsertCamasBySql(List<Cama> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8547,7 +8547,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8560,7 +8560,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertPersonasCamasBySql(List<PersonaCama> list) {
+	public boolean bulkInsertPersonasCamasBySql(List<PersonaCama> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8575,7 +8575,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8588,7 +8588,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertMuestrasChfBySql(List<Muestra> list) {
+	public boolean bulkInsertMuestrasChfBySql(List<Muestra> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8603,7 +8603,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8616,7 +8616,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertTelefonosContactoBySql(List<TelefonoContacto> list) {
+	public boolean bulkInsertTelefonosContactoBySql(List<TelefonoContacto> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8631,7 +8631,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8644,7 +8644,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertCasosChfBySql(String tabla, List<?> list) {
+	public boolean bulkInsertCasosChfBySql(String tabla, List<?> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8738,7 +8738,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8751,7 +8751,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertU01BySql(String tabla, List<?> list) {
+	public boolean bulkInsertU01BySql(String tabla, List<?> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8797,7 +8797,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {
@@ -8810,7 +8810,7 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-	public boolean bulkInsertCovidBySql(String tabla, List<?> list) {
+	public boolean bulkInsertCovidBySql(String tabla, List<?> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
 		}
@@ -8904,7 +8904,7 @@ public class EstudiosAdapter {
 			mDb.setTransactionSuccessful();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
 		} finally {
 			try {
 				if (null != mDb) {

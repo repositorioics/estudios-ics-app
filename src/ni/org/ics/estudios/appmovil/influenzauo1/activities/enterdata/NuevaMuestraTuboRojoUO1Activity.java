@@ -345,9 +345,11 @@ public class NuevaMuestraTuboRojoUO1Activity extends FragmentActivity implements
                         if (valor.contains(".")){
                             codigoTmp = valor.substring(0,valor.indexOf(".",0));
                         }
-                        if (!codigoTmp.equalsIgnoreCase(participanteCasoUO1.getParticipante().getCodigo().toString())){
-                            Toast.makeText( this.getApplicationContext(),this.getString(R.string.error2CodigoMx,
-                                    participanteCasoUO1.getParticipante().getCodigo().toString()), Toast.LENGTH_LONG).show();
+                        String codigoParticipante = "";
+                        if (participanteCasoUO1 != null) codigoParticipante = String.valueOf(participanteCasoUO1.getParticipante().getCodigo());
+                        else codigoParticipante = String.valueOf(visitaVacuna.getParticipante().getCodigo());
+                        if (!codigoTmp.equalsIgnoreCase(codigoParticipante)) {
+                            Toast.makeText( this.getApplicationContext(),this.getString(R.string.error2CodigoMx, codigoParticipante), Toast.LENGTH_LONG).show();
                             cutOffPage = i;
                             break;
                         }

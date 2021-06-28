@@ -30,6 +30,7 @@ import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.Covid19DBConstants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListaParticipantesPosCasoCovid19Activity extends AbstractAsyncListActivity {
@@ -261,7 +262,17 @@ public class ListaParticipantesPosCasoCovid19Activity extends AbstractAsyncListA
 		protected String doInBackground(String... values) {
 			try {
 				estudiosAdapter.open();
-				participanteCasoCovid19List = estudiosAdapter.getParticipantesCasosCovid19(Covid19DBConstants.enfermo+"!='N'", null);
+				//ordenar por casa chf, si no tiene ordenar por codigo de participante y poner al final
+				String subSelectCasas = "select "+ Covid19DBConstants.codigoCaso + " from "+ Covid19DBConstants.COVID_CASOS_TABLE + " where "+Covid19DBConstants.casa +" is not null";
+				String subSelectSinCasas = "select "+ Covid19DBConstants.codigoCaso + " from "+ Covid19DBConstants.COVID_CASOS_TABLE + " where "+Covid19DBConstants.casa +" is null";
+
+				participanteCasoCovid19List = estudiosAdapter.getParticipantesCasosCovid19(Covid19DBConstants.enfermo+"!='N' and "+ Covid19DBConstants.codigoCaso + " in ("+subSelectCasas+")", null);
+				List<ParticipanteCasoCovid19> participanteCasoCovid19SinCasa = estudiosAdapter.getParticipantesCasosCovid19(Covid19DBConstants.enfermo+"!='N' and "+ Covid19DBConstants.codigoCaso + " in ("+subSelectSinCasas+")", null);
+
+				Collections.sort(participanteCasoCovid19List);
+				Collections.sort(participanteCasoCovid19SinCasa);
+				participanteCasoCovid19List.addAll(participanteCasoCovid19SinCasa);
+
 				mPositivoPor = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='COVID_CAT_POSITIVO_POR'", null);
 				estudiosAdapter.close();
 			} catch (Exception e) {

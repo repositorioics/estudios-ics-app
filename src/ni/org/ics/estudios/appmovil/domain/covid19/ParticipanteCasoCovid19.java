@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by Miguel Salinas on 01/06/2020.
  * V1.0
  */
-public class ParticipanteCasoCovid19 extends BaseMetaData {
+public class ParticipanteCasoCovid19 extends BaseMetaData implements Comparable<ParticipanteCasoCovid19> {
 
     /**
 	 * 
@@ -110,4 +110,22 @@ public class ParticipanteCasoCovid19 extends BaseMetaData {
         result = 31 * result + participante.hashCode();
         return result;
     }
+
+	@Override
+	public int compareTo(ParticipanteCasoCovid19 o) {
+		if (this.codigoCaso.getCasa() != null) {
+			return Integer.compare(Integer.parseInt(this.codigoCaso.getCasa().getCodigoCHF()), Integer.parseInt(o.codigoCaso.getCasa().getCodigoCHF()));
+		} else {
+			return Integer.compare(this.participante.getCodigo(), o.participante.getCodigo());
+		}
+		/*
+		if ((this.codigoCaso.getCasa() != null && Integer.parseInt(this.codigoCaso.getCasa().getCodigoCHF()) < (Integer.parseInt(o.codigoCaso.getCasa().getCodigoCHF())))
+			|| this.participante.getCodigo() < o.participante.getCodigo())
+			return -1;
+
+		if ((this.codigoCaso.getCasa() != null && Integer.parseInt(this.codigoCaso.getCasa().getCodigoCHF()) > (Integer.parseInt(o.codigoCaso.getCasa().getCodigoCHF())))
+				|| this.participante.getCodigo() > o.participante.getCodigo())
+			return 1;
+*/
+	}
 }

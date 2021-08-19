@@ -55,6 +55,7 @@ public class UploadAllCasosCovid19Task extends UploadTask {
     private List<ParticipanteProcesos> mParticipantesProc = new ArrayList<ParticipanteProcesos>();
     private List<VisitaFinalCasoCovid19> mVisitasFinales = new ArrayList<VisitaFinalCasoCovid19>();
     private List<SintomasVisitaFinalCovid19> mSintomasFinal = new ArrayList<SintomasVisitaFinalCovid19>();
+    private List<ObsequioGeneral> mObsequiosGeneral = new ArrayList<ObsequioGeneral>();
 
     public static final String TAMIZAJE = "1";
     public static final String PARTICIPANTE = "2";
@@ -73,8 +74,9 @@ public class UploadAllCasosCovid19Task extends UploadTask {
     public static final String DATOS_AISLAMIENTO_COVID19 = "15";
     public static final String VISITAS_FINALES_COVID19 = "16";
     public static final String SINT_VISITAS_FINALES_COVID19 = "17";
+    public static final String OBSEQUIOS = "18";
 
-    private static final String TOTAL_TASK_CASOS = "17";
+    private static final String TOTAL_TASK_CASOS = "18";
 
     @Override
     protected String doInBackground(String... values) {
@@ -103,6 +105,7 @@ public class UploadAllCasosCovid19Task extends UploadTask {
             mVisitasTerrenoP = estudioAdapter.getVisitasTerrenoParticipantes(filtro, null);
             mVisitasFinales = estudioAdapter.getVisitasFinalesCasosCovid19(filtro, null);
             mSintomasFinal = estudioAdapter.getSintomasVisitasFinalesCovid19(filtro, null);
+            mObsequiosGeneral = estudioAdapter.getObsequiosGenerales(filtro, null);
 
             publishProgress("Datos completos!", "2", "2");
 
@@ -222,6 +225,13 @@ public class UploadAllCasosCovid19Task extends UploadTask {
             error = cargarSintomasVisitasFinalesCovid19(url, username, password);
             if (!error.matches("Datos recibidos!")){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINT_VISITAS_FINALES_COVID19);
+                return error;
+            }
+
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, OBSEQUIOS);
+            error = cargarObsequioGeneral(url, username, password);
+            if (!error.matches("Datos recibidos!")){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, OBSEQUIOS);
                 return error;
             }
         } catch (Exception e1) {
@@ -420,6 +430,21 @@ public class UploadAllCasosCovid19Task extends UploadTask {
                     estudioAdapter.editarSintomasVisitaFinalCovid19(sintoma);
                     publishProgress("Actualizando síntomas visitas finales COVID19 en base de datos local", Integer.valueOf(mSintomasFinal.indexOf(sintoma)).toString(), Integer
                             .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(OBSEQUIOS)){
+            c = mObsequiosGeneral.size();
+            if(c>0){
+                for (ObsequioGeneral obsequio : mObsequiosGeneral) {
+                    obsequio.setEstado(estado.charAt(0));
+                    try {
+                        estudioAdapter.editarObsequioGeneral(obsequio);
+                        publishProgress("Actualizando obsequios en base de datos local", Integer.valueOf(mObsequiosGeneral.indexOf(obsequio)).toString(), Integer
+                                .valueOf(c).toString());
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
                 }
             }
         }
@@ -994,6 +1019,41 @@ public class UploadAllCasosCovid19Task extends UploadTask {
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<SintomasVisitaFinalCovid19[]> requestEntity =
                         new HttpEntity<SintomasVisitaFinalCovid19[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /*************** ObsequioGeneral ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarObsequioGeneral(String url, String username,
+                                           String password) throws Exception {
+        try {
+            if(mObsequiosGeneral.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando obsequios!", OBSEQUIOS, TOTAL_TASK_CASOS);
+                final String urlRequest = url + "/movil/obsequiosgen";
+                ObsequioGeneral[] envio = mObsequiosGeneral.toArray(new ObsequioGeneral[mObsequiosGeneral.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ObsequioGeneral[]> requestEntity =
+                        new HttpEntity<ObsequioGeneral[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

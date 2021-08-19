@@ -89,8 +89,15 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                 if (participante.getDatosUO1()!=null &&  participante.getDatosUO1().isConvalesciente() && participante.getDatosUO1().getDiasConvalesciente() < 30){
                     labelHeader = labelHeader + "<font color='red'>Convaleciente UO1 con menos de 30 días. No tomar muestra</font><br />";
                 }
-                if (participante.getDatosUO1()!=null &&  participante.getDatosUO1().isVacunado() && participante.getDatosUO1().getDiasVacuna() < 30){
-                    labelHeader = labelHeader + "<font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font><br />";
+                if (participante.getDatosUO1()!=null &&  participante.getDatosUO1().isVisitaExitosa() && participante.getDatosUO1().getDiasVacuna() < 30){
+                    if (participante.getDatosUO1().isVacunado()) {
+                        if (participante.getDatosUO1().isMxTomada())
+                            labelHeader = labelHeader + "<font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font><br />";
+                        else
+                            labelHeader = labelHeader + "<font color='red'>Vacuna UO1 menor 30 días sin muestra: "+participante.getDatosUO1().getRazonNoMx()+"</font><br />";
+                    } else {
+                        labelHeader = labelHeader + "<font color='red'>Visita Vac UO1 menor 30 días sin muestra: "+participante.getDatosUO1().getRazonNoMx()+"</font><br />";
+                    }
                 }
                 if (procesos.getPosCovid()!=null) labelHeader = labelHeader + "<font color='red'>"+procesos.getPosCovid()+"</font><br />";
                 if (participante.getDatosCovid19()!=null &&  participante.getDatosCovid19().isSeguimiento()){

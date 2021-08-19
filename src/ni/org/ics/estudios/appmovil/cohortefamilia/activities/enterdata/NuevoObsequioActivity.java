@@ -21,12 +21,16 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuVisitaFinalCas
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.MenuVisitaSeguimientoCasoActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.ObsequioForm;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.ObsequioFormLabels;
+import ni.org.ics.estudios.appmovil.covid19.activities.MenuVisitaCasoCovid19Activity;
+import ni.org.ics.estudios.appmovil.covid19.activities.MenuVisitaFinalCasoCovid19Activity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
+import ni.org.ics.estudios.appmovil.domain.covid19.VisitaFinalCasoCovid19;
+import ni.org.ics.estudios.appmovil.domain.covid19.VisitaSeguimientoCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuInfoActivity;
@@ -64,6 +68,9 @@ public class NuevoObsequioActivity extends FragmentActivity implements
     private static VisitaSeguimientoCaso visita;
     private static VisitaFinalCaso visitaFinal;
     private static CasaCohorteFamilia casaChf;
+    //se solicita agregar obsequio en seguimiento de transmision sars-cov2 visitas inicial y final
+    private static VisitaSeguimientoCasoCovid19 visitaSCovid19;
+    private static VisitaFinalCasoCovid19 visitaFCovid19;
     private static Integer codigoParticipante;
 	private String username;
 	private SharedPreferences settings;
@@ -72,6 +79,7 @@ public class NuevoObsequioActivity extends FragmentActivity implements
 	private boolean notificarCambios = true;
 	private ObsequioFormLabels labels = new ObsequioFormLabels();
     private boolean visExitosa = false;
+    private boolean esTCovid = false;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -88,10 +96,21 @@ public class NuevoObsequioActivity extends FragmentActivity implements
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
         visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
+        esTCovid =  getIntent().getBooleanExtra(Constants.T_COVID19,false);
 		infoMovil = new DeviceInfo(NuevoObsequioActivity.this);
-		if (getIntent().getExtras().getSerializable(Constants.VISITA)!=null) visita = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
-        if (getIntent().getExtras().getSerializable(Constants.VISITA_FINAL)!=null) visitaFinal = (VisitaFinalCaso) getIntent().getExtras().getSerializable(Constants.VISITA_FINAL);
-        if (getIntent().getExtras().getSerializable(Constants.CASACHF)!=null) casaChf = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASACHF);
+		if (!esTCovid) {
+            if (getIntent().getExtras().getSerializable(Constants.VISITA) != null)
+                visita = (VisitaSeguimientoCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
+            if (getIntent().getExtras().getSerializable(Constants.VISITA_FINAL) != null)
+                visitaFinal = (VisitaFinalCaso) getIntent().getExtras().getSerializable(Constants.VISITA_FINAL);
+            if (getIntent().getExtras().getSerializable(Constants.CASACHF) != null)
+                casaChf = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASACHF);
+        } else {
+            if (getIntent().getExtras().getSerializable(Constants.VISITA) != null)
+                visitaSCovid19 = (VisitaSeguimientoCasoCovid19) getIntent().getExtras().getSerializable(Constants.VISITA);
+            if (getIntent().getExtras().getSerializable(Constants.VISITA_FINAL) != null)
+                visitaFCovid19 = (VisitaFinalCasoCovid19) getIntent().getExtras().getSerializable(Constants.VISITA_FINAL);
+        }
         codigoParticipante = getIntent().getIntExtra(Constants.PARTICIPANTE, -1);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new ObsequioForm(this,mPass);
@@ -177,9 +196,13 @@ public class NuevoObsequioActivity extends FragmentActivity implements
         Page pagePart = mWizardModel.findByKey(labels.getPersonaRecibe());
         if (visita!=null) {
             pagePart.setCasaCHF(visita.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF());
-        }else if (visitaFinal!=null){
+        } else if (visitaFinal!=null){
             pagePart.setCasaCHF(visitaFinal.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF());
-        }else{
+        } else if (visitaSCovid19 != null ) {
+            pagePart.setCasaCHF(visitaSCovid19.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF());
+        } else if (visitaFCovid19 != null ) {
+            pagePart.setCasaCHF(visitaFCovid19.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF());
+        } else{
             pagePart.setCasaCHF(casaChf.getCodigoCHF());
         }
 
@@ -206,17 +229,28 @@ public class NuevoObsequioActivity extends FragmentActivity implements
                         arguments.putSerializable(Constants.VISITA, visita);
                         i = new Intent(getApplicationContext(),
                                 MenuVisitaSeguimientoCasoActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtras(arguments);
-                        startActivity(i);
                     }else if (visitaFinal !=null){
                         arguments.putSerializable(Constants.VISITA_FINAL, visitaFinal);
                         i = new Intent(getApplicationContext(),
                                 MenuVisitaFinalCasoActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtras(arguments);
-                        startActivity(i);
+                    } else if (visitaSCovid19 != null) {
+                        arguments.putSerializable(Constants.VISITA, visitaSCovid19);
+                        i = new Intent(getApplicationContext(),
+                                MenuVisitaCasoCovid19Activity.class);
+                    } else if (visitaFCovid19 != null) {
+                        arguments.putSerializable(Constants.VISITA_FINAL, visitaFCovid19);
+                        i = new Intent(getApplicationContext(),
+                                MenuVisitaFinalCasoCovid19Activity.class);
+                    } else{
+                        i = new Intent(getApplicationContext(),
+                                MenuInfoActivity.class);
+                        i.putExtra(ConstantsDB.COD_CASA, casaChf.getCasa().getCodigo());
+                        i.putExtra(ConstantsDB.CODIGO, codigoParticipante);
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
                     }
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.putExtras(arguments);
+                    startActivity(i);
                     dialog.dismiss();
 					finish();
 				}
@@ -439,6 +473,18 @@ public class NuevoObsequioActivity extends FragmentActivity implements
             obsequioGeneral.setSeguimiento(visitaFinal.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso());
             obsequioGeneral.setNumVisitaSeguimiento("F");
             obsequioGeneral.setMotivo("2");
+        }else if (visitaSCovid19!=null) {
+            obsequioGeneral.setCasa(visitaSCovid19.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCasa().getCodigo().toString());
+            obsequioGeneral.setCasaChf(visitaSCovid19.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF());
+            obsequioGeneral.setSeguimiento(visitaSCovid19.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso());
+            obsequioGeneral.setNumVisitaSeguimiento(visitaSCovid19.getVisita());
+            obsequioGeneral.setMotivo("4");
+        }else if (visitaFCovid19 != null){
+            obsequioGeneral.setCasa(visitaFCovid19.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCasa().getCodigo().toString());
+            obsequioGeneral.setCasaChf(visitaFCovid19.getCodigoParticipanteCaso().getCodigoCaso().getCasa().getCodigoCHF());
+            obsequioGeneral.setSeguimiento(visitaFCovid19.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso());
+            obsequioGeneral.setNumVisitaSeguimiento("F");
+            obsequioGeneral.setMotivo("5");
         }else{
             obsequioGeneral.setCasa(casaChf.getCasa().getCodigo().toString());
             obsequioGeneral.setCasaChf(casaChf.getCodigoCHF());
@@ -489,6 +535,16 @@ public class NuevoObsequioActivity extends FragmentActivity implements
             arguments.putSerializable(Constants.VISITA_FINAL, visitaFinal);
             i = new Intent(getApplicationContext(),
                     MenuVisitaFinalCasoActivity.class);
+        }else if (visitaSCovid19 != null) {
+            arguments.putSerializable(Constants.VISITA, visitaSCovid19);
+            i = new Intent(getApplicationContext(),
+                    MenuVisitaCasoCovid19Activity.class);
+            i.putExtras(arguments);
+        } else if (visitaFCovid19 != null) {
+            arguments.putSerializable(Constants.VISITA_FINAL, visitaFCovid19);
+            i = new Intent(getApplicationContext(),
+                    MenuVisitaFinalCasoCovid19Activity.class);
+            i.putExtras(arguments);
         }else{
             i = new Intent(getApplicationContext(),
                     MenuInfoActivity.class);

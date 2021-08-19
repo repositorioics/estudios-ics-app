@@ -209,7 +209,7 @@ public class MenuVisitaSeguimientoCasoActivity extends AbstractAsyncActivity {
             try {
                 estudiosAdapter.open();
                 obsequioGeneral = estudiosAdapter.getObsequioGeneral(MainDBConstants.seguimiento +" = '"+visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso()+
-                        "' and "+MainDBConstants.numVisitaSeguimiento+" != 'F' and "+MainDBConstants.obsequioSN+" = 1", null);
+                        "' and "+MainDBConstants.numVisitaSeguimiento+" != 'F' and "+MainDBConstants.obsequioSN+" = 1 and "+MainDBConstants.motivo + " = '1'", null);
                 mMuestras = estudiosAdapter.getMuestrasSuperficie(
                         MuestrasDBConstants.caso + " = '" + visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso() + "' and " + MainDBConstants.pasive + " ='0' ",
                         MuestrasDBConstants.tipoMuestra);

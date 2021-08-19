@@ -1222,8 +1222,11 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if (mVisitasCasos.size()>0) {
                 VisitaVacunaUO1 ultimaVisita = mVisitasCasos.get(0);
                 if (DateUtil.getDateDiff(ultimaVisita.getFechaVisita(), new Date(), TimeUnit.DAYS) < 30){
-                    datosUO1.setVacunado(true);
+                    datosUO1.setVacunado(ultimaVisita.getVacuna().equalsIgnoreCase(Constants.YESKEYSND));
                     datosUO1.setFechaVacuna(ultimaVisita.getFechaVacuna());
+                    datosUO1.setMxTomada(ultimaVisita.getTomaMxAntes().equalsIgnoreCase(Constants.YESKEYSND));
+                    datosUO1.setRazonNoMx(ultimaVisita.getRazonNoTomaMx());
+                    datosUO1.setVisitaExitosa(ultimaVisita.getVisitaExitosa().equalsIgnoreCase(Constants.YESKEYSND));
                 }
             }
             mParticipante.setDatosUO1(datosUO1);
@@ -1278,9 +1281,17 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isConvalesciente() && mParticipante.getDatosUO1().getDiasConvalesciente() < 30){
                 labelHeader = labelHeader + "<small><font color='red'>Convaleciente UO1 con menos de 30 días. No tomar muestra</font></small><br />";
             }
-            if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isVacunado() && mParticipante.getDatosUO1().getDiasVacuna() < 30){
-                labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font></small><br />";
+            if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isVisitaExitosa() && mParticipante.getDatosUO1().getDiasVacuna() < 30){
+                if (mParticipante.getDatosUO1().isVacunado()) {
+                    if (mParticipante.getDatosUO1().isMxTomada())
+                        labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font></small><br />";
+                    else
+                        labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 menor 30 días sin muestra: "+mParticipante.getDatosUO1().getRazonNoMx()+"</font></small><br />";
+                } else {
+                    labelHeader = labelHeader + "<small><font color='red'>Visita Vac UO1 menor 30 días sin muestra: "+mParticipante.getDatosUO1().getRazonNoMx()+"</font></small><br />";
+                }
             }
+
             if (mParticipante.getProcesos().getPosCovid()!=null) labelHeader = labelHeader + "<small><font color='red'>"+mParticipante.getProcesos().getPosCovid()+"</font></small><br />";
             if (mParticipante.getDatosCovid19()!=null &&  mParticipante.getDatosCovid19().isSeguimiento()){
                 labelHeader = labelHeader + "<small><font color='red'>"+mParticipante.getDatosCovid19().getMensajeSeguimiento()+"</font></small><br />";

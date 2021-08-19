@@ -23,7 +23,7 @@ public class ObsequioGeneral extends BaseMetaData implements Serializable {
     private String casaChf;
     private String seguimiento;
     private String numVisitaSeguimiento;
-    private String motivo;//1 Pediatrica, 2 Familia, 3 Seguimiento_inicial, 4 Seguimiento_final
+    private String motivo;//1 Seguimiento transmision de influenza, 2 Final transmision de influenza, 3 MA(Familia), 4 Seguimiento sars-cov2, 5 Final sars-cov2
 	private Integer obsequioSN;
 	private String personaRecibe;
 	private Integer relacionFam;

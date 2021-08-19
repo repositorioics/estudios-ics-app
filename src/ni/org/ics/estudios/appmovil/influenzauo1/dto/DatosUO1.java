@@ -8,7 +8,11 @@ public class DatosUO1 implements Serializable {
     private static final long serialVersionUID = 1L;
     private boolean convalesciente;
     private Date fechaInicioCaso;
-    private boolean vacunado;
+    private boolean vacunado; //se aplico vacuna
+    private boolean mxTomada;//se tomo mx antes de la vacuna
+    private String razonNoMx; //porque no tomo la muestra antes de la vacuna
+    private boolean visitaExitosa; //visita exitosa vacuna
+    //private Date fechaVisita;
     private Date fechaVacuna;
 
     public boolean isConvalesciente() {
@@ -43,6 +47,30 @@ public class DatosUO1 implements Serializable {
         this.fechaVacuna = fechaVacuna;
     }
 
+    public boolean isMxTomada() {
+        return mxTomada;
+    }
+
+    public void setMxTomada(boolean mxTomada) {
+        this.mxTomada = mxTomada;
+    }
+
+    public String getRazonNoMx() {
+        return razonNoMx;
+    }
+
+    public void setRazonNoMx(String razonNoMx) {
+        this.razonNoMx = razonNoMx;
+    }
+
+    public boolean isVisitaExitosa() {
+        return visitaExitosa;
+    }
+
+    public void setVisitaExitosa(boolean visitaExitosa) {
+        this.visitaExitosa = visitaExitosa;
+    }
+
     public long getDiasConvalesciente(){
         TimeUnit timeUnit = TimeUnit.DAYS;
         if (this.fechaInicioCaso!=null){
@@ -60,4 +88,6 @@ public class DatosUO1 implements Serializable {
         }else
             return 0;
     }
+
+
 }

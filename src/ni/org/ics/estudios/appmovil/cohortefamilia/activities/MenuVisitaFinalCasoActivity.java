@@ -173,7 +173,7 @@ public class MenuVisitaFinalCasoActivity extends AbstractAsyncActivity {
             try {
                 estudiosAdapter.open();
                 obsequioGeneral = estudiosAdapter.getObsequioGeneral(MainDBConstants.seguimiento +" = '"+visitaFinalCaso.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso() +
-                        "' and "+MainDBConstants.numVisitaSeguimiento+" = 'F' and " + MainDBConstants.obsequioSN + " = 1", null);
+                        "' and "+MainDBConstants.numVisitaSeguimiento+" = 'F' and " + MainDBConstants.obsequioSN + " = 1 and "+MainDBConstants.motivo + " = '2'", null);
                 estudiosAdapter.close();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);

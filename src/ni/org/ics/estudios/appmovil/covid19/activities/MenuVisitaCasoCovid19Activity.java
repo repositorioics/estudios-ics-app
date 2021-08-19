@@ -20,6 +20,7 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObsequioActivity;
 import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoDAislamientoVisitaCasoCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.list.ListaMuestrasParticipanteCasoCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.list.ListaSintomasVisitaCasoCovid19Activity;
@@ -106,6 +107,21 @@ public class MenuVisitaCasoCovid19Activity extends AbstractAsyncActivity {
                             finish();
                         }
                         break;
+                    case 3:
+                        if (obsequioGeneral == null) {
+                            arguments.putSerializable(Constants.VISITA, visitaCaso);
+                            i = new Intent(getApplicationContext(),
+                                    NuevoObsequioActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            i.putExtra(Constants.T_COVID19, true);
+                            startActivity(i);
+                            finish();
+                        } else {
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                            Toast.makeText(getApplicationContext(), "Obsequio entregado a " + obsequioGeneral.getPersonaRecibe() + " - " + formatter.format(obsequioGeneral.getRecordDate()), Toast.LENGTH_LONG).show();
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -189,7 +205,7 @@ public class MenuVisitaCasoCovid19Activity extends AbstractAsyncActivity {
             try {
                 estudiosAdapter.open();
                 obsequioGeneral = estudiosAdapter.getObsequioGeneral(MainDBConstants.seguimiento +" = '"+visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso()+
-                        "' and "+MainDBConstants.numVisitaSeguimiento+" != 'F' and "+MainDBConstants.obsequioSN+" = 1", null);
+                        "' and "+MainDBConstants.numVisitaSeguimiento+" != 'F' and "+MainDBConstants.obsequioSN+" = 1 and "+MainDBConstants.motivo + " = '4'", null);
                 /*mMuestras = estudiosAdapter.getMuestrasSuperficie(
                         MuestrasDBConstants.caso + " = '" + visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCodigoCaso() + "' and " + MainDBConstants.pasive + " ='0' ",
                         MuestrasDBConstants.tipoMuestra);*/
@@ -212,7 +228,8 @@ public class MenuVisitaCasoCovid19Activity extends AbstractAsyncActivity {
             textView.setText(getString(R.string.main_4)+ "\n" + visitaCaso.getCodigoParticipanteCaso().getParticipante().getNombreCompleto()
             		+ "\n" + getString(R.string.visit) +": " + visitaCaso.getVisita() +" - "+ formatter.format(visitaCaso.getFechaVisita()));
 
-            gridView.setAdapter(new MenuVisitaCasoCovid19Adapter(getApplicationContext(), R.layout.menu_item_2, menu_visita, mDatosAislamiento.size()>0));
+            gridView.setAdapter(new MenuVisitaCasoCovid19Adapter(getApplicationContext(), R.layout.menu_item_2, menu_visita, mDatosAislamiento.size()>0,
+                    obsequioGeneral != null, visitaCaso.getCodigoParticipanteCaso().getCodigoCaso().getCasa() != null));
             dismissProgressDialog();
         }
     }

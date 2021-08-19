@@ -107,7 +107,7 @@ public class NuevaVisitaSeguimientoCovid19Fragment extends Fragment {
         mParticipanteCaso = (ParticipanteCasoCovid19) getActivity().getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         primerSintomaIngresado = this.getActivity().getIntent().getBooleanExtra(Constants.PRIMER_SINTOMA, false);
         calLimiteFecVisita.setTime(mParticipanteCaso.getCodigoCaso().getFechaIngreso());
-        calLimiteFecVisita.add(Calendar.DATE,30);//12 dias después de la fecha de ingreso
+        calLimiteFecVisita.add(Calendar.DATE,30);//30 dias después de la fecha de ingreso
         infoMovil = new DeviceInfo(getActivity());
         settings =
 				PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -457,8 +457,8 @@ public class NuevaVisitaSeguimientoCovid19Fragment extends Fragment {
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_fecha_visita),Toast.LENGTH_LONG).show();
         	return false;
         }
-        else if (dVis.after(calLimiteFecVisita.getTime())){//si la fecha de visita es posterior a los 12 dias después de la fecha de inicio no permitir registro
-            Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_fecha_visita2),Toast.LENGTH_LONG).show();
+        else if (dVis.after(calLimiteFecVisita.getTime())){//si la fecha de visita es posterior a los 30 dias después de la fecha de inicio no permitir registro
+            Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_fecha_visita_covid),Toast.LENGTH_LONG).show();
             return false;
         }
         else{

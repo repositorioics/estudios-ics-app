@@ -16,11 +16,15 @@ public class MenuVisitaCasoCovid19Adapter extends ArrayAdapter<String> {
 
 	private final String[] values;
     private final boolean aislamiento;
+	private final boolean obsequio;
+	private final boolean mostrarObsequio;
 	public MenuVisitaCasoCovid19Adapter(Context context, int textViewResourceId,
-                                        String[] values, boolean aislamiento) {
+                                        String[] values, boolean aislamiento, boolean obsequio, boolean mostrarObsequio) {
 		super(context, textViewResourceId, values);
 		this.values = values;
         this.aislamiento = aislamiento;
+		this.obsequio = obsequio;
+		this.mostrarObsequio = mostrarObsequio;
 	}
 
 	@Override
@@ -53,6 +57,17 @@ public class MenuVisitaCasoCovid19Adapter extends ArrayAdapter<String> {
                 if (aislamiento) textView.setTextColor(Color.BLACK);
                 else textView.setTextColor(Color.RED);
                 break;
+			case 3:
+				if (mostrarObsequio) {
+					img = getContext().getResources().getDrawable(R.drawable.ic_gift_o);
+					textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+					if (!obsequio) {
+						textView.setTextColor(Color.RED);
+					}
+				} else {
+					textView.setVisibility(View.GONE);
+				}
+				break;
 			default:
 				img=getContext().getResources().getDrawable(R.drawable.ic_menu_help);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);

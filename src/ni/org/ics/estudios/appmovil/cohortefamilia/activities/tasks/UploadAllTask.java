@@ -2136,7 +2136,7 @@ public class UploadAllTask extends UploadTask {
     }
 
     /***************************************************/
-    /*************** ObsequioGeneral ************/
+    /*************** MuestrasSuperficie ************/
     /***************************************************/
     // url, username, password
     protected String cargarMuestrasSuperficie(String url, String username,

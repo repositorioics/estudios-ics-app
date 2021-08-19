@@ -283,8 +283,11 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 							if (mVisitasCasos.size()>0) {
 								VisitaVacunaUO1 ultimaVisita = mVisitasCasos.get(0);
 								if (DateUtil.getDateDiff(ultimaVisita.getFechaVisita(), new Date(), TimeUnit.DAYS) < 30){
-									datosUO1.setVacunado(true);
+									datosUO1.setVacunado(ultimaVisita.getVacuna().equalsIgnoreCase(Constants.YESKEYSND));
 									datosUO1.setFechaVacuna(ultimaVisita.getFechaVacuna());
+									datosUO1.setMxTomada(ultimaVisita.getTomaMxAntes().equalsIgnoreCase(Constants.YESKEYSND));
+									datosUO1.setRazonNoMx(ultimaVisita.getRazonNoTomaMx());
+									datosUO1.setVisitaExitosa(ultimaVisita.getVisitaExitosa().equalsIgnoreCase(Constants.YESKEYSND));
 								}
 							}
 							mParticipante.setDatosUO1(datosUO1);
@@ -533,8 +536,11 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 						if (mVisitasCasos.size()>0) {
 							VisitaVacunaUO1 ultimaVisita = mVisitasCasos.get(0);
 							if (DateUtil.getDateDiff(ultimaVisita.getFechaVisita(), new Date(), TimeUnit.DAYS) < 30){
-								datosUO1.setVacunado(true);
+								datosUO1.setVacunado(ultimaVisita.getVacuna().equalsIgnoreCase(Constants.YESKEYSND));
 								datosUO1.setFechaVacuna(ultimaVisita.getFechaVacuna());
+								datosUO1.setMxTomada(ultimaVisita.getTomaMxAntes().equalsIgnoreCase(Constants.YESKEYSND));
+								datosUO1.setRazonNoMx(ultimaVisita.getRazonNoTomaMx());
+								datosUO1.setVisitaExitosa(ultimaVisita.getVisitaExitosa().equalsIgnoreCase(Constants.YESKEYSND));
 							}
 
 						}

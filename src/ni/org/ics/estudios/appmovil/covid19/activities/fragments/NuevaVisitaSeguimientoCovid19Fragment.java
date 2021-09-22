@@ -107,7 +107,7 @@ public class NuevaVisitaSeguimientoCovid19Fragment extends Fragment {
         mParticipanteCaso = (ParticipanteCasoCovid19) getActivity().getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         primerSintomaIngresado = this.getActivity().getIntent().getBooleanExtra(Constants.PRIMER_SINTOMA, false);
         calLimiteFecVisita.setTime(mParticipanteCaso.getCodigoCaso().getFechaIngreso());
-        calLimiteFecVisita.add(Calendar.DATE,30);//30 dias después de la fecha de ingreso
+        calLimiteFecVisita.add(Calendar.DATE,33);//30 dias después de la fecha de ingreso. Se modifica a 33 13/09/2021. Brenda
         infoMovil = new DeviceInfo(getActivity());
         settings =
 				PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -457,7 +457,7 @@ public class NuevaVisitaSeguimientoCovid19Fragment extends Fragment {
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_fecha_visita),Toast.LENGTH_LONG).show();
         	return false;
         }
-        else if (dVis.after(calLimiteFecVisita.getTime())){//si la fecha de visita es posterior a los 30 dias después de la fecha de inicio no permitir registro
+        else if (dVis.after(calLimiteFecVisita.getTime())){//si la fecha de visita es posterior a los 33 dias después de la fecha de inicio no permitir registro.. Se modifica a 33 dias 13/09/2021 Brenda
             Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_fecha_visita_covid),Toast.LENGTH_LONG).show();
             return false;
         }

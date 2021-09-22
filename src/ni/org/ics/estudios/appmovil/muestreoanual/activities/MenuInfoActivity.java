@@ -43,6 +43,7 @@ import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
+import ni.org.ics.estudios.appmovil.domain.covid19.CasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaVacunaUO1;
@@ -1232,15 +1233,28 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             mParticipante.setDatosUO1(datosUO1);
         }
         //procesos Covid19
-        if (mParticipante.getProcesos().getSubEstudios().contains("2")) {
-            ParticipanteCasoCovid19 casoUO1 = estudiosAdapter.getParticipanteCasoCovid19(Covid19DBConstants.participante + "=" + mParticipante.getCodigo(), null);
+        //if (mParticipante.getProcesos().getSubEstudios().contains("2")) {
+            ParticipanteCasoCovid19 pCasoCovid19 = estudiosAdapter.getParticipanteCasoCovid19(Covid19DBConstants.participante + "=" + mParticipante.getCodigo(), null);
             DatosCovid19 datosCovid19 = new DatosCovid19();
-            if (casoUO1 != null) {
+            if (pCasoCovid19 != null) {
                 datosCovid19.setSeguimiento(true);
-                datosCovid19.setMensajeSeguimiento((mParticipante.getProcesos().getEstudio().contains(Constants.T_COVID19)?getString(R.string.enTransmisionCovid19):getString(R.string.enSeguimientoCovid19)));
+                //2 es consentimiento pendiente
+                if (!pCasoCovid19.getConsentimiento().equalsIgnoreCase("2")) {
+                    datosCovid19.setMensajeSeguimiento((mParticipante.getProcesos().getEstudio().contains(Constants.T_COVID19) ? getString(R.string.enTransmisionCovid19) : getString(R.string.enSeguimientoCovid19)));
+                } else {
+                    datosCovid19.setMensajeSeguimiento(getString(R.string.noEnroladoTransmisionCovid19));
+                }
+            } else {
+                CasoCovid19 casoCovid19 = null;
+                if (mParticipante.getProcesos().getCasaCHF()!=null && !mParticipante.getProcesos().getCasaCHF().isEmpty())
+                    casoCovid19 = estudiosAdapter.getCasoCovid19(Covid19DBConstants.casa + "='" + mParticipante.getProcesos().getCasaCHF() + "' and " + Covid19DBConstants.inactivo + "='0'", null);
+                if (casoCovid19 != null) { // la casa esta en seguimiento covid19, pero el participante no esta enrolado
+                    datosCovid19.setSeguimiento(true);
+                    datosCovid19.setMensajeSeguimiento(getString(R.string.noEnroladoTransmisionCovid19));
+                }
             }
             mParticipante.setDatosCovid19(datosCovid19);
-        }
+        //}
         estudiosAdapter.close();
     }
 

@@ -258,67 +258,139 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 		return volumenTotal;
 	}
 
+	/****
+	 * Metodo para mostrar en pantalla la sugerencia de cuanto volumen es el requerido segun la edad y el estudio
+	 *
+	 ************************** UO1 **************************
+	 * 		INICIAL				|		FINAL
+	 * Menores de 6 meses 		|  Menores de 6 meses
+	 * 		2 ml Pbmc			| 		2 ml Pbmc
+	 *
+	 * 6 meses –menor de 2 años	| 6 meses - menor de 2 años
+	 * 		2 ml Pbmc			|		2 ml Pbmc
+	 * 		2 ml rojo			|		2 ml rojo
+	 *
+	 * Mayores de 2 años. 		|  Mayores de 2 años.
+	 *  	6 ml Pbmc	 		|		6 ml Pbmc
+	 *  	2 ml rojo	 		|		2 ml rojo
+	 *
+	 ******** COHORTE  - FAMILA (TRASMISIÓN COVID ) ***********
+	 * 		INICIAL							|		FINAL
+	 * Menor de 6 meses 	  				|	Menor de 6 meses
+	 * 		2ml rojo						|		2ml rojo
+	 *
+	 * Mayor de 6 meses y menor de 3 años.	|  Mayor de 6 meses y menor  de 3 años.
+	 * 		1 ml Rojo						|		1 ml Rojo
+	 * 		3 ml PBMC						|		3 ml PBMC
+	 *
+	 * 3 años - 14 años.					| 3 años - 14 años.
+	 * 		1 ml BHC
+	 * 		2 ml Rojo						|		2 ml Rojo
+	 * 		6 ml Pbmc						|		6 ml Pbmc
+	 * 15 años a mas (Adultos)				|  15 años a mas (Adultos)
+	 * 		1 ml BHC
+	 * 		6 ml Rojo						|		6 ml Rojo
+	 * 		6 ml Pbmc						|		6 ml Pbmc
+	 *
+	 *  @param opcion tipo de tubo
+	 */
 	private void createDialogMuestras(final String opcion) {
 		String labelMuestra = "";
 		String labelVolumenPermitido = "";
 		int edadMeses = participanteCasoCovid19.getParticipante().getEdadMeses();
-		/*Volumen de muestra para ROJO Covid19 (INFLUENZA(CEIRS)/ U01 / Tranmisión Covid)
-		 * < de 6 meses  |	6 m - < 2 años	|  >=2 a - <= 14 años	|	>  14 años
-		 *		2 ml	 |		4 ml		|		8 ml			|		12 ml
-		 *  Con PBMC
-		 * No se toma	 |		2 ml		|		2 ml			|  6 ml
-		 * */
-		if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_ROJO) && !participanteCasoCovid19.getParticipante().getEdad().equalsIgnoreCase("ND")) {
-			//+14 años
-			if (edadMeses>168) {
-				labelMuestra = getString(R.string.rojo_covid19_mas14);
-				labelVolumenPermitido = getString(R.string.rojo_covid19_mas14_perm);
-				volumenTotalPermitido = 13D;//permitir 1 ml de desviación
-			} else if (edadMeses<=168 && edadMeses >= 24) { //14 a 2 años
-				labelMuestra = getString(R.string.rojo_covid19_14a2);
-				labelVolumenPermitido = getString(R.string.rojo_covid19_14a2_perm);
-				volumenTotalPermitido = 9D;//permitir 1 ml de desviación
-			} else if (edadMeses >= 6) { //>= 6 meses y < de 2 años
-				labelMuestra = getString(R.string.rojo_covid19_2a6m);
-				labelVolumenPermitido = getString(R.string.rojo_covid19_2a6m_perm);
-				volumenTotalPermitido = 3D;//permitir 1 ml de desviación
-			} else { //< de 6 meses
-				labelMuestra = getString(R.string.rojo_covid19_6m);
-				labelVolumenPermitido = getString(R.string.rojo_covid19_6m_perm);
-				volumenTotalPermitido = 3D;//permitir 1 ml de desviación
+		if (!participanteCasoCovid19.getParticipante().getEdad().equalsIgnoreCase("ND")){
+			//UO1
+			if (!participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19)){
+				if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_ROJO)) {
+					//Mayores de 2 años
+					if (edadMeses >= 24) {
+						labelMuestra = getString(R.string.rojo_covid19_mas2_uo1);
+						labelVolumenPermitido = getString(R.string.rojo_covid19_mas2_uo1);
+						volumenTotalPermitido = 3D;//permitir 1 ml de desviación
+					} //6 meses –menor de 2 años
+					else if (edadMeses>= 6) {
+						labelMuestra = getString(R.string.rojo_covid19_2a6m_uo1);
+						labelVolumenPermitido = getString(R.string.rojo_covid19_2a6m_perm_uo1);
+						volumenTotalPermitido = 3D;//permitir 1 ml de desviación
+					} else {
+						labelMuestra = getString(R.string.rojo_covid19_6m_uo1);
+						volumenTotalPermitido = 0D;
+					}
+				} else if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_PBMC)) {
+					//Mayores de 2 años
+					if (edadMeses >= 24) {
+						labelMuestra = getString(R.string.pbmc_covid19_mas2_uo1);
+						labelVolumenPermitido = getString(R.string.pbmc_covid19_mas2_uo1);
+						volumenTotalPermitido = 7D;//permitir 1 ml de desviación
+					} //6 meses –menor de 2 años
+					else if (edadMeses>= 6) {
+						labelMuestra = getString(R.string.pbmc_covid19_2a6m_uo1);
+						labelVolumenPermitido = getString(R.string.pbmc_covid19_2a6m_perm_uo1);
+						volumenTotalPermitido = 3D;//permitir 1 ml de desviación
+					} else {
+						labelMuestra = getString(R.string.pbmc_covid19_6m_uo1);
+						labelVolumenPermitido = getString(R.string.pbmc_covid19_6m_perm_uo1);
+						volumenTotalPermitido = 3D;
+					}
+				}
+			}  //COHORTE  - FAMILA (TRASMISIÓN COVID )
+			else {
+				if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_ROJO)) {
+					//DE 15 AÑOS A MAS
+					if (edadMeses>=180) {
+						labelMuestra = getString(R.string.rojo_covid19_mas15_chf);
+						labelVolumenPermitido = getString(R.string.rojo_covid19_mas15_perm_chf);
+						volumenTotalPermitido = 7D;//permitir 1 ml de desviación
+					} else if (edadMeses >= 36) { //MAYOR DE 3 AÑOS A 14 AÑOS
+						labelMuestra = getString(R.string.rojo_covid19_14a3a_chf);
+						labelVolumenPermitido = getString(R.string.rojo_covid19_14a3a_perm_chf);
+						volumenTotalPermitido = 3D;//permitir 1 ml de desviación
+					} else if (edadMeses >= 6) { //MAYOR DE 6 MESES Y MENOR DE 3 AÑOS
+						labelMuestra = getString(R.string.rojo_covid19_3a6m_chf);
+						labelVolumenPermitido = getString(R.string.rojo_covid19_3a6m_perm_chf);
+						volumenTotalPermitido = 2D;//permitir 1 ml de desviación
+					} else { //menor de 6 meses
+						labelMuestra = getString(R.string.rojo_covid19_6m_chf);
+						labelVolumenPermitido = getString(R.string.rojo_covid19_6m_perm_chf);
+						volumenTotalPermitido = 3D;//permitir 1 ml de desviación
+					}
+				} else if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_PBMC)) {
+					//DE 15 AÑOS A MAS
+					if (edadMeses>=180) {
+						labelMuestra = getString(R.string.pbmc_covid19_mas15_chf);
+						labelVolumenPermitido = getString(R.string.pbmc_covid19_mas15_perm_chf);
+						volumenTotalPermitido = 7D;//permitir 1 ml de desviación
+					}else if (edadMeses >= 36) {//MAYOR DE 3 AÑOS A 14 AÑOS
+						labelMuestra = getString(R.string.pbmc_covid19_14a3a_chf);
+						labelVolumenPermitido = getString(R.string.pbmc_covid19_14a3a_perm_chf);
+						volumenTotalPermitido = 7D;//permitir 1 ml de desviación
+					} else if (edadMeses >= 6) { //MAYOR DE 6 MESES Y MENOR DE 3 AÑOS
+						labelMuestra = getString(R.string.pbmc_covid19_3a6m_chf);
+						labelVolumenPermitido = getString(R.string.pbmc_covid19_3a6m_perm_chf);
+						volumenTotalPermitido = 4D;//permitir 1 ml de desviación
+					} else { //< de 6 meses
+						labelMuestra = getString(R.string.pbmc_covid19_6m_chf);
+						labelVolumenPermitido = getString(R.string.pbmc_covid19_6m_perm_chf);
+						volumenTotalPermitido = 0D;//permitir 1 ml de desviación
+					}
+
+				} else if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_BHC)){
+					//DE 15 AÑOS A MAS
+					if (edadMeses>=180) {
+						labelMuestra = getString(R.string.bhc_covid19_mas15_chf);
+						labelVolumenPermitido = getString(R.string.bhc_covid19_mas15_perm_chf);
+						volumenTotalPermitido = 7D;//permitir 1 ml de desviación
+					}else if (edadMeses >= 36) {//MAYOR DE 3 AÑOS A 14 AÑOS
+						labelMuestra = getString(R.string.bhc_covid19_3a14a_chf);
+						labelVolumenPermitido = getString(R.string.bhc_covid19_3a14a_chf);
+						volumenTotalPermitido = 2D;//permitir 1 ml de desviación
+					} else {
+						labelMuestra = getString(R.string.bhc_covid19_menos3a_chf);
+						volumenTotalPermitido = 0D;//permitir 1 ml de desviación
+					}
+
+				}
 			}
-
-		}
-		/*Volumen de muestra para PBMC Covid19 (INFLUENZA(CEIRS)/ U01 / Tranmisión Covid)
-		 * < de 6 meses  |	6 m - < 2 años	|  >=2 a - <= 14 años |	>  14 años
-		 *		2 ml	 |   	2 ml	 	|  		 6 ml		  |		6 ml
-		 * */
-		if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_PBMC) && !participanteCasoCovid19.getParticipante().getEdad().equalsIgnoreCase("ND")) {
-			//+14 años
-			if (edadMeses>168) {
-				labelMuestra = getString(R.string.pbmc_covid19_mas14);
-				labelVolumenPermitido = getString(R.string.pbmc_covid19_mas14_perm);
-				volumenTotalPermitido = 7D;//permitir 1 ml de desviación
-			}else if (edadMeses<=168 && edadMeses >= 24) {//14 a 2 años
-				labelMuestra = getString(R.string.pbmc_covid19_14a2);
-				labelVolumenPermitido = getString(R.string.pbmc_covid19_14a2_perm);
-				volumenTotalPermitido = 7D;//permitir 1 ml de desviación
-			} else if (edadMeses >= 6) { //>= 6 meses y < de 2 años
-				labelMuestra = getString(R.string.pbmc_covid19_2a6m);
-				labelVolumenPermitido = getString(R.string.pbmc_covid19_2a6m_perm);
-				volumenTotalPermitido = 3D;//permitir 1 ml de desviación
-			} else { //< de 6 meses
-				labelMuestra = getString(R.string.pbmc_covid19_6m);
-				labelVolumenPermitido = getString(R.string.pbmc_covid19_6m_perm);
-				volumenTotalPermitido = 3D;//permitir 1 ml de desviación
-			}
-
-		}
-
-		if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_BHC)){
-			labelMuestra = getString(R.string.bhc_covid19);
-			labelVolumenPermitido = getString(R.string.bhc_covid19_perm);
-			volumenTotalPermitido = 2D;//permitir 1 ml de desviación
 		}
 
 		Double volumenExistente = getVolumenExistente(opcion);

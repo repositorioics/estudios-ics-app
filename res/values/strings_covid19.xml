@@ -44,10 +44,11 @@
 
     <!--nuevos volumenes covid - UO1 28/09/2021-->
     <string name="rojo_covid19_2a6m_uo1">6 meses y menos de 2 años: Rojo: 2 ml es el volumen requerido</string>
-    <string name="rojo_covid19_2a6m_perm_uo1">6 meses y menos de 2 años: Rojo: 2 ml es el volumen máximo permitido</string>
+    <string name="rojo_covid19_2a6m_perm_uo1">6 meses y menos de 2 años: Rojo: 4 ml es el volumen máximo permitido</string>
     <string name="rojo_covid19_mas2_uo1">Mayores de 2 años. Rojo: 2 ml es el volumen requerido</string>
-    <string name="rojo_covid19_mas2_perm_uo1">Mayores de 2 años. Rojo: 2 ml es el volumen máximo permitido</string>
+    <string name="rojo_covid19_mas2_perm_uo1">Mayores de 2 años. Rojo: 8 ml es el volumen máximo permitido</string>
     <string name="rojo_covid19_6m_uo1">Menor de 6 meses: Rojo: no tomar muestra</string>
+    <string name="rojo_covid19_6m_perm_uo1">Menor de 6 meses: Rojo: 2 ml es el volumen máximo permitido</string>
 
     <string name="pbmc_covid19_2a6m_uo1">6 meses y menos de 2 años: PBMC: 2 ml es el volumen requerido</string>
     <string name="pbmc_covid19_2a6m_perm_uo1">6 meses y menos de 2 años: PBMC: 2 ml es el volumen máximo permitido</string>
@@ -60,11 +61,11 @@
     <string name="rojo_covid19_6m_chf">Menor de 6 meses: Rojo: 2 ml es el volumen requerido</string>
     <string name="rojo_covid19_6m_perm_chf">Menor de 6 meses: Rojo: 2 ml volumen máximo permitido</string>
     <string name="rojo_covid19_3a6m_chf">6 meses y menor de 3 años: Rojo: 1 ml es el volumen requerido</string>
-    <string name="rojo_covid19_3a6m_perm_chf">6 meses y menor de 3 años: Rojo: 1 ml volumen máximo permitido</string>
+    <string name="rojo_covid19_3a6m_perm_chf">6 meses y menor de 3 años: Rojo: 4 ml volumen máximo permitido</string>
     <string name="rojo_covid19_14a3a_chf">Entre 3 y 14 años. Rojo: 2 ml es el volumen requerido</string>
-    <string name="rojo_covid19_14a3a_perm_chf">Entre 3 y 14 años. Rojo: 2 ml volumen máximo permitido</string>
+    <string name="rojo_covid19_14a3a_perm_chf">Entre 3 y 14 años. Rojo: 8 ml volumen máximo permitido</string>
     <string name="rojo_covid19_mas15_chf">Mayores de 15 años. Rojo: 6 ml es el volumen requerido</string>
-    <string name="rojo_covid19_mas15_perm_chf">Mayores de 15 años. Rojo: 6 ml volumen máximo permitido</string>
+    <string name="rojo_covid19_mas15_perm_chf">Mayores de 15 años. Rojo: 12 ml volumen máximo permitido</string>
 
     <string name="pbmc_covid19_6m_chf">Menor de 6 meses: PBMC: No tomar muestra</string>
     <string name="pbmc_covid19_6m_perm_chf">Menor de 6 meses: PBMC: No tomar muestra</string>

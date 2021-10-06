@@ -265,14 +265,17 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 	 * 		INICIAL				|		FINAL
 	 * Menores de 6 meses 		|  Menores de 6 meses
 	 * 		2 ml Pbmc			| 		2 ml Pbmc
+	 * NOTA: SINO SE TOMA PBMC SE TOMARÁ 2ML ROJO
 	 *
 	 * 6 meses –menor de 2 años	| 6 meses - menor de 2 años
 	 * 		2 ml Pbmc			|		2 ml Pbmc
 	 * 		2 ml rojo			|		2 ml rojo
+	 * NOTA: SINO SE TOMA PBMC SE TOMARÁ 4ML ROJO
 	 *
 	 * Mayores de 2 años. 		|  Mayores de 2 años.
 	 *  	6 ml Pbmc	 		|		6 ml Pbmc
 	 *  	2 ml rojo	 		|		2 ml rojo
+	 * NOTA: SINO SE TOMA PBMC SE TOMARÁ 8ML ROJO
 	 *
 	 ******** COHORTE  - FAMILA (TRASMISIÓN COVID ) ***********
 	 * 		INICIAL							|		FINAL
@@ -282,15 +285,19 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 	 * Mayor de 6 meses y menor de 3 años.	|  Mayor de 6 meses y menor  de 3 años.
 	 * 		1 ml Rojo						|		1 ml Rojo
 	 * 		3 ml PBMC						|		3 ml PBMC
+	 * NOTA: SINO SE TOMA PBMC SE TOMARÁ 4ML ROJO
 	 *
 	 * 3 años - 14 años.					| 3 años - 14 años.
 	 * 		1 ml BHC
 	 * 		2 ml Rojo						|		2 ml Rojo
 	 * 		6 ml Pbmc						|		6 ml Pbmc
+	 * NOTA: SINO SE TOMA PBMC SE TOMARÁ 8ML ROJO
+	 *
 	 * 15 años a mas (Adultos)				|  15 años a mas (Adultos)
 	 * 		1 ml BHC
 	 * 		6 ml Rojo						|		6 ml Rojo
 	 * 		6 ml Pbmc						|		6 ml Pbmc
+	 * NOTA: SINO SE TOMA PBMC SE TOMARÁ 12ML ROJO
 	 *
 	 *  @param opcion tipo de tubo
 	 */
@@ -305,16 +312,17 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 					//Mayores de 2 años
 					if (edadMeses >= 24) {
 						labelMuestra = getString(R.string.rojo_covid19_mas2_uo1);
-						labelVolumenPermitido = getString(R.string.rojo_covid19_mas2_uo1);
-						volumenTotalPermitido = 3D;//permitir 1 ml de desviación
+						labelVolumenPermitido = getString(R.string.rojo_covid19_mas2_perm_uo1);
+						volumenTotalPermitido = 9D;//permitir 1 ml de desviación
 					} //6 meses –menor de 2 años
 					else if (edadMeses>= 6) {
 						labelMuestra = getString(R.string.rojo_covid19_2a6m_uo1);
 						labelVolumenPermitido = getString(R.string.rojo_covid19_2a6m_perm_uo1);
-						volumenTotalPermitido = 3D;//permitir 1 ml de desviación
+						volumenTotalPermitido = 5D;//permitir 1 ml de desviación
 					} else {
 						labelMuestra = getString(R.string.rojo_covid19_6m_uo1);
-						volumenTotalPermitido = 0D;
+						labelVolumenPermitido = getString(R.string.rojo_covid19_6m_perm_uo1);
+						volumenTotalPermitido = 3D;
 					}
 				} else if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_PBMC)) {
 					//Mayores de 2 años
@@ -340,15 +348,15 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 					if (edadMeses>=180) {
 						labelMuestra = getString(R.string.rojo_covid19_mas15_chf);
 						labelVolumenPermitido = getString(R.string.rojo_covid19_mas15_perm_chf);
-						volumenTotalPermitido = 7D;//permitir 1 ml de desviación
+						volumenTotalPermitido = 13D;//permitir 1 ml de desviación
 					} else if (edadMeses >= 36) { //MAYOR DE 3 AÑOS A 14 AÑOS
 						labelMuestra = getString(R.string.rojo_covid19_14a3a_chf);
 						labelVolumenPermitido = getString(R.string.rojo_covid19_14a3a_perm_chf);
-						volumenTotalPermitido = 3D;//permitir 1 ml de desviación
+						volumenTotalPermitido = 9D;//permitir 1 ml de desviación
 					} else if (edadMeses >= 6) { //MAYOR DE 6 MESES Y MENOR DE 3 AÑOS
 						labelMuestra = getString(R.string.rojo_covid19_3a6m_chf);
 						labelVolumenPermitido = getString(R.string.rojo_covid19_3a6m_perm_chf);
-						volumenTotalPermitido = 2D;//permitir 1 ml de desviación
+						volumenTotalPermitido = 5D;//permitir 1 ml de desviación
 					} else { //menor de 6 meses
 						labelMuestra = getString(R.string.rojo_covid19_6m_chf);
 						labelVolumenPermitido = getString(R.string.rojo_covid19_6m_perm_chf);

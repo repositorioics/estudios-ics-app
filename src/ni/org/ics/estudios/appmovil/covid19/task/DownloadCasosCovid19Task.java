@@ -42,6 +42,7 @@ public class DownloadCasosCovid19Task extends DownloadTask {
     private List<ParticipanteProcesos> mParticipantesProc = null;
     private List<VisitaFinalCasoCovid19> mVisitasFinales = null;
     private List<SintomasVisitaFinalCovid19> mSintomasFinal = null;
+    private List<OtrosPositivosCovid> mOtrosPositivos = null;
 
 
     public static final String CASOS_COVID19 = "1";
@@ -55,8 +56,9 @@ public class DownloadCasosCovid19Task extends DownloadTask {
     public static final String PARTICIPANTE_PROC = "9";
     public static final String VISITAS_FINALES_COVID19 = "10";
     public static final String SINT_VISITAS_FINALES_COVID19 = "11";
+    public static final String OTROS_POSITIVOS = "12";
 
-    private static final String TOTAL_TASK_CASOS = "11";
+    private static final String TOTAL_TASK_CASOS = "12";
 
 	private String error = null;
 	private String url = null;
@@ -97,6 +99,7 @@ public class DownloadCasosCovid19Task extends DownloadTask {
             estudioAdapter.borrarDatosAislamientoVisitaCasoCovid19();
             estudioAdapter.borrarVisitaFinalCasoCovid19();
             estudioAdapter.borrarSintomasVisitaFinalCovid19();
+            estudioAdapter.borrarOtrosPositivosCovid();
             if (mCasos != null){
                 publishProgress("Insertando seguimientos COVID19 en la base de datos...",CASOS_COVID19 , TOTAL_TASK_CASOS);
                 estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.COVID_CASOS_TABLE, mCasos);
@@ -140,6 +143,10 @@ public class DownloadCasosCovid19Task extends DownloadTask {
             if (mSintomasFinal != null){
                 publishProgress("Insertando datos síntomas visitas finales COVID19 en la base de datos...", SINT_VISITAS_FINALES_COVID19, TOTAL_TASK_CASOS);
                 estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.COVID_SINT_VISITA_FINAL_CASO_TABLE, mSintomasFinal);
+            }
+            if (mOtrosPositivos != null){
+                publishProgress("Insertando datos otros positivos COVID19 en la base de datos...", OTROS_POSITIVOS, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.COVID_OTROS_POSITIVOS_TABLE, mOtrosPositivos);
             }
 
         } catch (Exception e) {
@@ -295,6 +302,18 @@ public class DownloadCasosCovid19Task extends DownloadTask {
 
             // convert the array to a list and return it
             mSintomasFinal = Arrays.asList(responseEntitySVF.getBody());
+
+            //Descargando otros positivos covid19 que no son indices
+            // The URL for making the GET request
+            urlRequest = url + "/movil/otrosPositivosCovid19";
+            publishProgress("Solicitando otros positivos COVID19",OTROS_POSITIVOS,TOTAL_TASK_CASOS);
+
+            // Perform the HTTP GET request
+            ResponseEntity<OtrosPositivosCovid[]> responseEntityOP = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    OtrosPositivosCovid[].class);
+
+            // convert the array to a list and return it
+            mOtrosPositivos = Arrays.asList(responseEntityOP.getBody());
 
 
             return null;

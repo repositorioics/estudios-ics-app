@@ -147,10 +147,12 @@ public class ListaParticipantesCasoCovid19Activity extends AbstractAsyncListActi
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
 		 participanteCasoCovid19 = (ParticipanteCasoCovid19) this.getListAdapter().getItem(position);
+		 //ya fue consentido
 		if (!participanteCasoCovid19.getConsentimiento().equalsIgnoreCase("2")) {
-			crearFomulario("VISITAS");
+			crearFomulario(VER_VISITAS);
 		}else{
-			if (participanteCasoCovid19.getEnfermo().equalsIgnoreCase("N")){//solo miembros de familia
+			if (participanteCasoCovid19.getEnfermo().equalsIgnoreCase("N") || //miembros
+					(participanteCasoCovid19.getEnfermo().equalsIgnoreCase("S") && participanteCasoCovid19.getCodigoCaso().getCasa() != null) ){ //otros positivos misma casa, pero no el indice
 				createDialog(3);
 			}else if (participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains("Influenza"))
 				createDialog(2);

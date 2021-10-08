@@ -124,6 +124,7 @@ public class ListaParticipantesPosCasoCovid19Activity extends AbstractAsyncListA
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
 		 participanteCasoCovid19 = (ParticipanteCasoCovid19) this.getListAdapter().getItem(position);
+		 //aca entran los que son uo1 o influenza,..
 		if (participanteCasoCovid19.getCodigoCaso().getCasa()==null) {
 			if (!participanteCasoCovid19.getConsentimiento().equalsIgnoreCase("2")) {
 				crearFomulario();
@@ -132,7 +133,7 @@ public class ListaParticipantesPosCasoCovid19Activity extends AbstractAsyncListA
 					createDialog(2);
 				else createDialog(1); //UO1
 			}
-		}else{
+		}else{ //los que son transmisión covid (familia)
 			Bundle arguments = new Bundle();
 			Intent i;
 			arguments.putSerializable(Constants.CASA , participanteCasoCovid19.getCodigoCaso());
@@ -266,7 +267,7 @@ public class ListaParticipantesPosCasoCovid19Activity extends AbstractAsyncListA
 				String subSelectCasas = "select "+ Covid19DBConstants.codigoCaso + " from "+ Covid19DBConstants.COVID_CASOS_TABLE + " where "+Covid19DBConstants.casa +" is not null";
 				String subSelectSinCasas = "select "+ Covid19DBConstants.codigoCaso + " from "+ Covid19DBConstants.COVID_CASOS_TABLE + " where "+Covid19DBConstants.casa +" is null";
 
-				participanteCasoCovid19List = estudiosAdapter.getParticipantesCasosCovid19(Covid19DBConstants.enfermo+"!='N' and "+ Covid19DBConstants.codigoCaso + " in ("+subSelectCasas+")", null);
+				participanteCasoCovid19List = estudiosAdapter.getParticipantesCasosCovid19(Covid19DBConstants.enfermo+" = 'I' and "+ Covid19DBConstants.codigoCaso + " in ("+subSelectCasas+")", null);
 				List<ParticipanteCasoCovid19> participanteCasoCovid19SinCasa = estudiosAdapter.getParticipantesCasosCovid19(Covid19DBConstants.enfermo+"!='N' and "+ Covid19DBConstants.codigoCaso + " in ("+subSelectSinCasas+")", null);
 
 				Collections.sort(participanteCasoCovid19List);

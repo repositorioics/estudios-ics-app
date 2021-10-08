@@ -143,6 +143,7 @@ public class Covid19DBConstants {
     public static final String codigo = "codigo";
     public static final String casaCHF = "casaCHF";
     public static final String estActuales = "estActuales";
+    public static final String indice = "indice";
 
     //Crear CandidatoTransmisionCovid19
     public static final String CREATE_COVID_CANDIDATO_TRANSMISION_TABLE = "create table if not exists "
@@ -156,6 +157,7 @@ public class Covid19DBConstants {
             + consentimiento + " text, "
             + estActuales + " text, "
             + fechaIngreso + " date, "
+            + indice + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "
@@ -809,12 +811,13 @@ public class Covid19DBConstants {
             + consentimiento + ","
             + estActuales + ","
             + fechaIngreso + ","
+            + indice + ","
             + MainDBConstants.recordDate + ","
             + MainDBConstants.recordUser + ","
             + MainDBConstants.pasive + ","
             + MainDBConstants.deviceId + ","
             + MainDBConstants.estado
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static final String INSERT_COVID_SINTOMAS_VISITA_CASO_TABLE = "insert into "
             + COVID_SINTOMAS_VISITA_CASO_TABLE + " ("
@@ -1139,4 +1142,47 @@ public class Covid19DBConstants {
             + MainDBConstants.deviceId + ","
             + MainDBConstants.estado
             + ") values (?,?,?,?,?,?)";
+
+    //Tabla OtrosPositivosCovid
+    public static final String COVID_OTROS_POSITIVOS_TABLE = "covid_otros_positivos";
+
+    //Campos OtrosPositivosCovid
+    public static final String codigoCandidato = "codigo_candidato";
+
+    //Crear OtrosPositivosCovid
+    public static final String CREATE_COVID_OTROS_POSITIVOS_TABLE = "create table if not exists "
+            + COVID_OTROS_POSITIVOS_TABLE + " ("
+            + codigo + " integer not null, "
+            + codigoCandidato + " text not null, "
+            + participante + " integer not null, "
+            + casaCHF + " text, "
+            + fis + " date, "
+            + fif + " date, "
+            + positivoPor + " text, "
+            + estActuales + " text, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + codigo + "));";
+
+    //Bulk OtrosPositivosCovid
+    public static final String INSERT_CCOVID_OTROS_POSITIVOS_TABLE = "insert into "
+            + COVID_OTROS_POSITIVOS_TABLE + " ("
+            + codigo + ","
+            + codigoCandidato + ","
+            + participante + ","
+            + casaCHF + ","
+            + fis + ","
+            + fif + ","
+            + positivoPor + ","
+            + estActuales + ","
+            + MainDBConstants.recordDate + ","
+            + MainDBConstants.recordUser + ","
+            + MainDBConstants.pasive + ","
+            + MainDBConstants.deviceId + ","
+            + MainDBConstants.estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
 }

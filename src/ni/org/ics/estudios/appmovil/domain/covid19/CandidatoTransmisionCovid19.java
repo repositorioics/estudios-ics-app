@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by Miguel Salinas on 01/06/2020.
  * V1.0
  */
-public class CandidatoTransmisionCovid19 extends BaseMetaData {
+public class CandidatoTransmisionCovid19 extends BaseMetaData implements Comparable<CandidatoTransmisionCovid19> {
 
     /**
 	 * 
@@ -24,6 +24,7 @@ public class CandidatoTransmisionCovid19 extends BaseMetaData {
 	private String consentimiento;
     private String estActuales;
 	private Date fechaIngreso;
+	private Character indice;
     
 	public String getCodigo() {
 		return codigo;
@@ -97,6 +98,14 @@ public class CandidatoTransmisionCovid19 extends BaseMetaData {
 		this.fechaIngreso = fechaIngreso;
 	}
 
+	public Character getIndice() {
+		return indice;
+	}
+
+	public void setIndice(Character indice) {
+		this.indice = indice;
+	}
+
 	@Override
 	public String toString(){
 		return participante.getCodigo().toString();
@@ -119,4 +128,9 @@ public class CandidatoTransmisionCovid19 extends BaseMetaData {
         result = 31 * result + participante.hashCode();
         return result;
     }
+
+	@Override
+	public int compareTo(CandidatoTransmisionCovid19 o) {
+		return Integer.compare(Integer.parseInt(this.casaCHF), Integer.parseInt(o.getCasaCHF()));
+	}
 }

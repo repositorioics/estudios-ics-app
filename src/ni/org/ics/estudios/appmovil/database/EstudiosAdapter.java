@@ -178,6 +178,7 @@ public class EstudiosAdapter {
 			db.execSQL(Covid19DBConstants.CREATE_COVID_SINT_VISITA_FINAL_CASO_TABLE);
 			//MA Adicional covid19 CHF
 			db.execSQL(Covid19DBConstants.CREATE_COVID_CUESTIONARIO_TABLE);
+			db.execSQL(Covid19DBConstants.CREATE_COVID_OTROS_POSITIVOS_TABLE);
 		}
 
 		@Override
@@ -394,6 +395,10 @@ public class EstudiosAdapter {
 			}
 			if (oldVersion==39) {
 				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.informacionRetiro + " text");
+			}
+			if (oldVersion==40) {
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CANDIDATO_TRANSMISION_TABLE + " ADD COLUMN " + Covid19DBConstants.indice + " text");
+				db.execSQL(Covid19DBConstants.CREATE_COVID_OTROS_POSITIVOS_TABLE);
 			}
 		}
 	}
@@ -7968,6 +7973,59 @@ public class EstudiosAdapter {
 		return mCuestionarioCovid19s;
 	}
 
+	//Crear nuevo OtrosPositivosCovid en la base de datos
+	public void crearOtrosPositivosCovid(OtrosPositivosCovid partcaso) throws Exception {
+		ContentValues cv = CandidatoTransmisionCovid19Helper.crearOtrosPositivosCovidContentValues(partcaso);
+		mDb.insertOrThrow(Covid19DBConstants.COVID_OTROS_POSITIVOS_TABLE, null, cv);
+	}
+
+	//Crear nuevo OtrosPositivosCovid en la base de datos desde otro equipo
+	public void insertarOtrosPositivosCovid(String participanteCohorteFamiliaCasoSQL) {
+		mDb.execSQL(participanteCohorteFamiliaCasoSQL);
+	}
+
+	//Editar OtrosPositivosCovid existente en la base de datos
+	public boolean editarOtrosPositivosCovid(OtrosPositivosCovid partcaso) throws Exception{
+		ContentValues cv = CandidatoTransmisionCovid19Helper.crearOtrosPositivosCovidContentValues(partcaso);
+		return mDb.update(Covid19DBConstants.COVID_OTROS_POSITIVOS_TABLE, cv, Covid19DBConstants.codigo + "='"
+				+ partcaso.getCodigo() + "'", null) > 0;
+	}
+	//Limpiar la tabla de OtrosPositivosCovid de la base de datos
+	public boolean borrarOtrosPositivosCovid() {
+		return mDb.delete(Covid19DBConstants.COVID_OTROS_POSITIVOS_TABLE, null, null) > 0;
+	}
+	//Obtener un OtrosPositivosCovid de la base de datos
+	public OtrosPositivosCovid getOtrosPositivosCovid(String filtro, String orden) throws SQLException {
+		OtrosPositivosCovid mOtrosPositivosCovid = null;
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_OTROS_POSITIVOS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mOtrosPositivosCovid = CandidatoTransmisionCovid19Helper.crearOtrosPositivosCovid(cursor);
+			CandidatoTransmisionCovid19 candidato = this.getCandidatoTransmisionCovid19(Covid19DBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(Covid19DBConstants.codigoCandidato)), null);
+			mOtrosPositivosCovid.setCandidatoTransmisionCovid19(candidato);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mOtrosPositivosCovid;
+	}
+	//Obtener una lista de OtrosPositivosCovid de la base de datos
+	public List<OtrosPositivosCovid> getOtrosPositivosCovidList(String filtro, String orden) throws SQLException {
+		List<OtrosPositivosCovid> mOtrosPositivosCovids = new ArrayList<OtrosPositivosCovid>();
+		Cursor cursor = crearCursor(Covid19DBConstants.COVID_OTROS_POSITIVOS_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mOtrosPositivosCovids.clear();
+			do{
+				OtrosPositivosCovid mOtrosPositivosCovid = null;
+				mOtrosPositivosCovid = CandidatoTransmisionCovid19Helper.crearOtrosPositivosCovid(cursor);
+				CandidatoTransmisionCovid19 candidato = this.getCandidatoTransmisionCovid19(Covid19DBConstants.codigo + "=" +cursor.getInt(cursor.getColumnIndex(Covid19DBConstants.codigoCandidato)), null);
+				mOtrosPositivosCovid.setCandidatoTransmisionCovid19(candidato);
+				mOtrosPositivosCovids.add(mOtrosPositivosCovid);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mOtrosPositivosCovids;
+	}
+
 	public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
@@ -8894,6 +8952,14 @@ public class EstudiosAdapter {
 					stat = mDb.compileStatement(Covid19DBConstants.INSERT_COVID_SINT_VISITA_FINAL_CASO_TABLE);
 					for (Object remoteAppInfo : list) {
 						SintomasVisitaFinalCovid19Helper.fillSintomasVisitaFinalCovid19Statement(stat, (SintomasVisitaFinalCovid19) remoteAppInfo);
+						long result = stat.executeInsert();
+						if (result < 0) return false;
+					}
+					break;
+				case Covid19DBConstants.COVID_OTROS_POSITIVOS_TABLE:
+					stat = mDb.compileStatement(Covid19DBConstants.INSERT_CCOVID_OTROS_POSITIVOS_TABLE);
+					for (Object remoteAppInfo : list) {
+						CandidatoTransmisionCovid19Helper.fillOtrosPositivosCovidStatement(stat, (OtrosPositivosCovid) remoteAppInfo);
 						long result = stat.executeInsert();
 						if (result < 0) return false;
 					}

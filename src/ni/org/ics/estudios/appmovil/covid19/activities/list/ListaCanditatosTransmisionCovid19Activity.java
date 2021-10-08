@@ -31,6 +31,7 @@ import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.Covid19DBConstants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListaCanditatosTransmisionCovid19Activity extends AbstractAsyncListActivity {
@@ -226,6 +227,7 @@ public class ListaCanditatosTransmisionCovid19Activity extends AbstractAsyncList
 				estudiosAdapter.open();
 				candidatoTransmisionCovid19s = estudiosAdapter.getCandidatosTransmisionCovid19(Covid19DBConstants.consentimiento+"='PENDIENTE'", null);
 				mPositivoPor = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='COVID_CAT_POSITIVO_POR'", null);
+				Collections.sort(candidatoTransmisionCovid19s);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

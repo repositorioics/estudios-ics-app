@@ -27,10 +27,7 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
-import ni.org.ics.estudios.appmovil.domain.covid19.CandidatoTransmisionCovid19;
-import ni.org.ics.estudios.appmovil.domain.covid19.CasoCovid19;
-import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
-import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCovid19;
+import ni.org.ics.estudios.appmovil.domain.covid19.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuInfoActivity;
@@ -1265,8 +1262,8 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                                 }
 
                                 List<ParticipanteCohorteFamilia> participantesCasaChf = estudiosAdapter.getParticipanteCohorteFamilias(MainDBConstants.casaCHF + "='" + candidato.getCasaCHF() + "'", null);
-                                ParticipanteCasoCovid19 indice = null;
-                                if (existeCaso) indice = estudiosAdapter.getParticipanteCasoCovid19(Covid19DBConstants.codigoCaso+ "='"+ casoCovid19.getCodigoCaso()+"' and " + Covid19DBConstants.enfermo + " = 'I'" , null);
+                                //ParticipanteCasoCovid19 indice = null;
+                                //if (existeCaso) indice = estudiosAdapter.getParticipanteCasoCovid19(Covid19DBConstants.codigoCaso+ "='"+ casoCovid19.getCodigoCaso()+"' and " + Covid19DBConstants.enfermo + " = 'I'" , null);
                                 for (ParticipanteCohorteFamilia partChf : participantesCasaChf) {
                                     //si es un segundo positivo en la casa, ya existe el caso entonces validar si ya existe el participante en el caso.
                                     ParticipanteCasoCovid19 partCasoCovid19 = estudiosAdapter.getParticipanteCasoCovid19(Covid19DBConstants.participante+" = "+partChf.getParticipante().getCodigo() + " and "+MainDBConstants.pasive + "='0'", null);
@@ -1291,12 +1288,22 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                                             partCasoCovid19.setPositivoPor(candidato.getPositivoPor());
                                             partCasoCovid19.setConsentimiento("1");
                                             participanteCasoCovid19 = partCasoCovid19;
-                                        } else {//es miembro
-                                            partCasoCovid19.setEnfermo("N");
-                                            partCasoCovid19.setFis(null);
-                                            partCasoCovid19.setFif(null);
-                                            partCasoCovid19.setPositivoPor(null);
-                                            partCasoCovid19.setConsentimiento("2");
+                                        } else {//es miembro o es positivo pero no indice. Se cambia segun nueva estructura propuesta por Brenda y Lizandro. Octubre 2021
+                                            OtrosPositivosCovid positivo = estudiosAdapter.getOtrosPositivosCovid(Covid19DBConstants.participante + "=" + partChf.getParticipante().getCodigo()
+                                                    + " and "+ Covid19DBConstants.codigoCandidato + "='"+ candidato.getCodigo() + "'", null);
+                                            if (positivo != null) {
+                                                partCasoCovid19.setEnfermo("S");
+                                                partCasoCovid19.setFis(positivo.getFis());
+                                                partCasoCovid19.setFif(positivo.getFif());
+                                                partCasoCovid19.setPositivoPor(positivo.getPositivoPor());
+                                                partCasoCovid19.setConsentimiento("2"); //pendiente
+                                            } else {
+                                                partCasoCovid19.setEnfermo("N");
+                                                partCasoCovid19.setFis(null);
+                                                partCasoCovid19.setFif(null);
+                                                partCasoCovid19.setPositivoPor(null);
+                                                partCasoCovid19.setConsentimiento("2");
+                                            }
                                         }
                                         //ya existe el caso y es positivo. Ya fue registrado como miembro, actualizar los datos de FIS, FIF, ENFERMO, POSITIVO POR
                                         if (existeCaso && esIndice) {

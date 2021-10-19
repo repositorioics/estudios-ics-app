@@ -131,6 +131,7 @@ public class Constants {
     public static final String MX_SUPERFICIE_2 = "2";
 
     public static final String NOM_EST_COHORTEDENGUE = "Dengue";
+    public static final String NOM_EST_UO1 = "UO1";
 
     public static final String SUB_ESTUDIO_NA = "0";
     public static final String SUB_ESTUDIO_ARBOVIRUS = "1";

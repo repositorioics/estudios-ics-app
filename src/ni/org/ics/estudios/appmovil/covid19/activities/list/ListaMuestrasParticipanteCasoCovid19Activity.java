@@ -307,7 +307,11 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 		int edadMeses = participanteCasoCovid19.getParticipante().getEdadMeses();
 		if (!participanteCasoCovid19.getParticipante().getEdad().equalsIgnoreCase("ND")){
 			//UO1
-			if (!participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19)){
+			//Cuando exista alguna combinación de UO1 para transmisión de covid debe mostrarse volumen uo1 porque tiene mayor prioridad
+			if ((!participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19))
+					|| ((participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.T_COVID19))
+					&& (participanteCasoCovid19.getParticipante().getProcesos().getEstudio().contains(Constants.NOM_EST_UO1)))
+			){
 				if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_ROJO)) {
 					//Mayores de 2 años
 					if (edadMeses >= 24) {
@@ -339,6 +343,20 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 						labelMuestra = getString(R.string.pbmc_covid19_6m_uo1);
 						labelVolumenPermitido = getString(R.string.pbmc_covid19_6m_perm_uo1);
 						volumenTotalPermitido = 3D;
+					}
+				} else if (opcion.equalsIgnoreCase(Constants.CODIGO_TUBO_BHC)){ //bhc solo para los que son U01 y Tcovid
+					//DE 15 AÑOS A MAS
+					if (edadMeses>=180) {
+						labelMuestra = getString(R.string.bhc_covid19_mas15_chf);
+						labelVolumenPermitido = getString(R.string.bhc_covid19_mas15_perm_chf);
+						volumenTotalPermitido = 7D;//permitir 1 ml de desviación
+					}else if (edadMeses >= 36) {//MAYOR DE 3 AÑOS A 14 AÑOS
+						labelMuestra = getString(R.string.bhc_covid19_3a14a_chf);
+						labelVolumenPermitido = getString(R.string.bhc_covid19_3a14a_chf);
+						volumenTotalPermitido = 2D;//permitir 1 ml de desviación
+					} else {
+						labelMuestra = getString(R.string.bhc_covid19_menos3a_chf);
+						volumenTotalPermitido = 0D;//permitir 1 ml de desviación
 					}
 				}
 			}  //COHORTE  - FAMILA (TRASMISIÓN COVID )

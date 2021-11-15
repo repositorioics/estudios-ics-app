@@ -442,6 +442,8 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".update.DescargarApkActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name=".covid19.activities.enterdata.NuevoCuestionarioCovid19v2Activity"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

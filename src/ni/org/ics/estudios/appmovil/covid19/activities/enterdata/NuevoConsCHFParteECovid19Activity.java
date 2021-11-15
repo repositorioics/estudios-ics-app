@@ -1068,8 +1068,8 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
 
                         procesos.setConsChf(Constants.NO);
                         if (procesos.getCuestCovid() == null || procesos.getCuestCovid().equalsIgnoreCase("No"))
-                            procesos.setCuestCovid("1a");
-                        procesos.setMuestraCovid(Constants.NO);//ya no pedir procesos de muestra adicional covid. Brenda 03082021
+                            procesos.setCuestCovid("3a");//muestreo noviembre 2021
+                        procesos.setMuestraCovid(Constants.YES);//ya no pedir procesos de muestra adicional covid. Brenda 03082021
                         procesos.setMovilInfo(movilInfo);
                         //estudiosAdapter.actualizarParticipanteProcesos(procesos);
                         if (esElegible) {

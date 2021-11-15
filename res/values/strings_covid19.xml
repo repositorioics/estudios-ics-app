@@ -224,8 +224,9 @@
 
     <!--Cuestionario Covid19 -->
     <string name="covid19_questionnaire">Cuestionario Covid19</string>
-    <string name="feb20">1.	¿Desde febrero de 2020 ha tenido usted o su niño/a alguno de los siguientes síntomas?</string>
+    <string name="feb20">1.	¿Desde febrero de 2021 ha tenido usted o su niño/a alguno de los siguientes síntomas?</string>
     <string name="oct20">1.	¿Desde octubre de 2020 ha tenido usted o su niño/a alguno de los siguientes síntomas?</string>
+    <string name="feb21">2.	¿Desde febrero de 2021 ha tenido usted o su niño/a alguno de los siguientes síntomas?</string>
     <string name="feb20Febricula">Sintió febrícula con o sin presencia de temperatura</string>
     <string name="feb20Fiebre">Fiebre > 38C</string>
     <string name="feb20Escalofrio">Escalofríos</string>
@@ -248,13 +249,14 @@
     <string name="feb20Sarpullido">Sarpullido o decoloración de piel</string>
     <string name="feb20Desmayo">Desmayo</string>
     <string name="feb20QuedoCama">Quedo en cama</string>
-    <string name="sabeInicioSintoma">2. ¿Conoce la fecha exacta que iniciaron los síntomas?</string>
+    <string name="sabeInicioSintoma">3. ¿Conoce la fecha exacta que iniciaron los síntomas?</string>
     <string name="inicioSintoma">¿Qué fecha exacta o aproximada empezaron estos síntomas?</string>
     <string name="fis">Fecha Inicio Síntomas</string>
     <string name="diaInicioSintoma">Dia</string>
     <string name="mesInicioSintoma">Mes</string>
     <string name="anioInicioSintoma">Año</string>
-    <string name="padecidoCovid19">3. ¿Usted cree que en el año 2020 usted o su niño/a pudo haber padecido de COVID-19 o su medico le informo que padeció de COVID-19?</string>
+    <!--se elimina esta pregunta para el cuestionario en noviembre 2021-->
+    <string name="padecidoCovid19">4. ¿Usted cree que en el año 2021 usted o su niño/a pudo haber padecido de COVID-19 o su medico le informo que padeció de COVID-19?</string>
     <string name="conoceLugarExposicion">4.	¿Conoce en donde usted o su niño/a estuvieron expuestos a COVID-19?</string>
     <string name="lugarExposicion">¿Dónde fue su exposición?</string>
     <string name="buscoAyuda">5. ¿Buscó ayuda médica?</string>
@@ -262,7 +264,7 @@
     <string name="nombreDondeBuscoAyuda">Nombre Centro u hospital</string>
     <string name="recibioSeguimiento">¿Recibió seguimiento diario por su centro de salud?</string>
     <string name="tipoSeguimiento">Seguimiento fue por</string>
-    <string name="tmpDespuesBuscoAyuda">7. ¿Cuánto tiempo después de que iniciaron los síntomas de COVID-19 busco ayuda medica?</string>
+    <string name="tmpDespuesBuscoAyuda">7. ¿Cuánto tiempo después de que iniciaron los síntomas de COVID-19 busco ayuda médica?</string>
     <string name="unaNocheHospital">8. ¿Pasó al menos una noche en el hospital por COVID-19?</string>
     <string name="queHospital">9. ¿A que hospital acudió?</string>
     <string name="sabeCuantasNoches">10. ¿Sabe cuantas noches estuvo en el hospital?</string>
@@ -297,7 +299,7 @@
     <string name="severidadEnfermedad">18. ¿En el momento más severo de su enfermedad, diría que su enfermedad o la de su niño/a fue?</string>
     <string name="tomoMedicamento">19. ¿Tomó medicamentos para COVID-19?</string>
     <string name="queMedicamento">¿Qué medicamentos tomo para COVID-19?</string>
-    <string name="condiciones">20. ¿Algún medico u otro profesional de la salud le ha dicho alguna vez que usted o su niño/a padece alguna de estas condiciones?</string>
+    <string name="condiciones">21. ¿Algún medico u otro profesional de la salud le ha dicho alguna vez que usted o su niño/a padece alguna de estas condiciones?</string>
     <string name="padeceEnfisema">Enfisema o EPOC</string>
     <string name="padeceAsma">Asma</string>
     <string name="padeceDiabetes">Diabetes</string>
@@ -313,10 +315,10 @@
     <string name="padeceCondPsicPsiq">Condición Psicológica o Psiquiátrica</string>
     <string name="padeceOtraCondicion">¿Alguna otra condición?</string>
     <string name="queOtraCondicion">¿Qué condición o condiciones?</string>
-    <string name="fumado">21. ¿Ha fumado alguna vez en su vida?</string>
-    <string name="fumadoCienCigarrillos">22. ¿Ha fumado al menos 100 cigarrillos en su vida?</string>
-    <string name="fumadoPrevioEnfermedad">23. ¿En los días previos a que se enfermara, usted fumaba cigarrillos todos los días o algunos días previo a que se enfermara?</string>
-    <string name="fumaActualmente">24. ¿Usted fumaba cigarrillos todos los días o algunos días ahora?</string>
+    <string name="fumado">22. ¿Ha fumado alguna vez en su vida?</string>
+    <string name="fumadoCienCigarrillos">23. ¿Ha fumado al menos 100 cigarrillos en su vida?</string>
+    <string name="fumadoPrevioEnfermedad">24. ¿En los días previos a que se enfermara, usted fumaba cigarrillos todos los días o algunos días previo a que se enfermara?</string>
+    <string name="fumaActualmente">25. ¿Usted fumaba cigarrillos todos los días o algunos días ahora?</string>
 
     <!--Consentimiento parte E CHF-->
     <string name="aceptaCHFParteECovid">Parte E CHF</string>
@@ -329,13 +331,68 @@
     <string name="confirmarValor">¿Confirma respuesta \"<xliff:g id="variable">%1$s</xliff:g>\" para la pregunta \"<xliff:g id="variable2">%2$s</xliff:g>\"?</string>
 
     <!--MA 2021 -->
-    <string name="embarazada">25 ¿Usted estaba embarazada al momento de ser diagnosticada o sospechosa de COVID19?</string>
+    <string name="embarazada">26. ¿Usted estaba embarazada al momento de ser diagnosticada o sospechosa de COVID19?</string>
     <string name="recuerdaSemanasEmb">¿Recuerda las semanas de embarazo que tenía?</string>
     <string name="semanasEmbarazoCovid">Indicar las semanas de embarazo que tenía</string>
     <string name="finalEmbarazo">como finalizó el embarazo?</string>
     <string name="otroFinalEmbarazo">Otro final</string>
-    <string name="dabaPecho">26 Si estaba embarazada recientemente al momento de ser diagnosticada con COVID19, ¿Usted estaba dando pecho materno?</string>
-    <string name="trabajadorSalud">27 ¿Usted estuvo empleado como trabajador de la salud desde el 1 de febrero de 2020?</string>
+    <string name="dabaPecho">27. Si estaba embarazada recientemente al momento de ser diagnosticada con COVID19, ¿Usted estaba dando pecho materno?</string>
+    <string name="trabajadorSalud">28 ¿Usted estuvo empleado como trabajador de la salud desde el 1 de febrero de 2021?</string>
     <string name="wrongYear">Año inválido. Debe ser entre <xliff:g id="year1">%1$s</xliff:g> y <xliff:g id="year2">%2$s</xliff:g></string>
 
+    <!--nuevas preguntas Cuestionario Covid19 Muestreo Octubre 2021 -->
+    <string name="enfermoCovid19">1. ¿Desde febrero 2021 a usted o su niño/a le han diagnosticado o ha estado enfermo con la COVID19?</string>
+    <string name="cuantasVecesEnfermo">¿Cuantas veces ha estado enfermo en este periodo?</string>
+    <string name="sabeEvento1">¿Conoce la fecha exacta que enfermo (evento 1)?</string>
+    <string name="fechaEvento1">Fecha enfermó evento 1</string>
+    <string name="mesEvento">Mes</string>
+    <string name="anioEvento">Año</string>
+    <string name="sabeEvento2">¿Conoce la fecha exacta que enfermo (evento 2)?</string>
+    <string name="fechaEvento2">Fecha enfermó evento 2</string>
+    <string name="sabeEvento3">¿Conoce la fecha exacta que enfermo (evento 3)?</string>
+    <string name="fechaEvento3">Fecha enfermó evento 3</string>
+    <string name="presentoSintomas">¿Presentó alguno de los siguientes síntomas durante este evento?</string>
+    <string name="oxigenoDomicilio">20. ¿ A Ud. o su niño/a le administraron oxígeno en su domicilio?</string>
+    <string name="tiempoOxigenoDom">20. 1 Por cuanto tiempo le administraron?</string>
+    <string name="vacunadoCovid19">29. ¿Usted o su niño/a han sido vacunado en la jornada de vacunación voluntaria contra la COVID-19?</string>
+    <string name="muestraTarjetaVac">30. ¿Puede mostrarnos su tarjeta de vacunación contra la COVID 19?</string>
+    <string name="recordarFoto">Recuerde tomar fotografía de Tarjeta de vacuna de COVID 19</string>
+    <string name="sabeNombreVacuna">Sabe cuál vacuna le fue aplicada?</string>
+    <string name="nombreVacuna">Nombre vacuna aplicada</string>
+    <string name="sabeFechaVacuna">¿Conoce el mes y año de vacunación?</string>
+    <string name="mesVacuna">Mes Vacuna</string>
+    <string name="anioVacuna">Año Vacuna</string>
+    <string name="cuantasDosis">¿Cuántas dosis aparecen en la tarjeta?</string>
+    <string name="nombreDosis1">Nombre vacuna primera dosis</string>
+    <string name="loteDosis1">Lote vacuna primera dosis</string>
+    <string name="fechaDosis1">Fecha vacunación primera dosis</string>
+    <string name="nombreDosis2">Nombre vacuna segunda dosis</string>
+    <string name="loteDosis2">Lote vacuna segunda dosis</string>
+    <string name="fechaDosis2">Fecha vacunación segunda dosis</string>
+    <string name="nombreDosis3">Nombre vacuna tercera dosis</string>
+    <string name="loteDosis3">Lote vacuna tercera dosis</string>
+    <string name="fechaDosis3">Fecha vacunación tercera dosis</string>
+    <string name="cualVacuna">Cuál Vacuna?</string>
+    <string name="presentoSintomasVacuna1">31. PRIMERA DOSIS ¿Posterior a ser vacunado contra la COVID19 Ud. o su niño/a presento alguna molestia o síntoma posterior a un máximo de 72 horas a la vacunación?</string>
+    <string name="presentoSintomasVacuna2">31. SEGUNDA DOSIS ¿Posterior a ser vacunado contra la COVID19 Ud. o su niño/a presento alguna molestia o síntoma posterior a un máximo de 72 horas a la vacunación?</string>
+    <string name="presentoSintomasVacuna3">31. TERCERA DOSIS ¿Posterior a ser vacunado contra la COVID19 Ud. o su niño/a presento alguna molestia o síntoma posterior a un máximo de 72 horas a la vacunación?</string>
+    <string name="sintomasVacuna">31.1 ¿Cual o Cuales de estos síntomas presento?</string>
+    <string name="dolorSitioVac">Dolor en el sitio de la inyección</string>
+    <string name="fiebreVac">Fiebre</string>
+    <string name="cansancioVac">Cansancio</string>
+    <string name="dolorCabezaVac">Dolor de cabeza (Cefalea)</string>
+    <string name="diarreaVac">Diarrea</string>
+    <string name="vomitoVac">Vomito</string>
+    <string name="dolorMuscularVac">Dolor Muscular (Mialgias)</string>
+    <string name="escalofriosVac">Escalofríos</string>
+    <string name="reaccionAlergicaVac">Reacción Alérgica</string>
+    <string name="infeccionSitioVac">Infección del sitio de vacunación</string>
+    <string name="nauseasVac">Nauseas</string>
+    <string name="bultosVac">Bultos o Inflamación de ganglios en Axilas o Clavícula</string>
+    <string name="otrosVac">Otros:</string>
+    <string name="desOtrosVac">Especifique que síntoma</string>
+
+    <string name="covid19PosteriorVacuna">32. ¿Ud. o su niño presentaron síntomas que sospecharon enfermedad por Covid-19 Posterior a haber recibido la vacuna de Covid-19?</string>
+    <string name="sabeFechaEnfPostVac">¿Conoce la fecha exacta que presentó sintomas posterior a haber recibido la vacuna de Covid-19?</string>
+    <string name="fechaEnfPostVac">Fecha presentó sintomas</string>
 </resources>

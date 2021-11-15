@@ -13,12 +13,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.widget.Switch;
 import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.FormularioContactoCasoAdapter;
 import ni.org.ics.estudios.appmovil.domain.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.*;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
@@ -382,12 +380,12 @@ public class EstudiosAdapter {
 				db.execSQL("ALTER TABLE " + CasosDBConstants.PARTICIPANTES_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.fis + " text");
 			}
 			if (oldVersion==37){
-				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.embarazada + " text");
-				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.recuerdaSemanasEmb + " text");
-				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.semanasEmbarazo + " integer");
-				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.finalEmbarazo + " text");
-				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.otroFinalEmbarazo + " text");
-				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.dabaPecho + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.e1Embarazada + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.e1RecuerdaSemanasEmb + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.e1SemanasEmbarazo + " integer");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.e1FinalEmbarazo + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.e1OtroFinalEmbarazo + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.e1DabaPecho + " text");
 				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.trabajadorSalud + " text");
 			}
 			if (oldVersion==38) {
@@ -399,6 +397,9 @@ public class EstudiosAdapter {
 			if (oldVersion==40) {
 				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CANDIDATO_TRANSMISION_TABLE + " ADD COLUMN " + Covid19DBConstants.indice + " text");
 				db.execSQL(Covid19DBConstants.CREATE_COVID_OTROS_POSITIVOS_TABLE);
+			}
+			if (oldVersion==41) {
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.fechaEventoEnfermoPostVac + " text");
 			}
 		}
 	}

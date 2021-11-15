@@ -32,10 +32,7 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActiv
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoObsequioActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoRecon18AniosActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.dto.DatosCHF;
-import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevaMuestraAdicRojoCovid19Activity;
-import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoConsCHFParteECovid19Activity;
-import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoConsCovid19Activity;
-import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.NuevoCuestionarioCovid19Activity;
+import ni.org.ics.estudios.appmovil.covid19.activities.enterdata.*;
 import ni.org.ics.estudios.appmovil.covid19.dto.DatosCovid19;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.DatosCoordenadas;
@@ -513,7 +510,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 if(mUser.getConsentimiento()){
                     if(!mParticipante.getProcesos().getCuestCovid().matches("No")){
                         i = new Intent(getApplicationContext(),
-                                NuevoCuestionarioCovid19Activity.class);
+                                NuevoCuestionarioCovid19v2Activity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtra(Constants.PARTICIPANTE, mParticipante);
                         i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
@@ -1140,9 +1137,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             visitaItem.setVisible(false);
             if ((mParticipante.getProcesos().getConsChf()!=null && mParticipante.getProcesos().getConsChf().matches("Si") && mUser.getConsentimiento())) consParteEChf.setVisible(true);
             if ((mParticipante.getProcesos().getCuestCovid()!=null && !mParticipante.getProcesos().getCuestCovid().matches("No") && mUser.getEncuestaParticipante())) cuestCovid19.setVisible(true);
-            /*if ((mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) &&
+            if ((mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) &&
                     (mParticipante.getProcesos().getMuestraCovid()!=null && mParticipante.getProcesos().getMuestraCovid().matches("Si") && mUser.getMuestra())) mxAdicionalCovid19.setVisible(true);
-            *///Deshabilitar en MA2021
+            //Deshabilitar en MA2021. Habilitar muestreo familia nov 2021
             if ((mParticipante.getProcesos().getConsSa()!=null && mParticipante.getProcesos().getConsSa().matches("Si") && mUser.getConsentimiento()))consSAItem.setVisible(true);
             //ParteE Dengue
             if ((mParticipante.getProcesos().getConsDenParteE()!=null && mParticipante.getProcesos().getConsDenParteE().matches("Si") && mUser.getEncuestaParticipante())) consDenParteEItem.setVisible(true);
@@ -1326,7 +1323,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || mParticipante.getProcesos().getConsCovid19().matches("Si")
                     || (mParticipante.getProcesos().getConsChf() != null && mParticipante.getProcesos().getConsChf().matches("Si"))
                     || (mParticipante.getProcesos().getCuestCovid() != null && !mParticipante.getProcesos().getCuestCovid().matches("No"))
-                    //|| (mParticipante.getProcesos().getMuestraCovid() != null && mParticipante.getProcesos().getMuestraCovid().matches("Si")) //se deshabilita para MA2021
+                    || (mParticipante.getProcesos().getMuestraCovid() != null && mParticipante.getProcesos().getMuestraCovid().matches("Si")) //se deshabilita para MA2021
                     || (mParticipante.getProcesos().getConsSa() != null && mParticipante.getProcesos().getConsSa().matches("Si"))
                     || (mParticipante.getProcesos().getConsDenParteE()!=null && mParticipante.getProcesos().getConsDenParteE().matches("Si"))
                     //|| (mParticipante.getProcesos().getMxDenParteE()!=null && mParticipante.getProcesos().getMxDenParteE().matches("Si")) //se deshabilita para MA2021
@@ -1558,12 +1555,12 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 }
                             }
                         }
-                        /* //deshabilitar adicional CHF para Covid19 y Muestra adicional Dengue parte E para MA2021
+                         //deshabilitar adicional CHF para Covid19 y Muestra adicional Dengue parte E para MA2021
                         //Muestra adicional CHF para Covid19
                         if (mParticipante.getProcesos().getMuestraCovid()!=null && mParticipante.getProcesos().getMuestraCovid().matches("Si")){
                             labelHeader += getVolumenCHFAdicionalCovid19();
                             pendiente=true;
-                        }
+                        }/*
                         //Muestra adicional Dengue parte E
                         if (mParticipante.getProcesos().getMxDenParteE()!=null && mParticipante.getProcesos().getMxDenParteE().matches("Si")){
                             if (mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) {
@@ -2054,19 +2051,23 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         if (mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) {
             //menores de 6 meses
             if (mParticipante.getEdadMeses() < 6) {
-                labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                //labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                labelHeader = labelHeader + "<small><font color='red'>No tomar muestra<br /></font></small>";
                 pendiente = true;
             } //De 6 meses a <2 años
             else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
+                //labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
                 labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
                 pendiente = true;
             }  //De 2 años - < 14 Años
             else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
-                labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+                //labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+                labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
                 pendiente = true;
             } else //De 14 años y más
             {
-                labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                //labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
                 pendiente = true;
             }
         }

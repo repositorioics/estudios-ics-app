@@ -140,6 +140,7 @@ public class Constants {
     public static final String PRIMER_SINTOMA = "primer_sintoma";
     public static final String PERIODO_CUEST_COVID19_1 = "Febrero2020";
     public static final String PERIODO_CUEST_COVID19_2 = "Octubre2020";
+    public static final String PERIODO_CUEST_COVID19_3 = "Febrero2021";
 
     public static final int MINIMO_NUM_CELULAR = 30000000;
     public static final int MAXIMO_NUM_CELULAR = 89999999;

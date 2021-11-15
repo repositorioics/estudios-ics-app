@@ -1,0 +1,3112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="@style/WizardPageContainer">
+
+    <TextView style="@style/WizardPageTitle" />
+
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
+            <TextView style="@style/WizardFormLabel"
+                      android:text="@string/codigoParticipanteCaso" />
+
+            <EditText android:id="@+id/inputParticipante"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textEnfermoCovid19"
+                      android:text="@string/enfermoCovid19" />
+            <Spinner android:id="@+id/spinEnfermoCovid19"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textCuantasVecesEnfermo"
+                      android:text="@string/cuantasVecesEnfermo" />
+            <Spinner android:id="@+id/spinCuantasVecesEnfermo"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <!-- inicio evento 1-->
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textSabeEvento1"
+                      android:text="@string/sabeEvento1" />
+            <Spinner android:id="@+id/spinSabeEvento1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textEvento1"
+                      android:text="@string/fechaEvento1" />
+            <LinearLayout android:id="@+id/layoutEvento1"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputEvento1"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbEvento1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textAnioEvento1"
+                      android:text="@string/anioEvento" />
+            <EditText android:id="@+id/inputAnioEvento1"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textMesEvento1"
+                      android:text="@string/mesEvento" />
+            <Spinner android:id="@+id/spinMesEvento1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+            <!-- inicio sintomas evento 1-->
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDesdeSintomasE1"
+                      android:text="@string/presentoSintomas" android:layout_marginBottom="20dp" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1Febricula"
+                      android:text="@string/feb20Febricula" />
+            <Spinner android:id="@+id/spinE1Febricula"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1Fiebre"
+                      android:text="@string/feb20Fiebre" />
+            <Spinner android:id="@+id/spinE1Fiebre"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1Escalofrio"
+                      android:text="@string/feb20Escalofrio" />
+            <Spinner android:id="@+id/spinE1Escalofrio"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TemblorEscalofrio"
+                      android:text="@string/feb20TemblorEscalofrio" />
+            <Spinner android:id="@+id/spinE1TemblorEscalofrio"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1DolorMuscular"
+                      android:text="@string/feb20DolorMuscular" />
+            <Spinner android:id="@+id/spinE1DolorMuscular"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1DolorArticular"
+                      android:text="@string/feb20DolorArticular" />
+            <Spinner android:id="@+id/spinE1DolorArticular"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1SecresionNasal"
+                      android:text="@string/feb20SecresionNasal" />
+            <Spinner android:id="@+id/spinE1SecresionNasal"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1DolorGarganta"
+                      android:text="@string/feb20DolorGarganta" />
+            <Spinner android:id="@+id/spinE1DolorGarganta"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1Tos"
+                      android:text="@string/feb20Tos" />
+            <Spinner android:id="@+id/spinE1Tos"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1DificultadResp"
+                      android:text="@string/feb20DificultadResp" />
+            <Spinner android:id="@+id/spinE1DificultadResp"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1DolorPecho"
+                      android:text="@string/feb20DolorPecho" />
+            <Spinner android:id="@+id/spinE1DolorPecho"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1NauseasVomito"
+                      android:text="@string/feb20NauseasVomito" />
+            <Spinner android:id="@+id/spinE1NauseasVomito"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1DolorCabeza"
+                      android:text="@string/feb20DolorCabeza" />
+            <Spinner android:id="@+id/spinE1DolorCabeza"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1DolorAbdominal"
+                      android:text="@string/feb20DolorAbdominal" />
+            <Spinner android:id="@+id/spinE1DolorAbdominal"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1Diarrea"
+                      android:text="@string/feb20Diarrea" />
+            <Spinner android:id="@+id/spinE1Diarrea"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1DificultadDormir"
+                      android:text="@string/feb20DificultadDormir" />
+            <Spinner android:id="@+id/spinE1DificultadDormir"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1Debilidad"
+                      android:text="@string/feb20Debilidad" />
+            <Spinner android:id="@+id/spinE1Debilidad"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1PerdidaOlfatoGusto"
+                      android:text="@string/feb20PerdidaOlfatoGusto" />
+            <Spinner android:id="@+id/spinE1PerdidaOlfatoGusto"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1Mareo"
+                      android:text="@string/feb20Mareo" />
+            <Spinner android:id="@+id/spinE1Mareo"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1Sarpullido"
+                      android:text="@string/feb20Sarpullido" />
+            <Spinner android:id="@+id/spinE1Sarpullido"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1Desmayo"
+                      android:text="@string/feb20Desmayo" />
+            <Spinner android:id="@+id/spinE1Desmayo"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1QuedoCama"
+                      android:text="@string/feb20QuedoCama" />
+            <Spinner android:id="@+id/spinE1QuedoCama"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+            <!-- fin sintomas evento 1-->
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1SabeInicioSintoma"
+                      android:text="@string/sabeInicioSintoma" />
+            <Spinner android:id="@+id/spinE1SabeInicioSintoma"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1FIS"
+                      android:text="@string/fis" />
+            <LinearLayout android:id="@+id/layoutE1FIS"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputE1FIS"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbE1FIS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1AnioInicioSintoma"
+                      android:text="@string/anioInicioSintoma" />
+            <EditText android:id="@+id/inputE1AnioInicioSintoma"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1MesInicioSintoma"
+                      android:text="@string/mesInicioSintoma" />
+            <Spinner android:id="@+id/spinE1MesInicioSintoma"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1ConoceLugarExposicion"
+                      android:text="@string/conoceLugarExposicion" />
+            <Spinner android:id="@+id/spinE1ConoceLugarExposicion"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1LugarExposicion"
+                      android:text="@string/lugarExposicion" />
+            <EditText android:id="@+id/inputE1LugarExposicion"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1BuscoAyuda"
+                      android:text="@string/buscoAyuda" />
+            <Spinner android:id="@+id/spinE1BuscoAyuda"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1DondeBuscoAyuda"
+                      android:text="@string/dondeBuscoAyuda" />
+            <Spinner android:id="@+id/spinE1DondeBuscoAyuda"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1NombreCentro"
+                      android:text="@string/otroCentroSalud" />
+            <EditText android:id="@+id/inputE1NombreCentro"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1NombreHospital"
+                      android:text="@string/cualHospital" />
+            <EditText android:id="@+id/inputE1NombreHospital"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1RecibioSeguimiento"
+                      android:text="@string/recibioSeguimiento" />
+            <Spinner android:id="@+id/spinE1RecibioSeguimiento"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TipoSeguimiento"
+                      android:text="@string/tipoSeguimiento" />
+            <Spinner android:id="@+id/spinE1TipoSeguimiento"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TmpDespuesBuscoAyuda"
+                      android:text="@string/tmpDespuesBuscoAyuda" />
+            <Spinner android:id="@+id/spinE1TmpDespuesBuscoAyuda"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1UnaNocheHospital"
+                      android:text="@string/unaNocheHospital" />
+            <Spinner android:id="@+id/spinE1UnaNocheHospital"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1QueHospital"
+                      android:text="@string/queHospital" />
+            <EditText android:id="@+id/inputE1QueHospital"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1SabeCuantasNoches"
+                      android:text="@string/sabeCuantasNoches" />
+            <Spinner android:id="@+id/spinE1SabeCuantasNoches"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1CuantasNochesHosp"
+                      android:text="@string/cuantasNochesHosp" />
+            <EditText android:id="@+id/inputE1CuantasNochesHosp"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1SabeFechaAdmision"
+                      android:text="@string/sabeFechaAdmision" />
+            <Spinner android:id="@+id/spinE1SabeFechaAdmision"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1FechaAdmisionHosp"
+                      android:text="@string/fechaAdmisionHosp" />
+            <LinearLayout android:id="@+id/layoutE1FechaAdmision"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputE1FechaAdmisionHosp"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbE1FechaAdmisionHosp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1SabeFechaAlta"
+                      android:text="@string/sabeFechaAlta" />
+            <Spinner android:id="@+id/spinE1SabeFechaAlta"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1FechaAltaHosp"
+                      android:text="@string/fechaAltaHosp" />
+            <LinearLayout android:id="@+id/layoutE1FechaAlta"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputE1FechaAltaHosp"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbE1FechaAltaHosp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1UtilizoOxigeno"
+                      android:text="@string/utilizoOxigenoCuest" />
+            <Spinner android:id="@+id/spinE1UtilizoOxigeno"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1EstuvoUCI"
+                      android:text="@string/estuvoUCI" />
+            <Spinner android:id="@+id/spinE1EstuvoUCI"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1FueIntubado"
+                      android:text="@string/fueIntubadoCuest" />
+            <Spinner android:id="@+id/spinE1FueIntubado"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1RecuperadoCovid19"
+                      android:text="@string/recuperadoCovid19" />
+            <Spinner android:id="@+id/spinE1RecuperadoCovid19"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1QueSintomasPresenta"
+                      android:text="@string/queSintomasPresenta"
+                      android:layout_marginBottom="20dp"/>
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TieneFebricula"
+                      android:text="@string/febricula" />
+            <Spinner android:id="@+id/spinE1TieneFebricula"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TieneCansancio"
+                      android:text="@string/cansancio" />
+            <Spinner android:id="@+id/spinE1TieneCansancio"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TieneDolorCabeza"
+                      android:text="@string/dolorCabeza" />
+            <Spinner android:id="@+id/spinE1TieneDolorCabeza"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TienePerdidaOlfato"
+                      android:text="@string/perdidaOlfatoCuest" />
+            <Spinner android:id="@+id/spinE1TienePerdidaOlfato"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TienePerdidaGusto"
+                      android:text="@string/perdidaGustoCuest" />
+            <Spinner android:id="@+id/spinE1TienePerdidaGusto"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TieneTos"
+                      android:text="@string/tos" />
+            <Spinner android:id="@+id/spinE1TieneTos"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TieneDificultadRespirar"
+                      android:text="@string/dificultadRespirar" />
+            <Spinner android:id="@+id/spinE1TieneDificultadRespirar"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TieneDolorPecho"
+                      android:text="@string/dolorPecho" />
+            <Spinner android:id="@+id/spinE1TieneDolorPecho"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TienePalpitaciones"
+                      android:text="@string/palpitaciones" />
+            <Spinner android:id="@+id/spinE1TienePalpitaciones"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TieneDolorArticulaciones"
+                      android:text="@string/dolorArticulaciones" />
+            <Spinner android:id="@+id/spinE1TieneDolorArticulaciones"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TieneParalisis"
+                      android:text="@string/paralisis" />
+            <Spinner android:id="@+id/spinE1TieneParalisis"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TieneMareos"
+                      android:text="@string/mareos" />
+            <Spinner android:id="@+id/spinE1TieneMareos"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TienePensamientoNublado"
+                      android:text="@string/pensamientoNublado" />
+            <Spinner android:id="@+id/spinE1TienePensamientoNublado"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TieneProblemasDormir"
+                      android:text="@string/problemasDormir" />
+            <Spinner android:id="@+id/spinE1TieneProblemasDormir"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TieneDepresion"
+                      android:text="@string/depresion" />
+            <Spinner android:id="@+id/spinE1TieneDepresion"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TieneOtrosSintomas"
+                      android:text="@string/otrosSintomas" />
+            <Spinner android:id="@+id/spinE1TieneOtrosSintomas"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1CualesSintomas"
+                      android:text="@string/cualesSintomas" />
+            <EditText android:id="@+id/inputE1CualesSintomas"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1SabeTiempoRecuperacion"
+                      android:text="@string/sabeTiempoRecuperacion" />
+            <Spinner android:id="@+id/spinE1SabeTiempoRecuperacion"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TiempoRecuperacion"
+                      android:text="@string/tiempoRecuperacion" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputE1TiempoRecuperacion"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:inputType="number" />
+
+                <Spinner android:id="@+id/spinE1TiempoRecuperacionEn"
+                         android:layout_width="wrap_content"
+                         android:layout_height="fill_parent"/>
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1SeveridadEnfermedad"
+                      android:text="@string/severidadEnfermedad" />
+            <Spinner android:id="@+id/spinE1SeveridadEnfermedad"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TomoMedicamento"
+                      android:text="@string/tomoMedicamento" />
+            <Spinner android:id="@+id/spinE1TomoMedicamento"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1QueMedicamento"
+                      android:text="@string/queMedicamento" />
+            <ni.org.ics.estudios.appmovil.multiselector.gui.MultiSpinner android:id="@+id/spinE1QueMedicamento"
+                                                                         android:layout_width="match_parent"
+                                                                         android:layout_height="wrap_content"
+                                                                         android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textE1OtroMedicamento"
+                      android:text="@string/otroMedicamento" />
+
+            <EditText android:id="@+id/inputE1OtroMedicamento"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1OxigenoDomicilio"
+                      android:text="@string/oxigenoDomicilio" />
+            <Spinner android:id="@+id/spinE1OxigenoDomicilio"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1TiempoOxigenoDom"
+                      android:text="@string/tiempoOxigenoDom" />
+            <Spinner android:id="@+id/spinE1TiempoOxigenoDom"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+            <!-- fin evento 1-->
+            <!-- para todos los eventos-->
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textCondiciones"
+                      android:text="@string/condiciones"
+                      android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceEnfisema"
+                      android:text="@string/padeceEnfisema" />
+            <Spinner android:id="@+id/spinPadeceEnfisema"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceAsma"
+                      android:text="@string/padeceAsma" />
+            <Spinner android:id="@+id/spinPadeceAsma"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceDiabetes"
+                      android:text="@string/padeceDiabetes" />
+            <Spinner android:id="@+id/spinPadeceDiabetes"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceEnfCoronaria"
+                      android:text="@string/padeceEnfCoronaria" />
+            <Spinner android:id="@+id/spinPadeceEnfCoronaria"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadecePresionAlta"
+                      android:text="@string/padecePresionAlta" />
+            <Spinner android:id="@+id/spinPadecePresionAlta"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceEnfHigado"
+                      android:text="@string/padeceEnfHigado" />
+            <Spinner android:id="@+id/spinPadeceEnfHigado"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceEnfRenal"
+                      android:text="@string/padeceEnfRenal" />
+            <Spinner android:id="@+id/spinPadeceEnfRenal"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceInfartoDerrameCer"
+                      android:text="@string/padeceInfartoDerrameCer" />
+            <Spinner android:id="@+id/spinPadeceInfartoDerrameCer"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceCancer"
+                      android:text="@string/padeceCancer" />
+            <Spinner android:id="@+id/spinPadeceCancer"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceCondicionInmuno"
+                      android:text="@string/padeceCondicionInmuno" />
+            <Spinner android:id="@+id/spinPadeceCondicionInmuno"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceEnfAutoinmune"
+                      android:text="@string/padeceEnfAutoinmune" />
+            <Spinner android:id="@+id/spinPadeceEnfAutoinmune"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceDiscapacidadFis"
+                      android:text="@string/padeceDiscapacidadFis" />
+            <Spinner android:id="@+id/spinPadeceDiscapacidadFis"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceCondPsicPsiq"
+                      android:text="@string/padeceCondPsicPsiq" />
+            <Spinner android:id="@+id/spinPadeceCondPsicPsiq"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPadeceOtraCondicion"
+                      android:text="@string/padeceOtraCondicion" />
+            <Spinner android:id="@+id/spinPadeceOtraCondicion"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textQueOtraCondicion"
+                      android:text="@string/queOtraCondicion" />
+            <EditText android:id="@+id/inputQueOtraCondicion"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textFumado"
+                      android:text="@string/fumado" />
+            <Spinner android:id="@+id/spinFumado"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textFumadoCienCigarrillos"
+                      android:text="@string/fumadoCienCigarrillos" />
+            <Spinner android:id="@+id/spinFumadoCienCigarrillos"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+            <!-- fin para todos los eventos-->
+            <!-- continua evento 1-->
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1FumadoPrevioEnfermedad"
+                      android:text="@string/fumadoPrevioEnfermedad" />
+            <Spinner android:id="@+id/spinE1FumadoPrevioEnfermedad"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1FumaActualmente"
+                      android:text="@string/fumaActualmente" />
+            <Spinner android:id="@+id/spinE1FumaActualmente"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1Embarazada"
+                      android:text="@string/embarazada" />
+            <Spinner android:id="@+id/spinE1Embarazada"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1RecuerdaSemanasEmb"
+                      android:text="@string/recuerdaSemanasEmb" />
+            <Spinner android:id="@+id/spinE1RecuerdaSemanasEmb"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1SemanasEmbarazo"
+                      android:text="@string/semanasEmbarazoCovid" />
+            <EditText android:id="@+id/inputE1SemanasEmbarazo"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1FinalEmbarazo"
+                      android:text="@string/finalEmbarazo" />
+            <Spinner android:id="@+id/spinE1FinalEmbarazo"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1OtroFinalEmbarazo"
+                      android:text="@string/otroFinalEmbarazo" />
+            <EditText android:id="@+id/inputE1OtroFinalEmbarazo"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE1DabaPecho"
+                      android:text="@string/dabaPecho" />
+            <Spinner android:id="@+id/spinE1DabaPecho"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+            <!-- fin evento 1-->
+            <!-- inicio evento 2-->
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textSabeEvento2"
+                      android:text="@string/sabeEvento2" />
+            <Spinner android:id="@+id/spinSabeEvento2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textEvento2"
+                      android:text="@string/fechaEvento2" />
+            <LinearLayout android:id="@+id/layoutEvento2"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputEvento2"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbEvento2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textAnioEvento2"
+                      android:text="@string/anioEvento" />
+            <EditText android:id="@+id/inputAnioEvento2"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textMesEvento2"
+                      android:text="@string/mesEvento" />
+            <Spinner android:id="@+id/spinMesEvento2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+            <!-- inicio sintomas evento 2-->
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDesdeSintomasE2"
+                      android:text="@string/presentoSintomas" android:layout_marginBottom="20dp" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2Febricula"
+                      android:text="@string/feb20Febricula" />
+            <Spinner android:id="@+id/spinE2Febricula"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2Fiebre"
+                      android:text="@string/feb20Fiebre" />
+            <Spinner android:id="@+id/spinE2Fiebre"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2Escalofrio"
+                      android:text="@string/feb20Escalofrio" />
+            <Spinner android:id="@+id/spinE2Escalofrio"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TemblorEscalofrio"
+                      android:text="@string/feb20TemblorEscalofrio" />
+            <Spinner android:id="@+id/spinE2TemblorEscalofrio"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2DolorMuscular"
+                      android:text="@string/feb20DolorMuscular" />
+            <Spinner android:id="@+id/spinE2DolorMuscular"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2DolorArticular"
+                      android:text="@string/feb20DolorArticular" />
+            <Spinner android:id="@+id/spinE2DolorArticular"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2SecresionNasal"
+                      android:text="@string/feb20SecresionNasal" />
+            <Spinner android:id="@+id/spinE2SecresionNasal"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2DolorGarganta"
+                      android:text="@string/feb20DolorGarganta" />
+            <Spinner android:id="@+id/spinE2DolorGarganta"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2Tos"
+                      android:text="@string/feb20Tos" />
+            <Spinner android:id="@+id/spinE2Tos"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2DificultadResp"
+                      android:text="@string/feb20DificultadResp" />
+            <Spinner android:id="@+id/spinE2DificultadResp"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2DolorPecho"
+                      android:text="@string/feb20DolorPecho" />
+            <Spinner android:id="@+id/spinE2DolorPecho"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2NauseasVomito"
+                      android:text="@string/feb20NauseasVomito" />
+            <Spinner android:id="@+id/spinE2NauseasVomito"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2DolorCabeza"
+                      android:text="@string/feb20DolorCabeza" />
+            <Spinner android:id="@+id/spinE2DolorCabeza"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2DolorAbdominal"
+                      android:text="@string/feb20DolorAbdominal" />
+            <Spinner android:id="@+id/spinE2DolorAbdominal"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2Diarrea"
+                      android:text="@string/feb20Diarrea" />
+            <Spinner android:id="@+id/spinE2Diarrea"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2DificultadDormir"
+                      android:text="@string/feb20DificultadDormir" />
+            <Spinner android:id="@+id/spinE2DificultadDormir"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2Debilidad"
+                      android:text="@string/feb20Debilidad" />
+            <Spinner android:id="@+id/spinE2Debilidad"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2PerdidaOlfatoGusto"
+                      android:text="@string/feb20PerdidaOlfatoGusto" />
+            <Spinner android:id="@+id/spinE2PerdidaOlfatoGusto"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2Mareo"
+                      android:text="@string/feb20Mareo" />
+            <Spinner android:id="@+id/spinE2Mareo"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2Sarpullido"
+                      android:text="@string/feb20Sarpullido" />
+            <Spinner android:id="@+id/spinE2Sarpullido"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2Desmayo"
+                      android:text="@string/feb20Desmayo" />
+            <Spinner android:id="@+id/spinE2Desmayo"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2QuedoCama"
+                      android:text="@string/feb20QuedoCama" />
+            <Spinner android:id="@+id/spinE2QuedoCama"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+            <!-- fin sintomas evento 2-->
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2SabeInicioSintoma"
+                      android:text="@string/sabeInicioSintoma" />
+            <Spinner android:id="@+id/spinE2SabeInicioSintoma"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2FIS"
+                      android:text="@string/fis" />
+            <LinearLayout android:id="@+id/layoutE2FIS"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputE2FIS"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbE2FIS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2AnioInicioSintoma"
+                      android:text="@string/anioInicioSintoma" />
+            <EditText android:id="@+id/inputE2AnioInicioSintoma"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2MesInicioSintoma"
+                      android:text="@string/mesInicioSintoma" />
+            <Spinner android:id="@+id/spinE2MesInicioSintoma"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2ConoceLugarExposicion"
+                      android:text="@string/conoceLugarExposicion" />
+            <Spinner android:id="@+id/spinE2ConoceLugarExposicion"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2LugarExposicion"
+                      android:text="@string/lugarExposicion" />
+            <EditText android:id="@+id/inputE2LugarExposicion"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2BuscoAyuda"
+                      android:text="@string/buscoAyuda" />
+            <Spinner android:id="@+id/spinE2BuscoAyuda"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2DondeBuscoAyuda"
+                      android:text="@string/dondeBuscoAyuda" />
+            <Spinner android:id="@+id/spinE2DondeBuscoAyuda"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2NombreCentro"
+                      android:text="@string/otroCentroSalud" />
+            <EditText android:id="@+id/inputE2NombreCentro"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2NombreHospital"
+                      android:text="@string/cualHospital" />
+            <EditText android:id="@+id/inputE2NombreHospital"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2RecibioSeguimiento"
+                      android:text="@string/recibioSeguimiento" />
+            <Spinner android:id="@+id/spinE2RecibioSeguimiento"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TipoSeguimiento"
+                      android:text="@string/tipoSeguimiento" />
+            <Spinner android:id="@+id/spinE2TipoSeguimiento"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TmpDespuesBuscoAyuda"
+                      android:text="@string/tmpDespuesBuscoAyuda" />
+            <Spinner android:id="@+id/spinE2TmpDespuesBuscoAyuda"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2UnaNocheHospital"
+                      android:text="@string/unaNocheHospital" />
+            <Spinner android:id="@+id/spinE2UnaNocheHospital"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2QueHospital"
+                      android:text="@string/queHospital" />
+            <EditText android:id="@+id/inputE2QueHospital"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2SabeCuantasNoches"
+                      android:text="@string/sabeCuantasNoches" />
+            <Spinner android:id="@+id/spinE2SabeCuantasNoches"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2CuantasNochesHosp"
+                      android:text="@string/cuantasNochesHosp" />
+            <EditText android:id="@+id/inputE2CuantasNochesHosp"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2SabeFechaAdmision"
+                      android:text="@string/sabeFechaAdmision" />
+            <Spinner android:id="@+id/spinE2SabeFechaAdmision"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2FechaAdmisionHosp"
+                      android:text="@string/fechaAdmisionHosp" />
+            <LinearLayout android:id="@+id/layoutE2FechaAdmision"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputE2FechaAdmisionHosp"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbE2FechaAdmisionHosp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2SabeFechaAlta"
+                      android:text="@string/sabeFechaAlta" />
+            <Spinner android:id="@+id/spinE2SabeFechaAlta"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2FechaAltaHosp"
+                      android:text="@string/fechaAltaHosp" />
+            <LinearLayout android:id="@+id/layoutE2FechaAlta"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputE2FechaAltaHosp"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbE2FechaAltaHosp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2UtilizoOxigeno"
+                      android:text="@string/utilizoOxigenoCuest" />
+            <Spinner android:id="@+id/spinE2UtilizoOxigeno"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2EstuvoUCI"
+                      android:text="@string/estuvoUCI" />
+            <Spinner android:id="@+id/spinE2EstuvoUCI"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2FueIntubado"
+                      android:text="@string/fueIntubadoCuest" />
+            <Spinner android:id="@+id/spinE2FueIntubado"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2RecuperadoCovid19"
+                      android:text="@string/recuperadoCovid19" />
+            <Spinner android:id="@+id/spinE2RecuperadoCovid19"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2QueSintomasPresenta"
+                      android:text="@string/queSintomasPresenta"
+                      android:layout_marginBottom="20dp"/>
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TieneFebricula"
+                      android:text="@string/febricula" />
+            <Spinner android:id="@+id/spinE2TieneFebricula"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TieneCansancio"
+                      android:text="@string/cansancio" />
+            <Spinner android:id="@+id/spinE2TieneCansancio"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TieneDolorCabeza"
+                      android:text="@string/dolorCabeza" />
+            <Spinner android:id="@+id/spinE2TieneDolorCabeza"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TienePerdidaOlfato"
+                      android:text="@string/perdidaOlfatoCuest" />
+            <Spinner android:id="@+id/spinE2TienePerdidaOlfato"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TienePerdidaGusto"
+                      android:text="@string/perdidaGustoCuest" />
+            <Spinner android:id="@+id/spinE2TienePerdidaGusto"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TieneTos"
+                      android:text="@string/tos" />
+            <Spinner android:id="@+id/spinE2TieneTos"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TieneDificultadRespirar"
+                      android:text="@string/dificultadRespirar" />
+            <Spinner android:id="@+id/spinE2TieneDificultadRespirar"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TieneDolorPecho"
+                      android:text="@string/dolorPecho" />
+            <Spinner android:id="@+id/spinE2TieneDolorPecho"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TienePalpitaciones"
+                      android:text="@string/palpitaciones" />
+            <Spinner android:id="@+id/spinE2TienePalpitaciones"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TieneDolorArticulaciones"
+                      android:text="@string/dolorArticulaciones" />
+            <Spinner android:id="@+id/spinE2TieneDolorArticulaciones"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TieneParalisis"
+                      android:text="@string/paralisis" />
+            <Spinner android:id="@+id/spinE2TieneParalisis"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TieneMareos"
+                      android:text="@string/mareos" />
+            <Spinner android:id="@+id/spinE2TieneMareos"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TienePensamientoNublado"
+                      android:text="@string/pensamientoNublado" />
+            <Spinner android:id="@+id/spinE2TienePensamientoNublado"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TieneProblemasDormir"
+                      android:text="@string/problemasDormir" />
+            <Spinner android:id="@+id/spinE2TieneProblemasDormir"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TieneDepresion"
+                      android:text="@string/depresion" />
+            <Spinner android:id="@+id/spinE2TieneDepresion"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TieneOtrosSintomas"
+                      android:text="@string/otrosSintomas" />
+            <Spinner android:id="@+id/spinE2TieneOtrosSintomas"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2CualesSintomas"
+                      android:text="@string/cualesSintomas" />
+            <EditText android:id="@+id/inputE2CualesSintomas"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2SabeTiempoRecuperacion"
+                      android:text="@string/sabeTiempoRecuperacion" />
+            <Spinner android:id="@+id/spinE2SabeTiempoRecuperacion"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TiempoRecuperacion"
+                      android:text="@string/tiempoRecuperacion" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputE2TiempoRecuperacion"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:inputType="number" />
+
+                <Spinner android:id="@+id/spinE2TiempoRecuperacionEn"
+                         android:layout_width="wrap_content"
+                         android:layout_height="fill_parent"/>
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2SeveridadEnfermedad"
+                      android:text="@string/severidadEnfermedad" />
+            <Spinner android:id="@+id/spinE2SeveridadEnfermedad"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TomoMedicamento"
+                      android:text="@string/tomoMedicamento" />
+            <Spinner android:id="@+id/spinE2TomoMedicamento"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2QueMedicamento"
+                      android:text="@string/queMedicamento" />
+            <ni.org.ics.estudios.appmovil.multiselector.gui.MultiSpinner android:id="@+id/spinE2QueMedicamento"
+                                                                         android:layout_width="match_parent"
+                                                                         android:layout_height="wrap_content"
+                                                                         android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textE2OtroMedicamento"
+                      android:text="@string/otroMedicamento" />
+
+            <EditText android:id="@+id/inputE2OtroMedicamento"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2OxigenoDomicilio"
+                      android:text="@string/oxigenoDomicilio" />
+            <Spinner android:id="@+id/spinE2OxigenoDomicilio"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2TiempoOxigenoDom"
+                      android:text="@string/tiempoOxigenoDom" />
+            <Spinner android:id="@+id/spinE2TiempoOxigenoDom"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2FumadoPrevioEnfermedad"
+                      android:text="@string/fumadoPrevioEnfermedad" />
+            <Spinner android:id="@+id/spinE2FumadoPrevioEnfermedad"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2FumaActualmente"
+                      android:text="@string/fumaActualmente" />
+            <Spinner android:id="@+id/spinE2FumaActualmente"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2Embarazada"
+                      android:text="@string/embarazada" />
+            <Spinner android:id="@+id/spinE2Embarazada"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2RecuerdaSemanasEmb"
+                      android:text="@string/recuerdaSemanasEmb" />
+            <Spinner android:id="@+id/spinE2RecuerdaSemanasEmb"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2SemanasEmbarazo"
+                      android:text="@string/semanasEmbarazoCovid" />
+            <EditText android:id="@+id/inputE2SemanasEmbarazo"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2FinalEmbarazo"
+                      android:text="@string/finalEmbarazo" />
+            <Spinner android:id="@+id/spinE2FinalEmbarazo"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2OtroFinalEmbarazo"
+                      android:text="@string/otroFinalEmbarazo" />
+            <EditText android:id="@+id/inputE2OtroFinalEmbarazo"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE2DabaPecho"
+                      android:text="@string/dabaPecho" />
+            <Spinner android:id="@+id/spinE2DabaPecho"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+            <!-- fin evento 2-->
+            <!-- inicio evento 3-->
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textSabeEvento3"
+                      android:text="@string/sabeEvento3" />
+            <Spinner android:id="@+id/spinSabeEvento3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textEvento3"
+                      android:text="@string/fechaEvento3" />
+            <LinearLayout android:id="@+id/layoutEvento3"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputEvento3"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbEvento3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textAnioEvento3"
+                      android:text="@string/anioEvento" />
+            <EditText android:id="@+id/inputAnioEvento3"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textMesEvento3"
+                      android:text="@string/mesEvento" />
+            <Spinner android:id="@+id/spinMesEvento3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+            <!-- inicio sintomas evento 3-->
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDesdeSintomasE3"
+                      android:text="@string/presentoSintomas" android:layout_marginBottom="20dp" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3Febricula"
+                      android:text="@string/feb20Febricula" />
+            <Spinner android:id="@+id/spinE3Febricula"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3Fiebre"
+                      android:text="@string/feb20Fiebre" />
+            <Spinner android:id="@+id/spinE3Fiebre"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3Escalofrio"
+                      android:text="@string/feb20Escalofrio" />
+            <Spinner android:id="@+id/spinE3Escalofrio"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TemblorEscalofrio"
+                      android:text="@string/feb20TemblorEscalofrio" />
+            <Spinner android:id="@+id/spinE3TemblorEscalofrio"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3DolorMuscular"
+                      android:text="@string/feb20DolorMuscular" />
+            <Spinner android:id="@+id/spinE3DolorMuscular"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3DolorArticular"
+                      android:text="@string/feb20DolorArticular" />
+            <Spinner android:id="@+id/spinE3DolorArticular"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3SecresionNasal"
+                      android:text="@string/feb20SecresionNasal" />
+            <Spinner android:id="@+id/spinE3SecresionNasal"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3DolorGarganta"
+                      android:text="@string/feb20DolorGarganta" />
+            <Spinner android:id="@+id/spinE3DolorGarganta"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3Tos"
+                      android:text="@string/feb20Tos" />
+            <Spinner android:id="@+id/spinE3Tos"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3DificultadResp"
+                      android:text="@string/feb20DificultadResp" />
+            <Spinner android:id="@+id/spinE3DificultadResp"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3DolorPecho"
+                      android:text="@string/feb20DolorPecho" />
+            <Spinner android:id="@+id/spinE3DolorPecho"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3NauseasVomito"
+                      android:text="@string/feb20NauseasVomito" />
+            <Spinner android:id="@+id/spinE3NauseasVomito"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3DolorCabeza"
+                      android:text="@string/feb20DolorCabeza" />
+            <Spinner android:id="@+id/spinE3DolorCabeza"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3DolorAbdominal"
+                      android:text="@string/feb20DolorAbdominal" />
+            <Spinner android:id="@+id/spinE3DolorAbdominal"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3Diarrea"
+                      android:text="@string/feb20Diarrea" />
+            <Spinner android:id="@+id/spinE3Diarrea"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3DificultadDormir"
+                      android:text="@string/feb20DificultadDormir" />
+            <Spinner android:id="@+id/spinE3DificultadDormir"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3Debilidad"
+                      android:text="@string/feb20Debilidad" />
+            <Spinner android:id="@+id/spinE3Debilidad"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3PerdidaOlfatoGusto"
+                      android:text="@string/feb20PerdidaOlfatoGusto" />
+            <Spinner android:id="@+id/spinE3PerdidaOlfatoGusto"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3Mareo"
+                      android:text="@string/feb20Mareo" />
+            <Spinner android:id="@+id/spinE3Mareo"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3Sarpullido"
+                      android:text="@string/feb20Sarpullido" />
+            <Spinner android:id="@+id/spinE3Sarpullido"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3Desmayo"
+                      android:text="@string/feb20Desmayo" />
+            <Spinner android:id="@+id/spinE3Desmayo"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3QuedoCama"
+                      android:text="@string/feb20QuedoCama" />
+            <Spinner android:id="@+id/spinE3QuedoCama"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+            <!-- fin sintomas evento 3-->
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3SabeInicioSintoma"
+                      android:text="@string/sabeInicioSintoma" />
+            <Spinner android:id="@+id/spinE3SabeInicioSintoma"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3FIS"
+                      android:text="@string/fis" />
+            <LinearLayout android:id="@+id/layoutE3FIS"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputE3FIS"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbE3FIS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3AnioInicioSintoma"
+                      android:text="@string/anioInicioSintoma" />
+            <EditText android:id="@+id/inputE3AnioInicioSintoma"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3MesInicioSintoma"
+                      android:text="@string/mesInicioSintoma" />
+            <Spinner android:id="@+id/spinE3MesInicioSintoma"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3ConoceLugarExposicion"
+                      android:text="@string/conoceLugarExposicion" />
+            <Spinner android:id="@+id/spinE3ConoceLugarExposicion"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3LugarExposicion"
+                      android:text="@string/lugarExposicion" />
+            <EditText android:id="@+id/inputE3LugarExposicion"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3BuscoAyuda"
+                      android:text="@string/buscoAyuda" />
+            <Spinner android:id="@+id/spinE3BuscoAyuda"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3DondeBuscoAyuda"
+                      android:text="@string/dondeBuscoAyuda" />
+            <Spinner android:id="@+id/spinE3DondeBuscoAyuda"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3NombreCentro"
+                      android:text="@string/otroCentroSalud" />
+            <EditText android:id="@+id/inputE3NombreCentro"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3NombreHospital"
+                      android:text="@string/cualHospital" />
+            <EditText android:id="@+id/inputE3NombreHospital"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3RecibioSeguimiento"
+                      android:text="@string/recibioSeguimiento" />
+            <Spinner android:id="@+id/spinE3RecibioSeguimiento"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TipoSeguimiento"
+                      android:text="@string/tipoSeguimiento" />
+            <Spinner android:id="@+id/spinE3TipoSeguimiento"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TmpDespuesBuscoAyuda"
+                      android:text="@string/tmpDespuesBuscoAyuda" />
+            <Spinner android:id="@+id/spinE3TmpDespuesBuscoAyuda"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3UnaNocheHospital"
+                      android:text="@string/unaNocheHospital" />
+            <Spinner android:id="@+id/spinE3UnaNocheHospital"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3QueHospital"
+                      android:text="@string/queHospital" />
+            <EditText android:id="@+id/inputE3QueHospital"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3SabeCuantasNoches"
+                      android:text="@string/sabeCuantasNoches" />
+            <Spinner android:id="@+id/spinE3SabeCuantasNoches"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3CuantasNochesHosp"
+                      android:text="@string/cuantasNochesHosp" />
+            <EditText android:id="@+id/inputE3CuantasNochesHosp"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3SabeFechaAdmision"
+                      android:text="@string/sabeFechaAdmision" />
+            <Spinner android:id="@+id/spinE3SabeFechaAdmision"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3FechaAdmisionHosp"
+                      android:text="@string/fechaAdmisionHosp" />
+            <LinearLayout android:id="@+id/layoutE3FechaAdmision"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputE3FechaAdmisionHosp"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbE3FechaAdmisionHosp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3SabeFechaAlta"
+                      android:text="@string/sabeFechaAlta" />
+            <Spinner android:id="@+id/spinE3SabeFechaAlta"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3FechaAltaHosp"
+                      android:text="@string/fechaAltaHosp" />
+            <LinearLayout android:id="@+id/layoutE3FechaAlta"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputE3FechaAltaHosp"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbE3FechaAltaHosp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3UtilizoOxigeno"
+                      android:text="@string/utilizoOxigenoCuest" />
+            <Spinner android:id="@+id/spinE3UtilizoOxigeno"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3EstuvoUCI"
+                      android:text="@string/estuvoUCI" />
+            <Spinner android:id="@+id/spinE3EstuvoUCI"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3FueIntubado"
+                      android:text="@string/fueIntubadoCuest" />
+            <Spinner android:id="@+id/spinE3FueIntubado"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3RecuperadoCovid19"
+                      android:text="@string/recuperadoCovid19" />
+            <Spinner android:id="@+id/spinE3RecuperadoCovid19"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3QueSintomasPresenta"
+                      android:text="@string/queSintomasPresenta"
+                      android:layout_marginBottom="20dp"/>
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TieneFebricula"
+                      android:text="@string/febricula" />
+            <Spinner android:id="@+id/spinE3TieneFebricula"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TieneCansancio"
+                      android:text="@string/cansancio" />
+            <Spinner android:id="@+id/spinE3TieneCansancio"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TieneDolorCabeza"
+                      android:text="@string/dolorCabeza" />
+            <Spinner android:id="@+id/spinE3TieneDolorCabeza"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TienePerdidaOlfato"
+                      android:text="@string/perdidaOlfatoCuest" />
+            <Spinner android:id="@+id/spinE3TienePerdidaOlfato"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TienePerdidaGusto"
+                      android:text="@string/perdidaGustoCuest" />
+            <Spinner android:id="@+id/spinE3TienePerdidaGusto"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TieneTos"
+                      android:text="@string/tos" />
+            <Spinner android:id="@+id/spinE3TieneTos"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TieneDificultadRespirar"
+                      android:text="@string/dificultadRespirar" />
+            <Spinner android:id="@+id/spinE3TieneDificultadRespirar"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TieneDolorPecho"
+                      android:text="@string/dolorPecho" />
+            <Spinner android:id="@+id/spinE3TieneDolorPecho"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TienePalpitaciones"
+                      android:text="@string/palpitaciones" />
+            <Spinner android:id="@+id/spinE3TienePalpitaciones"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TieneDolorArticulaciones"
+                      android:text="@string/dolorArticulaciones" />
+            <Spinner android:id="@+id/spinE3TieneDolorArticulaciones"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TieneParalisis"
+                      android:text="@string/paralisis" />
+            <Spinner android:id="@+id/spinE3TieneParalisis"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TieneMareos"
+                      android:text="@string/mareos" />
+            <Spinner android:id="@+id/spinE3TieneMareos"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TienePensamientoNublado"
+                      android:text="@string/pensamientoNublado" />
+            <Spinner android:id="@+id/spinE3TienePensamientoNublado"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TieneProblemasDormir"
+                      android:text="@string/problemasDormir" />
+            <Spinner android:id="@+id/spinE3TieneProblemasDormir"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TieneDepresion"
+                      android:text="@string/depresion" />
+            <Spinner android:id="@+id/spinE3TieneDepresion"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TieneOtrosSintomas"
+                      android:text="@string/otrosSintomas" />
+            <Spinner android:id="@+id/spinE3TieneOtrosSintomas"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3CualesSintomas"
+                      android:text="@string/cualesSintomas" />
+            <EditText android:id="@+id/inputE3CualesSintomas"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3SabeTiempoRecuperacion"
+                      android:text="@string/sabeTiempoRecuperacion" />
+            <Spinner android:id="@+id/spinE3SabeTiempoRecuperacion"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TiempoRecuperacion"
+                      android:text="@string/tiempoRecuperacion" />
+
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                <EditText android:id="@+id/inputE3TiempoRecuperacion"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:inputType="number" />
+
+                <Spinner android:id="@+id/spinE3TiempoRecuperacionEn"
+                         android:layout_width="wrap_content"
+                         android:layout_height="fill_parent"/>
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3SeveridadEnfermedad"
+                      android:text="@string/severidadEnfermedad" />
+            <Spinner android:id="@+id/spinE3SeveridadEnfermedad"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TomoMedicamento"
+                      android:text="@string/tomoMedicamento" />
+            <Spinner android:id="@+id/spinE3TomoMedicamento"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3QueMedicamento"
+                      android:text="@string/queMedicamento" />
+            <ni.org.ics.estudios.appmovil.multiselector.gui.MultiSpinner android:id="@+id/spinE3QueMedicamento"
+                                                                         android:layout_width="match_parent"
+                                                                         android:layout_height="wrap_content"
+                                                                         android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel" android:id="@+id/textE3OtroMedicamento"
+                      android:text="@string/otroMedicamento" />
+
+            <EditText android:id="@+id/inputE3OtroMedicamento"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3OxigenoDomicilio"
+                      android:text="@string/oxigenoDomicilio" />
+            <Spinner android:id="@+id/spinE3OxigenoDomicilio"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3TiempoOxigenoDom"
+                      android:text="@string/tiempoOxigenoDom" />
+            <Spinner android:id="@+id/spinE3TiempoOxigenoDom"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3FumadoPrevioEnfermedad"
+                      android:text="@string/fumadoPrevioEnfermedad" />
+            <Spinner android:id="@+id/spinE3FumadoPrevioEnfermedad"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3FumaActualmente"
+                      android:text="@string/fumaActualmente" />
+            <Spinner android:id="@+id/spinE3FumaActualmente"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3Embarazada"
+                      android:text="@string/embarazada" />
+            <Spinner android:id="@+id/spinE3Embarazada"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3RecuerdaSemanasEmb"
+                      android:text="@string/recuerdaSemanasEmb" />
+            <Spinner android:id="@+id/spinE3RecuerdaSemanasEmb"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3SemanasEmbarazo"
+                      android:text="@string/semanasEmbarazoCovid" />
+            <EditText android:id="@+id/inputE3SemanasEmbarazo"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3FinalEmbarazo"
+                      android:text="@string/finalEmbarazo" />
+            <Spinner android:id="@+id/spinE3FinalEmbarazo"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3OtroFinalEmbarazo"
+                      android:text="@string/otroFinalEmbarazo" />
+            <EditText android:id="@+id/inputE3OtroFinalEmbarazo"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textE3DabaPecho"
+                      android:text="@string/dabaPecho" />
+            <Spinner android:id="@+id/spinE3DabaPecho"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+            <!-- fin evento 3-->
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textTrabajadorSalud"
+                      android:text="@string/trabajadorSalud" />
+            <Spinner android:id="@+id/spinTrabajadorSalud"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textVacunadoCovid19"
+                      android:text="@string/vacunadoCovid19" />
+            <Spinner android:id="@+id/spinVacunadoCovid19"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textMuestraTarjetaVac"
+                      android:text="@string/muestraTarjetaVac" />
+            <Spinner android:id="@+id/spinMuestraTarjetaVac"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textRecordarFoto"
+                      android:text="@string/recordarFoto" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textSabeNombreVacuna"
+                      android:text="@string/sabeNombreVacuna" />
+            <Spinner android:id="@+id/spinSabeNombreVacuna"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textNombreVacuna"
+                      android:text="@string/nombreVacuna" />
+            <EditText android:id="@+id/inputNombreVacuna"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textAnioVacuna"
+                      android:text="@string/anioVacuna" />
+            <EditText android:id="@+id/inputAnioVacuna"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textMesVacuna"
+                      android:text="@string/mesVacuna" />
+            <Spinner android:id="@+id/spinMesVacuna"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textCuantasDosis"
+                      android:text="@string/cuantasDosis" />
+            <Spinner android:id="@+id/spinCuantasDosis"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textNombreDosis1"
+                      android:text="@string/nombreDosis1" />
+            <Spinner android:id="@+id/spinNombreDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textOtraVacunaDosis1"
+                      android:text="@string/cualVacuna" />
+            <EditText android:id="@+id/inputOtraVacunaDosis1"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textLoteDosis1"
+                      android:text="@string/loteDosis1" />
+            <EditText android:id="@+id/inputLoteDosis1"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textFechaDosis1"
+                      android:text="@string/fechaDosis1" />
+            <LinearLayout android:id="@+id/layoutFechaDosis1"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputFechaDosis1"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbFechaDosis1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textNombreDosis2"
+                      android:text="@string/nombreDosis2" />
+            <Spinner android:id="@+id/spinNombreDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textOtraVacunaDosis2"
+                      android:text="@string/cualVacuna" />
+            <EditText android:id="@+id/inputOtraVacunaDosis2"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textLoteDosis2"
+                      android:text="@string/loteDosis2" />
+            <EditText android:id="@+id/inputLoteDosis2"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textFechaDosis2"
+                      android:text="@string/fechaDosis2" />
+            <LinearLayout android:id="@+id/layoutFechaDosis2"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputFechaDosis2"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbFechaDosis2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textNombreDosis3"
+                      android:text="@string/nombreDosis3" />
+            <Spinner android:id="@+id/spinNombreDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textOtraVacunaDosis3"
+                      android:text="@string/cualVacuna" />
+            <EditText android:id="@+id/inputOtraVacunaDosis3"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textLoteDosis3"
+                      android:text="@string/loteDosis3" />
+            <EditText android:id="@+id/inputLoteDosis3"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textFechaDosis3"
+                      android:text="@string/fechaDosis3" />
+            <LinearLayout android:id="@+id/layoutFechaDosis3"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputFechaDosis3"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbFechaDosis3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPresentoSintomasDosis1"
+                      android:text="@string/presentoSintomasVacuna1" />
+            <Spinner android:id="@+id/spinPresentoSintomasDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textSintomasDosis1"
+                      android:text="@string/sintomasVacuna" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDolorSitioDosis1"
+                      android:text="@string/dolorSitioVac" />
+            <Spinner android:id="@+id/spinDolorSitioDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textFiebreDosis1"
+                      android:text="@string/fiebreVac" />
+            <Spinner android:id="@+id/spinFiebreDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textCansancioDosis1"
+                      android:text="@string/cansancioVac" />
+            <Spinner android:id="@+id/spinCansancioDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDolorCabezaDosis1"
+                      android:text="@string/dolorCabezaVac" />
+            <Spinner android:id="@+id/spinDolorCabezaDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDiarreaDosis1"
+                      android:text="@string/diarreaVac" />
+            <Spinner android:id="@+id/spinDiarreaDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textVomitoDosis1"
+                      android:text="@string/vomitoVac" />
+            <Spinner android:id="@+id/spinVomitoDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDolorMuscularDosis1"
+                      android:text="@string/dolorMuscularVac" />
+            <Spinner android:id="@+id/spinDolorMuscularDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textEscalofriosDosis1"
+                      android:text="@string/escalofriosVac" />
+            <Spinner android:id="@+id/spinEscalofriosDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textReaccionAlergicaDosis1"
+                      android:text="@string/reaccionAlergicaVac" />
+            <Spinner android:id="@+id/spinReaccionAlergicaDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textInfeccionSitioDosis1"
+                      android:text="@string/infeccionSitioVac" />
+            <Spinner android:id="@+id/spinInfeccionSitioDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textNauseasDosis1"
+                      android:text="@string/nauseasVac" />
+            <Spinner android:id="@+id/spinNauseasDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textBultosDosis1"
+                      android:text="@string/bultosVac" />
+            <Spinner android:id="@+id/spinBultosDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textOtrosDosis1"
+                      android:text="@string/otrosVac" />
+            <Spinner android:id="@+id/spinOtrosDosis1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDesOtrosDosis1"
+                      android:text="@string/desOtrosVac" />
+            <EditText android:id="@+id/inputDesOtrosDosis1"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPresentoSintomasDosis2"
+                      android:text="@string/presentoSintomasVacuna2" />
+            <Spinner android:id="@+id/spinPresentoSintomasDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textSintomasDosis2"
+                      android:text="@string/sintomasVacuna" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDolorSitioDosis2"
+                      android:text="@string/dolorSitioVac" />
+            <Spinner android:id="@+id/spinDolorSitioDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textFiebreDosis2"
+                      android:text="@string/fiebreVac" />
+            <Spinner android:id="@+id/spinFiebreDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textCansancioDosis2"
+                      android:text="@string/cansancioVac" />
+            <Spinner android:id="@+id/spinCansancioDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDolorCabezaDosis2"
+                      android:text="@string/dolorCabezaVac" />
+            <Spinner android:id="@+id/spinDolorCabezaDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDiarreaDosis2"
+                      android:text="@string/diarreaVac" />
+            <Spinner android:id="@+id/spinDiarreaDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textVomitoDosis2"
+                      android:text="@string/vomitoVac" />
+            <Spinner android:id="@+id/spinVomitoDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDolorMuscularDosis2"
+                      android:text="@string/dolorMuscularVac" />
+            <Spinner android:id="@+id/spinDolorMuscularDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textEscalofriosDosis2"
+                      android:text="@string/escalofriosVac" />
+            <Spinner android:id="@+id/spinEscalofriosDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textReaccionAlergicaDosis2"
+                      android:text="@string/reaccionAlergicaVac" />
+            <Spinner android:id="@+id/spinReaccionAlergicaDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textInfeccionSitioDosis2"
+                      android:text="@string/infeccionSitioVac" />
+            <Spinner android:id="@+id/spinInfeccionSitioDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textNauseasDosis2"
+                      android:text="@string/nauseasVac" />
+            <Spinner android:id="@+id/spinNauseasDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textBultosDosis2"
+                      android:text="@string/bultosVac" />
+            <Spinner android:id="@+id/spinBultosDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textOtrosDosis2"
+                      android:text="@string/otrosVac" />
+            <Spinner android:id="@+id/spinOtrosDosis2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDesOtrosDosis2"
+                      android:text="@string/desOtrosVac" />
+            <EditText android:id="@+id/inputDesOtrosDosis2"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textPresentoSintomasDosis3"
+                      android:text="@string/presentoSintomasVacuna3" />
+            <Spinner android:id="@+id/spinPresentoSintomasDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textSintomasDosis3"
+                      android:text="@string/sintomasVacuna" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDolorSitioDosis3"
+                      android:text="@string/dolorSitioVac" />
+            <Spinner android:id="@+id/spinDolorSitioDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textFiebreDosis3"
+                      android:text="@string/fiebreVac" />
+            <Spinner android:id="@+id/spinFiebreDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textCansancioDosis3"
+                      android:text="@string/cansancioVac" />
+            <Spinner android:id="@+id/spinCansancioDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDolorCabezaDosis3"
+                      android:text="@string/dolorCabezaVac" />
+            <Spinner android:id="@+id/spinDolorCabezaDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDiarreaDosis3"
+                      android:text="@string/diarreaVac" />
+            <Spinner android:id="@+id/spinDiarreaDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textVomitoDosis3"
+                      android:text="@string/vomitoVac" />
+            <Spinner android:id="@+id/spinVomitoDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDolorMuscularDosis3"
+                      android:text="@string/dolorMuscularVac" />
+            <Spinner android:id="@+id/spinDolorMuscularDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textEscalofriosDosis3"
+                      android:text="@string/escalofriosVac" />
+            <Spinner android:id="@+id/spinEscalofriosDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textReaccionAlergicaDosis3"
+                      android:text="@string/reaccionAlergicaVac" />
+            <Spinner android:id="@+id/spinReaccionAlergicaDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textInfeccionSitioDosis3"
+                      android:text="@string/infeccionSitioVac" />
+            <Spinner android:id="@+id/spinInfeccionSitioDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textNauseasDosis3"
+                      android:text="@string/nauseasVac" />
+            <Spinner android:id="@+id/spinNauseasDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textBultosDosis3"
+                      android:text="@string/bultosVac" />
+            <Spinner android:id="@+id/spinBultosDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textOtrosDosis3"
+                      android:text="@string/otrosVac" />
+            <Spinner android:id="@+id/spinOtrosDosis3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textDesOtrosDosis3"
+                      android:text="@string/desOtrosVac" />
+            <EditText android:id="@+id/inputDesOtrosDosis3"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="text" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textCovid19PosteriorVacuna"
+                      android:text="@string/covid19PosteriorVacuna" />
+            <Spinner android:id="@+id/spinCovid19PosteriorVacuna"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textFechaEventoEnfermoPostVac"
+                      android:text="@string/fechaEnfPostVac" />
+            <Spinner android:id="@+id/spinFechaEventoEnfermoPostVac"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <!--<TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textSabeFechaEnfPostVac"
+                      android:text="@string/sabeFechaEnfPostVac" />
+            <Spinner android:id="@+id/spinSabeFechaEnfPostVac"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textFechaEnfPostVac"
+                      android:text="@string/fechaEnfPostVac" />
+            <LinearLayout android:id="@+id/layoutFechaEnfPostVac"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:orientation="horizontal">
+                <EditText android:id="@+id/inputFechaEnfPostVac"
+                          android:layout_width="0dip"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.0"
+                          android:focusable="false"
+                          android:inputType="text" />
+                <ImageButton
+                        android:id="@+id/imbFechaEnfPostVac"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu_month" />
+            </LinearLayout>
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textAnioEnfPostVac"
+                      android:text="@string/anioEvento" />
+            <EditText android:id="@+id/inputAnioEnfPostVac"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="20dp"
+                      android:inputType="number" />
+
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/textMesEnfPostVac"
+                      android:text="@string/mesEvento" />
+            <Spinner android:id="@+id/spinMesEnfPostVac"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
+-->
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

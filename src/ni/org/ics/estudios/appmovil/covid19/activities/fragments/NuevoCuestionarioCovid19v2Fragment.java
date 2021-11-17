@@ -4300,10 +4300,14 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                     spinE1Fiebre.setVisibility(View.GONE);
                     textE1Fiebre.setVisibility(View.GONE);
                     spinE1Fiebre.setSelection(0, false);
-                } else {
+                } else if (e1Febricula.equals(Constants.NOKEYSND)) {
                     spinE1Febricula.setBackgroundColor(Color.WHITE);
                     spinE1Fiebre.setVisibility(View.VISIBLE);
                     textE1Fiebre.setVisibility(View.VISIBLE);
+                } else {
+                    spinE1Fiebre.setVisibility(View.GONE);
+                    textE1Fiebre.setVisibility(View.GONE);
+                    spinE1Fiebre.setSelection(0, false);
                 }
                 MostrarOcultarPregunta3E1();
             }
@@ -4685,11 +4689,17 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                     spinE2Fiebre.setVisibility(View.GONE);
                     textE2Fiebre.setVisibility(View.GONE);
                     spinE2Fiebre.setSelection(0, false);
-                } else {
+                } else if (e2Febricula.equals(Constants.NOKEYSND)) {
                     spinE2Febricula.setBackgroundColor(Color.WHITE);
                     spinE2Fiebre.setVisibility(View.VISIBLE);
                     textE2Fiebre.setVisibility(View.VISIBLE);
+                } else {
+                    spinE2Fiebre.setVisibility(View.GONE);
+                    textE2Fiebre.setVisibility(View.GONE);
+                    spinE2Fiebre.setSelection(0, false);
                 }
+
+
                 MostrarOcultarPregunta3E2();
             }
             @Override
@@ -5070,10 +5080,14 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                     spinE3Fiebre.setVisibility(View.GONE);
                     textE3Fiebre.setVisibility(View.GONE);
                     spinE3Fiebre.setSelection(0, false);
-                } else {
+                } else if (e3Febricula.equals(Constants.NOKEYSND)) {
                     spinE3Febricula.setBackgroundColor(Color.WHITE);
                     spinE3Fiebre.setVisibility(View.VISIBLE);
                     textE3Fiebre.setVisibility(View.VISIBLE);
+                } else {
+                    spinE3Fiebre.setVisibility(View.GONE);
+                    textE3Fiebre.setVisibility(View.GONE);
+                    spinE3Fiebre.setSelection(0, false);
                 }
                 MostrarOcultarPregunta3E3();
             }

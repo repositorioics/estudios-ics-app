@@ -115,7 +115,7 @@ public class CuestionarioCovid19Helper {
         cv.put(Covid19DBConstants.e2UtilizoOxigeno, cuestionario.getE2UtilizoOxigeno());
         cv.put(Covid19DBConstants.e2EstuvoUCI, cuestionario.getE2EstuvoUCI());
         cv.put(Covid19DBConstants.e2FueIntubado, cuestionario.getE2FueIntubado());
-        cv.put(Covid19DBConstants.e2RecuperadoCovid19, cuestionario.getE1RecuperadoCovid19());
+        cv.put(Covid19DBConstants.e2RecuperadoCovid19, cuestionario.getE2RecuperadoCovid19());
         cv.put(Covid19DBConstants.e2TenidoFebricula, cuestionario.getE2TieneFebricula());
         cv.put(Covid19DBConstants.e2TenidoCansancio, cuestionario.getE2TieneCansancio());
         cv.put(Covid19DBConstants.e2TenidoDolorCabeza, cuestionario.getE2TieneDolorCabeza());
@@ -167,7 +167,7 @@ public class CuestionarioCovid19Helper {
         cv.put(Covid19DBConstants.e3UtilizoOxigeno, cuestionario.getE3UtilizoOxigeno());
         cv.put(Covid19DBConstants.e3EstuvoUCI, cuestionario.getE3EstuvoUCI());
         cv.put(Covid19DBConstants.e3FueIntubado, cuestionario.getE3FueIntubado());
-        cv.put(Covid19DBConstants.e3RecuperadoCovid19, cuestionario.getE1RecuperadoCovid19());
+        cv.put(Covid19DBConstants.e3RecuperadoCovid19, cuestionario.getE3RecuperadoCovid19());
         cv.put(Covid19DBConstants.e3TenidoFebricula, cuestionario.getE3TieneFebricula());
         cv.put(Covid19DBConstants.e3TenidoCansancio, cuestionario.getE3TieneCansancio());
         cv.put(Covid19DBConstants.e3TenidoDolorCabeza, cuestionario.getE3TieneDolorCabeza());

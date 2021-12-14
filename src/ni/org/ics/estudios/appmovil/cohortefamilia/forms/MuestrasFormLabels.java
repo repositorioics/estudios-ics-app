@@ -39,6 +39,26 @@ public class MuestrasFormLabels {
     protected String bhc2ml14;
     protected String realizaPaxgene;
     protected String realizaPaxgeneHint;
+
+    protected String tomaMxSnEDTA;
+    protected String codigoMxEDTA;
+    protected String volumenEDTA;
+    protected String observacionEDTA;
+    protected String descOtraObservacionEDTA;
+    protected String razonNoTomaEDTA;
+    protected String descOtraRazonNoTomaEDTA;
+
+    protected String tomaMxSnCit;
+    protected String codigoMxCit;
+    protected String volumenCit;
+    protected String observacionCit;
+    protected String descOtraObservacionCit;
+    protected String razonNoTomaCit;
+    protected String descOtraRazonNoTomaCit;
+
+    protected String tuboRojoHint;
+    protected String tuboEDTAHint;
+    protected String tuboCitratoHint;
     
     protected String volMedio;
     protected String volMem;
@@ -76,6 +96,28 @@ public class MuestrasFormLabels {
         realizaPaxgeneHint = res.getString(R.string.realizaPaxgeneHint);
         volMedio = res.getString(R.string.volMedio);
         volMem = res.getString(R.string.volMem);
+
+        tomaMxSnEDTA = res.getString(R.string.tomaMxSnEDTA);
+        codigoMxEDTA = res.getString(R.string.codigoMxEDTA);
+        volumenEDTA = res.getString(R.string.volumenEDTA);
+        observacionEDTA = res.getString(R.string.observacionEDTA);
+        descOtraObservacionEDTA = res.getString(R.string.descOtraObservacionEDTA);
+        razonNoTomaEDTA = res.getString(R.string.razonNoTomaEDTA);
+        descOtraRazonNoTomaEDTA = res.getString(R.string.descOtraRazonNoTomaEDTA);
+
+
+        tomaMxSnCit = res.getString(R.string.tomaMxSnCit);
+        codigoMxCit = res.getString(R.string.codigoMxCit);
+        volumenCit = res.getString(R.string.volumenCit);
+        observacionCit = res.getString(R.string.observacionCit);
+        descOtraObservacionCit = res.getString(R.string.descOtraObservacionCit);
+        razonNoTomaCit = res.getString(R.string.razonNoTomaCit);
+        descOtraRazonNoTomaCit = res.getString(R.string.descOtraRazonNoTomaCit);
+
+        tuboRojoHint = res.getString(R.string.tuboRojoHint);
+        tuboEDTAHint = res.getString(R.string.tuboEDTAHint);
+        tuboCitratoHint = res.getString(R.string.tuboCitratoHint);
+
     }
 
     public String getTomaMxSn() {
@@ -325,6 +367,74 @@ public class MuestrasFormLabels {
 	public void setVolMem(String volMem) {
 		this.volMem = volMem;
 	}
-    
-    
+
+    public String getTuboRojoHint() {
+        return tuboRojoHint;
+    }
+
+    public String getTuboEDTAHint() {
+        return tuboEDTAHint;
+    }
+
+    public String getTuboCitratoHint() {
+        return tuboCitratoHint;
+    }
+
+    public String getCodigoMxEDTA() {
+        return codigoMxEDTA;
+    }
+
+    public String getCodigoMxCit() {
+        return codigoMxCit;
+    }
+
+    public String getTomaMxSnEDTA() {
+        return tomaMxSnEDTA;
+    }
+
+    public String getVolumenEDTA() {
+        return volumenEDTA;
+    }
+
+    public String getObservacionEDTA() {
+        return observacionEDTA;
+    }
+
+    public String getDescOtraObservacionEDTA() {
+        return descOtraObservacionEDTA;
+    }
+
+    public String getRazonNoTomaEDTA() {
+        return razonNoTomaEDTA;
+    }
+
+    public String getDescOtraRazonNoTomaEDTA() {
+        return descOtraRazonNoTomaEDTA;
+    }
+
+    public String getTomaMxSnCit() {
+        return tomaMxSnCit;
+    }
+
+    public String getVolumenCit() {
+        return volumenCit;
+    }
+
+    public String getObservacionCit() {
+        return observacionCit;
+    }
+
+    public String getDescOtraObservacionCit() {
+        return descOtraObservacionCit;
+    }
+
+    public String getRazonNoTomaCit() {
+        return razonNoTomaCit;
+    }
+
+    public String getDescOtraRazonNoTomaCit() {
+        return descOtraRazonNoTomaCit;
+    }
+
+
 }

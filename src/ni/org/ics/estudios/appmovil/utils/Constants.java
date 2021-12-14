@@ -103,6 +103,8 @@ public class Constants {
     public static final String CODIGO_TUBO_PBMC = "3";
     public static final String CODIGO_MEDIO = "4";
     public static final String CODIGO_MEM = "5";
+    public static final String CODIGO_TUBO_PBMC_EDTA = "6";
+    public static final String CODIGO_TUBO_PBMC_CITRATO = "7";
     public static final String FEC_VISITA = "fecha_visita";
 
     //MUESTREO ANUAL
@@ -150,6 +152,10 @@ public class Constants {
     public static final String DESDE_FOTO = "desde_fotografia";
 
     public static final String REL_FAM_MISMO_PART = "8";
+
+    //EDTA y Citrato
+    public static final String CANDIDATO_EDTA_CITRATO = "C3";
+    public static final String MX_EDTA_CITRATO = "3";
 
 }
 

@@ -121,4 +121,25 @@
     <string name="error1CodigoMx">Código de muestra no válido</string>
     <string name="error2CodigoMx">Código de muestra no pertenece al participante: <xliff:g id="codigo">%1$s</xliff:g></string>
 
+    <string name="tomaMxSnEDTA">Se tomó muestra PBMC?</string>
+    <string name="codigoMxEDTA">Escanee código de muestra EDTA</string>
+    <string name="volumenEDTA">Volumen EDTA</string>
+    <string name="observacionEDTA">Observación de la muestra EDTA</string>
+    <string name="descOtraObservacionEDTA">Otra observacion EDTA</string>
+    <string name="razonNoTomaEDTA">¿Porqué razón no se tomó muestra EDTA?</string>
+    <string name="descOtraRazonNoTomaEDTA">Otra razon EDTA</string>
+
+    <string name="tomaMxSnCit">Se tomó muestra Citrato?</string>
+    <string name="codigoMxCit">Escanee código de muestra Citrato</string>
+    <string name="volumenCit">Volumen Citrato</string>
+    <string name="observacionCit">Observación de la muestra Citrato</string>
+    <string name="descOtraObservacionCit">Otra observacion Citrato</string>
+    <string name="razonNoTomaCit">¿Porqué razón no se tomó muestra Citrato?</string>
+    <string name="descOtraRazonNoTomaCit">Otra razon Citrato</string>
+
+    <string name="tuboRojoHint">Tubo Rojo</string>
+    <string name="tuboEDTAHint">Tubo con EDTA</string>
+    <string name="tuboCitratoHint">Tubo Amarillo</string>
+    <string name="codigoMxCitrato">Escanee código de muestra Citrato</string>
+
 </resources>

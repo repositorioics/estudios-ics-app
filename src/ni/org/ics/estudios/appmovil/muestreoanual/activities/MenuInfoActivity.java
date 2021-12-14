@@ -535,6 +535,13 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         i.putExtra(Constants.PARTICIPANTE, mParticipante);
                         i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
                         startActivity(i);
+                    } else if(mParticipante.getProcesos().getMuestraCovid().matches(Constants.MX_EDTA_CITRATO)){
+                        i = new Intent(getApplicationContext(),
+                                NuevaMuestraAdicRojoEDTACitratoCovid19Activity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(Constants.PARTICIPANTE, mParticipante);
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                        startActivity(i);
                     }
                     else{
                         Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
@@ -1138,7 +1145,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if ((mParticipante.getProcesos().getConsChf()!=null && mParticipante.getProcesos().getConsChf().matches("Si") && mUser.getConsentimiento())) consParteEChf.setVisible(true);
             if ((mParticipante.getProcesos().getCuestCovid()!=null && !mParticipante.getProcesos().getCuestCovid().matches("No") && mUser.getEncuestaParticipante())) cuestCovid19.setVisible(true);
             if ((mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) &&
-                    (mParticipante.getProcesos().getMuestraCovid()!=null && mParticipante.getProcesos().getMuestraCovid().matches("Si") && mUser.getMuestra())) mxAdicionalCovid19.setVisible(true);
+                    (mParticipante.getProcesos().getMuestraCovid()!=null && (mParticipante.getProcesos().getMuestraCovid().matches("Si") || mParticipante.getProcesos().getMuestraCovid().matches(Constants.MX_EDTA_CITRATO)) && mUser.getMuestra())) mxAdicionalCovid19.setVisible(true);
             //Deshabilitar en MA2021. Habilitar muestreo familia nov 2021
             if ((mParticipante.getProcesos().getConsSa()!=null && mParticipante.getProcesos().getConsSa().matches("Si") && mUser.getConsentimiento()))consSAItem.setVisible(true);
             //ParteE Dengue
@@ -1323,7 +1330,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || mParticipante.getProcesos().getConsCovid19().matches("Si")
                     || (mParticipante.getProcesos().getConsChf() != null && mParticipante.getProcesos().getConsChf().matches("Si"))
                     || (mParticipante.getProcesos().getCuestCovid() != null && !mParticipante.getProcesos().getCuestCovid().matches("No"))
-                    || (mParticipante.getProcesos().getMuestraCovid() != null && mParticipante.getProcesos().getMuestraCovid().matches("Si")) //se deshabilita para MA2021
+                    || (mParticipante.getProcesos().getMuestraCovid() != null && (mParticipante.getProcesos().getMuestraCovid().matches("Si") || mParticipante.getProcesos().getMuestraCovid().matches(Constants.MX_EDTA_CITRATO))) //se deshabilita para MA2021
                     || (mParticipante.getProcesos().getConsSa() != null && mParticipante.getProcesos().getConsSa().matches("Si"))
                     || (mParticipante.getProcesos().getConsDenParteE()!=null && mParticipante.getProcesos().getConsDenParteE().matches("Si"))
                     //|| (mParticipante.getProcesos().getMxDenParteE()!=null && mParticipante.getProcesos().getMxDenParteE().matches("Si")) //se deshabilita para MA2021
@@ -1557,7 +1564,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         }
                          //deshabilitar adicional CHF para Covid19 y Muestra adicional Dengue parte E para MA2021
                         //Muestra adicional CHF para Covid19
-                        if (mParticipante.getProcesos().getMuestraCovid()!=null && mParticipante.getProcesos().getMuestraCovid().matches("Si")){
+                        if (mParticipante.getProcesos().getMuestraCovid()!=null && (mParticipante.getProcesos().getMuestraCovid().matches("Si") || mParticipante.getProcesos().getMuestraCovid().matches(Constants.MX_EDTA_CITRATO))){
                             labelHeader += getVolumenCHFAdicionalCovid19();
                             pendiente=true;
                         }/*
@@ -2047,28 +2054,34 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
 
     private String getVolumenCHFAdicionalCovid19() {
         String labelHeader = "";
-        //no tiene que tener pendiente mx principal
-        if (mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) {
-            //menores de 6 meses
-            if (mParticipante.getEdadMeses() < 6) {
-                //labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
-                labelHeader = labelHeader + "<small><font color='red'>No tomar muestra<br /></font></small>";
-                pendiente = true;
-            } //De 6 meses a <2 años
-            else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
-                //labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
-                labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
-                pendiente = true;
-            }  //De 2 años - < 14 Años
-            else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
-                //labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
-                labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
-                pendiente = true;
-            } else //De 14 años y más
-            {
-                //labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
-                labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
-                pendiente = true;
+        if (mParticipante.getProcesos().getMuestraCovid() != null && mParticipante.getProcesos().getMuestraCovid().equalsIgnoreCase(Constants.MX_EDTA_CITRATO)) {
+            labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
+            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 4cc en tubo PBMC<br /></font></small>";
+            labelHeader = labelHeader + "<small><font color='#bc7201'>Tomar 6cc en tubo Amarillo<br /></font></small>";
+        } else {
+            //no tiene que tener pendiente mx principal
+            if (mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) {
+                //menores de 6 meses
+                if (mParticipante.getEdadMeses() < 6) {
+                    //labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>No tomar muestra<br /></font></small>";
+                    pendiente = true;
+                } //De 6 meses a <2 años
+                else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
+                    //labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
+                    pendiente = true;
+                }  //De 2 años - < 14 Años
+                else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
+                    //labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                    pendiente = true;
+                } else //De 14 años y más
+                {
+                    //labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                    pendiente = true;
+                }
             }
         }
         return labelHeader;

@@ -1069,7 +1069,11 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                         procesos.setConsChf(Constants.NO);
                         if (procesos.getCuestCovid() == null || procesos.getCuestCovid().equalsIgnoreCase("No"))
                             procesos.setCuestCovid("3a");//muestreo noviembre 2021
-                        procesos.setMuestraCovid(Constants.YES);//ya no pedir procesos de muestra adicional covid. Brenda 03082021
+                        if (procesos.getMuestraCovid() != null && procesos.getMuestraCovid().equalsIgnoreCase(Constants.CANDIDATO_EDTA_CITRATO)) {
+                            procesos.setMuestraCovid(Constants.MX_EDTA_CITRATO);//pedir rojo, edta y citrato. Noviembre 2021
+                        } else {
+                            procesos.setMuestraCovid(Constants.YES);//ya no pedir procesos de muestra adicional covid. Brenda 03082021
+                        }
                         procesos.setMovilInfo(movilInfo);
                         //estudiosAdapter.actualizarParticipanteProcesos(procesos);
                         if (esElegible) {

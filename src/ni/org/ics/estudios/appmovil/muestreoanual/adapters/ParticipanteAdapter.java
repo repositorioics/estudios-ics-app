@@ -11,6 +11,7 @@ import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
+import ni.org.ics.estudios.appmovil.utils.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -119,7 +120,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         || procesos.getConsCovid19().matches("Si")
                         || (procesos.getConsChf()!=null && procesos.getConsChf().matches("Si"))
                         || (procesos.getCuestCovid()!=null && !procesos.getCuestCovid().matches("No"))
-                        || (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si"))//se deshabilita para MA2021
+                        || (procesos.getMuestraCovid()!=null && (procesos.getMuestraCovid().matches("Si") || procesos.getMuestraCovid().matches(Constants.MX_EDTA_CITRATO)))//rojo o rojo+edta+citrato
                         || (procesos.getConsSa() != null && procesos.getConsSa().matches("Si"))
                         || (procesos.getConsDenParteE()!=null && procesos.getConsDenParteE().matches("Si"))
                         //|| (procesos.getMxDenParteE()!=null && procesos.getMxDenParteE().matches("Si")) //se deshabilita para MA2021
@@ -329,7 +330,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         }
                         //deshabilitar adicional CHF para Covid19 y Muestra adicional Dengue parte E para MA2021
                         //Muestra adicional CHF para Covid19
-                        if (procesos.getMuestraCovid()!=null && procesos.getMuestraCovid().matches("Si")){
+                        if (procesos.getMuestraCovid()!=null && (procesos.getMuestraCovid().matches("Si") || procesos.getMuestraCovid().matches(Constants.MX_EDTA_CITRATO))){
                             labelHeader += getVolumenCHFAdicionalCovid19(participante);
                         }/*
                         //Muestra adicional Dengue parte E
@@ -706,23 +707,29 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
     private String getVolumenCHFAdicionalCovid19(Participante mParticipante) {
         String labelHeader = "";
         //no tiene que tener pendiente mx principal
-        if (mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) {
-            //menores de 6 meses
-            if (mParticipante.getEdadMeses() < 6) {
-                //labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
-                labelHeader = labelHeader + "<small><font color='red'>No tomar muestra<br /></font></small>";
-            } //De 6 meses a <2 años
-            else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
-                //labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
-                labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
-            }  //De 2 años - < 14 Años
-            else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
-                //labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
-                labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
-            } else //De 14 años y más
-            {
-                //labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
-                labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+        if (mParticipante.getProcesos().getMuestraCovid() != null && mParticipante.getProcesos().getMuestraCovid().equalsIgnoreCase(Constants.MX_EDTA_CITRATO)) {
+            labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
+            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 4cc en tubo PBMC<br /></font></small>";
+            labelHeader = labelHeader + "<small><font color='#bc7201'>Tomar 6cc en tubo Amarillo<br /></font></small>";
+        } else {
+            if (mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) {
+                //menores de 6 meses
+                if (mParticipante.getEdadMeses() < 6) {
+                    //labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>No tomar muestra<br /></font></small>";
+                } //De 6 meses a <2 años
+                else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
+                    //labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
+                }  //De 2 años - < 14 Años
+                else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
+                    //labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                } else //De 14 años y más
+                {
+                    //labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                }
             }
         }
         return labelHeader;

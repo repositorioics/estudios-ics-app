@@ -39,6 +39,7 @@ public class CasosDBConstants {
     public static final String enfermo = "enfermo";
     public static final String fechaEnfermedad = "fechaEnfermedad";
     public static final String fis = "fis";
+    public static final String positivoPor = "positivoPor";
 
     //Crear ParticipanteCohorteFamiliaCaso
     public static final String CREATE_PARTICIPANTES_CASOS_TABLE = "create table if not exists "
@@ -49,6 +50,7 @@ public class CasosDBConstants {
             + enfermo + " text, "
             + fechaEnfermedad + " date, "
             + fis + " date, "
+            + positivoPor + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "
@@ -337,12 +339,13 @@ public class CasosDBConstants {
             + enfermo + ","
             + fechaEnfermedad + ","
             + fis + ","
+            + positivoPor + ","
             + MainDBConstants.recordDate + ","
             + MainDBConstants.recordUser + ","
             + MainDBConstants.pasive + ","
             + MainDBConstants.deviceId + ","
             + MainDBConstants.estado
-            + ") values (?,?,?,?,?,?,?,?,?,?,?)";
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static final String INSERT_VISITAS_CASOS_TABLE = "insert into "
             + VISITAS_CASOS_TABLE + " ("

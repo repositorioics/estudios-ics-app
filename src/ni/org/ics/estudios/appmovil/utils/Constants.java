@@ -3,6 +3,9 @@ package ni.org.ics.estudios.appmovil.utils;
 
 import android.net.Uri;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Constantes usadas en multiples clases de la aplicacion
  * 

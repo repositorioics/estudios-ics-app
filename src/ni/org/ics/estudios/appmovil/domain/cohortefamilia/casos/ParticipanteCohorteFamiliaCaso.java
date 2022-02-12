@@ -21,6 +21,7 @@ public class ParticipanteCohorteFamiliaCaso extends BaseMetaData {
 	private String enfermo;
 	private Date fechaEnfermedad;
 	private Date fis;
+	private String positivoPor;
 	
 	public String getCodigoCasoParticipante() {
 		return codigoCasoParticipante;
@@ -68,6 +69,14 @@ public class ParticipanteCohorteFamiliaCaso extends BaseMetaData {
 
 	public void setFis(Date fis) {
 		this.fis = fis;
+	}
+
+	public String getPositivoPor() {
+		return positivoPor;
+	}
+
+	public void setPositivoPor(String positivoPor) {
+		this.positivoPor = positivoPor;
 	}
 
 	@Override

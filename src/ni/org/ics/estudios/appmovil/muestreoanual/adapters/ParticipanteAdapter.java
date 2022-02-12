@@ -87,8 +87,11 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
 				if ((participante.getDatosCHF()!=null && participante.getDatosCHF().isEnMonitoreoIntensivo()) || procesos.getMi().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante en monitoreo intensivo CHF</b></font><br />";
                 if (procesos.getPosDengue()!=null) labelHeader = labelHeader + "<font color='red'>"+procesos.getPosDengue()+"</font><br />";
 				//if (participante.getCand().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante candidato a CHF</b></font><br />";
-                if (participante.getDatosUO1()!=null &&  participante.getDatosUO1().isConvalesciente() && participante.getDatosUO1().getDiasConvalesciente() < 30){
+                if (participante.getDatosUO1()!=null && participante.getDatosUO1().isConvalesciente() && participante.getDatosUO1().getDiasConvalesciente() < 30){
                     labelHeader = labelHeader + "<font color='red'>Convaleciente UO1 con menos de 30 días. No tomar muestra</font><br />";
+                }
+                if (participante.getDatosUO1()!=null && participante.getDatosUO1().isConvalescienteFlu() && participante.getDatosUO1().getDiasConvalesciente() < 30){
+                    labelHeader = labelHeader + "<small><font color='red'>Convaleciente Flu con menos de 30 días. No tomar muestra</font></small><br />";
                 }
                 if (participante.getDatosUO1()!=null &&  participante.getDatosUO1().isVisitaExitosa() && participante.getDatosUO1().getDiasVacuna() < 30){
                     if (participante.getDatosUO1().isVacunado()) {

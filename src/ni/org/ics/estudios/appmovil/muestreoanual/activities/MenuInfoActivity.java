@@ -1224,15 +1224,24 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             //sacar la ultima visita inicial por vacuna uo1, si tiene evaluar si tiene menos de 30 dias de vacunado
             List<VisitaVacunaUO1> mVisitasCasos = estudiosAdapter.getVisitasVacunasUO1(InfluenzaUO1DBConstants.participante + " = " + mParticipante.getCodigo() + " and visitaExitosa = '1' and visita = 'I' ",
                     InfluenzaUO1DBConstants.fechaVisita + " desc ");
-            if (mVisitasCasos.size()>0) {
+            if (mVisitasCasos.size() > 0) {
                 VisitaVacunaUO1 ultimaVisita = mVisitasCasos.get(0);
-                if (DateUtil.getDateDiff(ultimaVisita.getFechaVisita(), new Date(), TimeUnit.DAYS) < 30){
+                if (DateUtil.getDateDiff(ultimaVisita.getFechaVisita(), new Date(), TimeUnit.DAYS) < 30) {
                     datosUO1.setVacunado(ultimaVisita.getVacuna().equalsIgnoreCase(Constants.YESKEYSND));
                     datosUO1.setFechaVacuna(ultimaVisita.getFechaVacuna());
                     datosUO1.setMxTomada(ultimaVisita.getTomaMxAntes().equalsIgnoreCase(Constants.YESKEYSND));
                     datosUO1.setRazonNoMx(ultimaVisita.getRazonNoTomaMx());
                     datosUO1.setVisitaExitosa(ultimaVisita.getVisitaExitosa().equalsIgnoreCase(Constants.YESKEYSND));
                 }
+            }
+            mParticipante.setDatosUO1(datosUO1);
+        }  //procesos CEIRS
+        else if (mParticipante.getProcesos().getEstudio().contains("Influenza")) {
+            ParticipanteCasoUO1 casoUO1 = estudiosAdapter.getParticipanteCasoUO1(InfluenzaUO1DBConstants.participante + "=" + mParticipante.getCodigo(), null);
+            DatosUO1 datosUO1 = new DatosUO1();
+            if (casoUO1 != null) {
+                datosUO1.setConvalescienteFlu(true);
+                datosUO1.setFechaInicioCaso(casoUO1.getFechaIngreso());
             }
             mParticipante.setDatosUO1(datosUO1);
         }
@@ -1298,6 +1307,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if (mParticipante.getProcesos().getPosDengue()!=null) labelHeader = labelHeader + "<small><font color='red'>"+mParticipante.getProcesos().getPosDengue()+"</font></small><br />";
             if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isConvalesciente() && mParticipante.getDatosUO1().getDiasConvalesciente() < 30){
                 labelHeader = labelHeader + "<small><font color='red'>Convaleciente UO1 con menos de 30 días. No tomar muestra</font></small><br />";
+            }
+            if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isConvalescienteFlu() && mParticipante.getDatosUO1().getDiasConvalesciente() < 30){
+                labelHeader = labelHeader + "<small><font color='red'>Convaleciente Flu con menos de 30 días. No tomar muestra</font></small><br />";
             }
             if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isVisitaExitosa() && mParticipante.getDatosUO1().getDiasVacuna() < 30){
                 if (mParticipante.getDatosUO1().isVacunado()) {

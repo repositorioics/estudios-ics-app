@@ -11,6 +11,7 @@ public class InfluenzaUO1DBConstants {
     public static final String fif = "fif";
     public static final String fechaIngreso = "fechaIngreso";
     public static final String fechaDesactivacion = "fechaDesactivacion";
+    public static final String fis = "fis";
 
     //crear tabla ParticipanteCasoUO1
     public static final String CREATE_UO1_PARTICIPANTES_CASOS_TABLE = "create table if not exists "
@@ -18,6 +19,7 @@ public class InfluenzaUO1DBConstants {
             + codigoCasoParticipante + " text not null, "
             + participante + " integer not null, "
             + positivoPor + " text, "
+            + fis + " date, "
             + fif + " date, "
             + fechaIngreso + " date, "
             + fechaDesactivacion + " date, "
@@ -175,6 +177,7 @@ public class InfluenzaUO1DBConstants {
             + codigoCasoParticipante + ","
             + participante + ","
             + positivoPor + ","
+            + fis + ","
             + fif + ","
             + fechaIngreso + ","
             + fechaDesactivacion + ","
@@ -184,7 +187,7 @@ public class InfluenzaUO1DBConstants {
             + MainDBConstants.pasive + ","
             + MainDBConstants.deviceId + ","
             + MainDBConstants.estado
-            + ") values(?,?,?,?,?,?,?,?,?,?,?,?)";
+            + ") values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static final String INSERT_UO1_VISITAS_CASOS_TABLE = "insert into "
             + UO1_VISITAS_CASOS_TABLE + " ("

@@ -292,6 +292,15 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 								}
 							}
 							mParticipante.setDatosUO1(datosUO1);
+						}  //procesos CEIRS
+						else if (mParticipante.getProcesos().getEstudio().contains("Influenza")) {
+							ParticipanteCasoUO1 casoUO1 = estudiosAdapter.getParticipanteCasoUO1(InfluenzaUO1DBConstants.participante + "=" + mParticipante.getCodigo(), null);
+							DatosUO1 datosUO1 = new DatosUO1();
+							if (casoUO1 != null) {
+								datosUO1.setConvalescienteFlu(true);
+								datosUO1.setFechaInicioCaso(casoUO1.getFechaIngreso());
+							}
+							mParticipante.setDatosUO1(datosUO1);
 						}
 						//procesos Covid19
 						//if (mParticipante.getProcesos().getSubEstudios().contains("2")) {
@@ -559,6 +568,15 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 
 						}
 						mParticipantes.get(indice).setDatosUO1(datosUO1);
+					}  //procesos CEIRS
+                	else if (p.getProcesos().getEstudio().contains("Influenza")) {
+						ParticipanteCasoUO1 casoUO1 = estudiosAdapter.getParticipanteCasoUO1(InfluenzaUO1DBConstants.participante + "=" + p.getCodigo(), null);
+						DatosUO1 datosUO1 = new DatosUO1();
+						if (casoUO1 != null) {
+							datosUO1.setConvalescienteFlu(true);
+							datosUO1.setFechaInicioCaso(casoUO1.getFechaIngreso());
+						}
+						p.setDatosUO1(datosUO1);
 					}
 					//procesos Covid19
 					//if (p.getProcesos().getSubEstudios().contains("2")) {

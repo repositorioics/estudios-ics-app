@@ -390,7 +390,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                     //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), true);
                     //notificarCambios = false;
-                    Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noEsElegible) + " Dengue o Influenza", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noEsElegible) + " Dengue", Toast.LENGTH_LONG);
                     toast.show();
                     resetForm(99);
                 }else {
@@ -410,7 +410,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         if (!(edadAnios >= EDAD_MINIMA_DENGUE && edadAnios < EDAD_LIMITE_INGRESO)) {
                             changeStatus(mWizardModel.findByKey(labels.getAceptaTamizajePersona()), false);
                             //notificarCambios = false;
-                            changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), true);
+                            changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), false);
                             //notificarCambios = false;
                             resetForm(99);
                         }else{
@@ -1742,7 +1742,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
             }
 
             if (tieneValor(diagDengue)) {
-                MessageResource catDen = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + diagDengue + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SND'", null);
+                MessageResource catDen = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + diagDengue + "' and " + CatalogosDBConstants.catRoot + "='CAT_SND_SINFECHA'", null);
                 if (catDen!=null) tamizaje.setDiagDengue(catDen.getCatKey());
             }
             if (tieneValor(hospDengue)) {

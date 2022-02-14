@@ -11,7 +11,7 @@
     <string name="razonNoParticipaPersona">Porque no acepta tamizaje?</string>
     <string name="razonNoParticipaPersonaHint">Pregunte porque no está de acuerdo en realizar el tamizaje.</string>
     <string name="otraRazonNoParticipaPersona">Otra razón desacuerdo tamizaje</string>
-    <string name="otraRazonNoParticipaPersonaHint">Indicar porque otra razón no esta de acuerdo en realizar tamisaje</string>
+    <string name="otraRazonNoParticipaPersonaHint">Indicar porque otra razón no esta de acuerdo en realizar tamizaje</string>
     <string name="criteriosInclusion">Criterios de Inclusión</string>
     <string name="criteriosInclusionHint">Verifique cada uno de los Criterios de Inclusión</string>
     <string name="enfermedad">Enfermo</string>
@@ -151,7 +151,7 @@
     <string name="codigoNuevaCasaCohorte">Código de Nueva Casa</string>
     <string name="pretermino">¿Es bebé Pretermino?</string>
     <string name="participanteExiste">Código de participante ya está registrado</string>
-    <string name="noRegistraIngreso">No acepta participar o no es elegible. No se realazará el ingreso</string>
+    <string name="noRegistraIngreso">No acepta participar o no es elegible. No se realizará el ingreso</string>
     <string name="jefeFamiliaHint">Nombres y apellidos del jefe de la casa de cohorte pediátrica</string>
     <string name="direccion">Dirección</string>
     <string name="direccionHint">Dirección de la casa de cohorte pediátrica</string>

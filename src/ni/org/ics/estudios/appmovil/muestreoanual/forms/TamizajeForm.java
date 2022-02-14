@@ -75,6 +75,7 @@ public class TamizajeForm extends AbstractWizardModel {
         String[] catTramiento = fillCatalog("CPD_CAT_TRATAMIENTO");
         String[] catVerificaTutor = fillCatalog("CP_CAT_VERIFTUTOR");
         String[] catMotivoRechazo = fillCatalog("CPD_CAT_MOTRECHAZO");
+        String[] catSiNoDesSinFecha = fillCatalog("CAT_SND_SINFECHA");
         estudiosAdapter.close();
 
         DateMidnight dmDesde = DateMidnight.parse("01/01/1900", DateTimeFormat.forPattern("dd/MM/yyyy"));
@@ -134,7 +135,7 @@ public class TamizajeForm extends AbstractWizardModel {
         Page cualTratamiento = new MultipleFixedChoicePage(this,labels.getCualTratamiento(),"", Constants.WIZARD, false).setChoices(catTramiento).setRequired(true);
         Page otroTx = new TextPage(this,labels.getOtroTratamiento(), "", Constants.WIZARD, false).setRequired(true);
 
-        Page diagDengue = new SingleFixedChoicePage(this,labels.getDiagDengue(), "", Constants.WIZARD, false).setChoices(catSiNoDes).setRequired(true);
+        Page diagDengue = new SingleFixedChoicePage(this,labels.getDiagDengue(), "", Constants.WIZARD, false).setChoices(catSiNoDesSinFecha).setRequired(true);
         Page fechaDiagDengue = new NewDatePage(this,labels.getFechaDiagDengue(), "", Constants.WIZARD, false).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
         Page hospDengue = new SingleFixedChoicePage(this,labels.getHospDengue(), "", Constants.WIZARD, false).setChoices(catSiNoDes).setRequired(true);
         Page fechaHospDengue = new NewDatePage(this,labels.getFechaHospDengue(), "", Constants.WIZARD, false).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);

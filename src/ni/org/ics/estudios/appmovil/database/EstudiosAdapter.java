@@ -7222,7 +7222,7 @@ public class EstudiosAdapter {
 
 	//Limpiar la tabla de Muestras Positivos UO1 de la base de datos
 	public boolean borrarMuestrasUO1() {
-		return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, MuestrasDBConstants.proposito + "='"+Constants.CODIGO_PROPOSITO_UO1+"' or " + MuestrasDBConstants.proposito + "='"+Constants.CODIGO_PROPOSITO_VC_UO1+"'"  , null) > 0;
+		return mDb.delete(MuestrasDBConstants.MUESTRA_TABLE, MuestrasDBConstants.proposito + "='"+Constants.CODIGO_PROPOSITO_UO1+"' or " + MuestrasDBConstants.proposito + "='"+Constants.CODIGO_PROPOSITO_POS_FLU+"'  or " + MuestrasDBConstants.proposito + "='"+Constants.CODIGO_PROPOSITO_VC_UO1+"'"  , null) > 0;
 	}
 
 	/**

@@ -54,6 +54,7 @@ public class Constants {
     public static final String OTRO = "Otro";
     public static final String NO = "No";
     public static final String NA = "NA";
+    public static final String OTRARELFAM = "Otra relación familiar";
 
     public static final String YESKEYSND = "1";
     public static final String OTROKEYSND = "999";
@@ -96,6 +97,7 @@ public class Constants {
     public static final String CODIGO_PROPOSITO_ADIC_COVID = "9"; //Muestra adicional CHF Covid19
     public static final String CODIGO_PROPOSITO_ADIC_DEN = "10"; //Muestra adicional Dengue Parte E
     //public static final String CODIGO_PROPOSITO_UO1_CHF = "6"; //Compartido Positivo UO1 y positivo familia
+    public static final String CODIGO_PROPOSITO_POS_FLU = "11"; //FLU positivos para influenza CEIRS
     public static final String CODIGO_TIPO_SANGRE = "1";
     public static final String CODIGO_TIPO_RESP = "9";
     public static final String CODIGO_TIPO_HF = "2";

@@ -6,7 +6,8 @@ import java.util.concurrent.TimeUnit;
 
 public class DatosUO1 implements Serializable {
     private static final long serialVersionUID = 1L;
-    private boolean convalesciente;
+    private boolean convalesciente;//Uo1
+    private boolean convalescienteFlu;//CEIRS
     private Date fechaInicioCaso;
     private boolean vacunado; //se aplico vacuna
     private boolean mxTomada;//se tomo mx antes de la vacuna
@@ -69,6 +70,14 @@ public class DatosUO1 implements Serializable {
 
     public void setVisitaExitosa(boolean visitaExitosa) {
         this.visitaExitosa = visitaExitosa;
+    }
+
+    public boolean isConvalescienteFlu() {
+        return convalescienteFlu;
+    }
+
+    public void setConvalescienteFlu(boolean convalescienteFlu) {
+        this.convalescienteFlu = convalescienteFlu;
     }
 
     public long getDiasConvalesciente(){

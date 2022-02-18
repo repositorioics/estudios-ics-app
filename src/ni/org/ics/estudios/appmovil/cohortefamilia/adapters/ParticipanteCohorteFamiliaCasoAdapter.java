@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCasoData;
 
 import java.text.SimpleDateFormat;
@@ -17,10 +18,19 @@ import java.util.List;
 public class ParticipanteCohorteFamiliaCasoAdapter extends ArrayAdapter<ParticipanteCohorteFamiliaCasoData> {
 
 	private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
-	
+	private List<MessageResource> catalogos;
 	public ParticipanteCohorteFamiliaCasoAdapter(Context context, int textViewResourceId,
-                          List<ParticipanteCohorteFamiliaCasoData> items) {
+                          List<ParticipanteCohorteFamiliaCasoData> items, List<MessageResource> catalogos) {
 		super(context, textViewResourceId, items);
+		this.catalogos = catalogos;
+	}
+
+	private String getDescripcionCatalogo(String codigo, String catalogo){
+		for(MessageResource item : catalogos){
+			if (item.getCatRoot().equalsIgnoreCase(catalogo) && item.getCatKey().equalsIgnoreCase(codigo))
+				return item.getSpanish();
+		}
+		return "-";
 	}
 
 	@Override
@@ -47,7 +57,11 @@ public class ParticipanteCohorteFamiliaCasoAdapter extends ArrayAdapter<Particip
 			}
 
 			textView = (TextView) v.findViewById(R.id.name_text);
-			textView.setTextColor(Color.BLACK);
+			if (!p.getParticipante().getEnfermo().equalsIgnoreCase("N")) {
+				textView.setTextColor(Color.RED);
+			}else{
+				textView.setTextColor(Color.BLACK);
+			}
 			String nameCompleto = p.getParticipante().getParticipante().getParticipante().getNombreCompleto();
 			if (textView != null) {
 				textView.setText(nameCompleto);
@@ -64,9 +78,14 @@ public class ParticipanteCohorteFamiliaCasoAdapter extends ArrayAdapter<Particip
 			textView = (TextView) v.findViewById(R.id.infoc_text);
 			textView.setTextColor(Color.GRAY);
 			if (textView != null) {
-				textView.setText(this.getContext().getString(R.string.numVisits) + String.valueOf(p.getNumVisitas()));
+				mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				if (!p.getParticipante().getEnfermo().equalsIgnoreCase("N")) {
+					if (p.getParticipante().getPositivoPor() != null) {
+						textView.setText(this.getContext().getString(R.string.positivoPorUO1) + ": " + this.getDescripcionCatalogo(p.getParticipante().getPositivoPor(), "CHF_CAT_POSITIVO_POR") + "\n");
+					}
+				}
+				textView.setText(textView.getText().toString()	+ " " + this.getContext().getString(R.string.numVisits) + String.valueOf(p.getNumVisitas()));
 				if(p.getFechaUltimaVisita()!=null){
-					mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 					textView.setText(textView.getText().toString()	+ " " + this.getContext().getString(R.string.ultVisit) + mDateFormat.format(p.getFechaUltimaVisita()));
 				}
 			}

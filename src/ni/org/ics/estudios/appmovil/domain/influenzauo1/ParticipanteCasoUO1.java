@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by William Aviles on 6/07/2017.
  * V1.0
  */
-public class ParticipanteCasoUO1 extends BaseMetaData {
+public class ParticipanteCasoUO1 extends BaseMetaData implements Comparable<ParticipanteCasoUO1>{
 
     /**
 	 * 
@@ -22,6 +22,7 @@ public class ParticipanteCasoUO1 extends BaseMetaData {
 	private Date fif;
 	private Date fechaIngreso;
 	private Date fechaDesactivacion;
+	private Date fis;
 	
 	public String getCodigoCasoParticipante() {
 		return codigoCasoParticipante;
@@ -79,6 +80,14 @@ public class ParticipanteCasoUO1 extends BaseMetaData {
 		this.fechaDesactivacion = fechaDesactivacion;
 	}
 
+	public Date getFis() {
+		return fis;
+	}
+
+	public void setFis(Date fis) {
+		this.fis = fis;
+	}
+
 	@Override
 	public String toString(){
 		return participante.getCodigo().toString();
@@ -101,4 +110,9 @@ public class ParticipanteCasoUO1 extends BaseMetaData {
         result = 31 * result + participante.hashCode();
         return result;
     }
+
+	@Override
+	public int compareTo(ParticipanteCasoUO1 o) {
+		return Integer.compare(this.participante.getCodigo(), o.participante.getCodigo());
+	}
 }

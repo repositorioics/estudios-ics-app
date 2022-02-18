@@ -2,7 +2,7 @@
 <resources>
     <string name="main_1">Estudio Cohorte Familia</string>
     <string name="main_2">Estudio Cohorte Pediatrica</string>
-    <string name="main_3">Estudio UO1</string>
+    <string name="main_3">Estudios FLU(UO1, Influenza)</string>
     <string name="main_4">Estudio COVID-19</string>
     <string name="barrio">Barrio</string>
     <string name="manzana">Manzana</string>

@@ -22,6 +22,7 @@ public class ParticipanteCasoUO1Helper {
         if (part.getFechaIngreso() != null) cv.put(InfluenzaUO1DBConstants.fechaIngreso, part.getFechaIngreso().getTime());
         if (part.getFechaDesactivacion() != null) cv.put(InfluenzaUO1DBConstants.fechaDesactivacion, part.getFechaDesactivacion().getTime());
         cv.put(InfluenzaUO1DBConstants.activo, part.getActivo());
+        if (part.getFis() != null) cv.put(InfluenzaUO1DBConstants.fis, part.getFis().getTime());
 
         if (part.getRecordDate() != null) cv.put(MainDBConstants.recordDate, part.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, part.getRecordUser());
@@ -40,6 +41,7 @@ public class ParticipanteCasoUO1Helper {
         if(cursor.getLong(cursor.getColumnIndex(InfluenzaUO1DBConstants.fif))>0) mParticipanteCasoUO1.setFif(new Date(cursor.getLong(cursor.getColumnIndex(InfluenzaUO1DBConstants.fif))));
         if(cursor.getLong(cursor.getColumnIndex(InfluenzaUO1DBConstants.fechaIngreso))>0) mParticipanteCasoUO1.setFechaIngreso(new Date(cursor.getLong(cursor.getColumnIndex(InfluenzaUO1DBConstants.fechaIngreso))));
         if(cursor.getLong(cursor.getColumnIndex(InfluenzaUO1DBConstants.fechaDesactivacion))>0) mParticipanteCasoUO1.setFechaDesactivacion(new Date(cursor.getLong(cursor.getColumnIndex(InfluenzaUO1DBConstants.fechaDesactivacion))));
+        if(cursor.getLong(cursor.getColumnIndex(InfluenzaUO1DBConstants.fis))>0) mParticipanteCasoUO1.setFis(new Date(cursor.getLong(cursor.getColumnIndex(InfluenzaUO1DBConstants.fis))));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mParticipanteCasoUO1.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mParticipanteCasoUO1.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
@@ -53,16 +55,17 @@ public class ParticipanteCasoUO1Helper {
         stat.bindString(1, part.getCodigoCasoParticipante());
         stat.bindLong(2, part.getParticipante().getCodigo());
         bindString(stat,3, part.getPositivoPor());
-        bindDate(stat,4, part.getFif());
-        bindDate(stat,5, part.getFechaIngreso());
-        bindDate(stat,6, part.getFechaDesactivacion());
-        bindString(stat,7, part.getActivo());
+        bindDate(stat,4, part.getFis());
+        bindDate(stat,5, part.getFif());
+        bindDate(stat,6, part.getFechaIngreso());
+        bindDate(stat,7, part.getFechaDesactivacion());
+        bindString(stat,8, part.getActivo());
 
-        bindDate(stat,8, part.getRecordDate());
-        bindString(stat,9, part.getRecordUser());
-        stat.bindString(10, String.valueOf(part.getPasive()));
-        bindString(stat,11, part.getDeviceid());
-        stat.bindString(12, String.valueOf(part.getEstado()));
+        bindDate(stat,9, part.getRecordDate());
+        bindString(stat,10, part.getRecordUser());
+        stat.bindString(11, String.valueOf(part.getPasive()));
+        bindString(stat,12, part.getDeviceid());
+        stat.bindString(13, String.valueOf(part.getEstado()));
     }
 
     public static void bindString(SQLiteStatement stat, int index, String value){

@@ -47,7 +47,7 @@ public class NuevoSintomaVisitaCasoUO1Fragment extends Fragment {
 	//Catalogos
 	private List<MessageResource> mCatalogoSnd;
 	private List<MessageResource> mCatalogoIntensidad;
-	private List<String> mCatalogoDias = Arrays.asList("Seleccionar","1","2","3","4","5","6","7","8","9","10","11","12");
+	private List<String> mCatalogoDias = new ArrayList<>();
 
 	private List<VisitaCasoUO1> mVisitasCasoUO1 = new ArrayList<VisitaCasoUO1>();
 	private List<SintomasVisitaCasoUO1> mSintomasVisitaCasoUO1 = new ArrayList<SintomasVisitaCasoUO1>();
@@ -643,15 +643,23 @@ public class NuevoSintomaVisitaCasoUO1Fragment extends Fragment {
                 	inputFechaSintoma.setText(fechaSintoma);
 		        }
 		    },c.get(Calendar.YEAR), c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
-            if (mVisitaCasoUO1.getParticipanteCasoUO1().getFif()!=null){
+			if (mVisitaCasoUO1.getParticipanteCasoUO1().getFis()!=null){
                 Date fechaInicio = mVisitaCasoUO1.getParticipanteCasoUO1().getFechaIngreso();
-                Date fechaEnfermedad = mVisitaCasoUO1.getParticipanteCasoUO1().getFif();
+                Date fechaEnfermedad = mVisitaCasoUO1.getParticipanteCasoUO1().getFis();
                 //si la fecha de enfermedad es menor a la fecha de inicio, tomar la fecha de enfermedad
                 if (fechaInicio.compareTo(fechaEnfermedad)>=0)
                     minDate = new DateMidnight(fechaEnfermedad);
                 else //sino tomar la fecha de inicio
                     minDate = new DateMidnight(fechaInicio);
-            }else {
+            } else if (mVisitaCasoUO1.getParticipanteCasoUO1().getFif()!=null){
+				Date fechaInicio = mVisitaCasoUO1.getParticipanteCasoUO1().getFechaIngreso();
+				Date fechaEnfermedad = mVisitaCasoUO1.getParticipanteCasoUO1().getFif();
+				//si la fecha de enfermedad es menor a la fecha de inicio, tomar la fecha de enfermedad
+				if (fechaInicio.compareTo(fechaEnfermedad)>=0)
+					minDate = new DateMidnight(fechaEnfermedad);
+				else //sino tomar la fecha de inicio
+					minDate = new DateMidnight(fechaInicio);
+			} else {
                 minDate = new DateMidnight(mVisitaCasoUO1.getParticipanteCasoUO1().getFechaIngreso());
             }
 			maxDate = new DateMidnight(mVisitaCasoUO1.getFechaVisita());
@@ -785,10 +793,10 @@ public class NuevoSintomaVisitaCasoUO1Fragment extends Fragment {
         	Toast.makeText(getActivity(), getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.quedoCamaUO1)),Toast.LENGTH_LONG).show();
             return false;
         }
-        else if (mVisitaCasoUO1.getParticipanteCasoUO1().getFif()==null && formatter.parse(fechaSintoma).before(mVisitaCasoUO1.getParticipanteCasoUO1().getFechaIngreso())){
+        /*else if (mVisitaCasoUO1.getParticipanteCasoUO1().getFif()==null && formatter.parse(fechaSintoma).before(mVisitaCasoUO1.getParticipanteCasoUO1().getFechaIngreso())){
         	Toast.makeText(getActivity(), getActivity().getString(R.string.fecBefRegistro,getActivity().getString(R.string.fecha_sintoma),getActivity().getString(R.string.fechaInicio)),Toast.LENGTH_LONG).show();
             return false;
-        }else{
+        }*/else{
 			if (diaValido(fechaSintoma, diaSintoma)) {
 				vscs.setCodigoSintoma(infoMovil.getId());
 				vscs.setCodigoCasoVisita(mVisitaCasoUO1);
@@ -867,6 +875,11 @@ public class NuevoSintomaVisitaCasoUO1Fragment extends Fragment {
 			// after the request completes, hide the progress indicator
 			nDialog.dismiss();
 			mTitleView.setText(getActivity().getString(R.string.new_sint));
+			//permitir de 1 a 28 dias
+			mCatalogoDias.add("Seleccionar");
+			for(int i=1; i<=28 ; i++){
+				mCatalogoDias.add(String.valueOf(i));
+			}
 			ArrayAdapter<String> dataAdapterDia = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mCatalogoDias);
 			dataAdapterDia.setDropDownViewResource(R.layout.spinner_item);
 			spinDiaSintoma.setAdapter(dataAdapterDia);

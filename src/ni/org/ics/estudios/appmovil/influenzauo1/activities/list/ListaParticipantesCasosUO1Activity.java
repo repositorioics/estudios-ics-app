@@ -30,6 +30,7 @@ import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.InfluenzaUO1DBConstants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListaParticipantesCasosUO1Activity extends AbstractAsyncListActivity {
@@ -241,6 +242,7 @@ public class ListaParticipantesCasosUO1Activity extends AbstractAsyncListActivit
 				estudiosAdapter.open();
 				participanteCasoUO1List = estudiosAdapter.getParticipantesCasosUO1("", InfluenzaUO1DBConstants.fechaIngreso);
 				mPositivoPor = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='UO1_CAT_POSITIVO_POR'", null);
+				Collections.sort(participanteCasoUO1List);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

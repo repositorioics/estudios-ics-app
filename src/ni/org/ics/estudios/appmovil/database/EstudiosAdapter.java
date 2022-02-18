@@ -401,6 +401,10 @@ public class EstudiosAdapter {
 			if (oldVersion==41) {
 				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.fechaEventoEnfermoPostVac + " text");
 			}
+			if (oldVersion==42) {
+				db.execSQL("ALTER TABLE " + InfluenzaUO1DBConstants.UO1_PARTICIPANTES_CASOS_TABLE + " ADD COLUMN " + InfluenzaUO1DBConstants.fis + " date");
+				db.execSQL("ALTER TABLE " + CasosDBConstants.PARTICIPANTES_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.positivoPor + " text");
+			}
 		}
 	}
 
@@ -2969,8 +2973,9 @@ public class EstudiosAdapter {
 		c.close();
 		c = crearCursor(EncuestasDBConstants.ENCUESTA_LACTANCIAMAT_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
-		*/
 		c.close();
+		*/
+
 		c = crearCursor(MuestrasDBConstants.MUESTRA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();

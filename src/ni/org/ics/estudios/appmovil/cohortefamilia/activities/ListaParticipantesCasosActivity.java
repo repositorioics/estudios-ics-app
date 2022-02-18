@@ -11,6 +11,7 @@ import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 
+import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVisitaFallidaCasaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoTamizajePersonaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.ParticipanteCohorteFamiliaCasoAdapter;
@@ -18,6 +19,7 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCasoData;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
+import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import android.os.AsyncTask;
@@ -43,6 +45,7 @@ public class ListaParticipantesCasosActivity extends AbstractAsyncListActivity {
     private ParticipanteCohorteFamiliaCasoData participanteCaso = new ParticipanteCohorteFamiliaCasoData();
 	private ArrayAdapter<ParticipanteCohorteFamiliaCasoData> mParticipanteCohorteFamiliaCasoAdapter;
 	private List<ParticipanteCohorteFamiliaCasoData> mParticipanteCohorteFamiliaCasos = new ArrayList<ParticipanteCohorteFamiliaCasoData>();
+	private List<MessageResource> mPositivoPor = new ArrayList<MessageResource>();
 	private EstudiosAdapter estudiosAdapter;
 
 	@Override
@@ -252,6 +255,7 @@ public class ListaParticipantesCasosActivity extends AbstractAsyncListActivity {
 			try {
 				estudiosAdapter.open();
 				mParticipanteCohorteFamiliaCasos = estudiosAdapter.getParticipanteCohorteFamiliaCasosDatos(CasosDBConstants.codigoCaso +" = '" + codigoCaso +"'", MainDBConstants.participante);
+				mPositivoPor = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_POSITIVO_POR'", null);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -266,7 +270,7 @@ public class ListaParticipantesCasosActivity extends AbstractAsyncListActivity {
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
 			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.follow_up_list_par)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCaso.getCasa().getCodigoCHF() + " - " + formatter.format(casaCaso.getFechaInicio()));
-			mParticipanteCohorteFamiliaCasoAdapter = new ParticipanteCohorteFamiliaCasoAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mParticipanteCohorteFamiliaCasos);
+			mParticipanteCohorteFamiliaCasoAdapter = new ParticipanteCohorteFamiliaCasoAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mParticipanteCohorteFamiliaCasos, mPositivoPor);
 			setListAdapter(mParticipanteCohorteFamiliaCasoAdapter);
 			dismissProgressDialog();
 		}

@@ -23,7 +23,8 @@ public class ParticipanteCohorteFamiliaCasoHelper {
         cv.put(CasosDBConstants.enfermo, participanteCaso.getEnfermo());
         if (participanteCaso.getFechaEnfermedad() != null) cv.put(CasosDBConstants.fechaEnfermedad, participanteCaso.getFechaEnfermedad().getTime());
         if (participanteCaso.getFis() != null) cv.put(CasosDBConstants.fis, participanteCaso.getFis().getTime());
-        
+        cv.put(CasosDBConstants.positivoPor, participanteCaso.getPositivoPor());
+
         if (participanteCaso.getRecordDate() != null) cv.put(MainDBConstants.recordDate, participanteCaso.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, participanteCaso.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(participanteCaso.getPasive()));
@@ -41,6 +42,7 @@ public class ParticipanteCohorteFamiliaCasoHelper {
         mParticipanteCohorteFamiliaCaso.setEnfermo(cursor.getString(cursor.getColumnIndex(CasosDBConstants.enfermo)));
         if(cursor.getLong(cursor.getColumnIndex(CasosDBConstants.fechaEnfermedad))>0) mParticipanteCohorteFamiliaCaso.setFechaEnfermedad(new Date(cursor.getLong(cursor.getColumnIndex(CasosDBConstants.fechaEnfermedad))));
         if(cursor.getLong(cursor.getColumnIndex(CasosDBConstants.fis))>0) mParticipanteCohorteFamiliaCaso.setFis(new Date(cursor.getLong(cursor.getColumnIndex(CasosDBConstants.fis))));
+        mParticipanteCohorteFamiliaCaso.setPositivoPor(cursor.getString(cursor.getColumnIndex(CasosDBConstants.positivoPor)));
         
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mParticipanteCohorteFamiliaCaso.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mParticipanteCohorteFamiliaCaso.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
@@ -57,11 +59,12 @@ public class ParticipanteCohorteFamiliaCasoHelper {
         bindString(stat,4, participanteCaso.getEnfermo());
         bindDate(stat,5, participanteCaso.getFechaEnfermedad());
         bindDate(stat,6, participanteCaso.getFis());
-        bindDate(stat,7, participanteCaso.getRecordDate());
-        bindString(stat,8, participanteCaso.getRecordUser());
-        stat.bindString(9, String.valueOf(participanteCaso.getPasive()));
-        bindString(stat,10, participanteCaso.getDeviceid());
-        stat.bindString(11, String.valueOf(participanteCaso.getEstado()));
+        bindString(stat,7, participanteCaso.getPositivoPor());
+        bindDate(stat,8, participanteCaso.getRecordDate());
+        bindString(stat,9, participanteCaso.getRecordUser());
+        stat.bindString(10, String.valueOf(participanteCaso.getPasive()));
+        bindString(stat,11, participanteCaso.getDeviceid());
+        stat.bindString(12, String.valueOf(participanteCaso.getEstado()));
     }
 
     public static void bindString(SQLiteStatement stat, int index, String value){

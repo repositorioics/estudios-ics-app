@@ -274,7 +274,7 @@ public class ListaMuestrasParticipanteCasoUO1Activity extends AbstractAsyncListA
 				estudiosAdapter.open();
 				//Llenar el objeto de lista de esta View
 				mMuestras = estudiosAdapter.getMuestras(MuestrasDBConstants.participante + " = " + participanteCasoUO1.getParticipante().getCodigo()
-						+" and " + MainDBConstants.pasive + " ='0' and " + MuestrasDBConstants.proposito + " ='" + Constants.CODIGO_PROPOSITO_UO1 + "'" +
+						+" and " + MainDBConstants.pasive + " ='0' and( " + MuestrasDBConstants.proposito + " ='" + Constants.CODIGO_PROPOSITO_UO1 + "' or " + MuestrasDBConstants.proposito + "='"+Constants.CODIGO_PROPOSITO_POS_FLU+"')"  +
 								" and " + MainDBConstants.recordDate + "= " + fechaVisita.getTime(), MuestrasDBConstants.tipoMuestra);
 				mTiposMuestra = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TUBO_MX'" + " or " + CatalogosDBConstants.catRoot + "='CHF_CAT_RAZON_NO_MX'", null);
 				estudiosAdapter.close();
@@ -324,12 +324,21 @@ public class ListaMuestrasParticipanteCasoUO1Activity extends AbstractAsyncListA
 					case Constants.CODIGO_TUBO_PBMC:
 						i = new Intent(getApplicationContext(),
 								NuevaMuestraTuboPbmcUO1Activity.class);
-						i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_UO1);
+						if(participanteCasoUO1.getParticipante().getProcesos().getEstudio().contains("UO1")){
+							i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_UO1);
+						}else{
+							i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_POS_FLU);
+						}
+
 						break;
 					case Constants.CODIGO_TUBO_ROJO:
 						i = new Intent(getApplicationContext(),
 								NuevaMuestraTuboRojoUO1Activity.class);
-						i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_UO1);
+						if(participanteCasoUO1.getParticipante().getProcesos().getEstudio().contains("UO1")){
+							i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_UO1);
+						}else{
+							i.putExtra(Constants.ACCION, Constants.CODIGO_PROPOSITO_POS_FLU);
+						}
 						break;
 					default:
 						return "error";

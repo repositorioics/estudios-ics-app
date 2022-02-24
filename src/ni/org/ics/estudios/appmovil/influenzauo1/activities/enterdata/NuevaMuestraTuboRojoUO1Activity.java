@@ -188,7 +188,7 @@ public class NuevaMuestraTuboRojoUO1Activity extends FragmentActivity implements
         vol.setRangeValidation(true, 0, volumenMaximoPermitido.intValue());
         BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoMx());
         pagetmp.setmCodePosicion(1);
-        if (accion.equalsIgnoreCase(Constants.CODIGO_PROPOSITO_UO1)) //positivo
+        if (accion.equalsIgnoreCase(Constants.CODIGO_PROPOSITO_UO1) || accion.equalsIgnoreCase(Constants.CODIGO_PROPOSITO_POS_FLU)) //positivo
             pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.[U|F]R[I|F]$");
         else //vacuna. permitir código de mx o código de participante
             pagetmp.setPatternValidation(true, "(^\\d{1,5}\\.\\d{2}\\.VR[I|F]$)|(^\\d{1,5}?$)");
@@ -541,7 +541,7 @@ public class NuevaMuestraTuboRojoUO1Activity extends FragmentActivity implements
             estudiosAdapter.close();
             Intent i;
             Bundle arguments = new Bundle();
-            if (accion.equalsIgnoreCase(Constants.CODIGO_PROPOSITO_UO1)) {
+            if (accion.equalsIgnoreCase(Constants.CODIGO_PROPOSITO_UO1) || accion.equalsIgnoreCase(Constants.CODIGO_PROPOSITO_POS_FLU)) {
                 arguments.putSerializable(Constants.VISITA, visitaCaso);
                 i = new Intent(getApplicationContext(),
                         ListaMuestrasParticipanteCasoUO1Activity.class);

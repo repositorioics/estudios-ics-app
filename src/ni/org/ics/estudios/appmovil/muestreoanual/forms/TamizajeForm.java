@@ -75,6 +75,7 @@ public class TamizajeForm extends AbstractWizardModel {
         String[] catTramiento = fillCatalog("CPD_CAT_TRATAMIENTO");
         String[] catVerificaTutor = fillCatalog("CP_CAT_VERIFTUTOR");
         String[] catMotivoRechazo = fillCatalog("CPD_CAT_MOTRECHAZO");
+        String[] catSiNoDesSinFecha = fillCatalog("CAT_SND_SINFECHA");
         estudiosAdapter.close();
 
         DateMidnight dmDesde = DateMidnight.parse("01/01/1900", DateTimeFormat.forPattern("dd/MM/yyyy"));
@@ -134,7 +135,7 @@ public class TamizajeForm extends AbstractWizardModel {
         Page cualTratamiento = new MultipleFixedChoicePage(this,labels.getCualTratamiento(),"", Constants.WIZARD, false).setChoices(catTramiento).setRequired(true);
         Page otroTx = new TextPage(this,labels.getOtroTratamiento(), "", Constants.WIZARD, false).setRequired(true);
 
-        Page diagDengue = new SingleFixedChoicePage(this,labels.getDiagDengue(), "", Constants.WIZARD, false).setChoices(catSiNoDes).setRequired(true);
+        Page diagDengue = new SingleFixedChoicePage(this,labels.getDiagDengue(), "", Constants.WIZARD, false).setChoices(catSiNoDesSinFecha).setRequired(true);
         Page fechaDiagDengue = new NewDatePage(this,labels.getFechaDiagDengue(), "", Constants.WIZARD, false).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
         Page hospDengue = new SingleFixedChoicePage(this,labels.getHospDengue(), "", Constants.WIZARD, false).setChoices(catSiNoDes).setRequired(true);
         Page fechaHospDengue = new NewDatePage(this,labels.getFechaHospDengue(), "", Constants.WIZARD, false).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
@@ -194,6 +195,7 @@ public class TamizajeForm extends AbstractWizardModel {
         Page apellido1Tutor = new TextPage(this,labels.getApellido1Tutor(),labels.getApellido1TutorHint(),Constants.WIZARD,false).setRequired(true);
         Page apellido2Tutor = new TextPage(this,labels.getApellido2Tutor(),labels.getApellido2TutorHint(),Constants.WIZARD,false).setRequired(false);
         Page relacionFamiliarTutor = new SingleFixedChoicePage(this,labels.getRelacionFamiliarTutor(), "", Constants.WIZARD, false).setChoices(catRelacionFamiliarTutor).setRequired(true);
+        Page otraRelacionFamTutor = new TextPage(this,labels.getOtraRelacionFamTutor(), "", Constants.WIZARD,false).setRequired(true);
 
         Page participanteOTutorAlfabeto = new SingleFixedChoicePage(this,labels.getParticipanteOTutorAlfabeto(), labels.getParticipanteOTutorAlfabetoHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page testigoPresente = new SingleFixedChoicePage(this,labels.getTestigoPresente(), labels.getTestigoPresenteHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
@@ -228,7 +230,7 @@ public class TamizajeForm extends AbstractWizardModel {
                 casaPerteneceCohorte, codigoCasaCohorte, codigoNuevaCasaCohorte, nombre1JefeFamilia, nombre2JefeFamilia, apellido1JefeFamilia, apellido2JefeFamilia, barrio, manzana, direccion,
                 codigoNuevoParticipante, nombre1, nombre2, apellido1, apellido2,
                 nombre1Padre, nombre2Padre, apellido1Padre, apellido2Padre, nombre1Madre, nombre2Madre, apellido1Madre, apellido2Madre,
-                nombre1Tutor, nombre2Tutor, apellido1Tutor, apellido2Tutor, relacionFamiliarTutor,
+                nombre1Tutor, nombre2Tutor, apellido1Tutor, apellido2Tutor, relacionFamiliarTutor, otraRelacionFamTutor,
                 participanteOTutorAlfabeto, testigoPresente, nombre1Testigo, nombre2Testigo, apellido1Testigo, apellido2Testigo,
                 aceptaParteB, aceptaParteC, aceptaParteD, aceptaParteBInf, aceptaParteCInf, aceptaCohorteUO1ParteDCovid, razonNoAceptaParteD, otraRazonNoAceptaParteD, aceptaContactoFuturo,
                 nombreContacto, barrioContacto, direccionContacto, tieneTelefono, tipoTel1, operadoraTel1, numeroTel1, tieneOtroTelefono, tipoTel2, operadoraTel2, numeroTel2, verifTutor,

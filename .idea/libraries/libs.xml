@@ -1,0 +1,21 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-codec.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/gson-2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/guava-r09.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jackson-core-asl-1.9.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jackson-mapper-asl-1.9.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/joda-convert-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/joda-time-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/simple-xml-2.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/spring-android-core-1.0.0.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/spring-android-rest-template-1.0.0.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/spring-security-crypto-3.1.0.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/support-v4-19.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

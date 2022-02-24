@@ -166,6 +166,7 @@ public class TamizajeFormLabels {
     protected String apellido2Tutor;
     protected String apellido2TutorHint;
     protected String relacionFamiliarTutor;
+    protected String otraRelacionFamTutor;
     protected String participanteOTutorAlfabeto;
     protected String participanteOTutorAlfabetoHint;
     protected String testigoPresente;
@@ -360,6 +361,7 @@ public class TamizajeFormLabels {
         apellido2Tutor = res.getString(R.string.apellido2Tutor);
         apellido2TutorHint = res.getString(R.string.apellido2TutorHint);
         relacionFamiliarTutor = res.getString(R.string.relacionFamiliarTutor);
+        otraRelacionFamTutor = res.getString(R.string.otraRelacionFam);
         participanteOTutorAlfabeto = res.getString(R.string.participanteOTutorAlfabeto);
         participanteOTutorAlfabetoHint = res.getString(R.string.participanteOTutorAlfabetoHint);
         testigoPresente = res.getString(R.string.testigoPresente);
@@ -1134,5 +1136,9 @@ public class TamizajeFormLabels {
 
     public String getOtraRazonNoAceptaParteDHint() {
         return otraRazonNoAceptaParteDHint;
+    }
+
+    public String getOtraRelacionFamTutor() {
+        return otraRelacionFamTutor;
     }
 }

@@ -1110,6 +1110,12 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                                 cc.setApellido2Tutor(participante.getApellido2Tutor());
                                 cc.setRelacionFamiliarTutor(participante.getRelacionFamiliarTutor());
                             }
+                        } else if (edadMeses >= 216) { //cuando es mayor de edad no se pregunta tutor.. poner el mismo participante
+                            cc.setNombre1Tutor(participante.getNombre1());
+                            cc.setNombre2Tutor(participante.getNombre2());
+                            cc.setApellido1Tutor(participante.getApellido1());
+                            cc.setApellido2Tutor(participante.getApellido2());
+                            cc.setRelacionFamiliarTutor(Constants.REL_FAM_MISMO_PART);
                         }
                         if (tieneValor(motivoDifTutor)) {
                             MessageResource catDifTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + motivoDifTutor + "' and " + CatalogosDBConstants.catRoot + "='CP_CAT_DIFTUTOR'", null);
@@ -1194,6 +1200,12 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                                 participante.setNombre2Tutor(cc.getNombre2Tutor());
                                 participante.setApellido1Tutor(cc.getApellido1Tutor());
                                 participante.setApellido2Tutor(cc.getApellido2Tutor());
+                            } else if (edadMeses >= 216) { //cuando es mayor de edad no se pregunta tutor.. poner el mismo participante
+                                participante.setNombre1Tutor(participante.getNombre1());
+                                participante.setNombre2Tutor(participante.getNombre2());
+                                participante.setApellido1Tutor(participante.getApellido1());
+                                participante.setApellido2Tutor(participante.getApellido2());
+                                participante.setRelacionFamiliarTutor(Constants.REL_FAM_MISMO_PART);
                             }
                             participante.setRecordDate(new Date());
                             participante.setRecordUser(username);

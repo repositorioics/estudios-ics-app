@@ -435,8 +435,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     //de 2 a 14 anio
                     changeStatus(mWizardModel.findByKey(labels.getParteCDen()), consentimiento);
                     //notificarCambios = false;
+                    //MA2022. Version de Carta no incluye parte D. Solo A, B, C
                     //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
-                    changeStatus(mWizardModel.findByKey(labels.getParteDDen()), reconsentimiento);
+                    //changeStatus(mWizardModel.findByKey(labels.getParteDDen()), reconsentimiento);
                     //notificarCambios = false;
                 }
                 esElegible = visible;
@@ -481,8 +482,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteCDen()), !visible && consentimiento);
                 //notificarCambios = false;
+                //MA2022. Version de Carta no incluye parte D. Solo A, B, C
                 //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
-                changeStatus(mWizardModel.findByKey(labels.getParteDDen()), !visible && reconsentimiento);
+                //changeStatus(mWizardModel.findByKey(labels.getParteDDen()), !visible && reconsentimiento);
                 //notificarCambios = false;
                 esElegible = !visible;
                 onPageTreeChanged();
@@ -614,8 +616,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteCDen()), visible && consentimiento);
                 //notificarCambios = false;
+                //MA2022. Version de Carta no incluye parte D. Solo A, B, C
                 //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
-                changeStatus(mWizardModel.findByKey(labels.getParteDDen()), visible && reconsentimiento);
+                //changeStatus(mWizardModel.findByKey(labels.getParteDDen()), visible && reconsentimiento);
                 //notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -943,7 +946,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //notificarCambios = false;
                 onPageTreeChanged();
             }
-            if (page.getTitle().equals(labels.getParteDDen())) {
+            //MA2022. Version de Carta no incluye parte D. Solo A, B, C
+            /*if (page.getTitle().equals(labels.getParteDDen())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRechDenExtEdad()), !visible);
                 //notificarCambios = false;
@@ -966,6 +970,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //notificarCambios = false;
                 onPageTreeChanged();
             }
+            */
             if (page.getTitle().equals(labels.getAsentimiento())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
@@ -1411,9 +1416,10 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
         if (preg>92) changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), false);
         if (preg>92) changeStatus(mWizardModel.findByKey(labels.getParteBDen()), false);
         if (preg>92) changeStatus(mWizardModel.findByKey(labels.getParteCDen()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getParteDDen()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getRechDenExtEdad()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getOtroRechDenExtEdad()), false);
+        //MA2022. Version de Carta no incluye parte D. Solo A, B, C
+        //if (preg>92) changeStatus(mWizardModel.findByKey(labels.getParteDDen()), false);
+        //if (preg>92) changeStatus(mWizardModel.findByKey(labels.getRechDenExtEdad()), false);
+        //if (preg>92) changeStatus(mWizardModel.findByKey(labels.getOtroRechDenExtEdad()), false);
         if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronica()), false);
         if (preg>92) changeStatus(mWizardModel.findByKey(labels.getoEnfCronica()), false);
         if (preg>92) changeStatus(mWizardModel.findByKey(labels.getTomaTx()), false);
@@ -1619,9 +1625,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturoRC2018));
             String parteBDen = datos.getString(this.getString(R.string.parteBDen));
             String parteCDen = datos.getString(this.getString(R.string.parteCDen));
-            String parteDDen = datos.getString(this.getString(R.string.parteDDen));
+            //MA2022. Version de Carta no incluye parte D. Solo A, B, C
+            /*String parteDDen = datos.getString(this.getString(R.string.parteDDen));
             String rechDenExtEdad = datos.getString(this.getString(R.string.rechDenExtEdad));//agregar en carta
             String otroRechDenExtEdad = datos.getString(this.getString(R.string.otroRechDenExtEdad));//agregar en carta
+            */
             String rechDen = datos.getString(this.getString(R.string.rechDen));
             String otroRechDen = datos.getString(this.getString(R.string.otroRechDen));
             String nombrept = datos.getString(this.getString(R.string.nombrept));
@@ -1945,8 +1953,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         //crear carta de consentimiento para dengue
                         estudiosAdapter.crearCartaConsentimiento(cc);
                     }
+                    //MA2022. Version de Carta no incluye parte D. Solo A, B, C
                     //si se preguntó por la parte D entonces crear nuevo tamizaje y nueva carta para la parte D
-                    if (tieneValor(parteDDen)) {
+                    /*if (tieneValor(parteDDen)) {
                         //solo crear nuevo tamizaje si se pregunto por la parte A
                         if (tieneValor(parteADen)) {
                             //se crea tamizaje para parteD
@@ -1977,6 +1986,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         //se crea tamizaje de parte D(es otra carta)
                         estudiosAdapter.crearCartaConsentimiento(cc);
                     }
+                    */
                     MovilInfo movilInfo = new MovilInfo();
                     movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
                     movilInfo.setDeviceid(infoMovil.getDeviceId());

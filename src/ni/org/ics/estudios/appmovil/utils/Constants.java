@@ -75,11 +75,11 @@ public class Constants {
     public static final int COD_EST_TCOVID = 6; //Transmisión Covid
 
     //VERSIONES CARTA DE CONSENTIMIENTO
-    public static final String VERSION_CC_CHF = "3"; //COHORTE FAMILIA
+    public static final String VERSION_CC_CHF = "3"; //COHORTE FAMILIA//Version 3 MA2022
     public static final String VERSION_CC_SA = "1"; //SEROPREVALENCIA
-    public static final String VERSION_CC_CD = "15"; //COHORTE DENGUE //Version 13 MA2020//Version 14 MA2021
+    public static final String VERSION_CC_CD = "15"; //COHORTE DENGUE //Version 13 MA2020//Version 14 MA2021//Version 15 MA2022
     public static final String VERSION_CC_CD_D = "1"; //COHORTE DENGUE Extensión edad 2018
-    public static final String VERSION_CC_CI = "7"; //COHORTE INFLUENZA.
+    public static final String VERSION_CC_CI = "1"; //COHORTE INFLUENZA. Parte F. Pasa a ser version 1. MA2022
     public static final String VERSION_CC_CI_COVID = "1"; //COHORTE INFLUENZA. Cuando se agrega la parte D de Covid pasa a verson 1
     public static final String VERSION_CC_UO1 = "1"; //COHORTE UO1
     public static final String VERSION_CC_UO1_COVID = "1"; //COHORTE UO1 + consentimiento covid

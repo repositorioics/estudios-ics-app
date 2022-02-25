@@ -5,7 +5,8 @@
     <string name="main_header">Estudios de Investigación</string>
     <string name="desc_logo">Instituto de Ciencias Sostenibles</string>
     <string name="apk_name">estudios-ics-app.apk</string>
-    <string name="url_apk">http://192.168.1.98:8080/estudios-ics/resources/apk/estudios-ics-app.apk</string>
+    <!--<string name="url_apk">http://192.168.1.98:8080/estudios-ics/resources/apk/estudios-ics-app.apk</string>-->
+    <string name="url_apk">http://192.168.0.13:8080/estudios-ics/resources/apk/estudios-ics-app.apk</string>
     
     <string name="success">Operación exitosa!</string>
     <string name="error">Ha ocurrido un error!</string>

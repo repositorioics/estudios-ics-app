@@ -66,11 +66,13 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
     private boolean consentimiento;
     private boolean reconsentimiento;
     private List<MessageResource> catRelacionFamiliar = new ArrayList<MessageResource>();
+    private String[] catRelFamSegunEdad;
     private List<MessageResource> catMeses = new ArrayList<MessageResource>();
     private String[] catRazonEmanFem; //razones de emancipación para mujeres
     private String[] catRazonEmanMas; //razones de emancipación para hombres
     private String[] catVerifTutAlf; //cosas a verificar cuando tutor es alfabeto
     private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
+    private int totalVerifTutor = 0;
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,6 +178,13 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
         consentimiento = participante.getProcesos().getConsDeng().equalsIgnoreCase(Constants.YES);
         reconsentimiento = participante.getProcesos().getReConsDeng().equalsIgnoreCase(Constants.YES);
         estudiosAdapter.open();
+
+        if (edadMeses < 216) {
+            catRelFamSegunEdad = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR' and "+CatalogosDBConstants.catKey + " not in( '8', '9')", CatalogosDBConstants.order);
+        } else {
+            catRelFamSegunEdad = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", CatalogosDBConstants.order);
+        }
+
         catRelacionFamiliar = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", CatalogosDBConstants.order);
         catMeses = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", CatalogosDBConstants.order);
         catRazonEmanFem = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RAZEMAN'", CatalogosDBConstants.order);
@@ -183,6 +192,10 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
         catVerifTutNoAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
         catVerifTutAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catKey + " in ('1','2','3','6') and " + CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
         estudiosAdapter.close();
+
+        SingleFixedChoicePage pagetmp = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getRelacionFam());
+        pagetmp.setChoices(catRelFamSegunEdad);
+
         onPageTreeChanged();
         updateBottomBar();
     }
@@ -326,6 +339,16 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                                 cutOffPage = i;
                                 break;
                             }
+                        }
+                    }
+                } else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")) {
+                    ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
+                    //validación solo para la pregunta de verificación del tutor
+                    if (page.getTitle().equalsIgnoreCase(this.getString(R.string.verifTutor))) {
+                        assert test != null;
+                        if (test.size() != totalVerifTutor) {
+                            cutOffPage = i;
+                            break;
                         }
                     }
                 }
@@ -1065,6 +1088,12 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //notificarCambios = false;
                 onPageTreeChanged();
             }
+            if (page.getTitle().equals(labels.getRelacionFam())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra relación familiar");
+                changeStatus(mWizardModel.findByKey(labels.getOtraRelacionFam()), visible);
+                //notificarCambios = false;
+                onPageTreeChanged();
+            }
             if (page.getTitle().equals(labels.getMotivoDifTutor())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro Motivo");
                 changeStatus(mWizardModel.findByKey(labels.getOtroMotivoDifTutor()), visible);
@@ -1085,6 +1114,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //notificarCambios = false;
                 MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
                 pagetmp.setChoices(visible?catVerifTutNoAlf:catVerifTutAlf);
+                totalVerifTutor = visible?catVerifTutNoAlf.length:catVerifTutAlf.length;
 
                 onPageTreeChanged();
             }
@@ -2060,10 +2090,14 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                             procesos.setEstudio("Dengue");
                         }else if (procesos.getEstudio().equals("Influenza")){
                             procesos.setEstudio("Dengue  Influenza");
-                        }else if (procesos.getEstudio().equals("CH Familia")){
-                            procesos.setEstudio("Dengue    CH Familia");
+                        }else if (procesos.getEstudio().equals("CH Familia") || procesos.getEstudio().equals("CH Familia  Tcovid")){
+                            procesos.setEstudio("Dengue    "+procesos.getEstudio());
                         }else if (procesos.getEstudio().equals("Influenza  CH Familia")){
-                            procesos.setEstudio("Dengue  Influenza  CH Familiaa");
+                            procesos.setEstudio("Dengue  Influenza  CH Familia");
+                        }else if (procesos.getEstudio().equals("UO1")){
+                            procesos.setEstudio("Dengue  UO1");
+                        }else if (procesos.getEstudio().equals("UO1  CH Familia") || procesos.getEstudio().equalsIgnoreCase("UO1  CH Familia  Tcovid")){
+                            procesos.setEstudio("Dengue  "+procesos.getEstudio());
                         }
 
                         estudiosAdapter.actualizarParticipanteProcesos(procesos);

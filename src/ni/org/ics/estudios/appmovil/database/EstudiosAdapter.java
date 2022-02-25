@@ -405,6 +405,11 @@ public class EstudiosAdapter {
 				db.execSQL("ALTER TABLE " + InfluenzaUO1DBConstants.UO1_PARTICIPANTES_CASOS_TABLE + " ADD COLUMN " + InfluenzaUO1DBConstants.fis + " date");
 				db.execSQL("ALTER TABLE " + CasosDBConstants.PARTICIPANTES_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.positivoPor + " text");
 			}
+			if (oldVersion==43) {
+				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.aceptaParteF + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.motivoRechazoParteF + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.otroMotivoRechazoParteF + " text");
+			}
 		}
 	}
 

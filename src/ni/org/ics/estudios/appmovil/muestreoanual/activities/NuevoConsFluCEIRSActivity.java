@@ -465,6 +465,7 @@ public class NuevoConsFluCEIRSActivity extends FragmentActivity implements
             }
             if (page.getTitle().equals(labels.getAsentimiento())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), visible);

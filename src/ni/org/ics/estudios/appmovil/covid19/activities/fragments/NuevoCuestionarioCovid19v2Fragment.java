@@ -3366,14 +3366,17 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
 
 
         if (participante.getProcesos().getCuestCovid().equalsIgnoreCase("1a")){
-            //textDesdeSintomas.setText(getString(R.string.feb20));
+            textEnfermoCovid19.setText(getString(R.string.feb20));
             periodoSintomas = Constants.PERIODO_CUEST_COVID19_1;
         }else if (participante.getProcesos().getCuestCovid().equalsIgnoreCase("2a")){
-            //textDesdeSintomas.setText(getString(R.string.oct20));
+            textEnfermoCovid19.setText(getString(R.string.oct20));
             periodoSintomas = Constants.PERIODO_CUEST_COVID19_2;
-        }else {
-            //textDesdeSintomas.setText(getString(R.string.feb21));
+        } else if (participante.getProcesos().getCuestCovid().equalsIgnoreCase("3a")){
+            textEnfermoCovid19.setText(getString(R.string.feb21));
             periodoSintomas = Constants.PERIODO_CUEST_COVID19_3;
+        } else {
+            textEnfermoCovid19.setText(getString(R.string.nov21));
+            periodoSintomas = Constants.PERIODO_CUEST_COVID19_4;
         }
 
         imbE1FIS.setOnClickListener(new View.OnClickListener()  {

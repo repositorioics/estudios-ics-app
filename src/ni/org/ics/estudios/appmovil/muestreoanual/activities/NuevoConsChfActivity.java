@@ -501,6 +501,8 @@ public class NuevoConsChfActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getAsentimiento())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
                 //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
                 //notificarCambios = false;
@@ -747,9 +749,11 @@ public class NuevoConsChfActivity extends FragmentActivity implements
         try {
             if (preg > 93) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteA()), false);
             if (preg > 93) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteA()), false);
+
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), false);
+
             //no esta dispuesto a ir al centro
             if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), false);
-            if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), false);
             if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getTutor()), false);
             if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), false);
             if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getTestigoSN()), false);
@@ -1003,7 +1007,7 @@ public class NuevoConsChfActivity extends FragmentActivity implements
 
                 //Pregunta si acepta realizar el tamizaje. Aca siempre va a entrar porque en este caso por defecto siempre es Si
                 if (tamizaje.getAceptaTamizajePersona().equals(Constants.YESKEYSND)) {
-                    if (tamizaje.getAceptaParticipar().equals(Constants.YESKEYSND)) {
+                    if (tamizaje.getAceptaParticipar() != null && tamizaje.getAceptaParticipar().equals(Constants.YESKEYSND)) {
                         CartaConsentimiento cc = new CartaConsentimiento();
                         cc.setRecordDate(new Date());
                         cc.setRecordUser(username);

@@ -3140,6 +3140,17 @@ public class EstudiosAdapter {
 		return false;
 	}
 
+	public Boolean verificarProcesosPendientesEnvio() throws SQLException {
+		Cursor c = null;
+		c = crearCursor(ConstantsDB.PART_PROCESOS_TABLE, MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'", null, null);
+		if (c != null && c.getCount() > 0) {
+			c.close();
+			return true;
+		}
+		c.close();
+		return false;
+	}
+
     /****************************************************************************
      * MUESTREO ANUAL
      */

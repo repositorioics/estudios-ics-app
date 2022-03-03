@@ -301,9 +301,9 @@ public class TamizajeFormLabels {
         razonNoAceptaInfluenzaHint = res.getString(R.string.razonNoAceptaInfluenzaHint);
         otraRazonNoAceptaInfluenza = res.getString(R.string.otraRazonNoAceptaInfluenza);
         otraRazonNoAceptaInfluenzaHint = res.getString(R.string.otraRazonNoAceptaInfluenzaHint);
-        aceptaParteBInf = res.getString(R.string.aceptaParteBInf);
+        aceptaParteBInf = res.getString(R.string.aceptaParteBInfUO1);
         aceptaParteBInfHint = res.getString(R.string.aceptaParteBInfHint);
-        aceptaParteCInf = res.getString(R.string.aceptaParteCInf);
+        aceptaParteCInf = res.getString(R.string.aceptaParteCInfUO1);
         aceptaParteCInfHint = res.getString(R.string.aceptaParteCInfHint);
         //Covid19
         aceptaCohorteUO1ParteDCovid = res.getString(R.string.aceptaCohorteUO1ParteDCovid);

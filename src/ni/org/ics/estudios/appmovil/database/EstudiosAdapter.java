@@ -405,6 +405,11 @@ public class EstudiosAdapter {
 				db.execSQL("ALTER TABLE " + InfluenzaUO1DBConstants.UO1_PARTICIPANTES_CASOS_TABLE + " ADD COLUMN " + InfluenzaUO1DBConstants.fis + " date");
 				db.execSQL("ALTER TABLE " + CasosDBConstants.PARTICIPANTES_CASOS_TABLE + " ADD COLUMN " + CasosDBConstants.positivoPor + " text");
 			}
+			if (oldVersion==43) {
+				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.aceptaParteF + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.motivoRechazoParteF + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.otroMotivoRechazoParteF + " text");
+			}
 		}
 	}
 
@@ -3132,6 +3137,17 @@ public class EstudiosAdapter {
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
 
+		return false;
+	}
+
+	public Boolean verificarProcesosPendientesEnvio() throws SQLException {
+		Cursor c = null;
+		c = crearCursor(ConstantsDB.PART_PROCESOS_TABLE, MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'", null, null);
+		if (c != null && c.getCount() > 0) {
+			c.close();
+			return true;
+		}
+		c.close();
 		return false;
 	}
 

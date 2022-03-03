@@ -60,17 +60,19 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
 	private boolean notificarCambios = true;
 	private static Participante participante = new Participante();
     private Integer edadMeses = 0;
-    private boolean retirado;
+    //private boolean retirado;
     private boolean esElegible = true;
     private boolean visExitosa = false;
     private boolean consentimiento;
     private boolean reconsentimiento;
     private List<MessageResource> catRelacionFamiliar = new ArrayList<MessageResource>();
+    private String[] catRelFamSegunEdad;
     private List<MessageResource> catMeses = new ArrayList<MessageResource>();
     private String[] catRazonEmanFem; //razones de emancipación para mujeres
     private String[] catRazonEmanMas; //razones de emancipación para hombres
     private String[] catVerifTutAlf; //cosas a verificar cuando tutor es alfabeto
     private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
+    private int totalVerifTutor = 0;
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,11 +173,18 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             }
         });
 
-        retirado = (participante.getProcesos().getEstPart().equals(0) || !participante.getProcesos().getEstudio().contains("Dengue"));
+        //retirado = (participante.getProcesos().getEstPart().equals(0) || !participante.getProcesos().getEstudio().contains("Dengue"));
         edadMeses = participante.getEdadMeses();
         consentimiento = participante.getProcesos().getConsDeng().equalsIgnoreCase(Constants.YES);
         reconsentimiento = participante.getProcesos().getReConsDeng().equalsIgnoreCase(Constants.YES);
         estudiosAdapter.open();
+
+        if (edadMeses < 216) {
+            catRelFamSegunEdad = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR' and "+CatalogosDBConstants.catKey + " not in( '8', '9')", CatalogosDBConstants.order);
+        } else {
+            catRelFamSegunEdad = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", CatalogosDBConstants.order);
+        }
+
         catRelacionFamiliar = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", CatalogosDBConstants.order);
         catMeses = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_MESES'", CatalogosDBConstants.order);
         catRazonEmanFem = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RAZEMAN'", CatalogosDBConstants.order);
@@ -183,6 +192,10 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
         catVerifTutNoAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
         catVerifTutAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catKey + " in ('1','2','3','6') and " + CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
         estudiosAdapter.close();
+
+        SingleFixedChoicePage pagetmp = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getRelacionFam());
+        pagetmp.setChoices(catRelFamSegunEdad);
+
         onPageTreeChanged();
         updateBottomBar();
     }
@@ -328,6 +341,16 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                             }
                         }
                     }
+                } else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")) {
+                    ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
+                    //validación solo para la pregunta de verificación del tutor
+                    if (page.getTitle().equalsIgnoreCase(this.getString(R.string.verifTutor))) {
+                        assert test != null;
+                        if (test.size() != totalVerifTutor) {
+                            cutOffPage = i;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -415,9 +438,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getEmancipado()), visible && edadMeses>=168);
                 //notificarCambios = false;
                 //Sólo se preguntará a los retirados
-                changeStatus(mWizardModel.findByKey(labels.getIncDen()), (visible && retirado));
+                changeStatus(mWizardModel.findByKey(labels.getIncDen()), (visible));
                 //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible && retirado));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible));
                 //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), !visible);
                 //notificarCambios = false;
@@ -435,8 +458,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     //de 2 a 14 anio
                     changeStatus(mWizardModel.findByKey(labels.getParteCDen()), consentimiento);
                     //notificarCambios = false;
+                    //MA2022. Version de Carta no incluye parte D. Solo A, B, C
                     //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
-                    changeStatus(mWizardModel.findByKey(labels.getParteDDen()), reconsentimiento);
+                    //changeStatus(mWizardModel.findByKey(labels.getParteDDen()), reconsentimiento);
                     //notificarCambios = false;
                 }
                 esElegible = visible;
@@ -457,7 +481,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRazonEmancipacion()), visible);
                 //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getIncDen()), (!visible && retirado));
+                //changeStatus(mWizardModel.findByKey(labels.getIncDen()), (!visible));
                 //notificarCambios = false;
                 if (visible){
                     SingleFixedChoicePage pagetmp = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getRazonEmancipacion());
@@ -466,25 +490,26 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     }else{
                         pagetmp.setChoices(catRazonEmanFem);
                     }
-                    resetForm(98);
+                    //resetForm(98);
                 }
-                changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), !visible);
+                //changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), !visible);
                 //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAsiste()), !visible);
-                //notificarCambios = false;
-                //de 2 a 14 anio
-                changeStatus(mWizardModel.findByKey(labels.getParteADen()), !visible && consentimiento);
+                //changeStatus(mWizardModel.findByKey(labels.getAsiste()), !visible);
                 //notificarCambios = false;
                 //de 2 a 14 anio
-                changeStatus(mWizardModel.findByKey(labels.getParteBDen()), !visible && consentimiento);
+                //changeStatus(mWizardModel.findByKey(labels.getParteADen()), !visible && consentimiento);
                 //notificarCambios = false;
                 //de 2 a 14 anio
-                changeStatus(mWizardModel.findByKey(labels.getParteCDen()), !visible && consentimiento);
+                //changeStatus(mWizardModel.findByKey(labels.getParteBDen()), !visible && consentimiento);
                 //notificarCambios = false;
+                //de 2 a 14 anio
+                //changeStatus(mWizardModel.findByKey(labels.getParteCDen()), !visible && consentimiento);
+                //notificarCambios = false;
+                //MA2022. Version de Carta no incluye parte D. Solo A, B, C
                 //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
-                changeStatus(mWizardModel.findByKey(labels.getParteDDen()), !visible && reconsentimiento);
+                //changeStatus(mWizardModel.findByKey(labels.getParteDDen()), !visible && reconsentimiento);
                 //notificarCambios = false;
-                esElegible = !visible;
+                ////esElegible = !visible;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRazonEmancipacion())) {
@@ -502,10 +527,10 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                 visible = test.size() > 1;
                 //Sólo se preguntará a los retirados
-                changeStatus(mWizardModel.findByKey(labels.getVivienda()), (visible && retirado));
+                changeStatus(mWizardModel.findByKey(labels.getVivienda()), (visible));
                 //notificarCambios = false;
                 //Sólo se preguntará a los retirados
-                changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), (visible && retirado));
+                changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), (visible));
                 //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
                 //notificarCambios = false;
@@ -531,7 +556,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         resetForm(93);
                     }
                     esElegible = visible && tiempoValido;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible && tiempoValido && retirado));
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible && tiempoValido));
                     //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), (visible && tiempoValido));
                     //notificarCambios = false;
@@ -546,7 +571,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                             resetForm(93);
                         }
                         esElegible = tiempoValido;
-                        changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), tiempoValido && retirado);
+                        changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), tiempoValido);
                         //notificarCambios = false;
                         changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), tiempoValido);
                         //notificarCambios = false;
@@ -568,7 +593,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     resetForm(93);
                 }
                 esElegible = esPropia && visible;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (esPropia && visible && retirado));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (esPropia && visible));
                 //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), (esPropia && visible));
                 //notificarCambios = false;
@@ -583,7 +608,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         resetForm(93);
                     }
                     esElegible = visible;
-                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), visible && retirado);
+                    changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), visible);
                     //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
                     //notificarCambios = false;
@@ -614,8 +639,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //de 2 a 14 anio
                 changeStatus(mWizardModel.findByKey(labels.getParteCDen()), visible && consentimiento);
                 //notificarCambios = false;
+                //MA2022. Version de Carta no incluye parte D. Solo A, B, C
                 //de 14 a 15 anio y si tiene 15 tiene que estar retirado(en ningún estudio o del estudio de dengue)
-                changeStatus(mWizardModel.findByKey(labels.getParteDDen()), visible && reconsentimiento);
+                //changeStatus(mWizardModel.findByKey(labels.getParteDDen()), visible && reconsentimiento);
                 //notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -861,6 +887,10 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRechDen()), !visible);
                 //notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getParteBDen()), visible);
+                //notificarCambios = false;
+                //de 2 a 14 anio
+                changeStatus(mWizardModel.findByKey(labels.getParteCDen()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
                 //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && edadMeses >= 72);
@@ -933,8 +963,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     madre = madre +" "+ participante.getApellido1Madre();
                     if (participante.getApellido2Madre()!=null) madre = madre + " "+  participante.getApellido2Madre();
                     pagetmp.setHint(madre);
-                    esElegible = visible;
                 }
+                esElegible = visible;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRechDen())) {
@@ -943,7 +973,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //notificarCambios = false;
                 onPageTreeChanged();
             }
-            if (page.getTitle().equals(labels.getParteDDen())) {
+            //MA2022. Version de Carta no incluye parte D. Solo A, B, C
+            /*if (page.getTitle().equals(labels.getParteDDen())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRechDenExtEdad()), !visible);
                 //notificarCambios = false;
@@ -966,7 +997,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //notificarCambios = false;
                 onPageTreeChanged();
             }
+            */
             if (page.getTitle().equals(labels.getAsentimiento())) {
+
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
                 //notificarCambios = false;
@@ -1060,6 +1093,12 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //notificarCambios = false;
                 onPageTreeChanged();
             }
+            if (page.getTitle().equals(labels.getRelacionFam())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra relación familiar");
+                changeStatus(mWizardModel.findByKey(labels.getOtraRelacionFam()), visible);
+                //notificarCambios = false;
+                onPageTreeChanged();
+            }
             if (page.getTitle().equals(labels.getMotivoDifTutor())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro Motivo");
                 changeStatus(mWizardModel.findByKey(labels.getOtroMotivoDifTutor()), visible);
@@ -1080,6 +1119,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //notificarCambios = false;
                 MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
                 pagetmp.setChoices(visible?catVerifTutNoAlf:catVerifTutAlf);
+                totalVerifTutor = visible?catVerifTutNoAlf.length:catVerifTutAlf.length;
 
                 onPageTreeChanged();
             }
@@ -1393,9 +1433,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
 
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getEmancipado()), false);
         if (preg>98) changeStatus(mWizardModel.findByKey(labels.getRazonEmancipacion()), false);
+        if (preg>98) changeStatus(mWizardModel.findByKey(labels.getIncDen()), false);
 
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getOtraRazonEmancipacion()), false);
-        if (preg>97) changeStatus(mWizardModel.findByKey(labels.getIncDen()), false);
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getDejoCarta()), false);
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getVivienda()), false);
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), false);
@@ -1411,9 +1451,10 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
         if (preg>92) changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), false);
         if (preg>92) changeStatus(mWizardModel.findByKey(labels.getParteBDen()), false);
         if (preg>92) changeStatus(mWizardModel.findByKey(labels.getParteCDen()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getParteDDen()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getRechDenExtEdad()), false);
-        if (preg>92) changeStatus(mWizardModel.findByKey(labels.getOtroRechDenExtEdad()), false);
+        //MA2022. Version de Carta no incluye parte D. Solo A, B, C
+        //if (preg>92) changeStatus(mWizardModel.findByKey(labels.getParteDDen()), false);
+        //if (preg>92) changeStatus(mWizardModel.findByKey(labels.getRechDenExtEdad()), false);
+        //if (preg>92) changeStatus(mWizardModel.findByKey(labels.getOtroRechDenExtEdad()), false);
         if (preg>92) changeStatus(mWizardModel.findByKey(labels.getEnfCronica()), false);
         if (preg>92) changeStatus(mWizardModel.findByKey(labels.getoEnfCronica()), false);
         if (preg>92) changeStatus(mWizardModel.findByKey(labels.getTomaTx()), false);
@@ -1619,9 +1660,11 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturoRC2018));
             String parteBDen = datos.getString(this.getString(R.string.parteBDen));
             String parteCDen = datos.getString(this.getString(R.string.parteCDen));
-            String parteDDen = datos.getString(this.getString(R.string.parteDDen));
+            //MA2022. Version de Carta no incluye parte D. Solo A, B, C
+            /*String parteDDen = datos.getString(this.getString(R.string.parteDDen));
             String rechDenExtEdad = datos.getString(this.getString(R.string.rechDenExtEdad));//agregar en carta
             String otroRechDenExtEdad = datos.getString(this.getString(R.string.otroRechDenExtEdad));//agregar en carta
+            */
             String rechDen = datos.getString(this.getString(R.string.rechDen));
             String otroRechDen = datos.getString(this.getString(R.string.otroRechDen));
             String nombrept = datos.getString(this.getString(R.string.nombrept));
@@ -1945,8 +1988,9 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         //crear carta de consentimiento para dengue
                         estudiosAdapter.crearCartaConsentimiento(cc);
                     }
+                    //MA2022. Version de Carta no incluye parte D. Solo A, B, C
                     //si se preguntó por la parte D entonces crear nuevo tamizaje y nueva carta para la parte D
-                    if (tieneValor(parteDDen)) {
+                    /*if (tieneValor(parteDDen)) {
                         //solo crear nuevo tamizaje si se pregunto por la parte A
                         if (tieneValor(parteADen)) {
                             //se crea tamizaje para parteD
@@ -1977,6 +2021,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         //se crea tamizaje de parte D(es otra carta)
                         estudiosAdapter.crearCartaConsentimiento(cc);
                     }
+                    */
                     MovilInfo movilInfo = new MovilInfo();
                     movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
                     movilInfo.setDeviceid(infoMovil.getDeviceId());
@@ -2050,10 +2095,14 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                             procesos.setEstudio("Dengue");
                         }else if (procesos.getEstudio().equals("Influenza")){
                             procesos.setEstudio("Dengue  Influenza");
-                        }else if (procesos.getEstudio().equals("CH Familia")){
-                            procesos.setEstudio("Dengue    CH Familia");
+                        }else if (procesos.getEstudio().equals("CH Familia") || procesos.getEstudio().equals("CH Familia  Tcovid")){
+                            procesos.setEstudio("Dengue    "+procesos.getEstudio());
                         }else if (procesos.getEstudio().equals("Influenza  CH Familia")){
-                            procesos.setEstudio("Dengue  Influenza  CH Familiaa");
+                            procesos.setEstudio("Dengue  Influenza  CH Familia");
+                        }else if (procesos.getEstudio().equals("UO1")){
+                            procesos.setEstudio("Dengue  UO1");
+                        }else if (procesos.getEstudio().equals("UO1  CH Familia") || procesos.getEstudio().equalsIgnoreCase("UO1  CH Familia  Tcovid")){
+                            procesos.setEstudio("Dengue  "+procesos.getEstudio());
                         }
 
                         estudiosAdapter.actualizarParticipanteProcesos(procesos);

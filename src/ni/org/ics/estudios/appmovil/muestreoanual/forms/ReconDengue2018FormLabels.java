@@ -88,10 +88,11 @@ public class ReconDengue2018FormLabels {
     private String parteBDenHint;
     private String parteCDen;
     private String parteCDenHint;
-    private String parteDDen;
-    private String parteDDenHint;
-    private String rechDenExtEdad;
-    private String otroRechDenExtEdad;
+    //MA2022. Version de Carta no incluye parte D. Solo A, B, C
+    //private String parteDDen;
+    //private String parteDDenHint;
+    //private String rechDenExtEdad;
+    //private String otroRechDenExtEdad;
     private String asentimiento;
     private String asentimientoHint;
     private String noAsentimiento;
@@ -256,11 +257,11 @@ public class ReconDengue2018FormLabels {
         parteBDenHint = res.getString(R.string.parteBDenHint);
         parteCDen = res.getString(R.string.parteCDen);
         parteCDenHint = res.getString(R.string.parteCDenHint);
-        parteDDen = res.getString(R.string.parteDDen);
+        /*parteDDen = res.getString(R.string.parteDDen);
         parteDDenHint = res.getString(R.string.parteDDenHint);
         rechDenExtEdad = res.getString(R.string.rechDenExtEdad);
         otroRechDenExtEdad = res.getString(R.string.otroRechDenExtEdad);
-        rechDen = res.getString(R.string.rechDen);
+        */rechDen = res.getString(R.string.rechDen);
         otroRechDen = res.getString(R.string.otroRechDen);
         nombrept = res.getString(R.string.nombrept);
         nombrept2 = res.getString(R.string.nombrept2);
@@ -934,7 +935,7 @@ public class ReconDengue2018FormLabels {
     public void setParteCDenHint(String parteCDenHint) {
         this.parteCDenHint = parteCDenHint;
     }
-
+/*
     public String getParteDDen() {
         return parteDDen;
     }
@@ -966,7 +967,7 @@ public class ReconDengue2018FormLabels {
     public void setOtroRechDenExtEdad(String otroRechDenExtEdad) {
         this.otroRechDenExtEdad = otroRechDenExtEdad;
     }
-
+*/
     public String getAsentimiento() {
         return asentimiento;
     }

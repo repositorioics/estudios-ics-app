@@ -1,4 +1,4 @@
-package ni.org.ics.estudios.appmovil.covid19.activities.enterdata;
+package ni.org.ics.estudios.appmovil.muestreoanual.activities;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -19,14 +19,12 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.Barrio;
 import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.covid19.forms.ConsCHFParteECovid19Form;
-import ni.org.ics.estudios.appmovil.covid19.forms.ConsCHFParteECovid19FormLabels;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.*;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
-import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuInfoActivity;
-import ni.org.ics.estudios.appmovil.muestreoanual.activities.SelecPartActivity;
+import ni.org.ics.estudios.appmovil.muestreoanual.forms.ConsChfForm;
+import ni.org.ics.estudios.appmovil.muestreoanual.forms.ConsChfFormLabels;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
@@ -35,16 +33,14 @@ import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
 import ni.org.ics.estudios.appmovil.wizard.ui.StepPagerStrip;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Miguel Salinas on 28/09/2020.
- * V1.0
- */
-public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implements
+
+public class NuevoConsChfActivity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -57,7 +53,7 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
     private Button mPrevButton;
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
-    private ConsCHFParteECovid19FormLabels labels = new ConsCHFParteECovid19FormLabels();
+    private ConsChfFormLabels labels = new ConsChfFormLabels();
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
     private GPSTracker gps;
@@ -71,6 +67,8 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
     private boolean esElegible = true;
     private boolean visExitosa = false;
     private List<MessageResource> catRelacionFamiliar = new ArrayList<MessageResource>();
+    private String[] catRelFamSegunEdad;
+    private List<MessageResource> catMeses = new ArrayList<MessageResource>();
     private String[] catVerifTutAlf; //cosas a verificar cuando tutor es alfabeto
     private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
     private int totalVerifTutor = 0;
@@ -90,11 +88,11 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
-		infoMovil = new DeviceInfo(NuevoConsCHFParteECovid19Activity.this);
-        gps = new GPSTracker(NuevoConsCHFParteECovid19Activity.this);
+		infoMovil = new DeviceInfo(NuevoConsChfActivity.this);
+        gps = new GPSTracker(NuevoConsChfActivity.this);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-        mWizardModel = new ConsCHFParteECovid19Form(this,mPass);
+        mWizardModel = new ConsChfForm(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
@@ -176,10 +174,19 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
 
         edadMeses = participante.getEdadMeses();
         estudiosAdapter.open();
+        if (edadMeses < 216) {
+            catRelFamSegunEdad = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR' and "+CatalogosDBConstants.catKey + " not in( '8', '9')", CatalogosDBConstants.order);
+        } else {
+            catRelFamSegunEdad = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", CatalogosDBConstants.order);
+        }
         catRelacionFamiliar = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", CatalogosDBConstants.order);
         catVerifTutNoAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
         catVerifTutAlf = estudiosAdapter.getSpanishMessageResources(CatalogosDBConstants.catKey + " in ('1','2','3','6') and " + CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", CatalogosDBConstants.order);
         estudiosAdapter.close();
+
+        SingleFixedChoicePage pagetmp = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getRelacionFam());
+        pagetmp.setChoices(catRelFamSegunEdad);
+
         onPageTreeChanged();
         updateBottomBar();
     }
@@ -302,24 +309,25 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                 break;
             }
             if ((!page.isRequired() && !page.getData().isEmpty()) || (page.isRequired() && page.isCompleted())) {
-                if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")) {
-                    if (!page.getData().getString(NumberPage.SIMPLE_DATA_KEY).matches("")) {
+                if(clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")){
+                    if (!page.getData().getString(NumberPage.SIMPLE_DATA_KEY).matches("")){
                         NumberPage np = (NumberPage) page;
                         if ((np.ismValRange() || np.ismValPattern())) {
                             String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                            if ((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Integer.valueOf(valor) || np.getmLowerOrEqualsThan() < Integer.valueOf(valor)))
-                                    || (np.ismValPattern() && !valor.matches(np.getmPattern()))) {
+                            if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Integer.valueOf(valor) || np.getmLowerOrEqualsThan() < Integer.valueOf(valor)))
+                                    || (np.ismValPattern() && !valor.matches(np.getmPattern()))){
                                 cutOffPage = i;
                                 break;
                             }
                         }
                     }
-                } else if (clase.equals("ni.org.ics.estudios.appmovil.wizard.model.TextPage")) {
-                    if (!page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("")) {
+                }
+                else if(clase.equals("ni.org.ics.estudios.appmovil.wizard.model.TextPage")){
+                    if (!page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("")){
                         TextPage tp = (TextPage) page;
                         if (tp.ismValPattern()) {
                             String valor = tp.getData().getString(TextPage.SIMPLE_DATA_KEY);
-                            if (!valor.matches(tp.getmPattern())) {
+                            if(!valor.matches(tp.getmPattern())){
                                 cutOffPage = i;
                                 break;
                             }
@@ -328,9 +336,12 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                 } else if (clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.MultipleFixedChoicePage")) {
                     ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                     //validación solo para la pregunta de verificación del tutor
-                    if (page.getTitle().equalsIgnoreCase(this.getString(R.string.verifTutor)) && test.size() != totalVerifTutor) {
-                        cutOffPage = i;
-                        break;
+                    if (page.getTitle().equalsIgnoreCase(this.getString(R.string.verifTutor))) {
+                        assert test != null;
+                        if (test.size() != totalVerifTutor) {
+                            cutOffPage = i;
+                            break;
+                        }
                     }
                 }
             }
@@ -381,10 +392,6 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                 //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtraRelacionPersonaCasa()), false);
                 //notificarCambios = false;
-                visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null &&
-                        page.getData().getString(TextPage.SIMPLE_DATA_KEY).contains("Otro motivo"));
-                changeStatus(mWizardModel.findByKey(labels.getOtraRazonVisitaNoExitosa()), visible);
-                //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRelacionFamPersonaCasa())) {
@@ -396,86 +403,106 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getAceptaTamizajePersona())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && (edadMeses >= 72 && edadMeses < 216));//6 y menores de 18
-                //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCHFParteECovid()), visible);
-                //notificarCambios = false;
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), !visible);
-                //notificarCambios = false;
-                if (!visible) {
-                    resetForm(92);
-                    esElegible =false;
+                changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusionIndice()), visible);
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getCriteriosInclusionIndice())){
+                ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
+                visible = test!=null && test.size()==4;
+                changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && (edadMeses >= 72 && edadMeses < 216));//6 y menores de 18
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
+                if(!visible){
+                    resetForm(99);
+                    if (test!=null) {
+                        Toast toast = Toast.makeText(getApplicationContext(), this.getString(R.string.noCumpleCriteriosInclusion), Toast.LENGTH_LONG);
+                        toast.show();
+                    }
                 }
                 onPageTreeChanged();
             }
-            if (page.getTitle().equals(labels.getAceptaCHFParteECovid())) {
+            if (page.getTitle().equals(labels.getAceptaParteA())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
-                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteE()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
                 //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getTutor()), visible && edadMeses < 216);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
                 //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible && edadMeses < 216);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteA()), !visible);
                 //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), visible);
-                //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getDomicilio()), visible);
-                //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), visible);
-                //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
-                //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getPadre()), visible && edadMeses < 216);
-                //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible && edadMeses < 216);
-                //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getMadre()), visible && edadMeses < 216);
-                //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible && edadMeses < 216);
-                //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
-                //notificarCambios = false;
+                //if (visible && edadMeses < 72){
+                    changeStatus(mWizardModel.findByKey(labels.getTutor()), visible && edadMeses < 216);
+                    //notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible && edadMeses < 216);
+                    //notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), visible);
+                    //notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getDomicilio()), visible);
+                    //notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCmDomicilio()), visible);
+                    //notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getTelefono1SN()), visible);
+                    //notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getPadre()), visible && edadMeses < 216);
+                    //notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCambiarPadre()), visible && edadMeses < 216);
+                    //notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getMadre()), visible && edadMeses < 216);
+                    //notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getCambiarMadre()), visible && edadMeses < 216);
+                    //notificarCambios = false;
+                    changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
+                    //notificarCambios = false;
 
-                LabelPage pagetmp = (LabelPage) mWizardModel.findByKey(labels.getDomicilio());
-                String domicilio;
-                if (participante.getCasa().getBarrio() != null) {
-                    domicilio = participante.getCasa().getDireccion() + " - (" + participante.getCasa().getBarrio().getNombre() + ")";
-                } else
-                    domicilio = participante.getCasa().getDireccion();
-                pagetmp.setHint(domicilio);
+                    LabelPage pagetmp = (LabelPage) mWizardModel.findByKey(labels.getDomicilio());
+                    String domicilio;
+                    if (participante.getCasa().getBarrio()!=null){
+                        domicilio = participante.getCasa().getDireccion() + " - ("+ participante.getCasa().getBarrio().getNombre()+")";
+                    }else
+                        domicilio = participante.getCasa().getDireccion();
+                    pagetmp.setHint(domicilio);
 
-                String relacion = MessageResourceUtil.getRelacionFamiliar(catRelacionFamiliar, participante.getRelacionFamiliarTutor());
-                pagetmp = (LabelPage) mWizardModel.findByKey(labels.getTutor());
-                pagetmp.setHint(participante.getTutor() + " - (" + relacion + ")");
+                    String relacion = MessageResourceUtil.getRelacionFamiliar(catRelacionFamiliar, participante.getRelacionFamiliarTutor());
+                    pagetmp = (LabelPage) mWizardModel.findByKey(labels.getTutor());
+                    pagetmp.setHint(participante.getTutor()+" - ("+ relacion +")");
 
-                pagetmp = (LabelPage) mWizardModel.findByKey(labels.getPadre());
-                String padre = participante.getNombre1Padre();
-                if (participante.getNombre2Padre() != null) padre = padre + " " + participante.getNombre2Padre();
-                padre = padre + " " + participante.getApellido1Padre();
-                if (participante.getApellido2Padre() != null) padre = padre + " " + participante.getApellido2Padre();
-                pagetmp.setHint(padre);
+                    pagetmp = (LabelPage) mWizardModel.findByKey(labels.getPadre());
+                    String padre = participante.getNombre1Padre();
+                    if (participante.getNombre2Padre()!=null) padre = padre + " "+  participante.getNombre2Padre();
+                    padre = padre +" "+ participante.getApellido1Padre();
+                    if (participante.getApellido2Padre()!=null) padre = padre + " "+  participante.getApellido2Padre();
+                    pagetmp.setHint(padre);
 
-                pagetmp = (LabelPage) mWizardModel.findByKey(labels.getMadre());
-                String madre = participante.getNombre1Madre();
-                if (participante.getNombre2Madre() != null) madre = madre + " " + participante.getNombre2Madre();
-                madre = madre + " " + participante.getApellido1Madre();
-                if (participante.getApellido2Madre() != null) madre = madre + " " + participante.getApellido2Madre();
-                pagetmp.setHint(madre);
-                esElegible = visible;
-                if (!visible) {
-                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noAceptaParticipar), Toast.LENGTH_LONG);
+                    pagetmp = (LabelPage) mWizardModel.findByKey(labels.getMadre());
+                    String madre = participante.getNombre1Madre();
+                    if (participante.getNombre2Madre()!=null) madre = madre + " "+  participante.getNombre2Madre();
+                    madre = madre +" "+ participante.getApellido1Madre();
+                    if (participante.getApellido2Madre()!=null) madre = madre + " "+  participante.getApellido2Madre();
+                    pagetmp.setHint(madre);
+                    esElegible = visible;
+                //}
+                //esElegible = visible;
+                if (!visible){
+                    Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.noAceptaParticipar),Toast.LENGTH_LONG);
                     toast.show();
                     resetForm(92);
                 }
                 onPageTreeChanged();
             }
-            if (page.getTitle().equals(labels.getRazonNoAceptaParteE())) {
+            if (page.getTitle().equals(labels.getRazonNoAceptaParteA())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros motivos");
-                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteE()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteA()), visible);
                 //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAsentimiento())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCHFParteECovid()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteA()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
                 //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
                 //notificarCambios = false;
@@ -553,6 +580,12 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
             if (page.getTitle().equals(labels.getMotivoDifTutor())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro Motivo");
                 changeStatus(mWizardModel.findByKey(labels.getOtroMotivoDifTutor()), visible);
+                //notificarCambios = false;
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getRelacionFam())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otra relación familiar");
+                changeStatus(mWizardModel.findByKey(labels.getOtraRelacionFam()), visible);
                 //notificarCambios = false;
                 onPageTreeChanged();
             }
@@ -706,7 +739,6 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                 onPageTreeChanged();
             }
 
-
     	}catch (Exception ex){
             ex.printStackTrace();
         }
@@ -715,11 +747,13 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
 
     private void resetForm(int preg){
         try {
-            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), false);
-            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getAceptaCHFParteECovid()), false);
-            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteE()), false);
-            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteE()), false);
-            if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), false);
+            if (preg > 93) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteA()), false);
+            if (preg > 93) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteA()), false);
+
+            if (preg > 92) changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), false);
+
+            //no esta dispuesto a ir al centro
+            if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), false);
             if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getTutor()), false);
             if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), false);
             if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getTestigoSN()), false);
@@ -729,6 +763,7 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
             if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getApellidopt()), false);
             if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getApellidopt2()), false);
             if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getRelacionFam()), false);
+            if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getOtraRelacionFam()), false);
             if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getMotivoDifTutor()), false);
             if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getOtroMotivoDifTutor()), false);
             if (preg > 90) changeStatus(mWizardModel.findByKey(labels.getAlfabetoTutor()), false);
@@ -832,7 +867,6 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
 
             String visExit = datos.getString(this.getString(R.string.visExit));
             String razonVisNoExit = datos.getString(this.getString(R.string.razonVisNoExit));
-            String otraRazonVisitaNoExitosa = datos.getString(this.getString(R.string.otraRazonVisitaNoExitosa));
             String personaCasa = datos.getString(this.getString(R.string.personaCasa));
             String relacionFamPersonaCasa = datos.getString(this.getString(R.string.relacionFamPersonaCasa));
             String otraRelacionPersonaCasa = datos.getString(this.getString(R.string.otraRelacionPersonaCasa));
@@ -842,10 +876,14 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
             String razonNoParticipaPersona = datos.getString(this.getString(R.string.razonNoParticipaPersona));
             String otraRazonNoParticipaPersona = datos.getString(this.getString(R.string.otraRazonNoParticipaPersona));
 
+            String criteriosInclusionIndice = datos.getString(this.getString(R.string.criteriosInclusion));
             String asentimiento = datos.getString(this.getString(R.string.asentimientoVerbal));
-            String aceptaCHFParteECovid = datos.getString(this.getString(R.string.aceptaCHFParteECovid));
-            String razonNoAceptaParteE = datos.getString(this.getString(R.string.razonNoAceptaParteE));
-            String otraRazonNoAceptaParteE = datos.getString(this.getString(R.string.otraRazonNoAceptaParteE));
+            String aceptaParteA = datos.getString(this.getString(R.string.aceptaParteA));
+            String razonNoAceptaParteA = datos.getString(this.getString(R.string.razonNoAceptaParteA));
+            String otraRazonNoAceptaParteA = datos.getString(this.getString(R.string.otraRazonNoAceptaParteACovid));
+            String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturo));
+            String aceptaParteB = datos.getString(this.getString(R.string.aceptaParteB));
+            String aceptaParteC = datos.getString(this.getString(R.string.aceptaParteC));
 
             String nombrept = datos.getString(this.getString(R.string.nombrept));
             String nombrept2 = datos.getString(this.getString(R.string.nombrept2));
@@ -904,13 +942,11 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                 MessageResource relFamiliar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + relacionFamPersonaCasa + "' and " + CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", null);
                 visita.setRelacionFamPersonaCasa(relFamiliar.getCatKey());
             }
-            /*Pedir descripción cuándo visita no es exitosa y se selecciona 'Otro motivo'. Brenda 27/10/2020*/
-            visita.setOtraRazonVisitaNoExitosa(otraRazonVisitaNoExitosa);
             visita.setPersonaCasa(personaCasa);
             visita.setOtraRelacionPersonaCasa(otraRelacionPersonaCasa);
             visita.setTelefonoPersonaCasa(telefonoPersonaCasa);
             visita.setCodigoVisita(infoMovil.getId());
-            visita.setEstudio("CHF-ParteE");
+            visita.setEstudio("CHF");
             estudiosAdapter.crearVisitaTerrenoParticipante(visita);
 
             //si visita es exitosa registrar tamizaje, carta de consentimiento, y actualizar datos del participante participante
@@ -934,23 +970,26 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                         tamizaje.setRazonNoAceptaTamizajePersona(catRazonNoAceptaTam.getCatKey());
                 }
                 tamizaje.setOtraRazonNoAceptaTamizajePersona(otraRazonNoParticipaPersona);
-                /*if (tieneValor(aceptaCHFParteECovid)) {
-                    MessageResource catAceptaParteE = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaCHFParteECovid + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                    if (catAceptaParteE != null) {
-                        tamizaje.setAceptaParticipar(catAceptaParteE.getCatKey());
+                if (tieneValor(aceptaParteA)) {
+                    MessageResource catAceptaParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteA + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    if (catAceptaParteA != null) {
+                        tamizaje.setAceptaParticipar(catAceptaParteA.getCatKey());
                     }
                 }
-                if (tieneValor(razonNoAceptaParteE)) {
-                    MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaParteE + "' and " + CatalogosDBConstants.catRoot + "='CPD_CAT_MOTRECHAZO'", null);
-                    if (catRazonNoAceptaParticipar != null)
-                        tamizaje.setRazonNoAceptaParticipar(catRazonNoAceptaParticipar.getCatKey());
-                }
-                tamizaje.setOtraRazonNoAceptaParticipar(otraRazonNoAceptaParteE);*/
-                //Si acepta por defecto
-                tamizaje.setAceptaParticipar(Constants.YESKEYSND);
-                tamizaje.setRazonNoAceptaParticipar(null);
                 tamizaje.setOtraRazonNoAceptaParticipar(null);
                 tamizaje.setEsElegible(esElegible?Constants.YESKEYSND:Constants.NOKEYSND);
+                if (tieneValor(criteriosInclusionIndice)) {
+                    String keysCriterios = "";
+                    criteriosInclusionIndice = criteriosInclusionIndice.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','");
+                    List<MessageResource> mcriteriosInclusion = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + criteriosInclusionIndice + "') and "
+                            + CatalogosDBConstants.catRoot + "='CHF_CAT_CI'", null);
+                    for (MessageResource ms : mcriteriosInclusion) {
+                        keysCriterios += ms.getCatKey() + ",";
+                    }
+                    if (!keysCriterios.isEmpty())
+                        keysCriterios = keysCriterios.substring(0, keysCriterios.length() - 1);
+                    tamizaje.setCriteriosInclusion(keysCriterios);
+                }
                 if (tieneValor(asentimiento)) {
                     MessageResource catAsentimientoVerbal = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + asentimiento + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                     if (catAsentimientoVerbal != null)
@@ -961,22 +1000,14 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                 tamizaje.setDeviceid(infoMovil.getDeviceId());
                 tamizaje.setEstado('0');
                 tamizaje.setPasive('0');
-
-                //Registrar tamizaje ParteE
+                //Registrar chf
                 Estudio estudioNuevo = estudiosAdapter.getEstudio(MainDBConstants.codigo + "=" + Constants.COD_EST_CHF, null);
                 tamizaje.setEstudio(estudioNuevo);
                 estudiosAdapter.crearTamizaje(tamizaje);
 
-                ParticipanteProcesos procesos = participante.getProcesos();
-                MovilInfo movilInfo = new MovilInfo();
-                movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
-                movilInfo.setDeviceid(infoMovil.getDeviceId());
-                movilInfo.setUsername(username);
-                movilInfo.setToday(new Date());
-
                 //Pregunta si acepta realizar el tamizaje. Aca siempre va a entrar porque en este caso por defecto siempre es Si
                 if (tamizaje.getAceptaTamizajePersona().equals(Constants.YESKEYSND)) {
-                    if (tamizaje.getAceptaParticipar().equals(Constants.YESKEYSND)) {
+                    if (tamizaje.getAceptaParticipar() != null && tamizaje.getAceptaParticipar().equals(Constants.YESKEYSND)) {
                         CartaConsentimiento cc = new CartaConsentimiento();
                         cc.setRecordDate(new Date());
                         cc.setRecordUser(username);
@@ -1040,19 +1071,14 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                             MessageResource catDifTutor = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + motivoDifTutor + "' and " + CatalogosDBConstants.catRoot + "='CP_CAT_DIFTUTOR'", null);
                             if (catDifTutor != null) cc.setMotivoDifTutor(catDifTutor.getCatKey());
                         }
-                        if (tieneValor(aceptaCHFParteECovid)) {
-                            MessageResource catAceptaParteE = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaCHFParteECovid + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                            if (catAceptaParteE != null) cc.setAceptaParteE(catAceptaParteE.getCatKey());
-                        }
-                        if (tieneValor(razonNoAceptaParteE)) {
-                            MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaParteE + "' and " + CatalogosDBConstants.catRoot + "='CPD_CAT_MOTRECHAZO'", null);
-                            if (catRazonNoAceptaParticipar != null)
-                                cc.setMotivoRechazoParteE(catRazonNoAceptaParticipar.getCatKey());
-                        }
-                        cc.setOtroMotivoRechazoParteE(otraRazonNoAceptaParteE);
-
                         cc.setOtroMotivoDifTutor(otroMotivoDifTutor);
                         cc.setOtraRelacionFamTutor(otraRelacionFam);
+                        if (tieneValor(aceptaContactoFuturo)) {
+                            MessageResource catConFut = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaContactoFuturo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                            if (catConFut != null) {
+                                cc.setAceptaContactoFuturo(catConFut.getCatKey());
+                            }
+                        }
                         if (tieneValor(verifTutor)) {
 
                             String keysCriterios = "";
@@ -1066,24 +1092,49 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                                 keysCriterios = keysCriterios.substring(0, keysCriterios.length() - 1);
                             cc.setVerifTutor(keysCriterios);
                         }
+                        if (tieneValor(aceptaContactoFuturo)) {
+                            MessageResource catConFut = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaContactoFuturo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                            if (catConFut != null) {
+                                cc.setAceptaContactoFuturo(catConFut.getCatKey());
+                            }
+                        }
+                        if (tieneValor(aceptaParteA)) {
+                            MessageResource catAceptaParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteA + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                            if (catAceptaParteA != null) cc.setAceptaParteA(catAceptaParteA.getCatKey());
+                        }
+                        if (tieneValor(razonNoAceptaParteA)) {
+                            MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaParteA + "' and " + CatalogosDBConstants.catRoot + "='CPD_CAT_MOTRECHAZO'", null);
+                            if (catRazonNoAceptaParticipar != null)
+                                cc.setMotivoRechazoParteA(catRazonNoAceptaParticipar.getCatKey());
+                        }
+                        cc.setOtroMotivoRechazoParteA(otraRazonNoAceptaParteA);
+                        if (tieneValor(aceptaParteB)) {
+                            MessageResource catAcepta = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteB + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                            if (catAcepta != null) {
+                                cc.setAceptaParteB(catAcepta.getCatKey());
+                            }
+                        }
+                        if (tieneValor(aceptaParteC)) {
+                            MessageResource catAcepta = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteC + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                            if (catAcepta != null) {
+                                cc.setAceptaParteC(catAcepta.getCatKey());
+                            }
+                        }
                         cc.setTamizaje(tamizaje);
                         cc.setVersion(Constants.VERSION_CC_CHF);
                         cc.setCodigo(infoMovil.getId());
-                        cc.setReconsentimiento(Constants.NOKEYSND);
+                        cc.setReconsentimiento(Constants.YESKEYSND);
                         estudiosAdapter.crearCartaConsentimiento(cc);
 
-                        procesos.setConsChf(Constants.NO);
-                        if (procesos.getCuestCovid() == null || procesos.getCuestCovid().equalsIgnoreCase("No"))
-                            procesos.setCuestCovid("3a");//muestreo noviembre 2021
-                        if (procesos.getMuestraCovid() != null && procesos.getMuestraCovid().equalsIgnoreCase(Constants.CANDIDATO_EDTA_CITRATO)) {
-                            procesos.setMuestraCovid(Constants.MX_EDTA_CITRATO);//pedir rojo, edta y citrato. Noviembre 2021
-                        } else {
-                            procesos.setMuestraCovid(Constants.YES);//ya no pedir procesos de muestra adicional covid. Brenda 03082021
-                        }
+                        MovilInfo movilInfo = new MovilInfo();
+                        movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+                        movilInfo.setDeviceid(infoMovil.getDeviceId());
+                        movilInfo.setUsername(username);
+                        movilInfo.setToday(new Date());
+                        ParticipanteProcesos procesos = participante.getProcesos();
                         procesos.setMovilInfo(movilInfo);
-                        //estudiosAdapter.actualizarParticipanteProcesos(procesos);
                         if (esElegible) {
-                            int ceroDefault = 0;
+                            int ceroDefaul = 0;
                             if (tieneValor(cmDomicilio) && cmDomicilio.equals(Constants.YES)) {
                                 procesos.setCoordenadas("2");
                             } else {
@@ -1101,11 +1152,6 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                                 if (tieneValor(apellidomadre)) participante.setApellido1Madre(apellidomadre);
                                 if (tieneValor(apellidomadre2)) participante.setApellido2Madre(apellidomadre2);
                             }
-                            participante.setRecordDate(new Date());
-                            participante.setRecordUser(username);
-                            participante.setDeviceid(infoMovil.getDeviceId());
-                            participante.setEstado('0');
-                            participante.setPasive('0');
                             if (tieneValor(mismoTutorSN) && mismoTutorSN.equals(Constants.NO)) {
                                 participante.setRelacionFamiliarTutor(cc.getRelacionFamiliarTutor());
                                 participante.setNombre1Tutor(cc.getNombre1Tutor());
@@ -1119,6 +1165,11 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                                 participante.setApellido2Tutor(participante.getApellido2());
                                 participante.setRelacionFamiliarTutor(Constants.REL_FAM_MISMO_PART);
                             }
+                            participante.setRecordDate(new Date());
+                            participante.setRecordUser(username);
+                            participante.setDeviceid(infoMovil.getDeviceId());
+                            participante.setEstado('0');
+                            participante.setPasive('0');
                             //Guarda nuevo participante
                             estudiosAdapter.editarParticipante(participante);
 
@@ -1130,50 +1181,56 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
                             if (procesos.getEstPart().equals(0)) {
                                 procesos.setEstPart(1);
                             }
+                            procesos.setConsChf(Constants.NO);
                             estudiosAdapter.actualizarParticipanteProcesos(procesos);
 
-                            //si no existe participante covid19, crearlo
-                            /*if (estudiosAdapter.getParticipanteCovid19(Covid19DBConstants.participante + "="+participante.getCodigo() ,null)==null) {
-                                ParticipanteCovid19 participanteCovid19 = new ParticipanteCovid19();
-                                participanteCovid19.setParticipante(participante);
-                                participanteCovid19.setRecordDate(new Date());
-                                participanteCovid19.setRecordUser(username);
-                                participanteCovid19.setDeviceid(infoMovil.getDeviceId());
-                                participanteCovid19.setEstado('0');
-                                participanteCovid19.setPasive('0');
-                                estudiosAdapter.crearParticipanteCovid19(participanteCovid19);
-                            }*/
                             openMenuInfo();
 
                             Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_LONG);
                             toast.show();
                             finish();
                         } else {
+                            //Si no es elegible entonces desactivar el proceso de Covid19
                             procesos.setConsChf(Constants.NO);
-                            procesos.setCuestCovid(Constants.NO);
-                            procesos.setMuestraCovid(Constants.NO);
+                            procesos.setMovilInfo(movilInfo);
                             estudiosAdapter.actualizarParticipanteProcesos(procesos);
                             openMenuInfo();
                             Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noRegistraIngreso), Toast.LENGTH_LONG);
                             toast.show();
                             finish();
                         }
+
                     } else {
+                        //Si no acepta participar entonces desactivar el proceso de Covid19
+                        MovilInfo movilInfo = new MovilInfo();
+                        movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+                        movilInfo.setDeviceid(infoMovil.getDeviceId());
+                        movilInfo.setUsername(username);
+                        movilInfo.setToday(new Date());
+                        ParticipanteProcesos procesos = participante.getProcesos();
                         procesos.setConsChf(Constants.NO);
-                        procesos.setCuestCovid(Constants.NO);
-                        procesos.setMuestraCovid(Constants.NO);
+                        procesos.setMovilInfo(movilInfo);
                         estudiosAdapter.actualizarParticipanteProcesos(procesos);
+
                         openMenuInfo();
+
                         Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noRegistraIngreso), Toast.LENGTH_LONG);
                         toast.show();
                         finish();
                     }
                 }else {
+                    MovilInfo movilInfo = new MovilInfo();
+                    movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+                    movilInfo.setDeviceid(infoMovil.getDeviceId());
+                    movilInfo.setUsername(username);
+                    movilInfo.setToday(new Date());
+                    ParticipanteProcesos procesos = participante.getProcesos();
                     procesos.setConsChf(Constants.NO);
-                    procesos.setCuestCovid(Constants.NO);
-                    procesos.setMuestraCovid(Constants.NO);
+                    procesos.setMovilInfo(movilInfo);
                     estudiosAdapter.actualizarParticipanteProcesos(procesos);
+
                     openMenuInfo();
+
                     Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noAceptaTamizajePersona), Toast.LENGTH_LONG);
                     toast.show();
                     finish();
@@ -1181,10 +1238,6 @@ public class NuevoConsCHFParteECovid19Activity extends FragmentActivity implemen
             }else {
                 Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.visitaNoExitosa)+ " " +razonVisNoExit, Toast.LENGTH_LONG);
                 toast.show();
-                Intent i = new Intent(getApplicationContext(),
-                        SelecPartActivity.class);
-                i.putExtra(Constants.MENU_INFO, true);
-                startActivity(i);
                 finish();
             }
 

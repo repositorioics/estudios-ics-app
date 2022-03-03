@@ -1984,8 +1984,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
                 String aceptaParteC = datos.getString(this.getString(R.string.aceptaParteCDengue));
                 String aceptaParteD = datos.getString(this.getString(R.string.aceptaParteDDengue));
 
-                String aceptaParteBInf = datos.getString(this.getString(R.string.aceptaParteBInf));
-                String aceptaParteCInf = datos.getString(this.getString(R.string.aceptaParteCInf));
+                String aceptaParteBInf = datos.getString(this.getString(R.string.aceptaParteBInfUO1));
+                String aceptaParteCInf = datos.getString(this.getString(R.string.aceptaParteCInfUO1));
                 String aceptaCohorteUO1ParteDCovid = datos.getString(this.getString(R.string.aceptaCohorteUO1ParteDCovid));
                 String razonNoAceptaParteDCovid = datos.getString(this.getString(R.string.razonNoAceptaParteDCovid));
                 String otraRazonNoAceptaParteDCovid = datos.getString(this.getString(R.string.otraRazonNoAceptaParteDCovid));

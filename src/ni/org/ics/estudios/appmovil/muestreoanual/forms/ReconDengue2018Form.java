@@ -2,7 +2,6 @@ package ni.org.ics.estudios.appmovil.muestreoanual.forms;
 
 import android.content.Context;
 import ni.org.ics.estudios.appmovil.catalogs.Barrio;
-import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -134,10 +133,11 @@ public class ReconDengue2018Form extends AbstractWizardModel {
         Page aceptaContactoFuturo = new SingleFixedChoicePage(this,labels.getAceptaContactoFuturo(), labels.getAceptaContactoFuturoHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page parteBDen = new SingleFixedChoicePage(this,labels.getParteBDen(), labels.getParteBDenHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page parteCDen = new SingleFixedChoicePage(this,labels.getParteCDen(), labels.getParteCDenHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page parteDDen = new SingleFixedChoicePage(this,labels.getParteDDen(), labels.getParteDDenHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        //MA2022. Version de Carta no incluye parte D. Solo A, B, C
+        /*Page parteDDen = new SingleFixedChoicePage(this,labels.getParteDDen(), labels.getParteDDenHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page rechDenExtEdad = new SingleFixedChoicePage(this,labels.getRechDenExtEdad(), "", Constants.WIZARD, false).setChoices(catMotivoRechazo).setRequired(true);
         Page otroRechDenExtEdad = new TextPage(this,labels.getOtroRechDenExtEdad(), "", Constants.WIZARD, false).setRequired(true);
-
+*/
         Page asentimiento = new SingleFixedChoicePage(this,labels.getAsentimiento(), labels.getAsentimientoHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page tutor = new LabelPage(this,labels.getTutor(), "", Constants.WIZARD, false).setRequired(false);
         Page mismoTutorSN = new SingleFixedChoicePage(this,labels.getMismoTutorSN(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
@@ -220,7 +220,7 @@ public class ReconDengue2018Form extends AbstractWizardModel {
                 aceptaCohorteDengue, razonNoAceptaDengue, otraRazonNoAceptaDengue, emancipado, razonEmancipacion, otraRazonEmancipacion, incDen, vivienda, tiempoResidencia, aceptaAtenderCentro, enfCronSN, enfCronica, oEnfCronica,
                 enfCronicaAnio1, enfCronicaMes1, enfCronicaAnio2, enfCronicaMes2, enfCronicaAnio3, enfCronicaMes3, enfCronicaAnio4, enfCronicaMes4, enfCronicaAnio5, enfCronicaMes5, enfCronicaAnio6, enfCronicaMes6, enfCronicaAnio7, enfCronicaMes7,
                 enfCronicaAnio8, enfCronicaMes8, enfCronicaAnio9, enfCronicaMes9, enfCronicaAnio10, enfCronicaMes10, enfCronicaAnio11, enfCronicaMes11, enfCronicaAnio12, enfCronicaMes12, enfCronicaAnio13, enfCronicaMes13, enfCronicaAnio14, enfCronicaMes14,
-                tomaTx, cualesTx, otroTx, asiste, ocentrosalud, puestosalud, parteADen, rechDen, otroRechDen, aceptaContactoFuturo, parteBDen, parteCDen, parteDDen, rechDenExtEdad, otroRechDenExtEdad, asentimiento,
+                tomaTx, cualesTx, otroTx, asiste, ocentrosalud, puestosalud, parteADen, rechDen, otroRechDen, aceptaContactoFuturo, parteBDen, parteCDen, /*parteDDen, rechDenExtEdad, otroRechDenExtEdad,*/ asentimiento,
                 tutor, mismoTutorSN, nombrept, nombrept2, apellidopt, apellidopt2, relacionFam, otraRelacionFam, motivoDifTutor, otroMotivoDifTutor, alfabetoTutor, testigoSN, nombretest1, nombretest2, apellidotest1, apellidotest2,
                 domicilio, cmDomicilio, notaCmDomicilio,//barrio, otrobarrio, dire, autsup,
                 telefono1SN, telefonoClasif1, telefonoCel1, telefonoOper1, telefono2SN, telefonoClasif2, telefonoCel2, telefonoOper2, telefono3SN,

@@ -115,6 +115,7 @@
     <string name="aceptaParteBHint">¿Acepta Parte B Almacenamiento y uso de Muestras en Estudios Futuros?</string>
     <string name="aceptaParteC">Acepta Parte C</string>
     <string name="aceptaParteCHint">¿Acepta Parte C Estudios Geneticos?</string>
+    <string name="razonNoAceptaParteAChfHint">Seleccionar porque no acepta participar en el estudio Transmisión de la influenza en los hogares nicaragüenses</string>
 
     <string name="aceptaSeroprevalencia">Acepta estudio Seroprevalencia</string>
     <string name="aceptaSeroprevalenciaHint">¿Acepta participar en estudio Seroprevalencia Arbovirus?</string>
@@ -169,10 +170,17 @@
     <string name="formato712Asentimiento">Recuerde Adjuntar formato de asentimiento de 7 a 12 años</string>
     <string name="formato1317Asentimiento">Recuerde Adjuntar formato de asentimiento de 13 a 17 años</string>
 
-    <string name="aceptaParteBInf">Parte B UO1</string>
+    <string name="aceptaParteBInf">Parte B Influenza</string>
     <string name="aceptaParteBInfHint">¿Acepta Parte B Almacenamiento y uso de Muestras en Estudios Futuros?</string>
-    <string name="aceptaParteCInf">Parte C UO1</string>
+    <string name="aceptaParteCInf">Parte C Influenza</string>
     <string name="aceptaParteCInfHint">¿Acepta Parte C Estudios Genéticos?</string>
+
+    <string name="aceptaParteFCEIRS">Acepta Parte F Influenza</string>
+    <string name="aceptaParteFCEIRSHint">re-enrolamiento y obtención de muestras de sangre adicionales</string>
+    <string name="razonNoAceptaParteFCEIRS">¿Porque no acepta Parte F?</string>
+    <string name="razonNoAceptaParteFCEIRSHint">Seleccionar porque razón no acepta Parte F</string>
+    <string name="otraRazonNoAceptaParteFCEIRS">Otra razón no acepta Parte F</string>
+    <string name="otraRazonNoAceptaParteFCEIRSHint">Indicar porque otra razón no acepta Parte F</string>
 
     <string name="nombreContacto">Nombre del contacto</string>
     <string name="nombreContactoHint">Nombre completo del contacto</string>

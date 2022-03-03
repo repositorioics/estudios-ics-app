@@ -23,6 +23,7 @@
             <item android:id="@+id/RECONSFLU" android:title="@string/info_reconflu"/>
             <item android:id="@+id/CONSCOVID19" android:title="@string/info_cons_covid19"/>
             <item android:id="@+id/CONS_PARTEE_CHF" android:title="@string/info_cons_partee_chf"/>
+            <item android:id="@+id/CONS_CHF" android:title="@string/info_cons_chf"/>
             <item android:id="@+id/CUESTCOVID19" android:title="@string/info_cuest_covid19"/>
             <item android:id="@+id/MXADICOVID19" android:title="@string/info_mxadi_covid19"/>
             <item android:id="@+id/CONSFLUUO1" android:title="@string/info_conflu_uo1"/>

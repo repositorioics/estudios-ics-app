@@ -34,6 +34,7 @@ public class MenuMuestreoAnualActivity extends ListActivity {
     private static final int VERIFY = 4;
     private static final int DOWNLOAD_USER = 5;
     private static final int DOWNLOAD_PROC = 7;
+    private static final int DENY_DOWNLOAD_PROC = 8;
     public static final int BARCODE_CAPTURE = 22;
 
     private static final String EXIT_SHOWING = "exitshowing";
@@ -122,7 +123,14 @@ public class MenuMuestreoAnualActivity extends ListActivity {
                 createDialog(EXIT);
                 return true;
             case R.id.MENU_DOWN_PROC:
-                createDialog(DOWNLOAD_PROC);
+                cae.open();
+                boolean hayDatos = cae.verificarProcesosPendientesEnvio();
+                cae.close();
+                if (hayDatos) {
+                    createDialog(DENY_DOWNLOAD_PROC);
+                } else {
+                    createDialog(DOWNLOAD_PROC);
+                }
                 return true;
             case R.id.MENU_DOWN_USER:
                 createDialog(DOWNLOAD_USER);
@@ -406,6 +414,16 @@ public class MenuMuestreoAnualActivity extends ListActivity {
                     }
                 });
                 mReceiveShowing=true;
+                break;
+            case DENY_DOWNLOAD_PROC:
+                builder.setTitle(this.getString(R.string.validating));
+                builder.setMessage(this.getString(R.string.processes_not_sent));
+                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setPositiveButton(this.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
                 break;
             default:
                 break;

@@ -1719,7 +1719,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     pendiente = true;
                 }
                 if (mParticipante.getProcesos().getConsChf() != null && mParticipante.getProcesos().getConsChf().matches("Si") && mUser.getConsentimiento()) {
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.chfpartee_missing) + "</font></small><br />";
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.chf_missing) + "</font></small><br />";
                     pendiente = true;
                 }
                 if (mParticipante.getProcesos().getCuestCovid() != null && !mParticipante.getProcesos().getCuestCovid().matches("No")) {
@@ -1728,7 +1728,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
 
                 if (mParticipante.getProcesos().getConsFlu().matches("Si") && mUser.getConsentimiento()) {
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consflu_missing_UO1) + "</font></small><br />";
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.consflu_missing) + "</font></small><br />";
                     pendiente = true;
                 }
                 if (mParticipante.getProcesos().getConsDeng().matches("Si") && mUser.getConsentimiento()) {

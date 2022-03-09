@@ -122,7 +122,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private MenuItem documentosItem;
     private MenuItem consChf;//MA2022
 
+
     private EstudiosAdapter estudiosAdapter;
+
+    private boolean mxVisible = false;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
@@ -1163,10 +1166,32 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             visitaItem.setVisible(true);
         }
         else{
-            if((mParticipante.getProcesos().getConmx().matches("No") || (mParticipante.getProcesos().getConmxbhc().matches("No") && !mParticipante.getProcesos().getEstudio().contains("UO1") && mParticipante.getEdadMeses()>24 )) //excluir UO1 menores de 24 que no aplica bhc
+            /*if(( || (mParticipante.getProcesos().getConmxbhc().matches("No") && !mParticipante.getProcesos().getEstudio().equalsIgnoreCase("UO1") && mParticipante.getEdadMeses()>24 )) //excluir UO1 menores de 24 que no aplica bhc
                     && mUser.getMuestra()
                     && (mParticipante.getEdadMeses()>5
-                    || (mParticipante.getEdadMeses()<=5 && mParticipante.getProcesos().getEstudio().contains("UO1")))) muestraItem.setVisible(true);
+                    || (mParticipante.getEdadMeses()<=5 && mParticipante.getProcesos().getEstudio().contains("UO1")))) muestraItem.setVisible(true);*/
+
+            if (mParticipante.getProcesos().getConmx().matches("No") && mUser.getMuestra()){
+                mxVisible =  true;
+                if (mParticipante.getEdadMeses() < 6){
+                    //Si es menor a 6 meses y el estudio es igual a CH Familia no mostrar menu muestras
+                    if (mParticipante.getProcesos().getEstudio().matches("CH Familia")){
+                        mxVisible = false;
+                    }
+                }else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24){
+                    if ((mParticipante.getProcesos().getEstudio().matches("UO1") && mParticipante.getProcesos().getPbmc().matches("No")) || (mParticipante.getProcesos().getEstudio().matches("UO1  CH Familia") && mParticipante.getProcesos().getPbmc().matches("No")) ){
+                        mxVisible = false;
+                    }
+                }
+                muestraItem.setVisible(mxVisible);
+
+            }
+
+            /*  if((mParticipante.getProcesos().getConmx().matches("No"))
+                    && mUser.getMuestra()
+                    && ((mParticipante.getEdadMeses()<=5 && !mParticipante.getProcesos().getEstudio().matches("CH Familia"))
+                      || (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24 &&
+                      (!mParticipante.getProcesos().getEstudio().matches("UO1")|| !mParticipante.getProcesos().getEstudio().matches("UO1  CH Familia"))))) muestraItem.setVisible(true);*/
 
             if((mParticipante.getProcesos().getEnCasa().matches("Si") && mUser.getEncuestaCasa())) encCasaItem.setVisible(true);
             if((mParticipante.getProcesos().getEncPart().matches("Si") && mUser.getEncuestaParticipante())) encPartItem.setVisible(true);
@@ -1443,7 +1468,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
                                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font></small>";
+                                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 3cc en tubo PBMC<br /></font></small>";
                                             labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
                                             labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                                         } else {
@@ -1799,7 +1824,11 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private String getVolumenCHF() {
         String labelHeader = "";
         if (!ingresoChf) {
-            //De 6 meses a <2 años
+            //Menores de 6 meses
+            if (mParticipante.getEdadMeses() < 6) {
+                labelHeader = labelHeader + "<small><font color='red'>No tomar muestra<br /></font></small>";
+                pendiente = false;
+            } else //De 6 meses a <2 años
             if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {

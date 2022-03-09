@@ -451,7 +451,10 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
     //CH Familia
     private String getVolumenCHF(Participante mParticipante) {
         String labelHeader = "";
-        //De 6 meses a <2 años
+        //Menores de 6 meses
+        if (mParticipante.getEdadMeses() < 6) {
+            labelHeader = labelHeader + "<small><font color='red'>No tomar muestra<br /></font></small>";
+        } else //De 6 meses a <2 años
         if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
             if (mParticipante.getProcesos().getConmx().matches("No")) {
                 if (mParticipante.getProcesos().getPbmc().matches("Si")) {

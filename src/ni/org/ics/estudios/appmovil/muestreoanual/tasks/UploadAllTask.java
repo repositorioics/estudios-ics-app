@@ -83,6 +83,26 @@ public class UploadAllTask extends UploadTask {
             estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
             estudioAdapter.open();
             try {
+                error = cargarCasas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
+
+            try {
+                error = cargarParticipantes(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
+
+            try {
                 getTamizajes();
                 saveTamizajes(Constants.STATUS_SUBMITTED);
                 error = cargarTamizajes(url, username, password);
@@ -100,25 +120,6 @@ public class UploadAllTask extends UploadTask {
                 error = cargarCartasConsentimientos(url, username, password);
                 if (!error.matches("Datos recibidos!")) {
                     saveCartasConset(Constants.STATUS_NOT_SUBMITTED);
-                    return error;
-                }
-            } catch (Exception e1) {
-                e1.printStackTrace();
-                return e1.getLocalizedMessage();
-            }
-            try {
-                error = cargarCasas(url, username, password);
-                if (!error.matches("Datos recibidos!")) {
-                    return error;
-                }
-            } catch (Exception e1) {
-                e1.printStackTrace();
-                return e1.getLocalizedMessage();
-            }
-
-            try {
-                error = cargarParticipantes(url, username, password);
-                if (!error.matches("Datos recibidos!")) {
                     return error;
                 }
             } catch (Exception e1) {

@@ -68,7 +68,7 @@ public class ConsChfForm extends AbstractWizardModel {
         Page aceptaTamizajePersona = new SingleFixedChoicePage(this,labels.getAceptaTamizajePersona(), labels.getAceptaTamizajePersonaHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page razonNoParticipaPersona = new SingleFixedChoicePage(this,labels.getRazonNoParticipaPersona(), labels.getRazonNoParticipaPersonaHint(), Constants.WIZARD, false).setChoices(catRazonNoParticipaPersona).setRequired(true);
         Page otraRazonNoParticipaPersona = new TextPage(this,labels.getOtraRazonNoParticipaPersona(),labels.getOtraRazonNoParticipaPersonaHint(),Constants.WIZARD, false).setRequired(true);
-        Page criteriosInclusionI = new MultipleFixedChoicePage(this,labels.getCriteriosInclusionIndice(), labels.getCriteriosInclusionHint(), Constants.WIZARD, false).setChoices(catCriteriosInclusionI).setRequired(true);
+        //Page criteriosInclusionI = new MultipleFixedChoicePage(this,labels.getCriteriosInclusionIndice(), labels.getCriteriosInclusionHint(), Constants.WIZARD, false).setChoices(catCriteriosInclusionI).setRequired(true);
         //Page aceptaParticipar = new SingleFixedChoicePage(this,labels.getAceptaParticipar(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         //Page razonNoAceptaParticipar = new SingleFixedChoicePage(this,labels.getRazonNoAceptaParticipar(), "", Constants.WIZARD, false).setChoices(catRazonNoParticipaPersona).setRequired(true);
         //Page otraRazonNoAceptaParticipar = new TextPage(this,labels.getOtraRazonNoAceptaParticipar(),labels.getOtraRazonNoAceptaParticiparHint(),Constants.WIZARD, false).setRequired(true);
@@ -131,7 +131,7 @@ public class ConsChfForm extends AbstractWizardModel {
         Page verifTutor = new MultipleFixedChoicePage(this,labels.getVerifTutor(), "", Constants.WIZARD, false).setChoices(catVerificaTutor).setRequired(true);
 
         return new PageList(visExit, visNoExit, personaCasa, relacionFamPersonaCasa, otraRelacionPersonaCasa, telefonoPersonaCasa,
-                aceptaTamizajePersona, razonNoParticipaPersona, otraRazonNoParticipaPersona, criteriosInclusionI, asentimiento,
+                aceptaTamizajePersona, razonNoParticipaPersona, otraRazonNoParticipaPersona, asentimiento,
                 aceptaParteA, razonNoAceptaParteA, otraRazonNoAceptaParteA, aceptaParteB, aceptaParteC, aceptaContactoFuturo,
                 tutor, mismoTutorSN, nombrept, nombrept2, apellidopt, apellidopt2, relacionFam, otraRelacionFam, motivoDifTutor, otroMotivoDifTutor, alfabetoTutor, testigoSN, nombretest1, nombretest2, apellidotest1, apellidotest2,
                 domicilio, cmDomicilio, notaCmDomicilio, telefono1SN, telefonoClasif1, telefonoCel1, telefonoOper1, telefono2SN, telefonoClasif2, telefonoCel2, telefonoOper2, telefono3SN, telefonoClasif3, telefonoCel3, telefonoOper3,

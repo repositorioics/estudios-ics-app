@@ -69,11 +69,10 @@
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textAnioEvento1"
                       android:text="@string/anioEvento" />
-            <EditText android:id="@+id/inputAnioEvento1"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginBottom="20dp"
-                      android:inputType="number" />
+            <Spinner android:id="@+id/spinAnioEvento1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
 
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textMesEvento1"
@@ -972,11 +971,10 @@
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textAnioEvento2"
                       android:text="@string/anioEvento" />
-            <EditText android:id="@+id/inputAnioEvento2"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginBottom="20dp"
-                      android:inputType="number" />
+            <Spinner android:id="@+id/spinAnioEvento2"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
 
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textMesEvento2"
@@ -1731,11 +1729,10 @@
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textAnioEvento3"
                       android:text="@string/anioEvento" />
-            <EditText android:id="@+id/inputAnioEvento3"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginBottom="20dp"
-                      android:inputType="number" />
+            <Spinner android:id="@+id/spinAnioEvento3"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
 
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textMesEvento3"
@@ -2505,11 +2502,10 @@
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textAnioVacuna"
                       android:text="@string/anioVacuna" />
-            <EditText android:id="@+id/inputAnioVacuna"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginBottom="20dp"
-                      android:inputType="number" />
+            <Spinner android:id="@+id/spinAnioVacuna"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"/>
 
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textMesVacuna"

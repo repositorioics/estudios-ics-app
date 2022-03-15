@@ -340,6 +340,7 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
     protected static final String VACUNADOCOVID19_CONS = "VACUNADOCOVID19";
     protected static final String MUESTRATARJETAVAC_CONS = "MUESTRATARJETAVAC";
     protected static final String SABENOMBREVACUNA_CONS = "SABENOMBREVACUNA";
+    protected static final String ANIOVACUNA_CONS = "ANIOVACUNA";
     protected static final String MESVACUNA_CONS = "MESVACUNA";
     protected static final String CUANTASDOSIS_CONS = "CUANTASDOSIS";
     protected static final String NOMBREDOSIS1_CONS = "NOMBREDOSIS1";
@@ -428,6 +429,7 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
     private List<MessageResource> mCatalogoVacunas;
     private List<MessageResource> mCatalogoDosis;
     private List<MessageResource> mCatalogoMesesVacuna = new ArrayList<>();
+    private List<MessageResource> mCatalogoAniosVac;
 
     //Objeto que se va a hacer
     private CuestionarioCovid19 mCuestionario = new CuestionarioCovid19();
@@ -1029,15 +1031,15 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
     private Spinner spinCuantasVecesEnfermo;
     private Spinner spinSabeEvento1;
     private EditText inputEvento1;
-    private EditText inputAnioEvento1;
+    private Spinner spinAnioEvento1;
     private Spinner spinMesEvento1;
     private Spinner spinSabeEvento2;
     private EditText inputEvento2;
-    private EditText inputAnioEvento2;
+    private Spinner spinAnioEvento2;
     private Spinner spinMesEvento2;
     private Spinner spinSabeEvento3;
     private EditText inputEvento3;
-    private EditText inputAnioEvento3;
+    private Spinner spinAnioEvento3;
     private Spinner spinMesEvento3;
     private Spinner spinE1Febricula;
     private Spinner spinE1Fiebre;
@@ -1109,7 +1111,8 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
     private Spinner spinMuestraTarjetaVac;
     private Spinner spinSabeNombreVacuna;
     private EditText inputNombreVacuna;
-    private EditText inputAnioVacuna;
+    //private EditText inputAnioVacuna;
+    private Spinner spinAnioVacuna;
     private Spinner spinMesVacuna;
     private Spinner spinCuantasDosis;
     private Spinner spinNombreDosis1;
@@ -1849,7 +1852,6 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
     //private String fechaEnfPostVac;
     //private String anioEnfPostVac;
     //private String mesEnfPostVac;
-
 
     public static NuevoCuestionarioCovid19v2Fragment create() {
         NuevoCuestionarioCovid19v2Fragment fragment = new NuevoCuestionarioCovid19v2Fragment();
@@ -2822,36 +2824,24 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
         imbEvento1.setVisibility(View.GONE);
         imbEvento2.setVisibility(View.GONE);
         imbEvento3.setVisibility(View.GONE);
-        inputAnioEvento1 = (EditText) rootView.findViewById(R.id.inputAnioEvento1);
-        //poner el año actual, no hay mas opciones
-        inputAnioEvento1.setText(String.valueOf(c.get(Calendar.YEAR)));
-        anioEvento1 = inputAnioEvento1.getText().toString();
-        inputAnioEvento1.setEnabled(false);
-        inputAnioEvento1.setVisibility(View.GONE);
+        spinAnioEvento1 = (Spinner) rootView.findViewById(R.id.spinAnioEvento1);
+        spinAnioEvento1.setVisibility(View.GONE);
         spinMesEvento1 = (Spinner) rootView.findViewById(R.id.spinMesEvento1);
         spinMesEvento1.setVisibility(View.GONE);
         spinSabeEvento2 = (Spinner) rootView.findViewById(R.id.spinSabeEvento2);
         spinSabeEvento2.setVisibility(View.GONE);
         inputEvento2 = (EditText) rootView.findViewById(R.id.inputEvento2);
         inputEvento2.setVisibility(View.GONE);
-        inputAnioEvento2 = (EditText) rootView.findViewById(R.id.inputAnioEvento2);
-        //poner el año actual, no hay mas opciones
-        inputAnioEvento2.setText(String.valueOf(c.get(Calendar.YEAR)));
-        anioEvento2 = inputAnioEvento1.getText().toString();
-        inputAnioEvento2.setEnabled(false);
-        inputAnioEvento2.setVisibility(View.GONE);
+        spinAnioEvento2 = (Spinner) rootView.findViewById(R.id.spinAnioEvento2);
+        spinAnioEvento2.setVisibility(View.GONE);
         spinMesEvento2 = (Spinner) rootView.findViewById(R.id.spinMesEvento2);
         spinMesEvento2.setVisibility(View.GONE);
         spinSabeEvento3 = (Spinner) rootView.findViewById(R.id.spinSabeEvento3);
         spinSabeEvento3.setVisibility(View.GONE);
         inputEvento3 = (EditText) rootView.findViewById(R.id.inputEvento3);
         inputEvento3.setVisibility(View.GONE);
-        inputAnioEvento3 = (EditText) rootView.findViewById(R.id.inputAnioEvento3);
-        //poner el año actual, no hay mas opciones
-        inputAnioEvento3.setText(String.valueOf(c.get(Calendar.YEAR)));
-        anioEvento3 = inputAnioEvento1.getText().toString();
-        inputAnioEvento3.setEnabled(false);
-        inputAnioEvento3.setVisibility(View.GONE);
+        spinAnioEvento3 = (Spinner) rootView.findViewById(R.id.spinAnioEvento3);
+        spinAnioEvento3.setVisibility(View.GONE);
         spinMesEvento3 = (Spinner) rootView.findViewById(R.id.spinMesEvento3);
         spinMesEvento3.setVisibility(View.GONE);
         spinE1Febricula = (Spinner) rootView.findViewById(R.id.spinE1Febricula);
@@ -2921,11 +2911,11 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
         spinE3Desmayo = (Spinner) rootView.findViewById(R.id.spinE3Desmayo);
         spinE3QuedoCama = (Spinner) rootView.findViewById(R.id.spinE3QuedoCama);
         inputNombreVacuna = (EditText) rootView.findViewById(R.id.inputNombreVacuna);
-        inputAnioVacuna = (EditText) rootView.findViewById(R.id.inputAnioVacuna);
+        spinAnioVacuna = (Spinner) rootView.findViewById(R.id.spinAnioVacuna);
         //poner el año actual, no hay mas opciones
-        inputAnioVacuna.setText(String.valueOf(c.get(Calendar.YEAR)));
-        anioVacuna = inputAnioVacuna.getText().toString();
-        inputAnioVacuna.setEnabled(false);
+        //inputAnioVacuna.setText(String.valueOf(c.get(Calendar.YEAR)));
+        //anioVacuna = inputAnioVacuna.getText().toString();
+        //inputAnioVacuna.setEnabled(false);
         inputOtraVacunaDosis1 = (EditText) rootView.findViewById(R.id.inputOtraVacunaDosis1);
         inputLoteDosis1 = (EditText) rootView.findViewById(R.id.inputLoteDosis1);
         inputOtraVacunaDosis2 = (EditText) rootView.findViewById(R.id.inputOtraVacunaDosis2);
@@ -3280,7 +3270,7 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
             spinTrabajadorSalud.setVisibility(View.GONE);
         }
         inputNombreVacuna.setVisibility(View.GONE);
-        inputAnioVacuna.setVisibility(View.GONE);
+        spinAnioVacuna.setVisibility(View.GONE);
         inputOtraVacunaDosis1.setVisibility(View.GONE);
         inputLoteDosis1.setVisibility(View.GONE);
         inputOtraVacunaDosis2.setVisibility(View.GONE);
@@ -4161,7 +4151,6 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                     spinSabeEvento1.setBackgroundColor(Color.WHITE);
                     MostrarOcultarE1_FechaCompleta(View.GONE);
                     MostrarOcultarE1_MesAnio(View.VISIBLE);
-                    anioEvento1 = inputAnioEvento1.getText().toString();
                     fechaEvento1 = null;
                 } else {
                     spinSabeEvento1.setBackgroundColor(Color.WHITE);
@@ -4170,6 +4159,24 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                 }
 
             }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+        spinAnioEvento1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                //Pedir confirmación para cada respuesta
+                createConfirmDialog(ANIOEVENTO1_CONS, getString(R.string.anioEvento), anioEvento1, mr.getCatKey(), mr.getSpanish(), spinner.getSelectedItemPosition());
+                mostrarConfirmacion = true;
+                anioEvento1 = mr.getCatKey();
+                List<MessageResource> meses  = new ArrayList<MessageResource>();
+                meses = getMesesByAnio(anioEvento1);
+                setMesesSpinner(meses, spinMesEvento1);
+             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
             }
@@ -4210,13 +4217,31 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                     spinSabeEvento2.setBackgroundColor(Color.WHITE);
                     MostrarOcultarE2_FechaCompleta(View.GONE);
                     MostrarOcultarE2_MesAnio(View.VISIBLE);
-                    anioEvento2 = inputAnioEvento2.getText().toString();
                     fechaEvento2 = null;
                 } else {
                     spinSabeEvento2.setBackgroundColor(Color.WHITE);
                     MostrarOcultarE2_FechaCompleta(View.GONE);
                     MostrarOcultarE2_MesAnio(View.GONE);
                 }
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+        spinAnioEvento2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                //Pedir confirmación para cada respuesta
+                createConfirmDialog(ANIOEVENTO2_CONS, getString(R.string.anioEvento), anioEvento2, mr.getCatKey(), mr.getSpanish(), spinner.getSelectedItemPosition());
+                mostrarConfirmacion = true;
+                anioEvento2 = mr.getCatKey();
+                List<MessageResource> meses  = new ArrayList<MessageResource>();
+                meses = getMesesByAnio(anioEvento2);
+                setMesesSpinner(meses, spinMesEvento2);
 
             }
             @Override
@@ -4259,7 +4284,6 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                     spinSabeEvento3.setBackgroundColor(Color.WHITE);
                     MostrarOcultarE3_FechaCompleta(View.GONE);
                     MostrarOcultarE3_MesAnio(View.VISIBLE);
-                    anioEvento3 = inputAnioEvento3.getText().toString();
                     fechaEvento3 = null;
                 } else {
                     spinSabeEvento3.setBackgroundColor(Color.WHITE);
@@ -4267,6 +4291,24 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                     MostrarOcultarE3_MesAnio(View.GONE);
                 }
 
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+        spinAnioEvento3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                //Pedir confirmación para cada respuesta
+                createConfirmDialog(ANIOEVENTO3_CONS, getString(R.string.anioEvento), anioEvento3, mr.getCatKey(), mr.getSpanish(), spinner.getSelectedItemPosition());
+                mostrarConfirmacion = true;
+                anioEvento3 = mr.getCatKey();
+                List<MessageResource> meses  = new ArrayList<MessageResource>();
+                meses = getMesesByAnio(anioEvento3);
+                setMesesSpinner(meses, spinMesEvento3);
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -4300,18 +4342,18 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                 e1Febricula = mr.getCatKey();
                 if (e1Febricula.equals(Constants.YESKEYSND)) {
                     spinE1Febricula.setBackgroundColor(Color.RED);
-                    spinE1Fiebre.setVisibility(View.GONE);
-                    textE1Fiebre.setVisibility(View.GONE);
-                    spinE1Fiebre.setSelection(0, false);
+                    //spinE1Fiebre.setVisibility(View.GONE);
+                    //textE1Fiebre.setVisibility(View.GONE);
+                    //spinE1Fiebre.setSelection(0, false);
                 } else if (e1Febricula.equals(Constants.NOKEYSND)) {
                     spinE1Febricula.setBackgroundColor(Color.WHITE);
-                    spinE1Fiebre.setVisibility(View.VISIBLE);
-                    textE1Fiebre.setVisibility(View.VISIBLE);
-                } else {
+                    //spinE1Fiebre.setVisibility(View.VISIBLE);
+                    //textE1Fiebre.setVisibility(View.VISIBLE);
+                }/* else {
                     spinE1Fiebre.setVisibility(View.GONE);
                     textE1Fiebre.setVisibility(View.GONE);
                     spinE1Fiebre.setSelection(0, false);
-                }
+                }*/
                 MostrarOcultarPregunta3E1();
             }
             @Override
@@ -4689,18 +4731,18 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                 e2Febricula = mr.getCatKey();
                 if (e2Febricula.equals(Constants.YESKEYSND)) {
                     spinE2Febricula.setBackgroundColor(Color.RED);
-                    spinE2Fiebre.setVisibility(View.GONE);
-                    textE2Fiebre.setVisibility(View.GONE);
-                    spinE2Fiebre.setSelection(0, false);
+                    //spinE2Fiebre.setVisibility(View.GONE);
+                    //textE2Fiebre.setVisibility(View.GONE);
+                    //spinE2Fiebre.setSelection(0, false);
                 } else if (e2Febricula.equals(Constants.NOKEYSND)) {
                     spinE2Febricula.setBackgroundColor(Color.WHITE);
-                    spinE2Fiebre.setVisibility(View.VISIBLE);
-                    textE2Fiebre.setVisibility(View.VISIBLE);
-                } else {
+                    //spinE2Fiebre.setVisibility(View.VISIBLE);
+                    //textE2Fiebre.setVisibility(View.VISIBLE);
+                }/* else {
                     spinE2Fiebre.setVisibility(View.GONE);
                     textE2Fiebre.setVisibility(View.GONE);
                     spinE2Fiebre.setSelection(0, false);
-                }
+                }*/
 
 
                 MostrarOcultarPregunta3E2();
@@ -5080,18 +5122,18 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                 e3Febricula = mr.getCatKey();
                 if (e3Febricula.equals(Constants.YESKEYSND)) {
                     spinE3Febricula.setBackgroundColor(Color.RED);
-                    spinE3Fiebre.setVisibility(View.GONE);
-                    textE3Fiebre.setVisibility(View.GONE);
-                    spinE3Fiebre.setSelection(0, false);
+                    //spinE3Fiebre.setVisibility(View.GONE);
+                    //textE3Fiebre.setVisibility(View.GONE);
+                    //spinE3Fiebre.setSelection(0, false);
                 } else if (e3Febricula.equals(Constants.NOKEYSND)) {
                     spinE3Febricula.setBackgroundColor(Color.WHITE);
-                    spinE3Fiebre.setVisibility(View.VISIBLE);
-                    textE3Fiebre.setVisibility(View.VISIBLE);
-                } else {
+                    //spinE3Fiebre.setVisibility(View.VISIBLE);
+                    //textE3Fiebre.setVisibility(View.VISIBLE);
+                } /*else {
                     spinE3Fiebre.setVisibility(View.GONE);
                     textE3Fiebre.setVisibility(View.GONE);
                     spinE3Fiebre.setSelection(0, false);
-                }
+                }*/
                 MostrarOcultarPregunta3E3();
             }
             @Override
@@ -5477,7 +5519,12 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                     spinE1SabeInicioSintoma.setBackgroundColor(Color.WHITE);
                     MostrarOcultarPregunta3_FISE1(View.GONE);
                     MostrarOcultarPregunta3_MesAnioE1(View.VISIBLE);
+
+                    inputE1AnioInicioSintoma.setText(getAnioEvento(fechaEvento1, anioEvento1));
                     e1AnioInicioSintoma = inputE1AnioInicioSintoma.getText().toString();
+                    List<MessageResource> meses  = getMesesByAnio(anioEvento1);
+                    setMesesSpinner(meses, spinE1MesInicioSintoma);
+
                     e1Fis = null;
                 } else {
                     spinE1SabeInicioSintoma.setBackgroundColor(Color.WHITE);
@@ -6710,7 +6757,12 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                     spinE2SabeInicioSintoma.setBackgroundColor(Color.WHITE);
                     MostrarOcultarPregunta3_FISE2(View.GONE);
                     MostrarOcultarPregunta3_MesAnioE2(View.VISIBLE);
+
+                    inputE2AnioInicioSintoma.setText(getAnioEvento(fechaEvento2, anioEvento2));
                     e2AnioInicioSintoma = inputE2AnioInicioSintoma.getText().toString();
+                    List<MessageResource> meses  = getMesesByAnio(anioEvento2);
+                    setMesesSpinner(meses, spinE2MesInicioSintoma);
+
                     e2Fis = null;
                 } else {
                     spinE2SabeInicioSintoma.setBackgroundColor(Color.WHITE);
@@ -7623,7 +7675,12 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                     spinE3SabeInicioSintoma.setBackgroundColor(Color.WHITE);
                     MostrarOcultarPregunta3_FISE3(View.GONE);
                     MostrarOcultarPregunta3_MesAnioE3(View.VISIBLE);
+
+                    inputE3AnioInicioSintoma.setText(getAnioEvento(fechaEvento3, anioEvento3));
                     e3AnioInicioSintoma = inputE3AnioInicioSintoma.getText().toString();
+                    List<MessageResource> meses  = getMesesByAnio(anioEvento3);
+                    setMesesSpinner(meses, spinE3MesInicioSintoma);
+
                     e3Fis = null;
                 } else {
                     spinE3SabeInicioSintoma.setBackgroundColor(Color.WHITE);
@@ -8606,6 +8663,37 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
             }
         });
 
+        spinAnioVacuna.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View v,
+                                       int arg2, long arg3) {
+                MessageResource mr = (MessageResource) spinner.getSelectedItem();
+                //Pedir confirmación para cada respuesta
+                createConfirmDialog(ANIOVACUNA_CONS, getString(R.string.anioVacuna), anioVacuna, mr.getCatKey(), mr.getSpanish(), spinner.getSelectedItemPosition());
+                mostrarConfirmacion = true;
+                anioVacuna = mr.getCatKey();
+                List<MessageResource> meses  = new ArrayList<MessageResource>();
+                if (anioVacuna != null && anioVacuna.equalsIgnoreCase("2021")) {
+                    meses = mCatalogoMesesVacuna;
+                } else if (anioVacuna != null && anioVacuna.equalsIgnoreCase("2022")) {
+                    for (MessageResource mes : mCatalogoMesesVacuna) {
+                        if (!mes.getCatKey().isEmpty() && Integer.parseInt(mes.getCatKey()) >= 1 && Integer.parseInt(mes.getCatKey()) <= c.get(Calendar.MONTH) + 1) {
+                            meses.add(mes);
+                        }
+                    }
+                }
+                meses.add(new MessageResource("", 0, getActivity().getString(R.string.select)));
+                Collections.sort(meses);
+                ArrayAdapter<MessageResource> dataAdapterMeses = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, meses);
+                dataAdapterMeses.setDropDownViewResource(R.layout.spinner_item);
+                spinMesVacuna.setAdapter(dataAdapterMeses);
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
         spinMesVacuna.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> spinner, View v,
@@ -9562,6 +9650,71 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    private List<MessageResource> getMesesByAnio(String anio) {
+        List<MessageResource> meses  = new ArrayList<MessageResource>();
+        if (anio != null && anio.equalsIgnoreCase("2021")) {
+            for (MessageResource mes : mCatalogoMeses) {
+                if (periodoSintomas.equalsIgnoreCase(Constants.PERIODO_CUEST_COVID19_3)) {
+                    if (!mes.getCatKey().isEmpty() && Integer.parseInt(mes.getCatKey()) >= 2 && Integer.parseInt(mes.getCatKey()) <= 12) {
+                        meses.add(mes);
+                    }
+                } else {
+                    if (!mes.getCatKey().isEmpty() && Integer.parseInt(mes.getCatKey()) >= 11 && Integer.parseInt(mes.getCatKey()) <= 12) {
+                        meses.add(mes);
+                    }
+                }
+            }
+        } else if (anio != null && anio.equalsIgnoreCase("2022")) {
+            for (MessageResource mes : mCatalogoMeses) {
+                if (!mes.getCatKey().isEmpty() && Integer.parseInt(mes.getCatKey()) >= 1 && Integer.parseInt(mes.getCatKey()) <= c.get(Calendar.MONTH) + 1) {
+                    meses.add(mes);
+                }
+            }
+        }
+        return meses;
+    }
+
+    private void setMesesSpinner(List<MessageResource> meses, Spinner spin){
+        meses.add(new MessageResource("", 0, getActivity().getString(R.string.select)));
+        Collections.sort(meses);
+        ArrayAdapter<MessageResource> dataAdapterMeses = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, meses);
+        dataAdapterMeses.setDropDownViewResource(R.layout.spinner_item);
+        spin.setAdapter(dataAdapterMeses);
+    }
+
+    private String getAnioEvento(String fechaEvento, String anioEvento) {
+        if (fechaEvento != null && !fechaEvento.isEmpty()) {
+            Calendar c = Calendar.getInstance();
+            try {
+                Date fechaInicio = DateUtil.StringToDate(fechaEvento, "dd/MM/yyyy");
+                c.setTime(fechaInicio);
+                return String.valueOf(c.get(Calendar.YEAR));
+
+            } catch (Exception ex){
+                ex.printStackTrace();
+                return String.valueOf(c.get(Calendar.YEAR));
+            }
+        } else {
+            return anioEvento;
+        }
+    }
+
+    private DateMidnight getMinDateEvento(String fechaEvento, int anioEventoPeriodo, int mesEventoPeriodo, String anioEventoSelec, String mesEventoSelec) {
+        DateMidnight minDate;
+        if (fechaEvento != null && !fechaEvento.isEmpty()) {
+            try {
+                Date fechaInicio = DateUtil.StringToDate(fechaEvento, "dd/MM/yyyy");
+                minDate = new DateMidnight(fechaInicio);
+            } catch (Exception ex){
+                ex.printStackTrace();
+                minDate = new DateMidnight(anioEventoPeriodo,mesEventoPeriodo,1);
+            }
+        } else {
+            minDate = new DateMidnight(Integer.parseInt(anioEventoSelec), Integer.parseInt(mesEventoSelec), 1);
+        }
+        return minDate;
+    }
+
     /*private boolean tuvoAlMenosUnSintoma(){
         if (feb20Febricula!=null && feb20Febricula.equalsIgnoreCase(Constants.YESKEYSND)) return true;
         if (feb20Fiebre!=null && feb20Fiebre.equalsIgnoreCase(Constants.YESKEYSND)) return true;
@@ -9965,27 +10118,36 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
     }
 
     private void MostrarOcultarE1_MesAnio(int estado){
-        if (estado == View.GONE) spinMesEvento1.setSelection(0, false);
+        if (estado == View.GONE){
+            spinMesEvento1.setSelection(0, false);
+            spinAnioEvento1.setSelection(0, false);
+        }
         textMesEvento1.setVisibility(estado);
         spinMesEvento1.setVisibility(estado);
         textAnioEvento1.setVisibility(estado);
-        inputAnioEvento1.setVisibility(estado);
+        spinAnioEvento1.setVisibility(estado);
     }
 
     private void MostrarOcultarE2_MesAnio(int estado){
-        if (estado == View.GONE) spinMesEvento2.setSelection(0, false);
+        if (estado == View.GONE){
+            spinMesEvento2.setSelection(0, false);
+            spinAnioEvento2.setSelection(0, false);
+        }
         textMesEvento2.setVisibility(estado);
         spinMesEvento2.setVisibility(estado);
         textAnioEvento2.setVisibility(estado);
-        inputAnioEvento2.setVisibility(estado);
+        spinAnioEvento2.setVisibility(estado);
     }
 
     private void MostrarOcultarE3_MesAnio(int estado){
-        if (estado == View.GONE) spinMesEvento3.setSelection(0, false);
+        if (estado == View.GONE){
+            spinMesEvento3.setSelection(0, false);
+            spinAnioEvento3.setSelection(0, false);
+        }
         textMesEvento3.setVisibility(estado);
         spinMesEvento3.setVisibility(estado);
         textAnioEvento3.setVisibility(estado);
-        inputAnioEvento3.setVisibility(estado);
+        spinAnioEvento3.setVisibility(estado);
     }
 
     /*Que fecha exacta o aproximada empezaron estos síntomas*/
@@ -10801,7 +10963,8 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
         textNombreVacuna.setVisibility(estado);
         inputNombreVacuna.setVisibility(estado);
         textAnioVacuna.setVisibility(estado);
-        inputAnioVacuna.setVisibility(estado);
+        if (estado == View.GONE) spinAnioVacuna.setSelection(0, false);
+        spinAnioVacuna.setVisibility(estado);
         if (estado == View.GONE) spinMesVacuna.setSelection(0, false);
         textMesVacuna.setVisibility(estado);
         spinMesVacuna.setVisibility(estado);
@@ -11104,6 +11267,18 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
                         case CUANTASVECESENFERMO_CONS:
                             cuantasVecesEnfermo = nuevoValor;
                             cuantasVecesEnfermoPos = position;
+                            break;
+                        case ANIOEVENTO1_CONS:
+                            anioEvento1 = nuevoValor;
+                            anioEvento1Pos = position;
+                            break;
+                        case ANIOEVENTO2_CONS:
+                            anioEvento2 = nuevoValor;
+                            anioEvento2Pos = position;
+                            break;
+                        case ANIOEVENTO3_CONS:
+                            anioEvento3 = nuevoValor;
+                            anioEvento3Pos = position;
                             break;
                         case MESEVENTO1_CONS:
                             mesEvento1 = nuevoValor;
@@ -12233,6 +12408,15 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
                         case CUANTASVECESENFERMO_CONS:
                             spinCuantasVecesEnfermo.setSelection(cuantasVecesEnfermoPos, false);
                             break;
+                        case ANIOEVENTO1_CONS:
+                            spinAnioEvento1.setSelection(anioEvento1Pos, false);
+                            break;
+                        case ANIOEVENTO2_CONS:
+                            spinAnioEvento2.setSelection(anioEvento2Pos, false);
+                            break;
+                        case ANIOEVENTO3_CONS:
+                            spinAnioEvento3.setSelection(anioEvento3Pos, false);
+                            break;
                         case MESEVENTO1_CONS:
                             spinMesEvento1.setSelection(mesEvento1Pos, false);
                             break;
@@ -13105,6 +13289,9 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
         DateMidnight minDate;
         DateMidnight maxDate;
         int anio = 2021;
+        int mesEventos = 2;
+        if (periodoSintomas.equalsIgnoreCase(Constants.PERIODO_CUEST_COVID19_4))
+            mesEventos = 11;
         switch(dialog) {
             case FECHA_SINTOMA_E1:
                 dpD = new DatePickerDialog(this.getActivity(), android.R.style.Theme_Holo_Dialog, new DatePickerDialog.OnDateSetListener() {
@@ -13114,8 +13301,19 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
                         inputE1FIS.setText(e1Fis);
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-
-                minDate = new DateMidnight(anio,2,1);
+                /*if (fechaEvento1 != null && !fechaEvento1.isEmpty()) {
+                    try {
+                        Date fechaInicio = DateUtil.StringToDate(fechaEvento1, "dd/MM/yyyy");
+                        minDate = new DateMidnight(fechaInicio);
+                    } catch (Exception ex){
+                        ex.printStackTrace();
+                        minDate = new DateMidnight(anio,mesEventos,1);
+                    }
+                } else {
+                    minDate = new DateMidnight(Integer.parseInt(anioEvento1), Integer.parseInt(mesEvento1), 1);
+                }*/
+                minDate = getMinDateEvento(fechaEvento1, anio, mesEventos, anioEvento1, mesEvento1);
+                //minDate = new DateMidnight(anio,2,1);
                 maxDate = new DateMidnight(new Date());
                 dpD.getDatePicker().setMinDate(minDate.getMillis());
                 dpD.getDatePicker().setMaxDate(maxDate.getMillis());
@@ -13159,8 +13357,20 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
                         inputE2FIS.setText(e2Fis);
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-
-                minDate = new DateMidnight(anio,2,1);
+/*
+                if (fechaEvento2 != null && !fechaEvento2.isEmpty()) {
+                    try {
+                        Date fechaInicio = DateUtil.StringToDate(fechaEvento2, "dd/MM/yyyy");
+                        minDate = new DateMidnight(fechaInicio);
+                    } catch (Exception ex){
+                        ex.printStackTrace();
+                        minDate = new DateMidnight(anio,mesEventos,1);
+                    }
+                } else {
+                    minDate = new DateMidnight(Integer.parseInt(anioEvento2), Integer.parseInt(mesEvento2), 1);
+                }*/
+                minDate = getMinDateEvento(fechaEvento2, anio, mesEventos, anioEvento2, mesEvento2);
+                //minDate = new DateMidnight(anio,2,1);
                 maxDate = new DateMidnight(new Date());
                 dpD.getDatePicker().setMinDate(minDate.getMillis());
                 dpD.getDatePicker().setMaxDate(maxDate.getMillis());
@@ -13205,7 +13415,19 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
-                minDate = new DateMidnight(anio,2,1);
+                /*if (fechaEvento3 != null && !fechaEvento3.isEmpty()) {
+                    try {
+                        Date fechaInicio = DateUtil.StringToDate(fechaEvento3, "dd/MM/yyyy");
+                        minDate = new DateMidnight(fechaInicio);
+                    } catch (Exception ex){
+                        ex.printStackTrace();
+                        minDate = new DateMidnight(anio,mesEventos,1);
+                    }
+                } else {
+                    minDate = new DateMidnight(Integer.parseInt(anioEvento3), Integer.parseInt(mesEvento3), 1);
+                }*/
+                minDate = getMinDateEvento(fechaEvento3, anio, mesEventos, anioEvento3, mesEvento3);
+                //minDate = new DateMidnight(anio,2,1);
                 maxDate = new DateMidnight(new Date());
                 dpD.getDatePicker().setMinDate(minDate.getMillis());
                 dpD.getDatePicker().setMaxDate(maxDate.getMillis());
@@ -13251,7 +13473,7 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
-                minDate = new DateMidnight(anio,2,1);
+                minDate = new DateMidnight(anio,mesEventos,1);
                 maxDate = new DateMidnight(new Date());
                 dpD.getDatePicker().setMinDate(minDate.getMillis());
                 dpD.getDatePicker().setMaxDate(maxDate.getMillis());
@@ -13266,17 +13488,18 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
                         actualizarListaEventos();
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-                if (fechaEvento1 != null && !fechaEvento1.isEmpty()) {
+                /*if (fechaEvento1 != null && !fechaEvento1.isEmpty()) {
                     try {
                         Date fechaInicio = DateUtil.StringToDate(fechaEvento1, "dd/MM/yyyy");
                         minDate = new DateMidnight(fechaInicio);
                     } catch (Exception ex){
                         ex.printStackTrace();
-                        minDate = new DateMidnight(anio,2,1);
+                        minDate = new DateMidnight(anio,mesEventos,1);
                     }
                 } else {
-                    minDate = new DateMidnight(anio, 2, 1);
-                }
+                    minDate = new DateMidnight(anio, mesEventos, 1);
+                }*/
+                minDate = getMinDateEvento(fechaEvento1, anio, mesEventos, anioEvento1, mesEvento1);
                 maxDate = new DateMidnight(new Date());
                 dpD.getDatePicker().setMinDate(minDate.getMillis());
                 dpD.getDatePicker().setMaxDate(maxDate.getMillis());
@@ -13291,17 +13514,18 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
                         actualizarListaEventos();
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-                if (fechaEvento2 != null && !fechaEvento2.isEmpty()) {
+                /*if (fechaEvento2 != null && !fechaEvento2.isEmpty()) {
                     try {
                         Date fechaInicio = DateUtil.StringToDate(fechaEvento2, "dd/MM/yyyy");
                         minDate = new DateMidnight(fechaInicio);
                     } catch (Exception ex){
                         ex.printStackTrace();
-                        minDate = new DateMidnight(anio,2,1);
+                        minDate = new DateMidnight(anio,mesEventos,1);
                     }
                 } else {
-                    minDate = new DateMidnight(anio, 2, 1);
-                }
+                    minDate = new DateMidnight(anio, mesEventos, 1);
+                }*/
+                minDate = getMinDateEvento(fechaEvento2, anio, mesEventos, anioEvento2, mesEvento2);
                 maxDate = new DateMidnight(new Date());
                 dpD.getDatePicker().setMinDate(minDate.getMillis());
                 dpD.getDatePicker().setMaxDate(maxDate.getMillis());
@@ -13411,6 +13635,9 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
         else if (faltaDatoRequeridoHijoContador(sabeEvento1, R.string.sabeEvento1, cuantasVecesEnfermo, 1)) return false;
         else if (faltaDatoRequeridoHijoContador(sabeEvento2, R.string.sabeEvento2, cuantasVecesEnfermo, 2)) return false;
         else if (faltaDatoRequeridoHijoContador(sabeEvento3, R.string.sabeEvento3, cuantasVecesEnfermo, 3)) return false;
+        else if (faltaDatoRequeridoHijo(anioEvento1, R.string.anioEvento, sabeEvento1, Constants.NOKEYSND)) return false;
+        else if (faltaDatoRequeridoHijo(anioEvento2, R.string.anioEvento, sabeEvento2, Constants.NOKEYSND)) return false;
+        else if (faltaDatoRequeridoHijo(anioEvento3, R.string.anioEvento, sabeEvento3, Constants.NOKEYSND)) return false;
         else if (faltaDatoRequeridoHijo(mesEvento1, R.string.mesEvento, sabeEvento1, Constants.NOKEYSND)) return false;
         else if (faltaDatoRequeridoHijo(mesEvento2, R.string.mesEvento, sabeEvento2, Constants.NOKEYSND)) return false;
         else if (faltaDatoRequeridoHijo(mesEvento3, R.string.mesEvento, sabeEvento3, Constants.NOKEYSND)) return false;
@@ -13418,7 +13645,8 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
         else if (faltaDatoRequeridoHijo(fechaEvento2, R.string.fechaEvento2, sabeEvento2, Constants.YESKEYSND)) return false;
         else if (faltaDatoRequeridoHijo(fechaEvento3, R.string.fechaEvento3, sabeEvento3, Constants.YESKEYSND)) return false;
         else if (faltaDatoRequeridoHijoContador(e1Febricula, R.string.feb20Febricula, cuantasVecesEnfermo, 1)) return false;
-        else if (faltaDatoRequeridoHijoNegado(e1Fiebre, R.string.feb20Fiebre, e1Febricula, Constants.YESKEYSND)) return false;
+        else if (faltaDatoRequeridoHijoContador(e1Fiebre, R.string.feb20Fiebre, cuantasVecesEnfermo, 1)) return false;
+            //No depende de febricula. Dr. Plaza, MA2022 //else if (faltaDatoRequeridoHijo(e1Fiebre, R.string.feb20Fiebre, e1Febricula, Constants.YESKEYSND)) return false;
         else if (faltaDatoRequeridoHijoContador(e1Escalofrio, R.string.feb20Escalofrio, cuantasVecesEnfermo, 1)) return false;
         else if (faltaDatoRequeridoHijoContador(e1TemblorEscalofrio, R.string.feb20TemblorEscalofrio, cuantasVecesEnfermo, 1)) return false;
         else if (faltaDatoRequeridoHijoContador(e1DolorMuscular, R.string.feb20DolorMuscular, cuantasVecesEnfermo, 1)) return false;
@@ -13440,7 +13668,8 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
         else if (faltaDatoRequeridoHijoContador(e1Desmayo, R.string.feb20Desmayo, cuantasVecesEnfermo, 1)) return false;
         else if (faltaDatoRequeridoHijoContador(e1QuedoCama, R.string.feb20QuedoCama, cuantasVecesEnfermo, 1)) return false;
         else if (faltaDatoRequeridoHijoContador(e2Febricula, R.string.feb20Febricula, cuantasVecesEnfermo, 2)) return false;
-        else if (faltaDatoRequeridoHijoNegado(e2Fiebre, R.string.feb20Fiebre, e2Febricula, Constants.YESKEYSND)) return false;
+        else if (faltaDatoRequeridoHijoContador(e2Fiebre, R.string.feb20Fiebre, cuantasVecesEnfermo, 2)) return false;
+            //No depende de febricula. Dr. Plaza, MA2022 //else if (faltaDatoRequeridoHijo(e2Fiebre, R.string.feb20Fiebre, e2Febricula, Constants.YESKEYSND)) return false;
         else if (faltaDatoRequeridoHijoContador(e2Escalofrio, R.string.feb20Escalofrio, cuantasVecesEnfermo, 2)) return false;
         else if (faltaDatoRequeridoHijoContador(e2TemblorEscalofrio, R.string.feb20TemblorEscalofrio, cuantasVecesEnfermo, 2)) return false;
         else if (faltaDatoRequeridoHijoContador(e2DolorMuscular, R.string.feb20DolorMuscular, cuantasVecesEnfermo, 2)) return false;
@@ -13462,7 +13691,8 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
         else if (faltaDatoRequeridoHijoContador(e2Desmayo, R.string.feb20Desmayo, cuantasVecesEnfermo, 2)) return false;
         else if (faltaDatoRequeridoHijoContador(e2QuedoCama, R.string.feb20QuedoCama, cuantasVecesEnfermo, 2)) return false;
         else if (faltaDatoRequeridoHijoContador(e3Febricula, R.string.feb20Febricula, cuantasVecesEnfermo, 3)) return false;
-        else if (faltaDatoRequeridoHijoNegado(e3Fiebre, R.string.feb20Fiebre, e3Febricula, Constants.YESKEYSND)) return false;
+        else if (faltaDatoRequeridoHijoContador(e3Fiebre, R.string.feb20Fiebre, cuantasVecesEnfermo, 3)) return false;
+        //No depende de febricula. Dr. Plaza, MA2022 //else if (faltaDatoRequeridoHijo(e3Fiebre, R.string.feb20Fiebre, e3Febricula, Constants.YESKEYSND)) return false;
         else if (faltaDatoRequeridoHijoContador(e3Escalofrio, R.string.feb20Escalofrio, cuantasVecesEnfermo, 3)) return false;
         else if (faltaDatoRequeridoHijoContador(e3TemblorEscalofrio, R.string.feb20TemblorEscalofrio, cuantasVecesEnfermo, 3)) return false;
         else if (faltaDatoRequeridoHijoContador(e3DolorMuscular, R.string.feb20DolorMuscular, cuantasVecesEnfermo, 3)) return false;
@@ -13512,8 +13742,8 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
             inputE1AnioInicioSintoma.requestFocus();
             return false;
         }
-        else if (e1AnioInicioSintoma != null && !e1AnioInicioSintoma.equalsIgnoreCase("2020") && !e1AnioInicioSintoma.equalsIgnoreCase("2021")) {
-            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2020", "2021"),Toast.LENGTH_LONG).show();
+        else if (e1AnioInicioSintoma != null && !e1AnioInicioSintoma.equalsIgnoreCase("2021") && !e1AnioInicioSintoma.equalsIgnoreCase("2022")) {
+            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2022"),Toast.LENGTH_LONG).show();
             inputE1AnioInicioSintoma.requestFocus();
             return false;
         }
@@ -13574,8 +13804,8 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
             inputE2AnioInicioSintoma.requestFocus();
             return false;
         }
-        else if (e2AnioInicioSintoma != null && !e2AnioInicioSintoma.equalsIgnoreCase("2020") && !e2AnioInicioSintoma.equalsIgnoreCase("2021")) {
-            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2020", "2021"),Toast.LENGTH_LONG).show();
+        else if (e2AnioInicioSintoma != null && !e2AnioInicioSintoma.equalsIgnoreCase("2021") && !e2AnioInicioSintoma.equalsIgnoreCase("2022")) {
+            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2022"),Toast.LENGTH_LONG).show();
             inputE2AnioInicioSintoma.requestFocus();
             return false;
         }
@@ -13633,8 +13863,8 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
             inputE3AnioInicioSintoma.requestFocus();
             return false;
         }
-        else if (e3AnioInicioSintoma != null && !e3AnioInicioSintoma.equalsIgnoreCase("2020") && !e3AnioInicioSintoma.equalsIgnoreCase("2021")) {
-            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2020", "2021"),Toast.LENGTH_LONG).show();
+        else if (e3AnioInicioSintoma != null && !e3AnioInicioSintoma.equalsIgnoreCase("2021") && !e3AnioInicioSintoma.equalsIgnoreCase("2022")) {
+            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2022"),Toast.LENGTH_LONG).show();
             inputE3AnioInicioSintoma.requestFocus();
             return false;
         }
@@ -14337,15 +14567,9 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
                 mCatalogoTiempoOxigeno = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='COVID_CAT_TIEMPO_OXI'", CatalogosDBConstants.order);
                 mCatalogoVacunas = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='COVID_CAT_VACUNA'", CatalogosDBConstants.order);
                 mCatalogoDosis = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='COVID_CAT_DOSIS'", CatalogosDBConstants.order);
-                //desde febrero al mes actual
-                for(MessageResource mes : meses){
-                    if (Integer.parseInt(mes.getCatKey()) >= 2 && Integer.parseInt(mes.getCatKey()) <= c.get(Calendar.MONTH)+1){
-                        mCatalogoMeses.add(mes);
-                    }
-                    if (Integer.parseInt(mes.getCatKey()) <= c.get(Calendar.MONTH)+1){
-                        mCatalogoMesesVacuna.add(mes);
-                    }
-                }
+                mCatalogoAniosVac = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='COVID_CAT_ANIO_VAC'", CatalogosDBConstants.order);
+                mCatalogoMeses = meses;
+                mCatalogoMesesVacuna = meses;
                 mCatalogoFinalEmb = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='COVID_CAT_FINAL_EMB'", CatalogosDBConstants.order);
                 estudiosAdapter.close();
             } catch (Exception e) {
@@ -14439,20 +14663,28 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
             Collections.sort(mCatalogoDosis);
             ArrayAdapter<MessageResource> dataAdapterDosis = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, mCatalogoDosis);
             dataAdapterDosis.setDropDownViewResource(R.layout.spinner_item);
-
+/*
             mCatalogoMesesVacuna.add(new MessageResource("",0,getActivity().getString(R.string.select)));
             Collections.sort(mCatalogoMesesVacuna);
             ArrayAdapter<MessageResource> dataAdapterMesesVac = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, mCatalogoMesesVacuna);
-            dataAdapterMesesVac.setDropDownViewResource(R.layout.spinner_item);
+            dataAdapterMesesVac.setDropDownViewResource(R.layout.spinner_item);*/
+
+            mCatalogoAniosVac.add(new MessageResource("",0,getActivity().getString(R.string.select)));
+            Collections.sort(mCatalogoAniosVac);
+            ArrayAdapter<MessageResource> dataAdapterAnioVac = new ArrayAdapter<MessageResource>(getActivity(), android.R.layout.simple_spinner_item, mCatalogoAniosVac);
+            dataAdapterAnioVac.setDropDownViewResource(R.layout.spinner_item);
 
             spinEnfermoCovid19.setAdapter(dataAdapterSiNoNsNc);
             spinCuantasVecesEnfermo.setAdapter(dataAdapterVecesEnfermo);
             spinSabeEvento1.setAdapter(dataAdapterSiNo);
             spinSabeEvento2.setAdapter(dataAdapterSiNo);
             spinSabeEvento3.setAdapter(dataAdapterSiNo);
-            spinMesEvento1.setAdapter(dataAdapterMeses);
+            spinAnioEvento1.setAdapter(dataAdapterAnioVac);
+            spinAnioEvento2.setAdapter(dataAdapterAnioVac);
+            spinAnioEvento3.setAdapter(dataAdapterAnioVac);
+            /*spinMesEvento1.setAdapter(dataAdapterMeses);
             spinMesEvento2.setAdapter(dataAdapterMeses);
-            spinMesEvento3.setAdapter(dataAdapterMeses);
+            spinMesEvento3.setAdapter(dataAdapterMeses);*/
 
             spinE1BuscoAyuda.setAdapter(dataAdapterSiNoNc);
             spinE1RecibioSeguimiento.setAdapter(dataAdapterSiNo);
@@ -14682,7 +14914,8 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
             spinVacunadoCovid19.setAdapter(dataAdapterSiNoNsNc);
             spinMuestraTarjetaVac.setAdapter(dataAdapterSiNoNc);
             spinSabeNombreVacuna.setAdapter(dataAdapterSiNoNc);
-            spinMesVacuna.setAdapter(dataAdapterMesesVac);
+            spinAnioVacuna.setAdapter(dataAdapterAnioVac);
+            //spinMesVacuna.setAdapter(dataAdapterMesesVac);
             spinCuantasDosis.setAdapter(dataAdapterDosis);
             spinNombreDosis1.setAdapter(dataAdapterVacunas);
             spinNombreDosis2.setAdapter(dataAdapterVacunas);

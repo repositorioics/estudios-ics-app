@@ -136,4 +136,6 @@
     <string name="surface_samples">Muestras de superficie</string>
     <string name="new_samp_surface">Superficie</string>
     <string name="new_samp_hands">Manos</string>
+	<string name="new_samp_MA">MA 2022</string>
+	<string name="samples_MA_exist">Muestras de MA ya fue registrada</string>
 </resources>

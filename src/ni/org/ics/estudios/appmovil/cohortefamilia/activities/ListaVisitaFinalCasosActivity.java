@@ -15,12 +15,10 @@ import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVisitaFallidaActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVisitaFinalActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.VisitaFinalCasoAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFallidaCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -93,6 +91,9 @@ public class ListaVisitaFinalCasosActivity extends AbstractAsyncListActivity {
         mButton.setVisibility(View.GONE);
 
 		mButton = (Button) findViewById(R.id.sensors_button);
+		mButton.setVisibility(View.GONE);
+
+		mButton = (Button) findViewById(R.id.new_MA_button);
 		mButton.setVisibility(View.GONE);
 
 		mAddVisitButton = (Button) findViewById(R.id.add_visit_button);

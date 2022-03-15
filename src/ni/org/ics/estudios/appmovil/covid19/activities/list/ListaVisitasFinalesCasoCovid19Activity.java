@@ -82,6 +82,8 @@ public class ListaVisitasFinalesCasoCovid19Activity extends AbstractAsyncListAct
 		mButton = (Button) findViewById(R.id.fail_visit_button_cv19);
 		mButton.setVisibility(View.GONE);
 
+		mButton = (Button) findViewById(R.id.new_MA_button_cv19);
+		mButton.setVisibility(View.GONE);
 
         mAddVisitButton = (Button) findViewById(R.id.final_visit_button_cv19);
 		mAddVisitButton.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_menu_btn_add), null, null);

@@ -40,6 +40,9 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * MA2022
+ */
 public class NuevoConsChfActivity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
@@ -407,10 +410,11 @@ public class NuevoConsChfActivity extends FragmentActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoParticipaPersona()), !visible);
-                changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusionIndice()), visible);
+                //changeStatus(mWizardModel.findByKey(labels.getCriteriosInclusionIndice()), visible);
                 onPageTreeChanged();
             }
-            if(page.getTitle().equals(labels.getCriteriosInclusionIndice())){
+            //No preguntar criterios. Brenda, 07/03/2022
+            /*if(page.getTitle().equals(labels.getCriteriosInclusionIndice())){
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
                 visible = test!=null && test.size()==4;
                 changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && (edadMeses >= 72 && edadMeses < 216));//6 y menores de 18
@@ -423,7 +427,7 @@ public class NuevoConsChfActivity extends FragmentActivity implements
                     }
                 }
                 onPageTreeChanged();
-            }
+            }*/
             if (page.getTitle().equals(labels.getAceptaParteA())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
@@ -875,8 +879,8 @@ public class NuevoConsChfActivity extends FragmentActivity implements
             String aceptaTamizajePersona = datos.getString(this.getString(R.string.aceptaTamizajePersona));
             String razonNoParticipaPersona = datos.getString(this.getString(R.string.razonNoParticipaPersona));
             String otraRazonNoParticipaPersona = datos.getString(this.getString(R.string.otraRazonNoParticipaPersona));
-
-            String criteriosInclusionIndice = datos.getString(this.getString(R.string.criteriosInclusion));
+            //No preguntar criterios. Brenda, 07/03/2022
+            //String criteriosInclusionIndice = datos.getString(this.getString(R.string.criteriosInclusion));
             String asentimiento = datos.getString(this.getString(R.string.asentimientoVerbal));
             String aceptaParteA = datos.getString(this.getString(R.string.aceptaParteA));
             String razonNoAceptaParteA = datos.getString(this.getString(R.string.razonNoAceptaParteA));
@@ -978,7 +982,7 @@ public class NuevoConsChfActivity extends FragmentActivity implements
                 }
                 tamizaje.setOtraRazonNoAceptaParticipar(null);
                 tamizaje.setEsElegible(esElegible?Constants.YESKEYSND:Constants.NOKEYSND);
-                if (tieneValor(criteriosInclusionIndice)) {
+                /*if (tieneValor(criteriosInclusionIndice)) {
                     String keysCriterios = "";
                     criteriosInclusionIndice = criteriosInclusionIndice.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','");
                     List<MessageResource> mcriteriosInclusion = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + criteriosInclusionIndice + "') and "
@@ -989,7 +993,7 @@ public class NuevoConsChfActivity extends FragmentActivity implements
                     if (!keysCriterios.isEmpty())
                         keysCriterios = keysCriterios.substring(0, keysCriterios.length() - 1);
                     tamizaje.setCriteriosInclusion(keysCriterios);
-                }
+                }*/
                 if (tieneValor(asentimiento)) {
                     MessageResource catAsentimientoVerbal = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + asentimiento + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                     if (catAsentimientoVerbal != null)

@@ -19,12 +19,13 @@
             <item android:id="@+id/MENU_VISIT" android:title="@string/info_visit"/>
             <item android:id="@+id/SAMPLE" android:title="@string/info_sample"/>
             <item android:id="@+id/SURVEY2" android:title="@string/info_survey2"/>
+            <item android:id="@+id/ENCASA_CHF" android:title="@string/casa_chf"/>
             <item android:id="@+id/SURVEY1" android:title="@string/info_survey1"/>
+            <item android:id="@+id/CUESTCOVID19" android:title="@string/info_cuest_covid19"/>
             <item android:id="@+id/RECONSFLU" android:title="@string/info_reconflu"/>
             <item android:id="@+id/CONSCOVID19" android:title="@string/info_cons_covid19"/>
             <item android:id="@+id/CONS_PARTEE_CHF" android:title="@string/info_cons_partee_chf"/>
             <item android:id="@+id/CONS_CHF" android:title="@string/info_cons_chf"/>
-            <item android:id="@+id/CUESTCOVID19" android:title="@string/info_cuest_covid19"/>
             <item android:id="@+id/MXADICOVID19" android:title="@string/info_mxadi_covid19"/>
             <item android:id="@+id/CONSFLUUO1" android:title="@string/info_conflu_uo1"/>
             <item android:id="@+id/RECONS" android:title="@string/info_recon"/>
@@ -41,7 +42,6 @@
             <item android:id="@+id/GIFT" android:title="@string/info_gift"/>
             <item android:id="@+id/GIFT_CHF" android:title="@string/info_gift_chf"/>
             <item android:id="@+id/DOC" android:title="@string/info_docs"/>
-            <item android:id="@+id/ENCASA_CHF" android:title="@string/casa_chf"/>
             <!--MA2020<item android:id="@+id/ENCASA_SA" android:title="@string/new_house_sa_survey"/>
             <item android:id="@+id/ENPART_SA" android:title="@string/new_participant_sa_survey"/>-->
             <item android:id="@+id/COORDENADAS" android:title="@string/info_coordenadas"/>

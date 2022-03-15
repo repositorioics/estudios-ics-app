@@ -1374,22 +1374,22 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.retired_error) + "</font></small><br />";
             }
             if (mParticipante.getProcesos().getPosZika().matches("Si")) labelHeader = labelHeader + "<small><font color='red'>Participante positivo a ZIKA</font></small><br />";
-            if ((mParticipante.getDatosCHF()!=null && mParticipante.getDatosCHF().isEnMonitoreoIntensivo()) || mParticipante.getProcesos().getMi().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante en monitoreo intensivo CHF</b></font><br />";
+            if ((mParticipante.getDatosCHF()!=null && mParticipante.getDatosCHF().isEnMonitoreoIntensivo()) || mParticipante.getProcesos().getMi().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante en monitoreo intensivo CHF. COMUNICAR AL SUPERVISOR</b></font><br />";
             if (mParticipante.getProcesos().getPosDengue()!=null) labelHeader = labelHeader + "<small><font color='red'>"+mParticipante.getProcesos().getPosDengue()+"</font></small><br />";
             if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isConvalesciente() && mParticipante.getDatosUO1().getDiasConvalesciente() < 30){
-                labelHeader = labelHeader + "<small><font color='red'>Convaleciente UO1 con menos de 30 días. No tomar muestra</font></small><br />";
+                labelHeader = labelHeader + "<small><font color='red'>Convaleciente UO1 con menos de 30 días. No tomar muestra. COMUNICAR AL SUPERVISOR</font></small><br />";
             }
             if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isConvalescienteFlu() && mParticipante.getDatosUO1().getDiasConvalesciente() < 30){
-                labelHeader = labelHeader + "<small><font color='red'>Convaleciente Flu con menos de 30 días. No tomar muestra</font></small><br />";
+                labelHeader = labelHeader + "<small><font color='red'>Convaleciente Flu con menos de 30 días. No tomar muestra. COMUNICAR AL SUPERVISOR</font></small><br />";
             }
             if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isVisitaExitosa() && mParticipante.getDatosUO1().getDiasVacuna() < 30){
                 if (mParticipante.getDatosUO1().isVacunado()) {
                     if (mParticipante.getDatosUO1().isMxTomada())
-                        labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra</font></small><br />";
+                        labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra. COMUNICAR AL SUPERVISOR</font></small><br />";
                     else
-                        labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 menor 30 días sin muestra: "+mParticipante.getDatosUO1().getRazonNoMx()+"</font></small><br />";
+                        labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 menor 30 días sin muestra: "+mParticipante.getDatosUO1().getRazonNoMx()+" . COMUNICAR AL SUPERVISOR</font></small><br />";
                 } else {
-                    labelHeader = labelHeader + "<small><font color='red'>Visita Vac UO1 menor 30 días sin muestra: "+mParticipante.getDatosUO1().getRazonNoMx()+"</font></small><br />";
+                    labelHeader = labelHeader + "<small><font color='red'>Visita Vac UO1 menor 30 días sin muestra: "+mParticipante.getDatosUO1().getRazonNoMx()+" . COMUNICAR AL SUPERVISOR</font></small><br />";
                 }
             }
 
@@ -1443,11 +1443,11 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                     pendiente = true;
                                 }
                                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
+                                    /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
                                         labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                    } else {
+                                    } else {*/
                                         labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                    }
+                                    //}
                                     pendiente = true;
                                 }
                             }
@@ -1456,7 +1456,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                             //Menores de 6 meses
                             if (mParticipante.getEdadMeses() < 6) {
                                 if (mParticipante.getProcesos().getConmx().matches("No")) {
-                                    labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                                    labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                                     pendiente = true;
                                 }
                                 if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
@@ -1468,40 +1468,40 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
                                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 3cc en tubo PBMC<br /></font></small>";
-                                            labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                                            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 3cc en tubo PBMC<br /></font></strong>";
+                                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
                                             labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                                         } else {
-                                            labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                                         }
                                         pendiente = true;
                                     }
                                     if (mParticipante.getProcesos().getConmxbhc().matches("No")
                                             && mParticipante.getProcesos().getPbmc().matches("No")) {
-                                        if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                                            labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                        } else {
-                                            labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                        }
+                                        /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                                            labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                                        } else {*/
+                                            labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                                        //}
                                         pendiente = true;
                                     }
                                 } else //De 2 años a < 14 años
                                     if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
                                         if (mParticipante.getProcesos().getConmx().matches("No")) {
                                             if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                                                labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                                                labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                                                labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></strong>";
+                                                labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
                                             } else {
-                                                labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                                                labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                                             }
                                             pendiente = true;
                                         }
                                         if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                                            if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                                                labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                            } else {
-                                                labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                            }
+                                            /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                                                labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                                            } else {*/
+                                                labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                                            //}
                                             pendiente = true;
                                         }
 
@@ -1509,19 +1509,19 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                     {
                                         if (mParticipante.getProcesos().getConmx().matches("No")) {
                                             if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                                                labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                                                labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                                                labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></strong>";
+                                                labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                                             } else {
-                                                labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                                                labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
                                             }
                                             pendiente = true;
                                         }
                                         if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                                            if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                                                labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                            } else {
-                                                labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                            }
+                                            /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                                                labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                                            } else {*/
+                                                labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                                            //}
                                             pendiente = true;
                                         }
                                     }
@@ -1529,38 +1529,38 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                             if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
                                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>No tomar BHC<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font></strong>";
+                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
+                                        labelHeader = labelHeader + "<strong><font color='#B941E0'>No tomar BHC<br /></font></strong>";
                                     } else {
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                                     }
                                     pendiente = true;
                                 }
                                 if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
-                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                    } else {
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                    }
+                                    /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                                        labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                                    } else {*/
+                                        labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                                    //}
                                     pendiente = true;
                                 }
                             } else {
                                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></strong>";
+                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
                                     } else {
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                                     }
                                     pendiente = true;
                                 }
                                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                    } else {
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                    }
+                                    /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                                        labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                                    } else {*/
+                                        labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                                    //}
                                     pendiente = true;
                                 }
                             }
@@ -1569,38 +1569,38 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                             if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 96) {
                                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
+                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                                     } else {
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 8cc en tubo Rojo<br /></font></strong>";
                                     }
                                     pendiente = true;
                                 }
                                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                    } else {
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                    }
+                                    /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                                        labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                                    } else {*/
+                                        labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                                    //}
                                     pendiente = true;
                                 }
                             } else { //De 8 Años a más
                                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
                                         //MA2022. 7 PBMC Y 6 ROJO
-                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
+                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                                     } else {
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
                                     }
                                     pendiente = true;
                                 }
                                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                    } else {
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                    }
+                                    /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                                        labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                                    } else {*/
+                                        labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                                    //}
                                     pendiente = true;
                                 }
                             }
@@ -1609,38 +1609,38 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                             if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 96) {
                                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
+                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                                     } else {
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 8cc en tubo Rojo<br /></font></strong>";
                                     }
                                     pendiente = true;
                                 }
                                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                    } else {
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                    }
+                                    /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                                        labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                                    } else {*/
+                                        labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                                    //}
                                     pendiente = true;
                                 }
                             } else { //de 8 a mas
                                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
                                         //MA2022. 7 PBMC Y 6 ROJO
-                                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></small>";
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
+                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                                     } else {
-                                        labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
                                     }
                                     pendiente = true;
                                 }
                                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                                    if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                                    } else {
-                                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                                    }
+                                    /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                                        labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                                    } else {*/
+                                        labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                                    //}
                                     pendiente = true;
                                 }
 
@@ -1683,16 +1683,16 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 //AL finalizar MA 2018, se solicita siempre muestre mensaje de muestra convasleciente.  28062018
                                 //if (mParticipante.getProcesos().getConmx().matches("No")) {
                                 //if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                                labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente (Tubo rojo o PBMC)<br /></font></small>";
+                                labelHeader = labelHeader + "<strong><font color='#de3163'>Tomar 5cc de convaleciente (Tubo rojo o PBMC)<br /></font></strong>";
                                     /*} else {
-                                        labelHeader = labelHeader + "<small><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></small>";
+                                        labelHeader = labelHeader + "<strong><font color='#de3163'>Tomar 5cc de convaleciente<br /></font></strong>";
                                         }
                                     }*/
                             }
                         }
                         if ((mParticipante.getProcesos().getRetoma() != null && mParticipante.getProcesos().getVolRetoma() != null)) {
                             if ((mParticipante.getProcesos().getRetoma().matches("Si")) && mUser.getMuestra()) {
-                                labelHeader = labelHeader + "<small><font color='red'>" + getString(R.string.retoma) + ": " + mParticipante.getProcesos().getVolRetoma() + "cc </font></small><br />";
+                                labelHeader = labelHeader + "<strong><font color='red'>" + getString(R.string.retoma) + ": " + mParticipante.getProcesos().getVolRetoma() + "cc </font></strong><br />";
                             }
                         }
 
@@ -1735,6 +1735,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.partsa_survey_missing) + "</font></small><br />";
                     pendiente=true;
                 }*/
+                if (mParticipante.getProcesos().getCuestCovid() != null && !mParticipante.getProcesos().getCuestCovid().matches("No")) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.cuest_covid19_missing) + "</font></small><br />";
+                    pendiente = true;
+                }
                 if (mParticipante.getProcesos().getConsCovid19().matches("Si") && mUser.getConsentimiento()) {
                     if (!mParticipante.getProcesos().getEstudio().trim().contains("Influenza")) {
                         labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.cons_missing_covid19) + "</font></small><br />";
@@ -1745,10 +1749,6 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getConsChf() != null && mParticipante.getProcesos().getConsChf().matches("Si") && mUser.getConsentimiento()) {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.chf_missing) + "</font></small><br />";
-                    pendiente = true;
-                }
-                if (mParticipante.getProcesos().getCuestCovid() != null && !mParticipante.getProcesos().getCuestCovid().matches("No")) {
-                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.cuest_covid19_missing) + "</font></small><br />";
                     pendiente = true;
                 }
 
@@ -1826,61 +1826,61 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         if (!ingresoChf) {
             //Menores de 6 meses
             if (mParticipante.getEdadMeses() < 6) {
-                labelHeader = labelHeader + "<small><font color='red'>No tomar muestra<br /></font></small>";
+                labelHeader = labelHeader + "<strong><font color='red'>No tomar muestra<br /></font></strong>";
                 pendiente = false;
             } else //De 6 meses a <2 años
             if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font></small>";
-                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
-                        labelHeader = labelHeader + "<small><font color='#B941E0'>No tomar BHC<br /></font></small>";
+                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font></strong>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
+                        labelHeader = labelHeader + "<strong><font color='#B941E0'>No tomar BHC<br /></font></strong>";
                     } else {
-                        labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                     }
                     pendiente = true;
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
-                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
+                    labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
                     pendiente = true;
                 }
             } else //De 2 años - < 14 Años
                 if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></strong>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
                         } else {
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                         }
                         pendiente = true;
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                        if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                        } else {
-                            labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                        }
+                        /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                            labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                        } else {*/
+                            labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                        //}
                         pendiente = true;
                     }
                 } else //De 14 años y más
                 {
                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></strong>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                         } else {
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
                         }
 
                         pendiente = true;
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                        if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                        } else {
-                            labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                        }
+                        /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                            labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                        } else {*/
+                            labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                        //}
                         pendiente = true;
                     }
                 }
@@ -1898,7 +1898,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             //Menores de 6 meses
             if (mParticipante.getEdadMeses() < 6) {
                 if (mParticipante.getProcesos().getConmx().matches("No")) {
-                    labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                     pendiente = true;
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
@@ -1910,58 +1910,58 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 3cc en tubo PBMC<br /></font></small>";
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 3cc en tubo PBMC<br /></font></strong>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
                             labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                         } else {
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                         }
                         pendiente = true;
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")
                             && mParticipante.getProcesos().getPbmc().matches("No")) {
-                        if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                        } else {
-                            labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                        }
+                        /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                            labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                        } else {*/
+                            labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                        //}
                         pendiente = true;
                     } //De 2 años y < 13 Años (justo antes de cumplir los 14)
                 } else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></strong>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
                         } else {
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                         }
                         pendiente = true;
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                        if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                        } else {
-                            labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                        }
+                        /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                            labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                        } else {*/
+                            labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                        //}
                         pendiente = true;
                     }
                 } else //De 14 años y más
                 {
                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></strong>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                         } else {
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
                         }
                         pendiente = true;
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                        if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                        } else {
-                            labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                        }
+                        /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                            labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                        } else {*/
+                            labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                        //}
                         pendiente = true;
                     }
                 }
@@ -1979,38 +1979,38 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 96) {
                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></small>";
-                        labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                     } else {
-                        labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 8cc en tubo Rojo<br /></font></strong>";
                     }
                     pendiente = true;
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                    if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                    } else {
-                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                    }
+                    /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                        labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                    } else {*/
+                        labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                    //}
                     pendiente = true;
                 }
             } else //De 8 años y más
             {
                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></small>";
-                        labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                     } else {
-                        labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
                     }
                     pendiente = true;
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                    if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                    } else {
-                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                    }
+                    /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                        labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                    } else {*/
+                        labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                    //}
                     pendiente = true;
                 }
             }
@@ -2028,38 +2028,38 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 96) {
                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></small>";
-                        labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                     } else {
-                        labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 8cc en tubo Rojo<br /></font></strong>";
                     }
                     pendiente = true;
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                    if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                    } else {
-                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                    }
+                    /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                        labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                    } else {*/
+                        labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                    //}
                     pendiente = true;
                 }
             } else //De 8 años y más
             {
                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></small>";
-                        labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                     } else {
-                        labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
                     }
                     pendiente = true;
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                    if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                    } else {
-                        labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                    }
+                    /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                        labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                    } else {*/
+                        labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                    //}
                     pendiente = true;
                 }
             }
@@ -2076,7 +2076,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         //menores de 6 meses
         if (mParticipante.getEdadMeses() < 6) {
             if (mParticipante.getProcesos().getConmx().matches("No")) {
-                labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                 pendiente = true;
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
@@ -2087,8 +2087,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 3cc en tubo PBMC<br /></font></small>";
-                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 3cc en tubo PBMC<br /></font></strong>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
 
                         pendiente = true;
                     } else {
@@ -2102,19 +2102,19 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></strong>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
                             pendiente = true;
                         } else {
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                         }
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                        if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
+                        /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
                             labelHeader = labelHeader + "<font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font>";
-                        } else {
+                        } else {*/
                             labelHeader = labelHeader + "<font color='#B941E0'>Tomar 1cc para BHC<br /></font>";
-                        }
+                        //}
                         pendiente = true;
                     }
 
@@ -2122,19 +2122,19 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 {
                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></strong>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                         } else {
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
                         }
                         pendiente = true;
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                        if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                        } else {
-                            labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                        }
+                        /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                            labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                        } else {*/
+                            labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                        //}
                         pendiente = true;
                     }
                 }
@@ -2147,7 +2147,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         //menores de 6 meses
         if (mParticipante.getEdadMeses() < 6) {
             if (mParticipante.getProcesos().getConmx().matches("No")) {
-                labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                 pendiente = true;
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
@@ -2158,8 +2158,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
                 if (mParticipante.getProcesos().getConmx().matches("No")) {
                     if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                        labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 3cc en tubo PBMC<br /></font></small>";
-                        labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 3cc en tubo PBMC<br /></font></strong>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
                         labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                         pendiente = true;
                     } else {
@@ -2173,19 +2173,19 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 1cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></strong>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
                             pendiente = true;
                         } else {
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                         }
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                        if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                        } else {
-                            labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                        }
+                        /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                            labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                        } else {*/
+                            labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                        //}
                         pendiente = true;
                     }
 
@@ -2193,19 +2193,19 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 {
                     if (mParticipante.getProcesos().getConmx().matches("No")) {
                         if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></small>";
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 6cc en tubo PBMC<br /></font></strong>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                         } else {
-                            labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
                         }
                         pendiente = true;
                     }
                     if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                        if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                            labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                        } else {
-                            labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                        }
+                        /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                            labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                        } else {*/
+                            labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                        //}
                         pendiente = true;
                     }
                 }
@@ -2218,20 +2218,20 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 96) {
             if (mParticipante.getProcesos().getConmx().matches("No")) {
                 if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></small>";
-                    labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
+                    labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
                     pendiente = true;
                 } else {
-                    labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<strong><font color='red'>Tomar 8cc en tubo Rojo<br /></font></strong>";
                 }
             }
 
             if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                } else {
-                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                }
+                /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                    labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                } else {*/
+                    labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                //}
                 pendiente = true;
             }
         } else {
@@ -2239,19 +2239,19 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             if (mParticipante.getProcesos().getConmx().matches("No")) {
                 if (mParticipante.getProcesos().getPbmc().matches("Si")) {
                     // 7 PBMC Y 6 ROJO
-                    labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></small>";
-                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
+                    labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                 } else {
-                    labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
+                    labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
                 }
                 pendiente = true;
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
-                if (mParticipante.getProcesos().getPaxgene().matches("Si")) {
-                    labelHeader = labelHeader + "<small><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></small>";
-                } else {
-                    labelHeader = labelHeader + "<small><font color='#B941E0'>Tomar 1cc para BHC<br /></font></small>";
-                }
+                /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
+                    labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
+                } else {*/
+                    labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
+                //}
                 pendiente = true;
             }
 
@@ -2263,31 +2263,31 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private String getVolumenCHFAdicionalCovid19() {
         String labelHeader = "";
         if (mParticipante.getProcesos().getMuestraCovid() != null && mParticipante.getProcesos().getMuestraCovid().equalsIgnoreCase(Constants.MX_EDTA_CITRATO)) {
-            labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
-            labelHeader = labelHeader + "<small><font color='#11BDF7'>Tomar 4cc en tubo PBMC<br /></font></small>";
-            labelHeader = labelHeader + "<small><font color='#bc7201'>Tomar 6cc en tubo Amarillo<br /></font></small>";
+            labelHeader = labelHeader + "<strong><font color='red'>Tomar 4cc en tubo Rojo<br /></font></strong>";
+            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 4cc en tubo PBMC<br /></font></strong>";
+            labelHeader = labelHeader + "<strong><font color='#bc7201'>Tomar 6cc en tubo Amarillo<br /></font></strong>";
         } else {
             //no tiene que tener pendiente mx principal
             if (mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) {
                 //menores de 6 meses
                 if (mParticipante.getEdadMeses() < 6) {
-                    //labelHeader = labelHeader + "<small><font color='red'>Tomar 2cc en tubo Rojo<br /></font></small>";
-                    labelHeader = labelHeader + "<small><font color='red'>No tomar muestra<br /></font></small>";
+                    //labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
+                    labelHeader = labelHeader + "<strong><font color='red'>No tomar muestra<br /></font></strong>";
                     pendiente = true;
                 } //De 6 meses a <2 años
                 else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
-                    //labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
-                    labelHeader = labelHeader + "<small><font color='red'>Tomar 4cc en tubo Rojo<br /></font></small>";
+                    //labelHeader = labelHeader + "<strong><font color='red'>Tomar 4cc en tubo Rojo<br /></font></strong>";
+                    labelHeader = labelHeader + "<strong><font color='red'>Tomar 4cc en tubo Rojo<br /></font></strong>";
                     pendiente = true;
                 }  //De 2 años - < 14 Años
                 else if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 168) {
-                    //labelHeader = labelHeader + "<small><font color='red'>Tomar 8cc en tubo Rojo<br /></font></small>";
-                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                    //labelHeader = labelHeader + "<strong><font color='red'>Tomar 8cc en tubo Rojo<br /></font></strong>";
+                    labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                     pendiente = true;
                 } else //De 14 años y más
                 {
-                    //labelHeader = labelHeader + "<small><font color='red'>Tomar 12cc en tubo Rojo<br /></font></small>";
-                    labelHeader = labelHeader + "<small><font color='red'>Tomar 6cc en tubo Rojo<br /></font></small>";
+                    //labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
+                    labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
                     pendiente = true;
                 }
             }

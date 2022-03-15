@@ -20,6 +20,8 @@ import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.ParticipanteCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaVisitasCasoUO1Activity;
 import ni.org.ics.estudios.appmovil.influenzauo1.forms.VisitaCasoUO1Form;
 import ni.org.ics.estudios.appmovil.influenzauo1.forms.VisitaCasoUO1FormLabels;
@@ -513,6 +515,34 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+            }
+            if (visita.equalsIgnoreCase("Final") && visitaExitosa.equalsIgnoreCase(Constants.YES)) {
+                //vamos a activar los procesos de toma de MA
+                MovilInfo movilInfo = new MovilInfo();
+                movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+                movilInfo.setDeviceid(infoMovil.getDeviceId());
+                movilInfo.setUsername(username);
+                movilInfo.setToday(new Date());
+                ParticipanteProcesos procesos = participanteCasoUO1.getParticipante().getProcesos();
+                procesos.setMovilInfo(movilInfo);
+
+                String estudios = procesos.getEstudio().replaceAll("  Tcovid","");
+                int edadMeses = participanteCasoUO1.getParticipante().getEdadMeses();
+                if (edadMeses < 6) {
+                    procesos.setConmxbhc(Constants.YES); //No habilitar
+                } else if (edadMeses < 24) {
+                    //No habilitar para UO1 y UO1  CH Familia
+                    if (estudios.equalsIgnoreCase("UO1") || estudios.equalsIgnoreCase("UO1  CH Familia")) {
+                        procesos.setConmxbhc(Constants.YES);
+                    } else {
+                        procesos.setConmxbhc(Constants.NO);
+                    }
+                } else {//para el resto.. siempre habilitar
+                    procesos.setConmxbhc(Constants.NO);
+                }
+                //rojo siempre habilitar
+                procesos.setConmx(Constants.NO);
+                estudiosAdapter.actualizarParticipanteProcesos(procesos);
             }
             estudiosAdapter.close();
             Bundle arguments = new Bundle();

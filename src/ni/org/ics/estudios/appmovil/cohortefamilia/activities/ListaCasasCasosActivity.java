@@ -101,6 +101,9 @@ public class ListaCasasCasosActivity extends AbstractAsyncListActivity {
 		mButton = (Button) findViewById(R.id.sensors_button);
 		mButton.setVisibility(View.GONE);
 
+		mButton = (Button) findViewById(R.id.new_MA_button);
+		mButton.setVisibility(View.GONE);
+
 		mDatosCasaButton = (Button) findViewById(R.id.datos_casa_button);
 		mDatosCasaButton.setText(getString(R.string.follow_up_update));
 		mDatosCasaButton.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_menu_refresh), null, null);

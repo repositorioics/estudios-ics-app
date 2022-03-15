@@ -525,6 +525,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
             }
             if(page.getTitle().equals(labels.getIncDen())) {
                 ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
+                assert test != null;
                 visible = test.size() > 1;
                 //Sólo se preguntará a los retirados
                 changeStatus(mWizardModel.findByKey(labels.getVivienda()), (visible));
@@ -537,7 +538,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 if (!visible){
                     Toast toast = Toast.makeText(getApplicationContext(),labels.getNoCumpleIncDen(),Toast.LENGTH_LONG);
                     toast.show();
-                    resetForm(97);
+                    resetForm(98);
                 }
                 esElegible = visible;
                 onPageTreeChanged();
@@ -1440,6 +1441,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getVivienda()), false);
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), false);
         if (preg>97) changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), false);
+
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getAsiste()), false);
         if (preg>96) changeStatus(mWizardModel.findByKey(labels.getOcentrosalud()), false);
@@ -1829,16 +1831,16 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     if (catTratami != null) tamizaje.setTratamiento(catTratami.getCatKey());
                 }
                 if (tieneValor(cualesTx)) {
-                    String keysCriterios = "";
+                    String keyTx = "";
                     cualesTx = cualesTx.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','");
                     List<MessageResource> catTx = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + cualesTx + "') and "
                             + CatalogosDBConstants.catRoot + "='CPD_CAT_TRATAMIENTO'", null);
                     for (MessageResource ms : catTx) {
-                        keysCriterios += ms.getCatKey() + ",";
+                        keyTx += ms.getCatKey() + ",";
                     }
-                    if (!keysCriterios.isEmpty())
-                        keysCriterios = keysCriterios.substring(0, keysCriterios.length() - 1);
-                    tamizaje.setCualTratamiento(keysCriterios);
+                    if (!keyTx.isEmpty())
+                        keyTx = keyTx.substring(0, keyTx.length() - 1);
+                    tamizaje.setCualTratamiento(keyTx);
                 }
                 tamizaje.setOtroTx(otroTx);
 
@@ -1963,16 +1965,16 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         }
                     }
                     if (tieneValor(verifTutor)) {
-                        String keysCriterios = "";
+                        String keysVerifica = "";
                         verifTutor = verifTutor.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "','");
                         List<MessageResource> catVerificaT = estudiosAdapter.getMessageResources(CatalogosDBConstants.spanish + " in ('" + verifTutor + "') and "
                                 + CatalogosDBConstants.catRoot + "='CP_CAT_VERIFTUTOR'", null);
                         for (MessageResource ms : catVerificaT) {
-                            keysCriterios += ms.getCatKey() + ",";
+                            keysVerifica += ms.getCatKey() + ",";
                         }
-                        if (!keysCriterios.isEmpty())
-                            keysCriterios = keysCriterios.substring(0, keysCriterios.length() - 1);
-                        cc.setVerifTutor(keysCriterios);
+                        if (!keysVerifica.isEmpty())
+                            keysVerifica = keysVerifica.substring(0, keysVerifica.length() - 1);
+                        cc.setVerifTutor(keysVerifica);
                     }
                     if (tieneValor(aceptaContactoFuturo)) {
                         MessageResource catConFut = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaContactoFuturo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
@@ -2117,6 +2119,12 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         toast.show();
                         finish();
                     } else {
+                        Intent i = new Intent(getApplicationContext(),
+                                MenuInfoActivity.class);
+                        i.putExtra(ConstantsDB.CODIGO, participante.getCodigo());
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
                         Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noRegistraIngreso), Toast.LENGTH_LONG);
                         toast.show();
                         finish();
@@ -2147,6 +2155,12 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                     finish();
                 }
             }else {
+                Intent i = new Intent(getApplicationContext(),
+                        MenuInfoActivity.class);
+                i.putExtra(ConstantsDB.CODIGO, participante.getCodigo());
+                i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
                 Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.visitaNoExitosa)+ " " +razonVisNoExit, Toast.LENGTH_LONG);
                 toast.show();
                 finish();

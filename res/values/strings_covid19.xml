@@ -218,9 +218,9 @@
     <string name="noHaySintVF">El participante no presentó síntomas respiratorios en el periodo que no fue visitado por el personal del CSSFV</string>
     <string name="finalVisitExist">Visita Final ya fue ingresada</string>
 
-    <string name="enSeguimientoCovid19">Participante en seguimiento de Covid19</string>
-    <string name="enTransmisionCovid19">Participante en transmisión de Covid19</string>
-    <string name="noEnroladoTransmisionCovid19">Casa en transmisión de Covid19. Participante NO Enrolado</string>
+    <string name="enSeguimientoCovid19">Participante en seguimiento de Covid19. COMUNICAR AL SUPERVISOR</string>
+    <string name="enTransmisionCovid19">Participante en transmisión de Covid19. COMUNICAR AL SUPERVISOR</string>
+    <string name="noEnroladoTransmisionCovid19">Casa en transmisión de Covid19. Participante NO Enrolado. COMUNICAR AL SUPERVISOR</string>
 
     <!--Cuestionario Covid19 -->
     <string name="covid19_questionnaire">Cuestionario Covid19</string>

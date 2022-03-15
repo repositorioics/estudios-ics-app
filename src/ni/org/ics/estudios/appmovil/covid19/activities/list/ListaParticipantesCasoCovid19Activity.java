@@ -93,6 +93,9 @@ public class ListaParticipantesCasoCovid19Activity extends AbstractAsyncListActi
 		mButton = (Button) findViewById(R.id.final_visit_button_cv19);
 		mButton.setVisibility(View.GONE);
 
+		mButton = (Button) findViewById(R.id.new_MA_button_cv19);
+		mButton.setVisibility(View.GONE);
+
 		mSendCase = (Button) findViewById(R.id.send_case_cv19);
 		if (participanteCasoCovid19List.size()>1)//si es mayo de 1 es una casa
 			mSendCase.setVisibility(View.GONE);

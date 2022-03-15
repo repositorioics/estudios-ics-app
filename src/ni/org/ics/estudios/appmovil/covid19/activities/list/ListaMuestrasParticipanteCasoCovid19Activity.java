@@ -12,15 +12,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasParticipantesCasosActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.MuestraAdapter;
 import ni.org.ics.estudios.appmovil.covid19.activities.MenuVisitaCasoCovid19Activity;
 import ni.org.ics.estudios.appmovil.covid19.activities.MenuVisitaFinalCasoCovid19Activity;
@@ -33,10 +31,12 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.covid19.VisitaFinalCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.covid19.VisitaSeguimientoCasoCovid19;
+import ni.org.ics.estudios.appmovil.muestreoanual.activities.NewSampleActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,6 +52,7 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 	private Button mAddRespButton;
 	private Button mReviewButton;
 	private Button mButton;
+	private Button mMAButton;//MA2022. Tomar mx de muestreo anual en la visita final
 	//Viene de la actividad principal
 	private static VisitaSeguimientoCasoCovid19 visitaCaso = new VisitaSeguimientoCasoCovid19();
     private static VisitaFinalCasoCovid19 visitaFinalCaso = new VisitaFinalCasoCovid19();
@@ -164,10 +165,20 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 			}
 		});*/
 
+		mMAButton = (Button) findViewById(R.id.new_MA_button_cv19);
+		mMAButton.setOnClickListener(new View.OnClickListener()  {
+			@Override
+			public void onClick(View v) {
+				new OpenMuestrasMATask().execute();
+			}
+		});
+
         if (visitaFinalCaso!=null){
             mAddRespButton.setVisibility(View.GONE);
             mAddBhcButton.setVisibility(View.GONE);
-        }
+        } else {
+			mMAButton.setVisibility(View.GONE);
+		}
 		
 	}
 
@@ -566,4 +577,47 @@ public class ListaMuestrasParticipanteCasoCovid19Activity extends AbstractAsyncL
 
 	}
 
+	private class OpenMuestrasMATask extends AsyncTask<String, Void, String> {
+		ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra> mMuestrasMA = new ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra>();
+		@Override
+		protected void onPreExecute() {
+			// before the request begins, show a progress indicator
+			showLoadingProgressDialog();
+		}
+
+		@Override
+		protected String doInBackground(String... values) {
+			try {
+				estudiosAdapter.open();
+
+				mMuestrasMA =estudiosAdapter.getListaMuestras(participanteCasoCovid19.getParticipante().getCodigo());
+				/**/
+				estudiosAdapter.close();
+			} catch (Exception e) {
+				Log.e(TAG, e.getLocalizedMessage(), e);
+				return "error";
+			}
+			return "exito";
+		}
+
+		protected void onPostExecute(String resultado) {
+			if (mMuestrasMA.size() <= 0) {
+				Intent i = new Intent(getApplicationContext(),
+						NewSampleActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				i.putExtra(ConstantsDB.COD_CASA, participanteCasoCovid19.getParticipante().getCasa().getCodigo());
+				i.putExtra(ConstantsDB.CODIGO, participanteCasoCovid19.getParticipante().getCodigo());
+				i.putExtra(ConstantsDB.VIS_EXITO, true);
+				Bundle arguments = new Bundle();
+				arguments.putSerializable(Constants.VISITA_FINAL, visitaFinalCaso);
+				i.putExtras(arguments);
+				startActivity(i);
+			} else {
+				Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.samples_MA_exist),Toast.LENGTH_LONG);
+				toast.show();
+			}
+			dismissProgressDialog();
+		}
+
+	}
 }

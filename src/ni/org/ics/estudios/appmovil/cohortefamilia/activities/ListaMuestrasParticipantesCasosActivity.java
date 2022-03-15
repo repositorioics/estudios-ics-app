@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.widget.*;
 import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
 import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
@@ -22,6 +23,7 @@ import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
+import ni.org.ics.estudios.appmovil.muestreoanual.activities.NewSampleActivity;
 import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -35,10 +37,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListActivity {
 	
@@ -50,6 +49,7 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
 	private Button mAddRespButton;
 	private Button mReviewButton;
 	private Button mButton;
+	private Button mMAButton;//MA2022. Tomar mx de muestreo anual en la visita final
 	//Viene de la actividad principal
 	private static VisitaSeguimientoCaso visitaCaso = new VisitaSeguimientoCaso();
     private static VisitaFinalCaso visitaFinalCaso = new VisitaFinalCaso();
@@ -117,6 +117,14 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
 		mButton = (Button) findViewById(R.id.sensors_button);
 		mButton.setVisibility(View.GONE);
 
+		mMAButton = (Button) findViewById(R.id.new_MA_button);
+		mMAButton.setOnClickListener(new View.OnClickListener()  {
+			@Override
+			public void onClick(View v) {
+				new OpenMuestrasMATask().execute();
+			}
+		});
+
         mAddBhcButton = (Button) findViewById(R.id.new_bhc_button);
 		mAddRojoButton = (Button) findViewById(R.id.new_rojo_button);
 		mAddPbmcButton = (Button) findViewById(R.id.new_pbmc_button);
@@ -168,7 +176,9 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
         if (visitaFinalCaso!=null){
             mAddBhcButton.setVisibility(View.GONE);
             mAddRespButton.setVisibility(View.GONE);
-        }
+        } else {
+			mMAButton.setVisibility(View.GONE);
+		}
 		
 	}
 
@@ -348,6 +358,50 @@ public class ListaMuestrasParticipantesCasosActivity extends AbstractAsyncListAc
 
 		protected void onPostExecute(String resultado) {
 			// after the request completes, hide the progress indicator
+			dismissProgressDialog();
+		}
+
+	}
+
+	private class OpenMuestrasMATask extends AsyncTask<String, Void, String> {
+		ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra> mMuestrasMA = new ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra>();
+		@Override
+		protected void onPreExecute() {
+			// before the request begins, show a progress indicator
+			showLoadingProgressDialog();
+		}
+
+		@Override
+		protected String doInBackground(String... values) {
+			try {
+				estudiosAdapter.open();
+
+				mMuestrasMA =estudiosAdapter.getListaMuestras(participantechf.getParticipante().getCodigo());
+				/**/
+				estudiosAdapter.close();
+			} catch (Exception e) {
+				Log.e(TAG, e.getLocalizedMessage(), e);
+				return "error";
+			}
+			return "exito";
+		}
+
+		protected void onPostExecute(String resultado) {
+			if (mMuestrasMA.size() <= 0) {
+				Intent i = new Intent(getApplicationContext(),
+						NewSampleActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				i.putExtra(ConstantsDB.COD_CASA, participantechf.getParticipante().getCasa().getCodigo());
+				i.putExtra(ConstantsDB.CODIGO, participantechf.getParticipante().getCodigo());
+				i.putExtra(ConstantsDB.VIS_EXITO, true);
+				Bundle arguments = new Bundle();
+				arguments.putSerializable(Constants.VISITA_FINAL, visitaFinalCaso);
+				i.putExtras(arguments);
+				startActivity(i);
+			} else {
+				Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.samples_MA_exist),Toast.LENGTH_LONG);
+				toast.show();
+			}
 			dismissProgressDialog();
 		}
 

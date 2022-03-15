@@ -115,6 +115,9 @@ public class ListaMuestrasSuperficieCasoActivity extends AbstractAsyncListActivi
         mButton = (Button) findViewById(R.id.sensors_button);
         mButton.setVisibility(View.GONE);
 
+        mButton = (Button) findViewById(R.id.new_MA_button);
+        mButton.setVisibility(View.GONE);
+
 		mSurfaceButton = (Button) findViewById(R.id.new_surface_button);
 
         mSurfaceButton.setOnClickListener(new View.OnClickListener()  {

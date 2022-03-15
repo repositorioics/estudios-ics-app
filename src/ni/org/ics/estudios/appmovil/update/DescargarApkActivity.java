@@ -5,14 +5,17 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,10 +28,16 @@ import java.net.URL;
 public class DescargarApkActivity extends Activity {
     public ProgressDialog PD_CREATE;
     private Context CONTEXT;
+    private String strUrlContext;
+    private SharedPreferences settings;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.CONTEXT = this;
+        settings =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        strUrlContext =
+                settings.getString(PreferencesActivity.KEY_SERVER_URL, this.getString(R.string.default_server_url));
         /*Intent i;
         PackageManager manager = getPackageManager();
         try {
@@ -71,7 +80,7 @@ public class DescargarApkActivity extends Activity {
         @Override
         protected Void doInBackground(String... arg0) {
             try {
-                URL url = new URL(getString(R.string.url_apk));
+                URL url = new URL(strUrlContext+getString(R.string.url_apk));
                 HttpURLConnection c = (HttpURLConnection) url.openConnection();
                 c.setRequestMethod("GET");
                 c.connect();

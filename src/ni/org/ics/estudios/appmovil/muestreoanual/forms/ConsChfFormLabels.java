@@ -26,8 +26,9 @@ public class ConsChfFormLabels {
     private String razonNoParticipaPersonaHint;
     private String otraRazonNoParticipaPersona;
     private String otraRazonNoParticipaPersonaHint;
-    private String criteriosInclusionIndice;
-    private String criteriosInclusionHint;
+    //No preguntar criterios. Brenda, 07/03/2022
+    //private String criteriosInclusionIndice;
+    //private String criteriosInclusionHint;
 
     /*private String aceptaParticipar;
     private String razonNoAceptaParticipar;
@@ -118,8 +119,8 @@ public class ConsChfFormLabels {
         otraRazonNoParticipaPersona = res.getString(R.string.otraRazonNoParticipaPersona);
         otraRazonNoParticipaPersonaHint = res.getString(R.string.otraRazonNoParticipaPersonaHint);
 
-        criteriosInclusionIndice = res.getString(R.string.criteriosInclusion);
-        criteriosInclusionHint = res.getString(R.string.criteriosInclusionHint);
+        //criteriosInclusionIndice = res.getString(R.string.criteriosInclusion);
+        //criteriosInclusionHint = res.getString(R.string.criteriosInclusionHint);
 
 /*        aceptaParticipar = res.getString(R.string.aceptaParticipar);
         razonNoAceptaParticipar = res.getString(R.string.razonNoAceptaParticipar);
@@ -257,7 +258,7 @@ public class ConsChfFormLabels {
     public String getOtraRazonNoParticipaPersonaHint() {
         return otraRazonNoParticipaPersonaHint;
     }
-
+/*
     public String getCriteriosInclusionIndice() {
         return criteriosInclusionIndice;
     }
@@ -265,6 +266,7 @@ public class ConsChfFormLabels {
     public String getCriteriosInclusionHint() {
         return criteriosInclusionHint;
     }
+    */
 
     public String getAsentimiento() {
         return asentimiento;

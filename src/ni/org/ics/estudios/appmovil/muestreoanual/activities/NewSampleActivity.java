@@ -18,11 +18,19 @@ import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaMuestrasParticipantesCasosActivity;
+import ni.org.ics.estudios.appmovil.covid19.activities.list.ListaMuestrasParticipanteCasoCovid19Activity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaSeguimientoCaso;
+import ni.org.ics.estudios.appmovil.domain.covid19.VisitaFinalCasoCovid19;
+import ni.org.ics.estudios.appmovil.domain.influenzauo1.VisitaCasoUO1;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MuestraId;
+import ni.org.ics.estudios.appmovil.influenzauo1.activities.list.ListaMuestrasParticipanteCasoUO1Activity;
 import ni.org.ics.estudios.appmovil.muestreoanual.parsers.MuestraXml;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -36,6 +44,7 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 
 public class NewSampleActivity extends AbstractAsyncActivity {
@@ -53,6 +62,10 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 	Dialog dialogInit;
 
 	private EstudiosAdapter estudiosAdapter;
+	//MA2022. Se registran mx de muestreo anual desde visitas finales si estan en seguimiento de familia, influenza o covid
+	private VisitaFinalCaso visitaFinalCaso = null;
+	private VisitaCasoUO1 visitaCaso = null;
+	private VisitaFinalCasoCovid19 visitaFinalCasoCovid19 = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +87,14 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 		casaId = getIntent().getIntExtra(ConstantsDB.COD_CASA,-1);
 		codigo = getIntent().getIntExtra(ConstantsDB.CODIGO,-1);
 		visExitosa = getIntent().getBooleanExtra(ConstantsDB.VIS_EXITO,false);
+		//MA2022. Se registran mx de muestreo anual desde visitas finales si estan en seguimiento de familia, influenza o covid
+		if (Objects.requireNonNull(getIntent().getExtras()).getSerializable(Constants.VISITA_FINAL) instanceof VisitaFinalCaso){
+			visitaFinalCaso = (VisitaFinalCaso) getIntent().getExtras().getSerializable(Constants.VISITA_FINAL);
+		}else if (Objects.requireNonNull(getIntent().getExtras()).getSerializable(Constants.VISITA) instanceof VisitaCasoUO1) {
+			visitaCaso = (VisitaCasoUO1) getIntent().getExtras().getSerializable(Constants.VISITA);
+		} else if (Objects.requireNonNull(getIntent().getExtras()).getSerializable(Constants.VISITA_FINAL) instanceof VisitaFinalCasoCovid19) {
+			visitaFinalCasoCovid19 = (VisitaFinalCasoCovid19) getIntent().getExtras().getSerializable(Constants.VISITA_FINAL);
+		}
 		getData();
 		createInitDialog();
 	}
@@ -128,11 +149,15 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 				finish();
 				return true;
 			case R.id.MENU_HOME:
-				Intent i = new Intent(getApplicationContext(),
-						MenuMuestreoAnualActivity.class);
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(i);
-				finish();
+				if (noEsVisitaFinalCasos()) {
+					Intent i = new Intent(getApplicationContext(),
+							MenuMuestreoAnualActivity.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(i);
+					finish();
+				} else
+					loadVisitaFinalCaso();
+
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -281,12 +306,18 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 			estudiosAdapter.actualizarParticipanteProcesos(mParticipante.getProcesos());
 			estudiosAdapter.close();
 			showToast(getApplicationContext().getString(R.string.success), 0);
-			loadMenuInfo();
+			if (noEsVisitaFinalCasos())
+				loadMenuInfo();
+			else
+				loadVisitaFinalCaso();
 		} catch (Exception e) {
 			// Presenta el error al parsear el xml
 			showToast(e.toString(),1);
 			e.printStackTrace();
-			loadMenuInfo();
+			if (noEsVisitaFinalCasos())
+				loadMenuInfo();
+			else
+				loadVisitaFinalCaso();
 		}
 
 	}
@@ -303,6 +334,34 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 
 	}
 
+	//MA2022. Se registran mx de muestreo anual desde visitas finales si estan en seguimiento de familia, influenza o covid
+	private boolean noEsVisitaFinalCasos(){
+		return visitaFinalCaso == null && visitaCaso == null && visitaFinalCasoCovid19 == null;
+	}
+
+	private void loadVisitaFinalCaso() {
+		Intent i;
+		Bundle arguments = new Bundle();
+		//familia
+		if (visitaFinalCaso != null) {
+			arguments.putSerializable(Constants.VISITA_FINAL, visitaFinalCaso);
+			i = new Intent(getApplicationContext(),
+					ListaMuestrasParticipantesCasosActivity.class);
+		} else if (visitaCaso != null) {//Influenza
+			arguments.putSerializable(Constants.VISITA, visitaCaso);
+			i = new Intent(getApplicationContext(),
+					ListaMuestrasParticipanteCasoUO1Activity.class);
+		} else { //covid
+			arguments.putSerializable(Constants.VISITA_FINAL, visitaFinalCasoCovid19);
+			i = new Intent(getApplicationContext(),
+					ListaMuestrasParticipanteCasoCovid19Activity.class);
+		}
+		i.putExtras(arguments);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
+		finish();
+	}
+	//Fin MA2022
 	/**
 	 *
 	 */

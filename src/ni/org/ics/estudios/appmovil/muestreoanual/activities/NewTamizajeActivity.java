@@ -2194,9 +2194,10 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         procesos.setRetoma(Constants.NO);
                         procesos.setAdn(Constants.NO);
                         procesos.setPbmc(Constants.NO);
-                        if (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE))
+                        /*if (tipoIngreso.equalsIgnoreCase(TIPO_DENGUE))
                             procesos.setPaxgene(Constants.NO);
-                        else procesos.setPaxgene(Constants.YES);
+                        else procesos.setPaxgene(Constants.YES);*/
+                        procesos.setPaxgene(Constants.NO);//MA2022, no hay paxgene
                         procesos.setConPto(Constants.NO);
                         procesos.setConsDeng(Constants.NO);
                         procesos.setObsequio(Constants.YES);
@@ -2285,7 +2286,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         //Covid19
                         procesos.setSubEstudios("0");
                         if (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1))//nuevos ingresos UO1 activar cuestionario covid19.Brenda MA2021 04/03/2021
-                            procesos.setCuestCovid("1a");
+                            procesos.setCuestCovid("4a");//Noviembre2021. MA2022
 
                         estudiosAdapter.crearParticipanteProcesos(procesos);
 

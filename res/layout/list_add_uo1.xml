@@ -70,5 +70,15 @@
                 android:text="@string/new_samp_pbmc"
                 android:drawableTop="@drawable/ic_pbmc"
                 style="?android:attr/buttonBarStyle" />
+
+        <Button
+                android:background="@drawable/selectable_item_background"
+                android:id="@+id/new_MA_uo1_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/new_samp_MA"
+                android:drawableTop="@drawable/ic_blood"
+                style="?android:attr/buttonBarStyle" />
     </LinearLayout>
 </LinearLayout>

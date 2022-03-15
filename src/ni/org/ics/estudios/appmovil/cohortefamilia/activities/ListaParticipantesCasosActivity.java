@@ -93,6 +93,9 @@ public class ListaParticipantesCasosActivity extends AbstractAsyncListActivity {
         mButton = (Button) findViewById(R.id.new_hand_button);
         mButton.setVisibility(View.GONE);
 
+		mButton = (Button) findViewById(R.id.new_MA_button);
+		mButton.setVisibility(View.GONE);
+
         mDatosCasaButton = (Button) findViewById(R.id.datos_casa_button);
 		mDatosCasaButton.setOnClickListener(new View.OnClickListener()  {
 			@Override

@@ -81,6 +81,9 @@ public class ListaVisitasFallidasCasoCovid19Activity extends AbstractAsyncListAc
 		mButton = (Button) findViewById(R.id.send_case_cv19);
 		mButton.setVisibility(View.GONE);
 
+		mButton = (Button) findViewById(R.id.new_MA_button_cv19);
+		mButton.setVisibility(View.GONE);
+
         mAddVisitButton = (Button) findViewById(R.id.add_visit_button_cv19);
 		mAddVisitButton.setText(getString(R.string.new_fail_visit));
 		mAddVisitButton.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_menu_btn_add), null, null);

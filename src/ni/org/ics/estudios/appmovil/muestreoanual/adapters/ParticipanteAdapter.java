@@ -660,7 +660,11 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
         //menores de 6 meses
         if (mParticipante.getEdadMeses() < 6) {
             if (mParticipante.getProcesos().getConmx().matches("No")) {
-                labelHeader = labelHeader + "<font color='red'>Tomar 2cc en tubo Rojo<br /></font>";
+                if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+                    labelHeader = labelHeader + "<font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font>";
+                } else {
+                    labelHeader = labelHeader + "<font color='red'>Tomar 2cc en tubo Rojo<br /></font>";
+                }
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
                 labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";

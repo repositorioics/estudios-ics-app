@@ -450,8 +450,8 @@ public class NuevaVisitaCasoUO1Activity extends FragmentActivity implements
                 }
                 //fecha limite para ingresar visita final
                 calLimiteFecVisita.setTime(participanteCasoUO1.getFechaIngreso());
-                calLimiteFecVisita.add(Calendar.DATE, 45);//45 dias después de la fecha de ingreso
-                if (dVis.after(calLimiteFecVisita.getTime())) {//si la fecha de visita es posterior a los 45 dias después de la fecha de inicio no permitir registro
+                calLimiteFecVisita.add(Calendar.DATE, 90);//90 dias después de la fecha de ingreso. Dr. Plaza, 21/03/2022
+                if (dVis.after(calLimiteFecVisita.getTime())) {//si la fecha de visita es posterior a los 90 dias después de la fecha de inicio no permitir registro
                     Toast.makeText(this, this.getString(R.string.wrong_visit_end_date_OU1), Toast.LENGTH_LONG).show();
                     procesarVisita = false;
                 }

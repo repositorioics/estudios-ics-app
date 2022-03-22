@@ -43,7 +43,7 @@
 	<string name="duplicateDate">Fecha ya está registrada</string>
     <string name="duplicateVisit">Visita ya está registrada</string>
     <string name="wrong_fecha_visita2">Fecha de visita es posterior a 12 días después de la fecha de inicio</string>
-    <string name="wrong_fecha_visita3">Fecha de visita es posterior a 60 días después de la fecha de inicio</string>
+    <string name="wrong_fecha_visita3">Fecha de visita es posterior a 90 días después de la fecha de inicio</string>
 	<string name="wrong_fecha_visita_covid">Fecha de visita es posterior a 33 días después de la fecha de inicio</string>
 	
 	<string name="sint">Sintomas</string>

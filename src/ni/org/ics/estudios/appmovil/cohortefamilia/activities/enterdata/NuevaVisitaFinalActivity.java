@@ -519,8 +519,8 @@ public class NuevaVisitaFinalActivity extends FragmentActivity implements
             Date dVis = mDateFormatLim.parse(fechaVisita);
             Calendar calLimiteFecVisita = Calendar.getInstance();
             calLimiteFecVisita.setTime(participanteChfCaso.getCodigoCaso().getFechaInicio());
-            calLimiteFecVisita.add(Calendar.DATE,60);//60 dias después de la fecha de ingreso
-            if (dVis.after(calLimiteFecVisita.getTime())){//si la fecha de visita es posterior a los 60 dias después de la fecha de inicio no permitir registro
+            calLimiteFecVisita.add(Calendar.DATE,90);//90 dias después de la fecha de ingreso. Dr. Plaza, 21/03/2022
+            if (dVis.after(calLimiteFecVisita.getTime())){//si la fecha de visita es posterior a los 90 dias después de la fecha de inicio no permitir registro
                 Toast.makeText(this,this.getString(R.string.wrong_fecha_visita3),Toast.LENGTH_LONG).show();
                 procesarVisita = false;
             }

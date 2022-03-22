@@ -304,7 +304,8 @@ public class LoginActivity extends Activity {
 				List<Authority> uroles = Arrays.asList(userRolesFromServer.getBody());
                 urlRequest = url + "/movil/permisos/{mUser}";
                 ResponseEntity<UserPermissions> permisosFromServer = restTemplate.exchange(urlRequest, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), UserPermissions.class, mUser);
-                if(!chkWipe.isChecked() || uroles.toString().contains("ROLE_SUPER")) {
+
+                if(!chkWipe.isChecked() || uroles.toString().contains("ROLE_SUPER") || uroles.toString().contains("ROLE_MOVIL")) {
                     successLogin = true;
                     EstudiosAdapter ca = new EstudiosAdapter(getApplicationContext(), mPassword, true, chkWipe.isChecked());
                     ca.open();

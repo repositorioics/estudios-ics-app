@@ -530,11 +530,12 @@ public class NuevaMuestraTuboPbmcActivity extends FragmentActivity implements
             muestra.setEstado('0');
             muestra.setPasive('0');
             estudiosAdapter.crearMuestras(muestra);
+            /*//Ya no aplica en MA2022
             if (tomaMxSn.equalsIgnoreCase(Constants.YES)) {
                 ParticipanteProcesos procesos = participanteCHF.getParticipante().getProcesos();
                 procesos.setPbmc(Constants.NO);
                 estudiosAdapter.actualizarParticipanteProcesos(procesos);
-            }
+            }*/
             estudiosAdapter.close();
             Intent i;
             Bundle arguments = new Bundle();

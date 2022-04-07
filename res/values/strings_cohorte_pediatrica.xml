@@ -106,6 +106,7 @@
     <string name="quitar_part">Quitar de esta vivienda</string>
 
     <string name="e_error">Esta indicado no entrar información. Es posible que ya se hizo el registro por favor verifique.</string>
+    <string name="pend_cons_error">Esta indicado no entrar información. Participante tiene consentimientos pendientes, por favor verifique.</string>
 
     <string name="verify_ec">Agregar encuesta de casa a este participante?</string>
     <string name="verify_ep">Agregar encuesta de participante?</string>

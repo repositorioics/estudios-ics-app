@@ -817,7 +817,13 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                             if (mParticipante.getProcesos().getConvalesciente().matches("Na")) {
                                 Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.convless14), Toast.LENGTH_LONG);
                                 toast.show();
-                            } else {
+                            } else if ((mParticipante.getProcesos().getConsDeng() != null && mParticipante.getProcesos().getConsDeng().matches("Si")) ||
+                                    (mParticipante.getProcesos().getConsFlu() != null && mParticipante.getProcesos().getConsFlu().matches("Si")) ||
+                                    (mParticipante.getProcesos().getConsChf() != null && mParticipante.getProcesos().getConsChf().matches("Si"))) {
+                                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.pend_cons_error), Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                            else {
                                 i = new Intent(getApplicationContext(),
                                         NewSampleActivity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

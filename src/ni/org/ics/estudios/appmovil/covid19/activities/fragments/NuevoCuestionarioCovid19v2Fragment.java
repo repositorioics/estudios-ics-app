@@ -6521,6 +6521,7 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                     spinPadeceOtraCondicion.setBackgroundColor(Color.WHITE);
                     textQueOtraCondicion.setVisibility(View.GONE);
                     inputQueOtraCondicion.setVisibility(View.GONE);
+                    queOtraCondicion = null;
                 }
             }
             @Override

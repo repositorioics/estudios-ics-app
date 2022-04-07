@@ -444,7 +444,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaDengue()), !visible);
                 //notificarCambios = false;
-                if (visible && edadMeses<168){
+                if (visible){
                     changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
                     //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getAsiste()), visible);
@@ -532,6 +532,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 //notificarCambios = false;
                 //Sólo se preguntará a los retirados
                 changeStatus(mWizardModel.findByKey(labels.getTiempoResidencia()), (visible));
+                changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible));
                 //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), visible);
                 //notificarCambios = false;
@@ -543,6 +544,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 esElegible = visible;
                 onPageTreeChanged();
             }
+            //no excluir por tipo de vivienda o tiempo de residencia. Dr. Ojeda, 31/03/2022
+            /*
             if(page.getTitle().equals(labels.getVivienda())) {
                 visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Propia"));
                 Page pagetmp = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTiempoResidencia());
@@ -556,7 +559,7 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                         toast.show();
                         resetForm(93);
                     }
-                    esElegible = visible && tiempoValido;
+                    //esElegible = visible && tiempoValido;
                     changeStatus(mWizardModel.findByKey(labels.getAceptaAtenderCentro()), (visible && tiempoValido));
                     //notificarCambios = false;
                     changeStatus(mWizardModel.findByKey(labels.getEnfCronSN()), (visible && tiempoValido));
@@ -619,6 +622,8 @@ public class NewReconDengue2018Activity extends FragmentActivity implements
                 }
                 onPageTreeChanged();
             }
+            */
+
             if (page.getTitle().equals(labels.getAceptaAtenderCentro())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 if (!visible) {

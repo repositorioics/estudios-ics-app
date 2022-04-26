@@ -156,6 +156,49 @@ public class MuestraHelper {
         stat.bindString(13, String.valueOf(muestra.getEstado()));
     }
 
+    public static void fillMuestraMAStatement(SQLiteStatement stat, ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra muestra){
+        bindInteger(stat,1, muestra.getmId().getCodigo());
+        bindDate(stat,2, muestra.getmId().getFechaMuestra());
+        bindInteger(stat,3, muestra.getFiebreM());
+        bindInteger(stat,4, muestra.getConsulta());
+        bindInteger(stat,5, muestra.getTuboBHC());
+        bindInteger(stat,6, muestra.getTuboRojo());
+        bindInteger(stat,7, muestra.getTuboLeu());
+        bindInteger(stat,8, muestra.getPinchazos());
+        bindInteger(stat,9, muestra.getBhc_razonNo());
+        bindInteger(stat,10, muestra.getRojo_razonNo());
+        bindInteger(stat,11, muestra.getPbmc_razonNo());
+        bindString(stat,12, muestra.getBhc_otraRazonNo());
+        bindString(stat,13, muestra.getRojo_otraRazonNo());
+        bindString(stat,14, muestra.getPbmc_otraRazonNo());
+        bindString(stat,15, muestra.getHoraBHC());
+        bindString(stat,16, muestra.getHoraPBMC());
+        bindString(stat,17, muestra.getHoraInicioPax());
+        bindString(stat,18, muestra.getHoraFinPax());
+        bindString(stat,19, muestra.getCodPax());
+        bindString(stat,20, muestra.getTerreno());
+        bindInteger(stat,21, muestra.getOtrorecurso1());
+        bindInteger(stat,22, muestra.getOtrorecurso2());
+        bindString(stat,23, muestra.getEstudiosAct());
+        bindString(stat,24, muestra.getHd_sn());
+        bindString(stat,25, muestra.getHdPorqueNo());
+        bindInteger(stat,26, muestra.getTuboPax());
+        bindInteger(stat,27, muestra.getMovilInfo().getIdInstancia());
+        bindString(stat,28, muestra.getMovilInfo().getInstancePath());
+        bindString(stat,29, muestra.getMovilInfo().getEstado());
+        bindString(stat,30, muestra.getMovilInfo().getUltimoCambio());
+        bindString(stat,31, muestra.getMovilInfo().getStart());
+        bindString(stat,32, muestra.getMovilInfo().getEnd());
+        bindString(stat,33, muestra.getMovilInfo().getDeviceid());
+        bindString(stat,34, muestra.getMovilInfo().getSimserial());
+        bindString(stat,35, muestra.getMovilInfo().getPhonenumber());
+        bindDate(stat,36, muestra.getMovilInfo().getToday());
+        bindString(stat,37, muestra.getMovilInfo().getUsername());
+        stat.bindLong(38, (muestra.getMovilInfo().getEliminado()?1:0));
+        bindInteger(stat,39, muestra.getMovilInfo().getRecurso1());
+        bindInteger(stat,40, muestra.getMovilInfo().getRecurso2());
+    }
+
     public static void bindString(SQLiteStatement stat, int index, String value){
         if (value == null) {
             stat.bindNull(index);

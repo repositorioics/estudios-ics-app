@@ -5757,6 +5757,22 @@ public class EstudiosAdapter {
         return mMuestras;
     }
 
+	public List<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra> getMuestrasMA(String filtro, String orden) throws SQLException {
+		List<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra> mMuestras = new ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra>();
+		Cursor cursor = crearCursor(ConstantsDB.MUESTRA_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mMuestras.clear();
+			do{
+				ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra mMuestra = null;
+				mMuestra = crearMuestra(cursor);
+				mMuestras.add(mMuestra);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mMuestras;
+	}
+
     public ArrayList<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra> getListaMuestrasHoy() throws SQLException {
         Cursor muestras = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -9005,5 +9021,31 @@ public class EstudiosAdapter {
 		return true;
 	}
 
-
+	public boolean bulkInsertMuestrasMABySql(List<ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra> list) throws Exception {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(ConstantsDB.INSERT_MUESTRA_TABLE);
+			mDb.beginTransaction();
+			for (ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra remoteAppInfo : list) {
+				MuestraHelper.fillMuestraMAStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
 }

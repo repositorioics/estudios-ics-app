@@ -13,6 +13,7 @@ import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.ParticipanteCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCovid19;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeroprevalencia;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
@@ -54,6 +55,7 @@ public class DownloadBaseTask extends DownloadTask {
     private List<MessageResource> mCatalogos = null;
     private List<ContactoParticipante> mContactosParticipante = null;
     private List<ParticipanteCovid19> mParticipantesCovid = null;
+    private List<Muestra> mMuestras = null;
 
     public static final String CATALOGOS = "1";
     public static final String USUARIOS = "2";
@@ -69,6 +71,7 @@ public class DownloadBaseTask extends DownloadTask {
     public static final String PARTICIPANTE_SA = "12";
     public static final String CONTACTOS_PART = "13";
     public static final String PARTICIPANTE_CV = "14";
+    public static final String MUESTRAS_MA = "15";
     private static final String TOTAL_TASK_GENERALES = "15";
 	
 	private String error = null;
@@ -84,6 +87,7 @@ public class DownloadBaseTask extends DownloadTask {
 		password = values[2];
 		
 		try {
+            error = descargarMuestrasMA();
             error = descargarCatalogos();
             error = descargarUsuarios();
 			error = descargarDatosGenerales();
@@ -91,6 +95,7 @@ public class DownloadBaseTask extends DownloadTask {
             error = descargarDatosSeroprevalencia();
             error = descargarContactosParticipantes();
             error = descargarParticipantesCovid();
+
 			if (error!=null) return error;
 		} catch (Exception e) {
 			// Regresa error al descargar
@@ -233,6 +238,10 @@ public class DownloadBaseTask extends DownloadTask {
             if (mParticipantesCovid != null){
                 publishProgress("Insertando contactos participantes", PARTICIPANTE_CV, TOTAL_TASK_GENERALES);
                 estudioAdapter.bulkInsertCovidBySql(Covid19DBConstants.PARTICIPANTE_COVID_TABLE, mParticipantesCovid);
+            }
+            if (mMuestras != null){
+                publishProgress("Insertando muestras anuales", MUESTRAS_MA, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertMuestrasMABySql(mMuestras);
             }
         } catch (Exception e) {
 			// Regresa error al insertar
@@ -556,6 +565,40 @@ public class DownloadBaseTask extends DownloadTask {
                     ParticipanteCovid19[].class);
             // convert the array to a list and return it
             mParticipantesCovid = Arrays.asList(responseEntityCovid.getBody());
+            responseEntityCovid = null;
+            return null;
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getLocalizedMessage();
+        }
+    }
+
+    // url, username, password
+    protected String descargarMuestrasMA() throws Exception {
+        try {
+            // The URL for making the GET request
+            String urlRequest;
+            // Set the Accept header for "application/json"
+            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+            HttpHeaders requestHeaders = new HttpHeaders();
+            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+            requestHeaders.setAccept(acceptableMediaTypes);
+            requestHeaders.setAuthorization(authHeader);
+            // Populate the headers in an HttpEntity object to use for the request
+            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+
+            //Descargar muestras anuales actuales
+            urlRequest = url + "/movil/muestrasMA/";
+            publishProgress("Solicitando muestras MA",MUESTRAS_MA,TOTAL_TASK_GENERALES);
+            // Perform the HTTP GET request
+            ResponseEntity<Muestra[]> responseEntityCovid = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    Muestra[].class);
+            // convert the array to a list and return it
+            mMuestras = Arrays.asList(responseEntityCovid.getBody());
             responseEntityCovid = null;
             return null;
         } catch (Exception e) {

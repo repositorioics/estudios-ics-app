@@ -25,10 +25,12 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.covid19.VisitaFinalCasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.ParticipanteProcesos;
 import ni.org.ics.estudios.appmovil.multiselector.gui.MultiSpinner;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 import org.joda.time.DateMidnight;
 
 import java.text.ParseException;
@@ -854,32 +856,35 @@ public class NuevaVisitaFinalCovid19Fragment extends Fragment {
 			try {
 				estudiosAdapter.open();
 				estudiosAdapter.crearVisitaFinalCasoCovid19(vsc);
-				//vamos a activar los procesos de toma de MA
-				MovilInfo movilInfo = new MovilInfo();
-				movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
-				movilInfo.setDeviceid(infoMovil.getDeviceId());
-				movilInfo.setUsername(username);
-				movilInfo.setToday(new Date());
-				ParticipanteProcesos procesos = mParticipanteCaso.getParticipante().getProcesos();
-				procesos.setMovilInfo(movilInfo);
+				List<Muestra> muestrasMA = estudiosAdapter.getMuestrasMA(ConstantsDB.CODIGO + "=" + mParticipanteCaso.getParticipante().getCodigo() +" and ("+ConstantsDB.BHC + "=1 or "+ConstantsDB.ROJO + "=1 or "+ConstantsDB.LEU + "=1)" ,null);
+				if (muestrasMA.size() <= 0) {
+					//vamos a activar los procesos de toma de MA
+					MovilInfo movilInfo = new MovilInfo();
+					movilInfo.setEstado(Constants.STATUS_NOT_SUBMITTED);
+					movilInfo.setDeviceid(infoMovil.getDeviceId());
+					movilInfo.setUsername(username);
+					movilInfo.setToday(new Date());
+					ParticipanteProcesos procesos = mParticipanteCaso.getParticipante().getProcesos();
+					procesos.setMovilInfo(movilInfo);
 
-				String estudios = procesos.getEstudio().replaceAll("  Tcovid","");
-				int edadMeses = mParticipanteCaso.getParticipante().getEdadMeses();
-				if (edadMeses < 6) {
-					procesos.setConmxbhc(Constants.YES); //No habilitar
-				} else if (edadMeses < 24) {
-					//No habilitar para UO1 y UO1  CH Familia
-					if (estudios.equalsIgnoreCase("UO1") || estudios.equalsIgnoreCase("UO1  CH Familia")) {
-						procesos.setConmxbhc(Constants.YES);
-					} else {
+					String estudios = procesos.getEstudio().replaceAll("  Tcovid", "");
+					int edadMeses = mParticipanteCaso.getParticipante().getEdadMeses();
+					if (edadMeses < 6) {
+						procesos.setConmxbhc(Constants.YES); //No habilitar
+					} else if (edadMeses < 24) {
+						//No habilitar para UO1 y UO1  CH Familia
+						if (estudios.equalsIgnoreCase("UO1") || estudios.equalsIgnoreCase("UO1  CH Familia")) {
+							procesos.setConmxbhc(Constants.YES);
+						} else {
+							procesos.setConmxbhc(Constants.NO);
+						}
+					} else {//para el resto.. siempre habilitar
 						procesos.setConmxbhc(Constants.NO);
 					}
-				} else {//para el resto.. siempre habilitar
-					procesos.setConmxbhc(Constants.NO);
+					//rojo siempre habilitar
+					procesos.setConmx(Constants.NO);
+					estudiosAdapter.actualizarParticipanteProcesos(procesos);
 				}
-				//rojo siempre habilitar
-				procesos.setConmx(Constants.NO);
-				estudiosAdapter.actualizarParticipanteProcesos(procesos);
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
 				return "error";

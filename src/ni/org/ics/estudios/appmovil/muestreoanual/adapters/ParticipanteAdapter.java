@@ -89,11 +89,17 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                 if (procesos.getPosDengue() != null)
                     labelHeader = labelHeader + "<font color='red'>" + procesos.getPosDengue() + "</font><br />";
                 //if (participante.getCand().matches("Si")) labelHeader = labelHeader + "<font color='red'><b>Participante candidato a CHF</b></font><br />";
-                if (participante.getDatosUO1() != null && participante.getDatosUO1().isConvalesciente() && participante.getDatosUO1().getDiasConvalesciente() < 30) {
-                    labelHeader = labelHeader + "<font color='red'>Convaleciente UO1 con menos de 30 días. No tomar muestra. COMUNICAR AL SUPERVISOR</font><br />";
+                if (participante.getDatosUO1() != null && participante.getDatosUO1().isConvalesciente()) {
+                    if (participante.getDatosUO1().getDiasConvalesciente() < 30)
+                        labelHeader = labelHeader + "<font color='red'>Convaleciente UO1 con menos de 30 días. No tomar muestra. COMUNICAR AL SUPERVISOR</font><br />";
+                    else
+                        labelHeader = labelHeader + "<font color='red'>Convaleciente UO1 con 30 días o más. COMUNICAR AL SUPERVISOR</font><br />";
                 }
-                if (participante.getDatosUO1() != null && participante.getDatosUO1().isConvalescienteFlu() && participante.getDatosUO1().getDiasConvalesciente() < 30) {
-                    labelHeader = labelHeader + "<small><font color='red'>Convaleciente Flu con menos de 30 días. No tomar muestra. COMUNICAR AL SUPERVISOR</font></small><br />";
+                if (participante.getDatosUO1() != null && participante.getDatosUO1().isConvalescienteFlu()) {
+                    if (participante.getDatosUO1().getDiasConvalesciente() < 30)
+                        labelHeader = labelHeader + "<font color='red'>Convaleciente Flu con menos de 30 días. No tomar muestra. COMUNICAR AL SUPERVISOR</font><br />";
+                    else
+                        labelHeader = labelHeader + "<font color='red'>Convaleciente Flu con 30 días o más. COMUNICAR AL SUPERVISOR</font><br />";
                 }
                 if (participante.getDatosUO1() != null && participante.getDatosUO1().isVisitaExitosa() && participante.getDatosUO1().getDiasVacuna() < 30) {
                     if (participante.getDatosUO1().isVacunado()) {

@@ -98,7 +98,7 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
                 visitaFinalCaso = (VisitaFinalCaso) getIntent().getExtras().getSerializable(Constants.VISITA);
                 participanteCHF = visitaFinalCaso.getCodigoParticipanteCaso().getParticipante();
             }
-        	volumenMaximoPermitido = 8D;
+        	volumenMaximoPermitido = getVolumenMaximoPermitido();
         }else{
         	participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         	volumenMaximoPermitido = (Double) getIntent().getExtras().getSerializable(Constants.VOLUMEN);
@@ -192,9 +192,24 @@ public class NuevaMuestraTuboRojoActivity extends FragmentActivity implements
         vol.setRangeValidation(true, 0, volumenMaximoPermitido.intValue());
         BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoMx());
         pagetmp.setmCodePosicion(1);
-        pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.TR[I|F]$");
+        //Si es Uo1, permitir URI o URF
+        pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.[T|U]R[I|F]$");
         onPageTreeChanged();
         updateBottomBar();
+    }
+
+    private Double getVolumenMaximoPermitido() {
+        Double volumenMaximoPermitido = 0D;
+        int edadMeses = participanteCHF.getParticipante().getEdadMeses();
+        ///mayor o igual a 14
+        if (edadMeses>= 168) {
+            volumenMaximoPermitido = 13D;//permitir 1 ml de desviación
+        } else if (edadMeses >= 24) { //DE 2 AÑOS A menor de 14 AÑOS
+            volumenMaximoPermitido = 7D;//permitir 1 ml de desviación
+        } else { //menor de 2 AÑOS
+            volumenMaximoPermitido = 3D;//permitir 1 ml de desviación
+        }
+        return volumenMaximoPermitido;
     }
 
     @Override

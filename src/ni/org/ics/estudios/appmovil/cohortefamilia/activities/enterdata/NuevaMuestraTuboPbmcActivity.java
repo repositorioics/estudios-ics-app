@@ -97,7 +97,7 @@ public class NuevaMuestraTuboPbmcActivity extends FragmentActivity implements
                 participanteCHF = visitaFinalCaso.getCodigoParticipanteCaso().getParticipante();
             }
 
-        	volumenMaximoPermitido = 8D;
+        	volumenMaximoPermitido = getVolumenMaximoPermitido();
         }else{
         	participanteCHF = (ParticipanteCohorteFamilia) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         	volumenMaximoPermitido = (Double) getIntent().getExtras().getSerializable(Constants.VOLUMEN);
@@ -189,12 +189,25 @@ public class NuevaMuestraTuboPbmcActivity extends FragmentActivity implements
         vol.setRangeValidation(true, 0, volumenMaximoPermitido.intValue());
         BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoMx());
         pagetmp.setmCodePosicion(1);
-        pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.TP[I|F]$");
+        pagetmp.setPatternValidation(true, "^\\d{1,5}\\.\\d{2}\\.[T|U]P[I|F]$");
 
         onPageTreeChanged();
         updateBottomBar();
     }
 
+    private Double getVolumenMaximoPermitido() {
+        Double volumenMaximoPermitido = 0D;
+        int edadMeses = participanteCHF.getParticipante().getEdadMeses();
+        ///mayor o igual a 14
+        if (edadMeses>= 168) {
+            volumenMaximoPermitido = 7D;//permitir 1 ml de desviación
+        } else if (edadMeses >= 24) { //DE 2 AÑOS A menor de 14 AÑOS
+            volumenMaximoPermitido = 5D;//permitir 1 ml de desviación
+        } else { //menor de 2 AÑOS
+            volumenMaximoPermitido = 0D;//no tomar muestra
+        }
+        return volumenMaximoPermitido;
+    }
     @Override
     public AbstractWizardModel onGetModel() {
         return mWizardModel;

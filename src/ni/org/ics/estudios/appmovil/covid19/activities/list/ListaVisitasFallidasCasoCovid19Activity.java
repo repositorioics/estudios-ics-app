@@ -149,7 +149,7 @@ public class ListaVisitasFallidasCasoCovid19Activity extends AbstractAsyncListAc
 		}
 	}
 
-	@Override
+	/*@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
         visitaFallidaCasoCovid19 = (VisitaFallidaCasoCovid19) this.getListAdapter().getItem(position);
@@ -163,7 +163,7 @@ public class ListaVisitasFallidasCasoCovid19Activity extends AbstractAsyncListAc
         i.putExtras(arguments);
 		startActivity(i);
 		finish();
-	}
+	}*/
 	
 	@Override
 	public void onBackPressed (){

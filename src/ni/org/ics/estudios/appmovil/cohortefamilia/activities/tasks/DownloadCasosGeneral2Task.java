@@ -8,6 +8,7 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.ObsequioGeneral;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.MuestraSuperficie;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.FormularioContactoCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.VisitaFinalCaso;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MuestrasDBConstants;
@@ -36,13 +37,14 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
 	
 	protected static final String TAG = DownloadCasosGeneral2Task.class.getSimpleName();
 	private EstudiosAdapter estudioAdapter = null;
-	
+
+    private List<VisitaFinalCaso> mVisitaFinalCasos = null;
     private List<FormularioContactoCaso> mFormularioContactoCasos = null;
     private List<ObsequioGeneral> mObsequios = null;
     private List<MuestraSuperficie> mMuestrasSup = null;
-	
-    public static final String CONTACTOS_CASOS = "1";
-    public static final String NODATA_CASOS = "2";
+
+    public static final String VISITAS_FINALES = "1";
+    public static final String CONTACTOS_CASOS = "2";
     public static final String OBSEQUIOS = "3";
     public static final String MUESTRAS_SUP = "4";
 
@@ -73,10 +75,15 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
 		estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
 		estudioAdapter.open();
 		//Borrar los datos de la base de datos
+        estudioAdapter.borrarVisitaFinalCaso();
         estudioAdapter.borrarFormularioContactoCaso();
         estudioAdapter.borrarObsequiosGenerales();
         estudioAdapter.borrarMuestrasSuperficie();
 		try {
+            if (mVisitaFinalCasos != null){
+                publishProgress("Insertando visitas finales de los participantes de casas con casos en la base de datos...", VISITAS_FINALES, TOTAL_TASK_CASOS);
+                estudioAdapter.bulkInsertCasosChfBySql(CasosDBConstants.VISITAS_FINALES_CASOS_TABLE, mVisitaFinalCasos);
+            }
             if (mFormularioContactoCasos != null){
                 publishProgress("Insertando contactos de los participantes de casas con casos en la base de datos...", CONTACTOS_CASOS, TOTAL_TASK_CASOS);
                 estudioAdapter.bulkInsertCasosChfBySql(CasosDBConstants.CONTACTOS_CASOS_TABLE, mFormularioContactoCasos);
@@ -116,7 +123,17 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
             // Create a new RestTemplate instance
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-            
+
+            //Descargar visitas finales de casas con casos
+            urlRequest = url + "/movil/visitasfinalescasos/";
+            publishProgress("Solicitando visitas finales de los participantes de casas de casos", VISITAS_FINALES,TOTAL_TASK_CASOS);
+            // Perform the HTTP GET request
+            ResponseEntity<VisitaFinalCaso[]> responseEntityVisitasFinales = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    VisitaFinalCaso[].class);
+            // convert the array to a list and return it
+            mVisitaFinalCasos = Arrays.asList(responseEntityVisitasFinales.getBody());
+            responseEntityVisitasFinales = null;
+
             //Descargar contactos de casas con casos
             urlRequest = url + "/movil/contactoscasos/";
             publishProgress("Solicitando contactos de los participantes de casas de casos",CONTACTOS_CASOS,TOTAL_TASK_CASOS);
@@ -138,12 +155,13 @@ public class DownloadCasosGeneral2Task extends DownloadTask {
 
             //Descargar muestras de superficie del los casos activos
             urlRequest = url + "/movil/muestrasSuperficie/";
-            publishProgress("Solicitando muesstras de superficie casos activos", MUESTRAS_SUP,TOTAL_TASK_CASOS);
+            publishProgress("Solicitando muestras de superficie casos activos", MUESTRAS_SUP,TOTAL_TASK_CASOS);
             // Perform the HTTP GET request
             ResponseEntity<MuestraSuperficie[]> responseEntityMxSup = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     MuestraSuperficie[].class);
             // convert the array to a list and return it
             mMuestrasSup = Arrays.asList(responseEntityMxSup.getBody());
+
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

@@ -352,32 +352,27 @@ public class NuevaVisitaVacunaUO1Activity extends FragmentActivity implements
     public void updateModel(Page page){
         try{
             boolean visible = false;
-            if (page.getTitle().equals(labels.getVisita())) {
-                visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("Inicial"));
-                changeStatus(mWizardModel.findByKey(labels.getVacuna()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getFechaVacuna()), false);
-                //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getTomaMxAntes()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getRazonNoTomaMx()), false);
-                //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getVisitaExitosa()), !visible);
-                changeStatus(mWizardModel.findByKey(labels.getRazonVisitaFallida()), false);
-                changeStatus(mWizardModel.findByKey(labels.getOtraRazon()), false);
-                //notificarCambios = false;
-                changeStatus(mWizardModel.findByKey(labels.getSegundaDosis()), !visible);
-                changeStatus(mWizardModel.findByKey(labels.getFechaSegundaDosis()), false);
-                changeStatus(mWizardModel.findByKey(labels.getReprogramarTomaMx()), false);
-                changeStatus(mWizardModel.findByKey(labels.getFechaReprogramacionTomaMx()), false);
-                //notificarCambios = false;
-
-                onPageTreeChanged();
-            }
+            //visita exitosa tambien en la visita inicial. Brenda 25/05/2022
             if (page.getTitle().equals(labels.getVisitaExitosa())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).equals(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getRazonVisitaFallida()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazon()), false);
-                changeStatus(mWizardModel.findByKey(labels.getSegundaDosis()), !visible);
+
+
+                Page tmpPage = mWizardModel.findByKey(labels.getVisita());
                 //notificarCambios = false;
+                boolean esInicial = (tmpPage.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && tmpPage.getData().getString(TextPage.SIMPLE_DATA_KEY).equals("Inicial"));
+                if (esInicial) {
+                    changeStatus(mWizardModel.findByKey(labels.getVacuna()), !visible);
+                    changeStatus(mWizardModel.findByKey(labels.getFechaVacuna()), false);
+                    changeStatus(mWizardModel.findByKey(labels.getTomaMxAntes()), !visible);
+                    changeStatus(mWizardModel.findByKey(labels.getRazonNoTomaMx()), false);
+                } else {
+                    changeStatus(mWizardModel.findByKey(labels.getSegundaDosis()), !visible);
+                    changeStatus(mWizardModel.findByKey(labels.getFechaSegundaDosis()), false);
+                    changeStatus(mWizardModel.findByKey(labels.getReprogramarTomaMx()), false);
+                    changeStatus(mWizardModel.findByKey(labels.getFechaReprogramacionTomaMx()), false);
+                }
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRazonVisitaFallida())) {

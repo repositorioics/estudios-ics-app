@@ -66,7 +66,7 @@ public class VisitaVacunaUO1Form extends AbstractWizardModel {
         Page segundaDosis = new SingleFixedChoicePage(this,labels.getSegundaDosis(),"", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page fechaSegundaDosis = new NewDatePage(this,labels.getFechaSegundaDosis(), "", Constants.WIZARD, false).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
 
-        Page reprogramar = new LabelPage(this,labels.getReprogramarTomaMx(), "", Constants.ROJO, true).setRequired(true);
+        Page reprogramar = new LabelPage(this,labels.getReprogramarTomaMx(), "", Constants.ROJO, false).setRequired(true);
         Page fechaReprogramacion = new NewDatePage(this,labels.getFechaReprogramacionTomaMx(), "", Constants.WIZARD, false).setRangeValidation(true, dmDesde, dmHasta.plusDays(35)).setRequired(true);
 
         return new PageList(visita, fechaVisita, visitaExitosa, visitaFallida, otraRazon, vacuna, fechaVacuna, tomaMx, razonNoTomaMx, segundaDosis, fechaSegundaDosis, reprogramar, fechaReprogramacion);

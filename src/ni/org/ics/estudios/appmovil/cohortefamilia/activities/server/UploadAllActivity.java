@@ -6,6 +6,7 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.cohortefamilia.activities.tasks.UploadAllTask;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.FileUtils;
 import android.app.Activity;
 import android.app.Dialog;
@@ -76,6 +77,8 @@ public class UploadAllActivity extends Activity implements UploadListener{
 		if(result!=null){
 			if (result.matches("Datos recibidos!")) {
 				setResult(RESULT_OK);
+			} else if (result.matches(Constants.NO_DATA)) {
+				setResult(Constants.RESULT_NO_DATA);
 			} else {
 				Intent intent = new Intent();
 				intent.putExtra("resultado", result);

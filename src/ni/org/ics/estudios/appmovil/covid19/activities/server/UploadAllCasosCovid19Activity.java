@@ -16,6 +16,7 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.covid19.task.UploadAllCasosCovid19Task;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
+import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.FileUtils;
 
 @SuppressWarnings("deprecation")
@@ -77,6 +78,8 @@ public class UploadAllCasosCovid19Activity extends Activity implements UploadLis
 		if(result!=null){
 			if (result.matches("Datos recibidos!")) {
 				setResult(RESULT_OK);
+			} else if (result.matches(Constants.NO_DATA)) {
+				setResult(Constants.RESULT_NO_DATA);
 			} else {
 				Intent intent = new Intent();
 				intent.putExtra("resultado", result);

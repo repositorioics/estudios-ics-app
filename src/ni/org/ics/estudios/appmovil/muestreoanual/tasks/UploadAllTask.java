@@ -431,6 +431,9 @@ public class UploadAllTask extends UploadTask {
                 e1.printStackTrace();
                 return e1.getLocalizedMessage();
             }
+            if (noHayDatosEnviar()) {
+                error = Constants.NO_DATA;
+            }
         } catch (Exception e1) {
 
             e1.printStackTrace();
@@ -439,6 +442,40 @@ public class UploadAllTask extends UploadTask {
             estudioAdapter.close();
         }
         return error;
+    }
+
+    private boolean noHayDatosEnviar(){
+        return mCasas.size() <= 0 &&
+                mParticipantes.size() <= 0 &&
+                mParticipantesProc.size() <= 0 &&
+                mEncuestasCasas.size() <= 0 &&
+                mEncuestasParticipantes.size() <= 0 &&
+                mLactanciasMaternas.size() <= 0 &&
+                mMuestras.size() <= 0 &&
+                mPyTs.size() <= 0 &&
+                mObsequios.size() <= 0 &&
+                mNewVacunas.size() <= 0 &&
+                mDatosPartoBB.size() <= 0 &&
+                mVisitasTerreno.size() <= 0 &&
+                mDatosVisitasTerreno.size() <= 0 &&
+                mRecepcionBHCs.size() <= 0 &&
+                mRecepcionSeros.size() <= 0 &&
+                mPinchazos.size() <= 0 &&
+                mRazonNoData.size() <= 0 &&
+                mTempRojoBhcs.size() <= 0 &&
+                mTempPbmcs.size() <= 0 &&
+                mEncuestaSatisfaccions.size() <= 0 &&
+                mTamizajes.size() <= 0 &&
+                mCartasConsent.size() <= 0 &&
+                mContactos.size() <= 0 &&
+                mParticipantesSa.size() <= 0 &&
+                mCambiosDom.size() <= 0 &&
+                mVisitasTerrenoP.size() <= 0 &&
+                mEnfermedades.size() <= 0 &&
+                mObsequiosGeneral.size() <= 0 &&
+                mParticipantesCovid19.size() <= 0 &&
+                mCuestionariosCovid19.size() <= 0 &&
+                mMuestrasAdiCovid19.size() <= 0;
     }
 
     private void getTamizajes(){

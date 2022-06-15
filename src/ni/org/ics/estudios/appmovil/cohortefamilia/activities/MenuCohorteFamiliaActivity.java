@@ -314,7 +314,7 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 					dialog.dismiss();
 				}
 			});
-			break;			
+			break;
 		default:
 			break;
 		}
@@ -404,6 +404,13 @@ public class MenuCohorteFamiliaActivity extends AbstractAsyncActivity {
 				Intent ie = new Intent(getApplicationContext(), DownloadCasosGeneral2Activity.class);
 				startActivityForResult(ie, UPDATE_EQUIPO_CASOS_2);
 				return;
+			}
+		}
+		if (resultCode == Constants.RESULT_NO_DATA) {
+			if (requestCode == UPDATE_SERVER){
+				builder.setTitle(getApplicationContext().getString(R.string.confirm));
+				builder.setIcon(R.drawable.ic_menu_info_details);
+				mensaje = getApplicationContext().getString(R.string.no_data_to_send);
 			}
 		}
 		builder.setMessage(mensaje)

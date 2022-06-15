@@ -20,6 +20,7 @@
     <string name="downloading">Descargar toda la info del servidor? Esta operacion descarta toda la informacion actual en el dispositivo</string>
     <string name="downloadingcat">Descargar todos los catalogos del servidor? Esta operacion modifica los catalogos actuales en el dispositivo</string>
     <string name="uploading">Enviar toda la info al servidor?</string>
+    <string name="no_data_to_send">No hay información a enviar!</string>
     <string name="desc_barcode">Escanear código de barras</string>
     <string name="parametro">Parámetro de búsqueda</string>
     <string name="method">Método:</string>

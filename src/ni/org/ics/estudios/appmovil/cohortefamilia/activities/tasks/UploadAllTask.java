@@ -137,13 +137,13 @@ public class UploadAllTask extends UploadTask {
 		password = values[2];
 
 		try {
-			publishProgress("Obteniendo registros de la base de datos", "1", "2");
-			estudioAdapter = new EstudiosAdapter(mContext, password, false,false);
-			estudioAdapter.open();
-			String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
-			mVisitasTerreno = estudioAdapter.getVisitasTerreno(filtro, null);
+            publishProgress("Obteniendo registros de la base de datos", "1", "2");
+            estudioAdapter = new EstudiosAdapter(mContext, password, false, false);
+            estudioAdapter.open();
+            String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
+            mVisitasTerreno = estudioAdapter.getVisitasTerreno(filtro, null);
             mPreTamizajes = estudioAdapter.getPreTamizajes(filtro, MainDBConstants.codigo);
-			mCasasCHF = estudioAdapter.getCasaCohorteFamilias(filtro, MainDBConstants.codigoCHF);
+            mCasasCHF = estudioAdapter.getCasaCohorteFamilias(filtro, MainDBConstants.codigoCHF);
             mTamizajes = estudioAdapter.getTamizajes(filtro, MainDBConstants.codigo);
             mParticipantes = estudioAdapter.getParticipantes(filtro, MainDBConstants.codigo);
             mParticipantesProc = estudioAdapter.getParticipantesProc(filtro, null);
@@ -179,7 +179,7 @@ public class UploadAllTask extends UploadTask {
             mCasaCohorteFamiliaCasos = estudioAdapter.getCasaCohorteFamiliaCasos(filtro, null);
             mParticipanteCohorteFamiliaCasos = estudioAdapter.getParticipanteCohorteFamiliaCasos(filtro, null);
             mVisitaSeguimientoCasos = estudioAdapter.getVisitaSeguimientoCasos(filtro, null);
-            
+
             mVisitaFallidaCasos = estudioAdapter.getVisitaFallidaCasos(filtro, null);
             mVisitaSeguimientoSintomasCasos = estudioAdapter.getVisitaSeguimientoCasosSintomas(filtro, null);
             mFormularioContactoCasos = estudioAdapter.getFormularioContactoCasos(filtro, null);
@@ -189,154 +189,159 @@ public class UploadAllTask extends UploadTask {
             mObsequiosGeneral = estudioAdapter.getObsequiosGenerales(filtro, null);
             mMuestrasSuperficie = estudioAdapter.getMuestrasSuperficie(filtro, null);
 
-			publishProgress("Datos completos!", "2", "2");
-			
-			//Enviando datos
-			actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITA);
-			error = cargarVisitas(url, username, password);
-			if (!error.matches("Datos recibidos!")){
-				actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITA);
-				return error;
-			}
-			actualizarBaseDatos(Constants.STATUS_SUBMITTED, PRETAMIZAJE);
-			error = cargarPretamizajes(url, username, password);
-			if (!error.matches("Datos recibidos!")){
-				actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PRETAMIZAJE);
-				return error;
-			}
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CASACHF);
-            error = cargarCasasCHF(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CASACHF);
-                return error;
+
+            publishProgress("Datos completos!", "2", "2");
+
+            if (noHayDatosEnviar()) {
+                error = Constants.NO_DATA;
             }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, TAMIZAJE);
-            error = cargarTamizajes(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TAMIZAJE);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE);
-            error = cargarParticipantes(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE_PRC);
-            error = cargarParticipantesProc(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE_PRC);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTECHF);
-            error = cargarParticipantesCHF(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTECHF);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CARTAS_CONSENT);
-            error = cargarCartasConsentimientos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CARTAS_CONSENT);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_CASACHF);
-            error = cargarEncuestasCasas(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_CASACHF);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, COCINA);
-            error = cargarCocinas(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, COCINA);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, COMEDOR);
-            error = cargarComedores(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, COMEDOR);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, SALA);
-            error = cargarSalas(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SALA);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, HABITACION);
-            error = cargarHabitaciones(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, HABITACION);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, BANIOS);
-            error = cargarBanios(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, BANIOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VENTANAS);
-            error = cargarVentanas(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VENTANAS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CUARTOS);
-            error = cargarCuartos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CUARTOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CAMAS);
-            error = cargarCamas(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CAMAS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PERSONAS_CAMA);
-            error = cargarPersonasCamas(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PERSONAS_CAMA);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_PARTICIPANTECHF);
-            error = cargarEncuestasParticipantes(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PARTICIPANTECHF);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_DATOSPBB);
-            error = cargarEncuestasDatosPartoBB(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_DATOSPBB);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_PESOTALLA);
-            error = cargarEncuestasPesoTalla(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PESOTALLA);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_LACTMAT);
-            error = cargarEncuestasLactancia(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_LACTMAT);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS);
-            error = cargarMuestras(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTESA);
-            error = cargarParticipantesSa(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTESA);
-                return error;
-            }
-            //MA2020
+            else {
+                //Enviando datos
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITA);
+                error = cargarVisitas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PRETAMIZAJE);
+                error = cargarPretamizajes(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PRETAMIZAJE);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CASACHF);
+                error = cargarCasasCHF(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CASACHF);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, TAMIZAJE);
+                error = cargarTamizajes(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TAMIZAJE);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE);
+                error = cargarParticipantes(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE_PRC);
+                error = cargarParticipantesProc(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE_PRC);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTECHF);
+                error = cargarParticipantesCHF(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTECHF);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CARTAS_CONSENT);
+                error = cargarCartasConsentimientos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CARTAS_CONSENT);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_CASACHF);
+                error = cargarEncuestasCasas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_CASACHF);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, COCINA);
+                error = cargarCocinas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, COCINA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, COMEDOR);
+                error = cargarComedores(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, COMEDOR);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, SALA);
+                error = cargarSalas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SALA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, HABITACION);
+                error = cargarHabitaciones(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, HABITACION);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, BANIOS);
+                error = cargarBanios(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, BANIOS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, VENTANAS);
+                error = cargarVentanas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VENTANAS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CUARTOS);
+                error = cargarCuartos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CUARTOS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CAMAS);
+                error = cargarCamas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CAMAS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PERSONAS_CAMA);
+                error = cargarPersonasCamas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PERSONAS_CAMA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_PARTICIPANTECHF);
+                error = cargarEncuestasParticipantes(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PARTICIPANTECHF);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_DATOSPBB);
+                error = cargarEncuestasDatosPartoBB(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_DATOSPBB);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_PESOTALLA);
+                error = cargarEncuestasPesoTalla(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PESOTALLA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_LACTMAT);
+                error = cargarEncuestasLactancia(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_LACTMAT);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS);
+                error = cargarMuestras(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTESA);
+                error = cargarParticipantesSa(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTESA);
+                    return error;
+                }
+                //MA2020
             /*actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_CASASA);
             error = cargarEncuestasCasaSa(url, username, password);
             if (!error.matches("Datos recibidos!")){
@@ -349,77 +354,78 @@ public class UploadAllTask extends UploadTask {
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PARTICIPANTESA);
                 return error;
             }*/
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, TELEFONOS);
-            error = cargarTelefonos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TELEFONOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, RECEPCION_MUESTRA);
-            error = cargarRecepcionMuestras(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCION_MUESTRA);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CASAS_CASOS);
-            error = cargarCasasCasos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CASAS_CASOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PART_CASOS);
-            error = cargarPartCasos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PART_CASOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_CASOS);
-            error = cargarVisitasCasos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_CASOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FALLIDAS_CASOS);
-            error = cargarVisitasFallidasCasos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_FALLIDAS_CASOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, SINTOMAS_CASOS);
-            error = cargarVisitasSeguimientoCasoSintomas(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINTOMAS_CASOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CONTACTOS_CASOS);
-            error = cargarFormularioContactoCasos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CONTACTOS_CASOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, SENSORES_CASOS);
-            error = cargarSensoresCasos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SENSORES_CASOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FINALES);
-            error = cargarVisitasFinalesCasos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_FINALES);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, OBSEQUIOS);
-            error = cargarObsequioGeneral(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, OBSEQUIOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS_SUP);
-            error = cargarMuestrasSuperficie(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS_SUP);
-                return error;
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, TELEFONOS);
+                error = cargarTelefonos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TELEFONOS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, RECEPCION_MUESTRA);
+                error = cargarRecepcionMuestras(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCION_MUESTRA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CASAS_CASOS);
+                error = cargarCasasCasos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CASAS_CASOS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PART_CASOS);
+                error = cargarPartCasos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PART_CASOS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_CASOS);
+                error = cargarVisitasCasos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_CASOS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FALLIDAS_CASOS);
+                error = cargarVisitasFallidasCasos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_FALLIDAS_CASOS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, SINTOMAS_CASOS);
+                error = cargarVisitasSeguimientoCasoSintomas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINTOMAS_CASOS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CONTACTOS_CASOS);
+                error = cargarFormularioContactoCasos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CONTACTOS_CASOS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, SENSORES_CASOS);
+                error = cargarSensoresCasos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SENSORES_CASOS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FINALES);
+                error = cargarVisitasFinalesCasos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_FINALES);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, OBSEQUIOS);
+                error = cargarObsequioGeneral(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, OBSEQUIOS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS_SUP);
+                error = cargarMuestrasSuperficie(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS_SUP);
+                    return error;
+                }
             }
 		} catch (Exception e1) {
 
@@ -430,7 +436,46 @@ public class UploadAllTask extends UploadTask {
         }
         return error;
 	}
-	
+
+	private boolean noHayDatosEnviar(){
+        return mVisitasTerreno.size() <= 0 &&
+                mPreTamizajes.size() <= 0 &&
+                mCasasCHF.size() <= 0 &&
+                mTamizajes.size() <= 0 &&
+                mParticipantes.size() <= 0 &&
+                mParticipantesProc.size() <= 0 &&
+                mParticipantesCHF.size() <= 0 &&
+                mCartasConsent.size() <= 0 &&
+                mEncuestasCasas.size() <= 0 &&
+                mCocinas.size() <= 0 &&
+                mComedores.size() <= 0 &&
+                mSalas.size() <= 0 &&
+                mHabitaciones.size() <= 0 &&
+                mBanios.size() <= 0 &&
+                mVentanas.size() <= 0 &&
+                mCuartos.size() <= 0 &&
+                mCamas.size() <= 0 &&
+                mPersonaCamas.size() <= 0 &&
+                mEncuestasParticipante.size() <= 0 &&
+                mEncuestasDatosPartoBB.size() <= 0 &&
+                mEncuestasPesoTalla.size() <= 0 &&
+                mEncuestasLacMat.size() <= 0 &&
+                mMuestras.size() <= 0 &&
+                mParticipantesSA.size() <= 0 &&
+                mTelefonos.size() <= 0 &&
+                mRecepcionMuestras.size() <= 0 &&
+                mCasaCohorteFamiliaCasos.size() <= 0 &&
+                mParticipanteCohorteFamiliaCasos.size() <= 0 &&
+                mVisitaSeguimientoCasos.size() <= 0 &&
+                mVisitaFallidaCasos.size() <= 0 &&
+                mVisitaSeguimientoSintomasCasos.size() <= 0 &&
+                mFormularioContactoCasos.size() <= 0 &&
+                mSensoresCaso.size() <= 0 &&
+                mVisitaFinalCasos.size() <= 0 &&
+                mObsequiosGeneral.size() <= 0 &&
+                mMuestrasSuperficie.size() <= 0;
+    }
+
 	private void actualizarBaseDatos(String estado, String opcion) {
 		int c;
         if(opcion.equalsIgnoreCase(VISITA)){

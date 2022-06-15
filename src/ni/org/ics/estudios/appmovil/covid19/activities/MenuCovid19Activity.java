@@ -286,6 +286,13 @@ public class MenuCovid19Activity extends AbstractAsyncActivity {
 				//new FetchDataCasasCasosTask().execute();
 			}
 		}
+		if (resultCode == Constants.RESULT_NO_DATA) {
+			if (requestCode == UPDATE_SERVER){
+				builder.setTitle(getApplicationContext().getString(R.string.confirm));
+				builder.setIcon(R.drawable.ic_menu_info_details);
+				mensaje = getApplicationContext().getString(R.string.no_data_to_send);
+			}
+		}
 		builder.setMessage(mensaje)
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {

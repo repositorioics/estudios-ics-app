@@ -63,32 +63,37 @@ public class UploadAllCasosUO1Task extends UploadTask {
 
             publishProgress("Datos completos!", "2", "2");
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_UO1);
-            error = cargarVisitas(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_UO1);
-                return error;
-            }
+            if (noHayDatosEnviar()) {
+                error = Constants.NO_DATA;
+            } else {
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_VAC_UO1);
-            error = cargarVisitasVacunas(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_VAC_UO1);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_UO1);
+                error = cargarVisitas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_UO1);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS_UO1);
-            error = cargarMuestras(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS_UO1);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_VAC_UO1);
+                error = cargarVisitasVacunas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_VAC_UO1);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, SINTOMAS_UO1);
-            error = cargarSintomas(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINTOMAS_UO1);
-                return error;
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS_UO1);
+                error = cargarMuestras(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS_UO1);
+                    return error;
+                }
+
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, SINTOMAS_UO1);
+                error = cargarSintomas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINTOMAS_UO1);
+                    return error;
+                }
             }
         } catch (Exception e1) {
 
@@ -98,6 +103,13 @@ public class UploadAllCasosUO1Task extends UploadTask {
             estudioAdapter.close();
         }
         return error;
+    }
+
+    private boolean noHayDatosEnviar() {
+        return mVisitasUO1.size() <= 0 &&
+                mVisitasVacunasUO1.size() <= 0 &&
+                mMuestras.size() <= 0 &&
+                mSintomas.size() <= 0;
     }
 
     private void actualizarBaseDatos(String estado, String opcion) {

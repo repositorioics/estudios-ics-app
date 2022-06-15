@@ -109,130 +109,135 @@ public class UploadAllCasosCovid19Task extends UploadTask {
 
             publishProgress("Datos completos!", "2", "2");
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, TAMIZAJE);
-            error = cargarTamizajes(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TAMIZAJE);
-                return error;
-            }
+            if (noHayDatosEnviar()) {
+                error = Constants.NO_DATA;
+            } else {
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE);
-            error = cargarParticipantes(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, TAMIZAJE);
+                error = cargarTamizajes(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TAMIZAJE);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CARTAS_CONSENT);
-            error = cargarCartasConsentimientos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CARTAS_CONSENT);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE);
+                error = cargarParticipantes(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE_PRC);
-            error = cargarParticipantesProc(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE_PRC);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CARTAS_CONSENT);
+                error = cargarCartasConsentimientos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CARTAS_CONSENT);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CONTACTO_PARTICIPANTE);
-            error = cargarContactos(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CONTACTO_PARTICIPANTE);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE_PRC);
+                error = cargarParticipantesProc(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE_PRC);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITA_TERRENO_PARTICIPANTE);
-            error = cargarVisitaTerrenoParticipante(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITA_TERRENO_PARTICIPANTE);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CONTACTO_PARTICIPANTE);
+                error = cargarContactos(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CONTACTO_PARTICIPANTE);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTES_COVID19);
-            error = cargarParticipanteCovid19(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTES_COVID19);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITA_TERRENO_PARTICIPANTE);
+                error = cargarVisitaTerrenoParticipante(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITA_TERRENO_PARTICIPANTE);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CASOS_COVID19);
-            error = cargarCasoCovid19(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CASOS_COVID19);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTES_COVID19);
+                error = cargarParticipanteCovid19(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTES_COVID19);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTES_CASOS_COVID19);
-            error = cargarParticipantesCasosCovid19(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTES_CASOS_COVID19);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CASOS_COVID19);
+                error = cargarCasoCovid19(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CASOS_COVID19);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_CASOS_COVID19);
-            error = cargarVisitasCasosCovid19(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_CASOS_COVID19);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTES_CASOS_COVID19);
+                error = cargarParticipantesCasosCovid19(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTES_CASOS_COVID19);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS);
-            error = cargarMuestras(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_CASOS_COVID19);
+                error = cargarVisitasCasosCovid19(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_CASOS_COVID19);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, SINT_VISITAS_CASOS_COVID19);
-            error = cargarSintomas(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINT_VISITAS_CASOS_COVID19);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS);
+                error = cargarMuestras(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FALL_CASOS_COVID19);
-            error = cargarVisitasFallidasCasosCovid19(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_FALL_CASOS_COVID19);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, SINT_VISITAS_CASOS_COVID19);
+                error = cargarSintomas(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINT_VISITAS_CASOS_COVID19);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CANDIDATOS_COVID19);
-            error = cargarCandidatosTransmisionCovid19(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CANDIDATOS_COVID19);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FALL_CASOS_COVID19);
+                error = cargarVisitasFallidasCasosCovid19(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_FALL_CASOS_COVID19);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, DATOS_AISLAMIENTO_COVID19);
-            error = cargarDatosAislamientoVisitaCasoCovid19(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, DATOS_AISLAMIENTO_COVID19);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CANDIDATOS_COVID19);
+                error = cargarCandidatosTransmisionCovid19(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CANDIDATOS_COVID19);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FINALES_COVID19);
-            error = cargarVisitasFinalesCasoCovid19(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_FINALES_COVID19);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, DATOS_AISLAMIENTO_COVID19);
+                error = cargarDatosAislamientoVisitaCasoCovid19(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, DATOS_AISLAMIENTO_COVID19);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, SINT_VISITAS_FINALES_COVID19);
-            error = cargarSintomasVisitasFinalesCovid19(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINT_VISITAS_FINALES_COVID19);
-                return error;
-            }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITAS_FINALES_COVID19);
+                error = cargarVisitasFinalesCasoCovid19(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITAS_FINALES_COVID19);
+                    return error;
+                }
 
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, OBSEQUIOS);
-            error = cargarObsequioGeneral(url, username, password);
-            if (!error.matches("Datos recibidos!")){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, OBSEQUIOS);
-                return error;
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, SINT_VISITAS_FINALES_COVID19);
+                error = cargarSintomasVisitasFinalesCovid19(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, SINT_VISITAS_FINALES_COVID19);
+                    return error;
+                }
+
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, OBSEQUIOS);
+                error = cargarObsequioGeneral(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, OBSEQUIOS);
+                    return error;
+                }
             }
         } catch (Exception e1) {
 
@@ -242,6 +247,27 @@ public class UploadAllCasosCovid19Task extends UploadTask {
             estudioAdapter.close();
         }
         return error;
+    }
+
+    private boolean noHayDatosEnviar() {
+        return mTamizajes.size() <= 0 &&
+                mCartasConsent.size() <= 0 &&
+                mParticipantes.size() <= 0 &&
+                mContactos.size() <= 0 &&
+                mVisitasTerrenoP.size() <= 0 &&
+                mParticipantesCovid.size() <= 0 &&
+                mCasos.size() <= 0 &&
+                mParticipantesCasos.size() <= 0 &&
+                mVisitas.size() <= 0 &&
+                mVisitasFall.size() <= 0 &&
+                mMuestras.size() <= 0 &&
+                mCandidatos.size() <= 0 &&
+                mSintomas.size() <= 0 &&
+                mAislamientos.size() <= 0 &&
+                mParticipantesProc.size() <= 0 &&
+                mVisitasFinales.size() <= 0 &&
+                mSintomasFinal.size() <= 0 &&
+                mObsequiosGeneral.size() <= 0;
     }
 
     private void actualizarBaseDatos(String estado, String opcion) throws Exception{

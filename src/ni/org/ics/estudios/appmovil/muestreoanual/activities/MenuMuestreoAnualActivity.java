@@ -453,6 +453,21 @@ public class MenuMuestreoAnualActivity extends ListActivity {
                 alert.show();
                 return;
             }
+        } else if (resultCode == Constants.RESULT_NO_DATA) {
+            if (requestCode == UPDATE_SERVER){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(getApplicationContext().getString(R.string.confirm));
+                builder.setIcon(android.R.drawable.ic_dialog_info);
+                builder.setMessage(getApplicationContext().getString(R.string.no_data_to_send))
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //do things
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
         }
         else{
             if (requestCode == UPDATE_EQUIPO||requestCode == UPDATE_SERVER){

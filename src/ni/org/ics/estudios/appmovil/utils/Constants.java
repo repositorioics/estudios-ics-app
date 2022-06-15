@@ -163,6 +163,10 @@ public class Constants {
     public static final String CANDIDATO_EDTA_CITRATO = "C3";
     public static final String MX_EDTA_CITRATO = "3";
 
+    //upload
+    public static final String NO_DATA = "-1";
+    public static final int RESULT_NO_DATA = 999;
+
 }
 
     

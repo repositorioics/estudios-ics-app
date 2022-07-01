@@ -101,16 +101,22 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                     else
                         labelHeader = labelHeader + "<font color='red'>Convaleciente Flu con 30 días o más. COMUNICAR AL SUPERVISOR</font><br />";
                 }
-                if (participante.getDatosUO1() != null && participante.getDatosUO1().isVisitaExitosa() && participante.getDatosUO1().getDiasVacuna() < 30) {
-                    if (participante.getDatosUO1().isVacunado()) {
-                        if (participante.getDatosUO1().isMxTomada())
-                            labelHeader = labelHeader + "<font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra. COMUNICAR AL SUPERVISOR</font><br />";
-                        else
-                            labelHeader = labelHeader + "<font color='red'>Vacuna UO1 menor 30 días sin muestra: " + participante.getDatosUO1().getRazonNoMx() + " . COMUNICAR AL SUPERVISOR</font><br />";
-                    } else {
-                        labelHeader = labelHeader + "<font color='red'>Visita Vac UO1 menor 30 días sin muestra: " + participante.getDatosUO1().getRazonNoMx() + " . COMUNICAR AL SUPERVISOR</font><br />";
+                if (participante.getDatosUO1() != null) {
+                    if (participante.getDatosUO1().isVisitaExitosa() && participante.getDatosUO1().getDiasVacuna() < 30) {
+                        if (participante.getDatosUO1().isVacunado()) {
+                            if (participante.getDatosUO1().isMxTomada())
+                                labelHeader = labelHeader + "<font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra. COMUNICAR AL SUPERVISOR</font><br />";
+                            else
+                                labelHeader = labelHeader + "<font color='red'>Vacuna UO1 menor 30 días sin muestra: " + participante.getDatosUO1().getRazonNoMx() + " . COMUNICAR AL SUPERVISOR</font><br />";
+                        } else {
+                            labelHeader = labelHeader + "<font color='red'>Visita Vac UO1 menor 30 días sin muestra: " + participante.getDatosUO1().getRazonNoMx() + " . COMUNICAR AL SUPERVISOR</font><br />";
+                        }
+                    }
+                    if (!participante.getDatosUO1().isMxFinalTomada() && participante.getDatosUO1().getDiasVacuna() >= 30) {
+                        labelHeader = labelHeader + "<font color='red'>Visita Vac UO1 mayor 30 días sin muestra final. COMUNICAR AL SUPERVISOR</font><br />";
                     }
                 }
+
                 if (procesos.getPosCovid() != null)
                     labelHeader = labelHeader + "<font color='red'>" + procesos.getPosCovid() + "</font><br />";
                 if (participante.getDatosCovid19() != null && participante.getDatosCovid19().isSeguimiento()) {

@@ -425,6 +425,7 @@ public class NuevoCuartoActivity extends FragmentActivity implements
 		
 		//Guarda el cuarto
 		estudiosAdapter.crearCuarto(c);
+		estudiosAdapter.close();
 		Bundle arguments = new Bundle();
 		Intent i;
 		if(fromCasos){

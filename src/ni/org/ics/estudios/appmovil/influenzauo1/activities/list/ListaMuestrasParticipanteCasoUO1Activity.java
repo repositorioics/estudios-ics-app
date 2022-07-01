@@ -286,7 +286,7 @@ public class ListaMuestrasParticipanteCasoUO1Activity extends AbstractAsyncListA
 				estudiosAdapter.open();
 				//Llenar el objeto de lista de esta View
 				mMuestras = estudiosAdapter.getMuestras(MuestrasDBConstants.participante + " = " + participanteCasoUO1.getParticipante().getCodigo()
-						+" and " + MainDBConstants.pasive + " ='0' and( " + MuestrasDBConstants.proposito + " ='" + Constants.CODIGO_PROPOSITO_UO1 + "' or " + MuestrasDBConstants.proposito + "='"+Constants.CODIGO_PROPOSITO_POS_FLU+"')"  +
+						+" and " + MainDBConstants.pasive + " ='0' and ( " + MuestrasDBConstants.proposito + " ='" + Constants.CODIGO_PROPOSITO_UO1 + "' or " + MuestrasDBConstants.proposito + "='"+Constants.CODIGO_PROPOSITO_POS_FLU+"')"  +
 								" and " + MainDBConstants.recordDate + "= " + fechaVisita.getTime(), MuestrasDBConstants.tipoMuestra);
 				mTiposMuestra = estudiosAdapter.getMessageResources(CatalogosDBConstants.catRoot + "='CHF_CAT_TIP_TUBO_MX'" + " or " + CatalogosDBConstants.catRoot + "='CHF_CAT_RAZON_NO_MX'", null);
 				estudiosAdapter.close();

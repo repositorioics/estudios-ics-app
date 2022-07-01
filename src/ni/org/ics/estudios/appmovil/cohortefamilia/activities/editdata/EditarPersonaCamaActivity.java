@@ -104,43 +104,6 @@ public class EditarPersonaCamaActivity extends FragmentActivity implements
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
-        //Abre la base de datos
-		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		estudiosAdapter.open();
-        if (pc != null) {
-        	Bundle dato = null;
-        	Page modifPage;
-	        if(tieneValor(pc.getEstaEnEstudio())){
-	        	modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getEstaEnEstudio());
-	        	MessageResource catEstaEnEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + pc.getEstaEnEstudio() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-	        	dato = new Bundle();
-	        	dato.putString(SIMPLE_DATA_KEY, catEstaEnEstudio.getSpanish());
-	        	modifPage.resetData(dato);
-	        }	
-	        if(tieneValor(pc.getSexo())){
-	        	modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getSexo());
-	        	MessageResource catSexo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + pc.getSexo() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SEXO'", null);
-		        dato = new Bundle();
-		        dato.putString(SIMPLE_DATA_KEY, catSexo.getSpanish());
-		        modifPage.resetData(dato);
-		        modifPage.setmVisible(true);
-	        }
-	        if(pc.getEdad()!= null){
-	        	modifPage = (NumberPage) mWizardModel.findByKey(labels.getEdad());
-	        	dato = new Bundle();
-	        	dato.putString(SIMPLE_DATA_KEY, pc.getEdad().toString());
-	        	modifPage.resetData(dato);
-	        	modifPage.setmVisible(true);
-	        }
-	        if(pc.getParticipante()!= null){
-	        	modifPage = (SelectParticipantPage) mWizardModel.findByKey(labels.getParticipante());
-	        	dato = new Bundle();
-	        	dato.putString(SIMPLE_DATA_KEY, pc.getParticipante().getCodigo().toString());
-	        	modifPage.resetData(dato);
-	        	modifPage.setmVisible(true);
-	        }
-        }
-        estudiosAdapter.close();
         mWizardModel.registerListener(this);
         Page pagePart = mWizardModel.findByKey(labels.getParticipante());
         pagePart.setCasaCHF(cama.getCuarto().getCasa().getCodigoCHF());
@@ -218,7 +181,48 @@ public class EditarPersonaCamaActivity extends FragmentActivity implements
             }
         });
         
-        onPageTreeChangedInitial(); 
+        onPageTreeChanged();
+        //Abre la base de datos
+        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+        estudiosAdapter.open();
+        if (pc != null) {
+            Bundle dato = null;
+            Page modifPage;
+            if(tieneValor(pc.getEstaEnEstudio())){
+                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getEstaEnEstudio());
+                MessageResource catEstaEnEstudio = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + pc.getEstaEnEstudio() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, catEstaEnEstudio.getSpanish());
+                modifPage.resetData(dato);
+                onPageTreeChanged();
+            }
+            if(tieneValor(pc.getSexo())){
+                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getSexo());
+                MessageResource catSexo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + pc.getSexo() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SEXO'", null);
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, catSexo.getSpanish());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+                onPageTreeChanged();
+            }
+            if(pc.getEdad()!= null){
+                modifPage = (NumberPage) mWizardModel.findByKey(labels.getEdad());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, pc.getEdad().toString());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+                onPageTreeChanged();
+            }
+            if(pc.getParticipante()!= null){
+                modifPage = (SelectParticipantPage) mWizardModel.findByKey(labels.getParticipante());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, pc.getParticipante().getCodigo().toString());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+                onPageTreeChanged();
+            }
+        }
+        estudiosAdapter.close();
     }
     
 	@Override

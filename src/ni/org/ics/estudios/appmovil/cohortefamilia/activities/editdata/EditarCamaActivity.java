@@ -89,20 +89,6 @@ public class EditarCamaActivity extends FragmentActivity implements
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
         //Abre la base de datos
-		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		estudiosAdapter.open();
-        if (cuarto != null) {
-        	Bundle dato = null;
-        	Page modifPage;
-	        if(cama.getDescCama()!= null){
-	        	modifPage = (TextPage) mWizardModel.findByKey(labels.getDescCama());
-	        	dato = new Bundle();
-	        	dato.putString(SIMPLE_DATA_KEY, cama.getDescCama());
-	        	modifPage.resetData(dato);
-	        }
-
-        }
-        estudiosAdapter.close();
         mWizardModel.registerListener(this);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -178,7 +164,18 @@ public class EditarCamaActivity extends FragmentActivity implements
             }
         });
         
-        onPageTreeChangedInitial(); 
+        onPageTreeChanged();
+        if (cuarto != null) {
+            Bundle dato = null;
+            Page modifPage;
+            if(cama.getDescCama()!= null){
+                modifPage = (TextPage) mWizardModel.findByKey(labels.getDescCama());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, cama.getDescCama());
+                modifPage.resetData(dato);
+                onPageTreeChanged();
+            }
+        }
     }
     
 	@Override

@@ -83,26 +83,10 @@ public class EditarCuartoActivity extends FragmentActivity implements
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
         //Abre la base de datos
-		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		estudiosAdapter.open();
-        if (cuarto != null) {
-        	Bundle dato = null;
-        	Page modifPage;
-	        if(cuarto.getCodigoHabitacion()!= null){
-	        	modifPage = (NumberPage) mWizardModel.findByKey(labels.getCodigoHabitacion());
-	        	dato = new Bundle();
-	        	dato.putString(SIMPLE_DATA_KEY, cuarto.getCodigoHabitacion());
-	        	modifPage.resetData(dato);
-	        }	
-	        if(cuarto.getCantidadCamas()!= null){
-	        	modifPage = (NumberPage) mWizardModel.findByKey(labels.getCantidadCamas());
-		        dato = new Bundle();
-		        dato.putString(SIMPLE_DATA_KEY, cuarto.getCantidadCamas().toString());
-		        modifPage.resetData(dato);
-		        modifPage.setmVisible(true);
-	        }
-        }
-        estudiosAdapter.close();
+		//estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+		//estudiosAdapter.open();
+
+        //estudiosAdapter.close();
         mWizardModel.registerListener(this);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -177,8 +161,26 @@ public class EditarCuartoActivity extends FragmentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
-        
-        onPageTreeChangedInitial(); 
+        onPageTreeChanged();
+        if (cuarto != null) {
+            Bundle dato = null;
+            Page modifPage;
+            if(cuarto.getCodigoHabitacion()!= null){
+                modifPage = (NumberPage) mWizardModel.findByKey(labels.getCodigoHabitacion());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, cuarto.getCodigoHabitacion());
+                modifPage.resetData(dato);
+                onPageTreeChanged();
+            }
+            if(cuarto.getCantidadCamas()!= null){
+                modifPage = (NumberPage) mWizardModel.findByKey(labels.getCantidadCamas());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, cuarto.getCantidadCamas().toString());
+                modifPage.resetData(dato);
+                //modifPage.setmVisible(true);
+                onPageTreeChanged();
+            }
+        }
     }
     
 	@Override
@@ -323,7 +325,7 @@ public class EditarCuartoActivity extends FragmentActivity implements
             if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")) {
             	NumberPage np = (NumberPage) page;
             	String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-        		if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Double.valueOf(valor) || np.getmLowerOrEqualsThan() < Double.valueOf(valor)))
+        		if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Integer.valueOf(valor) || np.getmLowerOrEqualsThan() < Integer.valueOf(valor)))
         				|| (np.ismValPattern() && !valor.matches(np.getmPattern()))){
         			cutOffPage = i;
         			break;

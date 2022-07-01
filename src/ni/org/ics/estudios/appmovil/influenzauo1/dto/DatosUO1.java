@@ -15,6 +15,7 @@ public class DatosUO1 implements Serializable {
     private boolean visitaExitosa; //visita exitosa vacuna
     //private Date fechaVisita;
     private Date fechaVacuna;
+    private boolean mxFinalTomada; //indica si ya tiene mx final de vacuna
 
     public boolean isConvalesciente() {
         return convalesciente;
@@ -78,6 +79,14 @@ public class DatosUO1 implements Serializable {
 
     public void setConvalescienteFlu(boolean convalescienteFlu) {
         this.convalescienteFlu = convalescienteFlu;
+    }
+
+    public boolean isMxFinalTomada() {
+        return mxFinalTomada;
+    }
+
+    public void setMxFinalTomada(boolean mxFinalTomada) {
+        this.mxFinalTomada = mxFinalTomada;
     }
 
     public long getDiasConvalesciente(){

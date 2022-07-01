@@ -1309,6 +1309,17 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     datosUO1.setMxTomada(ultimaVisita.getTomaMxAntes().equalsIgnoreCase(Constants.YESKEYSND));
                     datosUO1.setRazonNoMx(ultimaVisita.getRazonNoTomaMx());
                     datosUO1.setVisitaExitosa(ultimaVisita.getVisitaExitosa().equalsIgnoreCase(Constants.YESKEYSND));
+                } else {
+                    datosUO1.setFechaVacuna(ultimaVisita.getFechaVacuna());
+                    List<ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra> mMuestras = estudiosAdapter.getMuestras(MuestrasDBConstants.participante + " = " + mParticipante.getCodigo()
+                            +" and " + MainDBConstants.pasive + " ='0' and " + MuestrasDBConstants.proposito + " ='" + Constants.CODIGO_PROPOSITO_VC_UO1 + "'"  +
+                            " and "+ MainDBConstants.recordDate + " > " + ultimaVisita.getFechaVisita().getTime(), null);
+                    for (ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra muestra : mMuestras) {
+                        if (muestra.getCodigoMx().matches("(^\\d{1,5}\\.\\d{2}\\.V[P|R]F$)")) {
+                            datosUO1.setMxFinalTomada(true);
+                            break;
+                        }
+                    }
                 }
             }
             mParticipante.setDatosUO1(datosUO1);
@@ -1394,14 +1405,19 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 else
                     labelHeader = labelHeader + "<small><font color='red'>Convaleciente Flu con 30 días o más. COMUNICAR AL SUPERVISOR</font></small><br />";
             }
-            if (mParticipante.getDatosUO1()!=null &&  mParticipante.getDatosUO1().isVisitaExitosa() && mParticipante.getDatosUO1().getDiasVacuna() < 30){
-                if (mParticipante.getDatosUO1().isVacunado()) {
-                    if (mParticipante.getDatosUO1().isMxTomada())
-                        labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra. COMUNICAR AL SUPERVISOR</font></small><br />";
-                    else
-                        labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 menor 30 días sin muestra: "+mParticipante.getDatosUO1().getRazonNoMx()+" . COMUNICAR AL SUPERVISOR</font></small><br />";
-                } else {
-                    labelHeader = labelHeader + "<small><font color='red'>Visita Vac UO1 menor 30 días sin muestra: "+mParticipante.getDatosUO1().getRazonNoMx()+" . COMUNICAR AL SUPERVISOR</font></small><br />";
+            if (mParticipante.getDatosUO1()!=null){
+                if (mParticipante.getDatosUO1().isVisitaExitosa() && mParticipante.getDatosUO1().getDiasVacuna() < 30) {
+                    if (mParticipante.getDatosUO1().isVacunado()) {
+                        if (mParticipante.getDatosUO1().isMxTomada())
+                            labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 con menos de 30 días. No tomar muestra. COMUNICAR AL SUPERVISOR</font></small><br />";
+                        else
+                            labelHeader = labelHeader + "<small><font color='red'>Vacuna UO1 menor 30 días sin muestra: " + mParticipante.getDatosUO1().getRazonNoMx() + " . COMUNICAR AL SUPERVISOR</font></small><br />";
+                    } else {
+                        labelHeader = labelHeader + "<small><font color='red'>Visita Vac UO1 menor 30 días sin muestra: " + mParticipante.getDatosUO1().getRazonNoMx() + " . COMUNICAR AL SUPERVISOR</font></small><br />";
+                    }
+                }
+                if (!mParticipante.getDatosUO1().isMxFinalTomada() && mParticipante.getDatosUO1().getDiasVacuna() >= 30) {
+                    labelHeader = labelHeader + "<small><font color='red'>Visita Vac UO1 mayor 30 días sin muestra final. COMUNICAR AL SUPERVISOR</font></small><br />";
                 }
             }
 

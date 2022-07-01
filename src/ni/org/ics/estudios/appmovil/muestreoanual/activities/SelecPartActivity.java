@@ -18,6 +18,7 @@ import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.cohortefamilia.dto.DatosCHF;
 import ni.org.ics.estudios.appmovil.covid19.dto.DatosCovid19;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.ParticipanteCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.domain.covid19.CasoCovid19;
 import ni.org.ics.estudios.appmovil.domain.covid19.ParticipanteCasoCovid19;
@@ -289,6 +290,16 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 									datosUO1.setMxTomada(ultimaVisita.getTomaMxAntes().equalsIgnoreCase(Constants.YESKEYSND));
 									datosUO1.setRazonNoMx(ultimaVisita.getRazonNoTomaMx());
 									datosUO1.setVisitaExitosa(ultimaVisita.getVisitaExitosa().equalsIgnoreCase(Constants.YESKEYSND));
+								} else {
+									List<Muestra> mMuestras = estudiosAdapter.getMuestras(MuestrasDBConstants.participante + " = " + mParticipante.getCodigo()
+											+" and " + MainDBConstants.pasive + " ='0' and " + MuestrasDBConstants.proposito + " ='" + Constants.CODIGO_PROPOSITO_VC_UO1 + "'"  +
+											" and "+ MainDBConstants.recordDate + " > " + ultimaVisita.getFechaVisita().getTime(), null);
+									for (Muestra muestra : mMuestras) {
+										if (muestra.getCodigoMx().matches("(^\\d{1,5}\\.\\d{2}\\.V[P|R]F$)")) {
+											datosUO1.setMxFinalTomada(true);
+											break;
+										}
+									}
 								}
 							}
 							mParticipante.setDatosUO1(datosUO1);
@@ -564,8 +575,18 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 								datosUO1.setMxTomada(ultimaVisita.getTomaMxAntes().equalsIgnoreCase(Constants.YESKEYSND));
 								datosUO1.setRazonNoMx(ultimaVisita.getRazonNoTomaMx());
 								datosUO1.setVisitaExitosa(ultimaVisita.getVisitaExitosa().equalsIgnoreCase(Constants.YESKEYSND));
+							} else {
+								datosUO1.setFechaVacuna(ultimaVisita.getFechaVacuna());
+								List<Muestra> mMuestras = estudiosAdapter.getMuestras(MuestrasDBConstants.participante + " = " + p.getCodigo()
+										+" and " + MainDBConstants.pasive + " ='0' and " + MuestrasDBConstants.proposito + " ='" + Constants.CODIGO_PROPOSITO_VC_UO1 + "'"  +
+										" and "+ MainDBConstants.recordDate + " > " + ultimaVisita.getFechaVisita().getTime(), null);
+								for (Muestra muestra : mMuestras) {
+									if (muestra.getCodigoMx().matches("(^\\d{1,5}\\.\\d{2}\\.V[P|R]F$)")) {
+										datosUO1.setMxFinalTomada(true);
+										break;
+									}
+								}
 							}
-
 						}
 						mParticipantes.get(indice).setDatosUO1(datosUO1);
 					}  //procesos CEIRS

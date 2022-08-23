@@ -45,7 +45,12 @@ public class CasaAdapter extends ArrayAdapter<Casa> {
 			if (textView != null) {
 				textView.setText(p.getNombre1JefeFamilia() + " " +p.getApellido1JefeFamilia());
 			}
-			
+
+			textView = (TextView) v.findViewById(R.id.infoc_text);
+			if (textView != null) {
+				textView.setText(p.getDireccion());
+			}
+
 			ImageView imageView = (ImageView) v.findViewById(R.id.image);
 			if (imageView != null) {
 				imageView.setImageResource(R.drawable.proposed_house);

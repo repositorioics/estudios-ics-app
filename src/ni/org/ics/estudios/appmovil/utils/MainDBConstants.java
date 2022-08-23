@@ -28,7 +28,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 44;
+	public static final int DATABASE_VERSION = 45;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -36,7 +36,7 @@ public class MainDBConstants {
 	public static final String pasive = "pasive";
 	public static final String deviceId = "identificador_equipo";
 	public static final String estado = "estado";
-	
+
 	
 	//Tabla usuarios
 	public static final String USER_TABLE = "users";

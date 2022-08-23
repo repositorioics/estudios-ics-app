@@ -36,6 +36,10 @@ import ni.org.ics.estudios.appmovil.domain.seroprevalencia.ParticipanteSeropreva
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
+import ni.org.ics.estudios.appmovil.entomologia.constants.EntomologiaBConstants;
+import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioHogar;
+import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioHogarPoblacion;
+import ni.org.ics.estudios.appmovil.entomologia.helpers.EntomologiaHelper;
 import ni.org.ics.estudios.appmovil.helpers.*;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.*;
 import ni.org.ics.estudios.appmovil.helpers.covid19.*;
@@ -177,6 +181,10 @@ public class EstudiosAdapter {
 			//MA Adicional covid19 CHF
 			db.execSQL(Covid19DBConstants.CREATE_COVID_CUESTIONARIO_TABLE);
 			db.execSQL(Covid19DBConstants.CREATE_COVID_OTROS_POSITIVOS_TABLE);
+			//Entomologia 2022
+			db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_TABLE);
+			db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_POB_TABLE);
+
 		}
 
 		@Override
@@ -409,6 +417,11 @@ public class EstudiosAdapter {
 				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.aceptaParteF + " text");
 				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.motivoRechazoParteF + " text");
 				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.otroMotivoRechazoParteF + " text");
+			}
+			if (oldVersion==44) {
+				//Entomologia 2022
+				db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_TABLE);
+				db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_POB_TABLE);
 			}
 		}
 	}
@@ -3134,6 +3147,18 @@ public class EstudiosAdapter {
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
 		c = crearCursor(Covid19DBConstants.COVID_CUESTIONARIO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+
+		return false;
+	}
+
+	public Boolean verificarDataEnto() throws SQLException{
+		Cursor c = null;
+		c = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
+		c = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_POB_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
 
@@ -8064,6 +8089,96 @@ public class EstudiosAdapter {
 		return mOtrosPositivosCovids;
 	}
 
+	/*****INICIO ENTOMOLOGIA***/
+	//Crear nuevo CuestionarioHogar en la base de datos
+	public void crearCuestionarioHogar(CuestionarioHogar cuestionarioHogar) throws Exception {
+		ContentValues cv = EntomologiaHelper.crearCuestionarioHogarContentValues(cuestionarioHogar);
+		mDb.insertOrThrow(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_TABLE, null, cv);
+	}
+
+	//Editar CuestionarioHogar existente en la base de datos
+	public boolean editarCuestionarioHogar(CuestionarioHogar cuestionarioHogar) throws Exception{
+		ContentValues cv = EntomologiaHelper.crearCuestionarioHogarContentValues(cuestionarioHogar);
+		return mDb.update(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_TABLE , cv, EntomologiaBConstants.codigoEncuesta + "='"
+				+ cuestionarioHogar.getCodigoEncuesta() + "'", null) > 0;
+	}
+	//Limpiar la tabla de CuestionarioHogar de la base de datos
+	public boolean borrarCuestionarioHogar() {
+		return mDb.delete(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_TABLE, null, null) > 0;
+	}
+	//Obtener un CuestionarioHogar de la base de datos
+	public CuestionarioHogar getCuestionarioHogar(String filtro, String orden) throws SQLException {
+		CuestionarioHogar mCuestionarioHogar = null;
+		Cursor cursor = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_TABLE , filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mCuestionarioHogar=EntomologiaHelper.crearCuestionarioHogar(cursor);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mCuestionarioHogar;
+	}
+	//Obtener una lista de CuestionarioHogar de la base de datos
+	public List<CuestionarioHogar> getCuestionariosHogar(String filtro, String orden) throws SQLException {
+		List<CuestionarioHogar> mCuestionarioHogars = new ArrayList<CuestionarioHogar>();
+		Cursor cursor = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mCuestionarioHogars.clear();
+			do{
+				CuestionarioHogar mCuestionarioHogar = null;
+				mCuestionarioHogar=EntomologiaHelper.crearCuestionarioHogar(cursor);
+				mCuestionarioHogars.add(mCuestionarioHogar);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mCuestionarioHogars;
+	}
+
+	//Crear nuevo CuestionarioHogarPoblacion en la base de datos
+	public void crearCuestionarioHogarPoblacion(CuestionarioHogarPoblacion cuestionarioHogarPoblacion) throws Exception {
+		ContentValues cv = EntomologiaHelper.crearCuestionarioHogarPoblacionContentValues(cuestionarioHogarPoblacion);
+		mDb.insertOrThrow(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_POB_TABLE, null, cv);
+	}
+
+	//Editar CuestionarioHogarPoblacion existente en la base de datos
+	public boolean editarCuestionarioHogarPoblacion(CuestionarioHogarPoblacion cuestionarioHogarPoblacion) throws Exception{
+		ContentValues cv = EntomologiaHelper.crearCuestionarioHogarPoblacionContentValues(cuestionarioHogarPoblacion);
+		return mDb.update(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_POB_TABLE , cv, EntomologiaBConstants.codigoPoblacion + "='"
+				+ cuestionarioHogarPoblacion.getCodigoPoblacion() + "' ", null) > 0;
+	}
+	//Limpiar la tabla de CuestionarioHogarPoblacion de la base de datos
+	public boolean borrarCuestionarioHogarPoblacion() {
+		return mDb.delete(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_POB_TABLE, null, null) > 0;
+	}
+	//Obtener un CuestionarioHogarPoblacion de la base de datos
+	public CuestionarioHogarPoblacion getCuestionarioHogarPoblacion(String filtro, String orden) throws SQLException {
+		CuestionarioHogarPoblacion mCuestionarioHogarPoblacion = null;
+		Cursor cursor = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_POB_TABLE , filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mCuestionarioHogarPoblacion=EntomologiaHelper.crearCuestionarioHogarPoblacion(cursor);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mCuestionarioHogarPoblacion;
+	}
+	//Obtener una lista de CuestionarioHogarPoblacion de la base de datos
+	public List<CuestionarioHogarPoblacion> getCuestionariosHogarPoblacion(String filtro, String orden) throws SQLException {
+		List<CuestionarioHogarPoblacion> mCuestionarioHogarPoblacions = new ArrayList<CuestionarioHogarPoblacion>();
+		Cursor cursor = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_POB_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mCuestionarioHogarPoblacions.clear();
+			do{
+				CuestionarioHogarPoblacion mCuestionarioHogarPoblacion = null;
+				mCuestionarioHogarPoblacion=EntomologiaHelper.crearCuestionarioHogarPoblacion(cursor);
+				mCuestionarioHogarPoblacions.add(mCuestionarioHogarPoblacion);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mCuestionarioHogarPoblacions;
+	}
+
+	/*****FIN ENTOMOLOGIA****/
 	public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) throws Exception {
 		if (null == list || list.size() <= 0) {
 			return false;
@@ -9030,6 +9145,34 @@ public class EstudiosAdapter {
 			mDb.beginTransaction();
 			for (ni.org.ics.estudios.appmovil.domain.muestreoanual.Muestra remoteAppInfo : list) {
 				MuestraHelper.fillMuestraMAStatement(stat, remoteAppInfo);
+				long result = stat.executeInsert();
+				if (result < 0) return false;
+			}
+			mDb.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if (null != mDb) {
+					mDb.endTransaction();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	public boolean bulkInsertCuestionarioHogarBySql(List<CuestionarioHogar> list) throws Exception {
+		if (null == list || list.size() <= 0) {
+			return false;
+		}
+		try {
+			SQLiteStatement stat = mDb.compileStatement(EntomologiaBConstants.INSERT_ENTO_CUESTIONARIO_HOGAR_TABLE);
+			mDb.beginTransaction();
+			for (CuestionarioHogar remoteAppInfo : list) {
+				EntomologiaHelper.fillCuestionarioHogarStatement(stat, remoteAppInfo);
 				long result = stat.executeInsert();
 				if (result < 0) return false;
 			}

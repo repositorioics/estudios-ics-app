@@ -13,6 +13,7 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import ni.org.ics.estudios.appmovil.entomologia.activities.MenuEntomologiaActivity;
 import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.DatoAdapter;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 public class ReviewActivity extends ListActivity {
 	private Object mObjeto;
 	private String titulo;
+	private boolean esEntomologia;
 	private ArrayAdapter<Dato> mDatosAdapter;
 	private ArrayList<Dato> mDatos = new ArrayList<Dato>();
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -41,6 +43,7 @@ public class ReviewActivity extends ListActivity {
 		
 		titulo = getIntent().getExtras().getString(Constants.TITLE);
 		mObjeto = getIntent().getExtras().getSerializable(Constants.OBJECTO);
+		esEntomologia = getIntent().getExtras().getBoolean(Constants.MENU_ENTO, false);
 		
 		TextView titleView = (TextView) findViewById(R.id.title);
         titleView.setText(titulo);
@@ -108,8 +111,14 @@ public class ReviewActivity extends ListActivity {
 			finish();
 			return true;
 		case R.id.MENU_HOME:
-			Intent i = new Intent(getApplicationContext(),
-					MenuMuestreoAnualActivity.class);
+			Intent i = null;
+			if (!esEntomologia) {
+				i = new Intent(getApplicationContext(),
+						MenuMuestreoAnualActivity.class);
+			} else {
+				i = new Intent(getApplicationContext(),
+						MenuEntomologiaActivity.class);
+			}
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			finish();

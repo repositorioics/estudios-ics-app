@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="entomologia">Entomología</string>
+    <string name="cuestionario_hogar">Cuestioario Hogar</string>
+    <string name="agregar_cuestionario">Agregar Cuestionario</string>
+    <string name="listar_cuestionario">Cuestionarios hoy</string>
+    <string name="confirmar_agregar">¿Desea agregar cuestionario a esta casa?</string>
+    <string name="quienContesta">01. ¿Quién está contestando éste cuestionario?</string>
+    <string name="quienContestaOtro">01.1 Otro (Especificar)</string>
+    <string name="edadContest">02. Me podría decir ¿Qué edad tiene usted?</string>
+    <string name="escolaridadContesta">03. ¿Cuál es su último año aprobado?</string>
+    <string name="tiempoVivirBarrio">04. ¿Cuánto tiempo tienen de vivir en este barrio?</string>
+    <string name="cuantasPersonasViven">05.  ¿Cuántas personas viven en esta casa?</string>
+    <string name="edadMujeres">06. ¿Qué edad tienen las niñas y mujeres que viven en esta casa?</string>
+    <string name="edadHint">Me puede decir sus edades de menor a mayor</string>
+    <string name="edadHombres">07. ¿Qué edad tienen los niños y hombres que viven en esta casa?</string>
+
+    <string name="usaronMosquitero">08. De todas las personas que me mencionó, ¿Alguna de ellas usó mosquitero para dormir el día de ayer?</string>
+    <string name="quienesUsaronMosquitero">08.1 ¿Quiénes?</string>
+    <string name="usaronRepelente">09. De todas las personas que me mencionó, ¿Alguna de ellas usó repelente en su piel, para protegerse de los zancudos el día de ayer?</string>
+    <string name="quienesUsaronRepelente">09.1 ¿Quiénes?</string>
+
+    <string name="conoceLarvasEnto">10. ¿Conoce Usted las larvas o clavitos de los zancudos?</string>
+    <string name="alguienVisEliminarLarvas">11. ¿Alguien les ha visitado para enseñarles como buscar y eliminar las larvas o clavitos de los zancudos?</string>
+    <string name="quienVisEliminarLarvas">12. ¿Quién?</string>
+    <string name="quienVisEliminarLarvasOtro">12.1 Otro (Especificar)</string>
+    <string name="alguienDedicaElimLarvasCasa">13. ¿Alguien de esta casa dedica tiempo para buscar y eliminar criaderos de zancudos aquí en su casa?</string>
+    <string name="quienDedicaElimLarvasCasa">14. ¿Quién?</string>
+    <string name="tiempoElimanCridaros">15. ¿Cada cuánto tiempo buscan y eliminan criaderos de zancudos aquí en su casa?</string>
+    <string name="hayBastanteZancudos">16. ¿Hay bastante zancudos aquí en su casa?</string>
+    <string name="queFaltaCasaEvitarZancudos">17. ¿Qué hace falta en esta casa para evitar los criaderos de zancudos?</string>
+    <string name="queFaltaCasaEvitarZancudosOtros">17.1 Otro (Especificar)</string>
+    <string name="gastaronDineroProductos">18. El mes pasado, gastaron dinero en compra de productos para evitar los Zancudos?</string>
+    <string name="queProductosCompraron">19. ¿Qué productos compraron?</string>
+    <string name="queProductosCompraronOtros">19.1 Otro (Especificar)</string>
+    <string name="cuantoGastaron">20. ¿Cuánto gastaron?</string>
+    <string name="ultimaVisitaMinsaBTI">21. ¿Cuándo fue la última vez que el MINSA visitó su casa para aplicar BTI en sus recipientes con agua?</string>
+    <string name="ultimaVezMinsaFumigo">22. ¿Cuándo fue la última vez que el MINSA fumigó su casa?</string>
+    <string name="riesgoCasaDengue">23. ¿Qué tanto riesgo hay en su casa de enfermar por el virus del dengue?</string>
+    <string name="problemasAbastecimiento">24. ¿Hay problemas con el abastecimiento de agua en este barrio?</string>
+    <string name="cadaCuantoVaAgua">25. ¿Cada cuánto se les va el agua?</string>
+    <string name="cadaCuantoVaAguaOtro">25.1 Otro (Especificar)</string>
+    <string name="horasSinAguaDia">26. ¿Cuantas horas al día se les va?</string>
+    <string name="queHacenBasuraHogar">27. ¿Qué hacen con la basura del hogar?</string>
+    <string name="queHacenBasuraHogarOtro">27.1 Otro (Especificar)</string>
+    <string name="riesgoBarrioDengue">28. ¿Qué tanto riesgo hay en este barrio de enfermar por el virus del dengue?</string>
+    <string name="accionesCriaderosBarrio">29. ¿En los últimos tres meses, en este barrio han realizado acciones para eliminar criaderos de zancudos del barrio?</string>
+    <string name="queAcciones">30. ¿Qué acciones realizaron?</string>
+    <string name="queAccionesOtro">30.1 Otro (Especificar)</string>
+    <string name="alguienParticipo">31.	Alguien de la casa participó en esa actividad?</string>
+    <string name="quienParticipo">32 Quién?</string>
+    <string name="mayorCriaderoBarrio">33. ¿Cuál es el mayor criadero de Zancudos de este barrio?</string>
+
+    <string name="errorFormatoEdad">La edad <xliff:g id="codigo">%1$s</xliff:g> no tiene un formato correcto, favor verifique</string>
+    <string name="errorCuestExiste">La casa <xliff:g id="codigo">%1$s</xliff:g> ya tiene un cuestionario registrado. No se puede agregar uno nuevo</string>
+</resources>

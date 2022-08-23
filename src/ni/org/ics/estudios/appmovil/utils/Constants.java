@@ -83,7 +83,7 @@ public class Constants {
     public static final String VERSION_CC_CI_COVID = "1"; //COHORTE INFLUENZA. Cuando se agrega la parte D de Covid pasa a verson 1
     public static final String VERSION_CC_UO1 = "1"; //COHORTE UO1
     public static final String VERSION_CC_UO1_COVID = "1"; //COHORTE UO1 + consentimiento covid
-    public static final String VERSION_CC_TCOVID = "1"; //Transmisión Covid
+    public static final String VERSION_CC_TCOVID = "2"; //Transmisión Covid. 2 desde 4/Jul/2022
     public static final String VERSION_CC_CD_E = "1"; //COHORTE DENGUE PERMISO PARA OBTENER UNA MUESTRA DE SANGRE ADICIONAL
 
     public static final String PARTICIPANTE_SA = "participanteSA";
@@ -120,6 +120,7 @@ public class Constants {
     public static final String MENU_INFO = "menu_info";
     public static final String MENU_ZIKA = "menu_zika";
     public static final String MENU_UO1 = "menu_uo1";
+    public static final String MENU_ENTO = "menu_ento";
 
     //Providers
     public static final String AUTHORITY = "org.odk.collect.android.provider.odk.forms";
@@ -166,6 +167,9 @@ public class Constants {
     //upload
     public static final String NO_DATA = "-1";
     public static final int RESULT_NO_DATA = 999;
+    //
+    public static final String FEMENINO = "F";
+    public static final String MASCULINO = "M";
 
 }
 

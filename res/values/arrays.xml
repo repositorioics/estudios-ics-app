@@ -153,4 +153,12 @@
         <item>@string/gift</item>
     </string-array>
 
+    <string-array name="menu_entomologia">
+        <item>@string/agregar_cuestionario</item>
+        <item>@string/listar_cuestionario</item>
+        <item>@string/download</item>
+        <item>@string/upload</item>
+        <item>@string/exit</item>
+    </string-array>
+
 </resources>

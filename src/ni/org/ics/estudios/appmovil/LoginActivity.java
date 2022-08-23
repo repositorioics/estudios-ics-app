@@ -12,6 +12,7 @@ import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
+import ni.org.ics.estudios.appmovil.entomologia.activities.MenuEntomologiaActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
@@ -64,6 +65,7 @@ public class LoginActivity extends Activity {
 	private String mUser;
 	private String mPassword;
 	private Boolean successLogin;
+	private Boolean entomologia = false;
 
 	// UI references.
 	private EditText mUserView;
@@ -305,6 +307,7 @@ public class LoginActivity extends Activity {
                 urlRequest = url + "/movil/permisos/{mUser}";
                 ResponseEntity<UserPermissions> permisosFromServer = restTemplate.exchange(urlRequest, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), UserPermissions.class, mUser);
 
+                entomologia = uroles.toString().contains("ROLE_ENTO");
                 if(!chkWipe.isChecked() || uroles.toString().contains("ROLE_SUPER") || uroles.toString().contains("ROLE_MOVIL")) {
                     successLogin = true;
                     EstudiosAdapter ca = new EstudiosAdapter(getApplicationContext(), mPassword, true, chkWipe.isChecked());
@@ -345,8 +348,13 @@ public class LoginActivity extends Activity {
 				editor.putString(PreferencesActivity.KEY_SERVER_URL, url);
 				editor.commit();
 				finish();
-				Intent i = new Intent(getApplicationContext(),
+				Intent i = null;
+				if (!entomologia)
+					i = new Intent(getApplicationContext(),
 						MainActivity.class);
+				else
+					i = new Intent(getApplicationContext(),
+							MenuEntomologiaActivity.class);
 				startActivity(i);
 			}
 			else if(respuesta.contains("I/O error: failed to connect to")){
@@ -393,8 +401,14 @@ public class LoginActivity extends Activity {
 				editor.putString(PreferencesActivity.KEY_SERVER_URL, url);
 				editor.commit();
 				finish();
-				Intent i = new Intent(getApplicationContext(),
-						MainActivity.class);
+				Boolean entomologia = ca.buscarRol(usuarioActual.getUsername(), "ROLE_ENTO");
+				Intent i = null;
+				if (!entomologia)
+					i = new Intent(getApplicationContext(),
+							MainActivity.class);
+				else
+					i = new Intent(getApplicationContext(),
+							MenuEntomologiaActivity.class);
 				startActivity(i);
 			}
 			else{

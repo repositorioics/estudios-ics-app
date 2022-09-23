@@ -7,6 +7,7 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.tasks.UploadTask;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioHogar;
 import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioHogarPoblacion;
+import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioPuntoClave;
 import ni.org.ics.estudios.appmovil.listeners.UploadListener;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
@@ -34,11 +35,13 @@ public class UploadAllEntoTask extends UploadTask {
     protected UploadListener mStateListener;
     private List<CuestionarioHogar> mCuestHogar = new ArrayList<CuestionarioHogar>();
     private List<CuestionarioHogarPoblacion> mCuestHogarPob = new ArrayList<CuestionarioHogarPoblacion>();
+    private List<CuestionarioPuntoClave> mCuestPuntoClave = new ArrayList<CuestionarioPuntoClave>();
 
     public static final String ENTO_CUESTIONARIO_HOGAR = "1";
     public static final String ENTO_CUESTIONARIO_HOGAR_POB = "2";
+    public static final String ENTO_CUESTIONARIO_PUNTO_CLAVE = "3";
 
-    private static final String TOTAL_TASK_CASOS = "2";
+    private static final String TOTAL_TASK_CASOS = "3";
 
     @Override
     protected String doInBackground(String... values) {
@@ -52,6 +55,7 @@ public class UploadAllEntoTask extends UploadTask {
             String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
             mCuestHogar = estudioAdapter.getCuestionariosHogar(filtro, null);
             mCuestHogarPob = estudioAdapter.getCuestionariosHogarPoblacion(filtro, null);
+            mCuestPuntoClave = estudioAdapter.getCuestionariosPuntoClave(filtro, null);
 
             publishProgress("Datos completos!", "2", "2");
 
@@ -73,6 +77,13 @@ public class UploadAllEntoTask extends UploadTask {
                     return error;
                 }
 
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENTO_CUESTIONARIO_PUNTO_CLAVE);
+                error = cargarPuntosClaves(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENTO_CUESTIONARIO_PUNTO_CLAVE);
+                    return error;
+                }
+
             }
         } catch (Exception e1) {
 
@@ -86,7 +97,8 @@ public class UploadAllEntoTask extends UploadTask {
 
     private boolean noHayDatosEnviar() {
         return mCuestHogar.size() <= 0 &&
-                mCuestHogarPob.size() <= 0;
+                mCuestHogarPob.size() <= 0 &&
+                mCuestPuntoClave.size() <= 0;
     }
 
     private void actualizarBaseDatos(String estado, String opcion) throws Exception {
@@ -113,10 +125,21 @@ public class UploadAllEntoTask extends UploadTask {
                 }
             }
         }
+        if(opcion.equalsIgnoreCase(ENTO_CUESTIONARIO_PUNTO_CLAVE)){
+            c = mCuestPuntoClave.size();
+            if(c>0){
+                for (CuestionarioPuntoClave puntoClave : mCuestPuntoClave) {
+                    puntoClave.getMovilInfo().setEstado(estado);
+                    estudioAdapter.editarCuestionarioPuntoClave(puntoClave);
+                    publishProgress("Actualizando cuestionario punto clave en base de datos local", Integer.valueOf(mCuestPuntoClave.indexOf(puntoClave)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
     }
 
     /***************************************************/
-    /********************* Visitas Positivos ************************/
+    /********************* Cuestionario Hogar ************************/
     /***************************************************/
     // url, username, password
     protected String cargarCuestionarios(String url, String username,
@@ -152,7 +175,7 @@ public class UploadAllEntoTask extends UploadTask {
 
 
     /***************************************************/
-    /********************* Visitas Vacunas ************************/
+    /**************** Poblacion ************************/
     /***************************************************/
     // url, username, password
     protected String cargarPoblacion(String url, String username,
@@ -169,6 +192,41 @@ public class UploadAllEntoTask extends UploadTask {
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<CuestionarioHogarPoblacion[]> requestEntity =
                         new HttpEntity<CuestionarioHogarPoblacion[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /**************** Puntos Claves ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarPuntosClaves(String url, String username,
+                                     String password) throws Exception {
+        try {
+            if(mCuestPuntoClave.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando puntos claves!", ENTO_CUESTIONARIO_PUNTO_CLAVE, TOTAL_TASK_CASOS);
+                final String urlRequest = url + "/movil/cuestionariosPuntosClaves";
+                CuestionarioPuntoClave[] envio = mCuestPuntoClave.toArray(new CuestionarioPuntoClave[mCuestPuntoClave.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<CuestionarioPuntoClave[]> requestEntity =
+                        new HttpEntity<CuestionarioPuntoClave[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

@@ -59,6 +59,7 @@ public class ConsFluCEIRSForm extends AbstractWizardModel {
 
         Page visExit = new SingleFixedChoicePage(this,labels.getVisExit(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page visNoExit = new SingleFixedChoicePage(this,labels.getRazonVisNoExit(), "", Constants.WIZARD, false).setChoices(catVisNoExitosa).setRequired(true);
+        Page otraRazonVisitaNoExitosa = new TextPage(this,labels.getOtraRazonVisitaNoExitosa(), labels.getOtraRazonVisitaNoExitosaHint(), Constants.WIZARD, false).setRequired(true);
         Page dejoCarta = new SingleFixedChoicePage(this,labels.getDejoCarta(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page noDejoCarta = new LabelPage(this,labels.getNoDejoCarta(), "", Constants.ROJO, false).setRequired(false);
         Page personaDejoCarta = new TextPage(this,labels.getPersonaDejoCarta(), "", Constants.WIZARD, false).setRequired(true);
@@ -136,7 +137,7 @@ public class ConsFluCEIRSForm extends AbstractWizardModel {
 
         Page verifTutor = new MultipleFixedChoicePage(this,labels.getVerifTutor(), "", Constants.WIZARD, false).setChoices(catVerificaTutor).setRequired(true);
 
-        return new PageList(visExit, visNoExit, dejoCarta, noDejoCarta, personaDejoCarta, relFamPersonaDejoCarta, personaCasa, relacionFamPersonaCasa, otraRelacionPersonaCasa, telefonoPersonaCasa,
+        return new PageList(visExit, visNoExit, otraRazonVisitaNoExitosa, dejoCarta, noDejoCarta, personaDejoCarta, relFamPersonaDejoCarta, personaCasa, relacionFamPersonaCasa, otraRelacionPersonaCasa, telefonoPersonaCasa,
                 aceptaCohorteFLuParteDCovid, razonNoAceptaParteD, otraRazonNoAceptaParteD, asentimiento, aceptaContactoFuturo,
                 tutor, mismoTutorSN, nombrept, nombrept2, apellidopt, apellidopt2, relacionFam, otraRelacionFam, motivoDifTutor, otroMotivoDifTutor, alfabetoTutor, testigoSN, nombretest1, nombretest2, apellidotest1, apellidotest2,
                 domicilio, cmDomicilio, notaCmDomicilio, telefono1SN, telefonoClasif1, telefonoCel1, telefonoOper1, telefono2SN, telefonoClasif2, telefonoCel2, telefonoOper2, telefono3SN, telefonoClasif3, telefonoCel3, telefonoOper3,

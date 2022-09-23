@@ -60,6 +60,7 @@ public class TamizajeTransmisionCovid19Form extends AbstractWizardModel {
 
         Page visExit = new SingleFixedChoicePage(this,labels.getVisExit(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page visNoExit = new SingleFixedChoicePage(this,labels.getRazonVisNoExit(), "", Constants.WIZARD, false).setChoices(catVisNoExitosa).setRequired(true);
+        Page otraRazonVisitaNoExitosa = new TextPage(this,labels.getOtraRazonVisitaNoExitosa(), labels.getOtraRazonVisitaNoExitosaHint(), Constants.WIZARD, false).setRequired(true);
         Page personaCasa = new TextPage(this,labels.getPersonaCasa(), labels.getPersonaCasaHint(), Constants.WIZARD, false).setRequired(true);
         Page relacionFamPersonaCasa = new SingleFixedChoicePage(this,labels.getRelacionFamPersonaCasa(), labels.getRelacionFamPersonaCasaHint(), Constants.WIZARD, false).setChoices(catRelacionFamiliar).setRequired(true);
         Page otraRelacionPersonaCasa = new TextPage(this,labels.getOtraRelacionPersonaCasa(), "", Constants.WIZARD, false).setRequired(true);
@@ -130,7 +131,7 @@ public class TamizajeTransmisionCovid19Form extends AbstractWizardModel {
 
         Page verifTutor = new MultipleFixedChoicePage(this,labels.getVerifTutor(), "", Constants.WIZARD, false).setChoices(catVerificaTutor).setRequired(true);
 
-        return new PageList(visExit, visNoExit, personaCasa, relacionFamPersonaCasa, otraRelacionPersonaCasa, telefonoPersonaCasa,
+        return new PageList(visExit, visNoExit, otraRazonVisitaNoExitosa, personaCasa, relacionFamPersonaCasa, otraRelacionPersonaCasa, telefonoPersonaCasa,
                 aceptaTamizajePersona, razonNoParticipaPersona, otraRazonNoParticipaPersona, criteriosInclusionI, criteriosInclusionM, asentimiento,
                 aceptaParteA, razonNoAceptaParteA, otraRazonNoAceptaParteA, aceptaParteB, aceptaContactoFuturo,
                 tutor, mismoTutorSN, nombrept, nombrept2, apellidopt, apellidopt2, relacionFam, otraRelacionFam, motivoDifTutor, otroMotivoDifTutor, alfabetoTutor, testigoSN, nombretest1, nombretest2, apellidotest1, apellidotest2,

@@ -156,6 +156,8 @@
     <string-array name="menu_entomologia">
         <item>@string/agregar_cuestionario</item>
         <item>@string/listar_cuestionario</item>
+        <item>@string/agregar_cuest_pc</item>
+        <item>@string/listar_cuest_pc</item>
         <item>@string/download</item>
         <item>@string/upload</item>
         <item>@string/exit</item>

@@ -1,6 +1,7 @@
 package ni.org.ics.estudios.appmovil.entomologia.constants;
 
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 public class EntomologiaBConstants {
     //tabla CuestionarioHogar
@@ -264,4 +265,92 @@ public class EntomologiaBConstants {
             + MainDBConstants.deviceId + ","
             + MainDBConstants.estado
             + ") values(?,?,?,?,?,?,?,?,?,?)";
+
+
+    //tabla CuestionarioPuntoClave
+    public static final String ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE = "ento_cuestionario_punto_clave";
+    //campos tabla CuestionarioPuntoClave
+    public static final String codigoCuestionario = "codigoCuestionario";
+    public static final String fechaCuestionario = "fechaCuestionario";
+    public static final String barrio = "barrio";
+    public static final String nombrePuntoClave = "nombrePuntoClave";
+    public static final String direccionPuntoClave = "direccionPuntoClave";
+    public static final String tipoPuntoClave = "tipoPuntoClave";
+    public static final String tipoPuntoProductividad = "tipoPuntoProductividad";
+    public static final String tipoPuntoProductividadOtro = "tipoPuntoProductividadOtro";
+    public static final String tipoPuntoAglomeracion = "tipoPuntoAglomeracion";
+    public static final String tipoPuntoAglomeracionOtro = "tipoPuntoAglomeracionOtro";
+    public static final String cuantasPersonasReunen = "cuantasPersonasReunen";
+    public static final String cuantosDiasSemanaReunen = "cuantosDiasSemanaReunen";
+    public static final String horaInicioReunion = "horaInicioReunion";
+    public static final String horaFinReunion = "horaFinReunion";
+    public static final String puntoGps = "puntoGps";
+    public static final String latitud = "latitud";
+    public static final String longitud = "longitud";
+    public static final String tipoIngresoCodigoSitio = "tipoIngresoCodigoSitio";
+    public static final String codigoSitio = "codigoSitio";
+    public static final String hayAmbientePERI = "hayAmbientePERI";
+    public static final String horaCapturaPERI = "horaCapturaPERI";
+    public static final String humedadRelativaPERI = "humedadRelativaPERI";
+    public static final String temperaturaPERI = "temperaturaPERI";
+    public static final String tipoIngresoCodigoPERI = "tipoIngresoCodigoPERI";
+    public static final String codigoPERI = "codigoPERI";
+
+    public static final String hayAmbienteINTRA = "hayAmbienteINTRA";
+    public static final String horaCapturaINTRA = "horaCapturaINTRA";
+    public static final String humedadRelativaINTRA = "humedadRelativaINTRA";
+    public static final String temperaturaINTRA = "temperaturaINTRA";
+
+    public static final String tipoIngresoCodigoINTRA = "tipoIngresoCodigoINTRA";
+    public static final String codigoINTRA = "codigoINTRA";
+    public static final String nombrePersonaContesta = "nombrePersonaContesta";
+
+    //crear tabla CuestionarioPuntoClave
+    public static final String CREATE_ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE = "create table if not exists "
+            + ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE + " ("
+            + codigoCuestionario + " text not null, "
+            + fechaCuestionario  + " date, "
+            + barrio  + " integer, "
+            + nombrePuntoClave  + " text, "
+            + direccionPuntoClave  + " text, "
+            + tipoPuntoClave  + " text, "
+            + tipoPuntoProductividad  + " text, "
+            + tipoPuntoProductividadOtro  + " text, "
+            + tipoPuntoAglomeracion  + " text, "
+            + tipoPuntoAglomeracionOtro  + " text, "
+            + cuantasPersonasReunen  + " integer, "
+            + cuantosDiasSemanaReunen  + " integer, "
+            + horaInicioReunion  + " text, "
+            + horaFinReunion  + " text, "
+            + puntoGps  + " text, "
+            + latitud  + " double, "
+            + longitud  + " double, "
+            + tipoIngresoCodigoSitio  + " text, "
+            + codigoSitio  + " text, "
+            + hayAmbientePERI + " text, "
+            + horaCapturaPERI + " text, "
+            + humedadRelativaPERI + " double, "
+            + temperaturaPERI + " double, "
+            + tipoIngresoCodigoPERI  + " text, "
+            + codigoPERI  + " text, "
+            + hayAmbienteINTRA + " text, "
+            + horaCapturaINTRA + " text, "
+            + humedadRelativaINTRA + " double, "
+            + temperaturaINTRA + " double, "
+            + tipoIngresoCodigoINTRA  + " text, "
+            + codigoINTRA  + " text, "
+            + nombrePersonaContesta  + " text, "
+            + ConstantsDB.ID_INSTANCIA + " integer not null,"
+            + ConstantsDB.FILE_PATH + " text not null,"
+            + ConstantsDB.STATUS + " text not null, "
+            + ConstantsDB.WHEN_UPDATED + " text not null, "
+            + ConstantsDB.START  + " text, "
+            + ConstantsDB.END  + " text, "
+            + ConstantsDB.DEVICE_ID  + " text, "
+            + ConstantsDB.SIM_SERIAL + " text, "
+            + ConstantsDB.PHONE_NUMBER  + " text, "
+            + ConstantsDB.TODAY  + " date, "
+            + ConstantsDB.USUARIO  + " text, "
+            + ConstantsDB.DELETED  + " boolean, "
+            + "primary key (" + codigoCuestionario + "));";
 }

@@ -67,6 +67,7 @@ public class ConFluUO1Form extends AbstractWizardModel {
 
         Page visExit = new SingleFixedChoicePage(this,labels.getVisExit(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page visNoExit = new SingleFixedChoicePage(this,labels.getRazonVisNoExit(), "", Constants.WIZARD, false).setChoices(catVisNoExitosa).setRequired(true);
+        Page otraRazonVisitaNoExitosa = new TextPage(this,labels.getOtraRazonVisitaNoExitosa(), labels.getOtraRazonVisitaNoExitosaHint(), Constants.WIZARD, false).setRequired(true);
         Page dejoCarta = new SingleFixedChoicePage(this,labels.getDejoCarta(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page noDejoCarta = new LabelPage(this,labels.getNoDejoCarta(), "", Constants.ROJO, false).setRequired(false);
         Page personaDejoCarta = new TextPage(this,labels.getPersonaDejoCarta(), "", Constants.WIZARD, false).setRequired(true);
@@ -202,7 +203,7 @@ public class ConFluUO1Form extends AbstractWizardModel {
         Page apellidomadre2 = new TextPage(this,labels.getApellidomadre2(), "", Constants.WIZARD, false).setRequired(false);
         Page verifTutor = new MultipleFixedChoicePage(this,labels.getVerifTutor(), "", Constants.WIZARD, false).setChoices(catVerificaTutor).setRequired(true);
 
-        return new PageList(visExit, visNoExit, dejoCarta, noDejoCarta, personaDejoCarta, relFamPersonaDejoCarta, personaCasa, relacionFamPersonaCasa, otraRelacionPersonaCasa, telefonoPersonaCasa,
+        return new PageList(visExit, visNoExit, otraRazonVisitaNoExitosa, dejoCarta, noDejoCarta, personaDejoCarta, relFamPersonaDejoCarta, personaCasa, relacionFamPersonaCasa, otraRelacionPersonaCasa, telefonoPersonaCasa,
                 aceptaCohorteDengue, razonNoAceptaDengue, otraRazonNoAceptaDengue,
                 //emancipado, razonEmancipacion, otraRazonEmancipacion,
                 incDen, vivienda, tiempoResidencia, aceptaAtenderCentro, pretermino, enfermedadInmuno, enfCronSN, enfCronica, oEnfCronica,

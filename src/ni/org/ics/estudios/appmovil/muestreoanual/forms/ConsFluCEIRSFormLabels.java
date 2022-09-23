@@ -13,6 +13,8 @@ public class ConsFluCEIRSFormLabels {
 
     private String visExit;
     private String razonVisNoExit;
+    private String otraRazonVisitaNoExitosa;
+    private String otraRazonVisitaNoExitosaHint;
     private String dejoCarta;
     private String personaDejoCarta;
     private String relFamPersonaDejoCarta;
@@ -101,6 +103,9 @@ public class ConsFluCEIRSFormLabels {
         Resources res = MyIcsApplication.getContext().getResources();
         visExit = res.getString(R.string.visExit);
         razonVisNoExit = res.getString(R.string.razonVisNoExit);
+        otraRazonVisitaNoExitosa = res.getString(R.string.otraRazonVisitaNoExitosa);
+        otraRazonVisitaNoExitosaHint = res.getString(R.string.otraRazonVisitaNoExitosaHint);
+
         dejoCarta = res.getString(R.string.dejoCarta);
         personaDejoCarta = res.getString(R.string.personaDejoCarta);
         relFamPersonaDejoCarta = res.getString(R.string.relFamPersonaDejoCarta);
@@ -848,5 +853,13 @@ public class ConsFluCEIRSFormLabels {
 
     public void setNoCumpleIncDen(String noCumpleIncDen) {
         this.noCumpleIncDen = noCumpleIncDen;
+    }
+
+    public String getOtraRazonVisitaNoExitosa() {
+        return otraRazonVisitaNoExitosa;
+    }
+
+    public String getOtraRazonVisitaNoExitosaHint() {
+        return otraRazonVisitaNoExitosaHint;
     }
 }

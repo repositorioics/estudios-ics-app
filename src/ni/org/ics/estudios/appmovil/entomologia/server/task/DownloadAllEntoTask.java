@@ -76,6 +76,7 @@ public class DownloadAllEntoTask extends DownloadTask {
 		estudioAdapter.borrarMessageResource();
 		estudioAdapter.borrarCuestionarioHogar();
 		estudioAdapter.borrarCuestionarioHogarPoblacion();
+		estudioAdapter.borrarCuestionarioPuntoClave();
 		try {
 			if (mEstudios != null){
 				publishProgress("Insertando estudios en la base de datos","1","1");

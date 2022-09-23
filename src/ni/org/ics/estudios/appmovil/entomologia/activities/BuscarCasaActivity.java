@@ -25,6 +25,7 @@ import ni.org.ics.estudios.appmovil.domain.Casa;
 import ni.org.ics.estudios.appmovil.entomologia.constants.EntomologiaBConstants;
 import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioHogar;
 import ni.org.ics.estudios.appmovil.entomologia.helpers.EntomologiaHelper;
+import ni.org.ics.estudios.appmovil.muestreoanual.activities.MenuMuestreoAnualActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
@@ -226,27 +227,15 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId()==android.R.id.home){
-			Intent i = new Intent(getApplicationContext(),
-					MenuEntomologiaActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
+			openMenuEnto();
 			return true;
 		}
 		else if(item.getItemId()==R.id.MENU_BACK){
-			Intent i = new Intent(getApplicationContext(),
-					MenuEntomologiaActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
+			openMenuEnto();
 			return true;
 		}
 		else if(item.getItemId()==R.id.MENU_HOME){
-			Intent i = new Intent(getApplicationContext(),
-					MenuEntomologiaActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
+			openMenuEnto();
 			return true;
 		}
 		else{
@@ -254,6 +243,10 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 		}
 	}
 
+	@Override
+	public void onBackPressed (){
+		openMenuEnto();
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
@@ -274,7 +267,15 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 		super.onActivityResult(requestCode, resultCode, intent);
 
 	}
-	
+
+	private void openMenuEnto() {
+		Intent i = new Intent(getApplicationContext(),
+				MenuEntomologiaActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
+		finish();
+	}
+
 	public void buscarCasa(String parametro, int opcion){
 		String filtro = "";
 		switch (opcion) {

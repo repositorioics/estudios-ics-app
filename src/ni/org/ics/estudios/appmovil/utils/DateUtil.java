@@ -33,4 +33,18 @@ public class DateUtil {
             return null;
         }
     }
+
+    /**
+     * Convierte una Date a String, segun el formato indicado
+     * @param dtFecha Fecha a convertir
+     * @param format formato solicitado
+     * @return String
+     */
+    public static String DateToString(Date dtFecha, String format)  {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        if(dtFecha!=null)
+            return simpleDateFormat.format(dtFecha);
+        else
+            return null;
+    }
 }

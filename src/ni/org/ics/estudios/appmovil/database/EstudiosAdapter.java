@@ -39,6 +39,7 @@ import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
 import ni.org.ics.estudios.appmovil.entomologia.constants.EntomologiaBConstants;
 import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioHogar;
 import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioHogarPoblacion;
+import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioPuntoClave;
 import ni.org.ics.estudios.appmovil.entomologia.helpers.EntomologiaHelper;
 import ni.org.ics.estudios.appmovil.helpers.*;
 import ni.org.ics.estudios.appmovil.helpers.chf.casos.*;
@@ -184,6 +185,7 @@ public class EstudiosAdapter {
 			//Entomologia 2022
 			db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_TABLE);
 			db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_POB_TABLE);
+			db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE);
 
 		}
 
@@ -422,6 +424,10 @@ public class EstudiosAdapter {
 				//Entomologia 2022
 				db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_TABLE);
 				db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_POB_TABLE);
+			}
+			if (oldVersion==45) {
+				//sigue Entomologia 2022
+				db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE);
 			}
 		}
 	}
@@ -3161,7 +3167,9 @@ public class EstudiosAdapter {
 		c = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_POB_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
 		if (c != null && c.getCount()>0) {c.close();return true;}
 		c.close();
-
+		c = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+		if (c != null && c.getCount()>0) {c.close();return true;}
+		c.close();
 		return false;
 	}
 
@@ -8178,6 +8186,49 @@ public class EstudiosAdapter {
 		return mCuestionarioHogarPoblacions;
 	}
 
+	//Crear nuevo CuestionarioPuntoClave en la base de datos
+	public void crearCuestionarioPuntoClave(CuestionarioPuntoClave cuestionarioPuntoClave) throws Exception {
+		ContentValues cv = EntomologiaHelper.crearCuestionarioPuntoClaveContentValues(cuestionarioPuntoClave);
+		mDb.insertOrThrow(EntomologiaBConstants.ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE, null, cv);
+	}
+
+	//Editar CuestionarioPuntoClave existente en la base de datos
+	public boolean editarCuestionarioPuntoClave(CuestionarioPuntoClave cuestionarioPuntoClave) throws Exception{
+		ContentValues cv = EntomologiaHelper.crearCuestionarioPuntoClaveContentValues(cuestionarioPuntoClave);
+		return mDb.update(EntomologiaBConstants.ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE , cv, EntomologiaBConstants.codigoCuestionario + "='"
+				+ cuestionarioPuntoClave.getCodigoCuestionario() + "' ", null) > 0;
+	}
+	//Limpiar la tabla de CuestionarioPuntoClave de la base de datos
+	public boolean borrarCuestionarioPuntoClave() {
+		return mDb.delete(EntomologiaBConstants.ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE, null, null) > 0;
+	}
+	//Obtener un CuestionarioPuntoClave de la base de datos
+	public CuestionarioPuntoClave getCuestionarioPuntoClave(String filtro, String orden) throws SQLException {
+		CuestionarioPuntoClave mCuestionarioPuntoClave = null;
+		Cursor cursor = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE , filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mCuestionarioPuntoClave=EntomologiaHelper.crearCuestionarioPuntoClave(cursor);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mCuestionarioPuntoClave;
+	}
+	//Obtener una lista de CuestionarioPuntoClave de la base de datos
+	public List<CuestionarioPuntoClave> getCuestionariosPuntoClave(String filtro, String orden) throws SQLException {
+		List<CuestionarioPuntoClave> mCuestionarioPuntoClaves = new ArrayList<CuestionarioPuntoClave>();
+		Cursor cursor = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE, filtro, null, orden);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mCuestionarioPuntoClaves.clear();
+			do{
+				CuestionarioPuntoClave mCuestionarioPuntoClave = null;
+				mCuestionarioPuntoClave=EntomologiaHelper.crearCuestionarioPuntoClave(cursor);
+				mCuestionarioPuntoClaves.add(mCuestionarioPuntoClave);
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return mCuestionarioPuntoClaves;
+	}
 	/*****FIN ENTOMOLOGIA****/
 	public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) throws Exception {
 		if (null == list || list.size() <= 0) {

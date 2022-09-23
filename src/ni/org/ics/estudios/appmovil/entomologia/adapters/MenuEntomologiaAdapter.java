@@ -16,11 +16,13 @@ public class MenuEntomologiaAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
 	private final int totalCuestionarios;
+	private final int totalCuestionariosPC;
 	public MenuEntomologiaAdapter(Context context, int textViewResourceId,
-                                  String[] values, int totalCuestionarios) {
+                                  String[] values, int totalCuestionarios, int totalCuestionariosPC) {
 		super(context, textViewResourceId, values);
 		this.values = values;
 		this.totalCuestionarios = totalCuestionarios;
+		this.totalCuestionariosPC = totalCuestionariosPC;
 	}
 
 	@Override
@@ -49,14 +51,23 @@ public class MenuEntomologiaAdapter extends ArrayAdapter<String> {
 				textView.setText(values[position]+" ("+ totalCuestionarios+")");
 				break;
 			case 2:
-				img = getContext().getResources().getDrawable(R.drawable.ic_menu_download);
+				img = getContext().getResources().getDrawable(R.drawable.ic_menu_add);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
 			case 3:
+				img = getContext().getResources().getDrawable(R.drawable.ic_menu_moreoverflow);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				textView.setText(values[position]+" ("+ totalCuestionariosPC+")");
+				break;
+			case 4:
+				img = getContext().getResources().getDrawable(R.drawable.ic_menu_download);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;
+			case 5:
 				img = getContext().getResources().getDrawable(R.drawable.ic_menu_upload);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
-			case 4:
+			case 6:
 				img = getContext().getResources().getDrawable(R.drawable.ic_menu_revert);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;

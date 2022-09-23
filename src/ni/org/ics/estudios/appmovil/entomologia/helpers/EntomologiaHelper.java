@@ -3,10 +3,13 @@ package ni.org.ics.estudios.appmovil.entomologia.helpers;
 import android.content.ContentValues;
 import android.database.Cursor;
 import net.sqlcipher.database.SQLiteStatement;
+import ni.org.ics.estudios.appmovil.domain.muestreoanual.MovilInfo;
 import ni.org.ics.estudios.appmovil.entomologia.constants.EntomologiaBConstants;
 import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioHogar;
 import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioHogarPoblacion;
+import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioPuntoClave;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 import java.util.Date;
 
@@ -233,6 +236,117 @@ public class EntomologiaHelper {
         bindString(stat,9, part.getDeviceid());
         stat.bindString(10, String.valueOf(part.getEstado()));
     }
+
+    public static ContentValues crearCuestionarioPuntoClaveContentValues(CuestionarioPuntoClave cuest){
+        ContentValues cv = new ContentValues();
+        cv.put(EntomologiaBConstants.codigoCuestionario, cuest.getCodigoCuestionario());
+        cv.put(EntomologiaBConstants.codigoCuestionario, cuest.getCodigoCuestionario());
+        if (cuest.getFechaCuestionario() != null) cv.put(EntomologiaBConstants.fechaCuestionario, cuest.getFechaCuestionario().getTime());
+        cv.put(EntomologiaBConstants.barrio, cuest.getBarrio());
+        cv.put(EntomologiaBConstants.nombrePuntoClave, cuest.getNombrePuntoClave());
+        cv.put(EntomologiaBConstants.direccionPuntoClave, cuest.getDireccionPuntoClave());
+        cv.put(EntomologiaBConstants.tipoPuntoClave, cuest.getTipoPuntoClave());
+        cv.put(EntomologiaBConstants.tipoPuntoProductividad, cuest.getTipoPuntoProductividad());
+        cv.put(EntomologiaBConstants.tipoPuntoProductividadOtro, cuest.getTipoPuntoProductividadOtro());
+        cv.put(EntomologiaBConstants.tipoPuntoAglomeracion, cuest.getTipoPuntoAglomeracion());
+        cv.put(EntomologiaBConstants.tipoPuntoAglomeracionOtro, cuest.getTipoPuntoAglomeracionOtro());
+        if (cuest.getCuantasPersonasReunen() != null) cv.put(EntomologiaBConstants.cuantasPersonasReunen, cuest.getCuantasPersonasReunen());
+        if (cuest.getCuantosDiasSemanaReunen() != null) cv.put(EntomologiaBConstants.cuantosDiasSemanaReunen, cuest.getCuantosDiasSemanaReunen());
+        cv.put(EntomologiaBConstants.horaInicioReunion, cuest.getHoraInicioReunion());
+        cv.put(EntomologiaBConstants.horaFinReunion, cuest.getHoraFinReunion());
+        cv.put(EntomologiaBConstants.puntoGps, cuest.getPuntoGps());
+        if (cuest.getLatitud() != null) cv.put(EntomologiaBConstants.latitud, cuest.getLatitud());
+        if (cuest.getLongitud() != null) cv.put(EntomologiaBConstants.longitud, cuest.getLongitud());
+
+        cv.put(EntomologiaBConstants.tipoIngresoCodigoSitio, cuest.getTipoIngresoCodigoSitio());
+        cv.put(EntomologiaBConstants.codigoSitio, cuest.getCodigoSitio());
+
+        cv.put(EntomologiaBConstants.hayAmbientePERI, cuest.getHayAmbientePERI());
+        cv.put(EntomologiaBConstants.horaCapturaPERI, cuest.getHoraCapturaPERI());
+        if (cuest.getHumedadRelativaPERI() != null) cv.put(EntomologiaBConstants.humedadRelativaPERI, cuest.getHumedadRelativaPERI());
+        if (cuest.getTemperaturaPERI() != null) cv.put(EntomologiaBConstants.temperaturaPERI, cuest.getTemperaturaPERI());
+        cv.put(EntomologiaBConstants.tipoIngresoCodigoPERI, cuest.getTipoIngresoCodigoPERI());
+        cv.put(EntomologiaBConstants.codigoPERI, cuest.getCodigoPERI());
+
+        cv.put(EntomologiaBConstants.hayAmbienteINTRA, cuest.getHayAmbienteINTRA());
+        cv.put(EntomologiaBConstants.horaCapturaINTRA, cuest.getHoraCapturaINTRA());
+        if (cuest.getHumedadRelativaINTRA() != null) cv.put(EntomologiaBConstants.humedadRelativaINTRA, cuest.getHumedadRelativaINTRA());
+        if (cuest.getTemperaturaINTRA() != null) cv.put(EntomologiaBConstants.temperaturaINTRA, cuest.getTemperaturaINTRA());
+        cv.put(EntomologiaBConstants.tipoIngresoCodigoINTRA, cuest.getTipoIngresoCodigoINTRA());
+        cv.put(EntomologiaBConstants.codigoINTRA, cuest.getCodigoINTRA());
+
+        cv.put(EntomologiaBConstants.nombrePersonaContesta, cuest.getNombrePersonaContesta());
+
+        cv.put(ConstantsDB.ID_INSTANCIA, cuest.getMovilInfo().getIdInstancia());
+        cv.put(ConstantsDB.FILE_PATH, cuest.getMovilInfo().getInstancePath());
+        cv.put(ConstantsDB.STATUS, cuest.getMovilInfo().getEstado());
+        cv.put(ConstantsDB.WHEN_UPDATED, cuest.getMovilInfo().getUltimoCambio());
+        cv.put(ConstantsDB.START, cuest.getMovilInfo().getStart());
+        cv.put(ConstantsDB.END, cuest.getMovilInfo().getEnd());
+        cv.put(ConstantsDB.DEVICE_ID, cuest.getMovilInfo().getDeviceid());
+        cv.put(ConstantsDB.SIM_SERIAL, cuest.getMovilInfo().getSimserial());
+        cv.put(ConstantsDB.PHONE_NUMBER, cuest.getMovilInfo().getPhonenumber());
+        cv.put(ConstantsDB.TODAY, cuest.getMovilInfo().getToday().getTime());
+        cv.put(ConstantsDB.USUARIO, cuest.getMovilInfo().getUsername());
+        cv.put(ConstantsDB.DELETED, cuest.getMovilInfo().getEliminado());
+        
+        return cv;
+    }
+
+    public static CuestionarioPuntoClave crearCuestionarioPuntoClave(Cursor cursor){
+        CuestionarioPuntoClave cuest = new CuestionarioPuntoClave();
+        cuest.setCodigoCuestionario(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.codigoCuestionario)));
+        if(cursor.getLong(cursor.getColumnIndex(EntomologiaBConstants.fechaCuestionario))>0) cuest.setFechaCuestionario(new Date(cursor.getLong(cursor.getColumnIndex(EntomologiaBConstants.fechaCuestionario))));
+        cuest.setBarrio(cursor.getInt(cursor.getColumnIndex(EntomologiaBConstants.barrio)));
+        cuest.setNombrePuntoClave(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.nombrePuntoClave)));
+        cuest.setDireccionPuntoClave(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.direccionPuntoClave)));
+        cuest.setTipoPuntoClave(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoPuntoClave)));
+        cuest.setTipoPuntoProductividad(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoPuntoProductividad)));
+        cuest.setTipoPuntoProductividadOtro(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoPuntoProductividadOtro)));
+        cuest.setTipoPuntoAglomeracion(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoPuntoAglomeracion)));
+        cuest.setTipoPuntoAglomeracionOtro(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoPuntoAglomeracionOtro)));
+        if (cursor.getInt(cursor.getColumnIndex(EntomologiaBConstants.cuantasPersonasReunen))> 0) cuest.setCuantasPersonasReunen(cursor.getInt(cursor.getColumnIndex(EntomologiaBConstants.cuantasPersonasReunen)));
+        if (cursor.getInt(cursor.getColumnIndex(EntomologiaBConstants.cuantosDiasSemanaReunen))> 0) cuest.setCuantosDiasSemanaReunen(cursor.getInt(cursor.getColumnIndex(EntomologiaBConstants.cuantosDiasSemanaReunen)));
+        cuest.setHoraInicioReunion(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.horaInicioReunion)));
+        cuest.setHoraFinReunion(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.horaFinReunion)));
+        cuest.setPuntoGps(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.puntoGps)));
+        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.latitud))!= 0) cuest.setLatitud(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.latitud)));
+        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.longitud))!= 0) cuest.setLongitud(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.longitud)));
+
+        cuest.setTipoIngresoCodigoSitio(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoIngresoCodigoSitio)));
+        cuest.setCodigoSitio(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.codigoSitio)));
+
+        cuest.setHayAmbientePERI(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.hayAmbientePERI)));
+        cuest.setHoraCapturaPERI(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.horaCapturaPERI)));
+        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.humedadRelativaPERI))!= 0) cuest.setHumedadRelativaPERI(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.humedadRelativaPERI)));
+        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.temperaturaPERI))!= 0) cuest.setTemperaturaPERI(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.temperaturaPERI)));
+        cuest.setTipoIngresoCodigoPERI(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoIngresoCodigoPERI)));
+        cuest.setCodigoPERI(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.codigoPERI)));
+
+        cuest.setHayAmbienteINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.hayAmbienteINTRA)));
+        cuest.setHoraCapturaINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.horaCapturaINTRA)));
+        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.humedadRelativaINTRA))!= 0) cuest.setHumedadRelativaINTRA(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.humedadRelativaINTRA)));
+        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.temperaturaINTRA))!= 0) cuest.setTemperaturaINTRA(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.temperaturaINTRA)));
+        cuest.setTipoIngresoCodigoINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoIngresoCodigoINTRA)));
+        cuest.setCodigoINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.codigoINTRA)));
+
+        cuest.setNombrePersonaContesta(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.nombrePersonaContesta)));
+
+        cuest.setMovilInfo(new MovilInfo(cursor.getInt(cursor.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
+                cursor.getString(cursor.getColumnIndex(ConstantsDB.FILE_PATH)),
+                cursor.getString(cursor.getColumnIndex(ConstantsDB.STATUS)),
+                cursor.getString(cursor.getColumnIndex(ConstantsDB.WHEN_UPDATED)),
+                cursor.getString(cursor.getColumnIndex(ConstantsDB.START)),
+                cursor.getString(cursor.getColumnIndex(ConstantsDB.END)),
+                cursor.getString(cursor.getColumnIndex(ConstantsDB.DEVICE_ID)),
+                cursor.getString(cursor.getColumnIndex(ConstantsDB.SIM_SERIAL)),
+                cursor.getString(cursor.getColumnIndex(ConstantsDB.PHONE_NUMBER)),
+                new Date(cursor.getLong(cursor.getColumnIndex(ConstantsDB.TODAY))),
+                cursor.getString(cursor.getColumnIndex(ConstantsDB.USUARIO)),
+                cursor.getInt(cursor.getColumnIndex(ConstantsDB.DELETED))>0, null, null));
+        return cuest;
+    }
+    
     public static void bindString(SQLiteStatement stat, int index, String value){
         if (value == null) {
             stat.bindNull(index);

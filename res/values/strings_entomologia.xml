@@ -2,7 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="entomologia">Entomología</string>
-    <string name="cuestionario_hogar">Cuestioario Hogar</string>
+    <string name="cuestionario_hogar">Cuestionario Hogar</string>
     <string name="agregar_cuestionario">Agregar Cuestionario</string>
     <string name="listar_cuestionario">Cuestionarios hoy</string>
     <string name="confirmar_agregar">¿Desea agregar cuestionario a esta casa?</string>
@@ -54,4 +54,9 @@
 
     <string name="errorFormatoEdad">La edad <xliff:g id="codigo">%1$s</xliff:g> no tiene un formato correcto, favor verifique</string>
     <string name="errorCuestExiste">La casa <xliff:g id="codigo">%1$s</xliff:g> ya tiene un cuestionario registrado. No se puede agregar uno nuevo</string>
+
+    <string name="confirmar_cuestionariopc">Agregar cuestionario punto clave?</string>
+    <string name="cuestionario_pc">Cuestionario Punto Clave</string>
+    <string name="agregar_cuest_pc">Agregar Cuestionario PC</string>
+    <string name="listar_cuest_pc">Cuestionarios PC hoy</string>
 </resources>

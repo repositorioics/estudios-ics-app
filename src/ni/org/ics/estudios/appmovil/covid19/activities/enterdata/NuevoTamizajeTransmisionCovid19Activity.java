@@ -416,6 +416,9 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                 //notificarCambios = false;
                 changeStatus(mWizardModel.findByKey(labels.getOtraRelacionPersonaCasa()), false);
                 //notificarCambios = false;
+                visible = (page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null &&
+                        page.getData().getString(TextPage.SIMPLE_DATA_KEY).contains("Otro motivo"));
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonVisitaNoExitosa()), visible);
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getRelacionFamPersonaCasa())) {
@@ -904,6 +907,7 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
 
             String visExit = datos.getString(this.getString(R.string.visExit));
             String razonVisNoExit = datos.getString(this.getString(R.string.razonVisNoExit));
+            String otraRazonVisitaNoExitosa = datos.getString(this.getString(R.string.otraRazonVisitaNoExitosa));
             String personaCasa = datos.getString(this.getString(R.string.personaCasa));
             String relacionFamPersonaCasa = datos.getString(this.getString(R.string.relacionFamPersonaCasa));
             String otraRelacionPersonaCasa = datos.getString(this.getString(R.string.otraRelacionPersonaCasa));
@@ -979,6 +983,8 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                 MessageResource relFamiliar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + relacionFamPersonaCasa + "' and " + CatalogosDBConstants.catRoot + "='CP_CAT_RFTUTOR'", null);
                 visita.setRelacionFamPersonaCasa(relFamiliar.getCatKey());
             }
+            /*Pedir descripción cuándo visita no es exitosa y se selecciona 'Otro motivo'. Brenda 30/08/2022*/
+            visita.setOtraRazonVisitaNoExitosa(otraRazonVisitaNoExitosa);
             visita.setPersonaCasa(personaCasa);
             visita.setOtraRelacionPersonaCasa(otraRelacionPersonaCasa);
             visita.setTelefonoPersonaCasa(telefonoPersonaCasa);

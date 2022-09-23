@@ -17,18 +17,19 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
-import ni.org.ics.estudios.appmovil.MainActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.entomologia.adapters.MenuEntomologiaAdapter;
 import ni.org.ics.estudios.appmovil.entomologia.constants.EntomologiaBConstants;
 import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioHogar;
+import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioPuntoClave;
 import ni.org.ics.estudios.appmovil.entomologia.server.DownloadAllEntoActivity;
 import ni.org.ics.estudios.appmovil.entomologia.server.UploadAllEntoActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
+import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -55,6 +56,7 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
     private EstudiosAdapter estudiosAdapter;
 
 	private ArrayList<CuestionarioHogar> mCuestionarios = new ArrayList<CuestionarioHogar>();
+	private ArrayList<CuestionarioPuntoClave> mCuestionariosPC = new ArrayList<CuestionarioPuntoClave>();
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -73,7 +75,7 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
         menu_entomologia = getResources().getStringArray(R.array.menu_entomologia);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-        new FetchDataCasaTask().execute();
+        new FetchDataTask().execute();
 
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -99,12 +101,29 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
 						finish();
 						break;
 					case 2:
-						createDialog(DOWNLOAD);
+						i = new Intent(getApplicationContext(),
+								NuevoCuestionarioPuntoClaveActivity.class);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(i);
+						finish();
 						break;
 					case 3:
-						createDialog(UPLOAD);
+						Bundle arguments2 = new Bundle();
+						arguments2.putString(Constants.TITLE, getString(R.string.cuestionario_pc));
+						if (mCuestionariosPC !=null) arguments2.putSerializable(Constants.OBJECTO , mCuestionariosPC);
+						i = new Intent(getApplicationContext(),
+								ListReviewActivity.class);
+						i.putExtras(arguments2);
+						startActivity(i);
+						finish();
 						break;
 					case 4:
+						createDialog(DOWNLOAD);
+						break;
+					case 5:
+						createDialog(UPLOAD);
+						break;
+					case 6:
 						createDialog(EXIT);
 						break;
 					default:
@@ -304,7 +323,7 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
 		return;
 	}
 
-    private class FetchDataCasaTask extends AsyncTask<String, Void, String> {
+    private class FetchDataTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -318,6 +337,7 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
             // before the request begins, show a progress indicator
 			estudiosAdapter.open();
 			mCuestionarios = (ArrayList<CuestionarioHogar>) estudiosAdapter.getCuestionariosHogar(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), EntomologiaBConstants.codigoCasa);
+			mCuestionariosPC = (ArrayList<CuestionarioPuntoClave>) estudiosAdapter.getCuestionariosPuntoClave(ConstantsDB.TODAY + ">=" + timeStamp.getTime(), EntomologiaBConstants.nombrePuntoClave);
 			estudiosAdapter.close();
             showLoadingProgressDialog();
         }
@@ -332,7 +352,7 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
             textView.setText("");
             textView.setTextColor(Color.BLACK);
             textView.setText(getString(R.string.entomologia)+"\n"+getString(R.string.header_main));
-            gridView.setAdapter(new MenuEntomologiaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_entomologia, mCuestionarios.size()));
+            gridView.setAdapter(new MenuEntomologiaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_entomologia, mCuestionarios.size(), mCuestionariosPC.size()));
             dismissProgressDialog();
         }
     }

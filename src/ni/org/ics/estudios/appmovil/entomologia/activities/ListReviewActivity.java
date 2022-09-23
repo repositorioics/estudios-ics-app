@@ -18,9 +18,12 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaCuartosActivity;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.entomologia.adapters.CuestionarioHogarAdapter;
+import ni.org.ics.estudios.appmovil.entomologia.adapters.CuestionarioPuntoClaveAdapter;
 import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioHogar;
+import ni.org.ics.estudios.appmovil.entomologia.domain.CuestionarioPuntoClave;
 import ni.org.ics.estudios.appmovil.muestreoanual.activities.ReviewActivity;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.Constants;
@@ -34,6 +37,7 @@ public class ListReviewActivity extends ListActivity {
 	private TextWatcher mFilterTextWatcher;
 	private Button mSearchButton;
 	ArrayAdapter<CuestionarioHogar> mCuestionarioHogarAdapter =null;
+	ArrayAdapter<CuestionarioPuntoClave> mCuestionarioPCAdapter = null;
 
 	public static final int BARCODE_CAPTURE = 2;
 	
@@ -74,6 +78,8 @@ public class ListReviewActivity extends ListActivity {
 					int count) {
 				if (mCuestionarioHogarAdapter != null) {
 					mCuestionarioHogarAdapter.getFilter().filter(s);
+				} else if (mCuestionarioPCAdapter != null) {
+					mCuestionarioPCAdapter.getFilter().filter(s);
 				}
 			}
 
@@ -111,6 +117,7 @@ public class ListReviewActivity extends ListActivity {
 				}
 			}
 		});
+		mBarcodeButton.setVisibility(View.GONE);
 
 		if (titulo.matches(getString(R.string.cuestionario_hogar))){
 			
@@ -118,7 +125,14 @@ public class ListReviewActivity extends ListActivity {
 					(ArrayList<CuestionarioHogar>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
 			setListAdapter(mCuestionarioHogarAdapter);
 			showToast("Total = "+ mCuestionarioHogarAdapter.getCount());
+		} else if (titulo.matches(getString(R.string.cuestionario_pc))){
+
+			mCuestionarioPCAdapter = new CuestionarioPuntoClaveAdapter(this, R.layout.list_item_review,
+					(ArrayList<CuestionarioPuntoClave>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
+			setListAdapter(mCuestionarioPCAdapter);
+			showToast("Total = "+ mCuestionarioPCAdapter.getCount());
 		}
+
 
         ListView listView = (ListView) findViewById(android.R.id.list);
 		listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
@@ -150,6 +164,15 @@ public class ListReviewActivity extends ListActivity {
 	}
 
 	@Override
+	public void onBackPressed (){
+		Intent i = new Intent(getApplicationContext(),
+				MenuEntomologiaActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
+		finish();
+	}
+
+	@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
 		Bundle arguments = new Bundle();
@@ -161,7 +184,14 @@ public class ListReviewActivity extends ListActivity {
 			if (encuestapart!=null) arguments.putSerializable(Constants.OBJECTO , encuestapart);
 			i = new Intent(getApplicationContext(),
 					ReviewActivity.class);
+		} else if (titulo.matches(getString(R.string.cuestionario_pc))){
+			CuestionarioPuntoClave encuestapart = (CuestionarioPuntoClave) getListAdapter().getItem(position);
+			arguments.putString(Constants.TITLE, getString(R.string.cuestionario_pc));
+			if (encuestapart!=null) arguments.putSerializable(Constants.OBJECTO , encuestapart);
+			i = new Intent(getApplicationContext(),
+					ReviewActivity.class);
 		}
+		i.putExtra(Constants.MENU_ENTO, true);
 		i.putExtras(arguments);
 		startActivity(i);
 	}

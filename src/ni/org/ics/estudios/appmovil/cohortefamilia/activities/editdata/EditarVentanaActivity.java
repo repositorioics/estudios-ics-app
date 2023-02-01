@@ -87,44 +87,7 @@ public class EditarVentanaActivity extends FragmentActivity implements
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
-        //Abre la base de datos
-		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		estudiosAdapter.open();
-        if (ventana != null) {
-        	Bundle dato = null;
-        	Page modifPage;
-	        if(ventana.getLargo()!= null){
-	        	modifPage = (NumberPage) mWizardModel.findByKey(labels.getLargo());
-	        	dato = new Bundle();
-	        	dato.putString(SIMPLE_DATA_KEY, ventana.getLargo().toString());
-	        	modifPage.resetData(dato);
-	        }	
-	        if(ventana.getAncho()!= null){
-	        	modifPage = (NumberPage) mWizardModel.findByKey(labels.getAncho());
-		        dato = new Bundle();
-		        dato.putString(SIMPLE_DATA_KEY, ventana.getAncho().toString());
-		        modifPage.resetData(dato);
-		        modifPage.setmVisible(true);
-	        }
-            if(ventana.getLargo()!= null && ventana.getAncho()!= null){
-                modifPage = (LabelPage) mWizardModel.findByKey(labels.getTotalM2());
-                //dato = new Bundle();
-                //dato.putString(SIMPLE_DATA_KEY, String.valueOf(ventana.getAncho() * ventana.getLargo()));
-                //modifPage.resetData(dato);
-                modifPage.setHint(String.valueOf(ventana.getAncho() * ventana.getLargo()));
-                modifPage.setmVisible(true);
-            }
-            if(tieneValor(ventana.getAbierta())){
-                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAbierta());
-                MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + ventana.getAbierta() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                dato = new Bundle();
-                dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
-                modifPage.resetData(dato);
-                modifPage.setmVisible(true);
-            }
 
-        }
-        estudiosAdapter.close();
         mWizardModel.registerListener(this);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -200,7 +163,49 @@ public class EditarVentanaActivity extends FragmentActivity implements
             }
         });
         
-        onPageTreeChangedInitial(); 
+        onPageTreeChangedInitial();
+
+
+        //Abre la base de datos
+        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+        estudiosAdapter.open();
+        if (ventana != null) {
+            Bundle dato = null;
+            Page modifPage;
+            if(ventana.getLargo()!= null){
+                modifPage = (NumberPage) mWizardModel.findByKey(labels.getLargo());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, ventana.getLargo().toString());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+
+            }
+            if(ventana.getAncho()!= null){
+                modifPage = (NumberPage) mWizardModel.findByKey(labels.getAncho());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, ventana.getAncho().toString());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+            }
+            if(ventana.getLargo()!= null && ventana.getAncho()!= null){
+                modifPage = (LabelPage) mWizardModel.findByKey(labels.getTotalM2());
+                //dato = new Bundle();
+                //dato.putString(SIMPLE_DATA_KEY, String.valueOf(ventana.getAncho() * ventana.getLargo()));
+                //modifPage.resetData(dato);
+                modifPage.setHint(String.valueOf(ventana.getAncho() * ventana.getLargo()));
+                modifPage.setmVisible(true);
+            }
+            if(tieneValor(ventana.getAbierta())){
+                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAbierta());
+                MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + ventana.getAbierta() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+            }
+
+        }
+        estudiosAdapter.close();
     }
     
 	@Override

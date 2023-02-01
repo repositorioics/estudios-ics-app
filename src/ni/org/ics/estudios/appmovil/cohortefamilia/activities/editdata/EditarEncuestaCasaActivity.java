@@ -84,12 +84,91 @@ public class EditarEncuestaCasaActivity extends FragmentActivity implements
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
+
+        mWizardModel.registerListener(this);
+        mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(mPagerAdapter);
+        mStepPagerStrip = (StepPagerStrip) findViewById(R.id.strip);
+        mStepPagerStrip.setOnPageSelectedListener(new StepPagerStrip.OnPageSelectedListener() {
+            @Override
+            public void onPageStripSelected(int position) {
+                position = Math.min(mPagerAdapter.getCount() - 1, position);
+                if (mPager.getCurrentItem() != position) {
+                    mPager.setCurrentItem(position);
+                }
+            }
+        });
+
+        mNextButton = (Button) findViewById(R.id.next_button);
+        mPrevButton = (Button) findViewById(R.id.prev_button);
+
+        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                mStepPagerStrip.setCurrentPage(position);
+
+                if (mConsumePageSelectedEvent) {
+                    mConsumePageSelectedEvent = false;
+                    return; 
+                }
+
+                mEditingAfterReview = false;
+                updateBottomBar();
+            }
+        });
+
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
+                    DialogFragment dg = new DialogFragment() {
+                        @Override
+                        public Dialog onCreateDialog(Bundle savedInstanceState) {
+                            return new AlertDialog.Builder(getActivity())
+                                    .setMessage(R.string.submit_confirm_message)
+                                    .setPositiveButton(R.string.submit_confirm_button, new DialogInterface.OnClickListener() {
+                                    	@Override
+										public void onClick(DialogInterface arg0, int arg1) {
+                                    		saveData();
+										}
+                                    })
+                                    .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                                    	@Override
+										public void onClick(DialogInterface arg0, int arg1) {
+                                    		createDialog(EXIT);
+										}
+                                    })
+                                    .create();
+                        }
+                    };
+                    dg.show(getSupportFragmentManager(), "guardar_dialog");
+                } else {
+                    if (mEditingAfterReview) {
+                        mPager.setCurrentItem(mPagerAdapter.getCount() - 1);
+                    } else {
+                        mPager.setCurrentItem(mPager.getCurrentItem() + 1);
+                    }
+                }
+            }
+        });
+
+        mPrevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+            }
+        });
+        
+       onPageTreeChangedInitial();
+
+
         //Abre la base de datos
-		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		estudiosAdapter.open();
+        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+        estudiosAdapter.open();
         if (encuestaCasa != null) {
-        	Bundle dato = null;
-        	Page modifPage;
+            Bundle dato = null;
+            Page modifPage;
             modifPage = (NumberPage) mWizardModel.findByKey(labels.getCuantoCuartos());
             dato = new Bundle();
             dato.putString(SIMPLE_DATA_KEY, String.valueOf(encuestaCasa.getCantidadCuartos()));
@@ -641,82 +720,6 @@ public class EditarEncuestaCasaActivity extends FragmentActivity implements
             }
         }
         estudiosAdapter.close();
-        mWizardModel.registerListener(this);
-        mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(mPagerAdapter);
-        mStepPagerStrip = (StepPagerStrip) findViewById(R.id.strip);
-        mStepPagerStrip.setOnPageSelectedListener(new StepPagerStrip.OnPageSelectedListener() {
-            @Override
-            public void onPageStripSelected(int position) {
-                position = Math.min(mPagerAdapter.getCount() - 1, position);
-                if (mPager.getCurrentItem() != position) {
-                    mPager.setCurrentItem(position);
-                }
-            }
-        });
-
-        mNextButton = (Button) findViewById(R.id.next_button);
-        mPrevButton = (Button) findViewById(R.id.prev_button);
-
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                mStepPagerStrip.setCurrentPage(position);
-
-                if (mConsumePageSelectedEvent) {
-                    mConsumePageSelectedEvent = false;
-                    return; 
-                }
-
-                mEditingAfterReview = false;
-                updateBottomBar();
-            }
-        });
-
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
-                    DialogFragment dg = new DialogFragment() {
-                        @Override
-                        public Dialog onCreateDialog(Bundle savedInstanceState) {
-                            return new AlertDialog.Builder(getActivity())
-                                    .setMessage(R.string.submit_confirm_message)
-                                    .setPositiveButton(R.string.submit_confirm_button, new DialogInterface.OnClickListener() {
-                                    	@Override
-										public void onClick(DialogInterface arg0, int arg1) {
-                                    		saveData();
-										}
-                                    })
-                                    .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
-                                    	@Override
-										public void onClick(DialogInterface arg0, int arg1) {
-                                    		createDialog(EXIT);
-										}
-                                    })
-                                    .create();
-                        }
-                    };
-                    dg.show(getSupportFragmentManager(), "guardar_dialog");
-                } else {
-                    if (mEditingAfterReview) {
-                        mPager.setCurrentItem(mPagerAdapter.getCount() - 1);
-                    } else {
-                        mPager.setCurrentItem(mPager.getCurrentItem() + 1);
-                    }
-                }
-            }
-        });
-
-        mPrevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-            }
-        });
-        
-        onPageTreeChangedInitial(); 
     }
     
 	@Override

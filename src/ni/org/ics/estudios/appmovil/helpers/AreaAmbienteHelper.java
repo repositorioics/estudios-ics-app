@@ -40,7 +40,7 @@ public class AreaAmbienteHelper {
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.largo)) > 0) objeto.setLargo(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.largo)));
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2))>0) objeto.setTotalM2(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2)));
         //permitir 0
-        //if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
+        if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
         objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
         objeto.setNumeroCuarto(cursor.getString(cursor.getColumnIndex(MainDBConstants.numeroCuarto)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));

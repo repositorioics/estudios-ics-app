@@ -69,7 +69,7 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                     textView.setTypeface(null, Typeface.BOLD);
                 }
                 break;
-            case 1:
+           /* case 1:
                 if (existeencuestaCasa) {
                     textView.setTextColor(Color.BLUE);
                     textView.setText(textView.getText()+"\n"+ getContext().getResources().getString(R.string.done));
@@ -78,8 +78,8 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                 }
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_archive);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-			    break;
-            case 2:
+			    break;*/
+            case 1:
             	textView.setText(values[position] + "(" + numCuartos + ")");
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_share);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
@@ -88,7 +88,7 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                     textView.setTypeface(null, Typeface.BOLD);
                 }
 			    break;			    
-            case 3:
+            case 2:
             	textView.setText(values[position] + "(" + numAreas + ")");
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_selectall_holo_light);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
@@ -97,7 +97,7 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                     textView.setTypeface(null, Typeface.BOLD);
                 }
                 break;
-            case 4:
+            case 3:
             	textView.setText(values[position] + "(" + numTelefonos + ")");
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_call);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
@@ -122,7 +122,7 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_paste_holo_light);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;*/
-            case 5:
+            case 4:
             	textView.setText(values[position]);
                 img=getContext().getResources().getDrawable(R.drawable.ic_menu_chat_dashboard);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);

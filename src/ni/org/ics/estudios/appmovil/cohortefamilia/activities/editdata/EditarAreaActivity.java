@@ -78,68 +78,17 @@ public class EditarAreaActivity extends FragmentActivity implements
 		infoMovil = new DeviceInfo(EditarAreaActivity.this);
         casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
         areaCasa = (AreaAmbiente) getIntent().getExtras().getSerializable(Constants.AREA);
-		
+
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         mWizardModel = new AreaAmbienteCasaForm(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
         //Abre la base de datos
-		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		estudiosAdapter.open();
+	//	estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+	//	estudiosAdapter.open();
 
-        if (areaCasa != null) {
-        	Bundle dato = null;
-        	Page modifPage;
-            if (tieneValor(areaCasa.getTipo())){
-                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipo());
-                MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + areaCasa.getTipo() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_AREA'", null);
-                dato = new Bundle();
-                dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
-                modifPage.resetData(dato);
-                modifPage.setmEnabled(false);
-            }
-	        if(areaCasa.getLargo()!= null){
-	        	modifPage = (NumberPage) mWizardModel.findByKey(labels.getLargo());
-	        	dato = new Bundle();
-	        	dato.putString(SIMPLE_DATA_KEY, areaCasa.getLargo().toString());
-	        	modifPage.resetData(dato);
-	        }	
-	        if(areaCasa.getAncho()!= null){
-	        	modifPage = (NumberPage) mWizardModel.findByKey(labels.getAncho());
-		        dato = new Bundle();
-		        dato.putString(SIMPLE_DATA_KEY, areaCasa.getAncho().toString());
-		        modifPage.resetData(dato);
-	        }
-            if(areaCasa.getLargo()!= null && areaCasa.getAncho()!= null){
-                modifPage = (LabelPage) mWizardModel.findByKey(labels.getTotalM2());
-                modifPage.setHint(String.valueOf(areaCasa.getAncho() * areaCasa.getLargo()));
-                modifPage.setmVisible(true);
-            }
-
-            if(areaCasa.getTipo()!=null && areaCasa.getTipo().matches("banio")) {
-                Banio banio = estudiosAdapter.getBanio(MainDBConstants.codigo + "='" +areaCasa.getCodigo() + "'",null);
-                if (banio != null && banio.getConVentana()!=null){
-                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getConVentana());
-                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + banio.getConVentana() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                    dato = new Bundle();
-                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
-                    modifPage.resetData(dato);
-                    modifPage.setmVisible(true);
-                }
-            }else{
-                modifPage = (NumberPage) mWizardModel.findByKey(labels.getNumVentanas());
-                dato = new Bundle();
-                if(areaCasa.getNumVentanas()!= null) {
-                    dato.putString(SIMPLE_DATA_KEY, areaCasa.getNumVentanas().toString());
-                }
-                modifPage.resetData(dato);
-                modifPage.setmVisible(true);
-            }
-
-        }
-
-        estudiosAdapter.close();
+    //    estudiosAdapter.close();
         mWizardModel.registerListener(this);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -165,7 +114,7 @@ public class EditarAreaActivity extends FragmentActivity implements
 
                 if (mConsumePageSelectedEvent) {
                     mConsumePageSelectedEvent = false;
-                    return; 
+                    return;
                 }
 
                 mEditingAfterReview = false;
@@ -214,10 +163,78 @@ public class EditarAreaActivity extends FragmentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
-        
-        onPageTreeChangedInitial(); 
+
+        onPageTreeChangedInitial();
+
+        //Abre la base de datos
+        	estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+        	estudiosAdapter.open();
+        if (areaCasa != null) {
+            Bundle dato = null;
+            Page modifPage;
+            if (tieneValor(areaCasa.getTipo())){
+                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipo());
+                MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + areaCasa.getTipo() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_AREA'", null);
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                modifPage.resetData(dato);
+                modifPage.setmEnabled(false);
+            }
+            if(areaCasa.getLargo()!= null){
+                modifPage = (NumberPage) mWizardModel.findByKey(labels.getLargo());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, areaCasa.getLargo().toString());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+            }
+            if(areaCasa.getAncho()!= null){
+                modifPage = (NumberPage) mWizardModel.findByKey(labels.getAncho());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, areaCasa.getAncho().toString());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+            }
+            if(areaCasa.getLargo()!= null && areaCasa.getAncho()!= null){
+                modifPage = (LabelPage) mWizardModel.findByKey(labels.getTotalM2());
+                modifPage.setHint(String.valueOf(areaCasa.getAncho() * areaCasa.getLargo()));
+                modifPage.setmVisible(true);
+
+            }
+
+            if (areaCasa.getNumVentanas()!= null){
+                modifPage = (NumberPage) mWizardModel.findByKey(labels.getNumVentanas());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, areaCasa.getNumVentanas().toString());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+            }
+
+
+            if(areaCasa.getTipo()!=null && areaCasa.getTipo().matches("banio")) {
+                Banio banio = estudiosAdapter.getBanio(MainDBConstants.codigo + "='" +areaCasa.getCodigo() + "'",null);
+                if (banio != null && banio.getConVentana()!=null){
+                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getConVentana());
+                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + banio.getConVentana() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                    dato = new Bundle();
+                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                    modifPage.resetData(dato);
+                    modifPage.setmVisible(true);
+
+                }
+            }else{
+                modifPage = (NumberPage) mWizardModel.findByKey(labels.getNumVentanas());
+                dato = new Bundle();
+                if(areaCasa.getNumVentanas()!= null) {
+                    dato.putString(SIMPLE_DATA_KEY, areaCasa.getNumVentanas().toString());
+                }
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+            }
+
+        }
+        estudiosAdapter.close();
     }
-    
+
 	@Override
 	public void onBackPressed (){
 		createDialog(EXIT);

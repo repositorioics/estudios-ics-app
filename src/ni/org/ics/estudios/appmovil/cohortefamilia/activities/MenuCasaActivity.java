@@ -57,13 +57,13 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
     private boolean fromCasos = false;
 
     private final int OPCION_LISTA_PARTICIPANTES = 0;
-    private final int OPCION_ENCUESTA_CASA = 1;
-    private final int OPCION_LISTA_CUARTOS = 2;
-    private final int OPCION_LISTA_AREAS = 3;
-    private final int OPCION_LISTA_TELEFONOS = 4;
+   // private final int OPCION_ENCUESTA_CASA = 1;
+    private final int OPCION_LISTA_CUARTOS = 1;
+    private final int OPCION_LISTA_AREAS = 2;
+    private final int OPCION_LISTA_TELEFONOS = 3;
     //MA2020
     //private final int OPCION_ENCUESTA_CASASA = 5;
-    private final int OPCION_ENVIAR_CASA = 5;
+    private final int OPCION_ENVIAR_CASA = 4;
 
 	private EstudiosAdapter estudiosAdapter;
 
@@ -101,13 +101,13 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 						i.putExtras(arguments);
 						startActivity(i);
 			        	break;
-                    case OPCION_ENCUESTA_CASA:
+                /*    case OPCION_ENCUESTA_CASA:
                         if (existeencuestaCasa){
                             createDialogEditar(position);
                         }else {
                             createDialog(position);
                         }
-                        break;
+                        break;*/
                     case OPCION_LISTA_CUARTOS:
                     	if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
     					i = new Intent(getApplicationContext(),
@@ -208,7 +208,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
     private void createDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         switch(position){
-            case OPCION_ENCUESTA_CASA:
+        /*    case OPCION_ENCUESTA_CASA:
                 builder.setTitle(this.getString(R.string.confirm));
                 builder.setMessage(getString(R.string.confirm_house_survey) + "\n" + getString(R.string.code) + ": " + casaCHF.getCasa().getCodigo() + " " + casaCHF.getCasa().getNombre1JefeFamilia() + " " + casaCHF.getCasa().getApellido1JefeFamilia());
                 builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
@@ -224,7 +224,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                         dialog.dismiss();
                     }
                 });
-                break;
+                break;*/
             //MA2020
                 /*case OPCION_ENCUESTA_CASASA:
                 builder.setTitle(this.getString(R.string.confirm));
@@ -253,7 +253,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
     private void createDialogEditar(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         switch(position){
-            case OPCION_ENCUESTA_CASA:
+         /*  case OPCION_ENCUESTA_CASA:
                 builder.setTitle(this.getString(R.string.confirm));
                 builder.setMessage(getString(R.string.confirm_house_survey_edit) + "\n" + getString(R.string.code) + ": " + casaCHF.getCodigoCHF() + " " + casaCHF.getNombre1JefeFamilia() + " " + casaCHF.getApellido1JefeFamilia());
                 builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
@@ -269,7 +269,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                         dialog.dismiss();
                     }
                 });
-                break;
+                break;*/
             //MA2020
                 /*case OPCION_ENCUESTA_CASASA:
                 builder.setTitle(this.getString(R.string.confirm));
@@ -322,14 +322,14 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
             Intent i;
             try {
                 switch (position) {
-                    case OPCION_ENCUESTA_CASA:
+                 /*   case OPCION_ENCUESTA_CASA:
                     if (casaCHF != null) arguments.putSerializable(Constants.CASA, casaCHF);
                     i = new Intent(getApplicationContext(),
                             NuevaEncuestaCasaActivity.class);
                     i.putExtras(arguments);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
-                        break;
+                        break;*/
                     //MA2020
                         /*case OPCION_ENCUESTA_CASASA:
                         if (casaCHF != null) arguments.putSerializable(Constants.CASA, casaCHF);
@@ -376,7 +376,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
             try {
                 estudiosAdapter.open();
                 switch (position) {
-                    case OPCION_ENCUESTA_CASA:
+                  /*  case OPCION_ENCUESTA_CASA:
                         EncuestaCasa encuestaCasa = estudiosAdapter.getEncuestaCasa(EncuestasDBConstants.casa_chf + " = " + casaCHF.getCodigoCHF(), EncuestasDBConstants.casa_chf);
                         if (encuestaCasa != null) arguments.putSerializable(Constants.ENCUESTA, encuestaCasa);
                         i = new Intent(getApplicationContext(),
@@ -384,7 +384,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
                         i.putExtras(arguments);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
-                        break;
+                        break;*/
                     //MA2020
                         /*case OPCION_ENCUESTA_CASASA:
                         EncuestaCasaSA encuestaCasaSA = estudiosAdapter.getEncuestaCasaSA(SeroprevalenciaDBConstants.casa + " = " + casaCHF.getCasa().getCodigo(), null);

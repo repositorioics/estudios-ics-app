@@ -23,7 +23,7 @@
 
     <string-array name="menu_casa">
         <item>@string/participants</item>
-        <item>@string/new_survey_1</item>
+<!--        <item>@string/new_survey_1</item>-->
         <item>@string/rooms</item>
         <item>@string/environments</item>
         <item>@string/phones</item>

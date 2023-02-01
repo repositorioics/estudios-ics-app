@@ -86,41 +86,7 @@ public class EditarBanioActivity extends FragmentActivity implements
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
-        //Abre la base de datos
-		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		estudiosAdapter.open();
-        if (banio != null) {
-        	Bundle dato = null;
-        	Page modifPage;
-	        if(banio.getLargo()!= null){
-	        	modifPage = (NumberPage) mWizardModel.findByKey(labels.getLargo());
-	        	dato = new Bundle();
-	        	dato.putString(SIMPLE_DATA_KEY, banio.getLargo().toString());
-	        	modifPage.resetData(dato);
-	        }	
-	        if(banio.getAncho()!= null){
-	        	modifPage = (NumberPage) mWizardModel.findByKey(labels.getAncho());
-		        dato = new Bundle();
-		        dato.putString(SIMPLE_DATA_KEY, banio.getAncho().toString());
-		        modifPage.resetData(dato);
-		        modifPage.setmVisible(true);
-	        }
-            if(banio.getLargo()!= null && banio.getAncho()!= null){
-                modifPage = (LabelPage) mWizardModel.findByKey(labels.getTotalM2());
-                modifPage.setHint(String.valueOf(banio.getAncho() * banio.getLargo()));
-                modifPage.setmVisible(true);
-            }
-            if(tieneValor(banio.getConVentana())){
-                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getConVentana());
-                MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + banio.getConVentana() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                dato = new Bundle();
-                dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
-                modifPage.resetData(dato);
-                modifPage.setmVisible(true);
-            }
 
-        }
-        estudiosAdapter.close();
         mWizardModel.registerListener(this);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -196,7 +162,47 @@ public class EditarBanioActivity extends FragmentActivity implements
             }
         });
         
-        onPageTreeChangedInitial(); 
+        onPageTreeChangedInitial();
+
+
+        //Abre la base de datos
+        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+        estudiosAdapter.open();
+        if (banio != null) {
+            Bundle dato = null;
+            Page modifPage;
+            if(banio.getLargo()!= null){
+                modifPage = (NumberPage) mWizardModel.findByKey(labels.getLargo());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, banio.getLargo().toString());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+            }
+            if(banio.getAncho()!= null){
+                modifPage = (NumberPage) mWizardModel.findByKey(labels.getAncho());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, banio.getAncho().toString());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+            }
+            if(banio.getLargo()!= null && banio.getAncho()!= null){
+                modifPage = (LabelPage) mWizardModel.findByKey(labels.getTotalM2());
+                modifPage.setHint(String.valueOf(banio.getAncho() * banio.getLargo()));
+                modifPage.setmVisible(true);
+
+            }
+            if(tieneValor(banio.getConVentana())){
+                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getConVentana());
+                MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + banio.getConVentana() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+
+            }
+
+        }
+        estudiosAdapter.close();
     }
     
 	@Override

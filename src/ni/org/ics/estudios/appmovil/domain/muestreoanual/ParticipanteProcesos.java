@@ -77,6 +77,9 @@ public class ParticipanteProcesos implements Serializable {
     private String mxDenParteE;
     private String informacionRetiro;
 
+    //Indica si esta pendiente de la toma del perimetro abdominal
+    private String perimetroAbdominal;
+
     private MovilInfo movilInfo;
 
     public Integer getCodigo() {
@@ -533,6 +536,14 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setInformacionRetiro(String informacionRetiro) {
         this.informacionRetiro = informacionRetiro;
+    }
+
+    public String getPerimetroAbdominal() {
+        return perimetroAbdominal;
+    }
+
+    public void setPerimetroAbdominal(String perimetroAbdominal) {
+        this.perimetroAbdominal = perimetroAbdominal;
     }
 }
 

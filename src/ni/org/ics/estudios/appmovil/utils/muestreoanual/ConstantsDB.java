@@ -50,6 +50,7 @@ public class ConstantsDB {
     public static final String DATOSPARTOBB_TABLE = "partobb";
     public static final String NEWVAC_TABLE = "nuevas_vacunas";
     public static final String DOCS_TABLE = "documentacion";
+    public static final String PERIMETRO_ABDOMINAL_TABLE = "perimetroabdominal";
 
     //Campos roles
     //public static final String AUTH = "rol";
@@ -72,6 +73,8 @@ public class ConstantsDB {
     public static final String U_CASAZIKA = "casazika";
     public static final String U_TAMZIKA = "tamizajezika";
     public static final String U_PARTO = "datosparto";
+    //Usuario perimetro abdominal
+    public static final String U_PABDOMINAL = "pabdominal";
 
     //Campos casa
     public static final String COD_CASA = "codCasa";
@@ -941,6 +944,14 @@ public class ConstantsDB {
     public static final String fiebre = "fiebre";
     public static final String astenia = "astenia";
 
+    //Campos perimetro abdominal tabla perimetroabdominal
+    public static final String PABDOMINAL = "perimetroAbdominal";
+    public static final String FECHA = "fecha";
+    public static final String PABDOMINAL1 = "pabdominal1";
+    public static final String PABDOMINAL2 = "pabdominal2";
+    public static final String PABDOMINAL3 = "pabdominal3";
+    public static final String DIFPABDOMINAL = "difpabdominal";
+
     public static final String CREATE_USER_PERM_TABLE = "create table if not exists "
             + USER_PERM_TABLE + " ("
             + USERNAME + " text not null, "
@@ -958,6 +969,7 @@ public class ConstantsDB {
             + U_CASAZIKA + " boolean, "
             + U_TAMZIKA + " boolean, "
             + U_PARTO + " boolean, "
+            + U_PABDOMINAL + " boolean, "
             + "primary key (" + USERNAME + "));";
 
     public static final String CREATE_PARTPROC_TABLE = "create table if not exists "
@@ -1033,6 +1045,7 @@ public class ConstantsDB {
             + DELETED  + " boolean, "
             + REC1    + " integer, "
             + REC2    + " integer, "
+            + PABDOMINAL  + " text, "
             + "primary key (" + CODIGO + "));";
 
     public static final String CREATE_ENCCASA_TABLE = "create table if not exists "
@@ -1812,6 +1825,35 @@ public class ConstantsDB {
             + TODAY  + " date, "
             + "primary key (" + fechaDocumento + "," + CODIGO + "));";
 
+    public static final String CREATE_PAD_ABDOMINAL_TABLE = "create table if not exists "
+            + PERIMETRO_ABDOMINAL_TABLE + " ("
+            + CODIGO + " integer not null, "
+            + FECHA  + " date not null, "
+            + tomoMedidaSn  + " text, "
+            + razonNoTomoMedidas  + " text, "
+            + PABDOMINAL1 + " real, "
+            + PABDOMINAL2 + " real, "
+            + PABDOMINAL3 + " real, "
+            + DIFPABDOMINAL + " real, "
+            + estudiosAct + " text, "
+            + otrorecurso1  + " integer, "
+            + otrorecurso2  + " integer, "
+            + ID_INSTANCIA + " integer not null,"
+            + FILE_PATH + " text not null,"
+            + STATUS + " text not null, "
+            + WHEN_UPDATED + " text not null, "
+            + START  + " text, "
+            + END  + " text, "
+            + DEVICE_ID  + " text, "
+            + SIM_SERIAL + " text, "
+            + PHONE_NUMBER  + " text, "
+            + TODAY  + " date, "
+            + USUARIO  + " text, "
+            + DELETED  + " boolean, "
+            + REC1    + " integer, "
+            + REC2    + " integer, "
+            + "primary key (" + FECHA + "," + CODIGO + "));";
+
 
     /**BULCK INSERT*/
     public static final String INSERT_USER_PERM_TABLE = "insert into "
@@ -1830,8 +1872,9 @@ public class ConstantsDB {
             + U_CONS + ","
             + U_CASAZIKA + ","
             + U_TAMZIKA + ","
-            + U_PARTO
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + U_PARTO + ","
+            + U_PABDOMINAL
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static final String INSERT_PARTPROC_TABLE = "insert into "
             + PART_PROCESOS_TABLE + " ("
@@ -1904,8 +1947,9 @@ public class ConstantsDB {
             + USUARIO  + ","
             + DELETED  + ","
             + REC1    + ","
-            + REC2
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + REC2    + ","
+            + PABDOMINAL
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static final String INSERT_MUESTRA_TABLE = "insert into "
             + MUESTRA_TABLE + " ("

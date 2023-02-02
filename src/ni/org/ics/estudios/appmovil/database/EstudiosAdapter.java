@@ -187,6 +187,9 @@ public class EstudiosAdapter {
 			db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_POB_TABLE);
 			db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE);
 
+			/*Nueva tabla perimetroabdominal fecha creacion 27/01/2023 Ing. Santiago Carballo*/
+			db.execSQL(ConstantsDB.CREATE_PAD_ABDOMINAL_TABLE);
+
 		}
 
 		@Override
@@ -428,6 +431,12 @@ public class EstudiosAdapter {
 			if (oldVersion==45) {
 				//sigue Entomologia 2022
 				db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE);
+			}
+			if (oldVersion==46) {
+				/*Nueva tabla perimetroabdominal fecha creacion 27/01/2023 Ing. Santiago Carballo*/
+				db.execSQL(ConstantsDB.CREATE_PAD_ABDOMINAL_TABLE);
+				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.PABDOMINAL + " text");
+				db.execSQL("ALTER TABLE " + ConstantsDB.USER_PERM_TABLE + " ADD COLUMN " + ConstantsDB.U_PABDOMINAL + " text");
 			}
 		}
 	}
@@ -6859,12 +6868,18 @@ public class EstudiosAdapter {
         mEncSat.setAtenPerLab(encsats.getInt(encsats.getColumnIndex(ConstantsDB.ATENPERLAB)));
         mEncSat.setExplDxEnf(encsats.getInt(encsats.getColumnIndex(ConstantsDB.EXPLDXENF)));
         mEncSat.setFludenSN(encsats.getInt(encsats.getColumnIndex(ConstantsDB.FLUDENSN)));
-        mEncSat.setFluConImp(encsats.getInt(encsats.getColumnIndex(ConstantsDB.FLUCONIMP)));
+        /*mEncSat.setFluConImp(encsats.getInt(encsats.getColumnIndex(ConstantsDB.FLUCONIMP)));
         mEncSat.setDenConImp(encsats.getInt(encsats.getColumnIndex(ConstantsDB.DENCONIMP)));
         mEncSat.setExplPeligEnf(encsats.getInt(encsats.getColumnIndex(ConstantsDB.EXPLPELIGENF)));
-        mEncSat.setExpMedCuid(encsats.getInt(encsats.getColumnIndex(ConstantsDB.EXPMEDCUID)));
+        mEncSat.setExpMedCuid(encsats.getInt(encsats.getColumnIndex(ConstantsDB.EXPMEDCUID)));*/
         if(!encsats.isNull(encsats.getColumnIndex(ConstantsDB.otrorecurso1))) mEncSat.setOtrorecurso1(encsats.getInt(encsats.getColumnIndex(ConstantsDB.otrorecurso1)));
         Boolean borrado = encsats.getInt(encsats.getColumnIndex(ConstantsDB.DELETED))>0;
+		if (encsats.getInt(encsats.getColumnIndex(ConstantsDB.FLUDENSN)) > 0) {
+			mEncSat.setFluConImp(encsats.getInt(encsats.getColumnIndex(ConstantsDB.FLUCONIMP)));/*null cuando es FLUDENSN <= 0*/
+			mEncSat.setDenConImp(encsats.getInt(encsats.getColumnIndex(ConstantsDB.DENCONIMP)));/*null cuando es FLUDENSN <= 0*/
+			mEncSat.setExplPeligEnf(encsats.getInt(encsats.getColumnIndex(ConstantsDB.EXPLPELIGENF)));/*null cuando es FLUDENSN <= 0*/
+			mEncSat.setExpMedCuid(encsats.getInt(encsats.getColumnIndex(ConstantsDB.EXPMEDCUID)));/*null cuando es FLUDENSN <= 0*/
+		}
         mEncSat.setMovilInfo(new MovilInfo(encsats.getInt(encsats.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
                 encsats.getString(encsats.getColumnIndex(ConstantsDB.FILE_PATH)),
                 encsats.getString(encsats.getColumnIndex(ConstantsDB.STATUS)),
@@ -8229,6 +8244,221 @@ public class EstudiosAdapter {
 		if (!cursor.isClosed()) cursor.close();
 		return mCuestionarioPuntoClaves;
 	}
+
+	/**METODOS PARA PerimetroAbdominal**/
+
+	/**
+	 * Inserta un PerimetroAbdominal en la base de datos
+	 *
+	 * @param perimetroAbdominal
+	 *            Objeto PerimetroAbdominal que contiene la informacion
+	 *
+	 */
+	public void crearPerimetroAbdominal(PerimetroAbdominal perimetroAbdominal) {
+		ContentValues cv = new ContentValues();
+		cv.put(ConstantsDB.CODIGO, perimetroAbdominal.getPaId().getCodigo());
+		cv.put(ConstantsDB.FECHA, perimetroAbdominal.getPaId().getFecha().getTime());
+		cv.put(ConstantsDB.PABDOMINAL1, perimetroAbdominal.getPabdominal1());
+		cv.put(ConstantsDB.PABDOMINAL2, perimetroAbdominal.getPabdominal2());
+		cv.put(ConstantsDB.PABDOMINAL3, perimetroAbdominal.getPabdominal3());
+		cv.put(ConstantsDB.DIFPABDOMINAL, perimetroAbdominal.getDifpabdominal());
+		cv.put(ConstantsDB.tomoMedidaSn, perimetroAbdominal.getTomoMedidaSn());
+		cv.put(ConstantsDB.razonNoTomoMedidas, perimetroAbdominal.getRazonNoTomoMedidas());
+		cv.put(ConstantsDB.estudiosAct, perimetroAbdominal.getEstudiosAct());
+		cv.put(ConstantsDB.otrorecurso1, perimetroAbdominal.getOtrorecurso1());
+		cv.put(ConstantsDB.otrorecurso2, perimetroAbdominal.getOtrorecurso2());
+		cv.put(ConstantsDB.ID_INSTANCIA, perimetroAbdominal.getMovilInfo().getIdInstancia());
+		cv.put(ConstantsDB.FILE_PATH, perimetroAbdominal.getMovilInfo().getInstancePath());
+		cv.put(ConstantsDB.STATUS, perimetroAbdominal.getMovilInfo().getEstado());
+		cv.put(ConstantsDB.WHEN_UPDATED, perimetroAbdominal.getMovilInfo().getUltimoCambio());
+		cv.put(ConstantsDB.START, perimetroAbdominal.getMovilInfo().getStart());
+		cv.put(ConstantsDB.END, perimetroAbdominal.getMovilInfo().getEnd());
+		cv.put(ConstantsDB.DEVICE_ID, perimetroAbdominal.getMovilInfo().getDeviceid());
+		cv.put(ConstantsDB.SIM_SERIAL, perimetroAbdominal.getMovilInfo().getSimserial());
+		cv.put(ConstantsDB.PHONE_NUMBER, perimetroAbdominal.getMovilInfo().getPhonenumber());
+		cv.put(ConstantsDB.TODAY, perimetroAbdominal.getMovilInfo().getToday().getTime());
+		cv.put(ConstantsDB.USUARIO, perimetroAbdominal.getMovilInfo().getUsername());
+		cv.put(ConstantsDB.DELETED, perimetroAbdominal.getMovilInfo().getEliminado());
+		cv.put(ConstantsDB.REC1, perimetroAbdominal.getMovilInfo().getRecurso1());
+		cv.put(ConstantsDB.REC2, perimetroAbdominal.getMovilInfo().getRecurso2());
+		mDb.insertOrThrow(ConstantsDB.PERIMETRO_ABDOMINAL_TABLE, null, cv);
+	}
+
+	/**
+	 * Borra todas las RecepcionBHC de la base de datos
+	 *
+	 * @return verdadero o falso
+	 */
+	public boolean borrarPerimetroAbdominal() {
+		return mDb.delete(ConstantsDB.PERIMETRO_ABDOMINAL_TABLE, null, null) > 0;
+	}
+
+	/********************************************************/
+	/**
+	 * Obtiene Lista todas los Permietros Abdominales sin enviar
+	 *
+	 * @return lista con Permietros Abdominales
+	 */
+	public List<PerimetroAbdominal> getListaPerimetrosAbdominalesEnviar() throws SQLException {
+		Cursor cPabdominal = null;
+		List<PerimetroAbdominal> mPabdominal = new ArrayList<PerimetroAbdominal>();
+		cPabdominal = mDb.query(true, ConstantsDB.PERIMETRO_ABDOMINAL_TABLE, null,
+				ConstantsDB.STATUS + "= '" + Constants.STATUS_NOT_SUBMITTED+ "'", null, null, null, null, null);
+		if (cPabdominal != null && cPabdominal.getCount() > 0) {
+			cPabdominal.moveToFirst();
+			mPabdominal.clear();
+			do{
+				mPabdominal.add(crearPermietroAbdominal(cPabdominal));
+			} while (cPabdominal.moveToNext());
+		}
+		cPabdominal.close();
+		return mPabdominal;
+	}
+
+	/**
+	 * Obtiene Lista todas Permietros Abdominales de un codigo
+	 *
+	 * @return lista
+	 */
+	public ArrayList<PerimetroAbdominal> getListaPerimetrosAbdominales(Integer codigo) throws SQLException {
+		Cursor cPabdominal = null;
+		ArrayList<PerimetroAbdominal> mPabdominal = new ArrayList<PerimetroAbdominal>();
+		cPabdominal = mDb.query(true, ConstantsDB.PERIMETRO_ABDOMINAL_TABLE, null,
+				ConstantsDB.CODIGO + "=" + codigo, null, null, null, null, null);
+		if (cPabdominal != null && cPabdominal.getCount() > 0) {
+			cPabdominal.moveToFirst();
+			mPabdominal.clear();
+			do{
+				mPabdominal.add(crearPermietroAbdominal(cPabdominal));
+			} while (cPabdominal.moveToNext());
+		}
+		cPabdominal.close();
+		return mPabdominal;
+	}
+
+	public ArrayList<PerimetroAbdominal> getListaPerimetrosAbdominales() throws SQLException {
+		Cursor cPabdominal = null;
+		ArrayList<PerimetroAbdominal> mPabdominal = new ArrayList<PerimetroAbdominal>();
+		cPabdominal = mDb.query(true, ConstantsDB.PERIMETRO_ABDOMINAL_TABLE, null,
+				null, null, null, null, ConstantsDB.CODIGO + " , " +ConstantsDB.TODAY, null);
+		if (cPabdominal != null && cPabdominal.getCount() > 0) {
+			cPabdominal.moveToFirst();
+			mPabdominal.clear();
+			do{
+				mPabdominal.add(crearPermietroAbdominal(cPabdominal));
+			} while (cPabdominal.moveToNext());
+		}
+		cPabdominal.close();
+		return mPabdominal;
+	}
+
+	public ArrayList<PerimetroAbdominal> getListaPerimetrosAbdominalesHoy() throws SQLException {
+		Cursor cPabdominal = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateWithoutTime = null;
+		try {
+			dateWithoutTime = sdf.parse(sdf.format(new Date()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Timestamp timeStamp = new Timestamp(dateWithoutTime.getTime());
+		ArrayList<PerimetroAbdominal> mPabdominal = new ArrayList<PerimetroAbdominal>();
+		cPabdominal = mDb.query(true, ConstantsDB.PERIMETRO_ABDOMINAL_TABLE, null,
+				ConstantsDB.TODAY + "=" + timeStamp.getTime(), null, null, null, ConstantsDB.CODIGO + " , " +ConstantsDB.TODAY, null);
+		if (cPabdominal != null && cPabdominal.getCount() > 0) {
+			cPabdominal.moveToFirst();
+			mPabdominal.clear();
+			do{
+				mPabdominal.add(crearPermietroAbdominal(cPabdominal));
+			} while (cPabdominal.moveToNext());
+		}
+		cPabdominal.close();
+		return mPabdominal;
+	}
+
+
+	/**
+	 * Crea un Perimetro Abdominal
+	 *
+	 * @return PerimetroAbdomunal
+	 */
+	public PerimetroAbdominal crearPermietroAbdominal(Cursor perimetroAbdominal) {
+		PerimetroAbdominal mPabdominal = new PerimetroAbdominal();
+		Date fecha = new Date(perimetroAbdominal.getLong(perimetroAbdominal.getColumnIndex(ConstantsDB.TODAY)));
+		PerimetroAbdominalId perimetroAbdominalId = new PerimetroAbdominalId();
+		perimetroAbdominalId.setCodigo(perimetroAbdominal.getInt(perimetroAbdominal.getColumnIndex(ConstantsDB.CODIGO)));
+		perimetroAbdominalId.setFecha(new Date(perimetroAbdominal.getLong(perimetroAbdominal.getColumnIndex(ConstantsDB.FECHA))));
+
+		mPabdominal.setPaId(perimetroAbdominalId);
+
+		if(!perimetroAbdominal.isNull(perimetroAbdominal.getColumnIndex(ConstantsDB.PABDOMINAL1))) mPabdominal.setPabdominal1(perimetroAbdominal.getDouble(perimetroAbdominal.getColumnIndex(ConstantsDB.PABDOMINAL1)));
+		if(!perimetroAbdominal.isNull(perimetroAbdominal.getColumnIndex(ConstantsDB.PABDOMINAL2))) mPabdominal.setPabdominal2(perimetroAbdominal.getDouble(perimetroAbdominal.getColumnIndex(ConstantsDB.PABDOMINAL2)));
+		if(!perimetroAbdominal.isNull(perimetroAbdominal.getColumnIndex(ConstantsDB.PABDOMINAL3))) mPabdominal.setPabdominal3(perimetroAbdominal.getDouble(perimetroAbdominal.getColumnIndex(ConstantsDB.PABDOMINAL3)));
+		if(!perimetroAbdominal.isNull(perimetroAbdominal.getColumnIndex(ConstantsDB.DIFPABDOMINAL))) mPabdominal.setDifpabdominal(perimetroAbdominal.getDouble(perimetroAbdominal.getColumnIndex(ConstantsDB.DIFPABDOMINAL)));
+		mPabdominal.setTomoMedidaSn(perimetroAbdominal.getString(perimetroAbdominal.getColumnIndex(ConstantsDB.tomoMedidaSn)));
+		mPabdominal.setRazonNoTomoMedidas(perimetroAbdominal.getString(perimetroAbdominal.getColumnIndex(ConstantsDB.razonNoTomoMedidas)));
+		if(!perimetroAbdominal.isNull(perimetroAbdominal.getColumnIndex(ConstantsDB.otrorecurso1))) mPabdominal.setOtrorecurso1(perimetroAbdominal.getInt(perimetroAbdominal.getColumnIndex(ConstantsDB.otrorecurso1)));
+		if(!perimetroAbdominal.isNull(perimetroAbdominal.getColumnIndex(ConstantsDB.otrorecurso2))) mPabdominal.setOtrorecurso2(perimetroAbdominal.getInt(perimetroAbdominal.getColumnIndex(ConstantsDB.otrorecurso2)));
+		mPabdominal.setEstudiosAct(perimetroAbdominal.getString(perimetroAbdominal.getColumnIndex(ConstantsDB.estudiosAct)));//MA2020
+
+		Boolean borrado = perimetroAbdominal.getInt(perimetroAbdominal.getColumnIndex(ConstantsDB.DELETED))>0;
+		mPabdominal.setMovilInfo(new MovilInfo(perimetroAbdominal.getInt(perimetroAbdominal.getColumnIndex(ConstantsDB.ID_INSTANCIA)),
+				perimetroAbdominal.getString(perimetroAbdominal.getColumnIndex(ConstantsDB.FILE_PATH)),
+				perimetroAbdominal.getString(perimetroAbdominal.getColumnIndex(ConstantsDB.STATUS)),
+				perimetroAbdominal.getString(perimetroAbdominal.getColumnIndex(ConstantsDB.WHEN_UPDATED)),
+				perimetroAbdominal.getString(perimetroAbdominal.getColumnIndex(ConstantsDB.START)),
+				perimetroAbdominal.getString(perimetroAbdominal.getColumnIndex(ConstantsDB.END)),
+				perimetroAbdominal.getString(perimetroAbdominal.getColumnIndex(ConstantsDB.DEVICE_ID)),
+				perimetroAbdominal.getString(perimetroAbdominal.getColumnIndex(ConstantsDB.SIM_SERIAL)),
+				perimetroAbdominal.getString(perimetroAbdominal.getColumnIndex(ConstantsDB.PHONE_NUMBER)),
+				fecha,
+				perimetroAbdominal.getString(perimetroAbdominal.getColumnIndex(ConstantsDB.USUARIO)),
+				borrado,
+				perimetroAbdominal.getInt(perimetroAbdominal.getColumnIndex(ConstantsDB.REC1)),
+				perimetroAbdominal.getInt(perimetroAbdominal.getColumnIndex(ConstantsDB.REC2))));
+		return mPabdominal;
+	}
+
+	/**
+	 * Actualiza la base de datos.
+	 *
+	 *
+	 */
+	public boolean updatePermietroAbdominal(PerimetroAbdominal perimetroAbdominal) {
+		ContentValues cv = new ContentValues();
+		cv.put(ConstantsDB.STATUS, perimetroAbdominal.getMovilInfo().getEstado());
+		return mDb.update(ConstantsDB.PERIMETRO_ABDOMINAL_TABLE, cv,
+				ConstantsDB.CODIGO + "=" + perimetroAbdominal.getPaId().getCodigo() + " and " +
+						ConstantsDB.FECHA + "=" + perimetroAbdominal.getPaId().getFecha().getTime(), null) > 0;
+	}
+
+	/**
+	 * Obtiene Lista todos los Perimetros Abdominales sin enviar
+	 *
+	 * @return lista con PerimetroAbdominal
+	 */
+	public List<PerimetroAbdominal> getListaPerimetroAbdominalSinEnviar() throws SQLException {
+		Cursor pAbdominal = null;
+		List<PerimetroAbdominal> mPabdominal = new ArrayList<PerimetroAbdominal>();
+		pAbdominal = mDb.query(true, ConstantsDB.PERIMETRO_ABDOMINAL_TABLE, null,
+				ConstantsDB.STATUS + "= '" + Constants.STATUS_NOT_SUBMITTED+ "'", null, null, null, null, null);
+		if (pAbdominal != null && pAbdominal.getCount() > 0) {
+			pAbdominal.moveToFirst();
+			mPabdominal.clear();
+			do{
+				mPabdominal.add(crearPermietroAbdominal(pAbdominal));
+			} while (pAbdominal.moveToNext());
+		}
+		pAbdominal.close();
+		return mPabdominal;
+	}
+	/********************************************************/
+	/********************************************************/
+	/********************************************************/
+	/********************************************************/
+
+
 	/*****FIN ENTOMOLOGIA****/
 	public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) throws Exception {
 		if (null == list || list.size() <= 0) {

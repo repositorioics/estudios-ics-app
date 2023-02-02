@@ -67,6 +67,9 @@ public class UploadAllTask extends UploadTask {
     private List<CuestionarioCovid19> mCuestionariosCovid19 = new ArrayList<CuestionarioCovid19>();
     private List<ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra> mMuestrasAdiCovid19 = new ArrayList<ni.org.ics.estudios.appmovil.domain.cohortefamilia.Muestra>();
 
+    //Perimetro Abdominal
+    private List<PerimetroAbdominal> mPabdominal = new ArrayList<PerimetroAbdominal>();
+
     private String url = null;
     private String username = null;
     private String password = null;
@@ -431,6 +434,16 @@ public class UploadAllTask extends UploadTask {
                 e1.printStackTrace();
                 return e1.getLocalizedMessage();
             }
+            //Perimetro Abdominal
+            try {
+                error = cargarPerimetroAbdominal(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
             if (noHayDatosEnviar()) {
                 error = Constants.NO_DATA;
             }
@@ -475,7 +488,9 @@ public class UploadAllTask extends UploadTask {
                 mObsequiosGeneral.size() <= 0 &&
                 mParticipantesCovid19.size() <= 0 &&
                 mCuestionariosCovid19.size() <= 0 &&
-                mMuestrasAdiCovid19.size() <= 0;
+                mMuestrasAdiCovid19.size() <= 0 &&
+                //Perimetro Abdominal
+                mPabdominal.size() <= 0;
     }
 
     private void getTamizajes(){
@@ -2292,5 +2307,61 @@ public class UploadAllTask extends UploadTask {
             return e.getMessage();
         }
 
+    }
+
+    /***************************************************/
+    /*************** Perimetro Abdominal ***************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarPerimetroAbdominal(String url, String username,
+                                              String password) throws Exception {
+        try {
+            getPerimetroAbdominal();
+            if(mPabdominal.size()>0){
+                // La URL de la solicitud POST
+                savePerimetroAbdominal(Constants.STATUS_SUBMITTED);
+                final String urlRequest = url + "/movil/perimetroabdominal";
+                PerimetroAbdominal[] envio = mPabdominal.toArray(new PerimetroAbdominal[mPabdominal.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<PerimetroAbdominal[]> requestEntity =
+                        new HttpEntity<PerimetroAbdominal[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    savePerimetroAbdominal(Constants.STATUS_NOT_SUBMITTED);
+                }
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            savePerimetroAbdominal(Constants.STATUS_NOT_SUBMITTED);
+            return e.getMessage();
+        }
+
+    }
+
+    private void savePerimetroAbdominal(String estado) {
+        int c = mPabdominal.size();
+        for (PerimetroAbdominal pab : mPabdominal) {
+            pab.getMovilInfo().setEstado(estado);
+            estudioAdapter.updatePermietroAbdominal(pab);
+            publishProgress("Actualizando los perimetros abdominales", Integer.valueOf(mPabdominal.indexOf(pab)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+    }
+
+    private void getPerimetroAbdominal(){
+        mPabdominal = estudioAdapter.getListaPerimetroAbdominalSinEnviar();
     }
 }

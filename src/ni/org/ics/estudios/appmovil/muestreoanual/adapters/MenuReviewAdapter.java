@@ -31,11 +31,14 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
     private final int numEncCasaChf;
     //MA2020 private final int numEncCasaSa;
     //MA2020 private final int numEncPartSa;
+
+    private final int numPabdominal;
+
 	public MenuReviewAdapter(Context context, int textViewResourceId,
 			String[] values, int visitas, int pyts
 			, int ecasa, int epart, int elact, int vacunas, int encsats
 			, int muestras, int obsequios, int zikas, int partos, int datoscasas, int docs
-            , int ecasachf) {
+            , int ecasachf, int pAbdominal) {
 		super(context, textViewResourceId, values);
 		this.values = values;
 		this.numVisitas=visitas;
@@ -54,6 +57,7 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
         this.numEncCasaChf = ecasachf;
         //MA2020 this.numEncCasaSa = numEncCasaSa;
         //MA2020 this.numEncPartSa = numEncPartSa;
+        this.numPabdominal = pAbdominal; //Perimetro Abdominal
 	}
 
 	@Override
@@ -201,6 +205,14 @@ public class MenuReviewAdapter extends ArrayAdapter<String> {
                     textView.setTextColor(Color.RED);
                 }
                 break;*/
+            case 14:
+                img = getContext().getResources().getDrawable(R.drawable.ic_pesotalla);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                textView.setText(values[position] + "(" + numPabdominal + ")");
+                if (numPabdominal < 1) {
+                    textView.setTextColor(Color.RED);
+                }
+                break;
 
             default:
                 img = getContext().getResources().getDrawable(R.drawable.ic_cohorte);

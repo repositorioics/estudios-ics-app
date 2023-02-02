@@ -92,6 +92,8 @@ public class UserSistemaHelper {
         cv.put(ConstantsDB.U_CASAZIKA, userPermissions.getCasazika());
         cv.put(ConstantsDB.U_TAMZIKA, userPermissions.getTamizajezika());
         cv.put(ConstantsDB.U_PARTO, userPermissions.getDatosparto());
+        //Perimetro Abdominal
+        cv.put(ConstantsDB.U_PABDOMINAL, userPermissions.getpAbdominal());
         return cv;
     }
 
@@ -116,6 +118,8 @@ public class UserSistemaHelper {
         Boolean tamizajezika = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_TAMZIKA)) > 0;
         Boolean casazika = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_CASAZIKA)) > 0;
         Boolean parto = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_PARTO)) > 0;
+        //Perimetro Abdominal
+        Boolean pAbdominal = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_PABDOMINAL)) > 0;
         mUser.setEncuestaCasa(enCasa);
         mUser.setEncuestaParticipante(enPart);
         mUser.setEncuestaLactancia(enLact);
@@ -129,6 +133,7 @@ public class UserSistemaHelper {
         mUser.setTamizajezika(tamizajezika);
         mUser.setCasazika(casazika);
         mUser.setDatosparto(parto);
+        mUser.setpAbdominal(pAbdominal);
         return mUser;
     }
 
@@ -169,6 +174,8 @@ public class UserSistemaHelper {
         stat.bindLong(13, (userPermissions.getCasazika()?1:0));
         stat.bindLong(14, (userPermissions.getTamizajezika()?1:0));
         stat.bindLong(15, (userPermissions.getDatosparto()?1:0));
+        //Perimetro Abdominal
+        stat.bindLong(16, (userPermissions.getpAbdominal()?1:0));
     }
 
     public static void bindString(SQLiteStatement stat, int index, String value){

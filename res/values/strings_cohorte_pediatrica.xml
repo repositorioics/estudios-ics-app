@@ -159,4 +159,9 @@
 
     <string name="photograph_notfound">No se encontró fotografía para el código <xliff:g id="code">%1$s</xliff:g></string>
 
+    <!--Perimetro Abdominal-->
+    <string name="info_pabdominal">Perimetro Abdominal</string>
+    <string name="verify_pabdominal">Agregar perimetro abdominal?</string>
+    <string name="pabdominal_missing">Realizar perimetro abdominal</string>
+
 </resources>

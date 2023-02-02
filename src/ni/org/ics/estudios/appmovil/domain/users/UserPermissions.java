@@ -23,6 +23,7 @@ public class UserPermissions {
 	private Boolean casazika=false;
 	private Boolean tamizajezika=false;
 	private Boolean datosparto=false;
+	private Boolean pAbdominal=false;
 
 	public String getUsername() {
 		return username;
@@ -127,6 +128,14 @@ public class UserPermissions {
 	}
 	public void setDatosparto(Boolean datosparto) {
 		this.datosparto = datosparto;
+	}
+
+	public Boolean getpAbdominal() {
+		return pAbdominal;
+	}
+
+	public void setpAbdominal(Boolean pAbdominal) {
+		this.pAbdominal = pAbdominal;
 	}
 
 }

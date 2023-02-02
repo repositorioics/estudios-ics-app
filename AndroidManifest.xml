@@ -464,6 +464,9 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".entomologia.activities.NuevoCuestionarioPuntoClaveActivity"
                   android:screenOrientation="portrait" />
+
+        <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewPabdominalActivity"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

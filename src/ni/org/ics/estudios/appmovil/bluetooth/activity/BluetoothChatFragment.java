@@ -656,7 +656,9 @@ public class BluetoothChatFragment extends Fragment {
                 mParticipantesProc.getMovilInfo().getEstado()+"',null,null,null,'"+
                 mParticipantesProc.getMovilInfo().getDeviceid()+"',null,null,"+
                 mParticipantesProc.getMovilInfo().getToday().getTime()+",'"+
-                mParticipantesProc.getMovilInfo().getUsername()+"',0,0,0)";
+                mParticipantesProc.getMovilInfo().getUsername()+"',0,0,0)"+
+                mParticipantesProc.getPerimetroAbdominal()+"','"; //Perimetro Abdominal
+
         sendMessage(insertParticipanteProcSQL);
     }
 

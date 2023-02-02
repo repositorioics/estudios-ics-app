@@ -51,6 +51,9 @@ public class DownloadAllTask extends DownloadTask {
     private List<TempPbmc> mTempPbmcs = null;
     private List<EncuestaSatisfaccion> mEncuestaSatisfaccions = null;
 
+    //Permietro Abdominal
+    private List<PerimetroAbdominal> mPabdominal = null;
+
     private EstudiosAdapter ca = null;
 
     private static final String NO_PERMISSION="No tiene acceso a esta opción";
@@ -679,6 +682,33 @@ public class DownloadAllTask extends DownloadTask {
                     // close db and stream
                     //ca.close();
                 }
+                /*---------------------------------------------------*/
+                try {
+                    error = descargarPabdominal();
+                    if (error != null) {
+                        return error;
+                    }
+                } catch (Exception e) {
+                    // Regresa error al descargar
+                    e.printStackTrace();
+                    return e.getLocalizedMessage();
+                }
+
+                if (mPabdominal != null) {
+                    // open db and clean entries
+                    ////ca.open();
+                    ca.borrarTodasPT();
+                    // download and insert
+                    try {
+                        addPabdominal(mPabdominal);
+                    } catch (Exception e) {
+                        // Regresa error al insertar
+                        e.printStackTrace();
+                        return e.getLocalizedMessage();
+                    }
+                    // close db and stream
+                    //ca.close();
+                }
             } else {
                 //ca.open();
                 ca.borrarTodasEncCasas();
@@ -1283,6 +1313,20 @@ public class DownloadAllTask extends DownloadTask {
 
     }
 
+    private void addPabdominal(List<PerimetroAbdominal> pesos) throws Exception {
+
+        int v = pesos.size();
+
+        ListIterator<PerimetroAbdominal> iter = pesos.listIterator();
+
+        while (iter.hasNext()){
+            ca.crearPerimetroAbdominal(iter.next());
+            publishProgress("Perimetro Abdominal", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                    .valueOf(v).toString());
+        }
+
+    }
+
     // url, username, password
     protected String descargarEncCasas() throws Exception {
         try {
@@ -1848,6 +1892,41 @@ public class DownloadAllTask extends DownloadTask {
 
             // convert the array to a list and return it
             mEncuestaSatisfaccions = Arrays.asList(responseEntity.getBody());
+            return null;
+
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getLocalizedMessage();
+        }
+    }
+
+    // url, username, password
+    protected String descargarPabdominal() throws Exception {
+        try {
+            // The URL for making the GET request
+            final String urlRequest = url + "/movil/perimetroAbdominal";
+
+            // Set the Accept header for "application/json"
+            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+            HttpHeaders requestHeaders = new HttpHeaders();
+            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+            requestHeaders.setAccept(acceptableMediaTypes);
+            requestHeaders.setAuthorization(authHeader);
+
+            // Populate the headers in an HttpEntity object to use for the request
+            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+
+            // Perform the HTTP GET request
+            ResponseEntity<PerimetroAbdominal[]> responseEntity = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    PerimetroAbdominal[].class);
+
+            // convert the array to a list and return it
+            mPabdominal = Arrays.asList(responseEntity.getBody());
             return null;
 
         } catch (Exception e) {

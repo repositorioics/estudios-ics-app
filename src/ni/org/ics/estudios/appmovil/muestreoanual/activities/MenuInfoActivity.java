@@ -78,6 +78,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private ArrayList<DatosCoordenadas> mDatosCoordenadas = new ArrayList<DatosCoordenadas>();
     private ArrayList<ParticipanteSeroprevalencia> mConSA = new ArrayList<ParticipanteSeroprevalencia>();
 
+    //Perimetro Abdominal
+    private ArrayList<PerimetroAbdominal> mPabdominal = new ArrayList<PerimetroAbdominal>();
+
     private String username;
     private SharedPreferences settings;
     private GridView gridView;
@@ -121,6 +124,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private MenuItem mxDenParteEItem;
     private MenuItem documentosItem;
     private MenuItem consChf;//MA2022
+
+    //Perimetro Abdominal
+    private MenuItem pAbdominalItem;
 
 
     private EstudiosAdapter estudiosAdapter;
@@ -304,6 +310,12 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
+                    case 17:
+                        arguments.putString(Constants.TITLE, getString(R.string.info_pabdominal));
+                        if (mPabdominal!=null) arguments.putSerializable(Constants.OBJECTO , mPabdominal);
+                        i = new Intent(getApplicationContext(),
+                                ListReviewActivity.class);
+                        break;
                     default:
                         arguments.putString(Constants.TITLE, getString(R.string.info_participante));
                         if (mParticipante!=null) arguments.putSerializable(Constants.OBJECTO , mParticipante);
@@ -356,6 +368,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             mxDenParteEItem = menu.findItem(R.id.MX_PARTEE_DEN);
             documentosItem = menu.findItem(R.id.DOC);
             consChf = menu.findItem(R.id.CONS_CHF);
+            pAbdominalItem = menu.findItem(R.id.PABDOMINAL);
         }
         return true;
     }
@@ -1068,6 +1081,28 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     toast.show();
                 }
                 return true;
+                //Perimetro Abdominal
+            case R.id.PABDOMINAL:
+                if(mUser.getpAbdominal()){
+                    if(mParticipante.getProcesos().getPerimetroAbdominal().matches("Si")){
+                        i = new Intent(getApplicationContext(),
+                                NewPabdominalActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(ConstantsDB.COD_CASA, mParticipante.getCasa().getCodigo());
+                        i.putExtra(ConstantsDB.CODIGO, mParticipante.getCodigo());
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                        startActivity(i);
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.perm_error),Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -1159,6 +1194,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         mxDenParteEItem.setVisible(false);
         documentosItem.setVisible(false); //siempre oculto
         consChf.setVisible(false);
+        //Perimetro Abdominal
+        pAbdominalItem.setVisible(false);
 
         if (!mParticipante.getProcesos().getEstudio().trim().contains("Influenza")){
             consCovid19.setTitle(R.string.info_cons_covid19);
@@ -1230,6 +1267,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             /*if ((mParticipante.getProcesos().getConmx().matches("Si") && mParticipante.getProcesos().getConmxbhc().matches("Si")) &&
                     (mParticipante.getProcesos().getMxDenParteE()!=null && mParticipante.getProcesos().getMxDenParteE().matches("Si") && mUser.getMuestra())) mxDenParteEItem.setVisible(true);
              *///Deshabilitar en MA2021
+
+            /**Permietro abdominal**/
+            if((mParticipante.getProcesos().getPerimetroAbdominal().matches("Si") && mUser.getpAbdominal())) pAbdominalItem.setVisible(true);
         }
         return true;
     }
@@ -1258,6 +1298,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo  + "="+codigo, null);
         mVisitasTerreno=estudiosAdapter.getListaVisitaTerreno(codigo);
         mPyTs = estudiosAdapter.getListaPesoyTallas(codigo);
+        /***********Perimetro Abdominal******************/
+        mPabdominal = estudiosAdapter.getListaPerimetrosAbdominales(codigo);
         if(mParticipante.getCasa().getCodigo()!=9999) mEncuestasCasas = estudiosAdapter.getListaEncuestaCasas(mParticipante.getCasa().getCodigo());
         mEncuestasParticipantes = estudiosAdapter.getListaEncuestaParticipantes(codigo);
         mEncuestasLactancias = estudiosAdapter.getListaLactanciaMaternas(codigo);
@@ -1445,6 +1487,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     || (mParticipante.getProcesos().getConsSa() != null && mParticipante.getProcesos().getConsSa().matches("Si"))
                     || (mParticipante.getProcesos().getConsDenParteE()!=null && mParticipante.getProcesos().getConsDenParteE().matches("Si"))
                     //|| (mParticipante.getProcesos().getMxDenParteE()!=null && mParticipante.getProcesos().getMxDenParteE().matches("Si")) //se deshabilita para MA2021
+                    || mParticipante.getProcesos().getPerimetroAbdominal().matches("Si") //Perimetro Abdominal
             ){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
@@ -1840,6 +1883,11 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getAdn().matches("Si")) {
                     labelHeader = labelHeader + "<small><font color='red'>Pendiente de ADN, Informar a LAB para toma.</font></small><br />";
+                }
+                /*Perimetro Abdominal*/
+                if (mParticipante.getProcesos().getPerimetroAbdominal().matches("Si") && mUser.getpAbdominal()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.pabdominal_missing) + "</font></small><br />";
+                    pendiente = true;
                 }
             } else {
                 labelHeader = labelHeader + "<small><font color='blue'>No tiene procedimientos pendientes<br /></font></small>";
@@ -2350,7 +2398,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 gridView.setAdapter(new MenuInfoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info
                         , mVisitasTerreno.size(), mPyTs.size(), mEncuestasCasas.size(), mEncuestasParticipantes.size(),
                         mEncuestasLactancias.size(), mVacunas.size(), mMuestras.size(), mObsequios.size(), mConSA.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size(), mDocumentos.size()
-                        , mEncuestasCasasChf.size(), mDatosCoordenadas.size()));
+                        , mEncuestasCasasChf.size(), mDatosCoordenadas.size(), mPabdominal.size()));
                 refreshView();
             } catch (Exception ex) {
                 dismissProgressDialog();

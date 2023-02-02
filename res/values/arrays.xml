@@ -100,6 +100,8 @@
         <item>@string/info_participantesa</item>-->
         <item>@string/info_telefonos</item>
         <item>@string/info_coordenadas</item>
+        <!--Perimetro Abdominal-->
+        <item>@string/info_pabdominal</item>
 
     </string-array>
     <string-array name="menu_review">
@@ -119,6 +121,8 @@
         <item>@string/info_casachf</item>
         <!--MA2020<item>@string/info_casasa</item>
         <item>@string/info_participantesa</item>-->
+        <!--Perimetro Abdominal-->
+        <item>@string/info_pabdominal</item>
     </string-array>
     <string-array name="menu_influenza_UO1">
         <item>@string/positives</item>

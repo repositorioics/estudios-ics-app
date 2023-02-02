@@ -56,6 +56,9 @@ public class ListReviewActivity extends ListActivity {
     ArrayAdapter<ParticipanteSeroprevalencia> mParticipantesSAAdapter =null;
     ArrayAdapter<DatosCoordenadas> mDatosCoordenadasAdapter =null;
 	public static final int BARCODE_CAPTURE = 2;
+
+	//Perimetro Abdominal
+	ArrayAdapter<PerimetroAbdominal> mPerimetroAbdominalAdapter=null;
 	
 	private Integer codigo;
 	private Integer codCasa;
@@ -150,6 +153,10 @@ public class ListReviewActivity extends ListActivity {
                 if (mDatosCoordenadasAdapter != null) {
                     mDatosCoordenadasAdapter.getFilter().filter(s);
                 }
+				//Perimetro Abdominal
+				if (mPerimetroAbdominalAdapter != null ) {
+					mPerimetroAbdominalAdapter.getFilter().filter(s);
+				}
 			}
 
 			@Override
@@ -323,6 +330,14 @@ public class ListReviewActivity extends ListActivity {
             showToast("Total = "+ mDatosCoordenadasAdapter.getCount());
         }
 
+		//Perimetro Abdominal
+		if (titulo.matches(getString(R.string.info_pabdominal))) {
+			mPerimetroAbdominalAdapter = new PerimetroAbdominalAdapter(this, R.layout.list_item_review,
+					(ArrayList<PerimetroAbdominal>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
+			setListAdapter(mPerimetroAbdominalAdapter);
+			showToast("Total = "+ mPerimetroAbdominalAdapter.getCount());
+		}
+
         ListView listView = (ListView) findViewById(android.R.id.list);
 		listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 	}
@@ -473,6 +488,14 @@ public class ListReviewActivity extends ListActivity {
             i = new Intent(getApplicationContext(),
                     ReviewActivity.class);
         }
+		//Perimetro Abdominal
+		if (titulo.matches(getString(R.string.info_pabdominal))){
+			PerimetroAbdominal perimetroAbdominal = (PerimetroAbdominal) getListAdapter().getItem(position);
+			arguments.putString(Constants.TITLE, getString(R.string.info_pabdominal));
+			if (perimetroAbdominal != null) arguments.putSerializable(Constants.OBJECTO , perimetroAbdominal);
+			i = new Intent(getApplicationContext(),
+					ReviewActivity.class);
+		}
 		i.putExtras(arguments);
 		startActivity(i);
 	}

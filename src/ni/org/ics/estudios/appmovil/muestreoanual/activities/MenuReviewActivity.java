@@ -52,6 +52,10 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
     //MA2020
     /*private ArrayList<EncuestaCasaSA> mEncuestasCasasSa = new ArrayList<EncuestaCasaSA>();
     private ArrayList<EncuestaParticipanteSA> mEncuestasParticipantesSa = new ArrayList<EncuestaParticipanteSA>();*/
+
+    //Perimetro Abdominal
+    private ArrayList<PerimetroAbdominal> mPabdominal = new ArrayList<PerimetroAbdominal>();
+
     private ArrayList<ParticipanteSeroprevalencia> mConSA = new ArrayList<ParticipanteSeroprevalencia>();
 	private GridView gridView;
 	private TextView textView;
@@ -187,6 +191,12 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;*/
+                    case 14:
+                        arguments.putString(Constants.TITLE, getString(R.string.info_pabdominal));
+                        if (mPabdominal!=null) arguments.putSerializable(Constants.OBJECTO , mPabdominal);
+                        i = new Intent(getApplicationContext(),
+                                ListReviewActivity.class);
+                        break;
                     default:
                         i = new Intent(getApplicationContext(),
                                 MenuReviewActivity.class);
@@ -227,6 +237,9 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
         /*mEncuestasCasasSa = (ArrayList)ca.getEncuestasCasaSA(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), MainDBConstants.codigo+ " , " +MainDBConstants.recordDate);
         mEncuestasParticipantesSa = (ArrayList)ca.getEncuestasParticipanteSA(MainDBConstants.recordDate + " >= " + timeStamp.getTime(), MainDBConstants.codigo+ " , " +MainDBConstants.recordDate);*/
         mConSA=(ArrayList)ca.getParticipantesSeroprevalencia(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), SeroprevalenciaDBConstants.participante+ " , " +MainDBConstants.recordDate);
+
+        //Perimetro Abdominal
+        mPabdominal = ca.getListaPerimetrosAbdominalesHoy();
 		ca.close();	
 	}	
 
@@ -296,7 +309,7 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
             gridView.setAdapter(new MenuReviewAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info,
                     mVisitasTerreno.size(), mPyTs.size(), mEncuestasCasas.size(), mEncuestasParticipantes.size(),
                     mEncuestasLactancias.size(), mVacunas.size(), mEncuestasS.size(), mMuestras.size(), mObsequios.size(), mConSA.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size(), mDocumentos.size(),
-                    mEncuestasCasasChf.size()));
+                    mEncuestasCasasChf.size(), mPabdominal.size()));
 
             dismissProgressDialog();
         }

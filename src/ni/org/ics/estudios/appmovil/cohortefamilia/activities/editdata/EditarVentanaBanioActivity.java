@@ -17,15 +17,19 @@ import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.catalogs.MessageResource;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaAreasActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.forms.AreaAmbienteCasaForm;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaVentanasActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaVentanasBanioActivity;
 import ni.org.ics.estudios.appmovil.cohortefamilia.forms.AreaAmbienteCasaFormLabels;
+import ni.org.ics.estudios.appmovil.cohortefamilia.forms.VentanaForm;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Banio;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Ventana;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
-import ni.org.ics.estudios.appmovil.utils.*;
+import ni.org.ics.estudios.appmovil.utils.CatalogosDBConstants;
+import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.DeviceInfo;
+import ni.org.ics.estudios.appmovil.utils.FileUtils;
 import ni.org.ics.estudios.appmovil.wizard.model.*;
 import ni.org.ics.estudios.appmovil.wizard.ui.PageFragmentCallbacks;
 import ni.org.ics.estudios.appmovil.wizard.ui.ReviewFragment;
@@ -36,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class EditarAreaActivity extends FragmentActivity implements
+public class EditarVentanaBanioActivity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -51,8 +55,9 @@ public class EditarAreaActivity extends FragmentActivity implements
     private StepPagerStrip mStepPagerStrip;
     private EstudiosAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
-    private static CasaCohorteFamilia casaCHF = new CasaCohorteFamilia();
-    private static AreaAmbiente areaCasa = new AreaAmbiente();
+  //  private static AreaAmbiente areaCasa = new AreaAmbiente();
+    private static Ventana ventana = new Ventana();
+    private Banio banio = new Banio();
 	private String username;
 	private SharedPreferences settings;
 	private static final int EXIT = 1;
@@ -75,20 +80,17 @@ public class EditarAreaActivity extends FragmentActivity implements
 		username =
 				settings.getString(PreferencesActivity.KEY_USERNAME,
 						null);
-		infoMovil = new DeviceInfo(EditarAreaActivity.this);
-        casaCHF = (CasaCohorteFamilia) getIntent().getExtras().getSerializable(Constants.CASA);
-        areaCasa = (AreaAmbiente) getIntent().getExtras().getSerializable(Constants.AREA);
-
+		infoMovil = new DeviceInfo(EditarVentanaBanioActivity.this);
+        //areaCasa = (AreaAmbiente) getIntent().getExtras().getSerializable(Constants.AREA);
+        banio = (Banio) getIntent().getExtras().getSerializable(Constants.BANIO);
+        ventana = (Ventana) getIntent().getExtras().getSerializable(Constants.VENTANA);
+		
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        mWizardModel = new AreaAmbienteCasaForm(this,mPass);
+        mWizardModel = new VentanaForm(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
-        //Abre la base de datos
-	//	estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-	//	estudiosAdapter.open();
 
-    //    estudiosAdapter.close();
         mWizardModel.registerListener(this);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -114,7 +116,7 @@ public class EditarAreaActivity extends FragmentActivity implements
 
                 if (mConsumePageSelectedEvent) {
                     mConsumePageSelectedEvent = false;
-                    return;
+                    return; 
                 }
 
                 mEditingAfterReview = false;
@@ -163,71 +165,44 @@ public class EditarAreaActivity extends FragmentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
-
+        
         onPageTreeChangedInitial();
 
+
         //Abre la base de datos
-        	estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-        	estudiosAdapter.open();
-        if (areaCasa != null) {
+        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+        estudiosAdapter.open();
+        if (ventana != null) {
             Bundle dato = null;
             Page modifPage;
-            if (tieneValor(areaCasa.getTipo())){
-                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipo());
-                MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + areaCasa.getTipo() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_AREA'", null);
-                dato = new Bundle();
-                dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
-                modifPage.resetData(dato);
-               // modifPage.setmEnabled(true);
-                onPageTreeChangedInitial();
-            }
-            if(areaCasa.getLargo()!= null){
+            if(ventana.getLargo()!= null){
                 modifPage = (NumberPage) mWizardModel.findByKey(labels.getLargo());
                 dato = new Bundle();
-                dato.putString(SIMPLE_DATA_KEY, areaCasa.getLargo().toString());
+                dato.putString(SIMPLE_DATA_KEY, ventana.getLargo().toString());
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
+
             }
-            if(areaCasa.getAncho()!= null){
+            if(ventana.getAncho()!= null){
                 modifPage = (NumberPage) mWizardModel.findByKey(labels.getAncho());
                 dato = new Bundle();
-                dato.putString(SIMPLE_DATA_KEY, areaCasa.getAncho().toString());
+                dato.putString(SIMPLE_DATA_KEY, ventana.getAncho().toString());
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
-            if(areaCasa.getLargo()!= null && areaCasa.getAncho()!= null){
+            if(ventana.getLargo()!= null && ventana.getAncho()!= null){
                 modifPage = (LabelPage) mWizardModel.findByKey(labels.getTotalM2());
-                modifPage.setHint(String.valueOf(areaCasa.getAncho() * areaCasa.getLargo()));
-                modifPage.setmVisible(true);
-
-            }
-
-            if (areaCasa.getNumVentanas()!= null  && !areaCasa.getTipo().matches("banio")){
-                modifPage = (NumberPage) mWizardModel.findByKey(labels.getNumVentanas());
-                dato = new Bundle();
-                dato.putString(SIMPLE_DATA_KEY, areaCasa.getNumVentanas().toString());
-                modifPage.resetData(dato);
+                //dato = new Bundle();
+                //dato.putString(SIMPLE_DATA_KEY, String.valueOf(ventana.getAncho() * ventana.getLargo()));
+                //modifPage.resetData(dato);
+                modifPage.setHint(String.valueOf(ventana.getAncho() * ventana.getLargo()));
                 modifPage.setmVisible(true);
             }
-
-
-            if(areaCasa.getTipo()!=null && areaCasa.getTipo().matches("banio")) {
-                Banio banio = estudiosAdapter.getBanio(MainDBConstants.codigo + "='" +areaCasa.getCodigo() + "'",null);
-                if (banio != null && banio.getConVentana()!=null){
-                    modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getConVentana());
-                    MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + banio.getConVentana() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                    dato = new Bundle();
-                    dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
-                    modifPage.resetData(dato);
-                    modifPage.setmVisible(true);
-
-                }
-            }else{
-                modifPage = (NumberPage) mWizardModel.findByKey(labels.getNumVentanas());
+            if(tieneValor(ventana.getAbierta())){
+                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getAbierta());
+                MessageResource catSiNo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + ventana.getAbierta() + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                 dato = new Bundle();
-                if(areaCasa.getNumVentanas()!= null) {
-                    dato.putString(SIMPLE_DATA_KEY, areaCasa.getNumVentanas().toString());
-                }
+                dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
                 modifPage.resetData(dato);
                 modifPage.setmVisible(true);
             }
@@ -235,7 +210,7 @@ public class EditarAreaActivity extends FragmentActivity implements
         }
         estudiosAdapter.close();
     }
-
+    
 	@Override
 	public void onBackPressed (){
 		createDialog(EXIT);
@@ -252,9 +227,9 @@ public class EditarAreaActivity extends FragmentActivity implements
                         // Finish app
                         Bundle arguments = new Bundle();
                         Intent i;
-                        if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+                        if (banio!=null) arguments.putSerializable(Constants.BANIO , banio);
                         i = new Intent(getApplicationContext(),
-                                ListaAreasActivity.class);
+                                ListaVentanasBanioActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
@@ -411,29 +386,23 @@ public class EditarAreaActivity extends FragmentActivity implements
     
     public void updateModel(Page page){
         try{
-            boolean visible = false;
-            if (page.getTitle().equals(labels.getTipo())) {
-                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Baño");
-                changeStatus(mWizardModel.findByKey(labels.getNumVentanas()), !visible);
-                changeStatus(mWizardModel.findByKey(labels.getConVentana()), visible);
-                notificarCambios = false;
-                onPageTreeChanged();
-            }
             if (page.getTitle().equals(labels.getAncho())) {
-                if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) && tieneValor(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
+                if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
                     Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString());
                     mWizardModel.findByKey(labels.getTotalM2()).setHint(area.toString());
-                } else {
+                }
+                else{
                     mWizardModel.findByKey(labels.getTotalM2()).setHint("");
                 }
                 //notificarCambios = false;
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getLargo())) {
-                if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) && tieneValor(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
+                if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
                     Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString());
                     mWizardModel.findByKey(labels.getTotalM2()).setHint(area.toString());
-                } else {
+                }
+                else{
                     mWizardModel.findByKey(labels.getTotalM2()).setHint("");
                 }
                 //notificarCambios = false;
@@ -489,68 +458,49 @@ public class EditarAreaActivity extends FragmentActivity implements
                 datos.putString(entry.getKey(), entry.getValue());
             }
 
-            //Obtener datos del bundle para el area
-            String tipo = datos.getString(this.getString(R.string.tipo));
+            //Obtener datos del bundle para la ventana
             String largo = datos.getString(this.getString(R.string.largo));
             String ancho = datos.getString(this.getString(R.string.ancho));
-            String numVentanas = datos.getString(this.getString(R.string.numVentanas));
-            String conVentana = datos.getString(this.getString(R.string.conVentana));
-            String conVent = null;
+            String abierta = datos.getString(this.getString(R.string.abierta));
 
             //Abre la base de datos
             String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
             estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
             estudiosAdapter.open();
-            if (tieneValor(tipo)) {
-                MessageResource catTipo = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + tipo + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_TIPO_AREA'", null);
-                areaCasa.setTipo(catTipo.getCatKey());
-            }
+
 
             if (tieneValor(largo)) {
-                areaCasa.setLargo(Double.parseDouble(largo));
+                ventana.setLargo(Double.parseDouble(largo));
             } else {
-                areaCasa.setLargo(null);
+                ventana.setLargo(null);
             }
             if (tieneValor(ancho)) {
-                areaCasa.setAncho(Double.parseDouble(ancho));
+                ventana.setAncho(Double.parseDouble(ancho));
             } else {
-                areaCasa.setAncho(null);
+                ventana.setAncho(null);
             }
             Page area = mWizardModel.findByKey(labels.getTotalM2());
             if (tieneValor(area.getHint())) {
-                areaCasa.setTotalM2(Double.valueOf(area.getHint()));
+                ventana.setTotalM2(Double.valueOf(area.getHint()));
             }
-            if (tieneValor(numVentanas)) {
-                areaCasa.setNumVentanas(Integer.valueOf(numVentanas));
+            if (tieneValor(abierta)) {
+                MessageResource catAbierta = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + abierta + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                ventana.setAbierta(catAbierta.getCatKey());
             }
-            areaCasa.setRecordDate(new Date());
-            areaCasa.setRecordUser(username);
-            areaCasa.setDeviceid(infoMovil.getDeviceId());
-            areaCasa.setEstado('0');
-            areaCasa.setPasive('0');
 
-            //Guarda el areaambiente
-            if(areaCasa.getTipo().matches("banio")){
-                if (tieneValor(conVentana)) {
-                    MessageResource catConVentana = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + conVentana + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                    conVent = catConVentana.getCatKey();
-                }
-                Banio b = new Banio(areaCasa.getCodigo(), areaCasa.getLargo(), areaCasa.getAncho(), areaCasa.getTotalM2(), areaCasa.getNumVentanas(), areaCasa.getCasa(), areaCasa.getTipo(), conVent);
-                b.setRecordDate(new Date());
-                b.setRecordUser(username);
-                b.setDeviceid(infoMovil.getDeviceId());
-                b.setEstado('0');
-                b.setPasive('0');
-                estudiosAdapter.editarBanio(b);
-            }
-            else{
-                estudiosAdapter.editarAreaAmbiente(areaCasa);
-            }
+            ventana.setRecordDate(new Date());
+            ventana.setRecordUser(username);
+            ventana.setDeviceid(infoMovil.getDeviceId());
+            ventana.setEstado('0');
+            ventana.setPasive('0');
+
+            //Guarda la ventana
+            estudiosAdapter.editarVentana(ventana);
             Bundle arguments = new Bundle();
             Intent i;
-            if (casaCHF!=null) arguments.putSerializable(Constants.CASA , casaCHF);
+            if (banio!=null)arguments.putSerializable(Constants.BANIO, banio);
             i = new Intent(getApplicationContext(),
-                    ListaAreasActivity.class);
+                    ListaVentanasBanioActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtras(arguments);
             startActivity(i);

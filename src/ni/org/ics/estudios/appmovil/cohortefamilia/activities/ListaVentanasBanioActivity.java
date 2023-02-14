@@ -1,67 +1,65 @@
 package ni.org.ics.estudios.appmovil.cohortefamilia.activities;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
-import ni.org.ics.estudios.appmovil.MainActivity;
-import ni.org.ics.estudios.appmovil.MyIcsApplication;
-import ni.org.ics.estudios.appmovil.R;
-
-
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.editdata.EditarBanioActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevoBanioActivity;
-import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.BanioAdapter;
-import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
-import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Banio;
-import ni.org.ics.estudios.appmovil.utils.Constants;
-import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import ni.org.ics.estudios.appmovil.AbstractAsyncListActivity;
+import ni.org.ics.estudios.appmovil.MainActivity;
+import ni.org.ics.estudios.appmovil.MyIcsApplication;
+import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaAreasActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.editdata.EditarVentanaActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.editdata.EditarVentanaBanioActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVentanaActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVentanaBanioActivity;
+import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.VentanaAdapter;
+import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Banio;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Ventana;
+import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
-public class ListaBaniosActivity extends AbstractAsyncListActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ListaVentanasBanioActivity extends AbstractAsyncListActivity {
 	
 	private TextView textView;
 	private Drawable img = null;
 	private Button mAddButton;
-	private static AreaAmbiente area = new AreaAmbiente();
-    private Banio banio = new Banio();
-	private ArrayAdapter<Banio> mBanioAdapter;
-	private List<Banio> mBanios = new ArrayList<Banio>();
+	//private static AreaAmbiente area = new AreaAmbiente();
+	private static Banio banio = new Banio();
+
+    private Ventana ventana = new Ventana();
+	private ArrayAdapter<Ventana> mAreaAdapter;
+	private List<Ventana> mVentanas = new ArrayList<Ventana>();
 	private EstudiosAdapter estudiosAdapter;
 
-    private static final int EDITAR_BANIO = 1;
-	private static final int BORRAR_BANIO = 2;
+    private static final int EDITAR_VENTANA = 1;
+	private static final int BORRAR_VENTANA = 2;
 	private AlertDialog alertDialog;
-
-	private MenuItem verVentanas;
-	private MenuItem verBanios;
-
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_add);
 		registerForContextMenu(getListView());
-		area = (AreaAmbiente) getIntent().getExtras().getSerializable(Constants.AREA);
+		//area = (AreaAmbiente) getIntent().getExtras().getSerializable(Constants.AREA);
+		banio = (Banio) getIntent().getExtras().getSerializable(Constants.BANIO);
 		textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_menu_selectall_holo_light);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
@@ -70,7 +68,7 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
 		new FetchDataAreaTask().execute();
 		
 		mAddButton = (Button) findViewById(R.id.add_button);
-		mAddButton.setText(getString(R.string.new_bath));
+		mAddButton.setText(getString(R.string.new_window));
 
 		mAddButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
@@ -113,7 +111,7 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
-		banio = (Banio)this.getListAdapter().getItem(position);
+		ventana = (Ventana)this.getListAdapter().getItem(position);
 		listView.showContextMenuForChild(view);
 	}
 	
@@ -121,42 +119,18 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getMenuInflater();
-	//	inflater.inflate(R.menu.optionspersonascamas, menu);
-		inflater.inflate(R.menu.optionsareas, menu);
-		verVentanas = menu.findItem(R.id.MENU_VER_VENTANAS);
-		verBanios = menu.findItem(R.id.MENU_VER_BANIOS);
-		verBanios.setVisible(false);
-
-		if (!banio.getConVentana().isEmpty()){
-			if (banio.getConVentana().equals("1")){
-				verVentanas.setVisible(true);
-			}else{
-				verVentanas.setVisible(false);
-			}
-		}
-
+		inflater.inflate(R.menu.optionspersonascamas, menu);
 	}
 	
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		Bundle arguments = new Bundle();
-		Intent i;
+	public boolean onContextItemSelected(MenuItem item) {    	
 		switch(item.getItemId()) {
-		case R.id.MENU_BORRAR_AREA:
-			createDialog(BORRAR_BANIO);
+		case R.id.MENU_BORRAR_PCAMA:
+			createDialog(BORRAR_VENTANA);
 			return true;
-            case R.id.MENU_EDITAR_AREA:
-                createDialog(EDITAR_BANIO);
+            case R.id.MENU_EDITAR_PCAMA:
+                createDialog(EDITAR_VENTANA);
                 return true;
-			case R.id.MENU_VER_VENTANAS:
-				arguments.putSerializable(Constants.BANIO, banio);
-				i = new Intent(getApplicationContext(),
-						ListaVentanasBanioActivity.class);
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				i.putExtras(arguments);
-				startActivity(i);
-				finish();
-				return true;
 		default:
 			return super.onContextItemSelected(item);
 		}
@@ -165,26 +139,9 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
 	private void createDialog(int dialog) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		switch(dialog){
-		case BORRAR_BANIO:
-			builder.setTitle(this.getString(R.string.confirm));
-			builder.setMessage(getString(R.string.remove_bath));
-			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-					new UpdateBanioTask().execute();
-				}
-			});
-			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// Do nothing
-					dialog.dismiss();
-				}
-			});
-			break;
-            case EDITAR_BANIO:
+            case EDITAR_VENTANA:
                 builder.setTitle(this.getString(R.string.confirm));
-                builder.setMessage(getString(R.string.edit_bath));
+                builder.setMessage(getString(R.string.edit_window));
                 builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -199,7 +156,24 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
                     }
                 });
                 break;
-            default:
+            case BORRAR_VENTANA:
+			builder.setTitle(this.getString(R.string.confirm));
+			builder.setMessage(getString(R.string.remove_window));
+			builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+					new UpdateVentanaTask().execute();
+				}
+			});
+			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do nothing
+					dialog.dismiss();
+				}
+			});
+			break;		
+		default:
 			break;
 		}
 		alertDialog = builder.create();
@@ -208,11 +182,13 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
 	
 	@Override
 	public void onBackPressed (){
+		//Regresar al menu de lista de baños del ambiente
 		Bundle arguments = new Bundle();
 		Intent i;
-		if (area!=null) arguments.putSerializable(Constants.CASA , area.getCasa());
+		//if (banio!=null) arguments.putSerializable(Constants.CASA , banio.getAreaAmbiente().getCasa());
+		if (banio!=null) arguments.putSerializable(Constants.AREA , banio.getAreaAmbiente());
 		i = new Intent(getApplicationContext(),
-				ListaAreasActivity.class);
+				ListaBaniosActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);
 		startActivity(i);
@@ -255,9 +231,9 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {
 			try {
 				Bundle arguments = new Bundle();
-		        if (area!=null) arguments.putSerializable(Constants.AREA , area);
+				if (banio!=null) arguments.putSerializable(Constants.BANIO , banio);
 				Intent i = new Intent(getApplicationContext(),
-						NuevoBanioActivity.class);
+						NuevaVentanaBanioActivity.class);
 				i.putExtras(arguments);
 		        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
@@ -287,7 +263,7 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {      
 			try {
 				estudiosAdapter.open();
-				mBanios = estudiosAdapter.getBanios(MainDBConstants.areaAmbiente +" = '" + area.getCodigo() +"' and " + MainDBConstants.tipo + " ='banio' and " + MainDBConstants.pasive + " ='0'", null);
+				mVentanas = estudiosAdapter.getVentanas(MainDBConstants.areaBanio +" = '" + banio.getCodigo() +"' and " + MainDBConstants.tipo + " ='ventana' and " + MainDBConstants.pasive + " ='0'", null);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -300,15 +276,15 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
 			// after the request completes, hide the progress indicator
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.banio)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+area.getCasa().getCodigoCHF());
-			mBanioAdapter = new BanioAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mBanios);
-			setListAdapter(mBanioAdapter);
+			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.ventana)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+banio.getAreaAmbiente().getCasa().getCodigoCHF() +"\n"+ getString(R.string.numeroCuarto) + ": "+banio.getAreaAmbiente().getNumeroCuarto() +"\n"+banio.getTipo());
+			mAreaAdapter = new VentanaAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mVentanas);
+			setListAdapter(mAreaAdapter);
 			dismissProgressDialog();
 		}
 
 	}	
 	
-	private class UpdateBanioTask extends AsyncTask<String, Void, String> {
+	private class UpdateVentanaTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -319,10 +295,10 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
 		protected String doInBackground(String... values) {
 			try {
 				estudiosAdapter.open();
-				banio.setPasive('1');
-				banio.setEstado('0');
-				estudiosAdapter.editarBanio(banio);
-				mBanios = estudiosAdapter.getBanios(MainDBConstants.areaAmbiente +" = '" + area.getCodigo() +"' and " + MainDBConstants.tipo + " ='banio' and " + MainDBConstants.pasive + " ='0'", null);
+				ventana.setPasive('1');
+				ventana.setEstado('0');
+				estudiosAdapter.editarVentana(ventana);
+				mVentanas = estudiosAdapter.getVentanas(MainDBConstants.areaBanio +" = '" + banio.getCodigo() +"' and " + MainDBConstants.tipo + " ='ventana' and " + MainDBConstants.pasive + " ='0'", null);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -335,13 +311,14 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
 			// after the request completes, hide the progress indicator
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.banio)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+area.getCasa().getCodigoCHF());
-			mBanioAdapter = new BanioAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mBanios);
-			setListAdapter(mBanioAdapter);
+			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.ventana)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+banio.getAreaAmbiente().getCasa().getCodigoCHF());
+			mAreaAdapter = new VentanaAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mVentanas);
+			setListAdapter(mAreaAdapter);
 			dismissProgressDialog();
 		}
 
 	}
+
 
     // ***************************************
     // Private classes
@@ -357,10 +334,10 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
         protected String doInBackground(String... values) {
             try {
                 Bundle arguments = new Bundle();
-                if (area!=null) arguments.putSerializable(Constants.AREA , area);
-                if (banio!=null) arguments.putSerializable(Constants.BANIO , banio);
+				if (banio!=null) arguments.putSerializable(Constants.BANIO , banio);
+				if (ventana!=null) arguments.putSerializable(Constants.VENTANA , ventana);
                 Intent i = new Intent(getApplicationContext(),
-                        EditarBanioActivity.class);
+                        EditarVentanaBanioActivity.class);
                 i.putExtras(arguments);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
@@ -378,4 +355,5 @@ public class ListaBaniosActivity extends AbstractAsyncListActivity {
         }
 
     }
+
 }

@@ -40,7 +40,7 @@ public class AreaAmbienteHelper {
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.largo)) > 0) objeto.setLargo(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.largo)));
         if (cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2))>0) objeto.setTotalM2(cursor.getDouble(cursor.getColumnIndex(MainDBConstants.totalM2)));
         //permitir 0
-        if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
+        if (cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas))>=0) objeto.setNumVentanas(cursor.getInt(cursor.getColumnIndex(MainDBConstants.numVentanas)));
         objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
         objeto.setNumeroCuarto(cursor.getString(cursor.getColumnIndex(MainDBConstants.numeroCuarto)));
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
@@ -130,8 +130,8 @@ public class AreaAmbienteHelper {
 	public static ContentValues crearVentanaContentValues(Ventana objeto){
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigo, objeto.getCodigo());
-        if (objeto.getAreaAmbiente() != null) cv.put(MainDBConstants.casa, objeto.getCasa().getCodigoCHF());
-        if (objeto.getCasa() != null) cv.put(MainDBConstants.areaAmbiente, objeto.getAreaAmbiente().getCodigo());
+        if (objeto.getCasa() != null) cv.put(MainDBConstants.casa, objeto.getCasa().getCodigoCHF());
+        if (objeto.getAreaAmbiente() != null) cv.put(MainDBConstants.areaAmbiente, objeto.getAreaAmbiente().getCodigo());
         if (objeto.getAncho() != null) cv.put(MainDBConstants.ancho, objeto.getAncho());
         if (objeto.getLargo() != null) cv.put(MainDBConstants.largo, objeto.getLargo());
         if (objeto.getTotalM2() != null) cv.put(MainDBConstants.totalM2, objeto.getTotalM2());
@@ -139,6 +139,7 @@ public class AreaAmbienteHelper {
         cv.put(MainDBConstants.abierta, objeto.getAbierta());
         cv.put(MainDBConstants.tipo, objeto.getTipo());
         cv.put(MainDBConstants.numeroCuarto, objeto.getNumeroCuarto());//MA2020
+        if (objeto.getAreaBanio() != null) cv.put(MainDBConstants.areaBanio, objeto.getAreaBanio().getCodigo());
         if (objeto.getRecordDate() != null) cv.put(MainDBConstants.recordDate, objeto.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, objeto.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(objeto.getPasive()));
@@ -159,6 +160,7 @@ public class AreaAmbienteHelper {
         objeto.setAbierta(cursor.getString(cursor.getColumnIndex(MainDBConstants.abierta)));
         objeto.setTipo(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipo)));
         objeto.setNumeroCuarto(cursor.getString(cursor.getColumnIndex(MainDBConstants.numeroCuarto)));
+        objeto.setAreaBanio(null);
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) objeto.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         objeto.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
         objeto.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
@@ -167,7 +169,7 @@ public class AreaAmbienteHelper {
         return objeto;
     }
 	
-	
+
 	public static ContentValues crearCocinaContentValues(Cocina objeto){
         ContentValues cv = new ContentValues();
         cv.put(MainDBConstants.codigo, objeto.getCodigo());
@@ -291,11 +293,12 @@ public class AreaAmbienteHelper {
         //abierta 11
         //codigohabitacion 12
         bindString(stat,13, objeto.getNumeroCuarto());//MA2020
-        bindDate(stat,14, objeto.getRecordDate());
-        bindString(stat,15, objeto.getRecordUser());
-        stat.bindString(16, String.valueOf(objeto.getPasive()));
-        bindString(stat,17, objeto.getDeviceid());
-        stat.bindString(18, String.valueOf(objeto.getEstado()));
+        //codigobanio 14
+        bindDate(stat,15, objeto.getRecordDate());
+        bindString(stat,16, objeto.getRecordUser());
+        stat.bindString(17, String.valueOf(objeto.getPasive()));
+        bindString(stat,18, objeto.getDeviceid());
+        stat.bindString(19, String.valueOf(objeto.getEstado()));
     }
 
     public static void fillBanioStatement(SQLiteStatement stat, Banio objeto){
@@ -312,11 +315,12 @@ public class AreaAmbienteHelper {
         //abierta 11
         //codigohabitacion 12
         bindString(stat,13, objeto.getNumeroCuarto());//MA2020
-        bindDate(stat,14, objeto.getRecordDate());
-        bindString(stat,15, objeto.getRecordUser());
-        stat.bindString(16, String.valueOf(objeto.getPasive()));
-        bindString(stat,17, objeto.getDeviceid());
-        stat.bindString(18, String.valueOf(objeto.getEstado()));
+        //areaBanio 14
+        bindDate(stat,15, objeto.getRecordDate());
+        bindString(stat,16, objeto.getRecordUser());
+        stat.bindString(17, String.valueOf(objeto.getPasive()));
+        bindString(stat,18, objeto.getDeviceid());
+        stat.bindString(19, String.valueOf(objeto.getEstado()));
     }
 
     public static void fillVentanaStatement(SQLiteStatement stat, Ventana objeto){
@@ -332,12 +336,14 @@ public class AreaAmbienteHelper {
         if (objeto.getAreaAmbiente() != null) bindString(stat,10, objeto.getAreaAmbiente().getCodigo()); else stat.bindNull(10);
         bindString(stat,11, objeto.getAbierta());
         //codigohabitacion 12
-        bindString(stat,13, objeto.getNumeroCuarto());//MA2020
-        bindDate(stat,14, objeto.getRecordDate());
-        bindString(stat,15, objeto.getRecordUser());
-        stat.bindString(16, String.valueOf(objeto.getPasive()));
-        bindString(stat,17, objeto.getDeviceid());
-        stat.bindString(18, String.valueOf(objeto.getEstado()));
+        bindString(stat,13, objeto.getNumeroCuarto());//
+        if (objeto.getAreaBanio() != null) bindString(stat,14, objeto.getAreaBanio().getCodigo()); else stat.bindNull(14);
+        bindDate(stat,15, objeto.getRecordDate());
+        bindString(stat,16, objeto.getRecordUser());
+        stat.bindString(17, String.valueOf(objeto.getPasive()));
+        bindString(stat,18, objeto.getDeviceid());
+        stat.bindString(19, String.valueOf(objeto.getEstado()));
+
     }
 
     public static void bindString(SQLiteStatement stat, int index, String value){

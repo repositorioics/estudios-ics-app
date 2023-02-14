@@ -467,6 +467,12 @@
 
         <activity android:name="ni.org.ics.estudios.appmovil.muestreoanual.activities.NewPabdominalActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaVentanasBanioActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVentanaBanioActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.editdata.EditarVentanaBanioActivity"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -165,13 +165,16 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 		verBanios = menu.findItem(R.id.MENU_VER_BANIOS);
 		verVentanas = menu.findItem(R.id.MENU_VER_VENTANAS);
 		verBanios.setVisible(false);
-		verVentanas.setVisible(true);
+		verVentanas.setVisible(false);
 		if (area.getTipo().equals("habitacion")){
 			verBanios.setVisible(true);
 		}
-		if (area.getTipo().equals("banio")){
-			verVentanas.setVisible(false);
+		if (area.getNumVentanas()!= null){
+			if(area.getNumVentanas() > 0){
+				verVentanas.setVisible(true);
+			}
 		}
+
 		
 	}
 	
@@ -327,7 +330,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
                     casaCHF = casoCasa.getCasa();
                 }
                 if (casaCHF != null)
-                    mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + casaCHF.getCodigoCHF() + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'" + (codigoCaso !=null?" and "+MainDBConstants.tipo+"!='habitacion'":""), MainDBConstants.tipo);
+                    mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + casaCHF.getCodigoCHF() + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.areaBanio + " is null and " + MainDBConstants.pasive + " ='0'" + (codigoCaso !=null?" and "+MainDBConstants.tipo+"!='habitacion'":""), MainDBConstants.tipo);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -362,7 +365,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 				area.setPasive('1');
 				area.setEstado('0');
 				estudiosAdapter.editarAreaAmbiente(area);
-				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + area.getCasa().getCodigoCHF() + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.tipo);
+				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa +" = '" + area.getCasa().getCodigoCHF() + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.areaBanio + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.tipo);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

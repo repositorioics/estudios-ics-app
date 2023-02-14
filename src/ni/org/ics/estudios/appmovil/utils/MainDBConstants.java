@@ -542,6 +542,7 @@ public class MainDBConstants {
     public static final String abierta = "abierta";
     public static final String codigoHabitacion = "codigoHabitacion";
     public static final String numeroCuarto = "numeroCuarto";
+    public static final String areaBanio = "areaBanio";// para las ventanas dentro de un banio
     
 
     //crear tabla telefonocontacto
@@ -560,6 +561,7 @@ public class MainDBConstants {
             + abierta + " text, "
             + codigoHabitacion + " text, "
             + numeroCuarto + " text, "
+            + areaBanio + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -920,12 +922,13 @@ public class MainDBConstants {
             + abierta + ","
             + codigoHabitacion + ","
             + numeroCuarto + ","
+            + areaBanio + ","
             + recordDate + ","
             + recordUser + ","
             + pasive + ","
             + deviceId + ","
             + estado
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static final String INSERT_CUARTO_TABLE = "insert into "
             + CUARTO_TABLE + " ("

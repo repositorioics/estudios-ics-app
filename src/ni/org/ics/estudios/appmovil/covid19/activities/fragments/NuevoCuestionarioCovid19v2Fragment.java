@@ -8676,7 +8676,7 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                 List<MessageResource> meses  = new ArrayList<MessageResource>();
                 if (anioVacuna != null && anioVacuna.equalsIgnoreCase("2021")) {
                     meses = mCatalogoMesesVacuna;
-                } else if (anioVacuna != null && anioVacuna.equalsIgnoreCase("2022")) {
+                } else /*if (anioVacuna != null && anioVacuna.equalsIgnoreCase("2022"))*/ { //Cambio para obtener los años del 2021 en adelante
                     for (MessageResource mes : mCatalogoMesesVacuna) {
                         if (!mes.getCatKey().isEmpty() && Integer.parseInt(mes.getCatKey()) >= 1 && Integer.parseInt(mes.getCatKey()) <= c.get(Calendar.MONTH) + 1) {
                             meses.add(mes);
@@ -9665,7 +9665,15 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                     }
                 }
             }
-        } else if (anio != null && anio.equalsIgnoreCase("2022")) {
+        } /*else if (anio != null && anio.equalsIgnoreCase("2022")) {
+            for (MessageResource mes : mCatalogoMeses) {
+                if (!mes.getCatKey().isEmpty() && Integer.parseInt(mes.getCatKey()) >= 1 && Integer.parseInt(mes.getCatKey()) <= c.get(Calendar.MONTH) + 1) {
+                    meses.add(mes);
+                }
+            }
+        }*/
+        /*Se realiza cambio para que acepte años despues de 2021*/
+        else {
             for (MessageResource mes : mCatalogoMeses) {
                 if (!mes.getCatKey().isEmpty() && Integer.parseInt(mes.getCatKey()) >= 1 && Integer.parseInt(mes.getCatKey()) <= c.get(Calendar.MONTH) + 1) {
                     meses.add(mes);
@@ -13743,8 +13751,9 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
             inputE1AnioInicioSintoma.requestFocus();
             return false;
         }
-        else if (e1AnioInicioSintoma != null && !e1AnioInicioSintoma.equalsIgnoreCase("2021") && !e1AnioInicioSintoma.equalsIgnoreCase("2022")) {
-            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2022"),Toast.LENGTH_LONG).show();
+        else if (e1AnioInicioSintoma != null && !e1AnioInicioSintoma.equalsIgnoreCase("2021") && !e1AnioInicioSintoma.equalsIgnoreCase("2022") && !e1AnioInicioSintoma.equalsIgnoreCase("2023")) {
+            /*Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2022"),Toast.LENGTH_LONG).show();*/
+            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2023"),Toast.LENGTH_LONG).show();
             inputE1AnioInicioSintoma.requestFocus();
             return false;
         }
@@ -13805,8 +13814,9 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
             inputE2AnioInicioSintoma.requestFocus();
             return false;
         }
-        else if (e2AnioInicioSintoma != null && !e2AnioInicioSintoma.equalsIgnoreCase("2021") && !e2AnioInicioSintoma.equalsIgnoreCase("2022")) {
-            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2022"),Toast.LENGTH_LONG).show();
+        else if (e2AnioInicioSintoma != null && !e2AnioInicioSintoma.equalsIgnoreCase("2021") && !e2AnioInicioSintoma.equalsIgnoreCase("2022") && !e2AnioInicioSintoma.equalsIgnoreCase("2023")) {
+            /*Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2022"),Toast.LENGTH_LONG).show();*/
+            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2023"),Toast.LENGTH_LONG).show();
             inputE2AnioInicioSintoma.requestFocus();
             return false;
         }
@@ -13864,8 +13874,9 @@ private void MostrarOcultarPregunta31Dosis3(int estado){
             inputE3AnioInicioSintoma.requestFocus();
             return false;
         }
-        else if (e3AnioInicioSintoma != null && !e3AnioInicioSintoma.equalsIgnoreCase("2021") && !e3AnioInicioSintoma.equalsIgnoreCase("2022")) {
-            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2022"),Toast.LENGTH_LONG).show();
+        else if (e3AnioInicioSintoma != null && !e3AnioInicioSintoma.equalsIgnoreCase("2021") && !e3AnioInicioSintoma.equalsIgnoreCase("2022") && !e3AnioInicioSintoma.equalsIgnoreCase("2023")) {
+            /*Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2022"),Toast.LENGTH_LONG).show();*/
+            Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2023"),Toast.LENGTH_LONG).show();
             inputE3AnioInicioSintoma.requestFocus();
             return false;
         }

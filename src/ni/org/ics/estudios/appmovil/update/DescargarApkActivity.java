@@ -17,19 +17,30 @@ import android.widget.Toast;
 import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Properties;
 
 public class DescargarApkActivity extends Activity {
     public ProgressDialog PD_CREATE;
     private Context CONTEXT;
     private String strUrlContext;
     private SharedPreferences settings;
+    /*public static String URL_DOWNLOAD_APK = "";
+
+    static {
+        try {
+            Properties props = new Properties();
+            InputStream inputStream = new FileInputStream("/sdcard/icsApk/config/config.properties");
+            props.load(inputStream);
+            URL_DOWNLOAD_APK = props.getProperty("DOWNLOAD_ICS_APP_APK");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }*/
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +49,7 @@ public class DescargarApkActivity extends Activity {
                 PreferenceManager.getDefaultSharedPreferences(this);
         strUrlContext =
                 settings.getString(PreferencesActivity.KEY_SERVER_URL, this.getString(R.string.default_server_url));
+                //settings.getString(PreferencesActivity.KEY_SERVER_URL, URL_DOWNLOAD_APK);
         /*Intent i;
         PackageManager manager = getPackageManager();
         try {

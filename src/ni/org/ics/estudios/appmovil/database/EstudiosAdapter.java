@@ -2224,11 +2224,17 @@ public class EstudiosAdapter {
 				Ventana mVentana = null;
 				mVentana = AreaAmbienteHelper.crearVentana(cursorVentanas);
 				AreaAmbiente area = this.getAreaAmbiente(MainDBConstants.codigo + "='" + cursorVentanas.getString(cursorVentanas.getColumnIndex(MainDBConstants.areaAmbiente))+ "'", null);
+				Banio banio = this.getBanio(MainDBConstants.codigo + "='" + cursorVentanas.getString(cursorVentanas.getColumnIndex(MainDBConstants.areaBanio))+ "'", null);
+
 				if(area != null){
 					mVentana.setAreaAmbiente(area);
 					mVentana.setCasa(area.getCasa());
-					
 				}
+				if(banio != null){
+					mVentana.setAreaBanio(banio);
+					mVentana.setCasa(banio.getAreaAmbiente().getCasa());
+				}
+
 				mVentanas.add(mVentana);
 			} while (cursorVentanas.moveToNext());
 		}

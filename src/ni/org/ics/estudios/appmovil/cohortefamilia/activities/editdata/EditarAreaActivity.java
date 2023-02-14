@@ -178,8 +178,8 @@ public class EditarAreaActivity extends FragmentActivity implements
                 dato = new Bundle();
                 dato.putString(SIMPLE_DATA_KEY, catSiNo.getSpanish());
                 modifPage.resetData(dato);
-               // modifPage.setmEnabled(true);
-                onPageTreeChangedInitial();
+                modifPage.setmEnabled(false);
+
             }
             if(areaCasa.getLargo()!= null){
                 modifPage = (NumberPage) mWizardModel.findByKey(labels.getLargo());

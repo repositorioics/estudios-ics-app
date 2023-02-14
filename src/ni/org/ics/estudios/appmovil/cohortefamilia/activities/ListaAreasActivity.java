@@ -15,6 +15,7 @@ import ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaAre
 import ni.org.ics.estudios.appmovil.cohortefamilia.adapters.AreaAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.AreaAmbiente;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.Banio;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.CasaCohorteFamilia;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.CasaCohorteFamiliaCaso;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
@@ -169,11 +170,18 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 		if (area.getTipo().equals("habitacion")){
 			verBanios.setVisible(true);
 		}
-		if (area.getNumVentanas()!= null){
+		if(area.getNumVentanas()!= null && (!area.getTipo().equals("banio"))){
 			if(area.getNumVentanas() > 0){
 				verVentanas.setVisible(true);
 			}
 		}
+
+		if(area.getTipo().equals("banio")){
+			verVentanas.setVisible(true);
+		}
+
+
+
 
 		
 	}

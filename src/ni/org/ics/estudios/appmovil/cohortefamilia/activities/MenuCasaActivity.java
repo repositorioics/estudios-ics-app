@@ -432,7 +432,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 				estudiosAdapter.open();
 				mParticipantes = estudiosAdapter.getParticipanteCohorteFamilias(MainDBConstants.casaCHF +" = " + codigoCasaCHF, MainDBConstants.participante);
 				mCuartos = estudiosAdapter.getCuartos(MainDBConstants.casa + " = '" + codigoCasaCHF + "' and " + MainDBConstants.pasive + " ='0'", MainDBConstants.codigoHabitacion);
-				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa + " = '" + codigoCasaCHF + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.tipo);
+				mAreas = estudiosAdapter.getAreasAmbiente(MainDBConstants.casa + " = '" + codigoCasaCHF + "' and " + MainDBConstants.areaAmbiente + " is null and " + MainDBConstants.areaBanio + " is null and " + MainDBConstants.pasive + " ='0'", MainDBConstants.tipo);
 				mTelefonosContacto = estudiosAdapter.getTelefonosContacto(MainDBConstants.casa +" = " + casaCHF.getCasa().getCodigo() + " and " + MainDBConstants.pasive + " ='0'", MainDBConstants.numero);
                 EncuestaCasa encuestaExiste = estudiosAdapter.getEncuestaCasa(EncuestasDBConstants.casa_chf + " = " + casaCHF.getCodigoCHF(), EncuestasDBConstants.casa_chf);
                 if (encuestaExiste != null)

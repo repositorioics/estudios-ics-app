@@ -437,6 +437,7 @@ public class EstudiosAdapter {
 				db.execSQL(ConstantsDB.CREATE_PAD_ABDOMINAL_TABLE);
 				db.execSQL("ALTER TABLE " + ConstantsDB.PART_PROCESOS_TABLE + " ADD COLUMN " + ConstantsDB.PABDOMINAL + " text");
 				db.execSQL("ALTER TABLE " + ConstantsDB.USER_PERM_TABLE + " ADD COLUMN " + ConstantsDB.U_PABDOMINAL + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.AREA_AMBIENTE_TABLE + " ADD COLUMN " + MainDBConstants.areaBanio + " text");
 			}
 		}
 	}

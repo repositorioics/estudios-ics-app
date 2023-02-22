@@ -360,7 +360,8 @@ public class NuevoConsFluCEIRSActivity extends FragmentActivity implements
             if (page.getTitle().equals(labels.getVisExit())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getRazonVisNoExit()), !visible);
-                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteFLuParteF()), visible);
+                //changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteFLuParteF()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaCohorteFLuParteG()), visible);
                 if (!visible) {
                     resetForm(100);
                     esElegible =false;
@@ -408,11 +409,13 @@ public class NuevoConsFluCEIRSActivity extends FragmentActivity implements
                 onPageTreeChanged();
             }
 
-            if (page.getTitle().equals(labels.getAceptaCohorteFLuParteF())) {
+            /*if (page.getTitle().equals(labels.getAceptaCohorteFLuParteF())) {*/
+            if (page.getTitle().equals(labels.getAceptaCohorteFLuParteG())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), visible && edadMeses >= 72);
-                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteF()), !visible);
+                //changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteF()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteG()), !visible);
                 if (visible && edadMeses < 216){ //18 años
                     changeStatus(mWizardModel.findByKey(labels.getTutor()), visible);
                      changeStatus(mWizardModel.findByKey(labels.getMismoTutorSN()), visible);
@@ -461,9 +464,11 @@ public class NuevoConsFluCEIRSActivity extends FragmentActivity implements
                 }
                 onPageTreeChanged();
             }
-            if (page.getTitle().equals(labels.getRazonNoAceptaParteF())) {
+            /*if (page.getTitle().equals(labels.getRazonNoAceptaParteF())) {*/
+            if (page.getTitle().equals(labels.getRazonNoAceptaParteG())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros motivos");
-                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteF()), visible);
+                //changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteF()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteG()), visible);
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAsentimiento())) {
@@ -762,8 +767,10 @@ public class NuevoConsFluCEIRSActivity extends FragmentActivity implements
     private void resetForm(int preg){
         try {
             if (preg > 97) changeStatus(mWizardModel.findByKey(labels.getDejoCarta()), false);
-            if (preg > 93) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteF()), false);
-            if (preg > 93) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteF()), false);
+            /*if (preg > 93) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteF()), false);
+            if (preg > 93) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteF()), false);*/
+            if (preg > 93) changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaParteG()), false);
+            if (preg > 93) changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoAceptaParteG()), false);
             //no esta dispuesto a ir al centro
             if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), false);
             if (preg > 91) changeStatus(mWizardModel.findByKey(labels.getAsentimiento()), false);
@@ -904,9 +911,13 @@ public class NuevoConsFluCEIRSActivity extends FragmentActivity implements
             String otraRelacionPersonaCasa = datos.getString(this.getString(R.string.otraRelacionPersonaCasa));
             String telefonoPersonaCasa = datos.getString(this.getString(R.string.telefonoPersonaCasa));
 
-            String aceptaParteFCEIRS = datos.getString(this.getString(R.string.aceptaParteFCEIRS));
+            /*String aceptaParteFCEIRS = datos.getString(this.getString(R.string.aceptaParteFCEIRS));
             String razonNoAceptaParteFCEIRS = datos.getString(this.getString(R.string.razonNoAceptaParteFCEIRS));
-            String otraRazonNoAceptaParteFCEIRS = datos.getString(this.getString(R.string.otraRazonNoAceptaParteFCEIRS));
+            String otraRazonNoAceptaParteFCEIRS = datos.getString(this.getString(R.string.otraRazonNoAceptaParteFCEIRS));*/
+
+            String aceptaParteGCEIRS = datos.getString(this.getString(R.string.aceptaParteGCEIRRS));
+            String razonNoAceptaParteGCEIRS = datos.getString(this.getString(R.string.razonNoAceptaParteGCEIRRS));
+            String otraRazonNoAceptaParteGCEIRS = datos.getString(this.getString(R.string.otraRazonNoAceptaParteGCEIRRS));
 
             String asentimiento = datos.getString(this.getString(R.string.asentimientoVerbal));
             String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturo));
@@ -1118,7 +1129,7 @@ public class NuevoConsFluCEIRSActivity extends FragmentActivity implements
                             cc.setAceptaContactoFuturo(catConFut.getCatKey());
                         }
                     }
-                    if (tieneValor(aceptaParteFCEIRS)) {
+                    /*if (tieneValor(aceptaParteFCEIRS)) {
                         MessageResource catAcepta = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteFCEIRS + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                         if (catAcepta != null) {
                             cc.setAceptaParteF(catAcepta.getCatKey());
@@ -1129,7 +1140,19 @@ public class NuevoConsFluCEIRSActivity extends FragmentActivity implements
                         if (catRazonNoAceptaParticipar != null)
                             cc.setMotivoRechazoParteF(catRazonNoAceptaParticipar.getCatKey());
                     }
-                    cc.setOtroMotivoRechazoParteF(otraRazonNoAceptaParteFCEIRS);
+                    cc.setOtroMotivoRechazoParteF(otraRazonNoAceptaParteFCEIRS);*/
+                    if (tieneValor(aceptaParteGCEIRS)) {
+                        MessageResource catAcepta = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteGCEIRS + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                        if (catAcepta != null) {
+                            cc.setAceptaParteG(catAcepta.getCatKey());
+                        }
+                    }
+                    if (tieneValor(razonNoAceptaParteGCEIRS)) {
+                        MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaParteGCEIRS + "' and " + CatalogosDBConstants.catRoot + "='CPD_CAT_MOTRECHAZO'", null);
+                        if (catRazonNoAceptaParticipar != null)
+                            cc.setMotivoRechazoParteG(catRazonNoAceptaParticipar.getCatKey());
+                    }
+                    cc.setOtroMotivoRechazoParteG(otraRazonNoAceptaParteGCEIRS);
 
                     cc.setReconsentimiento(Constants.YESKEYSND);
                     cc.setTamizaje(tamizaje1);

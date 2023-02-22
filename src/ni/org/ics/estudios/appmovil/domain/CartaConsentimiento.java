@@ -60,6 +60,10 @@ public class CartaConsentimiento extends BaseMetaData {
     private String motivoRechazoParteF;
     private String otroMotivoRechazoParteF;
 
+    private String aceptaParteG;//re-enrolamiento y obtención de muestras de sangre adicionales-CEIRS. MA2023
+    private String motivoRechazoParteG;
+    private String otroMotivoRechazoParteG;
+
 
     public String getCodigo() {
         return codigo;
@@ -405,6 +409,30 @@ public class CartaConsentimiento extends BaseMetaData {
 
     public void setOtroMotivoRechazoParteF(String otroMotivoRechazoParteF) {
         this.otroMotivoRechazoParteF = otroMotivoRechazoParteF;
+    }
+
+    public String getAceptaParteG() {
+        return aceptaParteG;
+    }
+
+    public void setAceptaParteG(String aceptaParteG) {
+        this.aceptaParteG = aceptaParteG;
+    }
+
+    public String getMotivoRechazoParteG() {
+        return motivoRechazoParteG;
+    }
+
+    public void setMotivoRechazoParteG(String motivoRechazoParteG) {
+        this.motivoRechazoParteG = motivoRechazoParteG;
+    }
+
+    public String getOtroMotivoRechazoParteG() {
+        return otroMotivoRechazoParteG;
+    }
+
+    public void setOtroMotivoRechazoParteG(String otroMotivoRechazoParteG) {
+        this.otroMotivoRechazoParteG = otroMotivoRechazoParteG;
     }
 
     @Override

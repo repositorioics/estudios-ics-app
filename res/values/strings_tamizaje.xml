@@ -175,12 +175,20 @@
     <string name="aceptaParteCInf">Parte C Influenza</string>
     <string name="aceptaParteCInfHint">¿Acepta Parte C Estudios Genéticos?</string>
 
-    <string name="aceptaParteFCEIRS">Acepta Parte F Influenza</string>
+    <!--<string name="aceptaParteFCEIRS">Acepta Parte F Influenza</string>
     <string name="aceptaParteFCEIRSHint">re-enrolamiento y obtención de muestras de sangre adicionales</string>
     <string name="razonNoAceptaParteFCEIRS">¿Porque no acepta Parte F?</string>
     <string name="razonNoAceptaParteFCEIRSHint">Seleccionar porque razón no acepta Parte F</string>
     <string name="otraRazonNoAceptaParteFCEIRS">Otra razón no acepta Parte F</string>
-    <string name="otraRazonNoAceptaParteFCEIRSHint">Indicar porque otra razón no acepta Parte F</string>
+    <string name="otraRazonNoAceptaParteFCEIRSHint">Indicar porque otra razón no acepta Parte F</string>-->
+
+    <!--Parte G-->
+    <string name="aceptaParteGCEIRRS">Acepta Parte G Influenza</string>
+    <string name="aceptaParteGCEIRRSHint">re-enrolamiento y obtención de muestras de sangre adicionales</string>
+    <string name="razonNoAceptaParteGCEIRRS">¿Porque no acepta Parte G?</string>
+    <string name="razonNoAceptaParteGCEIRRSHint">Seleccionar porque razón no acepta Parte G</string>
+    <string name="otraRazonNoAceptaParteGCEIRRS">Otra razón no acepta Parte G</string>
+    <string name="otraRazonNoAceptaParteGCEIRRSHint">Indicar porque otra razón no acepta Parte G</string>
 
     <string name="nombreContacto">Nombre del contacto</string>
     <string name="nombreContactoHint">Nombre completo del contacto</string>

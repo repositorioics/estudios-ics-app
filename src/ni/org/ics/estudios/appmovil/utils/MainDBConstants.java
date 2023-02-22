@@ -28,7 +28,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 46;
+	public static final int DATABASE_VERSION = 47;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -353,6 +353,11 @@ public class MainDBConstants {
     public static final String motivoRechazoParteF = "motivoRechazoParteF";
     public static final String otroMotivoRechazoParteF = "otroMotivoRechazoParteF";
 
+    //re-enrolamiento y obtención de muestras de sangre adicionales-CEIRRS. MA2023
+    public static final String aceptaParteG = "aceptaParteG";
+    public static final String motivoRechazoParteG = "motivoRechazoParteG";
+    public static final String otroMotivoRechazoParteG = "otroMotivoRechazoParteG";
+
     //crear tabla cartas_consentimientos
     public static final String CREATE_CARTACONSENTIMIENTO_TABLE = "create table if not exists "
             + CARTA_CONSENTIMIENTO_TABLE + " ("
@@ -398,6 +403,11 @@ public class MainDBConstants {
             + aceptaParteF + " text, "
             + motivoRechazoParteF + " text, "
             + otroMotivoRechazoParteF + " text, "
+
+            + aceptaParteG + " text, "
+            + motivoRechazoParteG + " text, "
+            + otroMotivoRechazoParteG + " text, "
+
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "

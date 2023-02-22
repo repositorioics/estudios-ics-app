@@ -69,9 +69,13 @@ public class ConsFluCEIRSForm extends AbstractWizardModel {
         Page otraRelacionPersonaCasa = new TextPage(this,labels.getOtraRelacionPersonaCasa(), "", Constants.WIZARD, false).setRequired(true);
         Page telefonoPersonaCasa = new NumberPage(this,labels.getTelefonoPersonaCasa(), "", Constants.WIZARD, false).setRangeValidation(true, Constants.MINIMO_NUM_CONVENCIONAL, Constants.MAXIMO_NUM_CELULAR).setRequired(false);
 
-        Page aceptaCohorteFLuParteDCovid = new SingleFixedChoicePage(this,labels.getAceptaCohorteFLuParteF(), labels.getAceptaCohorteFLuParteFHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        /*Page aceptaCohorteFLuParteDCovid = new SingleFixedChoicePage(this,labels.getAceptaCohorteFLuParteF(), labels.getAceptaCohorteFLuParteFHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page razonNoAceptaParteD = new SingleFixedChoicePage(this,labels.getRazonNoAceptaParteF(), labels.getRazonNoAceptaParteFHint(), Constants.WIZARD, false).setChoices(catMotivoRechazo).setRequired(true);
-        Page otraRazonNoAceptaParteD = new TextPage(this,labels.getOtraRazonNoAceptaParteF(),labels.getOtraRazonNoAceptaParteFHint(),Constants.WIZARD, false).setRequired(true);
+        Page otraRazonNoAceptaParteD = new TextPage(this,labels.getOtraRazonNoAceptaParteF(),labels.getOtraRazonNoAceptaParteFHint(),Constants.WIZARD, false).setRequired(true);*/
+
+        Page aceptaCohorteFLuParteDCovid = new SingleFixedChoicePage(this,labels.getAceptaCohorteFLuParteG(), labels.getAceptaCohorteFLuParteGHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page razonNoAceptaParteD = new SingleFixedChoicePage(this,labels.getRazonNoAceptaParteG(), labels.getRazonNoAceptaParteGHint(), Constants.WIZARD, false).setChoices(catMotivoRechazo).setRequired(true);
+        Page otraRazonNoAceptaParteD = new TextPage(this,labels.getOtraRazonNoAceptaParteG(),labels.getOtraRazonNoAceptaParteGHint(),Constants.WIZARD, false).setRequired(true);
         Page asentimiento = new SingleFixedChoicePage(this,labels.getAsentimiento(), labels.getAsentimientoHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page aceptaContactoFuturo = new SingleFixedChoicePage(this,labels.getAceptaContactoFuturo(), labels.getAceptaContactoFuturoHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
 

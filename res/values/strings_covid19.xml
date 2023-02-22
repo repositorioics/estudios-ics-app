@@ -341,7 +341,7 @@
     <string name="finalEmbarazo">como finalizó el embarazo?</string>
     <string name="otroFinalEmbarazo">Otro final</string>
     <string name="dabaPecho">27. Si estaba embarazada recientemente al momento de ser diagnosticada con COVID19, ¿Usted estaba dando pecho materno?</string>
-    <string name="trabajadorSalud">28 ¿Usted estuvo empleado como trabajador de la salud desde el 1 de febrero de 2021?</string>
+    <string name="trabajadorSalud">28 ¿Usted estuvo empleado como trabajador de la salud desde el 1 de febrero de 2022?</string>
     <string name="wrongYear">Año inválido. Debe ser entre <xliff:g id="year1">%1$s</xliff:g> y <xliff:g id="year2">%2$s</xliff:g></string>
 
     <!--nuevas preguntas Cuestionario Covid19 Muestreo Octubre 2021 -->

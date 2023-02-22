@@ -27,12 +27,19 @@ public class ConsFluCEIRSFormLabels {
     private String otraRelacionPersonaCasa;
     private String telefonoPersonaCasa;
 
-    private String aceptaCohorteFLuParteF;
+    /*private String aceptaCohorteFLuParteF;
     private String aceptaCohorteFLuParteFHint;
     protected String razonNoAceptaParteF;
     protected String otraRazonNoAceptaParteF;
     protected String razonNoAceptaParteFHint;
-    protected String otraRazonNoAceptaParteFHint;
+    protected String otraRazonNoAceptaParteFHint;*/
+
+    private String aceptaCohorteFLuParteG;
+    private String aceptaCohorteFLuParteGHint;
+    protected String razonNoAceptaParteG;
+    protected String otraRazonNoAceptaParteG;
+    protected String razonNoAceptaParteGHint;
+    protected String otraRazonNoAceptaParteGHint;
 
     private String aceptaContactoFuturo;
     private String aceptaContactoFuturoHint;
@@ -118,13 +125,22 @@ public class ConsFluCEIRSFormLabels {
         otraRelacionPersonaCasa = res.getString(R.string.otraRelacionPersonaCasa);
         telefonoPersonaCasa = res.getString(R.string.telefonoPersonaCasa);
 
-        aceptaCohorteFLuParteF = res.getString(R.string.aceptaParteFCEIRS);
+        /*aceptaCohorteFLuParteF = res.getString(R.string.aceptaParteFCEIRS);
         aceptaCohorteFLuParteFHint = res.getString(R.string.aceptaParteFCEIRSHint);
 
         razonNoAceptaParteF = res.getString(R.string.razonNoAceptaParteFCEIRS);
         razonNoAceptaParteFHint = res.getString(R.string.razonNoAceptaParteFCEIRSHint);
         otraRazonNoAceptaParteF = res.getString(R.string.otraRazonNoAceptaParteFCEIRS);
-        otraRazonNoAceptaParteFHint = res.getString(R.string.otraRazonNoAceptaParteFCEIRSHint);
+        otraRazonNoAceptaParteFHint = res.getString(R.string.otraRazonNoAceptaParteFCEIRSHint);*/
+
+        /*Parte G. Creada el 21/02/2023*/
+        aceptaCohorteFLuParteG = res.getString(R.string.aceptaParteGCEIRRS);
+        aceptaCohorteFLuParteGHint = res.getString(R.string.aceptaParteGCEIRRSHint);
+
+        razonNoAceptaParteG = res.getString(R.string.razonNoAceptaParteGCEIRRS);
+        razonNoAceptaParteGHint = res.getString(R.string.razonNoAceptaParteGCEIRRSHint);
+        otraRazonNoAceptaParteG = res.getString(R.string.otraRazonNoAceptaParteGCEIRRS);
+        otraRazonNoAceptaParteGHint = res.getString(R.string.otraRazonNoAceptaParteGCEIRRSHint);
 
 
         asentimiento = res.getString(R.string.asentimientoVerbal);
@@ -303,7 +319,7 @@ public class ConsFluCEIRSFormLabels {
         this.telefonoPersonaCasa = telefonoPersonaCasa;
     }
 
-    public String getAceptaCohorteFLuParteF() {
+    /*public String getAceptaCohorteLuParteF() {
         return aceptaCohorteFLuParteF;
     }
 
@@ -349,6 +365,54 @@ public class ConsFluCEIRSFormLabels {
 
     public void setOtraRazonNoAceptaParteFHint(String otraRazonNoAceptaParteFHint) {
         this.otraRazonNoAceptaParteFHint = otraRazonNoAceptaParteFHint;
+    }*/
+
+    public String getAceptaCohorteFLuParteG() {
+        return aceptaCohorteFLuParteG;
+    }
+
+    public void setAceptaCohorteFLuParteG(String aceptaCohorteFLuParteG) {
+        this.aceptaCohorteFLuParteG = aceptaCohorteFLuParteG;
+    }
+
+    public String getAceptaCohorteFLuParteGHint() {
+        return aceptaCohorteFLuParteGHint;
+    }
+
+    public void setAceptaCohorteFLuParteGHint(String aceptaCohorteFLuParteGHint) {
+        this.aceptaCohorteFLuParteGHint = aceptaCohorteFLuParteGHint;
+    }
+
+    public String getRazonNoAceptaParteG() {
+        return razonNoAceptaParteG;
+    }
+
+    public void setRazonNoAceptaParteG(String razonNoAceptaParteG) {
+        this.razonNoAceptaParteG = razonNoAceptaParteG;
+    }
+
+    public String getOtraRazonNoAceptaParteG() {
+        return otraRazonNoAceptaParteG;
+    }
+
+    public void setOtraRazonNoAceptaParteG(String otraRazonNoAceptaParteG) {
+        this.otraRazonNoAceptaParteG = otraRazonNoAceptaParteG;
+    }
+
+    public String getRazonNoAceptaParteGHint() {
+        return razonNoAceptaParteGHint;
+    }
+
+    public void setRazonNoAceptaParteFHint(String razonNoAceptaParteFHint) {
+        this.razonNoAceptaParteGHint = razonNoAceptaParteFHint;
+    }
+
+    public String getOtraRazonNoAceptaParteGHint() {
+        return otraRazonNoAceptaParteGHint;
+    }
+
+    public void setOtraRazonNoAceptaParteGHint(String otraRazonNoAceptaParteGHint) {
+        this.otraRazonNoAceptaParteGHint = otraRazonNoAceptaParteGHint;
     }
 
     public String getAceptaContactoFuturo() {

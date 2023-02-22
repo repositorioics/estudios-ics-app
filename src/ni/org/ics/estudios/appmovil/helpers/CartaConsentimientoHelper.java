@@ -64,6 +64,11 @@ public class CartaConsentimientoHelper {
         cv.put(MainDBConstants.motivoRechazoParteF, carta.getMotivoRechazoParteF());
         cv.put(MainDBConstants.otroMotivoRechazoParteF, carta.getOtroMotivoRechazoParteF());
 
+        //re-enrolamiento y obtención de muestras de sangre adicionales-CEIRS. MA2023
+        cv.put(MainDBConstants.aceptaParteG, carta.getAceptaParteG());
+        cv.put(MainDBConstants.motivoRechazoParteG, carta.getMotivoRechazoParteG());
+        cv.put(MainDBConstants.otroMotivoRechazoParteG, carta.getOtroMotivoRechazoParteG());
+
         if (carta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, carta.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, carta.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(carta.getPasive()));
@@ -122,6 +127,11 @@ public class CartaConsentimientoHelper {
         mCarta.setAceptaParteF(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParteF)));
         mCarta.setMotivoRechazoParteF(cursor.getString(cursor.getColumnIndex(MainDBConstants.motivoRechazoParteF)));
         mCarta.setOtroMotivoRechazoParteF(cursor.getString(cursor.getColumnIndex(MainDBConstants.otroMotivoRechazoParteF)));
+
+        //re-enrolamiento y obtención de muestras de sangre adicionales-CEIRS. MA2023
+        mCarta.setAceptaParteG(cursor.getString(cursor.getColumnIndex(MainDBConstants.aceptaParteG)));
+        mCarta.setMotivoRechazoParteG(cursor.getString(cursor.getColumnIndex(MainDBConstants.motivoRechazoParteG)));
+        mCarta.setOtroMotivoRechazoParteG(cursor.getString(cursor.getColumnIndex(MainDBConstants.otroMotivoRechazoParteG)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mCarta.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         mCarta.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

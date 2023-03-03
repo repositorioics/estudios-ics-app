@@ -73,6 +73,8 @@ public class DownloadAllTask extends DownloadTask {
             ca.borrarContactosParticipantes();
             ca.borrarDatosCoordenadas();
             ca.borrarVisitasTerrenoParticipante();
+            ca.borrarPerimetroAbdominal();
+            ca.borrarEncuestaSatisfaccionUsuario();
 
             try {
                 error = checkRole();

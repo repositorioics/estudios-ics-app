@@ -171,6 +171,7 @@ public class ParticipanteHelper {
 				participantes.getInt(participantes.getColumnIndex(ConstantsDB.REC2))));
         //PerimetroAbdominal
         mPart.setPerimetroAbdominal(participantes.getString(participantes.getColumnIndex(ConstantsDB.PABDOMINAL)));
+        mPart.setEsatUsuario(participantes.getString(participantes.getColumnIndex(ConstantsDB.ENCSATUSUARIO)));
         return mPart;
     }
 
@@ -260,6 +261,7 @@ public class ParticipanteHelper {
         cv.put(ConstantsDB.REC2, participante.getMovilInfo().getRecurso2());
         //Perimetro Abdominal
         cv.put(ConstantsDB.PABDOMINAL, participante.getPerimetroAbdominal());
+        cv.put(ConstantsDB.ENCSATUSUARIO, participante.getEsatUsuario());
         return cv;
     }
 
@@ -416,6 +418,7 @@ public class ParticipanteHelper {
         if ( participante.getMovilInfo().getRecurso2() != null ) stat.bindLong(68, participante.getMovilInfo().getRecurso2()); else stat.bindNull(68);
         //Perimetro Abdominal
         if ( participante.getPerimetroAbdominal() != null ) stat.bindString(69, participante.getPerimetroAbdominal()); else stat.bindNull(69);
+        if ( participante.getEsatUsuario() != null ) stat.bindString(70, participante.getEsatUsuario()); else stat.bindNull(70);
     }
 
     public static void fillContactoParticipanteStatement(SQLiteStatement stat, ContactoParticipante contactoParticipante){

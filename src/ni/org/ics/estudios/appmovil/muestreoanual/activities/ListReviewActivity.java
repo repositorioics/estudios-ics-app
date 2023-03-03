@@ -59,6 +59,8 @@ public class ListReviewActivity extends ListActivity {
 
 	//Perimetro Abdominal
 	ArrayAdapter<PerimetroAbdominal> mPerimetroAbdominalAdapter=null;
+
+	ArrayAdapter<EncuestaSatisfaccionUsuario> mEncuestaSatisfaccionUsuarioAdapter=null;
 	
 	private Integer codigo;
 	private Integer codCasa;
@@ -156,6 +158,10 @@ public class ListReviewActivity extends ListActivity {
 				//Perimetro Abdominal
 				if (mPerimetroAbdominalAdapter != null ) {
 					mPerimetroAbdominalAdapter.getFilter().filter(s);
+				}
+
+				if (mEncuestaSatisfaccionUsuarioAdapter != null) {
+					mEncuestaSatisfaccionUsuarioAdapter.getFilter().filter(s);
 				}
 			}
 
@@ -338,6 +344,13 @@ public class ListReviewActivity extends ListActivity {
 			showToast("Total = "+ mPerimetroAbdominalAdapter.getCount());
 		}
 
+		if (titulo.matches(getString(R.string.info_encSatUsu))) {
+			mEncuestaSatisfaccionUsuarioAdapter = new EncuestaSatisfaccionUsuarioAdapter(this, R.layout.list_item_review,
+					(ArrayList<EncuestaSatisfaccionUsuario>) getIntent().getExtras().getSerializable(Constants.OBJECTO));
+			setListAdapter(mEncuestaSatisfaccionUsuarioAdapter);
+			showToast("Total = "+ mEncuestaSatisfaccionUsuarioAdapter.getCount());
+		}
+
         ListView listView = (ListView) findViewById(android.R.id.list);
 		listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 	}
@@ -493,6 +506,14 @@ public class ListReviewActivity extends ListActivity {
 			PerimetroAbdominal perimetroAbdominal = (PerimetroAbdominal) getListAdapter().getItem(position);
 			arguments.putString(Constants.TITLE, getString(R.string.info_pabdominal));
 			if (perimetroAbdominal != null) arguments.putSerializable(Constants.OBJECTO , perimetroAbdominal);
+			i = new Intent(getApplicationContext(),
+					ReviewActivity.class);
+		}
+		//Encuesta satisfaccion usuario
+		if (titulo.matches(getString(R.string.info_encSatUsu))){
+			EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario = (EncuestaSatisfaccionUsuario) getListAdapter().getItem(position);
+			arguments.putString(Constants.TITLE, getString(R.string.info_encSatUsu));
+			if (encuestaSatisfaccionUsuario != null) arguments.putSerializable(Constants.OBJECTO , encuestaSatisfaccionUsuario);
 			i = new Intent(getApplicationContext(),
 					ReviewActivity.class);
 		}

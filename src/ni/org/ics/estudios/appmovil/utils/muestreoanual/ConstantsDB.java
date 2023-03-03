@@ -76,6 +76,9 @@ public class ConstantsDB {
     //Usuario perimetro abdominal
     public static final String U_PABDOMINAL = "pabdominal";
 
+    //Usuario encuesta satisfaccion usuario
+    public static final String U_ENCSATUSUARIO = "encSatUsu";
+
     //Campos casa
     public static final String COD_CASA = "codCasa";
     public static final String BARRIO = "barrio";
@@ -952,6 +955,10 @@ public class ConstantsDB {
     public static final String PABDOMINAL3 = "pabdominal3";
     public static final String DIFPABDOMINAL = "difpabdominal";
 
+    //Campo encuesta satisfaccion usuario en la tabla participantes procesos
+    public static final String ENCSATUSUARIO = "esatUsuario";
+
+
     public static final String CREATE_USER_PERM_TABLE = "create table if not exists "
             + USER_PERM_TABLE + " ("
             + USERNAME + " text not null, "
@@ -970,6 +977,7 @@ public class ConstantsDB {
             + U_TAMZIKA + " boolean, "
             + U_PARTO + " boolean, "
             + U_PABDOMINAL + " boolean, "
+            + U_ENCSATUSUARIO + " boolean, "
             + "primary key (" + USERNAME + "));";
 
     public static final String CREATE_PARTPROC_TABLE = "create table if not exists "
@@ -1046,6 +1054,7 @@ public class ConstantsDB {
             + REC1    + " integer, "
             + REC2    + " integer, "
             + PABDOMINAL  + " text, "
+            + ENCSATUSUARIO + " text, "
             + "primary key (" + CODIGO + "));";
 
     public static final String CREATE_ENCCASA_TABLE = "create table if not exists "
@@ -1873,8 +1882,9 @@ public class ConstantsDB {
             + U_CASAZIKA + ","
             + U_TAMZIKA + ","
             + U_PARTO + ","
-            + U_PABDOMINAL
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + U_PABDOMINAL + ","
+            + U_ENCSATUSUARIO
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static final String INSERT_PARTPROC_TABLE = "insert into "
             + PART_PROCESOS_TABLE + " ("
@@ -1948,8 +1958,9 @@ public class ConstantsDB {
             + DELETED  + ","
             + REC1    + ","
             + REC2    + ","
-            + PABDOMINAL
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + PABDOMINAL + ","
+            + ENCSATUSUARIO
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static final String INSERT_MUESTRA_TABLE = "insert into "
             + MUESTRA_TABLE + " ("

@@ -80,6 +80,9 @@ public class ParticipanteProcesos implements Serializable {
     //Indica si esta pendiente de la toma del perimetro abdominal
     private String perimetroAbdominal;
 
+    //Indica realizar encuensta de satisfaccion de usuario
+    private String esatUsuario;
+
     private MovilInfo movilInfo;
 
     public Integer getCodigo() {
@@ -544,6 +547,14 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setPerimetroAbdominal(String perimetroAbdominal) {
         this.perimetroAbdominal = perimetroAbdominal;
+    }
+
+    public String getEsatUsuario() {
+        return esatUsuario;
+    }
+
+    public void setEsatUsuario(String esatUsuario) {
+        this.esatUsuario = esatUsuario;
     }
 }
 

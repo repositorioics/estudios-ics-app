@@ -33,12 +33,13 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
     //private final int numEncPartSa;
     private final int numDatosCoord;
     private final int numPabdominal;
+    private final int numEncSatUsuario;
 
 	public MenuInfoAdapter(Context context, int textViewResourceId,
 			String[] values, int visitas, int pyts
 			, int ecasa, int epart, int elact, int vacunas
 			, int muestras, int obsequios, int seroprev, int partos, int datoscasas, int docs
-            , int ecasachf, int numDatosCoord, int pAbdominal) {
+            , int ecasachf, int numDatosCoord, int pAbdominal, int mEncSatUsuario) {
 		super(context, textViewResourceId, values);
 		this.values = values;
 		this.numVisitas=visitas;
@@ -56,6 +57,7 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
         this.numEncCasaChf = ecasachf;
         this.numDatosCoord = numDatosCoord;
         this.numPabdominal = pAbdominal; //Perimetro Abdominal
+        this.numEncSatUsuario = mEncSatUsuario;
 	}
 
 	@Override
@@ -220,6 +222,14 @@ public class MenuInfoAdapter extends ArrayAdapter<String> {
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 textView.setText(values[position] + "(" + numPabdominal + ")");
                 if (numPabdominal < 1) {
+                    textView.setTextColor(Color.RED);
+                }
+                break;
+            case 18:
+                img = getContext().getResources().getDrawable(R.drawable.ic_survey_persona);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                textView.setText(values[position] + "(" + numEncSatUsuario + ")");
+                if (numEncSatUsuario < 1) {
                     textView.setTextColor(Color.RED);
                 }
                 break;

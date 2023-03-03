@@ -66,4 +66,13 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
+
+    <style name="customCheckboxStyle">
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="TextViewEstiloSeguimiento">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
 </resources>

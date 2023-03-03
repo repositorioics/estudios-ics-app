@@ -102,6 +102,7 @@
         <item>@string/info_coordenadas</item>
         <!--Perimetro Abdominal-->
         <item>@string/info_pabdominal</item>
+        <item>@string/info_encSatUsu</item>
 
     </string-array>
     <string-array name="menu_review">
@@ -123,6 +124,7 @@
         <item>@string/info_participantesa</item>-->
         <!--Perimetro Abdominal-->
         <item>@string/info_pabdominal</item>
+        <item>@string/info_encSatUsu</item>
     </string-array>
     <string-array name="menu_influenza_UO1">
         <item>@string/positives</item>

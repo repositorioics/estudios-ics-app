@@ -56,6 +56,8 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
     //Perimetro Abdominal
     private ArrayList<PerimetroAbdominal> mPabdominal = new ArrayList<PerimetroAbdominal>();
 
+    private ArrayList<EncuestaSatisfaccionUsuario> mEncSatUsuario = new ArrayList<EncuestaSatisfaccionUsuario>();
+
     private ArrayList<ParticipanteSeroprevalencia> mConSA = new ArrayList<ParticipanteSeroprevalencia>();
 	private GridView gridView;
 	private TextView textView;
@@ -197,6 +199,12 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
+                    case 15:
+                        arguments.putString(Constants.TITLE, getString(R.string.info_encSatUsu));
+                        if (mEncSatUsuario!=null) arguments.putSerializable(Constants.OBJECTO , mEncSatUsuario);
+                        i = new Intent(getApplicationContext(),
+                                ListReviewActivity.class);
+                        break;
                     default:
                         i = new Intent(getApplicationContext(),
                                 MenuReviewActivity.class);
@@ -239,7 +247,7 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
         mConSA=(ArrayList)ca.getParticipantesSeroprevalencia(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), SeroprevalenciaDBConstants.participante+ " , " +MainDBConstants.recordDate);
 
         //Perimetro Abdominal
-        mPabdominal = ca.getListaPerimetrosAbdominalesHoy();
+        mEncSatUsuario = ca.getListaEncuestaSatisfaccionUsuario(0);
 		ca.close();	
 	}	
 
@@ -309,7 +317,7 @@ public class MenuReviewActivity extends AbstractAsyncActivity {
             gridView.setAdapter(new MenuReviewAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info,
                     mVisitasTerreno.size(), mPyTs.size(), mEncuestasCasas.size(), mEncuestasParticipantes.size(),
                     mEncuestasLactancias.size(), mVacunas.size(), mEncuestasS.size(), mMuestras.size(), mObsequios.size(), mConSA.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size(), mDocumentos.size(),
-                    mEncuestasCasasChf.size(), mPabdominal.size()));
+                    mEncuestasCasasChf.size(), mPabdominal.size(), mEncSatUsuario.size()));
 
             dismissProgressDialog();
         }

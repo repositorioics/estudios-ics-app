@@ -7,6 +7,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
+import android.app.KeyguardManager;
+import android.content.Context;
+import android.hardware.fingerprint.FingerprintManager;
+import android.os.CancellationSignal;
+import android.support.v4.app.ActivityCompat;
+import android.widget.*;
 import net.sqlcipher.SQLException;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.users.Authority;
@@ -47,9 +53,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
 
 
 public class LoginActivity extends Activity {
@@ -150,7 +153,6 @@ public class LoginActivity extends Activity {
 					}
 				});
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -7,6 +7,7 @@ import ni.org.ics.estudios.appmovil.domain.users.Authority;
 import ni.org.ics.estudios.appmovil.domain.users.AuthorityId;
 import ni.org.ics.estudios.appmovil.domain.users.UserPermissions;
 import ni.org.ics.estudios.appmovil.domain.users.UserSistema;
+import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
 import android.content.ContentValues;
@@ -94,6 +95,7 @@ public class UserSistemaHelper {
         cv.put(ConstantsDB.U_PARTO, userPermissions.getDatosparto());
         //Perimetro Abdominal
         cv.put(ConstantsDB.U_PABDOMINAL, userPermissions.getpAbdominal());
+        cv.put(ConstantsDB.U_ENCSATUSUARIO, userPermissions.getEncSatUsu());
         return cv;
     }
 
@@ -120,6 +122,9 @@ public class UserSistemaHelper {
         Boolean parto = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_PARTO)) > 0;
         //Perimetro Abdominal
         Boolean pAbdominal = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_PABDOMINAL)) > 0;
+        //Encuesta satisfaccion usuario
+        Boolean enSatUser = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_ENCSATUSUARIO)) > 0;
+
         mUser.setEncuestaCasa(enCasa);
         mUser.setEncuestaParticipante(enPart);
         mUser.setEncuestaLactancia(enLact);
@@ -134,6 +139,7 @@ public class UserSistemaHelper {
         mUser.setCasazika(casazika);
         mUser.setDatosparto(parto);
         mUser.setpAbdominal(pAbdominal);
+        mUser.setEncSatUsu(enSatUser);
         return mUser;
     }
 
@@ -176,6 +182,8 @@ public class UserSistemaHelper {
         stat.bindLong(15, (userPermissions.getDatosparto()?1:0));
         //Perimetro Abdominal
         stat.bindLong(16, (userPermissions.getpAbdominal()?1:0));
+        //Encuesta satisfaccion usuario
+        stat.bindLong(17, (userPermissions.getEncSatUsu()?1:0));
     }
 
     public static void bindString(SQLiteStatement stat, int index, String value){

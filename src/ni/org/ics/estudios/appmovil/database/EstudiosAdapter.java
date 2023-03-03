@@ -190,6 +190,9 @@ public class EstudiosAdapter {
 			/*Nueva tabla perimetroabdominal fecha creacion 27/01/2023 Ing. Santiago Carballo*/
 			db.execSQL(ConstantsDB.CREATE_PAD_ABDOMINAL_TABLE);
 
+			/*Nueva encuesta satisfaccion usuario fecha creacion 25/02/2023 Ing. Santiago Carballo*/
+			db.execSQL(MainDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE);
+
 		}
 
 		@Override
@@ -443,6 +446,9 @@ public class EstudiosAdapter {
 				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.aceptaParteG + " text");
 				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.motivoRechazoParteG + " text");
 				db.execSQL("ALTER TABLE " + MainDBConstants.CARTA_CONSENTIMIENTO_TABLE + " ADD COLUMN " + MainDBConstants.otroMotivoRechazoParteG + " text");
+
+				/*Nueva encuesta satisfaccion por usuario 25/02/2023*/
+				db.execSQL(MainDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE);
 			}
 		}
 	}
@@ -8470,6 +8476,66 @@ public class EstudiosAdapter {
 	/********************************************************/
 	/********************************************************/
 
+	public boolean borrarEncuestaSatisfaccionUsuario() {
+		return mDb.delete(MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, null, null) > 0;
+	}
+
+	//Crear una nueva encuesta satisfaccion usuario en la base de datos
+	public void crearEncuestaSatisfaccionUsuarioValues(EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario) {
+		ContentValues cv = EncuestaSatisfaccionUsuarioHelper.crearEncuenstaSatisfaccionUsuarioContentValues(encuestaSatisfaccionUsuario);
+		mDb.insertOrThrow(MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, null, cv);
+	}
+
+	/*public boolean updateEncuestaSatisfaccionUsuario(EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario) {
+		ContentValues cv = new ContentValues();
+		cv.put(ConstantsDB.STATUS, String.valueOf(encuestaSatisfaccionUsuario.getEstado()));
+		return mDb.update(MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, cv,
+				ConstantsDB.CODIGO + "=" + encuestaSatisfaccionUsuario.getEsId().getCodigo() + " and " +
+						ConstantsDB.FECHA + "=" + encuestaSatisfaccionUsuario.getEsId().getFecha().getTime(), null) > 0;
+	}*/
+
+	public boolean updateEncuestaSatisfaccionUsuario(EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario) {
+		ContentValues cv = EncuestaSatisfaccionUsuarioHelper.crearEncuenstaSatisfaccionUsuarioContentValues(encuestaSatisfaccionUsuario);
+		return mDb.update(MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, cv, MainDBConstants.codigoParticipante + "="
+				+ encuestaSatisfaccionUsuario.getCodigoParticipante(), null) > 0;
+	}
+
+	public ArrayList<EncuestaSatisfaccionUsuario> getListaEncuestaSatisfaccionUsuario(Integer codigo) throws SQLException {
+		Cursor cEncSatUsu = null;
+		ArrayList<EncuestaSatisfaccionUsuario> mEncSatUsu = new ArrayList<EncuestaSatisfaccionUsuario>();
+		cEncSatUsu = mDb.query(true, MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, null,
+				null,  null, null, null, null, null);
+		if (cEncSatUsu != null && cEncSatUsu.getCount() > 0) {
+			cEncSatUsu.moveToFirst();
+			mEncSatUsu.clear();
+			do{
+				mEncSatUsu.add(EncuestaSatisfaccionUsuarioHelper.crearEncuestaSatisfaccionUsuario(cEncSatUsu));
+			} while (cEncSatUsu.moveToNext());
+		}
+		cEncSatUsu.close();
+		return mEncSatUsu;
+	}
+
+	public List<EncuestaSatisfaccionUsuario> getListaEncSatisfaccionUsuarioSinEnviar() throws SQLException {
+		Cursor cEncSatUsuario = null;
+		List<EncuestaSatisfaccionUsuario> mEncSatUsu = new ArrayList<EncuestaSatisfaccionUsuario>();
+		cEncSatUsuario = mDb.query(true, MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, null,
+				MainDBConstants.estado + "= '" + '0' + "'", null, null, null, null, null);
+		if (cEncSatUsuario != null && cEncSatUsuario.getCount() > 0) {
+			cEncSatUsuario.moveToFirst();
+			mEncSatUsu.clear();
+			do{
+				mEncSatUsu.add(EncuestaSatisfaccionUsuarioHelper.crearEncuestaSatisfaccionUsuario(cEncSatUsuario));
+			} while (cEncSatUsuario.moveToNext());
+		}
+		cEncSatUsuario.close();
+		return mEncSatUsu;
+	}
+
+	/********************************************************/
+	/********************************************************/
+	/********************************************************/
+	/********************************************************/
 
 	/*****FIN ENTOMOLOGIA****/
 	public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) throws Exception {

@@ -143,12 +143,13 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         || (procesos.getConsDenParteE() != null && procesos.getConsDenParteE().matches("Si"))
                     //|| (procesos.getMxDenParteE()!=null && procesos.getMxDenParteE().matches("Si")) //se deshabilita para MA2021
                         || procesos.getPerimetroAbdominal().matches("Si") //Perimetro Abdominal
+                        || procesos.getEsatUsuario().matches("Si")
                         ) {
 
                     labelHeader = labelHeader + "<font color='red'>Pendiente: <br /></font>";
 
                     //Primero muestras
-                    //'#B941E0'purple
+                    //'#B941E0'purple`
                     //'#11BDF7' blue
                     //'#32B507' green
                     if (procesos.getConvalesciente().matches("Na")) {
@@ -451,6 +452,7 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                     }
                     //Perimetro Abdominal
                     if (procesos.getPerimetroAbdominal().matches("Si")) labelHeader = labelHeader + "Perimetro Abdominal <br />";
+                    if (procesos.getEsatUsuario().matches("Si")) labelHeader = labelHeader + "Encuesta Satisfación de Usuario <br />";
                 } else {
                     labelHeader = labelHeader + "<font color='blue'>No tiene procedimientos pendientes<br /></font>";
                 }

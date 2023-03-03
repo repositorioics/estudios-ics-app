@@ -1128,7 +1128,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 return true;
             case R.id.ENCSATUSU:
                 if(mUser.getEncSatUsu()){
-                    if(mParticipante.getProcesos().getConsFlu().matches("Si")){
+                    if(mParticipante.getProcesos().getEsatUsuario().matches("Si")){
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaSatisfaccionActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

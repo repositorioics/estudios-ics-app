@@ -322,6 +322,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="23dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Nos atienden mejor en otro establecimiento de salud."
                     android:textAppearance="@style/TextViewEstiloSeguimiento" />
         </LinearLayout>

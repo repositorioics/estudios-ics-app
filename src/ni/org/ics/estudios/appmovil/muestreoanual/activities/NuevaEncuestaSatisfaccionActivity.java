@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
@@ -1237,10 +1239,25 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         }
     }
 
+    public void clearFocus() {
+        EditText edtxP1_Otras = (EditText) this.findViewById(R.id.edtxP1_Otras);
+        EditText edtxP2_Otras = (EditText) this.findViewById(R.id.edtxP2_Otras);
+        EditText edtxOtrasDificultades = (EditText) this.findViewById(R.id.edtxOtrasDificultades);
+        EditText edtxOtrasRazonesRecomendaria = (EditText) this.findViewById(R.id.edtxOtrasRazonesRecomendaria);
+        EditText edtxOtroMotivosNoComprendioProcedimiento = (EditText) this.findViewById(R.id.edtxOtroMotivosNoComprendioProcedimiento);
+
+        edtxP1_Otras.clearFocus();
+        edtxP2_Otras.clearFocus();
+        edtxOtrasDificultades.clearFocus();
+        edtxOtrasRazonesRecomendaria.clearFocus();
+        edtxOtroMotivosNoComprendioProcedimiento.clearFocus();
+    }
+
     //Primera Parte
     public void onRadioButtonP1Clicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
+        clearFocus();
         // Check which radio button was clicked
         switch(view.getId()) {
             case R.id.radioAtenMedica0:
@@ -1268,6 +1285,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioFamAmistadesP2_0:
                 if (checked)
@@ -1294,6 +1312,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioDesicionPropiaP3_0:
                 if (checked)
@@ -1320,6 +1339,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioObsequiosP4_0:
                 if (checked)
@@ -1346,6 +1366,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioAyudaComunidadP5_0:
                 if (checked)
@@ -1372,6 +1393,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioExaLabP6_0:
                 if (checked)
@@ -1398,6 +1420,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioInteresCientificoP7_0:
                 if (checked)
@@ -1424,6 +1447,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioAyudarOtrosP8_0:
                 if (checked)
@@ -1451,6 +1475,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioCalidadAtenMedica0:
                 if (checked)
@@ -1477,6 +1502,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioAtencionOportuna0:
                 if (checked)
@@ -1503,6 +1529,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioCoordinacionHosp0:
                 if (checked)
@@ -1529,6 +1556,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioInformacionEstadoSalud0:
                 if (checked)
@@ -1555,6 +1583,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioEnseniaPrevEnfer0:
                 if (checked)
@@ -1581,6 +1610,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioMejoraConoEnfer0:
                 if (checked)
@@ -1607,6 +1637,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioInteresCientificoP2_0:
                 if (checked)
@@ -1633,6 +1664,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioMejorarTrataDengue0:
                 if (checked)
@@ -1659,6 +1691,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioNoQuieroQuedarmeEstudio0:
                 if (checked)
@@ -1685,6 +1718,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioDificultadBuscarAtencionS:
                 if (checked)
@@ -1722,6 +1756,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioDificultadBuscarAtencionP4S:
                 if (checked)
@@ -1777,6 +1812,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioComprendeProcedimientosS:
                 if (checked)
@@ -1811,6 +1847,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioPersonalBrindaConsejosS:
                 if (checked)
@@ -1825,6 +1862,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
+        clearFocus();
         switch(view.getId()) {
             case R.id.radioImportanciaInforEstudios0:
                 if (checked)

@@ -86,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Dan respuesta a nuestras necesidades de salud de manera oportuna."
                     android:textAppearance="@style/TextViewEstiloSeguimiento" />
         </LinearLayout>
@@ -127,6 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="23dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Siento que me atienden mejor que en mi seguro médico."
                     android:textAppearance="@style/TextViewEstiloSeguimiento" />
         </LinearLayout>

@@ -112,7 +112,8 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                             labelHeader = labelHeader + "<font color='red'>Visita Vac UO1 menor 30 días sin muestra: " + participante.getDatosUO1().getRazonNoMx() + " . COMUNICAR AL SUPERVISOR</font><br />";
                         }
                     }
-                    if (!participante.getDatosUO1().isMxFinalTomada() && participante.getDatosUO1().getDiasVacuna() >= 30) {
+                    //Cambio a permitir rango en 30 y 90 dias solicitado por Brenda 26/02/23
+                    if (!participante.getDatosUO1().isMxFinalTomada() && (participante.getDatosUO1().getDiasVacuna() >= 30 && participante.getDatosUO1().getDiasVacuna() <= 90)) {
                         labelHeader = labelHeader + "<font color='red'>Visita Vac UO1 mayor 30 días sin muestra final. COMUNICAR AL SUPERVISOR</font><br />";
                     }
                 }

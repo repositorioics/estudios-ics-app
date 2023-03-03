@@ -1501,7 +1501,9 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         labelHeader = labelHeader + "<small><font color='red'>Visita Vac UO1 menor 30 días sin muestra: " + mParticipante.getDatosUO1().getRazonNoMx() + " . COMUNICAR AL SUPERVISOR</font></small><br />";
                     }
                 }
-                if (!mParticipante.getDatosUO1().isMxFinalTomada() && mParticipante.getDatosUO1().getDiasVacuna() >= 30) {
+                //Cambio a permitir rango en 30 y 90 dias solicitado por Brenda 26/02/23
+                if (!mParticipante.getDatosUO1().isMxFinalTomada() && (mParticipante.getDatosUO1().getDiasVacuna() >= 30 && mParticipante.getDatosUO1().getDiasVacuna() <= 90)) {
+                    //  if (!mParticipante.getDatosUO1().isMxFinalTomada() && mParticipante.getDatosUO1().getDiasVacuna() >= 30) {
                     labelHeader = labelHeader + "<small><font color='red'>Visita Vac UO1 mayor 30 días sin muestra final. COMUNICAR AL SUPERVISOR</font></small><br />";
                 }
             }

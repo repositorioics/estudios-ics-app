@@ -53,6 +53,7 @@
                           android:layout_height="wrap_content"
                           android:layout_marginBottom="20dp"
                           android:orientation="horizontal">
+
                 <EditText android:id="@+id/inputEvento1"
                           android:layout_width="0dip"
                           android:layout_height="wrap_content"
@@ -81,10 +82,11 @@
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:layout_marginBottom="20dp"/>
-            <!-- inicio sintomas evento 1-->
+            <!-- inicio sintomas evento 1   Cambio label 25/02/23-->
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textDesdeSintomasE1"
-                      android:text="@string/presentoSintomas" android:layout_marginBottom="20dp" />
+                      android:text="@string/feb21" android:layout_marginBottom="20dp" />
+
 
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textE1Febricula"
@@ -986,7 +988,7 @@
             <!-- inicio sintomas evento 2-->
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textDesdeSintomasE2"
-                      android:text="@string/presentoSintomas" android:layout_marginBottom="20dp" />
+                      android:text="@string/feb21" android:layout_marginBottom="20dp" />
 
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textE2Febricula"
@@ -1744,7 +1746,7 @@
             <!-- inicio sintomas evento 3-->
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textDesdeSintomasE3"
-                      android:text="@string/presentoSintomas" android:layout_marginBottom="20dp" />
+                      android:text="@string/feb21" android:layout_marginBottom="20dp" />
 
             <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textE3Febricula"

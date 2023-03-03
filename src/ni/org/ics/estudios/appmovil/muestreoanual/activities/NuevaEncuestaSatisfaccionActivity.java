@@ -790,7 +790,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
     //InteresCientificoP2
     public void onChkInteresCientificoP2(View view) {
         boolean chkInteresCientificoP2 = ((CheckBox) this.findViewById(R.id.chkInteresCientificoP2)).isChecked();
-        ((CheckBox) this.findViewById(R.id.chkMejoraConoEnfer)).setChecked(chkInteresCientificoP2);
+        ((CheckBox) this.findViewById(R.id.chkInteresCientificoP2)).setChecked(chkInteresCientificoP2);
         if (chkInteresCientificoP2) {
             ((CheckBox) this.findViewById(R.id.chkInteresCientificoP2)).setChecked(true);
             this.findViewById(R.id.radioGroupP2_7).setVisibility(view.VISIBLE);
@@ -805,7 +805,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
     //MejorarTrataDengue
     public void onChkMejorarTrataDengue(View view) {
         boolean chkMejorarTrataDengue = ((CheckBox) this.findViewById(R.id.chkMejorarTrataDengue)).isChecked();
-        ((CheckBox) this.findViewById(R.id.chkMejoraConoEnfer)).setChecked(chkMejorarTrataDengue);
+        ((CheckBox) this.findViewById(R.id.chkMejorarTrataDengue)).setChecked(chkMejorarTrataDengue);
         if (chkMejorarTrataDengue) {
             ((CheckBox) this.findViewById(R.id.chkMejorarTrataDengue)).setChecked(true);
             this.findViewById(R.id.radioGroupP2_8).setVisibility(view.VISIBLE);
@@ -1056,7 +1056,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
     //TiempoEsperaLargo
     public void onChkTiempoEsperaLargo(View view) {
         boolean chkTiempoEsperaLargo = ((CheckBox) this.findViewById(R.id.chkTiempoEsperaLargo)).isChecked();
-        ((CheckBox) this.findViewById(R.id.chkNoDanRespuestaNecesidades)).setChecked(chkTiempoEsperaLargo);
+        ((CheckBox) this.findViewById(R.id.chkTiempoEsperaLargo)).setChecked(chkTiempoEsperaLargo);
         if (chkTiempoEsperaLargo) {
             ((CheckBox) this.findViewById(R.id.chkTiempoEsperaLargo)).setChecked(true);
         } else {

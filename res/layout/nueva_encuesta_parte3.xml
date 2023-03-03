@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <TextView
+            android:id="@+id/txtvDificultadBuscarAtencion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="18dp"
+            android:text="3. ¿Ud. Ha presentado alguna dificultad de buscar atención de salud para su hijo/a en el proyecto en algún momento?"
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP3_1"
+                android:layout_below="@+id/txtvDificultadBuscarAtencion"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioDificultadBuscarAtencionS"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Si"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioDificultadBuscarAtencionClicked"/>
+        <RadioButton android:id="@+id/radioDificultadBuscarAtencionN"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="No"
+                     android:layout_marginLeft="10dp"
+                     android:onClick="onRadioDificultadBuscarAtencionClicked"/>
+
+    </RadioGroup>
+    <LinearLayout
+            android:id="@+id/pregunta3_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP3_1"
+            android:visibility="gone"
+            android:orientation="vertical">
+        <TextView
+                android:id="@+id/txtvDificultadPresentado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtvDificultadBuscarAtencion"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="18dp"
+                android:text="3.1 ¿Cuál de estas dificultades ha presentado?"
+                android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkLejosCentroSalud"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvLejosCentroSalud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Me queda lejos llegar al centro de salud."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkCostoElevadoTransporte"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvCostoElevadoTransporte"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="25dp"
+                    android:text="El costo es elevado para transportarme al centro de salud"
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkTrabajoTiempo"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvTrabajoTiempo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Trabajo y me es difícil encontrar el tiempo."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkNoQueriaPasarConsultMomento"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvNoQueriaPasarConsultMomento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Mi hijo/a no quería ir a pasar consulta médica en ese momento."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkPorHorarioClases"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvPorHorarioClases"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Por el horario de clases de mi hijo/a."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkTemorTomenMx"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvTemorTomenMx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Temor a que le tomen muestras a mi hijo/a."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkTemorDarInformacion"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvTemorDarInformacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Temor a dar mi información personal o muestras al estudio."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkOtrasDificultades"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvOtrasDificultades"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_toRightOf="@+id/chkOtrasDificultades"
+                    android:text="¿Otras dificultades? Especifique:"
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+            <EditText
+                    android:id="@+id/edtxOtrasDificultades"
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+                    android:layout_below="@+id/chkOtrasDificultades"
+                    android:visibility="invisible"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:scrollbars="vertical" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

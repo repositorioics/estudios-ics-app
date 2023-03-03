@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/txtvPregunta2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="30dp"
+            android:text="2. ¿Por qué ha decidido mantener a su hijo/a durante todo este tiempo en el proyecto? Puede seleccionar más de una respuesta, e indique su acuerdo a cada frase en la escala."
+            android:textStyle="bold" />
+
+    <!--PREGUNTA1-->
+    <CheckBox
+            android:id="@+id/chkCalidadAtencionMed"
+            style="@style/customCheckboxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtvPregunta2"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="25dp" />
+    <TextView
+            android:id="@+id/txtvCalidadAtencionMed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtvPregunta2"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="18dp"
+            android:layout_toRightOf="@+id/chkCalidadAtencionMed"
+            android:text="La calidad de atención médica y exámenes de laboratorio se ajusta a las necesidades médicas y de salud de mi hijo/a."
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP2_1"
+                android:visibility="invisible"
+                android:layout_below="@+id/txtvCalidadAtencionMed"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioCalidadAtenMedica0"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="0"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P1Clicked"/>
+        <RadioButton android:id="@+id/radioCalidadAtenMedica1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="1"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P1Clicked"/>
+        <RadioButton android:id="@+id/radioCalidadAtenMedica2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="2"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P1Clicked"/>
+        <RadioButton android:id="@+id/radioCalidadAtenMedica3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="3"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P1Clicked"/>
+        <RadioButton android:id="@+id/radioCalidadAtenMedica4"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="4"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P1Clicked"/>
+        <RadioButton android:id="@+id/radioCalidadAtenMedica5"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="5"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P1Clicked"/>
+    </RadioGroup>
+
+    <!--PREGUNTA2-->
+    <CheckBox
+            android:id="@+id/chkAtencionOportuna"
+            style="@style/customCheckboxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_1"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="25dp" />
+
+    <TextView
+            android:id="@+id/txtvAtencionOportuna"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@+id/chkAtencionOportuna"
+            android:text="Porque puedo recibir atención de emergencia y oportuna."
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP2_2"
+                android:visibility="invisible"
+                android:layout_below="@+id/txtvAtencionOportuna"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioAtencionOportuna0"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="0"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P2Clicked"/>
+        <RadioButton android:id="@+id/radioAtencionOportuna1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="1"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P2Clicked"/>
+        <RadioButton android:id="@+id/radioAtencionOportuna2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="2"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P2Clicked"/>
+        <RadioButton android:id="@+id/radioAtencionOportuna3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="3"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P2Clicked"/>
+        <RadioButton android:id="@+id/radioAtencionOportuna4"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="4"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P2Clicked"/>
+        <RadioButton android:id="@+id/radioAtencionOportuna5"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="5"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P2Clicked"/>
+    </RadioGroup>
+
+    <!--PREGUNTA3-->
+
+    <CheckBox
+            android:id="@+id/chkCoordinacionHosp"
+            style="@style/customCheckboxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_2"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="25dp" />
+
+    <TextView
+            android:id="@+id/txtvCoordinacionHosp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_2"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@+id/chkCoordinacionHosp"
+            android:text="Buena coordinación con el hospital, para cuando mi hijo/a necesita atención en el hospital."
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP2_3"
+                android:visibility="invisible"
+                android:layout_below="@+id/txtvCoordinacionHosp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioCoordinacionHosp0"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="0"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P3Clicked"/>
+        <RadioButton android:id="@+id/radioCoordinacionHosp1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="1"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P3Clicked"/>
+        <RadioButton android:id="@+id/radioCoordinacionHosp2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="2"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P3Clicked"/>
+        <RadioButton android:id="@+id/radioCoordinacionHosp3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="3"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P3Clicked"/>
+        <RadioButton android:id="@+id/radioCoordinacionHosp4"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="4"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P3Clicked"/>
+        <RadioButton android:id="@+id/radioCoordinacionHosp5"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="5"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P3Clicked"/>
+    </RadioGroup>
+
+    <!--PREGUNTA4-->
+    <CheckBox
+            android:id="@+id/chkInformacionEstadoSalud"
+            style="@style/customCheckboxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_3"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="25dp" />
+
+    <TextView
+            android:id="@+id/txtvInformacionEstadoSalud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_3"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@+id/chkCoordinacionHosp"
+            android:text="Me brindan información del estado de salud de mi hijo/a y nos clarifican nuestras dudas."
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP2_4"
+                android:visibility="invisible"
+                android:layout_below="@+id/txtvInformacionEstadoSalud"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioInformacionEstadoSalud0"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="0"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P4Clicked"/>
+        <RadioButton android:id="@+id/radioInformacionEstadoSalud1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="1"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P4Clicked"/>
+        <RadioButton android:id="@+id/radioInformacionEstadoSalud2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="2"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P4Clicked"/>
+        <RadioButton android:id="@+id/radioInformacionEstadoSalud3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="3"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P4Clicked"/>
+        <RadioButton android:id="@+id/radioInformacionEstadoSalud4"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="4"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P4Clicked"/>
+        <RadioButton android:id="@+id/radioInformacionEstadoSalud5"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="5"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P4Clicked"/>
+    </RadioGroup>
+
+    <!--PREGUNTA5-->
+    <CheckBox
+            android:id="@+id/chkEnseniaPrevEnfer"
+            style="@style/customCheckboxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_4"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="25dp" />
+
+    <TextView
+            android:id="@+id/txtvEnseniaPrevEnfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_4"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@+id/chkEnseniaPrevEnfer"
+            android:text="Me enseña sobre las enfermedades, y cómo puedo prevenirlas."
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP2_5"
+                android:visibility="invisible"
+                android:layout_below="@+id/txtvEnseniaPrevEnfer"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioEnseniaPrevEnfer0"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="0"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P5Clicked"/>
+        <RadioButton android:id="@+id/radioEnseniaPrevEnfer1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="1"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P5Clicked"/>
+        <RadioButton android:id="@+id/radioEnseniaPrevEnfer2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="2"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P5Clicked"/>
+        <RadioButton android:id="@+id/radioEnseniaPrevEnfer3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="3"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P5Clicked"/>
+        <RadioButton android:id="@+id/radioEnseniaPrevEnfer4"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="4"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P5Clicked"/>
+        <RadioButton android:id="@+id/radioEnseniaPrevEnfer5"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="5"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P5Clicked"/>
+    </RadioGroup>
+
+    <!--PREGUNTA6-->
+    <CheckBox
+            android:id="@+id/chkMejoraConoEnfer"
+            style="@style/customCheckboxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_5"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="25dp" />
+
+    <TextView
+            android:id="@+id/txtvMejoraConoEnfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_5"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@+id/chkMejoraConoEnfer"
+            android:text="Porque la información de mis consultas en el proyecto podrá mejorar los conocimientos de las enfermedades."
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP2_6"
+                android:visibility="invisible"
+                android:layout_below="@+id/txtvMejoraConoEnfer"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioMejoraConoEnfer0"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="0"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P6Clicked"/>
+        <RadioButton android:id="@+id/radioMejoraConoEnfer1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="1"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P6Clicked"/>
+        <RadioButton android:id="@+id/radioMejoraConoEnfer2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="2"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P6Clicked"/>
+        <RadioButton android:id="@+id/radioMejoraConoEnfer3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="3"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P6Clicked"/>
+        <RadioButton android:id="@+id/radioMejoraConoEnfer4"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="4"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P6Clicked"/>
+        <RadioButton android:id="@+id/radioMejoraConoEnfer5"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="5"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P6Clicked"/>
+    </RadioGroup>
+
+    <!--PREGUNTA7-->
+    <CheckBox
+            android:id="@+id/chkInteresCientificoP2"
+            style="@style/customCheckboxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_6"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="25dp" />
+
+    <TextView
+            android:id="@+id/txtvInteresCientificoP2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_6"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@+id/chkInteresCientificoP2"
+            android:text="Tengo interés científico personal"
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP2_7"
+                android:visibility="invisible"
+                android:layout_below="@+id/txtvInteresCientificoP2"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioInteresCientificoP2_0"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="0"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P7Clicked"/>
+        <RadioButton android:id="@+id/radioInteresCientificoP2_1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="1"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P7Clicked"/>
+        <RadioButton android:id="@+id/radioInteresCientificoP2_2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="2"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P7Clicked"/>
+        <RadioButton android:id="@+id/radioInteresCientificoP2_3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="3"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P7Clicked"/>
+        <RadioButton android:id="@+id/radioInteresCientificoP2_4"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="4"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P7Clicked"/>
+        <RadioButton android:id="@+id/radioInteresCientificoP2_5"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="5"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P7Clicked"/>
+    </RadioGroup>
+
+    <!--PREGUNTA8-->
+    <CheckBox
+            android:id="@+id/chkMejorarTrataDengue"
+            style="@style/customCheckboxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_7"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="25dp" />
+
+    <TextView
+            android:id="@+id/txtvMejorarTrataDengue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_7"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@+id/chkMejorarTrataDengue"
+            android:text="Porque quiero mejorar el tratamiento de dengue en el futuro."
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP2_8"
+                android:visibility="invisible"
+                android:layout_below="@+id/txtvMejorarTrataDengue"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioMejorarTrataDengue0"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="0"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P8Clicked"/>
+        <RadioButton android:id="@+id/radioMejorarTrataDengue1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="1"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P8Clicked"/>
+        <RadioButton android:id="@+id/radioMejorarTrataDengue2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="2"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P8Clicked"/>
+        <RadioButton android:id="@+id/radioMejorarTrataDengue3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="3"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P8Clicked"/>
+        <RadioButton android:id="@+id/radioMejorarTrataDengue4"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="4"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P8Clicked"/>
+        <RadioButton android:id="@+id/radioMejorarTrataDengue5"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="5"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P8Clicked"/>
+    </RadioGroup>
+
+    <!--PREGUNTA9-->
+    <CheckBox
+            android:id="@+id/chkNoQuieroQuedarmeEstudio"
+            style="@style/customCheckboxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_8"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="25dp" />
+
+    <TextView
+            android:id="@+id/txtvNoQuieroQuedarmeEstudio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_8"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@+id/chkNoQuieroQuedarmeEstudio"
+            android:text="No quiero quedarme en el estudio, pero es la única manera para recibir atención médica para mi hijo/a"
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP2_9"
+                android:visibility="invisible"
+                android:layout_below="@+id/txtvNoQuieroQuedarmeEstudio"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioNoQuieroQuedarmeEstudio0"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="0"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P9Clicked"/>
+        <RadioButton android:id="@+id/radioNoQuieroQuedarmeEstudio1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="1"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P9Clicked"/>
+        <RadioButton android:id="@+id/radioNoQuieroQuedarmeEstudio2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="2"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P9Clicked"/>
+        <RadioButton android:id="@+id/radioNoQuieroQuedarmeEstudio3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="3"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P9Clicked"/>
+        <RadioButton android:id="@+id/radioNoQuieroQuedarmeEstudio4"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="4"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P9Clicked"/>
+        <RadioButton android:id="@+id/radioNoQuieroQuedarmeEstudio5"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="5"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioButtonPart2P9Clicked"/>
+    </RadioGroup>
+
+    <!--PREGUNTA10-->
+    <CheckBox
+            android:id="@+id/chkP2_Otras"
+            style="@style/customCheckboxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_9"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="25dp" />
+    <TextView
+            android:id="@+id/txtvP2_Otras"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP2_9"
+            android:layout_toRightOf="@+id/chkP2_Otras"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="25dp"
+            android:text="¿Otra razón? Especifique:"
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+
+    <EditText
+            android:id="@+id/edtxP2_Otras"
+            android:inputType="textMultiLine"
+            android:lines="2"
+            android:layout_below="@+id/txtvP2_Otras"
+            android:visibility="invisible"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:scrollbars="vertical" />
+</RelativeLayout>

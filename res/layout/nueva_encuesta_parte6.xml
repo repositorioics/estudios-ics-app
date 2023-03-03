@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <TextView
+            android:id="@+id/txtvPersonalBrindaConsejos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="18dp"
+            android:text="6. ¿El personal del proyecto le brinda consejos de cómo prevenir las enfermedades?"
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP6_1"
+                android:layout_below="@+id/txtvPersonalBrindaConsejos"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioPersonalBrindaConsejosS"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Si"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioPersonalBrindaConsejosClicked"/>
+        <RadioButton android:id="@+id/radioPersonalBrindaConsejosN"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="No"
+                     android:layout_marginLeft="10dp"
+                     android:onClick="onRadioPersonalBrindaConsejosClicked"/>
+    </RadioGroup>
+    <TextView
+            android:id="@+id/txtvComodoHaciendoPreguntas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="18dp"
+            android:layout_below="@+id/radioGroupP6_1"
+            android:text="7. ¿Se siente cómodo/a haciendo preguntas acerca de los procedimientos del proyecto? Puede seleccionar más de una respuesta."
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/l1"
+            android:layout_below="@+id/txtvComodoHaciendoPreguntas">
+        <CheckBox
+                android:id="@+id/chkEntiendoProcedimientos"
+                style="@style/customCheckboxStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="25dp" />
+
+        <TextView
+                android:id="@+id/txtvEntiendoProcedimientos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginBottom="10dp"
+                android:text="Entiendo los procedimientos del estudio."
+                android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/l2"
+            android:layout_below="@+id/l1">
+        <CheckBox
+                android:id="@+id/chkSatisfecho"
+                style="@style/customCheckboxStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="25dp" />
+
+        <TextView
+                android:id="@+id/txtvSatisfecho"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="10dp"
+                android:text="Estoy satisfecho/a con las respuestas brindadas de sus preguntas sobre los procedimientos del estudio."
+                android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/l3"
+            android:layout_below="@+id/l2">
+        <CheckBox
+                android:id="@+id/chkComodoInformacion"
+                style="@style/customCheckboxStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="25dp" />
+
+        <TextView
+                android:id="@+id/txtvComodoInformacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="10dp"
+                android:text="Estoy cómodo/a con la información que se recolecta en las diferentes encuestas del estudio."
+                android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/l4"
+            android:layout_below="@+id/l3">
+        <CheckBox
+                android:id="@+id/chkNoComodoPreguntas"
+                style="@style/customCheckboxStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="25dp" />
+
+        <TextView
+                android:id="@+id/txtvNoComodoPreguntas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginBottom="10dp"
+                android:text="No me siento cómodo/a con las preguntas."
+                android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    </LinearLayout>
+    <TextView
+            android:id="@+id/txtvBrindarRecomendacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/l4"
+            android:text="8. ¿Nos podría brindar alguna recomendación para mejorar la atención o la información que se brinda en el proyecto? "
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+
+    <EditText
+            android:id="@+id/edtxBrindarRecomendacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtvBrindarRecomendacion"
+            android:inputType="textMultiLine"
+            android:lines="4"
+            android:scrollbars="vertical" />
+    <TextView
+            android:id="@+id/txtvImportanciaInforEstudios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/edtxBrindarRecomendacion"
+            android:text="9. ¿Qué tan importante sería para Ud recibir información de los estudios científicos obtenidos por el proyecto?"
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP9"
+                android:layout_below="@+id/txtvImportanciaInforEstudios"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioImportanciaInforEstudios0"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="0"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioImportanciaInforEstudiosClicked"/>
+        <RadioButton android:id="@+id/radioImportanciaInforEstudios1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="1"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioImportanciaInforEstudiosClicked"/>
+        <RadioButton android:id="@+id/radioImportanciaInforEstudios2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="2"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioImportanciaInforEstudiosClicked"/>
+        <RadioButton android:id="@+id/radioImportanciaInforEstudios3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="3"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioImportanciaInforEstudiosClicked"/>
+        <RadioButton android:id="@+id/radioImportanciaInforEstudios4"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="4"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioImportanciaInforEstudiosClicked"/>
+        <RadioButton android:id="@+id/radioImportanciaInforEstudios5"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="5"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioImportanciaInforEstudiosClicked"/>
+    </RadioGroup>
+</RelativeLayout>

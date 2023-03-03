@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <TextView
+            android:id="@+id/txtvRecomendariaOtraPersona"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="18dp"
+            android:text="4. ¿Usted recomendaría a un familiar, amigo u otra persona para que ingrese a su hijo/a en el proyecto?"
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP4_1"
+                android:layout_below="@+id/txtvRecomendariaOtraPersona"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioDificultadBuscarAtencionP4S"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Si"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioRecomendariaOtraPersonaClicked"/>
+        <RadioButton android:id="@+id/radioDificultadBuscarAtencionP4N"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="No"
+                     android:layout_marginLeft="10dp"
+                     android:onClick="onRadioRecomendariaOtraPersonaClicked"/>
+
+    </RadioGroup>
+    <LinearLayout
+            android:id="@+id/pregunta4_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP4_1"
+            android:visibility="gone"
+            android:orientation="vertical">
+        <TextView
+                android:id="@+id/txtvRecomendaria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtvRecomendariaOtraPersona"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="18dp"
+                android:text="4.1. ¿Por qué lo recomendaría?"
+                android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkAtencionRecibidaCalidad"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvAtencionRecibidaCalidad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Porque la atención recibida por parte del personal del estudio es de calidad."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkRespuestaNecesidades"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvRespuestaNecesidades"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Dan respuesta a nuestras necesidades de salud de manera oportuna."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkTiempoEsperaCorto"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvTiempoEsperaCorto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="El tiempo de espera para que me atiendan es bastante corto porque no espero mucho."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkMejorAtencionSeguroMed"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvMejorAtencionSeguroMed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="23dp"
+                    android:text="Siento que me atienden mejor que en mi seguro médico."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkExamLabNecesarios"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvExamLabNecesarios"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="23dp"
+                    android:text="Realizan los exámenes de laboratorio necesarios."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkGeneraConocimiento"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvGeneraConocimiento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Por participar en un proyecto científico que genera conocimientos importantes sobre las enfermedades y cómo tratarlas y prevenirlas."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkPocosRequisitos"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvPocosRequisitos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Solicitan pocos requisitos."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkOtrasRazonesRecomendaria"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvOtrasRazonesRecomendaria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_toRightOf="@+id/chkOtrasRazonesRecomendaria"
+                    android:text="¿Otras razones? Especifique:"
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+
+            <EditText
+                    android:id="@+id/edtxOtrasRazonesRecomendaria"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/chkOtrasRazonesRecomendaria"
+                    android:visibility="invisible"
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+                    android:scrollbars="vertical" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--PREGUNTAS 4.2-->
+    <LinearLayout
+            android:id="@+id/pregunta4_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP4_1"
+            android:visibility="gone"
+            android:orientation="vertical">
+        <TextView
+                android:id="@+id/txtvNoRecomendaria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtvRecomendariaOtraPersona"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="18dp"
+                android:text="4.2 ¿Porque no lo recomendaría?"
+                android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkAtencionRecibidaMala"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvAtencionRecibidaMala"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Porque la atención recibida por parte del personal del estudio no es buena."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkNoDanRespuestaNecesidades"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvNoDanRespuestaNecesidades"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="No dan respuesta a nuestras necesidades de salud de manera oportuna."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkTiempoEsperaLargo"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvTiempoEsperaLargo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Tardan mucho tiempo para atender."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkMejorAtencionOtroCentro"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvMejorAtencionOtroCentro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="23dp"
+                    android:text="Nos atienden mejor en otro establecimiento de salud."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkDemasiadasMx"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvDemasiadasMx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="El estudio solicita demasiada muestra de sangre en cada consulta."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkMuchosRequisitos"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvMuchosRequisitos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Porque piden demasiados requisitos para participar."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkNoExplicanHacenMx"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvNoExplicanHacenMx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="25dp"
+                    android:text="No explican que están haciendo con mis muestras."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkNoConfianzaEstudios"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvNoConfianzaEstudios"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="25dp"
+                    android:text="No tengo confianza en los estudios."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkOtrasRazonesNoRecomendaria"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvOtrasRazonesNoRecomendaria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_toRightOf="@+id/chkOtrasRazonesNoRecomendaria"
+                    android:text="¿Otras razones? Especifique:"
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+
+            <EditText
+                    android:id="@+id/edtxOtrasRazonesNoRecomendaria"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/chkOtrasRazonesNoRecomendaria"
+                    android:visibility="invisible"
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+                    android:scrollbars="vertical" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

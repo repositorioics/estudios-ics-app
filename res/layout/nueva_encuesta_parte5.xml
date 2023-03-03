@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <TextView
+            android:id="@+id/txtvComprendeProcedimientos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="18dp"
+            android:text="5. ¿Ud. Está claro o comprende los procedimientos que se realizan en el proyecto ?"
+            android:textAppearance="@style/TextViewEstiloSeguimiento" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupP5_1"
+                android:layout_below="@+id/txtvComprendeProcedimientos"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioComprendeProcedimientosS"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Si"
+                     android:layout_marginLeft="7dp"
+                     android:onClick="onRadioComprendeProcedimientosClicked"/>
+        <RadioButton android:id="@+id/radioComprendeProcedimientosN"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="No"
+                     android:layout_marginLeft="10dp"
+                     android:onClick="onRadioComprendeProcedimientosClicked"/>
+
+    </RadioGroup>
+    <!--PREGUNTA 5.1-->
+    <LinearLayout
+            android:id="@+id/pregunta5_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroupP5_1"
+            android:visibility="gone"
+            android:orientation="vertical">
+        <TextView
+                android:id="@+id/txtvMotivoNoQuedoClaro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="18dp"
+                android:text="5.1 ¿Cuál considera que fue el motivo por el cual no quedó claro o no comprendió los procedimientos?"
+                android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkNoEstuveComodoRealizarPreg"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvNoEstuveComodoRealizarPreg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="No estuve cómodo/a para realizar preguntas para aclarar mis dudas."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkNoRespondieronPreguntas"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvNoRespondieronPreguntas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:text="No respondieron a todas mis preguntas."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkExplicaronRapido"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvExplicaronRapido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Me explicaron muy rápido."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkNoDejaronHacerPreguntas"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvNoDejaronHacerPreguntas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="23dp"
+                    android:text="No me dejaron hacer preguntas."
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+        </LinearLayout>
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/chkOtroMotivosNoComprendioProcedimiento"
+                    style="@style/customCheckboxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="25dp" />
+
+            <TextView
+                    android:id="@+id/txtvOtroMotivosNoComprendioProcedimiento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_toRightOf="@+id/chkOtroMotivosNoComprendioProcedimiento"
+                    android:text="¿Otros motivos? Especifique:"
+                    android:textAppearance="@style/TextViewEstiloSeguimiento" />
+
+            <EditText
+                    android:id="@+id/edtxOtroMotivosNoComprendioProcedimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/chkOtroMotivosNoComprendioProcedimiento"
+                    android:visibility="invisible"
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+                    android:scrollbars="vertical" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

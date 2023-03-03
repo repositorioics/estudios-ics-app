@@ -71,6 +71,9 @@ public class PerimetroAbdominalXml {
     @Element(required=false)
     private Meta meta;
 
+    @Element(required=false)
+    private String titulo_dpa1dpa2;
+
     public PerimetroAbdominalXml(){
 
     }
@@ -235,5 +238,11 @@ public class PerimetroAbdominalXml {
         this.meta = meta;
     }
 
+    public String getTitulo_dpa1dpa2() {
+        return titulo_dpa1dpa2;
+    }
 
+    public void setTitulo_dpa1dpa2(String titulo_dpa1dpa2) {
+        this.titulo_dpa1dpa2 = titulo_dpa1dpa2;
+    }
 }

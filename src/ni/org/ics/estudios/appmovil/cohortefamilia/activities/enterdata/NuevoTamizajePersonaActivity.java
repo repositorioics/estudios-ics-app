@@ -102,7 +102,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!FileUtils.storageReady()) {
-            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error, R.string.storage_error),Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.error) + "," + getString(R.string.storage_error),Toast.LENGTH_LONG);
             toast.show();
             finish();
         }
@@ -1404,7 +1404,8 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                                 procesos.setConmxbhc(Constants.YES);
                             }
                             procesos.setPbmc(Constants.NO);
-                            procesos.setPaxgene(Constants.YES);
+                            //No pedir Paxgene para nuevo ingreso. MA2023 02/03/23
+                            procesos.setPaxgene(Constants.NO);
                         }
                         procesos.setCasaCHF(casaCHF.getCodigoCHF());
                         procesos.setEstPart(1);

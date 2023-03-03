@@ -45,6 +45,7 @@
     <string name="wrong_fecha_visita2">Fecha de visita es posterior a 12 días después de la fecha de inicio</string>
     <string name="wrong_fecha_visita3">Fecha de visita es posterior a 90 días después de la fecha de inicio</string>
 	<string name="wrong_fecha_visita_covid">Fecha de visita es posterior a 33 días después de la fecha de inicio</string>
+	<string name="enfermoCovid19_yes">Asegúrese de haber seleccionado la respuesta Si en la pregunta # <xliff:g id="variable">%1$s</xliff:g> </string>
 	
 	<string name="sint">Sintomas</string>
 	<string name="fecha_sintoma">Fecha sintoma</string>

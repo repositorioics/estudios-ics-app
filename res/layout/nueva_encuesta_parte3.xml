@@ -85,6 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="25dp"
+                    android:layout_marginBottom="10dp"
                     android:text="El costo es elevado para transportarme al centro de salud"
                     android:textAppearance="@style/TextViewEstiloSeguimiento" />
         </LinearLayout>
@@ -125,6 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="25dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Mi hijo/a no quería ir a pasar consulta médica en ese momento."
                     android:textAppearance="@style/TextViewEstiloSeguimiento" />
         </LinearLayout>
@@ -185,6 +187,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="25dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Temor a dar mi información personal o muestras al estudio."
                     android:textAppearance="@style/TextViewEstiloSeguimiento" />
         </LinearLayout>

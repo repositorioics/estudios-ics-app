@@ -450,6 +450,15 @@ public class EstudiosAdapter {
 				/*Nueva encuesta satisfaccion por usuario 25/02/2023*/
 				db.execSQL(MainDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE);
 			}
+			if (oldVersion==47) {
+				db.execSQL("ALTER TABLE " + MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE + " ADD COLUMN " + MainDBConstants.nombre1Tutor + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE + " ADD COLUMN " + MainDBConstants.nombre2Tutor + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE + " ADD COLUMN " + MainDBConstants.apellido1Tutor + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE + " ADD COLUMN " + MainDBConstants.apellido2Tutor + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE + " ADD COLUMN " + MainDBConstants.codigoCasa + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE + " ADD COLUMN " + MainDBConstants.casaCHF + " text");
+				db.execSQL("ALTER TABLE " + MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE + " ADD COLUMN " + MainDBConstants.estudio + " text");
+			}
 		}
 	}
 

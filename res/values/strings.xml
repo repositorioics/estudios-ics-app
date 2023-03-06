@@ -143,4 +143,7 @@
     <string name="pin_required">Debe ingresar PIN</string>
 
     <string name="downloadingApp">Descargando..</string>
+
+    <!-- Encuesta de satisfacción -->
+    <string name="pregunta1"><font color="#000000">¿Qué le motivó a Ud. ingresar a su hijo/a en el proyecto ?</font><font color="#DF36OC"> Puede seleccionar más de una respuesta, e indique su nivel de conformidad a cada opción.</font></string>
 </resources>

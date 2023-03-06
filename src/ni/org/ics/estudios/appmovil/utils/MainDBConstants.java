@@ -28,7 +28,7 @@ public class MainDBConstants {
 
 	//Base de datos y tablas
 	public static final String DATABASE_NAME = "icsestudioscryp.sqlite3";
-	public static final int DATABASE_VERSION = 47;
+	public static final int DATABASE_VERSION = 48;
 	
 	//Campos metadata
 	public static final String recordDate = "recordDate";
@@ -1085,6 +1085,7 @@ public class MainDBConstants {
     public static final String fechaRegistro = "fechaRegistro";
     public static final String creado = "creado";
     public static final String usuarioRegistro = "usuarioRegistro";
+    public static final String codigoCasa = "codigoCasa";
 
     //Crear tabla encuesta satiscaccion usuario
     public static final String CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE = "create table if not exists "
@@ -1155,6 +1156,13 @@ public class MainDBConstants {
             + fechaRegistro + " text, "
             + creado + " text, "
             + usuarioRegistro + " text, "
+            + nombre1Tutor + " text, "
+            + nombre2Tutor + " text, "
+            + apellido1Tutor + " text, "
+            + apellido2Tutor + " text, "
+            + codigoCasa + " text, "
+            + casaCHF + " text, "
+            + estudio + " text, "
             + "primary key (" + codigoParticipante + "));";
 
     public static final String INSERT_ENCUESTA_SATISFACCION_USUARIO_TABLE = "insert into "
@@ -1224,8 +1232,15 @@ public class MainDBConstants {
             + estado + ", "
             + fechaRegistro + ", "
             + creado + ", "
-            + usuarioRegistro
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + usuarioRegistro + ", "
+            + nombre1Tutor + ", "
+            + nombre2Tutor + ", "
+            + apellido1Tutor + ", "
+            + apellido2Tutor + ", "
+            + codigoCasa + ", "
+            + casaCHF + ", "
+            + estudio
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 }
 
 

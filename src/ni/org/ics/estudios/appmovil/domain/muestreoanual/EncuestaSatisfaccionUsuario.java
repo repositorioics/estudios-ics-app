@@ -76,6 +76,15 @@ public class EncuestaSatisfaccionUsuario implements Serializable {
     private String creado;
     private String usuarioRegistro;
 
+    //Nuevos campos agregados 06/03/2023
+    private String nombre1Tutor;
+    private String nombre2Tutor;
+    private String apellido1Tutor;
+    private String apellido2Tutor;
+    private Integer codigoCasa;
+    private String casaChf;
+    private String estudio;
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -614,5 +623,61 @@ public class EncuestaSatisfaccionUsuario implements Serializable {
 
     public void setCreado(String creado) {
         this.creado = creado;
+    }
+
+    public String getNombre1Tutor() {
+        return nombre1Tutor;
+    }
+
+    public void setNombre1Tutor(String nombre1Tutor) {
+        this.nombre1Tutor = nombre1Tutor;
+    }
+
+    public String getNombre2Tutor() {
+        return nombre2Tutor;
+    }
+
+    public void setNombre2Tutor(String nombre2Tutor) {
+        this.nombre2Tutor = nombre2Tutor;
+    }
+
+    public String getApellido1Tutor() {
+        return apellido1Tutor;
+    }
+
+    public void setApellido1Tutor(String apellido1Tutor) {
+        this.apellido1Tutor = apellido1Tutor;
+    }
+
+    public String getApellido2Tutor() {
+        return apellido2Tutor;
+    }
+
+    public void setApellido2Tutor(String apellido2Tutor) {
+        this.apellido2Tutor = apellido2Tutor;
+    }
+
+    public Integer getCodigoCasa() {
+        return codigoCasa;
+    }
+
+    public void setCodigoCasa(Integer codigoCasa) {
+        this.codigoCasa = codigoCasa;
+    }
+
+    public String getCasaChf() {
+        return casaChf;
+    }
+
+    public void setCasaChf(String casaChf) {
+        this.casaChf = casaChf;
+    }
+
+    public String getEstudio() {
+        return estudio;
+    }
+
+    public void setEstudio(String estudio) {
+        this.estudio = estudio;
     }
 }

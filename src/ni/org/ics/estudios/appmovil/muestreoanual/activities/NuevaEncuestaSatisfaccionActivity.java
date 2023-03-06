@@ -5,8 +5,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -55,8 +61,30 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
 
+        TextView txtvPregunta1 = (TextView)findViewById(R.id.txtvPregunta1);
+        TextView txtvPregunta2 = (TextView)findViewById(R.id.txtvPregunta2);
+        TextView txtvComodoHaciendoPreguntas = (TextView)findViewById(R.id.txtvComodoHaciendoPreguntas);
+
+        txtvPregunta1.setText(stringBuilder("¿Qué le motivó a Ud. ingresar a su hijo/a en el proyecto ? ", "Puede seleccionar más de una respuesta, e indique su nivel de conformidad a cada opción."), TextView.BufferType.SPANNABLE);
+        txtvPregunta2.setText(stringBuilder("¿Por qué ha decidido mantener a su hijo/a durante todo este tiempo en el proyecto? ", "Puede seleccionar más de una respuesta, e indique su acuerdo a cada frase en la escala."), TextView.BufferType.SPANNABLE);
+        txtvComodoHaciendoPreguntas.setText(stringBuilder("¿Se siente cómodo/a haciendo preguntas acerca de los procedimientos del proyecto? ", "Puede seleccionar más de una respuesta."), TextView.BufferType.SPANNABLE);
+
         this.CONTEXT = this;
         inicializarContorles();
+    }
+
+    public SpannableStringBuilder stringBuilder(String valor1, String valor2) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+
+        SpannableString str1= new SpannableString(valor1);
+        str1.setSpan(new ForegroundColorSpan(Color.BLACK), 0, str1.length(), 0);
+        builder.append(str1);
+
+        SpannableString str2= new SpannableString(valor2);
+        str2.setSpan(new ForegroundColorSpan(Color.RED), 0, str2.length(), 0);
+        builder.append(str2);
+
+        return builder;
     }
 
     public void inicializarContorles() {
@@ -2587,6 +2615,14 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             movilInfo.setUsername(username);
             movilInfo.setToday(new Date());
             //encuestaSatisfaccionUsuario.setMovilInfo(movilInfo);
+
+            encuestaSatisfaccionUsuario.setNombre1Tutor(participante.getNombre1Tutor());
+            encuestaSatisfaccionUsuario.setNombre2Tutor(participante.getNombre2Tutor());
+            encuestaSatisfaccionUsuario.setApellido1Tutor(participante.getApellido1Tutor());
+            encuestaSatisfaccionUsuario.setApellido2Tutor(participante.getApellido2Tutor());
+            encuestaSatisfaccionUsuario.setCodigoCasa(participante.getCasa().getCodigo());
+            encuestaSatisfaccionUsuario.setCasaChf(participante.getProcesos().getCasaCHF());
+            encuestaSatisfaccionUsuario.setEstudio(participante.getProcesos().getEstudio());
             estudiosAdapter.crearEncuestaSatisfaccionUsuarioValues(encuestaSatisfaccionUsuario);
 
             ParticipanteProcesos procesos = participante.getProcesos();

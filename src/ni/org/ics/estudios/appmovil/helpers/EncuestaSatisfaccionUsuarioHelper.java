@@ -92,6 +92,16 @@ public class EncuestaSatisfaccionUsuarioHelper {
         cv.put(MainDBConstants.creado, String.valueOf(encuestaSatisfaccionUsuario.getCreado()));
         cv.put(MainDBConstants.usuarioRegistro, encuestaSatisfaccionUsuario.getUsuarioRegistro());
 
+        cv.put(MainDBConstants.nombre1Tutor, encuestaSatisfaccionUsuario.getNombre1Tutor());
+        cv.put(MainDBConstants.nombre2Tutor, encuestaSatisfaccionUsuario.getNombre2Tutor());
+        cv.put(MainDBConstants.apellido1Tutor, encuestaSatisfaccionUsuario.getApellido1Tutor());
+        cv.put(MainDBConstants.apellido2Tutor, encuestaSatisfaccionUsuario.getApellido2Tutor());
+        cv.put(MainDBConstants.codigoCasa, encuestaSatisfaccionUsuario.getCodigoCasa());
+        cv.put(MainDBConstants.casaCHF, encuestaSatisfaccionUsuario.getCasaChf());
+        cv.put(MainDBConstants.estudio, encuestaSatisfaccionUsuario.getEstudio());
+
+
+
         return cv;
     }
 
@@ -167,6 +177,14 @@ public class EncuestaSatisfaccionUsuarioHelper {
 
 
         mEncSatUsuario.setUsuarioRegistro(encuestaSatisfaccion.getString(encuestaSatisfaccion.getColumnIndex(MainDBConstants.usuarioRegistro)));
+
+        mEncSatUsuario.setNombre1Tutor(encuestaSatisfaccion.getString(encuestaSatisfaccion.getColumnIndex(MainDBConstants.nombre1Tutor)));
+        mEncSatUsuario.setNombre2Tutor(encuestaSatisfaccion.getString(encuestaSatisfaccion.getColumnIndex(MainDBConstants.nombre2Tutor)));
+        mEncSatUsuario.setApellido1Tutor(encuestaSatisfaccion.getString(encuestaSatisfaccion.getColumnIndex(MainDBConstants.apellido1Tutor)));
+        mEncSatUsuario.setApellido2Tutor(encuestaSatisfaccion.getString(encuestaSatisfaccion.getColumnIndex(MainDBConstants.apellido2Tutor)));
+        mEncSatUsuario.setCodigoCasa(encuestaSatisfaccion.getInt(encuestaSatisfaccion.getColumnIndex(MainDBConstants.codigoCasa)));
+        mEncSatUsuario.setCasaChf(encuestaSatisfaccion.getString(encuestaSatisfaccion.getColumnIndex(MainDBConstants.casaCHF)));
+        mEncSatUsuario.setEstudio(encuestaSatisfaccion.getString(encuestaSatisfaccion.getColumnIndex(MainDBConstants.estudio)));
 
         return mEncSatUsuario;
     }

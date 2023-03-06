@@ -9,6 +9,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="18dp"
             android:text="6. ¿El personal del proyecto le brinda consejos de cómo prevenir las enfermedades?"
+            android:textStyle="bold"
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -28,7 +29,7 @@
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:text="No"
-                     android:layout_marginLeft="10dp"
+                     android:layout_marginLeft="15dp"
                      android:onClick="onRadioPersonalBrindaConsejosClicked"/>
     </RadioGroup>
     <TextView
@@ -39,6 +40,7 @@
             android:layout_marginTop="18dp"
             android:layout_below="@+id/radioGroupP6_1"
             android:text="7. ¿Se siente cómodo/a haciendo preguntas acerca de los procedimientos del proyecto? Puede seleccionar más de una respuesta."
+            android:textStyle="bold"
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <LinearLayout
             android:layout_width="wrap_content"
@@ -140,6 +142,7 @@
             android:layout_marginTop="30dp"
             android:layout_below="@+id/l4"
             android:text="8. ¿Nos podría brindar alguna recomendación para mejorar la atención o la información que se brinda en el proyecto? "
+            android:textStyle="bold"
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
 
     <EditText
@@ -158,6 +161,7 @@
             android:layout_marginTop="30dp"
             android:layout_below="@+id/edtxBrindarRecomendacion"
             android:text="9. ¿Qué tan importante sería para Ud recibir información de los estudios científicos obtenidos por el proyecto?"
+            android:textStyle="bold"
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
 
 
@@ -179,31 +183,31 @@
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:text="1"
-                     android:layout_marginLeft="7dp"
+                     android:layout_marginLeft="12dp"
                      android:onClick="onRadioImportanciaInforEstudiosClicked"/>
         <RadioButton android:id="@+id/radioImportanciaInforEstudios2"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:text="2"
-                     android:layout_marginLeft="7dp"
+                     android:layout_marginLeft="12dp"
                      android:onClick="onRadioImportanciaInforEstudiosClicked"/>
         <RadioButton android:id="@+id/radioImportanciaInforEstudios3"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:text="3"
-                     android:layout_marginLeft="7dp"
+                     android:layout_marginLeft="12dp"
                      android:onClick="onRadioImportanciaInforEstudiosClicked"/>
         <RadioButton android:id="@+id/radioImportanciaInforEstudios4"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:text="4"
-                     android:layout_marginLeft="7dp"
+                     android:layout_marginLeft="12dp"
                      android:onClick="onRadioImportanciaInforEstudiosClicked"/>
         <RadioButton android:id="@+id/radioImportanciaInforEstudios5"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:text="5"
-                     android:layout_marginLeft="7dp"
+                     android:layout_marginLeft="12dp"
                      android:onClick="onRadioImportanciaInforEstudiosClicked"/>
     </RadioGroup>
 </RelativeLayout>

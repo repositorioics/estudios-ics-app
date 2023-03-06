@@ -4259,7 +4259,8 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                 List<MessageResource> meses = new ArrayList<MessageResource>();
                 meses = getMesesByAnio(anioEvento1);
                 setMesesSpinner(meses, spinMesEvento1);
-
+                //En caso de seleccionar el año de evento 1 volver a seleccionar si sabe inicio de sintomas para evento1
+                spinE1SabeInicioSintoma.setSelection(0, false);
 
             }
 
@@ -4330,6 +4331,9 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                 meses = getMesesByAnio(anioEvento2);
                 setMesesSpinner(meses, spinMesEvento2);
 
+                //En caso de seleccionar el año de evento 2 volver a seleccionar si sabe inicio de sintomas para evento2
+                spinE2SabeInicioSintoma.setSelection(0, false);
+
             }
 
             @Override
@@ -4398,6 +4402,9 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
                 List<MessageResource> meses = new ArrayList<MessageResource>();
                 meses = getMesesByAnio(anioEvento3);
                 setMesesSpinner(meses, spinMesEvento3);
+
+                //En caso de seleccionar el año de evento 1 volver a seleccionar si sabe inicio de sintomas para evento1
+                spinE3SabeInicioSintoma.setSelection(0, false);
             }
 
             @Override
@@ -11648,16 +11655,21 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
         meses.add(new MessageResource("", 0, getActivity().getString(R.string.select)));
         if (fechaEvento1 != null && !fechaEvento1.isEmpty()) {
             meses.add(new MessageResource(fechaEvento1, 0, fechaEvento1));
+            spinE1SabeInicioSintoma.setSelection(0, false);
+
         } else if (mesEvento1 != null && !mesEvento1.isEmpty()) {
             meses.add(new MessageResource(mesEvento1 + "/" + anioEvento1, 0, mesEvento1 + "/" + anioEvento1));
         }
         if (fechaEvento2 != null && !fechaEvento2.isEmpty()) {
             meses.add(new MessageResource(fechaEvento2, 0, fechaEvento2));
+            spinE2SabeInicioSintoma.setSelection(0, false);
+
         } else if (mesEvento2 != null && !mesEvento2.isEmpty()) {
             meses.add(new MessageResource(mesEvento2 + "/" + anioEvento2, 0, mesEvento2 + "/" + anioEvento2));
         }
         if (fechaEvento3 != null && !fechaEvento3.isEmpty()) {
             meses.add(new MessageResource(fechaEvento3, 0, fechaEvento3));
+            spinE3SabeInicioSintoma.setSelection(0, false);
         } else if (mesEvento3 != null && !mesEvento3.isEmpty()) {
             meses.add(new MessageResource(mesEvento3 + "/" + anioEvento3, 0, mesEvento3 + "/" + anioEvento3));
         }

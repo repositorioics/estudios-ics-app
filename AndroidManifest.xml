@@ -475,6 +475,8 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".muestreoanual.activities.NuevaEncuestaSatisfaccionActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name=".muestreoanual.activities.NuevaEncuestaSatisfaccionCCActivity"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

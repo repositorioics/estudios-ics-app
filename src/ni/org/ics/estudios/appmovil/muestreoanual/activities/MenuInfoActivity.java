@@ -83,6 +83,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
 
     private ArrayList<EncuestaSatisfaccionUsuario> mEncSatsUsuario = new ArrayList<>();
 
+    private ArrayList<EncuestaSatisfaccionUsuario> mEncSatsUsuarioCc = new ArrayList<>();
+
     private String username;
     private SharedPreferences settings;
     private GridView gridView;
@@ -131,6 +133,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
     private MenuItem pAbdominalItem;
 
     private MenuItem encSatUsuItem;
+
+    private MenuItem encSatUsuCCItem;
 
 
     private EstudiosAdapter estudiosAdapter;
@@ -326,6 +330,12 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         i = new Intent(getApplicationContext(),
                                 ListReviewActivity.class);
                         break;
+                    case 19:
+                        arguments.putString(Constants.TITLE, getString(R.string.info_encSatUsuCC));
+                        if (mEncSatsUsuarioCc!=null) arguments.putSerializable(Constants.OBJECTO , mEncSatsUsuarioCc);
+                        i = new Intent(getApplicationContext(),
+                                ListReviewActivity.class);
+                        break;
                     default:
                         arguments.putString(Constants.TITLE, getString(R.string.info_participante));
                         if (mParticipante!=null) arguments.putSerializable(Constants.OBJECTO , mParticipante);
@@ -380,6 +390,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             consChf = menu.findItem(R.id.CONS_CHF);
             pAbdominalItem = menu.findItem(R.id.PABDOMINAL);
             encSatUsuItem = menu.findItem(R.id.ENCSATUSU);
+            encSatUsuCCItem = menu.findItem(R.id.ENCSATUSUCC);
         }
         return true;
     }
@@ -1142,6 +1153,22 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     }
                 }
                 return true;
+            case R.id.ENCSATUSUCC:
+                if(mUser.getEncSatUsuCc()){
+                    if(mParticipante.getProcesos().getEsatUsuarioCc().matches("Si")){
+                        i = new Intent(getApplicationContext(),
+                                NuevaEncuestaSatisfaccionCCActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(Constants.PARTICIPANTE, mParticipante);
+                        i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);
+                        startActivity(i);
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.e_error),Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -1236,6 +1263,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         //Perimetro Abdominal
         pAbdominalItem.setVisible(false);
         encSatUsuItem.setVisible(false);
+        encSatUsuCCItem.setVisible(false);
 
         if (!mParticipante.getProcesos().getEstudio().trim().contains("Influenza")){
             consCovid19.setTitle(R.string.info_cons_covid19);
@@ -1311,7 +1339,11 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
             /**Permietro abdominal**/
             if((mParticipante.getProcesos().getPerimetroAbdominal().matches("Si") && mUser.getpAbdominal())) pAbdominalItem.setVisible(true);
 
+            /**Encuesta satisfaccion de usuario**/
             if((mParticipante.getProcesos().getEsatUsuario().matches("Si") && mUser.getEncSatUsu())) encSatUsuItem.setVisible(true);
+
+            /**Encuesta satisfaccion de usuario - cc**/
+            if((mParticipante.getProcesos().getEsatUsuarioCc().matches("Si") && mUser.getEncSatUsuCc())) encSatUsuCCItem.setVisible(true);
         }
         return true;
     }
@@ -1343,6 +1375,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         /***********Perimetro Abdominal******************/
         mPabdominal = estudiosAdapter.getListaPerimetrosAbdominales(codigo);
         mEncSatsUsuario = estudiosAdapter.getListaEncuestaSatisfaccionUsuario(codigo);
+        mEncSatsUsuarioCc = estudiosAdapter.getListaEncuestaSatisfaccionUsuarioCC(codigo);
         if(mParticipante.getCasa().getCodigo()!=9999) mEncuestasCasas = estudiosAdapter.getListaEncuestaCasas(mParticipante.getCasa().getCodigo());
         mEncuestasParticipantes = estudiosAdapter.getListaEncuestaParticipantes(codigo);
         mEncuestasLactancias = estudiosAdapter.getListaLactanciaMaternas(codigo);
@@ -1534,6 +1567,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                     //|| (mParticipante.getProcesos().getMxDenParteE()!=null && mParticipante.getProcesos().getMxDenParteE().matches("Si")) //se deshabilita para MA2021
                     || mParticipante.getProcesos().getPerimetroAbdominal().matches("Si") //Perimetro Abdominal
                     || mParticipante.getProcesos().getEsatUsuario().matches("Si")
+                    || mParticipante.getProcesos().getEsatUsuarioCc().matches("Si")
             ){
                 labelHeader = labelHeader + "<small><font color='red'>Pendiente: <br /></font></small>";
 
@@ -1937,6 +1971,10 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 }
                 if (mParticipante.getProcesos().getEsatUsuario().matches("Si") && mUser.getEncSatUsu()) {
                     labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.encSatUsu_missing) + "</font></small><br />";
+                    pendiente = true;
+                }
+                if (mParticipante.getProcesos().getEsatUsuarioCc().matches("Si") && mUser.getEncSatUsuCc()) {
+                    labelHeader = labelHeader + "<small><font color='blue'>" + getString(R.string.encSatUsu_missingCC) + "</font></small><br />";
                     pendiente = true;
                 }
             } else {
@@ -2448,7 +2486,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 gridView.setAdapter(new MenuInfoAdapter(getApplicationContext(), R.layout.menu_item_2, menu_info
                         , mVisitasTerreno.size(), mPyTs.size(), mEncuestasCasas.size(), mEncuestasParticipantes.size(),
                         mEncuestasLactancias.size(), mVacunas.size(), mMuestras.size(), mObsequios.size(), mConSA.size(), mDatosPartoBBs.size(), mDatosVisitaTerreno.size(), mDocumentos.size()
-                        , mEncuestasCasasChf.size(), mDatosCoordenadas.size(), mPabdominal.size(), mEncSatsUsuario.size()));
+                        , mEncuestasCasasChf.size(), mDatosCoordenadas.size(), mPabdominal.size(), mEncSatsUsuario.size(), mEncSatsUsuarioCc.size()));
                 refreshView();
             } catch (Exception ex) {
                 dismissProgressDialog();

@@ -33,8 +33,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
-
+public class NuevaEncuestaSatisfaccionCCActivity extends AbstractAsyncActivity {
     private Context CONTEXT;
     private static EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario = new EncuestaSatisfaccionUsuario();
     private DeviceInfo infoMovil;
@@ -56,7 +55,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         username =
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
-        infoMovil = new DeviceInfo(NuevaEncuestaSatisfaccionActivity.this);
+        infoMovil = new DeviceInfo(NuevaEncuestaSatisfaccionCCActivity.this);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
@@ -64,6 +63,9 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         TextView txtvPregunta1 = (TextView)findViewById(R.id.txtvPregunta1);
         TextView txtvPregunta2 = (TextView)findViewById(R.id.txtvPregunta2);
         TextView txtvComodoHaciendoPreguntas = (TextView)findViewById(R.id.txtvComodoHaciendoPreguntas);
+
+        TextView txtvTitulo = (TextView)findViewById(R.id.txtvTitulo);
+        txtvTitulo.setText("Control de Calidad - Encuesta de Satisfacción de Usuario");
 
         txtvPregunta1.setText(stringBuilder("¿Qué le motivó a Ud. ingresar a su hijo/a en el proyecto ? ", "Puede seleccionar más de una respuesta, e indique su nivel de conformidad a cada opción."), TextView.BufferType.SPANNABLE);
         txtvPregunta2.setText(stringBuilder("¿Por qué ha decidido mantener a su hijo/a durante todo este tiempo en el proyecto? ", "Puede seleccionar más de una respuesta, e indique su acuerdo a cada frase en la escala."), TextView.BufferType.SPANNABLE);
@@ -342,8 +344,8 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         this.findViewById(R.id.chkOtrasDificultades).setOnClickListener(onClikOtrasDificultades);
 
         /*
-        * Parte 4, Pregunta 4.1
-        * */
+         * Parte 4, Pregunta 4.1
+         * */
 
         //chkAtencionRecibidaCalidad
         View.OnClickListener onAtencionRecibidaCalidad = new View.OnClickListener() {
@@ -503,8 +505,8 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         this.findViewById(R.id.chkOtrasRazonesNoRecomendaria).setOnClickListener(onOtrasRazonesNoRecomendaria);
 
         /*
-        * Parte 5
-        * **/
+         * Parte 5
+         * **/
 
         //chkNoEstuveComodoRealizarPreg
         View.OnClickListener onNoEstuveComodoRealizarPreg = new View.OnClickListener() {
@@ -1751,11 +1753,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             case R.id.radioDificultadBuscarAtencionS:
                 if (checked)
                     activarPreguntas3_1(view);
-                    break;
+                break;
             case R.id.radioDificultadBuscarAtencionN:
                 if (checked)
                     desactivarPreguntas3_1(view);
-                    break;
+                break;
         }
     }
 
@@ -1879,10 +1881,10 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         switch(view.getId()) {
             case R.id.radioPersonalBrindaConsejosS:
                 if (checked)
-                break;
+                    break;
             case R.id.radioPersonalBrindaConsejosN:
                 if (checked)
-                break;
+                    break;
         }
     }
 
@@ -2562,7 +2564,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                 Toast.makeText(getApplicationContext(), "Debe seleccionar al menos una opción en la pregunta 7", Toast.LENGTH_LONG).show();
                 return;
             }
-            
+
             if (chkEntiendoProcedimientos) {
                 encuestaSatisfaccionUsuario.setEntiendoProcedimientosEstudios("1");
             }
@@ -2623,10 +2625,10 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             encuestaSatisfaccionUsuario.setCodigoCasa(participante.getCasa().getCodigo());
             encuestaSatisfaccionUsuario.setCasaChf(participante.getProcesos().getCasaCHF());
             encuestaSatisfaccionUsuario.setEstudio(participante.getProcesos().getEstudio());
-            estudiosAdapter.crearEncuestaSatisfaccionUsuarioValues(encuestaSatisfaccionUsuario);
+            estudiosAdapter.crearEncuestaSatisfaccionUsuarioCCValues(encuestaSatisfaccionUsuario);
 
             ParticipanteProcesos procesos = participante.getProcesos();
-            procesos.setEsatUsuario(Constants.NO);
+            procesos.setEsatUsuarioCc(Constants.NO);
             procesos.setMovilInfo(movilInfo);
             estudiosAdapter.actualizarParticipanteProcesos(procesos);
 

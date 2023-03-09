@@ -83,6 +83,9 @@ public class ParticipanteProcesos implements Serializable {
     //Indica realizar encuensta de satisfaccion de usuario
     private String esatUsuario;
 
+    //Indica realizar encuensta de satisfaccion de usuario - control de calidad
+    private String esatUsuarioCc;
+
     private MovilInfo movilInfo;
 
     public Integer getCodigo() {
@@ -555,6 +558,14 @@ public class ParticipanteProcesos implements Serializable {
 
     public void setEsatUsuario(String esatUsuario) {
         this.esatUsuario = esatUsuario;
+    }
+
+    public String getEsatUsuarioCc() {
+        return esatUsuarioCc;
+    }
+
+    public void setEsatUsuarioCc(String esatUsuarioCc) {
+        this.esatUsuarioCc = esatUsuarioCc;
     }
 }
 

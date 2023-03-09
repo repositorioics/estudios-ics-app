@@ -1394,6 +1394,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         //Perimetro Abdominal
                         procesos.setPerimetroAbdominal(Constants.YES);
                         procesos.setEsatUsuario(Constants.YES);
+                        procesos.setEsatUsuarioCc(Constants.YES);
                         //si no pertenece a la pediatrica poner datos de muestra, sino que conserve los datos de muestra actuales
                         if (estudios.isEmpty()) {
                             //solo pedir muestra a los que tengan >= 6 meses

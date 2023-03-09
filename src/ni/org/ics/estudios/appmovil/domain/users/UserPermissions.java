@@ -25,6 +25,7 @@ public class UserPermissions {
 	private Boolean datosparto=false;
 	private Boolean pAbdominal=false;
 	private Boolean encSatUsu=false;
+	private Boolean encSatUsuCc=false;
 
 	public String getUsername() {
 		return username;
@@ -145,5 +146,13 @@ public class UserPermissions {
 
 	public void setEncSatUsu(Boolean encSatUsu) {
 		this.encSatUsu = encSatUsu;
+	}
+
+	public Boolean getEncSatUsuCc() {
+		return encSatUsuCc;
+	}
+
+	public void setEncSatUsuCc(Boolean encSatUsuCc) {
+		this.encSatUsuCc = encSatUsuCc;
 	}
 }

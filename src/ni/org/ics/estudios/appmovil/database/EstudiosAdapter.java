@@ -193,6 +193,9 @@ public class EstudiosAdapter {
 			/*Nueva encuesta satisfaccion usuario fecha creacion 25/02/2023 Ing. Santiago Carballo*/
 			db.execSQL(MainDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE);
 
+			/*Nueva encuesta satisfaccion usuario fecha creacion 08/03/2023 Ing. Santiago Carballo*/
+			db.execSQL(MainDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_CC_TABLE);
+
 		}
 
 		@Override
@@ -458,6 +461,8 @@ public class EstudiosAdapter {
 				db.execSQL("ALTER TABLE " + MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE + " ADD COLUMN " + MainDBConstants.codigoCasa + " text");
 				db.execSQL("ALTER TABLE " + MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE + " ADD COLUMN " + MainDBConstants.casaCHF + " text");
 				db.execSQL("ALTER TABLE " + MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE + " ADD COLUMN " + MainDBConstants.estudio + " text");
+
+				db.execSQL(MainDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_CC_TABLE);
 			}
 		}
 	}
@@ -8529,6 +8534,52 @@ public class EstudiosAdapter {
 		Cursor cEncSatUsuario = null;
 		List<EncuestaSatisfaccionUsuario> mEncSatUsu = new ArrayList<EncuestaSatisfaccionUsuario>();
 		cEncSatUsuario = mDb.query(true, MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, null,
+				MainDBConstants.estado + "= '" + '0' + "'", null, null, null, null, null);
+		if (cEncSatUsuario != null && cEncSatUsuario.getCount() > 0) {
+			cEncSatUsuario.moveToFirst();
+			mEncSatUsu.clear();
+			do{
+				mEncSatUsu.add(EncuestaSatisfaccionUsuarioHelper.crearEncuestaSatisfaccionUsuario(cEncSatUsuario));
+			} while (cEncSatUsuario.moveToNext());
+		}
+		cEncSatUsuario.close();
+		return mEncSatUsu;
+	}
+
+	/*Control de calidad encuesta de satisfaccuion de usuario*/
+
+	//Crear una nueva encuesta satisfaccion usuario control de calidad en la base de datos
+	public void crearEncuestaSatisfaccionUsuarioCCValues(EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario) {
+		ContentValues cv = EncuestaSatisfaccionUsuarioHelper.crearEncuenstaSatisfaccionUsuarioContentValues(encuestaSatisfaccionUsuario);
+		mDb.insertOrThrow(MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_CC_TABLE, null, cv);
+	}
+
+	public boolean updateEncuestaSatisfaccionUsuarioCC(EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario) {
+		ContentValues cv = EncuestaSatisfaccionUsuarioHelper.crearEncuenstaSatisfaccionUsuarioContentValues(encuestaSatisfaccionUsuario);
+		return mDb.update(MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_CC_TABLE, cv, MainDBConstants.codigoParticipante + "="
+				+ encuestaSatisfaccionUsuario.getCodigoParticipante(), null) > 0;
+	}
+
+	public ArrayList<EncuestaSatisfaccionUsuario> getListaEncuestaSatisfaccionUsuarioCC(Integer codigo) throws SQLException {
+		Cursor cEncSatUsu = null;
+		ArrayList<EncuestaSatisfaccionUsuario> mEncSatUsu = new ArrayList<EncuestaSatisfaccionUsuario>();
+		cEncSatUsu = mDb.query(true, MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_CC_TABLE, null,
+				null,  null, null, null, null, null);
+		if (cEncSatUsu != null && cEncSatUsu.getCount() > 0) {
+			cEncSatUsu.moveToFirst();
+			mEncSatUsu.clear();
+			do{
+				mEncSatUsu.add(EncuestaSatisfaccionUsuarioHelper.crearEncuestaSatisfaccionUsuario(cEncSatUsu));
+			} while (cEncSatUsu.moveToNext());
+		}
+		cEncSatUsu.close();
+		return mEncSatUsu;
+	}
+
+	public List<EncuestaSatisfaccionUsuario> getListaEncSatisfaccionUsuarioSinEnviarCC() throws SQLException {
+		Cursor cEncSatUsuario = null;
+		List<EncuestaSatisfaccionUsuario> mEncSatUsu = new ArrayList<EncuestaSatisfaccionUsuario>();
+		cEncSatUsuario = mDb.query(true, MainDBConstants.ENCUESTA_SATISFACCION_USUARIO_CC_TABLE, null,
 				MainDBConstants.estado + "= '" + '0' + "'", null, null, null, null, null);
 		if (cEncSatUsuario != null && cEncSatUsuario.getCount() > 0) {
 			cEncSatUsuario.moveToFirst();

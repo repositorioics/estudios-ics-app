@@ -96,6 +96,7 @@ public class UserSistemaHelper {
         //Perimetro Abdominal
         cv.put(ConstantsDB.U_PABDOMINAL, userPermissions.getpAbdominal());
         cv.put(ConstantsDB.U_ENCSATUSUARIO, userPermissions.getEncSatUsu());
+        cv.put(ConstantsDB.U_ENCSATUSUARIOCC, userPermissions.getEncSatUsuCc());
         return cv;
     }
 
@@ -125,6 +126,9 @@ public class UserSistemaHelper {
         //Encuesta satisfaccion usuario
         Boolean enSatUser = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_ENCSATUSUARIO)) > 0;
 
+        //Encuesta satisfaccion usuario control de calidad
+        Boolean enSatUserCc = usuarios.getInt(usuarios.getColumnIndex(ConstantsDB.U_ENCSATUSUARIOCC)) > 0;
+
         mUser.setEncuestaCasa(enCasa);
         mUser.setEncuestaParticipante(enPart);
         mUser.setEncuestaLactancia(enLact);
@@ -140,6 +144,7 @@ public class UserSistemaHelper {
         mUser.setDatosparto(parto);
         mUser.setpAbdominal(pAbdominal);
         mUser.setEncSatUsu(enSatUser);
+        mUser.setEncSatUsuCc(enSatUserCc);
         return mUser;
     }
 
@@ -184,6 +189,10 @@ public class UserSistemaHelper {
         stat.bindLong(16, (userPermissions.getpAbdominal()?1:0));
         //Encuesta satisfaccion usuario
         stat.bindLong(17, (userPermissions.getEncSatUsu()?1:0));
+        //Encuesta satisfaccion usuario control de calidad
+        stat.bindLong(18, (userPermissions.getEncSatUsuCc()?1:0));
+
+
     }
 
     public static void bindString(SQLiteStatement stat, int index, String value){

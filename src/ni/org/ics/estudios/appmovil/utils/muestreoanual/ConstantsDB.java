@@ -78,6 +78,7 @@ public class ConstantsDB {
 
     //Usuario encuesta satisfaccion usuario
     public static final String U_ENCSATUSUARIO = "encSatUsu";
+    public static final String U_ENCSATUSUARIOCC = "encSatUsuCc";
 
     //Campos casa
     public static final String COD_CASA = "codCasa";
@@ -957,6 +958,7 @@ public class ConstantsDB {
 
     //Campo encuesta satisfaccion usuario en la tabla participantes procesos
     public static final String ENCSATUSUARIO = "esatUsuario";
+    public static final String ENCSATUSUARIOCC = "esatUsuarioCc";
 
 
     public static final String CREATE_USER_PERM_TABLE = "create table if not exists "
@@ -978,6 +980,7 @@ public class ConstantsDB {
             + U_PARTO + " boolean, "
             + U_PABDOMINAL + " boolean, "
             + U_ENCSATUSUARIO + " boolean, "
+            + U_ENCSATUSUARIOCC + " boolean, "
             + "primary key (" + USERNAME + "));";
 
     public static final String CREATE_PARTPROC_TABLE = "create table if not exists "
@@ -1055,6 +1058,7 @@ public class ConstantsDB {
             + REC2    + " integer, "
             + PABDOMINAL  + " text, "
             + ENCSATUSUARIO + " text, "
+            + ENCSATUSUARIOCC + " text, "
             + "primary key (" + CODIGO + "));";
 
     public static final String CREATE_ENCCASA_TABLE = "create table if not exists "
@@ -1883,8 +1887,9 @@ public class ConstantsDB {
             + U_TAMZIKA + ","
             + U_PARTO + ","
             + U_PABDOMINAL + ","
-            + U_ENCSATUSUARIO
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + U_ENCSATUSUARIO + ","
+            + U_ENCSATUSUARIOCC
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static final String INSERT_PARTPROC_TABLE = "insert into "
             + PART_PROCESOS_TABLE + " ("
@@ -1959,8 +1964,9 @@ public class ConstantsDB {
             + REC1    + ","
             + REC2    + ","
             + PABDOMINAL + ","
-            + ENCSATUSUARIO
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + ENCSATUSUARIO + ","
+            + ENCSATUSUARIOCC
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static final String INSERT_MUESTRA_TABLE = "insert into "
             + MUESTRA_TABLE + " ("

@@ -72,6 +72,8 @@ public class UploadAllTask extends UploadTask {
 
     private List<EncuestaSatisfaccionUsuario> mEncSatUsuario = new ArrayList<EncuestaSatisfaccionUsuario>();
 
+    private List<EncuestaSatisfaccionUsuario> mEncSatUsuarioCc = new ArrayList<EncuestaSatisfaccionUsuario>();
+
     private String url = null;
     private String username = null;
     private String password = null;
@@ -456,6 +458,16 @@ public class UploadAllTask extends UploadTask {
                 e1.printStackTrace();
                 return e1.getLocalizedMessage();
             }
+            //Encuesta satisfacción de usuario control de calidad
+            try {
+                error = cargarEncuestaSatisfaccionUsuarioCC(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
             if (noHayDatosEnviar()) {
                 error = Constants.NO_DATA;
             }
@@ -503,7 +515,8 @@ public class UploadAllTask extends UploadTask {
                 mMuestrasAdiCovid19.size() <= 0 &&
                 //Perimetro Abdominal
                 mPabdominal.size() <= 0 &&
-                mEncSatUsuario.size() <= 0;
+                mEncSatUsuario.size() <= 0 &&
+                mEncSatUsuarioCc.size() <= 0;
     }
 
     private void getTamizajes(){
@@ -2431,5 +2444,60 @@ public class UploadAllTask extends UploadTask {
 
     private void getEncuestaSatisfaccionUsuarioPendientes(){
         mEncSatUsuario = estudioAdapter.getListaEncSatisfaccionUsuarioSinEnviar();
+    }
+
+    /***************************************************/
+    /******** Encuesta Satisfaccin de Usuario Control de calidad **********/
+    /***************************************************/
+    // url, username, password
+    protected String cargarEncuestaSatisfaccionUsuarioCC(String url, String username,
+                                                       String password) throws Exception {
+        try {
+            getEncuestaSatisfaccionUsuarioPendientesCC();
+            if(mEncSatUsuarioCc.size()>0) {
+                // La URL de la solicitud POST
+                saveEncuestaSatisfaccionUsuarioCC('1');
+                final String urlRequest = url + "/movil/encuestaSatisfaccionUsuarioCc";
+                EncuestaSatisfaccionUsuario[] envio = mEncSatUsuarioCc.toArray(new EncuestaSatisfaccionUsuario[mEncSatUsuarioCc.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<EncuestaSatisfaccionUsuario[]> requestEntity =
+                        new HttpEntity<EncuestaSatisfaccionUsuario[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    saveEncuestaSatisfaccionUsuarioCC('0');
+                }
+                return response.getBody();
+            } else {
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            saveEncuestaSatisfaccionUsuarioCC('0');
+            return e.getMessage();
+        }
+
+    }
+
+    private void saveEncuestaSatisfaccionUsuarioCC(char estado) {
+        int c = mEncSatUsuarioCc.size();
+        for (EncuestaSatisfaccionUsuario enSatUsu : mEncSatUsuarioCc) {
+            enSatUsu.setEstado(estado);
+            estudioAdapter.updateEncuestaSatisfaccionUsuarioCC(enSatUsu);
+            publishProgress("Actualizando las encuestas de satisfaccion de usuario - cc", Integer.valueOf(mEncSatUsuarioCc.indexOf(enSatUsu)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+    }
+
+    private void getEncuestaSatisfaccionUsuarioPendientesCC(){
+        mEncSatUsuarioCc = estudioAdapter.getListaEncSatisfaccionUsuarioSinEnviarCC();
     }
 }

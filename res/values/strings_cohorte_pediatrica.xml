@@ -165,7 +165,11 @@
     <string name="pabdominal_missing">Realizar perimetro abdominal</string>
 
     <string name="info_encSatUsu">Encuesta satisfacción de usuario</string>
-    <string name="verify_encSatUsu">Encuesta satisfacción de usuario?</string>
+    <string name="verify_encSatUsu">Encuesta satisfacción de usuario</string>
     <string name="encSatUsu_missing">Realizar encuesta satisfacción de usuario</string>
+
+    <string name="info_encSatUsuCC">Encuesta satisfacción de usuario - CC</string>
+    <string name="verify_encSatUsuCC">Encuesta satisfacción de usuario - CC?</string>
+    <string name="encSatUsu_missingCC">Realizar encuesta satisfacción de usuario - CC</string>
 
 </resources>

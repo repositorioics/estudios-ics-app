@@ -48,6 +48,7 @@
             <item android:id="@+id/PABDOMINAL" android:title="@string/info_pabdominal"/>
             <!--Encuesta satisfacción-->
             <item android:id="@+id/ENCSATUSU" android:title="@string/info_encSatUsu"/>
+            <item android:id="@+id/ENCSATUSUCC" android:title="@string/info_encSatUsuCC"/>
 
         </menu>
     </item>

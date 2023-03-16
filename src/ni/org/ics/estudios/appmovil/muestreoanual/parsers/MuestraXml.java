@@ -263,6 +263,10 @@ public class MuestraXml {
 	@Attribute
 	private String id;
 
+	@Element
+	private String observacion;
+
+
 
 	@Element(required=false)
 	private Meta meta;
@@ -901,5 +905,13 @@ public class MuestraXml {
 
 	public void setNuevoIngreso(String nuevoIngreso) {
 		this.nuevoIngreso = nuevoIngreso;
+	}
+
+	public String getObservacion() {
+		return observacion;
+	}
+
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
 	}
 }

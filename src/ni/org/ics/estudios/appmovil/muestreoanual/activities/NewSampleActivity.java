@@ -241,6 +241,9 @@ public class NewSampleActivity extends AbstractAsyncActivity {
 			//MA 2020
 			mMuestra.setTuboPax(em.getTuboPax());
 
+			//MA 2023
+			mMuestra.setObservacion(em.getObservacion());
+
 			mMuestra.setMovilInfo(new MovilInfo(idInstancia,
 					instanceFilePath,
 					Constants.STATUS_NOT_SUBMITTED,

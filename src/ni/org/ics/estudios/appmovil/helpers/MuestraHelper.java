@@ -197,6 +197,8 @@ public class MuestraHelper {
         stat.bindLong(38, (muestra.getMovilInfo().getEliminado()?1:0));
         bindInteger(stat,39, muestra.getMovilInfo().getRecurso1());
         bindInteger(stat,40, muestra.getMovilInfo().getRecurso2());
+
+        bindString(stat, 41, muestra.getObservacion());
     }
 
     public static void bindString(SQLiteStatement stat, int index, String value){

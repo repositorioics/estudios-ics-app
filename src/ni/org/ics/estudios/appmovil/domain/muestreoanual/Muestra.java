@@ -47,6 +47,8 @@ public class Muestra implements Serializable {
     private String hdPorqueNo;
 	private Integer tuboPax;
 
+	private String observacion;
+
 	public Integer getOtrorecurso1() {
 		return otrorecurso1;
 	}
@@ -261,5 +263,13 @@ public class Muestra implements Serializable {
 	@Override
 	public String toString() {
 		return this.getmId().getCodigo().toString();
+	}
+
+	public String getObservacion() {
+		return observacion;
+	}
+
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
 	}
 }

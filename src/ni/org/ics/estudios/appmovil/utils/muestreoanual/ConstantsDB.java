@@ -527,6 +527,9 @@ public class ConstantsDB {
     //MA2020
     public static final String tuboPax = "tuboPax";
 
+    //MA 2023
+    public static final String observacion = "observacion";
+
     //Campos obsequios
     public static final String FECHA_OB = "fecha_ob";
     public static final String OBSEQ = "obseqsn";
@@ -1502,6 +1505,7 @@ public class ConstantsDB {
             + DELETED  + " boolean, "
             + REC1    + " integer, "
             + REC2    + " integer, "
+            + observacion + " text, "
             + "primary key (" + FECHA_MUESTRA + "," + CODIGO + "));";
 
     public static final String CREATE_OB_TABLE = "create table if not exists "
@@ -2009,6 +2013,7 @@ public class ConstantsDB {
             + USUARIO  + ", "
             + DELETED  + ", "
             + REC1    + ", "
-            + REC2
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + REC2 + ", "
+            +observacion
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 }

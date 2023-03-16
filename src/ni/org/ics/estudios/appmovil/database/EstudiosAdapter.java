@@ -464,6 +464,9 @@ public class EstudiosAdapter {
 
 				db.execSQL(MainDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_CC_TABLE);
 			}
+			if (oldVersion==48) {
+				db.execSQL("ALTER TABLE " + ConstantsDB.MUESTRA_TABLE + " ADD COLUMN " + ConstantsDB.observacion + " text");
+			}
 		}
 	}
 
@@ -4432,6 +4435,9 @@ public class EstudiosAdapter {
         cv.put(ConstantsDB.DELETED, muestra.getMovilInfo().getEliminado());
         cv.put(ConstantsDB.REC1, muestra.getMovilInfo().getRecurso1());
         cv.put(ConstantsDB.REC2, muestra.getMovilInfo().getRecurso2());
+
+		cv.put(ConstantsDB.observacion, muestra.getObservacion());//MA 2023
+
         mDb.insertOrThrow(ConstantsDB.MUESTRA_TABLE, null, cv);
     }
 
@@ -5964,6 +5970,7 @@ public class EstudiosAdapter {
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.hdPorqueNo))) mMuestra.setHdPorqueNo(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.hdPorqueNo)));
         //MA2020
 		if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.tuboPax))) mMuestra.setTuboPax(muestreo.getInt(muestreo.getColumnIndex(ConstantsDB.tuboPax)));
+
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.otrorecurso1))) mMuestra.setOtrorecurso1(muestreo.getInt(muestreo.getColumnIndex(ConstantsDB.otrorecurso1)));
         if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.otrorecurso2))) mMuestra.setOtrorecurso2(muestreo.getInt(muestreo.getColumnIndex(ConstantsDB.otrorecurso2)));
 
@@ -5982,6 +5989,10 @@ public class EstudiosAdapter {
                 borrado,
                 muestreo.getInt(muestreo.getColumnIndex(ConstantsDB.REC1)),
                 muestreo.getInt(muestreo.getColumnIndex(ConstantsDB.REC2))));
+
+		//MA2023
+		if(!muestreo.isNull(muestreo.getColumnIndex(ConstantsDB.observacion))) mMuestra.setObservacion(muestreo.getString(muestreo.getColumnIndex(ConstantsDB.observacion)));
+
         return mMuestra;
     }
 

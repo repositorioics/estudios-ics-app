@@ -208,7 +208,7 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 			estudiosAdapter.open();
 			List<CuestionarioHogar> cuestionarioCasa = estudiosAdapter.getCuestionariosHogar(EntomologiaBConstants.codigoCasa + " = " + mCasa.getCodigo(), null);
 			estudiosAdapter.close();
-		if (cuestionarioCasa.size() > 0)
+		if (cuestionarioCasa.size() == 2)
 			createDialog(NO_AGREGAR);
 		else createDialog(AGREGAR);
 	}

@@ -263,7 +263,7 @@ public class MuestraXml {
 	@Attribute
 	private String id;
 
-	@Element
+	@Element(required=false)
 	private String observacion;
 
 

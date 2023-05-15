@@ -82,7 +82,8 @@ public class NewTamizajeActivity extends FragmentActivity implements
     private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
     private Date fechaNacimiento = null;
     private final int EDAD_LIMITE_INGRESO = 11; //justo antes de cumplir 11 anios
-    private final int EDAD_MINIMA_DENGUE = 2; //ANIOS
+    //private final int EDAD_MINIMA_DENGUE = 2; //ANIOS
+    private final int EDAD_MINIMA_DENGUE = 1; //ANIOS - CAMBIO REALIZADO EL 15/05/2023
     private final int EDAD_MINIMA_FLU = 0; //ANIOS
     private final int EDAD_MAXIMA_FLU_UO1 = 4; //SEMANAS
     @Override

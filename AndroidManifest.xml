@@ -477,6 +477,12 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".muestreoanual.activities.NuevaEncuestaSatisfaccionCCActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.ListaVentanasBanioNivel1Activity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.enterdata.NuevaVentanaBanioNivel1Activity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="ni.org.ics.estudios.appmovil.cohortefamilia.activities.editdata.EditarVentanaBanioNivel1Activity"
+                  android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

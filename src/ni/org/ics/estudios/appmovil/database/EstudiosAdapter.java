@@ -2261,7 +2261,13 @@ public class EstudiosAdapter {
 				}
 				if(banio != null){
 					mVentana.setAreaBanio(banio);
-					mVentana.setCasa(banio.getAreaAmbiente().getCasa());
+					if (banio.getAreaAmbiente() != null){
+						mVentana.setCasa(banio.getAreaAmbiente().getCasa());
+					}else{
+						mVentana.setCasa(banio.getCasa());
+					}
+
+
 				}
 
 				mVentanas.add(mVentana);

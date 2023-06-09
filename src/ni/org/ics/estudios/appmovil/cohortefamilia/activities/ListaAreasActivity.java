@@ -52,6 +52,7 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 	private ArrayAdapter<AreaAmbiente> mAreaAdapter;
 	private List<AreaAmbiente> mAreas = new ArrayList<AreaAmbiente>();
 	private EstudiosAdapter estudiosAdapter;
+	private Banio banio = new Banio();
 
 	private static final int EDITAR_AREA = 1;
     private static final int BORRAR_AREA = 2;
@@ -202,9 +203,18 @@ public class ListaAreasActivity extends AbstractAsyncListActivity {
 			finish();
 			return true;
 		case R.id.MENU_VER_VENTANAS:
-			arguments.putSerializable(Constants.AREA , area);
-			i = new Intent(getApplicationContext(),
-					ListaVentanasActivity.class);
+			if (area.getTipo().equals("banio")){
+				estudiosAdapter.open();
+				banio = estudiosAdapter.getBanio(MainDBConstants.codigo + "='" +area.getCodigo() + "'",null);
+				estudiosAdapter.close();
+				arguments.putSerializable(Constants.BANIO, banio);
+				i = new Intent(getApplicationContext(),
+						ListaVentanasBanioNivel1Activity.class);
+			}else{
+				arguments.putSerializable(Constants.AREA , area);
+				i = new Intent(getApplicationContext(),
+						ListaVentanasActivity.class);
+			}
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	        i.putExtras(arguments);
 			startActivity(i);

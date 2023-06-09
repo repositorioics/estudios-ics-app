@@ -1716,43 +1716,49 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                                 }
                             }
                         } else if (mParticipante.getProcesos().getEstudio().equals("Dengue")) {
-                            //De 2 años a 8 años
-                            if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 96) {
-                                if (mParticipante.getProcesos().getConmx().matches("No")) {
-                                    if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
-                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
-                                    } else {
-                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 8cc en tubo Rojo<br /></font></strong>";
+                            //Validando cuando el participante es menor a 2 años
+                            if (mParticipante.getEdadMeses() < 24) {
+                                labelHeader = labelHeader + "<strong><font color='red'>No Tomar tubo Rojo<br /></font></strong>";
+                                labelHeader = labelHeader + "<strong><font color='#B941E0'>No Tomar BHC<br /></font></strong>";
+                            } else { //Se agrego nuevo else para evaluar anteriormente la edad menor a 2 años
+                                //De 2 años a 8 años
+                                if (mParticipante.getEdadMeses() >= 24 && mParticipante.getEdadMeses() < 96) {
+                                    if (mParticipante.getProcesos().getConmx().matches("No")) {
+                                        if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+                                            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
+                                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
+                                        } else {
+                                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 8cc en tubo Rojo<br /></font></strong>";
+                                        }
+                                        pendiente = true;
                                     }
-                                    pendiente = true;
-                                }
-                                if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
+                                    if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                                     /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
                                         labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
                                     } else {*/
                                         labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
-                                    //}
-                                    pendiente = true;
-                                }
-                            } else { //De 8 Años a más
-                                if (mParticipante.getProcesos().getConmx().matches("No")) {
-                                    if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                                        //MA2022. 7 PBMC Y 6 ROJO
-                                        labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
-                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
-                                    } else {
-                                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
+                                        //}
+                                        pendiente = true;
                                     }
-                                    pendiente = true;
-                                }
-                                if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
+                                } else { //De 8 Años a más
+                                    if (mParticipante.getProcesos().getConmx().matches("No")) {
+                                        if (mParticipante.getProcesos().getPbmc().matches("Si")) {
+                                            //MA2022. 7 PBMC Y 6 ROJO
+                                            labelHeader = labelHeader + "<strong><font color='#11BDF7'>Tomar 7cc en tubo PBMC<br /></font></strong>";
+                                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 6cc en tubo Rojo<br /></font></strong>";
+                                        } else {
+                                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 12cc en tubo Rojo<br /></font></strong>";
+                                        }
+                                        pendiente = true;
+                                    }
+                                    if (mParticipante.getProcesos().getConmxbhc().matches("No")) {
                                     /*if (mParticipante.getProcesos().getPaxgene().matches("Si")) {//MA2022. No hay paxgene
                                         labelHeader = labelHeader + "<strong><font color='#32B507'>Tomar 1cc para BHC (Paxgene)<br /></font></strong>";
                                     } else {*/
                                         labelHeader = labelHeader + "<strong><font color='#B941E0'>Tomar 1cc para BHC<br /></font></strong>";
-                                    //}
-                                    pendiente = true;
+                                        //}
+                                        pendiente = true;
+                                    }
                                 }
                             }
                         } else if (mParticipante.getProcesos().getEstudio().equals("Dengue  Influenza")) {

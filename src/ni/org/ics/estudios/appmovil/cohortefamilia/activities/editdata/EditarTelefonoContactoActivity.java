@@ -84,43 +84,7 @@ public class EditarTelefonoContactoActivity extends FragmentActivity implements
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
-        //Abre la base de datos
-		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		estudiosAdapter.open();
-        if (telefonoContacto != null) {
-        	Bundle dato = null;
-        	Page modifPage;
-            if(tieneValor(telefonoContacto.getTipo())){
-                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipo());
-                MessageResource catTipo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + telefonoContacto.getTipo() + "' and " + CatalogosDBConstants.catRoot + "='CAT_TIPO_TEL'", null);
-                dato = new Bundle();
-                dato.putString(SIMPLE_DATA_KEY, catTipo.getSpanish());
-                modifPage.resetData(dato);
-            }
-            if(tieneValor(telefonoContacto.getOperadora())){
-	        	modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getOperadora());
-	        	MessageResource catOpera = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + telefonoContacto.getOperadora() + "' and " + CatalogosDBConstants.catRoot + "='CAT_OPER_TEL'", null);
-	        	dato = new Bundle();
-	        	dato.putString(SIMPLE_DATA_KEY, catOpera.getSpanish());
-	        	modifPage.resetData(dato);
-                modifPage.setmVisible(true);
-	        }	
-	        if(telefonoContacto.getNumero()!= null){
-	        	modifPage = (TextPage) mWizardModel.findByKey(labels.getNumero());
-	        	dato = new Bundle();
-	        	dato.putString(SIMPLE_DATA_KEY, telefonoContacto.getNumero());
-	        	modifPage.resetData(dato);
-	        	modifPage.setmVisible(true);
-	        }
-	        if(telefonoContacto.getParticipante()!= null){
-	        	modifPage = (SelectParticipantPage) mWizardModel.findByKey(labels.getParticipante());
-	        	dato = new Bundle();
-	        	dato.putString(SIMPLE_DATA_KEY, telefonoContacto.getParticipante().getCodigo().toString());
-	        	modifPage.resetData(dato);
-	        	modifPage.setmVisible(true);
-	        }
-        }
-        estudiosAdapter.close();
+
         mWizardModel.registerListener(this);
         Page pagePart = mWizardModel.findByKey(labels.getParticipante());
         pagePart.setCasaCHF(casaCHF.getCodigoCHF());
@@ -198,7 +162,45 @@ public class EditarTelefonoContactoActivity extends FragmentActivity implements
             }
         });
         
-        onPageTreeChangedInitial(); 
+        onPageTreeChangedInitial();
+
+        //Abre la base de datos
+        estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
+        estudiosAdapter.open();
+        if (telefonoContacto != null) {
+            Bundle dato = null;
+            Page modifPage;
+            if(tieneValor(telefonoContacto.getTipo())){
+                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getTipo());
+                MessageResource catTipo = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + telefonoContacto.getTipo() + "' and " + CatalogosDBConstants.catRoot + "='CAT_TIPO_TEL'", null);
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, catTipo.getSpanish());
+                modifPage.resetData(dato);
+            }
+            if(tieneValor(telefonoContacto.getOperadora())){
+                modifPage = (SingleFixedChoicePage) mWizardModel.findByKey(labels.getOperadora());
+                MessageResource catOpera = estudiosAdapter.getMessageResource(CatalogosDBConstants.catKey + "='" + telefonoContacto.getOperadora() + "' and " + CatalogosDBConstants.catRoot + "='CAT_OPER_TEL'", null);
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, catOpera.getSpanish());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+            }
+            if(telefonoContacto.getNumero()!= null){
+                modifPage = (TextPage) mWizardModel.findByKey(labels.getNumero());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, telefonoContacto.getNumero());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+            }
+            if(telefonoContacto.getParticipante()!= null){
+                modifPage = (SelectParticipantPage) mWizardModel.findByKey(labels.getParticipante());
+                dato = new Bundle();
+                dato.putString(SIMPLE_DATA_KEY, telefonoContacto.getParticipante().getCodigo().toString());
+                modifPage.resetData(dato);
+                modifPage.setmVisible(true);
+            }
+        }
+        estudiosAdapter.close();
     }
     
 	@Override

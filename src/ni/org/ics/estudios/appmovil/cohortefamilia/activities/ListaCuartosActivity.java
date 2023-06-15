@@ -344,7 +344,12 @@ public class ListaCuartosActivity extends AbstractAsyncListActivity {
 			// after the request completes, hide the progress indicator
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.rooms)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
+			//cambio realizado 15/06/2023
+			if (casaCHF != null) {
+				textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.rooms)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+casaCHF.getCodigoCHF());
+			} else {
+				textView.setText(getString(R.string.main_1) +"\n"+ getString(R.string.rooms)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+codigoCasaCHF);
+			}
 			mCuartoAdapter = new CuartoAdapter(getApplication().getApplicationContext(), R.layout.complex_list_item,mCuartos);
 			setListAdapter(mCuartoAdapter);
 			dismissProgressDialog();

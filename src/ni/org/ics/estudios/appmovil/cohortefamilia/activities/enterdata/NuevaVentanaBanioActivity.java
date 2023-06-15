@@ -292,7 +292,16 @@ public class NuevaVentanaBanioActivity extends FragmentActivity implements
             if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")) {
             	NumberPage np = (NumberPage) page;
             	String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-        		if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Double.valueOf(valor) || np.getmLowerOrEqualsThan() < Double.valueOf(valor)))
+
+                /*Nueva validacion para que no valla algo diferente a un numero*/
+                boolean resultado = isNumeric(valor);
+                if (!resultado) {
+                    /*Toast toast = Toast.makeText(getApplicationContext(), "DIGITE UN NUMERO ENTERO O DECIMAL", Toast.LENGTH_LONG);
+                    toast.show();*/
+                    return false;
+                }
+
+                if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Double.valueOf(valor) || np.getmLowerOrEqualsThan() < Double.valueOf(valor)))
         				|| (np.ismValPattern() && !valor.matches(np.getmPattern()))){
         			cutOffPage = i;
         			break;
@@ -317,8 +326,19 @@ public class NuevaVentanaBanioActivity extends FragmentActivity implements
 
         return false;
     }
-    
-    
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
     public void updateConstrains(){
         
     }

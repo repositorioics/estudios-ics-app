@@ -384,26 +384,31 @@ public class EditarVentanaActivity extends FragmentActivity implements
     public void updateModel(Page page){
         try{
             if (page.getTitle().equals(labels.getAncho())) {
-                if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
-                    Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString());
-                    mWizardModel.findByKey(labels.getTotalM2()).setHint(area.toString());
+                if (mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY) != null) {
+                    if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
+                        Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString());
+                        mWizardModel.findByKey(labels.getTotalM2()).setHint(area.toString());
+                    }
+                    else{
+                        mWizardModel.findByKey(labels.getTotalM2()).setHint("");
+                    }
+                    //notificarCambios = false;
+                    onPageTreeChanged();
                 }
-                else{
-                    mWizardModel.findByKey(labels.getTotalM2()).setHint("");
-                }
-                //notificarCambios = false;
-                onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getLargo())) {
-                if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
-                    Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString());
-                    mWizardModel.findByKey(labels.getTotalM2()).setHint(area.toString());
+                if (mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY) != null) {
+                    if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
+                        Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString());
+                        mWizardModel.findByKey(labels.getTotalM2()).setHint(area.toString());
+                    }
+                    else{
+                        mWizardModel.findByKey(labels.getTotalM2()).setHint("");
+                    }
+                    //notificarCambios = false;
+                    onPageTreeChanged();
                 }
-                else{
-                    mWizardModel.findByKey(labels.getTotalM2()).setHint("");
-                }
-                //notificarCambios = false;
-                onPageTreeChanged();
+
             }
         }catch (Exception ex){
             ex.printStackTrace();

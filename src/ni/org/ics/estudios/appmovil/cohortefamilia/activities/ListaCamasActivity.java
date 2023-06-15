@@ -58,13 +58,19 @@ public class ListaCamasActivity extends AbstractAsyncListActivity {
 		registerForContextMenu(getListView());
 		
 		cuarto = (Cuarto) getIntent().getExtras().getSerializable(Constants.CUARTO);
+		if (cuarto == null) { //15/06/2023
+			cuarto = (Cuarto) getIntent().getExtras().getSerializable(Constants.HABITACION);
+		}
 		textView = (TextView) findViewById(R.id.label);
 		img=getResources().getDrawable(R.drawable.ic_menu_share);
 		textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(),mPass,false,false);
-		new FetchDataHabitacionTask().execute(cuarto.getCodigo());
-		
+		//cambio realizado 15/06/2023
+		if (cuarto != null) {
+			new FetchDataHabitacionTask().execute(cuarto.getCodigo());
+		}
+
 		mAddButton = (Button) findViewById(R.id.add_button);
 		mAddButton.setText(getString(R.string.new_bed));
 

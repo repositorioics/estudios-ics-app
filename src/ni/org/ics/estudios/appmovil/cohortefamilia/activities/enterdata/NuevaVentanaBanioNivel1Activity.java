@@ -290,7 +290,16 @@ public class NuevaVentanaBanioNivel1Activity extends FragmentActivity implements
             if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")) {
             	NumberPage np = (NumberPage) page;
             	String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-        		if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Double.valueOf(valor) || np.getmLowerOrEqualsThan() < Double.valueOf(valor)))
+
+                /*Nueva validacion para que no valla algo diferente a un numero*/
+                boolean resultado = isNumeric(valor);
+                if (!resultado) {
+                    /*Toast toast = Toast.makeText(getApplicationContext(), "DIGITE UN NUMERO ENTERO O DECIMAL", Toast.LENGTH_LONG);
+                    toast.show();*/
+                    return false;
+                }
+
+                if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Double.valueOf(valor) || np.getmLowerOrEqualsThan() < Double.valueOf(valor)))
         				|| (np.ismValPattern() && !valor.matches(np.getmPattern()))){
         			cutOffPage = i;
         			break;
@@ -315,7 +324,18 @@ public class NuevaVentanaBanioNivel1Activity extends FragmentActivity implements
 
         return false;
     }
-    
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
     
     public void updateConstrains(){
         
@@ -324,26 +344,30 @@ public class NuevaVentanaBanioNivel1Activity extends FragmentActivity implements
     public void updateModel(Page page){
     	try{
     		if (page.getTitle().equals(labels.getAncho())) {
-    			if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
-    				Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString());
-    				mWizardModel.findByKey(labels.getTotalM2()).setHint(area.toString());
-    			}
-    			else{
-    				mWizardModel.findByKey(labels.getTotalM2()).setHint("");
-    			}
-    			//notificarCambios = false;
-                onPageTreeChanged();
+    		    if (mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY) != null) {
+                    if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
+                        Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getLargo()).getData().get(Page.SIMPLE_DATA_KEY).toString());
+                        mWizardModel.findByKey(labels.getTotalM2()).setHint(area.toString());
+                    }
+                    else{
+                        mWizardModel.findByKey(labels.getTotalM2()).setHint("");
+                    }
+                    //notificarCambios = false;
+                    onPageTreeChanged();
+                }
     		}
     		if (page.getTitle().equals(labels.getLargo())) {
-    			if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
-    				Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString());
-    				mWizardModel.findByKey(labels.getTotalM2()).setHint(area.toString());
-    			}
-    			else{
-    				mWizardModel.findByKey(labels.getTotalM2()).setHint("");
-    			}
-    			//notificarCambios = false;
-                onPageTreeChanged();
+    		    if(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY) != null) {
+                    if (tieneValor(page.getData().get(Page.SIMPLE_DATA_KEY).toString())&& tieneValor(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString())) {
+                        Double area = Double.valueOf(page.getData().get(Page.SIMPLE_DATA_KEY).toString()) * Double.valueOf(mWizardModel.findByKey(labels.getAncho()).getData().get(Page.SIMPLE_DATA_KEY).toString());
+                        mWizardModel.findByKey(labels.getTotalM2()).setHint(area.toString());
+                    }
+                    else{
+                        mWizardModel.findByKey(labels.getTotalM2()).setHint("");
+                    }
+                    //notificarCambios = false;
+                    onPageTreeChanged();
+                }
     		}
     	}catch (Exception ex){
             ex.printStackTrace();

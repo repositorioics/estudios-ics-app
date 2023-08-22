@@ -892,6 +892,10 @@ public class NuevoCuestionarioHogarActivity extends FragmentActivity implements
             cuestionarioHogar.setQuienParticipo(quienParticipo);
             cuestionarioHogar.setMayorCriaderoBarrio(mayorCriaderoBarrio);
 
+            //Capturando el año actual
+            int year = Calendar.getInstance().get(Calendar.YEAR);
+            cuestionarioHogar.setAnio(String.valueOf(year));
+
             estudiosAdapter.crearCuestionarioHogar(cuestionarioHogar);
             //guardar detalle de poblacion
             guardarPoblacion(cuestionarioHogar.getCodigoEncuesta());

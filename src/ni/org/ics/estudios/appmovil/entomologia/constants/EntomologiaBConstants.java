@@ -120,6 +120,8 @@ public class EntomologiaBConstants {
     //33.	¿Cuál es el mayor criadero de Zancudos de este barrio?
     public static final String mayorCriaderoBarrio = "mayorCriaderoBarrio";
 
+    public static final String anio = "anio";
+
     //crear tabla CuestionarioHogar
     public static final String CREATE_ENTO_CUESTIONARIO_HOGAR_TABLE = "create table if not exists "
             + ENTO_CUESTIONARIO_HOGAR_TABLE + " ("
@@ -172,6 +174,7 @@ public class EntomologiaBConstants {
             + MainDBConstants.pasive + " text, "
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
+            + anio + " text,"
             + "primary key (" + codigoEncuesta + "));";
 
 
@@ -226,8 +229,9 @@ public class EntomologiaBConstants {
             + MainDBConstants.recordUser + ","
             + MainDBConstants.pasive + ","
             + MainDBConstants.deviceId + ","
-            + MainDBConstants.estado
-            + ") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + MainDBConstants.estado + " , "
+            + anio
+            + ") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     //tabla CuestionarioHogarPoblacion
     public static final String ENTO_CUESTIONARIO_HOGAR_POB_TABLE = "ento_cuestionario_hogar_pob";

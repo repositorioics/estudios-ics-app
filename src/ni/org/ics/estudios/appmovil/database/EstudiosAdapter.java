@@ -467,6 +467,10 @@ public class EstudiosAdapter {
 			if (oldVersion==48) {
 				db.execSQL("ALTER TABLE " + ConstantsDB.MUESTRA_TABLE + " ADD COLUMN " + ConstantsDB.observacion + " text");
 			}
+
+			if (oldVersion==49) {
+				db.execSQL("ALTER TABLE " + EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_TABLE + " ADD COLUMN " + EntomologiaBConstants.anio + " text");
+			}
 		}
 	}
 

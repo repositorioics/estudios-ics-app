@@ -61,6 +61,7 @@ public class EntomologiaHelper {
         cv.put(EntomologiaBConstants.queAcciones, cuest.getQueAcciones());
         cv.put(EntomologiaBConstants.queAccionesOtro, cuest.getQueAccionesOtro());
         cv.put(EntomologiaBConstants.mayorCriaderoBarrio, cuest.getMayorCriaderoBarrio());
+
         cv.put(EntomologiaBConstants.edadesFemenino, cuest.getEdadesFemenino());
         cv.put(EntomologiaBConstants.edadesMasculino, cuest.getEdadesMasculino());
         cv.put(EntomologiaBConstants.alguienParticipo, cuest.getAlguienParticipo());
@@ -71,6 +72,8 @@ public class EntomologiaHelper {
         cv.put(MainDBConstants.pasive, String.valueOf(cuest.getPasive()));
         cv.put(MainDBConstants.estado, String.valueOf(cuest.getEstado()));
         cv.put(MainDBConstants.deviceId, cuest.getDeviceid());
+
+        cv.put(EntomologiaBConstants.anio, cuest.getAnio());
         return cv;
     }
 
@@ -133,6 +136,8 @@ public class EntomologiaHelper {
         cuest.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
         cuest.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         cuest.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
+
+        cuest.setAnio(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.anio)));
         return cuest;
     }
 
@@ -188,6 +193,8 @@ public class EntomologiaHelper {
         stat.bindString(47, String.valueOf(part.getPasive()));
         bindString(stat,48, part.getDeviceid());
         stat.bindString(49, String.valueOf(part.getEstado()));
+
+        bindString(stat,50, part.getAnio());
     }
 
 

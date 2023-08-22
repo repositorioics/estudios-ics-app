@@ -30,6 +30,7 @@ import ni.org.ics.estudios.appmovil.utils.Constants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class BuscarCasaActivity extends AbstractAsyncListActivity {
@@ -205,12 +206,19 @@ public class BuscarCasaActivity extends AbstractAsyncListActivity {
 	protected void onListItemClick(ListView listView, View view, int position,
 			long id) {
 		mCasa = (Casa) getListAdapter().getItem(position);
-			estudiosAdapter.open();
-			List<CuestionarioHogar> cuestionarioCasa = estudiosAdapter.getCuestionariosHogar(EntomologiaBConstants.codigoCasa + " = " + mCasa.getCodigo(), null);
-			estudiosAdapter.close();
-		if (cuestionarioCasa.size() == 2)
+		estudiosAdapter.open();
+		//Obteniendo el año actual
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		//List<CuestionarioHogar> cuestionarioCasa = estudiosAdapter.getCuestionariosHogar(EntomologiaBConstants.codigoCasa + " = " + mCasa.getCodigo(), null);
+		List<CuestionarioHogar> cuestionarioCasa = estudiosAdapter.getCuestionariosHogar(EntomologiaBConstants.codigoCasa + " = " + mCasa.getCodigo() +
+				" AND " + EntomologiaBConstants.anio + " = " + String.valueOf(year), null);
+		estudiosAdapter.close();
+		if (cuestionarioCasa.size() > 2)
 			createDialog(NO_AGREGAR);
 		else createDialog(AGREGAR);
+		/*if (cuestionarioCasa.size() == 2)
+			createDialog(NO_AGREGAR);
+		else createDialog(AGREGAR);*/
 	}
 
     private void crearCuestionarioHogar(){

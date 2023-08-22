@@ -124,6 +124,8 @@ public class CuestionarioHogar  extends BaseMetaData implements Serializable {
     //33.	¿Cuál es el mayor criadero de Zancudos de este barrio?
     private String mayorCriaderoBarrio;
 
+    private String anio;
+
     public String getCodigoEncuesta() {
         return codigoEncuesta;
     }
@@ -474,6 +476,14 @@ public class CuestionarioHogar  extends BaseMetaData implements Serializable {
 
     public void setQuienParticipo(String quienParticipo) {
         this.quienParticipo = quienParticipo;
+    }
+
+    public String getAnio() {
+        return anio;
+    }
+
+    public void setAnio(String anio) {
+        this.anio = anio;
     }
 
     @Override

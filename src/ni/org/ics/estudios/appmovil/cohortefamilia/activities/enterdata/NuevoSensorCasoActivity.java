@@ -451,13 +451,19 @@ public class NuevoSensorCasoActivity extends FragmentActivity implements
                 sensor.setSensorSN(catSino.getCatKey());
             }
             sensor.setRazonNoColocaSensor(razonNoColocaSensor);
-            if (tieneValor(areaSensor)) {
-                AreaAmbiente ambiente = estudiosAdapter.getAreaAmbiente(MainDBConstants.codigo + " = '" + areaSensor + "'", null);
-                sensor.setArea(ambiente);
-            }
+
             if (tieneValor(habitacionSensor)) {
                 Cuarto cuarto = estudiosAdapter.getCuarto(MainDBConstants.codigo + " = '" + habitacionSensor + "'", null);
                 sensor.setCuarto(cuarto);
+            }
+
+            if (tieneValor(areaSensor)) {
+                AreaAmbiente ambiente = estudiosAdapter.getAreaAmbiente(MainDBConstants.codigo + " = '" + areaSensor + "'", null);
+                sensor.setArea(ambiente);
+            } else {
+                AreaAmbiente areaAmbiente = estudiosAdapter.getAreaAmbiente(CasosDBConstants.casa + "='"+sensor.getCuarto().getCasa().getCodigoCHF()
+                        +"' and "+MainDBConstants.numeroCuarto+"='"+sensor.getCuarto().getCodigoHabitacion()+"'",null);
+                sensor.setArea(areaAmbiente);
             }
 
             sensor.setNumeroSensor(numero);

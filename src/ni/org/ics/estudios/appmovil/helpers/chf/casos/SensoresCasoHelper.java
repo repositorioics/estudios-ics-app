@@ -65,7 +65,7 @@ public class SensoresCasoHelper {
         stat.bindString(2, sensor.getCodigoCaso().getCodigoCaso());
         bindString(stat,3, sensor.getNumeroSensor());
         bindString(stat,4, sensor.getArea().getCodigo());
-        bindString(stat,5, sensor.getCuarto().getCodigo());
+        bindString(stat,5, sensor.getCuarto() != null ? sensor.getCuarto().getCodigo() : null);
         bindDate(stat,6, sensor.getFechaColocacion());
         bindDate(stat,7, sensor.getFechaRetiro());
         bindString(stat,8, sensor.getHoraRetiro());

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import net.sqlcipher.database.SQLiteStatement;
 import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.SensorCaso;
+import ni.org.ics.estudios.appmovil.domain.cohortefamilia.casos.SensorCasoDTO;
 import ni.org.ics.estudios.appmovil.utils.CasosDBConstants;
 import ni.org.ics.estudios.appmovil.utils.MainDBConstants;
 
@@ -66,6 +67,26 @@ public class SensoresCasoHelper {
         bindString(stat,3, sensor.getNumeroSensor());
         bindString(stat,4, sensor.getArea().getCodigo());
         bindString(stat,5, sensor.getCuarto() != null ? sensor.getCuarto().getCodigo() : null);
+        bindDate(stat,6, sensor.getFechaColocacion());
+        bindDate(stat,7, sensor.getFechaRetiro());
+        bindString(stat,8, sensor.getHoraRetiro());
+        bindString(stat,9, sensor.getObservacionRetiro());
+        bindString(stat,10, sensor.getSensorSN());
+        bindString(stat,11, sensor.getRazonNoColocaSensor());
+
+        bindDate(stat,12, sensor.getRecordDate());
+        bindString(stat,13, sensor.getRecordUser());
+        stat.bindString(14, String.valueOf(sensor.getPasive()));
+        bindString(stat,15, sensor.getDeviceid());
+        stat.bindString(16, String.valueOf(sensor.getEstado()));
+    }
+
+    public static void fillSensorCasoV2Statement(SQLiteStatement stat, SensorCasoDTO sensor){
+        stat.bindString(1, sensor.getCodigoSensor());
+        stat.bindString(2, sensor.getCodigoCaso());
+        bindString(stat,3, sensor.getNumeroSensor());
+        bindString(stat,4, sensor.getArea());
+        bindString(stat,5, sensor.getCuarto());
         bindDate(stat,6, sensor.getFechaColocacion());
         bindDate(stat,7, sensor.getFechaRetiro());
         bindString(stat,8, sensor.getHoraRetiro());

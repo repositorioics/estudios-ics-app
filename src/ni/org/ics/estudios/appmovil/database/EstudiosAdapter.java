@@ -9346,7 +9346,8 @@ public class EstudiosAdapter {
 				case CasosDBConstants.SENSORES_CASOS_TABLE:
 					stat = mDb.compileStatement(CasosDBConstants.INSERT_SENSORES_CASOS_TABLE);
 					for (Object remoteAppInfo : list) {
-						SensoresCasoHelper.fillSensorCasoStatement(stat, (SensorCaso)remoteAppInfo);
+						//SensoresCasoHelper.fillSensorCasoStatement(stat, (SensorCaso)remoteAppInfo);
+						SensoresCasoHelper.fillSensorCasoV2Statement(stat, (SensorCasoDTO) remoteAppInfo);
 						long result = stat.executeInsert();
 						if (result < 0) return false;
 					}

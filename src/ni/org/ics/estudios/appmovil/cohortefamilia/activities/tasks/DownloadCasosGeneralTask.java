@@ -37,7 +37,8 @@ public class DownloadCasosGeneralTask extends DownloadTask {
     private List<VisitaSeguimientoCaso> mVisitaSeguimientoCasos = null;
     private List<VisitaFallidaCaso> mVisitaFallidaCasos = null;
     private List<VisitaSeguimientoCasoSintomas> mVisitaSeguimientoSintomasCasos = null;
-    private List<SensorCaso> mSensoresCasos = null;
+    //private List<SensorCaso> mSensoresCasos = null;
+    private List<SensorCasoDTO> mSensoresCasos = null;
 
     public static final String CASAS_CASOS = "1";
     public static final String PART_CASOS = "2";
@@ -187,13 +188,22 @@ public class DownloadCasosGeneralTask extends DownloadTask {
             responseEntityVisitaSeguimientoCasoSintomas = null;
 
             //Descargar sensores de casos en seguimiento
-            urlRequest = url + "/movil/sensorescasos/";
+            /*urlRequest = url + "/movil/sensorescasos/";
             publishProgress("Solicitando sensores de casos", SENSORES_CASOS,TOTAL_TASK_CASOS);
             // Perform the HTTP GET request
             ResponseEntity<SensorCaso[]> responseEntitySensores = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
                     SensorCaso[].class);
             // convert the array to a list and return it
+            mSensoresCasos = Arrays.asList(responseEntitySensores.getBody());*/
+
+            urlRequest = url + "/movil/sensorescasos_v2/";
+            publishProgress("Solicitando sensores de casos", SENSORES_CASOS,TOTAL_TASK_CASOS);
+            // Perform the HTTP GET request
+            ResponseEntity<SensorCasoDTO[]> responseEntitySensores = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    SensorCasoDTO[].class);
+            // convert the array to a list and return it
             mSensoresCasos = Arrays.asList(responseEntitySensores.getBody());
+
             responseEntitySensores = null;
 
             return null;

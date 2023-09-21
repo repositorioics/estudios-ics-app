@@ -23,7 +23,7 @@ public class CuartoForm extends AbstractWizardModel {
     	labels = new CuartoFormLabels();
 		
 		Page codigoHabitacion = new NumberPage(this,labels.getCodigoHabitacion(),"", Constants.WIZARD, true).setRangeValidation(true, 1, 10).setRequired(true);
-		Page cantidadCamas = new NumberPage(this,labels.getCantidadCamas(),"", Constants.WIZARD, true).setRangeValidation(true, 1, 5).setRequired(true);
+		Page cantidadCamas = new NumberPage(this,labels.getCantidadCamas(),"", Constants.WIZARD, true).setRangeValidation(true, 1, 15).setRequired(true);
 
 		
         return new PageList(codigoHabitacion,cantidadCamas);

@@ -56,6 +56,10 @@ public class AreaAdapter extends ArrayAdapter<AreaAmbiente> {
 				if (textView != null) {
 					textView.setText("Cuarto: "+p.getNumeroCuarto());
 				}
+			}else{
+				textView = (TextView) v.findViewById(R.id.infoc_text);
+				textView.setTextColor(Color.BLUE);
+				textView.setText("");
 			}
 		}
 		return v;

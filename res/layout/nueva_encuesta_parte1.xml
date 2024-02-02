@@ -29,7 +29,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/chkAtenMedica"
-            android:text="Por la atención médica"
+            android:text="1.1 Por la atención médica"
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -96,7 +96,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/chkFamAmistades"
-            android:text="Mi familia y/o amistades me recomendaron que ingresara a mi hijo/a en el proyecto."
+            android:text="1.2 Mi familia y/o amistades me recomendaron que ingresara a mi hijo/a en el proyecto."
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
@@ -164,7 +164,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/chkDecisionPropia"
-            android:text="Por decisión propia, para que mi hijo/a participe en el estudio de investigación."
+            android:text="1.3 Por decisión propia, para que mi hijo/a participe en el estudio de investigación."
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -231,7 +231,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/chkFamAmistades"
-            android:text="Los obsequios que ofrece el estudio"
+            android:text="1.4 Los obsequios que ofrece el estudio"
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -298,7 +298,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/chkFamAmistades"
-            android:text="Por la ayuda que recibe la comunidad."
+            android:text="1.5 Por la ayuda que recibe la comunidad."
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -365,7 +365,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/chkFamAmistades"
-            android:text="Por los exámenes de laboratorio que le realizan a mi hijo/a."
+            android:text="1.6 Por los exámenes de laboratorio que le realizan a mi hijo/a."
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -434,7 +434,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="23dp"
             android:layout_toRightOf="@+id/chkFamAmistades"
-            android:text="El interés científico personal"
+            android:text="1.7 El interés científico personal"
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -501,7 +501,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="23dp"
             android:layout_toRightOf="@+id/chkFamAmistades"
-            android:text="Se que la información de mi expediente puede ayudar a otros niños/as en el futuro."
+            android:text="1.8 Se que la información de mi expediente puede ayudar a otros niños/as en el futuro."
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -567,7 +567,7 @@
             android:layout_toRightOf="@+id/chkOtras_P1"
             android:layout_marginLeft="7dp"
             android:layout_marginTop="25dp"
-            android:text="¿Otras? Especifique"
+            android:text="1.9 ¿Otras? Especifique"
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
 
     <EditText

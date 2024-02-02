@@ -31,7 +31,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="18dp"
             android:layout_toRightOf="@+id/chkCalidadAtencionMed"
-            android:text="La calidad de atención médica y exámenes de laboratorio se ajusta a las necesidades médicas y de salud de mi hijo/a."
+            android:text="2.1 La calidad de atención médica y exámenes de laboratorio se ajusta a las necesidades médicas y de salud de mi hijo/a."
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -98,7 +98,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="30dp"
             android:layout_toRightOf="@+id/chkAtencionOportuna"
-            android:text="Porque puedo recibir atención de emergencia y oportuna."
+            android:text="2.2 Porque puedo recibir atención de emergencia y oportuna."
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -166,7 +166,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="25dp"
             android:layout_toRightOf="@+id/chkCoordinacionHosp"
-            android:text="Buena coordinación con el hospital, para cuando mi hijo/a necesita atención en el hospital."
+            android:text="2.3 Buena coordinación con el hospital, para cuando mi hijo/a necesita atención en el hospital."
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -233,7 +233,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="25dp"
             android:layout_toRightOf="@+id/chkCoordinacionHosp"
-            android:text="Me brindan información del estado de salud de mi hijo/a y nos clarifican nuestras dudas."
+            android:text="2.4 Me brindan información del estado de salud de mi hijo/a y nos clarifican nuestras dudas."
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -300,7 +300,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="25dp"
             android:layout_toRightOf="@+id/chkEnseniaPrevEnfer"
-            android:text="Me enseña sobre las enfermedades, y cómo puedo prevenirlas."
+            android:text="2.5 Me enseña sobre las enfermedades, y cómo puedo prevenirlas."
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -367,7 +367,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="25dp"
             android:layout_toRightOf="@+id/chkMejoraConoEnfer"
-            android:text="Porque la información de mis consultas en el proyecto podrá mejorar los conocimientos de las enfermedades."
+            android:text="2.6 Porque la información de mis consultas en el proyecto podrá mejorar los conocimientos de las enfermedades."
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -434,7 +434,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="25dp"
             android:layout_toRightOf="@+id/chkInteresCientificoP2"
-            android:text="Tengo interés científico personal"
+            android:text="2.7 Tengo interés científico personal"
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -501,7 +501,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="25dp"
             android:layout_toRightOf="@+id/chkMejorarTrataDengue"
-            android:text="Porque quiero mejorar el tratamiento de dengue en el futuro."
+            android:text="2.8 Porque quiero mejorar el tratamiento de dengue en el futuro."
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -568,7 +568,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="25dp"
             android:layout_toRightOf="@+id/chkNoQuieroQuedarmeEstudio"
-            android:text="No quiero quedarme en el estudio, pero es la única manera para recibir atención médica para mi hijo/a"
+            android:text="2.9 No quiero quedarme en el estudio, pero es la única manera para recibir atención médica para mi hijo/a"
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -634,7 +634,7 @@
             android:layout_toRightOf="@+id/chkP2_Otras"
             android:layout_marginLeft="7dp"
             android:layout_marginTop="25dp"
-            android:text="¿Otra razón? Especifique:"
+            android:text="2.10 ¿Otra razón? Especifique:"
             android:textAppearance="@style/TextViewEstiloSeguimiento" />
 
     <EditText

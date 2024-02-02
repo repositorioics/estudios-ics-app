@@ -65,9 +65,9 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         TextView txtvPregunta2 = (TextView)findViewById(R.id.txtvPregunta2);
         TextView txtvComodoHaciendoPreguntas = (TextView)findViewById(R.id.txtvComodoHaciendoPreguntas);
 
-        txtvPregunta1.setText(stringBuilder("¿Qué le motivó a Ud. ingresar a su hijo/a en el proyecto ? ", "Puede seleccionar más de una respuesta, e indique su nivel de conformidad a cada opción."), TextView.BufferType.SPANNABLE);
-        txtvPregunta2.setText(stringBuilder("¿Por qué ha decidido mantener a su hijo/a durante todo este tiempo en el proyecto? ", "Puede seleccionar más de una respuesta, e indique su acuerdo a cada frase en la escala."), TextView.BufferType.SPANNABLE);
-        txtvComodoHaciendoPreguntas.setText(stringBuilder("¿Se siente cómodo/a haciendo preguntas acerca de los procedimientos del proyecto? ", "Puede seleccionar más de una respuesta."), TextView.BufferType.SPANNABLE);
+        txtvPregunta1.setText(stringBuilder("1. ¿Qué le motivó a Ud. ingresar a su hijo/a en el proyecto ? ", "Puede seleccionar más de una respuesta, e indique su nivel de conformidad a cada opción."), TextView.BufferType.SPANNABLE);
+        txtvPregunta2.setText(stringBuilder("2. ¿Por qué ha decidido mantener a su hijo/a durante todo este tiempo en el proyecto? ", "Puede seleccionar más de una respuesta, e indique su acuerdo a cada frase en la escala."), TextView.BufferType.SPANNABLE);
+        txtvComodoHaciendoPreguntas.setText(stringBuilder("7. ¿Se siente cómodo/a haciendo preguntas acerca de los procedimientos del proyecto? ", "Puede seleccionar más de una respuesta."), TextView.BufferType.SPANNABLE);
 
         this.CONTEXT = this;
         inicializarContorles();
@@ -2578,7 +2578,13 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
 
             //Pregunta 8
             EditText edtxBrindarRecomendacion = (EditText) this.findViewById(R.id.edtxBrindarRecomendacion);
-            if (!edtxBrindarRecomendacion.getText().toString().equals("") || !(edtxBrindarRecomendacion.getText() == null)) {
+            /*if (!edtxBrindarRecomendacion.getText().toString().equals("") || !(edtxBrindarRecomendacion.getText() == null)) {
+                encuestaSatisfaccionUsuario.setRecomendacionMejorarAtencion(edtxBrindarRecomendacion.getText().toString());
+            }*/
+            if (edtxBrindarRecomendacion.getText().toString().equals("") || (edtxBrindarRecomendacion.getText() == null)) {
+                Toast.makeText(getApplicationContext(), "La pregunta 8 es requerida", Toast.LENGTH_LONG).show();
+                return;
+            } else {
                 encuestaSatisfaccionUsuario.setRecomendacionMejorarAtencion(edtxBrindarRecomendacion.getText().toString());
             }
 

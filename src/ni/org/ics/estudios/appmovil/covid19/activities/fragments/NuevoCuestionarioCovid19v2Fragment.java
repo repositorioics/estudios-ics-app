@@ -14234,9 +14234,11 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
         else if (faltaDatoRequeridoHijo(e1AnioInicioSintoma, R.string.anioInicioSintoma, e1SabeFIS, Constants.NOKEYSND)) {
             inputE1AnioInicioSintoma.requestFocus();
             return false;
-        } else if (e1AnioInicioSintoma != null && !e1AnioInicioSintoma.equalsIgnoreCase("2022") && !e1AnioInicioSintoma.equalsIgnoreCase("2023")) {
+        } else if (e1AnioInicioSintoma != null && !e1AnioInicioSintoma.equalsIgnoreCase("2023") && !e1AnioInicioSintoma.equalsIgnoreCase("2024")) {
+        //else if (e1AnioInicioSintoma != null && !e1AnioInicioSintoma.equalsIgnoreCase("2022") && !e1AnioInicioSintoma.equalsIgnoreCase("2023")) {
             /*Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2022"),Toast.LENGTH_LONG).show();*/
-            Toast.makeText(getActivity(), getActivity().getString(R.string.wrongYear, "2022", "2023"), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), getActivity().getString(R.string.wrongYear, "2022", "2023"), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getActivity().getString(R.string.wrongYear, "2023", "2024"), Toast.LENGTH_LONG).show();
             inputE1AnioInicioSintoma.requestFocus();
             return false;
         } else if (faltaDatoRequeridoHijo(e1MesInicioSintoma, R.string.mesInicioSintoma, e1SabeFIS, Constants.NOKEYSND))
@@ -14335,9 +14337,11 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
         else if (faltaDatoRequeridoHijo(e2AnioInicioSintoma, R.string.anioInicioSintoma, e2SabeFIS, Constants.NOKEYSND)) {
             inputE2AnioInicioSintoma.requestFocus();
             return false;
-        } else if (e2AnioInicioSintoma != null && !e2AnioInicioSintoma.equalsIgnoreCase("2022") && !e2AnioInicioSintoma.equalsIgnoreCase("2023")) {
+        } else if (e2AnioInicioSintoma != null && !e2AnioInicioSintoma.equalsIgnoreCase("2023") && !e2AnioInicioSintoma.equalsIgnoreCase("2024")) {
+        //else if (e2AnioInicioSintoma != null && !e2AnioInicioSintoma.equalsIgnoreCase("2022") && !e2AnioInicioSintoma.equalsIgnoreCase("2023")) {
             /*Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2022"),Toast.LENGTH_LONG).show();*/
-            Toast.makeText(getActivity(), getActivity().getString(R.string.wrongYear, "2022", "2023"), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), getActivity().getString(R.string.wrongYear, "2022", "2023"), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getActivity().getString(R.string.wrongYear, "2023", "2024"), Toast.LENGTH_LONG).show();
             inputE2AnioInicioSintoma.requestFocus();
             return false;
         } else if (faltaDatoRequeridoHijo(e2MesInicioSintoma, R.string.mesInicioSintoma, e2SabeFIS, Constants.NOKEYSND))
@@ -14433,9 +14437,11 @@ public class NuevoCuestionarioCovid19v2Fragment extends Fragment {
         else if (faltaDatoRequeridoHijo(e3AnioInicioSintoma, R.string.anioInicioSintoma, e3SabeFIS, Constants.NOKEYSND)) {
             inputE3AnioInicioSintoma.requestFocus();
             return false;
-        } else if (e3AnioInicioSintoma != null && !e3AnioInicioSintoma.equalsIgnoreCase("2022") && !e3AnioInicioSintoma.equalsIgnoreCase("2023")) {
+        } else if (e3AnioInicioSintoma != null && !e3AnioInicioSintoma.equalsIgnoreCase("2023") && !e3AnioInicioSintoma.equalsIgnoreCase("2024")) {
+        //else if (e3AnioInicioSintoma != null && !e3AnioInicioSintoma.equalsIgnoreCase("2022") && !e3AnioInicioSintoma.equalsIgnoreCase("2023")) {
             /*Toast.makeText(getActivity(), getActivity().getString( R.string.wrongYear, "2021", "2022"),Toast.LENGTH_LONG).show();*/
-            Toast.makeText(getActivity(), getActivity().getString(R.string.wrongYear, "2022", "2023"), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), getActivity().getString(R.string.wrongYear, "2022", "2023"), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getActivity().getString(R.string.wrongYear, "2023", "2024"), Toast.LENGTH_LONG).show();
             inputE3AnioInicioSintoma.requestFocus();
             return false;
         } else if (faltaDatoRequeridoHijo(e3MesInicioSintoma, R.string.mesInicioSintoma, e3SabeFIS, Constants.NOKEYSND))

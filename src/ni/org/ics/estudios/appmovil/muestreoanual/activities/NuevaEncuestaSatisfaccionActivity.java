@@ -36,7 +36,7 @@ import java.util.Date;
 public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
 
     private Context CONTEXT;
-    private static EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario = new EncuestaSatisfaccionUsuario();
+    //private static EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario = new EncuestaSatisfaccionUsuario();
     private DeviceInfo infoMovil;
     private static Participante participante = new Participante();
     private boolean visExitosa = false;
@@ -717,6 +717,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         boolean chkOtras_P1 = ((CheckBox) this.findViewById(R.id.chkOtras_P1)).isChecked();
         ((CheckBox) this.findViewById(R.id.chkOtras_P1)).setChecked(chkOtras_P1);
         if (chkOtras_P1) {
+            Toast.makeText(getApplicationContext(), "Otras motivaciones diferente a las anteriores", Toast.LENGTH_LONG).show();
             ((CheckBox) this.findViewById(R.id.chkOtras_P1)).setChecked(true);
             this.findViewById(R.id.edtxP1_Otras).setVisibility(view.VISIBLE);
         } else {
@@ -729,9 +730,9 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
 
     //CalidadAtencionMed
     public void onChkCalidadAtencionMed(View view) {
-        boolean chkOtras_P1 = ((CheckBox) this.findViewById(R.id.chkCalidadAtencionMed)).isChecked();
-        ((CheckBox) this.findViewById(R.id.chkCalidadAtencionMed)).setChecked(chkOtras_P1);
-        if (chkOtras_P1) {
+        boolean chkCalidadAtencionMed = ((CheckBox) this.findViewById(R.id.chkCalidadAtencionMed)).isChecked();
+        ((CheckBox) this.findViewById(R.id.chkCalidadAtencionMed)).setChecked(chkCalidadAtencionMed);
+        if (chkCalidadAtencionMed) {
             ((CheckBox) this.findViewById(R.id.chkCalidadAtencionMed)).setChecked(true);
             this.findViewById(R.id.radioGroupP2_1).setVisibility(view.VISIBLE);
         } else {
@@ -867,6 +868,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         boolean chkP2_Otras = ((CheckBox) this.findViewById(R.id.chkP2_Otras)).isChecked();
         ((CheckBox) this.findViewById(R.id.chkP2_Otras)).setChecked(chkP2_Otras);
         if (chkP2_Otras) {
+            Toast.makeText(getApplicationContext(), "Otra decisión que sea diferente a las anteriores", Toast.LENGTH_LONG).show();
             ((CheckBox) this.findViewById(R.id.chkP2_Otras)).setChecked(true);
             this.findViewById(R.id.edtxP2_Otras).setVisibility(view.VISIBLE);
         } else {
@@ -959,6 +961,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         boolean chkOtrasDificultades = ((CheckBox) this.findViewById(R.id.chkOtrasDificultades)).isChecked();
         ((CheckBox) this.findViewById(R.id.chkOtrasDificultades)).setChecked(chkOtrasDificultades);
         if (chkOtrasDificultades) {
+            Toast.makeText(getApplicationContext(), "Otra dificultad que sea diferente a las anteriores", Toast.LENGTH_LONG).show();
             ((CheckBox) this.findViewById(R.id.chkOtrasDificultades)).setChecked(true);
             this.findViewById(R.id.edtxOtrasDificultades).setVisibility(view.VISIBLE);
         } else {
@@ -1051,6 +1054,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         boolean chkOtrasRazonesRecomendaria = ((CheckBox) this.findViewById(R.id.chkOtrasRazonesRecomendaria)).isChecked();
         ((CheckBox) this.findViewById(R.id.chkOtrasRazonesRecomendaria)).setChecked(chkOtrasRazonesRecomendaria);
         if (chkOtrasRazonesRecomendaria) {
+            Toast.makeText(getApplicationContext(), "Otra razon por la que recomendaría que sea diferente a las anteriores", Toast.LENGTH_LONG).show();
             ((CheckBox) this.findViewById(R.id.chkOtrasRazonesRecomendaria)).setChecked(true);
             this.findViewById(R.id.edtxOtrasRazonesRecomendaria).setVisibility(view.VISIBLE);
         } else {
@@ -1152,8 +1156,8 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
     //OtrasRazonesNoRecomendaria
     public void onChkOtrasRazonesNoRecomendaria(View view) {
         boolean chkOtrasRazonesNoRecomendaria = ((CheckBox) this.findViewById(R.id.chkOtrasRazonesNoRecomendaria)).isChecked();
-        ((CheckBox) this.findViewById(R.id.chkOtrasRazonesNoRecomendaria)).setChecked(chkOtrasRazonesNoRecomendaria);
         if (chkOtrasRazonesNoRecomendaria) {
+            Toast.makeText(getApplicationContext(), "Otra razón no recomendaría que sea diferente a las anteriores", Toast.LENGTH_LONG).show();
             ((CheckBox) this.findViewById(R.id.chkOtrasRazonesNoRecomendaria)).setChecked(true);
             this.findViewById(R.id.edtxOtrasRazonesNoRecomendaria).setVisibility(view.VISIBLE);
         } else {
@@ -1213,6 +1217,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         boolean chkOtrasRazonesNoRecomendaria = ((CheckBox) this.findViewById(R.id.chkOtroMotivosNoComprendioProcedimiento)).isChecked();
         ((CheckBox) this.findViewById(R.id.chkOtroMotivosNoComprendioProcedimiento)).setChecked(chkOtrasRazonesNoRecomendaria);
         if (chkOtrasRazonesNoRecomendaria) {
+            Toast.makeText(getApplicationContext(), "Otra razón por la que no quedo claro que sea diferente a las anteriores", Toast.LENGTH_LONG).show();
             ((CheckBox) this.findViewById(R.id.chkOtroMotivosNoComprendioProcedimiento)).setChecked(true);
             this.findViewById(R.id.edtxOtroMotivosNoComprendioProcedimiento).setVisibility(view.VISIBLE);
         } else {
@@ -1958,6 +1963,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
     public void validarDatos(DialogInterface dialogInterface) {
 
         try {
+            EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario = new EncuestaSatisfaccionUsuario();
             //Abre la base de datos
             String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
             estudiosAdapter = new EstudiosAdapter(this.getApplicationContext(), mPass, false, false);
@@ -2035,7 +2041,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             encuestaSatisfaccionUsuario.setEsId(esId);*/
 
             //Parte 1
-            if (!chkAtenMedica
+            /*if (!chkAtenMedica
                     && !chkFamAmistades
                     && !chkDecisionPropia
                     && !chkObsequios
@@ -2046,7 +2052,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     & !chkOtras_P1) {
                 Toast.makeText(getApplicationContext(), "Debe seleccionar al menos una opción en la pregunta 1", Toast.LENGTH_LONG).show();
                 return;
-            }
+            }*/
 
             //Validando la pregunta 1
             if (chkAtenMedica) {
@@ -2062,6 +2068,10 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setAtencionMedica(selectedRadioGroup1.getText().toString());
                 }
+            } else {
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 1.1 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 2
             if (chkFamAmistades) {
@@ -2077,6 +2087,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setFamilaAmistades(selectedRadioGroup2.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 1.2 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 3
             if (chkDecisionPropia) {
@@ -2092,6 +2107,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setDesicionPropia(selectedRadioGroup3.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 1.3 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 4
             if (chkObsequios) {
@@ -2107,6 +2127,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setObsequiosOfreceEstudio(selectedRadioGroup4.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 1.4 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 5
             if (chkAyudaComunidad) {
@@ -2122,6 +2147,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setAyudaRecibeComunidad(selectedRadioGroup5.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 1.5 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 6
             if (chkExamLaboratorio) {
@@ -2137,6 +2167,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setExamenesLaboratorio(selectedRadioGroup6.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 1.6 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 7
             if (chkInteresCientifico) {
@@ -2152,6 +2187,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setInteresCientificoPersonalP1(selectedRadioGroup7.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 1.7 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 8
             if (chkAyudarOtros) {
@@ -2167,6 +2207,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setInformacionAyudaOtros(selectedRadioGroup8.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 1.8 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 9
             if (chkOtras_P1) {
@@ -2180,7 +2225,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             }
 
             //PARTE 2
-            if (!chkCalidadAtencionMed
+            /*if (!chkCalidadAtencionMed
                     && !chkAtencionOportuna
                     && !chkCoordinacionHosp
                     && !chkInformacionEstadoSalud
@@ -2192,7 +2237,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     && !chkP2_Otras) {
                 Toast.makeText(getApplicationContext(), "Debe seleccionar al menos una opción en la pregunta 2", Toast.LENGTH_LONG).show();
                 return;
-            }
+            }*/
             //Validando la pregunta 10
             if (chkCalidadAtencionMed) {
                 RadioGroup radioGroupP2_1 = (RadioGroup) findViewById(R.id.radioGroupP2_1);
@@ -2207,6 +2252,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setCalidadAtencionMedica(selectedRadioGroupP2_1.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 2.1 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 11
             if (chkAtencionOportuna) {
@@ -2222,6 +2272,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setAtencionOportuna(selectedRadioGroupP2_2.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 2.2 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 12
             if (chkCoordinacionHosp) {
@@ -2237,6 +2292,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setBuenaCoordinacionhosp(selectedRadioGroupP2_3.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 2.3 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 13
             if (chkInformacionEstadoSalud) {
@@ -2252,6 +2312,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setInfoEstadoSalud(selectedRadioGroupP2_4.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 2.4 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 14
             if (chkEnseniaPrevEnfer) {
@@ -2267,6 +2332,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setEnseniaPrevEnfermedades(selectedRadioGroupP2_5.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 2.5 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 15
             if (chkMejoraConoEnfer) {
@@ -2282,6 +2352,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setInfoConsMejoraConocimientos(selectedRadioGroupP2_6.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 2.6 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 16
             if (chkInteresCientificoP2) {
@@ -2297,6 +2372,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setInteresCientificoPersonalP2(selectedRadioGroupP2_7.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 2.7 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 17
             if (chkMejorarTrataDengue) {
@@ -2312,6 +2392,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setMejorarTratamientoDengue(selectedRadioGroupP2_8.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 2.8 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 18
             if (chkNoQuieroQuedarmeEstudio) {
@@ -2327,6 +2412,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setUnicaManeraRecibirAtencionMed(selectedRadioGroupP2_9.getText().toString());
                 }
+            } else {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "La pregunta 2.9 es requerida", Toast.LENGTH_LONG).show();
+                return;
             }
             //Validando la pregunta 19
             if (chkP2_Otras) {
@@ -2364,35 +2454,50 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     && !chkTemorTomenMx
                     && !chkTemorDarInformacion
                     && !chkOtrasDificultades) {
-                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 3.1", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar al menos una opción en la pregunta 3.1", Toast.LENGTH_LONG).show();
                 return;
             }
 
+            int contadorPreg3_1 = 0;
+
             // 3.1 Se activan cuando la pregunta 3 es 'Si'
             if (chkLejosCentroSalud) {
+                contadorPreg3_1 = contadorPreg3_1 + 1;
                 encuestaSatisfaccionUsuario.setCentroSaludLejos("1");
             }
             if (chkCostoElevadoTransporte) {
+                contadorPreg3_1 = contadorPreg3_1 + 1;
                 encuestaSatisfaccionUsuario.setCostoTrasnporteElevado("1");
             }
             if (chkTrabajoTiempo) {
+                contadorPreg3_1 = contadorPreg3_1 + 1;
                 encuestaSatisfaccionUsuario.setTrabajoTiempo("1");
             }
             if (chkNoQueriaPasarConsultMomento) {
+                contadorPreg3_1 = contadorPreg3_1 + 1;
                 encuestaSatisfaccionUsuario.setNoQueriapasarConsulta("1");
             }
             if (chkPorHorarioClases) {
+                contadorPreg3_1 = contadorPreg3_1 + 1;
                 encuestaSatisfaccionUsuario.setHorarioClases("1");
             }
             if (chkTemorTomenMx) {
+                contadorPreg3_1 = contadorPreg3_1 + 1;
                 encuestaSatisfaccionUsuario.setTemorTomenMx("1");
             }
             if (chkTemorDarInformacion) {
+                contadorPreg3_1 = contadorPreg3_1 + 1;
                 encuestaSatisfaccionUsuario.setTemorInfoPersonal("1");
             }
             if (chkOtrasDificultades) {
+                contadorPreg3_1 = contadorPreg3_1 + 1;
                 EditText edtxOtrasDificultades = (EditText) this.findViewById(R.id.edtxOtrasDificultades);
                 encuestaSatisfaccionUsuario.setOtraP3(edtxOtrasDificultades.getText().toString());
+            }
+
+            if (contadorPreg3_1 > 3) {
+                Toast.makeText(getApplicationContext(), "Debe seleccionar un maximo de 3 opciones en la pregunta 3.1", Toast.LENGTH_LONG).show();
+                return;
             }
 
             //PARTE4
@@ -2401,7 +2506,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             int selectedP4_1 = radioGroupP4_1.getCheckedRadioButtonId();
             RadioButton selectedRadioGroupP4_1 = (RadioButton) findViewById(selectedP4_1);
             if (selectedRadioGroupP4_1 == null) {
-                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 4", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar al menos una opción en la pregunta 4", Toast.LENGTH_LONG).show();
                 return;
             } else {
                 if (selectedRadioGroupP4_1.getText().toString().equals("Si")) {
@@ -2439,61 +2544,90 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             }
 
             //4.1 se activa cuando la respuesta de la pregunta 4 es Si
+            int contadorPreg4_1 = 0;
             if (chkAtencionRecibidaCalidad) {
+                contadorPreg4_1 = contadorPreg4_1 + 1;
                 encuestaSatisfaccionUsuario.setAtencionCalidad("1");
             }
             if (chkRespuestaNecesidades) {
+                contadorPreg4_1 = contadorPreg4_1 + 1;
                 encuestaSatisfaccionUsuario.setRespNecesidadesSaludOportuna("1");
             }
             if (chkTiempoEsperaCorto) {
+                contadorPreg4_1 = contadorPreg4_1 + 1;
                 encuestaSatisfaccionUsuario.setTiempoEsperaCorto("1");
             }
             if (chkMejorAtencionSeguroMed) {
+                contadorPreg4_1 = contadorPreg4_1 + 1;
                 encuestaSatisfaccionUsuario.setMejorAtencionQueSeguro("1");
             }
             if (chkExamLabNecesarios) {
+                contadorPreg4_1 = contadorPreg4_1 + 1;
                 encuestaSatisfaccionUsuario.setExamenLabNecesarios("1");
             }
             if (chkGeneraConocimiento) {
+                contadorPreg4_1 = contadorPreg4_1 + 1;
                 encuestaSatisfaccionUsuario.setConocimientosImportantes("1");
             }
             if (chkPocosRequisitos) {
+                contadorPreg4_1 = contadorPreg4_1 + 1;
                 encuestaSatisfaccionUsuario.setPocosRequisitos("1");
             }
             if (chkOtrasRazonesRecomendaria) {
+                contadorPreg4_1 = contadorPreg4_1 + 1;
                 EditText edtxOtrasRazonesRecomendaria = (EditText) this.findViewById(R.id.edtxOtrasRazonesRecomendaria);
                 encuestaSatisfaccionUsuario.setOtraP_4_1(edtxOtrasRazonesRecomendaria.getText().toString());
             }
 
-            if (selectedRadioGroupP4_1.getText().toString().equals("No")) {}
+            if (contadorPreg4_1 > 3) {
+                Toast.makeText(getApplicationContext(), "Debe seleccionar un maximo de 3 opciones en la pregunta 4.1", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            //if (selectedRadioGroupP4_1.getText().toString().equals("No")) {}
             //4.2 se activa cuando la respuesta de la pregunta 4 es No
+            int contadorPreg4_2 = 0;
             if (chkAtencionRecibidaMala) {
+                contadorPreg4_2 = contadorPreg4_2 + 1;
                 encuestaSatisfaccionUsuario.setAtencionPersonalMala("1");
             }
             if (chkNoDanRespuestaNecesidades) {
+                contadorPreg4_2 = contadorPreg4_2 + 1;
                 encuestaSatisfaccionUsuario.setNoDanRespNecesidades("1");
             }
             if (chkTiempoEsperaLargo) {
+                contadorPreg4_2 = contadorPreg4_2 + 1;
                 encuestaSatisfaccionUsuario.setTiempoEsperaLargo("1");
             }
             if (chkMejorAtencionOtroCentro) {
+                contadorPreg4_2 = contadorPreg4_2 + 1;
                 encuestaSatisfaccionUsuario.setMejorAtencionOtraUnidadSalud("1");
             }
             if (chkDemasiadasMx) {
+                contadorPreg4_2 = contadorPreg4_2 + 1;
                 encuestaSatisfaccionUsuario.setSolicitaDemasiadaMx("1");
             }
             if (chkMuchosRequisitos) {
+                contadorPreg4_2 = contadorPreg4_2 + 1;
                 encuestaSatisfaccionUsuario.setMuchosRequisitos("1");
             }
             if (chkNoExplicanHacenMx) {
+                contadorPreg4_2 = contadorPreg4_2 + 1;
                 encuestaSatisfaccionUsuario.setNoExplicanHacenMx("1");
             }
             if (chkNoConfianzaEstudios) {
+                contadorPreg4_2 = contadorPreg4_2 + 1;
                 encuestaSatisfaccionUsuario.setNoConfianza("1");
             }
             if (chkOtrasRazonesNoRecomendaria) {
+                contadorPreg4_2 = contadorPreg4_2 + 1;
                 EditText edtxOtrasRazonesNoRecomendaria = (EditText) this.findViewById(R.id.edtxOtrasRazonesNoRecomendaria);
                 encuestaSatisfaccionUsuario.setOtraP_4_2(edtxOtrasRazonesNoRecomendaria.getText().toString());
+            }
+
+            if (contadorPreg4_2 > 3) {
+                Toast.makeText(getApplicationContext(), "Debe seleccionar un maximo de 3 opciones en la pregunta 4.2", Toast.LENGTH_LONG).show();
+                return;
             }
 
             //PARTE 5
@@ -2518,24 +2652,35 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     && !chkExplicaronRapido
                     && !chkNoDejaronHacerPreguntas
                     && !chkOtroMotivosNoComprendioProcedimiento) {
-                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 5.1", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar al menos una opción en la pregunta 5.1", Toast.LENGTH_LONG).show();
                 return;
             }
+            int contadorPreg5_1 = 0;
             if (chkNoEstuveComodoRealizarPreg) {
+                contadorPreg5_1 = contadorPreg5_1 + 1;
                 encuestaSatisfaccionUsuario.setNoComodoRealizarPreg("1");
             }
             if (chkNoRespondieronPreguntas) {
+                contadorPreg5_1 = contadorPreg5_1 + 1;
                 encuestaSatisfaccionUsuario.setNoRespondieronPreg("1");
             }
             if (chkExplicaronRapido) {
+                contadorPreg5_1 = contadorPreg5_1 + 1;
                 encuestaSatisfaccionUsuario.setExplicacionRapida("1");
             }
             if (chkNoDejaronHacerPreguntas) {
+                contadorPreg5_1 = contadorPreg5_1 + 1;
                 encuestaSatisfaccionUsuario.setNoDejaronHacerPreg("1");
             }
             if (chkOtroMotivosNoComprendioProcedimiento) {
+                contadorPreg5_1 = contadorPreg5_1 + 1;
                 EditText edtxOtroMotivosNoComprendioProcedimiento = (EditText) this.findViewById(R.id.edtxOtroMotivosNoComprendioProcedimiento);
                 encuestaSatisfaccionUsuario.setOtraP_5_1(edtxOtroMotivosNoComprendioProcedimiento.getText().toString());
+            }
+
+            if (contadorPreg5_1 > 3) {
+                Toast.makeText(getApplicationContext(), "Debe seleccionar un maximo de 3 opciones en la pregunta 5.1", Toast.LENGTH_LONG).show();
+                return;
             }
 
             //PARTE 6
@@ -2562,18 +2707,29 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                 Toast.makeText(getApplicationContext(), "Debe seleccionar al menos una opción en la pregunta 7", Toast.LENGTH_LONG).show();
                 return;
             }
+
+            int contadorPreg7 = 0;
             
             if (chkEntiendoProcedimientos) {
+                contadorPreg7 = contadorPreg7 + 1;
                 encuestaSatisfaccionUsuario.setEntiendoProcedimientosEstudios("1");
             }
             if (chkSatisfecho) {
+                contadorPreg7 = contadorPreg7 + 1;
                 encuestaSatisfaccionUsuario.setSatisfecho("1");
             }
             if (chkComodoInformacion) {
+                contadorPreg7 = contadorPreg7 + 1;
                 encuestaSatisfaccionUsuario.setComodoInfoRecolectada("1");
             }
             if (chkNoComodoPreguntas) {
+                contadorPreg7 = contadorPreg7 + 1;
                 encuestaSatisfaccionUsuario.setNoComodoPreguntas("1");
+            }
+
+            if (contadorPreg7 > 3) {
+                Toast.makeText(getApplicationContext(), "Debe seleccionar un maximo de 3 opciones en la pregunta 7", Toast.LENGTH_LONG).show();
+                return;
             }
 
             //Pregunta 8

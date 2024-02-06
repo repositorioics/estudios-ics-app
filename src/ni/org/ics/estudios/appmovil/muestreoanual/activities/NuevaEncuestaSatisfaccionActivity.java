@@ -65,9 +65,20 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         TextView txtvPregunta2 = (TextView)findViewById(R.id.txtvPregunta2);
         TextView txtvComodoHaciendoPreguntas = (TextView)findViewById(R.id.txtvComodoHaciendoPreguntas);
 
+        TextView txtvDificultadPresentado = (TextView)findViewById(R.id.txtvDificultadPresentado); //3.1
+        TextView txtvRecomendaria = (TextView)findViewById(R.id.txtvRecomendaria); //4.1
+        TextView txtvNoRecomendaria = (TextView)findViewById(R.id.txtvNoRecomendaria); //4.2
+        TextView txtvMotivoNoQuedoClaro = (TextView)findViewById(R.id.txtvMotivoNoQuedoClaro); //5.1
+
+
         txtvPregunta1.setText(stringBuilder("1. ¿Qué le motivó a Ud. ingresar a su hijo/a en el proyecto ? ", "Puede seleccionar más de una respuesta, e indique su nivel de conformidad a cada opción."), TextView.BufferType.SPANNABLE);
         txtvPregunta2.setText(stringBuilder("2. ¿Por qué ha decidido mantener a su hijo/a durante todo este tiempo en el proyecto? ", "Puede seleccionar más de una respuesta, e indique su acuerdo a cada frase en la escala."), TextView.BufferType.SPANNABLE);
-        txtvComodoHaciendoPreguntas.setText(stringBuilder("7. ¿Se siente cómodo/a haciendo preguntas acerca de los procedimientos del proyecto? ", "Puede seleccionar más de una respuesta."), TextView.BufferType.SPANNABLE);
+        txtvComodoHaciendoPreguntas.setText(stringBuilder("7. ¿Se siente cómodo/a haciendo preguntas acerca de los procedimientos del proyecto? ", "Puede seleccionar un máximo de 3 respuestas."), TextView.BufferType.SPANNABLE);
+
+        txtvDificultadPresentado.setText(stringBuilder("3.1 ¿Cuál de estas dificultades ha presentado? ", "Puede seleccionar un máximo de 3 respuestas."), TextView.BufferType.SPANNABLE);
+        txtvRecomendaria.setText(stringBuilder("4.1. ¿Por qué lo recomendaría? ", "Puede seleccionar un máximo de 3 respuestas."), TextView.BufferType.SPANNABLE);
+        txtvNoRecomendaria.setText(stringBuilder("4.2 ¿Porque no lo recomendaría? ", "Puede seleccionar un máximo de 3 respuestas."), TextView.BufferType.SPANNABLE);
+        txtvMotivoNoQuedoClaro.setText(stringBuilder("5.1 ¿Cuál considera que fue el motivo por el cual no quedó claro o no comprendió los procedimientos? ", "Puede seleccionar un máximo de 3 respuestas."), TextView.BufferType.SPANNABLE);
 
         this.CONTEXT = this;
         inicializarContorles();

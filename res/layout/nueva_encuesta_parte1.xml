@@ -12,6 +12,17 @@
             android:textAppearance="@style/TextViewEstiloSeguimiento"
             android:textStyle="bold" />
 
+    <TextView
+            android:id="@+id/txtvIndiqueValor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/txtvPregunta1"
+            android:text="Indique el valor por cada acápite"
+            android:textAppearance="@style/TextViewEstiloSeguimiento"
+            android:textStyle="bold" />
+
     <CheckBox
             android:id="@+id/chkAtenMedica"
             style="@style/customCheckboxStyle"
@@ -19,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtvPregunta1"
             android:layout_marginLeft="7dp"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="45dp" />
 
     <TextView
             android:id="@+id/txtvUsoAtenMedica"
@@ -27,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtvPregunta1"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:layout_toRightOf="@+id/chkAtenMedica"
             android:text="1.1 Por la atención médica"
             android:textAppearance="@style/TextViewEstiloSeguimiento" />

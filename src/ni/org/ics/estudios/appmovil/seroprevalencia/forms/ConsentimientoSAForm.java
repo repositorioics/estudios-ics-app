@@ -85,10 +85,16 @@ public class ConsentimientoSAForm extends AbstractWizardModel {
         Page verifTutor = new MultipleFixedChoicePage(this,labels.getVerifTutor(), "", Constants.WIZARD, false).setChoices(catVerificaTutor).setRequired(true);
         Page finTamizajeLabel = new LabelPage(this,labels.getFinTamizajeLabel(),"", Constants.WIZARD, true).setRequired(false);
 
-		return new PageList(visExit, visNoExit, otraRazonVisitaNoExitosa, personaCasa, relacionFamPersonaCasa, otraRelacionPersonaCasa, telefonoPersonaCasa,
+		/*return new PageList(visExit, visNoExit, otraRazonVisitaNoExitosa, personaCasa, relacionFamPersonaCasa, otraRelacionPersonaCasa, telefonoPersonaCasa,
                 aceptaTamizajePersona, razonNoParticipaPersona, otraRazonNoParticipaPersona,
                 asentimientoVerbal, aceptaSeroprevalencia, razonNoAceptaSeroprevalencia, otraRazonNoAceptaSeroprevalencia,
                 tutor, mismoTutorSN, nombre1Tutor, nombre2Tutor, apellido1Tutor, apellido2Tutor, relacionFamiliarTutor, motivoDifTutor, otroMotivoDifTutor,
+                participanteOTutorAlfabeto, testigoPresente, nombre1Testigo, nombre2Testigo, apellido1Testigo, apellido2Testigo,
+                verifTutor, finTamizajeLabel);*/
+
+        return new PageList(visExit, visNoExit, otraRazonVisitaNoExitosa, personaCasa, relacionFamPersonaCasa, otraRelacionPersonaCasa, telefonoPersonaCasa,
+                aceptaTamizajePersona, razonNoParticipaPersona, otraRazonNoParticipaPersona,
+                asentimientoVerbal, tutor, mismoTutorSN, nombre1Tutor, nombre2Tutor, apellido1Tutor, apellido2Tutor, relacionFamiliarTutor, motivoDifTutor, otroMotivoDifTutor,
                 participanteOTutorAlfabeto, testigoPresente, nombre1Testigo, nombre2Testigo, apellido1Testigo, apellido2Testigo,
                 verifTutor, finTamizajeLabel);
     }

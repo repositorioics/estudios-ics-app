@@ -14,4 +14,10 @@
     <string name="error_codigo">Código inválido</string>
     <string name="error_lugar">Seleccione lugar donde se tomó la muestra</string>
     <string name="error_codigoMx">Lectura Inválida!!!!</string>
+
+    <string name="header_pbmc">Recepción PBMC</string>
+    <string name="rojoAdicional">¿Rojo Adicional?</string>
+    <string name="error_volumen_pbmc">Volumen de pbmc inválido</string>
+    <string name="error_volumen_rojo_adicional">Volumen rojo adicional inválido</string>
+    <string name="volRojoAdicional">Debe ingresar el volumen del rojo adicional</string>
 </resources>

@@ -52,39 +52,46 @@ public class MenuSupervisorActivity extends ListActivity  {
 			long id) {
 		// Opcion de menu seleccionada
 		Intent i;
-		switch(position){
-		case 0: 
-			i = new Intent(getApplicationContext(),
-					RecepcionBhcActivity.class);
-			startActivity(i);
-			break;
-		case 1: 
-			i = new Intent(getApplicationContext(),
-					RecepcionSeroActivity.class);
-			startActivity(i);
-			break;
-		case 2: 
-			i = new Intent(getApplicationContext(),
-					TempPbmcActivity.class);
-			startActivity(i);
-			break;
+		switch(position) {
+			case 0:
+				i = new Intent(getApplicationContext(),
+						RecepcionBhcActivity.class);
+				startActivity(i);
+				break;
+			case 1:
+				i = new Intent(getApplicationContext(),
+						RecepcionSeroActivity.class);
+				startActivity(i);
+				break;
+
+			case 2:
+				i = new Intent(getApplicationContext(),
+						RecepcionPbmcActivity.class);
+				startActivity(i);
+				break;
+
+			case 3:
+				i = new Intent(getApplicationContext(),
+						TempPbmcActivity.class);
+				startActivity(i);
+				break;
+
+			case 4:
+				i = new Intent(getApplicationContext(),
+						TempRojoActivity.class);
+				startActivity(i);
+				break;
+
+			case 5:
+				i = new Intent(getApplicationContext(),
+						PinchazoActivity.class);
+				startActivity(i);
+				break;
 			
-		case 3: 
-			i = new Intent(getApplicationContext(),
-					TempRojoActivity.class);
-			startActivity(i);
-			break;
-			
-		case 4: 
-			i = new Intent(getApplicationContext(),
-					PinchazoActivity.class);
-			startActivity(i);
-			break;
-			
-		default: 
-			String s = (String) getListAdapter().getItem(position);
-			Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-		}
+			default:
+				String s = (String) getListAdapter().getItem(position);
+				Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+			}
 	}
     
     @Override

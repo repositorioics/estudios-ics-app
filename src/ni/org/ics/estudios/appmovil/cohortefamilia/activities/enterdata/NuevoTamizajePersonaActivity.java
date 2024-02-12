@@ -1063,7 +1063,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         String aceptaContactoFuturo = datos.getString(this.getString(R.string.aceptaContactoFuturo));
                         String aceptaParteB = datos.getString(this.getString(R.string.aceptaParteB));
                         String aceptaParteC = datos.getString(this.getString(R.string.aceptaParteC));
-                        String aceptaSeroprevalencia = datos.getString(this.getString(R.string.aceptaSeroprevalencia));
+                        //String aceptaSeroprevalencia = datos.getString(this.getString(R.string.aceptaSeroprevalencia));
                         String aceptaCohorteDengue = datos.getString(this.getString(R.string.aceptaCohorteDengue));
                         String aceptaParteD = datos.getString(this.getString(R.string.aceptaParteD));
                         String aceptaCohorteInfluenza = datos.getString(this.getString(R.string.aceptaCohorteInfluenza));
@@ -1192,7 +1192,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         estudiosAdapter.crearParticipanteCohorteFamilia(pchf);
 
                         //Si acepta participar estudio seroprevalencia guardar participanteSeroprevalencia y carta de consentimiento para estudio Seroprevalencia
-                        if (tieneValor(aceptaSeroprevalencia)) {
+                        /*if (tieneValor(aceptaSeroprevalencia)) {
                             //Si acepta o no participar, siempre registrar tamizaje
                             MessageResource catAceptaTamizajePersona = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaSeroprevalencia + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
                             if (catAceptaTamizajePersona != null)
@@ -1232,7 +1232,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                                 //Guarda el participante de chf
                                 estudiosAdapter.crearParticipanteSeroprevalencia(pSA);
                             }
-                        }
+                        }*/
                         //Si acepta participar estudio cohorte dengue guardar tamizaje y carta de consentimiento para estudio cohorte dengue
                         if (tieneValor(aceptaCohorteDengue)) {
                             //Si acepta o no participar, siempre registrar tamizaje

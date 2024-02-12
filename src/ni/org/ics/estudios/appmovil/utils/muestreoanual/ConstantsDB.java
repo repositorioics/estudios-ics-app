@@ -52,6 +52,8 @@ public class ConstantsDB {
     public static final String DOCS_TABLE = "documentacion";
     public static final String PERIMETRO_ABDOMINAL_TABLE = "perimetroabdominal";
 
+    public static final String RECEPCION_PBMC_TABLE = "recepcionpbmc";
+
     //Campos roles
     //public static final String AUTH = "rol";
 
@@ -962,6 +964,14 @@ public class ConstantsDB {
     //Campo encuesta satisfaccion usuario en la tabla participantes procesos
     public static final String ENCSATUSUARIO = "esatUsuario";
     public static final String ENCSATUSUARIOCC = "esatUsuarioCc";
+
+    //Campos recepcion serologia con rojo adicicional
+    public static final String FECHA_PBMC = "fechaPbmc";
+    public static final String VOLPBMC = "volPbmc";
+    public static final String ROJO_ADICIONAL = "rojoAdicional";
+    public static final String VOLROJO_ADICIONAL = "volRojoAdicional";
+    public static final String OBSPBMC = "obsPbmc";
+    public static final String FECHA_RECEPCION_PBMC = "fecha_recepcion";
 
 
     public static final String CREATE_USER_PERM_TABLE = "create table if not exists "
@@ -2016,4 +2026,20 @@ public class ConstantsDB {
             + REC2 + ", "
             +observacion
             + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    public static final String CREATE_RECEPCION_PBMC_TABLE = "create table if not exists "
+            + RECEPCION_PBMC_TABLE + " ("
+            + CODIGO + " integer not null, "
+            + FECHA_PBMC  + " text not null, "
+            + VOLPBMC  + " real, "
+            + ROJO_ADICIONAL  + " boolean, "
+            + VOLROJO_ADICIONAL  + " real, "
+            + LUGAR  + " text, "
+            + OBSPBMC  + " text, "
+            + USUARIO  + " text, "
+            + ESTUDIO  + " text, "
+            + STATUS + " text not null, "
+            + FECHA_RECEPCION_PBMC  + " text, "
+            + TODAY + " text,"
+            + "primary key (" + FECHA_PBMC + "," + CODIGO + "));";
 }

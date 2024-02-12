@@ -196,6 +196,9 @@ public class EstudiosAdapter {
 			/*Nueva encuesta satisfaccion usuario fecha creacion 08/03/2023 Ing. Santiago Carballo*/
 			db.execSQL(MainDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_CC_TABLE);
 
+			/*Recepcion pbmc con rojo adicional fecha creacion 07/02/2023 Ing. Santiago Carballo*/
+			db.execSQL(ConstantsDB.CREATE_RECEPCION_PBMC_TABLE);
+
 		}
 
 		@Override
@@ -470,6 +473,10 @@ public class EstudiosAdapter {
 
 			if (oldVersion==49) {
 				db.execSQL("ALTER TABLE " + EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_TABLE + " ADD COLUMN " + EntomologiaBConstants.anio + " text");
+			}
+
+			if (oldVersion==50) {
+				db.execSQL(ConstantsDB.CREATE_RECEPCION_PBMC_TABLE);
 			}
 		}
 	}
@@ -9631,5 +9638,118 @@ public class EstudiosAdapter {
 			}
 		}
 		return true;
+	}
+
+	/**METODOS PARA RECEPCION PMC**/
+
+	/**
+	 * Inserta un registro de pbmc en la base de datos
+	 *
+	 * @param recepcionPbmc
+	 *            Objeto RecepcionPbmc que contiene la informacion
+	 *
+	 */
+	public void crearRecepcionPbmc(RecepcionPbmc recepcionPbmc) {
+		ContentValues cv = new ContentValues();
+		cv.put(ConstantsDB.CODIGO, recepcionPbmc.getCodigo());
+		cv.put(ConstantsDB.FECHA_PBMC, recepcionPbmc.getFechaPbmc());
+		cv.put(ConstantsDB.VOLPBMC, recepcionPbmc.getVolPbmc());
+		cv.put(ConstantsDB.ROJO_ADICIONAL, recepcionPbmc.getRojoAdicional());
+		cv.put(ConstantsDB.VOLROJO_ADICIONAL, recepcionPbmc.getVolRojoAdicional());
+		cv.put(ConstantsDB.LUGAR, recepcionPbmc.getLugar());
+		cv.put(ConstantsDB.OBSPBMC, recepcionPbmc.getObservacion());
+		cv.put(ConstantsDB.USUARIO, recepcionPbmc.getUsername());
+		cv.put(ConstantsDB.ESTUDIO, recepcionPbmc.getEstudio());
+		cv.put(ConstantsDB.STATUS, recepcionPbmc.getEstado());
+		cv.put(ConstantsDB.FECHA_RECEPCION_PBMC, recepcionPbmc.getFechaCreacion().toString());
+		cv.put(ConstantsDB.TODAY, recepcionPbmc.getFechaRegistro() != null ? String.valueOf(recepcionPbmc.getFechaRegistro()) : null);
+		mDb.insertOrThrow(ConstantsDB.RECEPCION_PBMC_TABLE, null, cv);
+	}
+
+	/**
+	 * Borra todas las RecepcionPbmc de la base de datos
+	 *
+	 * @return verdadero o falso
+	 */
+	public boolean borrarRecepcionPbmc() {
+		return mDb.delete(ConstantsDB.RECEPCION_PBMC_TABLE, null, null) > 0;
+	}
+
+	/**
+	 * Busca una RecepcionPbmc de la base de datos
+	 *
+	 * @return RecepcionPbmc
+	 */
+	public RecepcionPbmc buscarRecepcionPbmc(Integer codigo, String fechaPbmc) throws SQLException {
+		RecepcionPbmc recepcionPbmc = null;
+		String params = " WHERE codigo = " + codigo + " and fechaPbmc " + "= '" + fechaPbmc+ "'" ;
+		String query = "SELECT * from recepcionpbmc " + params;
+		Cursor cursor = mDb.rawQuery(query, new String[]{});
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			recepcionPbmc= RecepcionPbmcHelper.crearRecepcionPbmc(cursor);
+		}
+		if (!cursor.isClosed()) cursor.close();
+		return recepcionPbmc;
+	}
+
+	public ArrayList<RecepcionPbmc> allRecepcionPbmcDelDia(String fechaPbmc) throws SQLException {
+		ArrayList<RecepcionPbmc> mRecepcionPbmc = new ArrayList<RecepcionPbmc>();
+		String params = " WHERE fechaPbmc " + "= '" + fechaPbmc+ "'" ;
+		String query = "SELECT * from recepcionpbmc " + params;
+		Cursor cursor = mDb.rawQuery(query, new String[]{});
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mRecepcionPbmc.clear();
+			do{
+				mRecepcionPbmc.add(RecepcionPbmcHelper.crearRecepcionPbmc(cursor));
+			} while (cursor.moveToNext());
+		}
+		cursor.isClosed();
+		return mRecepcionPbmc;
+	}
+
+	/**
+	 * Obtiene Lista todas las Sero sin enviar
+	 *
+	 * @return lista con Sero
+	 */
+	public List<RecepcionPbmc> getListaRecepcionPbmcSinEnviar() throws SQLException {
+		Cursor cursor = null;
+		List<RecepcionPbmc> mRecepcionPbmc = new ArrayList<RecepcionPbmc>();
+		cursor = mDb.query(true, ConstantsDB.RECEPCION_PBMC_TABLE, null,
+				ConstantsDB.STATUS + "= '" + Constants.STATUS_NOT_SUBMITTED+ "'", null, null, null, null, null);
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			mRecepcionPbmc.clear();
+			do{
+				mRecepcionPbmc.add(RecepcionPbmcHelper.crearRecepcionPbmc(cursor));
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		return mRecepcionPbmc;
+	}
+
+	public boolean updatePbmcSent(RecepcionPbmc tuboPbmc) {
+		ContentValues cv = new ContentValues();
+		cv.put(ConstantsDB.STATUS, tuboPbmc.getEstado());
+		return mDb.update(ConstantsDB.RECEPCION_PBMC_TABLE, cv,
+				ConstantsDB.CODIGO + "='" + tuboPbmc.getCodigo() + "' " +
+						" AND " + ConstantsDB.FECHA_PBMC + "='" + tuboPbmc.getFechaPbmc() + "' ", null) > 0;
+	}
+
+	/**
+	 * Lista todas las RecepcionPbmc de la base de datos
+	 *
+	 * @return dataset con RecepcionPbmc
+	 */
+	public Cursor obtenerRecepcionPbmc(Date today) throws SQLException {
+		Cursor c = null;
+		c = mDb.query(true, ConstantsDB.RECEPCION_PBMC_TABLE, null,
+				ConstantsDB.FECHA_PBMC + "=" + today.getTime(), null, null, null, ConstantsDB.TODAY + " Desc", null);
+		if (c != null) {
+			c.moveToFirst();
+		}
+		return c;
 	}
 }

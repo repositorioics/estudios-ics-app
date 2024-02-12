@@ -142,4 +142,5 @@
     <string name="tuboCitratoHint">Tubo Amarillo</string>
     <string name="codigoMxCitrato">Escanee código de muestra Citrato</string>
 
+    <string name="volumen_rojo_adicional">Volumen Rojo Adicional</string>
 </resources>

@@ -54,6 +54,9 @@ public class DownloadAllTask extends DownloadTask {
     //Permietro Abdominal
     private List<PerimetroAbdominal> mPabdominal = null;
 
+    //Recepcion PBMC
+    private List<RecepcionPbmc> mRecepcionPbmc = null;
+
     private EstudiosAdapter ca = null;
 
     private static final String NO_PERMISSION="No tiene acceso a esta opción";
@@ -75,7 +78,7 @@ public class DownloadAllTask extends DownloadTask {
             ca.borrarVisitasTerrenoParticipante();
             ca.borrarPerimetroAbdominal();
             ca.borrarEncuestaSatisfaccionUsuario();
-
+            ca.borrarRecepcionPbmc();
             try {
                 error = checkRole();
                 if (error != null) {
@@ -711,6 +714,33 @@ public class DownloadAllTask extends DownloadTask {
                     // close db and stream
                     //ca.close();
                 }
+                /*---------------------------------------------------*/
+                try {
+                    error = descargarRecepcionPbmcs();
+                    if (error != null) {
+                        return error;
+                    }
+                } catch (Exception e) {
+                    // Regresa error al descargar
+                    e.printStackTrace();
+                    return e.getLocalizedMessage();
+                }
+
+                if (mRecepcionPbmc != null) {
+                    // open db and clean entries
+                    //ca.open();
+                    ca.borrarRecepcionPbmc();
+                    // download and insert
+                    try {
+                        addRecepcionPbmc(mRecepcionPbmc);
+                    } catch (Exception e) {
+                        // Regresa error al insertar
+                        e.printStackTrace();
+                        return e.getLocalizedMessage();
+                    }
+                    // close db and stream
+                    //ca.close();
+                }
             } else {
                 //ca.open();
                 ca.borrarTodasEncCasas();
@@ -1329,6 +1359,19 @@ public class DownloadAllTask extends DownloadTask {
 
     }
 
+    private void addRecepcionPbmc(List<RecepcionPbmc> recepcionPbmcs) throws Exception {
+
+        int v = recepcionPbmcs.size();
+
+        ListIterator<RecepcionPbmc> iter = recepcionPbmcs.listIterator();
+
+        while (iter.hasNext()){
+            ca.crearRecepcionPbmc(iter.next());
+            publishProgress("Recepcion PBMC", Integer.valueOf(iter.nextIndex()).toString(), Integer
+                    .valueOf(v).toString());
+        }
+    }
+
     // url, username, password
     protected String descargarEncCasas() throws Exception {
         try {
@@ -1929,6 +1972,41 @@ public class DownloadAllTask extends DownloadTask {
 
             // convert the array to a list and return it
             mPabdominal = Arrays.asList(responseEntity.getBody());
+            return null;
+
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getLocalizedMessage();
+        }
+    }
+
+    // url, username, password
+    protected String descargarRecepcionPbmcs() throws Exception {
+        try {
+            // The URL for making the GET request
+            final String urlRequest = url + "/movil/pbmcs";
+
+            // Set the Accept header for "application/json"
+            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+            HttpHeaders requestHeaders = new HttpHeaders();
+            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+            requestHeaders.setAccept(acceptableMediaTypes);
+            requestHeaders.setAuthorization(authHeader);
+
+            // Populate the headers in an HttpEntity object to use for the request
+            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+
+            // Perform the HTTP GET request
+            ResponseEntity<RecepcionPbmc[]> responseEntity = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    RecepcionPbmc[].class);
+
+            // convert the array to a list and return it
+            mRecepcionPbmc = Arrays.asList(responseEntity.getBody());
             return null;
 
         } catch (Exception e) {

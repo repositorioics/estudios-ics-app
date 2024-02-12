@@ -74,6 +74,8 @@ public class UploadAllTask extends UploadTask {
 
     private List<EncuestaSatisfaccionUsuario> mEncSatUsuarioCc = new ArrayList<EncuestaSatisfaccionUsuario>();
 
+    private List<RecepcionPbmc> mRecepcionPbmc = new ArrayList<RecepcionPbmc>();
+
     private String url = null;
     private String username = null;
     private String password = null;
@@ -468,6 +470,16 @@ public class UploadAllTask extends UploadTask {
                 e1.printStackTrace();
                 return e1.getLocalizedMessage();
             }
+            //Recepcion PBMC
+            try {
+                error = cargarRecepcionPbmcs(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    return error;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return e1.getLocalizedMessage();
+            }
             if (noHayDatosEnviar()) {
                 error = Constants.NO_DATA;
             }
@@ -516,7 +528,8 @@ public class UploadAllTask extends UploadTask {
                 //Perimetro Abdominal
                 mPabdominal.size() <= 0 &&
                 mEncSatUsuario.size() <= 0 &&
-                mEncSatUsuarioCc.size() <= 0;
+                mEncSatUsuarioCc.size() <= 0 &&
+                mRecepcionPbmc.size() <= 0;
     }
 
     private void getTamizajes(){
@@ -2499,5 +2512,62 @@ public class UploadAllTask extends UploadTask {
 
     private void getEncuestaSatisfaccionUsuarioPendientesCC(){
         mEncSatUsuarioCc = estudioAdapter.getListaEncSatisfaccionUsuarioSinEnviarCC();
+    }
+
+    /**cargar RecepcionPbmc**/
+    // url, username, password
+    protected String cargarRecepcionPbmcs(String url, String username,
+                                          String password) throws Exception {
+        try {
+            getRecepcionPbmcs();
+            if(mRecepcionPbmc.size()>0){
+                saveRecepcionPbmcs(Constants.STATUS_SUBMITTED);
+                // La URL de la solicitud POST
+                final String urlRequest = url + "/movil/pbmcs";
+                RecepcionPbmc[] envio = mRecepcionPbmc.toArray(new RecepcionPbmc[mRecepcionPbmc.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<RecepcionPbmc[]> requestEntity =
+                        new HttpEntity<RecepcionPbmc[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    saveRecepcionPbmcs(Constants.STATUS_NOT_SUBMITTED);
+                }
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            saveRecepcionPbmcs(Constants.STATUS_NOT_SUBMITTED);
+            return e.getMessage();
+        }
+    }
+
+    private void saveRecepcionPbmcs(String estado) {
+        int c = mRecepcionPbmc.size();
+        for (RecepcionPbmc pbmc : mRecepcionPbmc) {
+            pbmc.setEstado(estado);
+            estudioAdapter.updatePbmcSent(pbmc);
+            publishProgress("Actualizando RecepcionPbmc", Integer.valueOf(mRecepcionPbmc.indexOf(pbmc)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+        //actualizar.close();
+    }
+
+    private void getRecepcionPbmcs(){
+        //CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
+        //ca.open();
+        mRecepcionPbmc = estudioAdapter.getListaRecepcionPbmcSinEnviar();
+        //ca.close();
     }
 }

@@ -619,7 +619,7 @@ public class NuevoConsentimientoSAActivity extends FragmentActivity implements
             String otraRazonNoAceptaTamizajePersona = datos.getString(this.getString(R.string.otraRazonNoParticipaPersona));
             String asentimientoVerbal = datos.getString(this.getString(R.string.asentimientoVerbal));
 
-            String aceptaSeroprevalencia = datos.getString(this.getString(R.string.aceptaSeroprevalencia));
+            //String aceptaSeroprevalencia = datos.getString(this.getString(R.string.aceptaSeroprevalencia));
             String razonNoAceptaSeroprevalencia = datos.getString(this.getString(R.string.razonNoAceptaSeroprevalencia));
             String otraRazonNoAceptaSeroprevalencia = datos.getString(this.getString(R.string.otraRazonNoAceptaSeroprevalencia));
             String verifTutor = datos.getString(this.getString(R.string.verifTutor));//agregar en carta
@@ -688,8 +688,8 @@ public class NuevoConsentimientoSAActivity extends FragmentActivity implements
                 tamizaje.setCodigo(infoMovil.getId());
                 tamizaje.setEstudio(estudioSA);
                 //Si acepta o no participar, siempre registrar tamizaje
-                MessageResource catAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaSeroprevalencia + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
-                if (catAceptaParticipar != null) tamizaje.setAceptaParticipar(catAceptaParticipar.getCatKey());
+                /*MessageResource catAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaSeroprevalencia + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                if (catAceptaParticipar != null) tamizaje.setAceptaParticipar(catAceptaParticipar.getCatKey());*/
                 if (tieneValor(razonNoAceptaSeroprevalencia)) {
                     MessageResource catRazonNoAceptaParticipar = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + razonNoAceptaSeroprevalencia + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_NPP'", null);
                     if (catRazonNoAceptaParticipar != null)
@@ -800,7 +800,7 @@ public class NuevoConsentimientoSAActivity extends FragmentActivity implements
                     estudiosAdapter.crearCartaConsentimiento(cc);
                     ParticipanteProcesos procesos = participante.getProcesos();
                     if (esElegible) {
-                        ParticipanteSeroprevalencia pSA = new ParticipanteSeroprevalencia();
+                        /*ParticipanteSeroprevalencia pSA = new ParticipanteSeroprevalencia();
                         pSA.setParticipante(participante);
 
                         pSA.setCasaCHF(participanteChf.getCasaCHF());
@@ -810,7 +810,7 @@ public class NuevoConsentimientoSAActivity extends FragmentActivity implements
                         pSA.setEstado('0');
                         pSA.setPasive('0');
                         //Guarda el participante de chf
-                        estudiosAdapter.crearParticipanteSeroprevalencia(pSA);
+                        estudiosAdapter.crearParticipanteSeroprevalencia(pSA);*/
 
                         int ceroDefaul = 0;
                         procesos.setEnCasaSa(Constants.NO);

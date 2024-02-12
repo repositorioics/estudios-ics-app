@@ -132,12 +132,19 @@ public class TamizajeForm extends AbstractWizardModel {
         Page finTamizajeLabel = new LabelPage(this,labels.getFinTamizajeLabel(),"", Constants.WIZARD, false).setRequired(false);
 		
 		
-		return new PageList(sexo,fechaNacimiento,aceptaTamizajePersona,razonNoParticipaPersona,otraRazonNoParticipaPersona,
+		/*return new PageList(sexo,fechaNacimiento,aceptaTamizajePersona,razonNoParticipaPersona,otraRazonNoParticipaPersona,
 				criteriosInclusion,enfermedad,dondeAsisteProblemasSalud,otroCentroSalud,puestoSalud,aceptaAtenderCentro,esElegible,aceptaParticipar,razonNoAceptaParticipar,otraRazonNoAceptaParticipar,asentimientoVerbal,
 				participadoCohortePediatrica,codigoCohorte,codigoNuevoParticipante,nombre1,nombre2,apellido1,apellido2,nombre1Padre,nombre2Padre,apellido1Padre,apellido2Padre,nombre1Madre,nombre2Madre,apellido1Madre,apellido2Madre,
 				emancipado,nombre1Tutor,nombre2Tutor,apellido1Tutor,apellido2Tutor,relacionFamiliarTutor,participanteOTutorAlfabeto,testigoPresente,nombre1Testigo,nombre2Testigo,apellido1Testigo,apellido2Testigo,
 				aceptaParteA,motivoRechazoParteA,aceptaContactoFuturo,aceptaParteB,aceptaParteC,aceptaSeroprevalencia, razonNoAceptaSeroprevalencia, otraRazonNoAceptaSeroprevalencia,aceptaCohorteDengue,
-                aceptaParteD, razonNoAceptaDengue, otraRazonNoAceptaDengue,aceptaCohorteInfluenza, razonNoAceptaInfluenza, otraRazonNoAceptaInfluenza, verifTutor, finTamizajeLabel);
+                aceptaParteD, razonNoAceptaDengue, otraRazonNoAceptaDengue,aceptaCohorteInfluenza, razonNoAceptaInfluenza, otraRazonNoAceptaInfluenza, verifTutor, finTamizajeLabel);*/
+
+		return new PageList(sexo,fechaNacimiento,aceptaTamizajePersona,razonNoParticipaPersona,otraRazonNoParticipaPersona,
+				criteriosInclusion,enfermedad,dondeAsisteProblemasSalud,otroCentroSalud,puestoSalud,aceptaAtenderCentro,esElegible,aceptaParticipar,razonNoAceptaParticipar,otraRazonNoAceptaParticipar,asentimientoVerbal,
+				participadoCohortePediatrica,codigoCohorte,codigoNuevoParticipante,nombre1,nombre2,apellido1,apellido2,nombre1Padre,nombre2Padre,apellido1Padre,apellido2Padre,nombre1Madre,nombre2Madre,apellido1Madre,apellido2Madre,
+				emancipado,nombre1Tutor,nombre2Tutor,apellido1Tutor,apellido2Tutor,relacionFamiliarTutor,participanteOTutorAlfabeto,testigoPresente,nombre1Testigo,nombre2Testigo,apellido1Testigo,apellido2Testigo,
+				aceptaParteA,motivoRechazoParteA,aceptaContactoFuturo,aceptaParteB,aceptaParteC,aceptaCohorteDengue,
+				aceptaParteD, razonNoAceptaDengue, otraRazonNoAceptaDengue,aceptaCohorteInfluenza, razonNoAceptaInfluenza, otraRazonNoAceptaInfluenza, verifTutor, finTamizajeLabel);
     }
 
 	public TamizajeFormLabels getLabels() {

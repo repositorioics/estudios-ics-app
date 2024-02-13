@@ -9752,4 +9752,17 @@ public class EstudiosAdapter {
 		}
 		return c;
 	}
+
+	public String estudioParticipanteProcesosByCodigo(Integer codigo) throws SQLException {
+		String result = "";
+		String params = " WHERE codigo " + "= '" + codigo+ "'" ;
+		String query = "SELECT * from participantes_procesos " + params;
+		Cursor cursor = mDb.rawQuery(query, new String[]{});
+		if (cursor != null && cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			result = cursor.getString(cursor.getColumnIndex(ConstantsDB.ESTUDIO));
+		}
+		cursor.isClosed();
+		return result;
+	}
 }

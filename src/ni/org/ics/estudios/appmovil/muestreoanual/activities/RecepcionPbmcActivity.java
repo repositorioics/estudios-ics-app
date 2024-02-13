@@ -15,6 +15,7 @@ import android.widget.*;
 import ni.org.ics.estudios.appmovil.AbstractAsyncActivity;
 import ni.org.ics.estudios.appmovil.MyIcsApplication;
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.catalogs.Estudio;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
@@ -313,8 +314,7 @@ public class RecepcionPbmcActivity extends AbstractAsyncActivity  {
                 }
                 if(validarEntrada()) {
                     ca.open();
-                    ParticipanteProcesos participanteProcesos = new ParticipanteProcesos();
-                    participanteProcesos = ca.getParticipanteProcesos(codigo.toString(), null);
+                    String estudio = ca.estudioParticipanteProcesosByCodigo(codigo);
                     ca.close();
                     DateFormat targetFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
                     String date = null;
@@ -328,7 +328,12 @@ public class RecepcionPbmcActivity extends AbstractAsyncActivity  {
                     recepcionPbmc.setLugar(lugarText);
                     recepcionPbmc.setObservacion(observacion);
                     recepcionPbmc.setUsername(username);
-                    recepcionPbmc.setEstudio(participanteProcesos.getEstudio());
+                    if (!estudio.equals("")) {
+                        recepcionPbmc.setEstudio(estudio);
+                    } else {
+                        recepcionPbmc.setEstudio("");
+                    }
+
                     recepcionPbmc.setEstado(Constants.STATUS_NOT_SUBMITTED);
                     Date strDate = new Date();
                     recepcionPbmc.setFechaCreacion(strDate.toString());

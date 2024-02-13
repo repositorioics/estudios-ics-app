@@ -186,11 +186,11 @@ public class RecepcionPbmcActivity extends AbstractAsyncActivity  {
                             showToast("Ya ingresó este código!!!!",1);
                         }
                         ca.close();
-                    } else {
+                    } /*else {
                         editCodigo.setText(null);
                         codigo = null;
                         showToast("Código Inválido!!!!",1);
-                    }
+                    }*/
                 }
             }
         });

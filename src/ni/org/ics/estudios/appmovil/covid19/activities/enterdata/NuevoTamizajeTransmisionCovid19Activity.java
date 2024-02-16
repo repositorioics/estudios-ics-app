@@ -1166,6 +1166,13 @@ public class NuevoTamizajeTransmisionCovid19Activity extends FragmentActivity im
                                 cc.setAceptaParteB(catAcepta.getCatKey());
                             }
                         }
+                        //Se manda a guardar la parte A ** 13/02/2024
+                        if (tieneValor(aceptaParteA)) {
+                            MessageResource catAceptaParteA = estudiosAdapter.getMessageResource(CatalogosDBConstants.spanish + "='" + aceptaParteA + "' and " + CatalogosDBConstants.catRoot + "='CHF_CAT_SINO'", null);
+                            if (catAceptaParteA != null) {
+                                cc.setAceptaParteA(catAceptaParteA.getCatKey());
+                            }
+                        }
                         cc.setTamizaje(tamizaje);
                         cc.setVersion(Constants.VERSION_CC_TCOVID);
                         cc.setCodigo(infoMovil.getId());

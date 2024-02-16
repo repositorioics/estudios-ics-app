@@ -302,6 +302,10 @@ public class NuevaVisitaSeguimientoFragment extends Fragment {
             Toast.makeText(getActivity(), getActivity().getString(R.string.wrong_fecha_visita2),Toast.LENGTH_LONG).show();
             return false;
         }
+		else if (temp < 34 || temp > 44) { /* SE VALIDA LA TEMPERATURA PARA QUE NO SE GUARDEN VALORES FUERA DE RANGO 13/02/2024 */
+			Toast.makeText(getActivity(), getActivity().getString(R.string.wrongTemp,34,44),Toast.LENGTH_LONG).show();
+			return false;
+		}
         else{
             if (visita != null || !visita.isEmpty()){
                 try {

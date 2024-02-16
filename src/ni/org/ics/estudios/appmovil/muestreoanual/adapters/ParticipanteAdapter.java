@@ -477,18 +477,23 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
     //CH Familia
     private String getVolumenCHF(Participante mParticipante) {
         String labelHeader = "";
-        //Menores de 6 meses
+        //Menores de 6 meses CORRECION ---- 15/02/2024
         if (mParticipante.getEdadMeses() < 6) {
-            labelHeader = labelHeader + "<font color='red'>No tomar muestra<br /></font>";
+            if (mParticipante.getProcesos().getConmx().matches("No")) {
+                labelHeader = labelHeader + "<font color='red'>Tomar 2cc en tubo Rojo<br /></font>";
+            }
+            //labelHeader = labelHeader + "<font color='red'>No tomar muestra<br /></font>";
         } else //De 6 meses a <2 años
         if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
             if (mParticipante.getProcesos().getConmx().matches("No")) {
                 if (mParticipante.getProcesos().getPbmc().matches("Si")) {
-                    labelHeader = labelHeader + "<font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font>";
+                    //labelHeader = labelHeader + "<font color='#11BDF7'>Tomar 2cc en tubo PBMC<br /></font>"; 15/02/2024
+                    labelHeader = labelHeader + "<font color='#11BDF7'>Tomar 3cc en tubo PBMC<br /></font>";
                     labelHeader = labelHeader + "<font color='red'>Tomar 1cc en tubo Rojo<br /></font>";
                     labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                 } else {
-                    labelHeader = labelHeader + "<font color='red'>Tomar 2cc en tubo Rojo<br /></font>";
+                    //labelHeader = labelHeader + "<font color='red'>Tomar 2cc en tubo Rojo<br /></font>";
+                    labelHeader = labelHeader + "<font color='red'>Tomar 3cc en tubo Rojo<br /></font>"; //15/02/2024
                 }
             }
             if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {
@@ -553,7 +558,8 @@ public class ParticipanteAdapter extends ArrayAdapter<Participante> {
                         labelHeader = labelHeader + "<font color='red'>Tomar 1cc en tubo Rojo<br /></font>";
                         labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                     } else {
-                        labelHeader = labelHeader + "<font color='red'>Tomar 2cc en tubo Rojo<br /></font>";
+                        //labelHeader = labelHeader + "<font color='red'>Tomar 2cc en tubo Rojo<br /></font>";
+                        labelHeader = labelHeader + "<font color='red'>Tomar 3cc en tubo Rojo<br /></font>"; //15/02/2024
                     }
                 }
                 if (mParticipante.getProcesos().getConmxbhc().matches("No") && mParticipante.getProcesos().getPbmc().matches("No")) {

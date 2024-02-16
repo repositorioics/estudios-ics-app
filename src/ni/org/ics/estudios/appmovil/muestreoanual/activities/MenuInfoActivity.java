@@ -1996,8 +1996,11 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
         if (!ingresoChf) {
             //Menores de 6 meses
             if (mParticipante.getEdadMeses() < 6) {
-                labelHeader = labelHeader + "<strong><font color='red'>No tomar muestra<br /></font></strong>";
-                pendiente = false;
+                //labelHeader = labelHeader + "<strong><font color='red'>No tomar muestra<br /></font></strong>";
+                //pendiente = false;
+                if (mParticipante.getProcesos().getConmx().matches("No")) {
+                    labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
+                }
             } else //De 6 meses a <2 años
             if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24) {
                 if (mParticipante.getProcesos().getConmx().matches("No")) {
@@ -2006,7 +2009,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                         labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
                         labelHeader = labelHeader + "<strong><font color='#B941E0'>No tomar BHC<br /></font></strong>";
                     } else {
-                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
+                        //labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
+                        labelHeader = labelHeader + "<strong><font color='red'>Tomar 3cc en tubo Rojo<br /></font></strong>"; //15/02/2024
                     }
                     pendiente = true;
                 }
@@ -2084,7 +2088,8 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                             labelHeader = labelHeader + "<strong><font color='red'>Tomar 1cc en tubo Rojo<br /></font></strong>";
                             labelHeader = labelHeader + "<font color='#B941E0'>No tomar BHC<br /></font>";
                         } else {
-                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
+                            //labelHeader = labelHeader + "<strong><font color='red'>Tomar 2cc en tubo Rojo<br /></font></strong>";
+                            labelHeader = labelHeader + "<strong><font color='red'>Tomar 3cc en tubo Rojo<br /></font></strong>"; //15/02/2024
                         }
                         pendiente = true;
                     }

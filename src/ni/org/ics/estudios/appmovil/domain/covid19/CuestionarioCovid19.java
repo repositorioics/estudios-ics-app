@@ -35,6 +35,12 @@ public class CuestionarioCovid19 extends BaseMetaData {
     private String feb20Sarpullido;
     private String feb20Desmayo;
     private String feb20QuedoCama;*/
+// Nuevos cambios Cuestionario Covid19 V3 2024
+    private String dxEnfermoCovid19;
+    private String sabeFechaUltEnf;
+    private String mesUltEnf;
+    private String anioUltEnf;
+
     /*3.	[Si uno o mas de los síntomas en la sección] Que fecha exacta o aproximada empezaron estos síntomas*/
     private String e1SabeFIS;
     private Date e1Fis;
@@ -3402,6 +3408,38 @@ public class CuestionarioCovid19 extends BaseMetaData {
 
     public void setFechaEventoEnfermoPostVac(String fechaEventoEnfermoPostVac) {
         this.fechaEventoEnfermoPostVac = fechaEventoEnfermoPostVac;
+    }
+
+    public String getDxEnfermoCovid19() {
+        return dxEnfermoCovid19;
+    }
+
+    public void setDxEnfermoCovid19(String dxEnfermoCovid19) {
+        this.dxEnfermoCovid19 = dxEnfermoCovid19;
+    }
+
+    public String getMesUltEnf() {
+        return mesUltEnf;
+    }
+
+    public void setMesUltEnf(String mesUltEnf) {
+        this.mesUltEnf = mesUltEnf;
+    }
+
+    public String getAnioUltEnf() {
+        return anioUltEnf;
+    }
+
+    public void setAnioUltEnf(String anioUltEnf) {
+        this.anioUltEnf = anioUltEnf;
+    }
+
+    public String getSabeFechaUltEnf() {
+        return sabeFechaUltEnf;
+    }
+
+    public void setSabeFechaUltEnf(String sabeFechaUltEnf) {
+        this.sabeFechaUltEnf = sabeFechaUltEnf;
     }
 
     @Override

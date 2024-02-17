@@ -156,6 +156,7 @@ public class ListaVisitasParticipantesCasosActivity extends AbstractAsyncListAct
 
 		mDatosPartButton = (Button) findViewById(R.id.datos_casa_button);
 		mDatosPartButton.setText(getString(R.string.datos_part));
+		mDatosPartButton.setEnabled(false); /* SE BLOQUEA EL BOTON - 13/02/2024 */
 		mDatosPartButton.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_menu_friendslist), null, null);
 		mDatosPartButton.setOnClickListener(new View.OnClickListener()  {
 			@Override

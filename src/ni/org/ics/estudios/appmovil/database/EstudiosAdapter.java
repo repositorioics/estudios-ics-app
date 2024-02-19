@@ -478,6 +478,13 @@ public class EstudiosAdapter {
 			if (oldVersion==50) {
 				db.execSQL(ConstantsDB.CREATE_RECEPCION_PBMC_TABLE);
 			}
+
+			if (oldVersion==51) {
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.dxEnfermoCovid19 + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.sabeFechaUltEnf + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.mesUltEnf + " text");
+				db.execSQL("ALTER TABLE " + Covid19DBConstants.COVID_CUESTIONARIO_TABLE + " ADD COLUMN " + Covid19DBConstants.anioUltEnf + " text");
+			}
 		}
 	}
 

@@ -1,7 +1,5 @@
 package ni.org.ics.estudios.appmovil.utils;
 
-import java.util.Date;
-
 public class Covid19DBConstants {
     //Tabla covid_participantes
     public static final String PARTICIPANTE_COVID_TABLE = "covid_participantes";
@@ -912,6 +910,12 @@ public class Covid19DBConstants {
     public static final String anioEnfPostVac = "anioEnfPostVac";
     public static final String mesEnfPostVac = "mesEnfPostVac";
 
+    //MA 2024
+    public static final String dxEnfermoCovid19 = "dxEnfermoCovid19";
+    public static final String mesUltEnf = "mesUltEnf";
+    public static final String anioUltEnf = "anioUltEnf";
+    public static final String sabeFechaUltEnf = "sabeFechaUltEnf";
+
 
     //Crear SintomasVisitaFinalCovid19
     public static final String CREATE_COVID_CUESTIONARIO_TABLE = "create table if not exists "
@@ -1296,6 +1300,12 @@ public class Covid19DBConstants {
             + fechaEnfPostVac + " date, "
             + anioEnfPostVac + " text, "
             + mesEnfPostVac + " text, "
+
+            + dxEnfermoCovid19 + " text, "
+            + sabeFechaUltEnf + " text, "
+            + mesUltEnf + " text, "
+            + anioUltEnf + " text, "
+
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "

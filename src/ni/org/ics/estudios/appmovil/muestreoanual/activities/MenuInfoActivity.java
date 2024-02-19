@@ -571,7 +571,7 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
                 if(mUser.getConsentimiento()){
                     if(!mParticipante.getProcesos().getCuestCovid().matches("No")){
                         i = new Intent(getApplicationContext(),
-                                NuevoCuestionarioCovid19v3Activity.class);
+                                NuevoCuestionarioCovid19v2Activity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtra(Constants.PARTICIPANTE, mParticipante);
                         i.putExtra(ConstantsDB.VIS_EXITO, visExitosa);

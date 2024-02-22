@@ -37,6 +37,12 @@
                      android:layout_height="wrap_content"
                      android:layout_marginBottom="20dp"/>
 
+            <TextView style="@style/WizardFormLabel"
+                      android:id="@+id/postCovidV3"
+                      android:text=""
+                      android:layout_marginBottom="20dp"
+                      android:visibility="gone"/>
+
         <!--    <TextView style="@style/WizardFormLabel"
                       android:id="@+id/textEvento1"
                       android:text="@string/fechaEvento1" />

@@ -1284,12 +1284,12 @@ public class MenuInfoActivity extends AbstractAsyncActivity {
 
             if (mParticipante.getProcesos().getConmx().matches("No") && mUser.getMuestra()){
                 mxVisible =  true;
-                if (mParticipante.getEdadMeses() < 6){
+              /*  if (mParticipante.getEdadMeses() < 6){
                     //Si es menor a 6 meses y el estudio es igual a CH Familia no mostrar menu muestras
                     if (mParticipante.getProcesos().getEstudio().matches("CH Familia")){
                         mxVisible = false;
                     }
-                }else if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24){
+                }else*/ if (mParticipante.getEdadMeses() >= 6 && mParticipante.getEdadMeses() < 24){
                     if ((mParticipante.getProcesos().getEstudio().matches("UO1") && mParticipante.getProcesos().getPbmc().matches("No")) || (mParticipante.getProcesos().getEstudio().matches("UO1  CH Familia") && mParticipante.getProcesos().getPbmc().matches("No")) ){
                         mxVisible = false;
                     }

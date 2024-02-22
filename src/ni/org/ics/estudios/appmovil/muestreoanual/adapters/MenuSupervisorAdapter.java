@@ -32,11 +32,11 @@ public class MenuSupervisorAdapter extends ArrayAdapter<String> {
 		// Change icon based on position
 		
 		switch (position){
-			case 0: imageView.setImageResource(R.drawable.bhctubes);
+			case 0: imageView.setImageResource(R.drawable.ic_tubo_lila);
 					break;
 			case 1: imageView.setImageResource(R.drawable.redtubes);
 				break;
-			case 2: imageView.setImageResource(R.drawable.redtubes);
+			case 2: imageView.setImageResource(R.drawable.bhctubes);
 				break;
 			case 3: imageView.setImageResource(R.drawable.blue_thermo);
 				break;

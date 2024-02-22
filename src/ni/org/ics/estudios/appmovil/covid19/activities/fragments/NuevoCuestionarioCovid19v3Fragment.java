@@ -804,6 +804,21 @@ public class NuevoCuestionarioCovid19v3Fragment extends Fragment {
             }
         });
 
+        inputQueOtraCondicion.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                queOtraCondicion = inputQueOtraCondicion.getText().toString();
+            }
+        });
+
         inputE1SemanasEmbarazo.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -954,16 +969,21 @@ public class NuevoCuestionarioCovid19v3Fragment extends Fragment {
                     spinDxEnfermoCovid19.setBackgroundColor(Color.RED);
                     MostrarOcultarPregunta2_4(View.VISIBLE);
                     MostrarOcultarPregunta3(View.VISIBLE);
-                    if (fumado.equals(Constants.YESKEYSND)){
-                        MostrarOcultarPregunta9(View.VISIBLE);
-                    }else{
-                        MostrarOcultarPregunta9(View.GONE);
+
+                    if (fumado != null){
+                        if (fumado.equals(Constants.YESKEYSND)){
+                            MostrarOcultarPregunta9(View.VISIBLE);
+                        }else{
+                            MostrarOcultarPregunta9(View.GONE);
+                        }
                     }
+
 
                 } else {
                     spinDxEnfermoCovid19.setBackgroundColor(Color.WHITE);
                     MostrarOcultarPregunta2_4(View.GONE);
                     MostrarOcultarPregunta3(View.GONE);
+                    MostrarOcultarPregunta9(View.GONE);
                 }
 
             }
@@ -1047,6 +1067,7 @@ public class NuevoCuestionarioCovid19v3Fragment extends Fragment {
                 e1SabeTiempoRecuperacion = mr.getCatKey();
                 if (e1SabeTiempoRecuperacion.equals(Constants.YESKEYSND)) {
                     spinE1SabeTiempoRecuperacion.setBackgroundColor(Color.RED);
+
                     MostrarOcultarPregunta4a(View.VISIBLE);
                 } else {
                     spinE1SabeTiempoRecuperacion.setBackgroundColor(Color.WHITE);
@@ -1634,15 +1655,18 @@ public class NuevoCuestionarioCovid19v3Fragment extends Fragment {
                     spinFumado.setBackgroundColor(Color.RED);
                     MostrarOcultarPregunta8_10(View.VISIBLE);
 
-                    if(dxEnfermoCovid19.equals(Constants.YESKEYSND)){
-                        MostrarOcultarPregunta9(View.VISIBLE);
-                    }else {
-                        MostrarOcultarPregunta9(View.GONE);
+                    if(dxEnfermoCovid19 != null){
+                        if(dxEnfermoCovid19.equals(Constants.YESKEYSND)){
+                            MostrarOcultarPregunta9(View.VISIBLE);
+                        }else {
+                            MostrarOcultarPregunta9(View.GONE);
+                        }
                     }
 
                 } else {
                     spinFumado.setBackgroundColor(Color.WHITE);
                     MostrarOcultarPregunta8_10(View.GONE);
+                    MostrarOcultarPregunta9(View.GONE);
                 }
             }
 
@@ -2948,7 +2972,7 @@ public class NuevoCuestionarioCovid19v3Fragment extends Fragment {
             return false;
         else if (faltaDatoRequeridoHijo(e1RecuerdaSemanasEmb, R.string.recuerdaSemanasEmb, e1Embarazada)) return false;
         else if (faltaDatoRequeridoHijo(e1SemanasEmbarazo, R.string.semanasEmbarazoCovid, e1RecuerdaSemanasEmb))return false;
-        else if (faltaDatoRequeridoHijo(e1FinalEmbarazo, R.string.finalEmbarazo, e1RecuerdaSemanasEmb))return false;
+        else if (faltaDatoRequeridoHijo(e1FinalEmbarazo, R.string.finalEmbarazo, e1Embarazada))return false;
             //else if ((participante.getSexo().equalsIgnoreCase("F") && participante.getEdadMeses() >= 216 &&  participante.getEdadMeses() <= 600) && faltaDatoRequeridoHijo(dabaPecho, R.string.dabaPecho, enfermoCovid19)) return false;
         else if ((participante.getSexo().equalsIgnoreCase("F") && participante.getEdadMeses() >= 216 && participante.getEdadMeses() <= 600) && faltaDatoRequeridoHijo(e1DabaPecho, R.string.dabaPecho2, e1Embarazada))
             return false;

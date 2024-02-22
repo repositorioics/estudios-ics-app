@@ -400,4 +400,21 @@
     <string name="covid19PosteriorVacuna">32. ¿Ud. o su niño presentaron síntomas que sospecharon enfermedad por Covid-19 Posterior a haber recibido la vacuna de Covid-19?</string>
     <string name="sabeFechaEnfPostVac">¿Conoce la fecha exacta que presentó sintomas posterior a haber recibido la vacuna de Covid-19?</string>
     <string name="fechaEnfPostVac">Fecha presentó sintomas</string>
+
+    <!--MA 2024 -->
+    <string name="dxEnfermoCovid19">1. ¿Alguna vez usted o su hijo/a han sido diagnosticados o han estado enfermos con COVID-19?</string>
+    <string name="sintomaTos">Tos</string>
+    <string name="queSintomasPresenta2">3. ¿Usted o su niño/a que síntomas presenta aún?</string>
+    <string name="sabeTiempoRecuperacion2">4. ¿ Sabe cuánto tiempo le tomo usted o su niño/a recuperarse de los síntomas secundarios a COVID-19 y recobrar su salud normal?</string>
+    <string name="severidadEnfermedad2">5. ¿En el momento más severo de su enfermedad, diría que su enfermedad o la de su niño/a fue?</string>
+    <string name="fumado2">7. ¿Ha fumado alguna vez en su vida?</string>
+    <string name="fumadoCienCigarrillos2">8. ¿Ha fumado al menos 100 cigarrillos en su vida?</string>
+    <string name="fumadoPrevioEnfermedad2">9. ¿En los días previos a que se enfermara, usted fumaba cigarrillos todos los días o algunos días previo a que se enfermara?</string>
+    <string name="fumaActualmente2">10. ¿Actualmente usted fuma cigarrillos todos los días o algunos días?</string>
+    <string name="embarazada2">11. ¿Usted estaba embarazada al momento de ser diagnosticada o sospechosa de COVID19?</string>
+    <string name="dabaPecho2">12. Si estaba embarazada recientemente al momento de ser diagnosticada con COVID19, ¿Usted estaba dando pecho materno?</string>
+    <string name="vacunadoCovid192">13. ¿Usted o su niño/a han sido vacunado en la jornada de vacunación voluntaria contra la COVID-19?</string>
+    <string name="muestraTarjetaVac2">14. ¿Puede mostrarnos su tarjeta de vacunación contra la COVID 19?</string>
+    <string name="sabeFechaUltimaEnf">2. ¿Sabe cual fue la fecha de su última enfermedad de COVID-19?</string>
+    <string name="condiciones2">6. ¿Algún médico u otro profesional de la salud le ha dicho alguna vez que usted o su niño/a padece alguna de estas condiciones?</string>
 </resources>

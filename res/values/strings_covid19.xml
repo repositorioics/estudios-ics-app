@@ -224,6 +224,7 @@
 
     <!--Cuestionario Covid19 -->
     <string name="covid19_questionnaire">Cuestionario Covid19</string>
+
     <!--<string name="feb20">1.	¿Desde febrero de 2021 ha tenido usted o su niño/a alguno de los siguientes síntomas?</string>-->
     <string name="feb20">1.	¿Desde febrero de 2022 ha tenido usted o su niño/a alguno de los siguientes síntomas?</string>
     <string name="oct20">1.	¿Desde octubre de 2020 ha tenido usted o su niño/a alguno de los siguientes síntomas?</string>
@@ -356,7 +357,6 @@
     <string name="fechaEvento2">Fecha enfermó evento 2</string>
     <string name="sabeEvento3">¿Conoce la fecha exacta que enfermo (evento 3)?</string>
     <string name="fechaEvento3">Fecha enfermó evento 3</string>
-    <string name="presentoSintomas">¿Presentó alguno de los siguientes síntomas durante este evento?</string>
     <string name="oxigenoDomicilio">20. ¿ A Ud. o su niño/a le administraron oxígeno en su domicilio?</string>
     <string name="tiempoOxigenoDom">20. 1 Por cuanto tiempo le administraron?</string>
     <string name="vacunadoCovid19">29. ¿Usted o su niño/a han sido vacunado en la jornada de vacunación voluntaria contra la COVID-19?</string>

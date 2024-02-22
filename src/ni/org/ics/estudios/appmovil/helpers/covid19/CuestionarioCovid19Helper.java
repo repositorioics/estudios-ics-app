@@ -399,6 +399,13 @@ public class CuestionarioCovid19Helper {
         cv.put(Covid19DBConstants.mesEnfPostVac, cuestionario.getMesEnfPostVac());
         cv.put(Covid19DBConstants.fechaEventoEnfermoPostVac, cuestionario.getFechaEventoEnfermoPostVac());
 
+        //MA 2024
+        cv.put(Covid19DBConstants.dxEnfermoCovid19, cuestionario.getDxEnfermoCovid19());
+        cv.put(Covid19DBConstants.sabeFechaUltEnf, cuestionario.getSabeFechaUltEnf());
+        cv.put(Covid19DBConstants.mesUltEnf, cuestionario.getMesUltEnf());
+        cv.put(Covid19DBConstants.anioUltEnf, cuestionario.getAnioUltEnf());
+
+
         if (cuestionario.getRecordDate() != null) cv.put(MainDBConstants.recordDate, cuestionario.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, cuestionario.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(cuestionario.getPasive()));
@@ -797,6 +804,12 @@ public class CuestionarioCovid19Helper {
         cuestionarioCovid19.setAnioEnfPostVac(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.anioEnfPostVac)));
         cuestionarioCovid19.setMesEnfPostVac(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.mesEnfPostVac)));
         cuestionarioCovid19.setFechaEventoEnfermoPostVac(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.fechaEventoEnfermoPostVac)));
+
+        //MA 2024
+        cuestionarioCovid19.setDxEnfermoCovid19(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.dxEnfermoCovid19)));
+        cuestionarioCovid19.setSabeFechaUltEnf(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.sabeFechaUltEnf)));
+        cuestionarioCovid19.setMesUltEnf(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.mesUltEnf)));
+        cuestionarioCovid19.setAnioUltEnf(cursor.getString(cursor.getColumnIndex(Covid19DBConstants.anioUltEnf)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) cuestionarioCovid19.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         cuestionarioCovid19.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

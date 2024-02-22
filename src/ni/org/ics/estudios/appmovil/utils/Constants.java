@@ -152,7 +152,6 @@ public class Constants {
     public static final String PERIODO_CUEST_COVID19_4 = "Noviembre2021";*/
     public static final String PERIODO_CUEST_COVID19_3 = "Febrero2022";
     public static final String PERIODO_CUEST_COVID19_4 = "Noviembre2022";
-    public static final String PERIODO_CUEST_COVID19_5 = "Febrero2024";
 
     public static final int MINIMO_NUM_CELULAR = 30000000;
     public static final int MAXIMO_NUM_CELULAR = 89999999;

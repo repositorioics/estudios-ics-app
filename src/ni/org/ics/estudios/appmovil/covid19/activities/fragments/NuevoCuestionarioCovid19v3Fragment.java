@@ -3379,11 +3379,11 @@ public class NuevoCuestionarioCovid19v3Fragment extends Fragment {
             spinNombreDosis1.setAdapter(dataAdapterVacunas);
             spinNombreDosis2.setAdapter(dataAdapterVacunas);
             spinNombreDosis3.setAdapter(dataAdapterVacunas);
-            verificandoCovid();
+            //verificandoCovid();
         }
     }
 
-    public void verificandoCovid() {
+    /*public void verificandoCovid() {
         if (participante != null) {
             if (participante.getProcesos() != null) {
                 if(participante.getProcesos().getPosCovid() != null) {
@@ -3401,7 +3401,7 @@ public class NuevoCuestionarioCovid19v3Fragment extends Fragment {
                 }
             }
         }
-    }
+    }*/
 
     private class SaveDataTask extends AsyncTask<String, Void, String> {
         private ProgressDialog nDialog;

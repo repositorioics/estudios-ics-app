@@ -192,7 +192,8 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
                         return;
                     }
 
-                    if (codigo!=null && codigo>0 && codigo <=15000){
+					//MA 2024 rango hasta 19999
+                    if (codigo!=null && codigo>0 && codigo <=19999){
                         ca.open();
                         Cursor c  = null;
                         c = ca.buscarRecepcionBHC(codigo, todayWithZeroTime);
@@ -387,7 +388,7 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
 					return;
 				}
 			}
-			if (codigo != null && codigo>0 && codigo <=15000){
+			if (codigo != null && codigo>0 && codigo <=19999){
 				ca.open();
 				Cursor c  = null;
 				c = ca.buscarRecepcionBHC(codigo, todayWithZeroTime);
@@ -424,7 +425,7 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
 			showToast(this.getString( R.string.error_volumen),1);
 			return false;
 		}
-		else if (!(codigo>0 && codigo<=15000)){
+		else if (!(codigo>0 && codigo<=19999)){
 			showToast(this.getString( R.string.error_codigo),1);
 			return false;
 		}

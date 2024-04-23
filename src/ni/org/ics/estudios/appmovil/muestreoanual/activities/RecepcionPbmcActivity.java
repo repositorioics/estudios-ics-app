@@ -173,8 +173,8 @@ public class RecepcionPbmcActivity extends AbstractAsyncActivity  {
                         showToast("Código Inválido!!!!",1);
                         return;
                     }
-
-                    if (codigo != null && codigo > 0 && codigo <= 15000) {
+                        //MA 2024 rango hasta 19999
+                    if (codigo != null && codigo > 0 && codigo <= 19999) {
                         DateFormat targetFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
                         String date = null;
                         date = targetFormat.format(new Date());
@@ -422,7 +422,7 @@ public class RecepcionPbmcActivity extends AbstractAsyncActivity  {
                     return;
                 }
             }
-            if (codigo != null && codigo>0 && codigo <= 15000){
+            if (codigo != null && codigo>0 && codigo <= 19999){
                 DateFormat targetFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
                 String date = null;
                 date = targetFormat.format(new Date());
@@ -476,7 +476,7 @@ public class RecepcionPbmcActivity extends AbstractAsyncActivity  {
         } else if (vPbmc < 0.5 || vPbmc > 12) {
             showToast(this.getString( R.string.error_volumen_pbmc),1);
             result = false;
-        } else if (!(codigo>0 && codigo<=15000)) {
+        } else if (!(codigo>0 && codigo<=19999)) {
             showToast(this.getString( R.string.error_codigo),1);
             result = false;
         } else if (rojoAdicional && volumenRojoAdicional == null) {

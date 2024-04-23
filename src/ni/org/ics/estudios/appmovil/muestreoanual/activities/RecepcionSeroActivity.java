@@ -196,8 +196,8 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
                         showToast("Código Inválido!!!!",1);
                         return;
                     }
-
-                    if (codigo!=null && (codigo<=0 || codigo >15000)){
+					//MA 2024 rango hasta 19999
+                    if (codigo!=null && (codigo<=0 || codigo >19999)){
                         editCodigo.setText(null);
                         codigo = null;
                         showToast("Código Inválido!!!!",1);
@@ -364,7 +364,7 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 					return;
 				}
 			}
-			if (codigo !=null & codigo>0 && codigo <=15000){
+			if (codigo !=null & codigo>0 && codigo <=19999){
 				if (!validarMaximoRegistrosPermitidos()) {
 					showToast("Ya ingresó dos registros para este código!!!!",1);
 				} else {
@@ -398,7 +398,7 @@ public class RecepcionSeroActivity extends AbstractAsyncActivity{
 			showToast(this.getString( R.string.error_volumen),1);
 			return false;
 		}
-		else if (!(codigo>0 && codigo<=15000)){
+		else if (!(codigo>0 && codigo<=19999)){
 			showToast(this.getString( R.string.error_codigo),1);
 			return false;
 		}

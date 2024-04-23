@@ -450,6 +450,8 @@ public class NuevoCuestionarioCovid19v3Fragment extends Fragment {
     private String loteDosis3;
     private String fechaDosis3;
 
+    private TextView postCovidV3;
+
     public static NuevoCuestionarioCovid19v3Fragment create() {
         NuevoCuestionarioCovid19v3Fragment fragment = new NuevoCuestionarioCovid19v3Fragment();
         return fragment;
@@ -473,6 +475,7 @@ public class NuevoCuestionarioCovid19v3Fragment extends Fragment {
         username =
                 settings.getString(PreferencesActivity.KEY_USERNAME,
                         null);
+
         new FetchCatalogosTask().execute();
     }
 
@@ -2074,6 +2077,7 @@ public class NuevoCuestionarioCovid19v3Fragment extends Fragment {
                 }
             }
         });
+        postCovidV3 = (TextView) rootView.findViewById(R.id.postCovidV3);
         return rootView;
     }
 
@@ -3375,8 +3379,29 @@ public class NuevoCuestionarioCovid19v3Fragment extends Fragment {
             spinNombreDosis1.setAdapter(dataAdapterVacunas);
             spinNombreDosis2.setAdapter(dataAdapterVacunas);
             spinNombreDosis3.setAdapter(dataAdapterVacunas);
+            //verificandoCovid();
         }
     }
+
+    /*public void verificandoCovid() {
+        if (participante != null) {
+            if (participante.getProcesos() != null) {
+                if(participante.getProcesos().getPosCovid() != null) {
+                    if (participante.getProcesos().getPosCovid().contains("SARS-COV2")) {
+                        spinDxEnfermoCovid19.setSelection(1);
+                        spinSabeFechaUltEnf.setSelection(1);
+                        postCovidV3.setVisibility(View.VISIBLE);
+                        postCovidV3.setText(participante.getProcesos().getPosCovid());
+                        postCovidV3.setTextColor(Color.parseColor("#C70039"));
+                    } else {
+                        postCovidV3.setVisibility(View.GONE);
+                        postCovidV3.setText("");
+                        postCovidV3.setTextColor(Color.parseColor("#66000000"));
+                    }
+                }
+            }
+        }
+    }*/
 
     private class SaveDataTask extends AsyncTask<String, Void, String> {
         private ProgressDialog nDialog;

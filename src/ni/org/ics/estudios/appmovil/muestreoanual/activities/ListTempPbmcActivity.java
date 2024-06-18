@@ -23,6 +23,8 @@ import ni.org.ics.estudios.appmovil.domain.muestreoanual.TempPbmcId;
 import ni.org.ics.estudios.appmovil.muestreoanual.adapters.TempAdapter;
 import ni.org.ics.estudios.appmovil.utils.FileUtils;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
+import ni.org.ics.estudios.appmovil.utils.zbar.SimpleScannerActivity;
+import ni.org.ics.estudios.appmovil.utils.zbar.ZBarConstants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +43,8 @@ public class ListTempPbmcActivity extends ListActivity{
 	private Button mSearchButton;
 
 	public static final int BARCODE_CAPTURE = 2;
+
+	private static final int ZBAR_QR_SCANNER_REQUEST = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +91,11 @@ public class ListTempPbmcActivity extends ListActivity{
 		mBarcodeButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				//Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				Intent intent = new Intent(getApplicationContext(), SimpleScannerActivity.class);
 				try {
-					startActivityForResult(i, BARCODE_CAPTURE);
+					//startActivityForResult(i, BARCODE_CAPTURE);
+					startActivityForResult(intent, ZBAR_QR_SCANNER_REQUEST);
 				} catch (ActivityNotFoundException e) {
 					Toast t = Toast.makeText(getApplicationContext(),
 							getString(R.string.error, R.string.barcode_error),
@@ -137,8 +143,10 @@ public class ListTempPbmcActivity extends ListActivity{
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 
-		if (requestCode == BARCODE_CAPTURE && intent != null) {
-			String sb = intent.getStringExtra("SCAN_RESULT");
+		//if (requestCode == BARCODE_CAPTURE && intent != null) {
+		if (requestCode == ZBAR_QR_SCANNER_REQUEST && intent != null) {
+			//String sb = intent.getStringExtra("SCAN_RESULT");
+			String sb = intent.getStringExtra(ZBarConstants.SCAN_RESULT);
 			if (sb != null && sb.length() > 0) {
 				mSearchText.setText(sb);
 			}

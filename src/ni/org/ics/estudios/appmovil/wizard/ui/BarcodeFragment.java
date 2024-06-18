@@ -1,6 +1,8 @@
 package ni.org.ics.estudios.appmovil.wizard.ui;
 
 import ni.org.ics.estudios.appmovil.R;
+import ni.org.ics.estudios.appmovil.utils.zbar.SimpleScannerActivity;
+import ni.org.ics.estudios.appmovil.utils.zbar.ZBarConstants;
 import ni.org.ics.estudios.appmovil.wizard.model.Page;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -28,6 +30,8 @@ public class BarcodeFragment extends Fragment {
 	protected TextView mHintTextInput;
 	protected EditText mEditTextInput;
 	protected ImageButton mButtonBarcode;
+
+	private static final int ZBAR_QR_SCANNER_REQUEST = 1;
 
 	public static BarcodeFragment create(String key) {
 		Bundle args = new Bundle();
@@ -68,9 +72,11 @@ public class BarcodeFragment extends Fragment {
 		mButtonBarcode.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				//Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				Intent intent = new Intent(getActivity().getApplicationContext(), SimpleScannerActivity.class);
 				try {
-					startActivityForResult(i, BARCODE_CAPTURE);
+					//startActivityForResult(i, BARCODE_CAPTURE);
+					startActivityForResult(intent, ZBAR_QR_SCANNER_REQUEST);
 				} catch (ActivityNotFoundException e) {
 					
 				}
@@ -100,13 +106,16 @@ public class BarcodeFragment extends Fragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
-		if (requestCode == BARCODE_CAPTURE && intent != null) {
+		//if (requestCode == BARCODE_CAPTURE && intent != null) {
+		if (requestCode == ZBAR_QR_SCANNER_REQUEST && intent != null) {
 			if (mPage.getmCodePosicion()<0) {//tomar en cuenta el texto completo
-                mEditTextInput.setText(intent.getStringExtra("SCAN_RESULT"));
+                //mEditTextInput.setText(intent.getStringExtra("SCAN_RESULT"));
+				mEditTextInput.setText(intent.getStringExtra(ZBarConstants.SCAN_RESULT));
                 mPage.getData().putString(Page.SIMPLE_DATA_KEY, intent.getStringExtra("SCAN_RESULT"));
 
             }else {
-                String code = intent.getStringExtra("SCAN_RESULT");
+                //String code = intent.getStringExtra("SCAN_RESULT");
+				String code = intent.getStringExtra(ZBarConstants.SCAN_RESULT);
                 if (code.contains("  ")) code = code.replaceAll(" {2}", " "); //Covid19
                 String[] codeparts = code.split(" ");
                 if (codeparts.length > mPage.getmCodePosicion() && codeparts[mPage.getmCodePosicion()] != null){

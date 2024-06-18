@@ -3,15 +3,15 @@ package ni.org.ics.estudios.appmovil;
 
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
-import android.app.KeyguardManager;
-import android.content.Context;
-import android.hardware.fingerprint.FingerprintManager;
-import android.os.CancellationSignal;
-import android.support.v4.app.ActivityCompat;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.provider.Settings;
 import android.widget.*;
 import net.sqlcipher.SQLException;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
@@ -85,6 +85,8 @@ public class LoginActivity extends Activity {
 	private AlertDialog alertDialog;
 	private static final int LIMPIAR = 1;
 
+	private static Boolean activePermission = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -144,6 +146,20 @@ public class LoginActivity extends Activity {
 		mLoginFormView = findViewById(R.id.login_form);
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
+
+		//Controlar los permisos
+		List<String> granted = getPermissions(getApplicationContext().getPackageName());
+		for (String s : granted) {
+			if (s.equals("android.permission.WRITE_EXTERNAL_STORAGE")) {
+				activePermission = false;
+				break;
+			} else {
+				activePermission = true;
+			}
+		}
+		if (activePermission) {
+			getGrantedPermissions();
+		}
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
@@ -461,5 +477,46 @@ public class LoginActivity extends Activity {
 		alertDialog = builder.create();
 		alertDialog.show();
 	}
-	
+
+	List<String> getPermissions(final String appPackage) {
+		List<String> granted = new ArrayList<String>();
+
+		try {
+			PackageInfo pi = getPackageManager().getPackageInfo(appPackage, PackageManager.GET_PERMISSIONS);
+			for (int i = 0; i < pi.requestedPermissions.length; i++) {
+				if ((pi.requestedPermissionsFlags[i] & PackageInfo.REQUESTED_PERMISSION_GRANTED) != 0) {
+					granted.add(pi.requestedPermissions[i]);
+				}
+			}
+		} catch (Exception e) {
+		}
+		return granted;
+	}
+
+	private void getGrantedPermissions() {
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
+			final AlertDialog.Builder adb = new AlertDialog.Builder(this);
+			adb.setTitle("Agregar Permisos");
+			adb.setMessage("Haga click en Aceptar, la aplicación lo redigira a la configuración donde tendra que otorgar todos los permisos para poder usar la app");
+			adb.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialogInterface, int i) {
+
+					Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+					Uri uri = Uri.fromParts("package", getPackageName(), null);
+					intent.setData(uri);
+					startActivity(intent);
+				}
+			});
+			adb.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialogInterface, int i) {
+					//finishAffinity();
+					dialogInterface.dismiss();
+				}
+			});
+			adb.show();
+		}
+		activePermission = false;
+	}
 }

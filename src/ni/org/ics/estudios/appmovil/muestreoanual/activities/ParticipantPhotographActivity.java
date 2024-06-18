@@ -30,6 +30,8 @@ import ni.org.ics.estudios.appmovil.influenzauo1.dto.DatosUO1;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
+import ni.org.ics.estudios.appmovil.utils.zbar.SimpleScannerActivity;
+import ni.org.ics.estudios.appmovil.utils.zbar.ZBarConstants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,6 +68,8 @@ public class ParticipantPhotographActivity extends Activity {
 	private String codigoParticipante = null;
 
 	private EstudiosAdapter estudiosAdapter;
+
+	private static final int ZBAR_QR_SCANNER_REQUEST = 1;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -133,9 +137,11 @@ public class ParticipantPhotographActivity extends Activity {
 		mBarcodeButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				//Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				Intent intent = new Intent(getApplicationContext(), SimpleScannerActivity.class);
 				try {
-					startActivityForResult(i, BARCODE_CAPTURE);
+					//startActivityForResult(i, BARCODE_CAPTURE);
+					startActivityForResult(intent, ZBAR_QR_SCANNER_REQUEST);
 				} catch (ActivityNotFoundException e) {
 					Toast t = Toast.makeText(getApplicationContext(),
 							getString(R.string.error, R.string.barcode_error),
@@ -227,8 +233,10 @@ public class ParticipantPhotographActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 									Intent intent) {
-		if (requestCode == BARCODE_CAPTURE && intent != null) {
-			String sb = intent.getStringExtra("SCAN_RESULT");
+		//if (requestCode == BARCODE_CAPTURE && intent != null) {
+		if (requestCode == ZBAR_QR_SCANNER_REQUEST && intent != null) {
+			//String sb = intent.getStringExtra("SCAN_RESULT");
+			String sb = intent.getStringExtra(ZBarConstants.SCAN_RESULT);
 			if (sb != null && sb.length() > 0) {
 				try{
 					loadImage(sb);

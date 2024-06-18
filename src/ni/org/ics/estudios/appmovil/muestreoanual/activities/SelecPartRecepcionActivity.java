@@ -19,6 +19,8 @@ import ni.org.ics.estudios.appmovil.R;
 import ni.org.ics.estudios.appmovil.adapters.ParticipanteAdapter;
 import ni.org.ics.estudios.appmovil.database.EstudiosAdapter;
 import ni.org.ics.estudios.appmovil.domain.Participante;
+import ni.org.ics.estudios.appmovil.utils.zbar.SimpleScannerActivity;
+import ni.org.ics.estudios.appmovil.utils.zbar.ZBarConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,8 @@ public class SelecPartRecepcionActivity extends ListActivity {
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
 
     private EstudiosAdapter ca;
+
+	private static final int ZBAR_QR_SCANNER_REQUEST = 1;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -118,9 +122,11 @@ public class SelecPartRecepcionActivity extends ListActivity {
 			@Override
 			public void onClick(View v) {
 				mParticipantes.clear();
-				Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				//Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				Intent intent = new Intent(getApplicationContext(), SimpleScannerActivity.class);
 				try {
-					startActivityForResult(i, BARCODE_CAPTURE);
+					//startActivityForResult(i, BARCODE_CAPTURE);
+					startActivityForResult(intent, ZBAR_QR_SCANNER_REQUEST);
 				} catch (ActivityNotFoundException e) {
 					Toast t = Toast.makeText(getApplicationContext(),
 							getString(R.string.error, R.string.barcode_error),
@@ -250,8 +256,10 @@ public class SelecPartRecepcionActivity extends ListActivity {
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		Integer codigoScanned =0;
-		if (requestCode == BARCODE_CAPTURE && intent != null) {
-			String sb = intent.getStringExtra("SCAN_RESULT");
+		//if (requestCode == BARCODE_CAPTURE && intent != null) {
+		if (requestCode == ZBAR_QR_SCANNER_REQUEST && intent != null) {
+			//String sb = intent.getStringExtra("SCAN_RESULT");
+			String sb = intent.getStringExtra(ZBarConstants.SCAN_RESULT);
 			if (sb != null && sb.length() > 0) {
 
 				try{

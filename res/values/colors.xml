@@ -38,5 +38,5 @@ the License.
 
     <color name="text_light">#66000000</color>
 
-<color name="chart_red">#d96666</color>
+	<color name="chart_red">#d96666</color>
 </resources>

@@ -37,6 +37,8 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import ni.org.ics.estudios.appmovil.utils.zbar.SimpleScannerActivity;
+import ni.org.ics.estudios.appmovil.utils.zbar.ZBarConstants;
 
 public class BuscarParticipanteActivity extends AbstractAsyncListActivity {
 
@@ -55,6 +57,8 @@ public class BuscarParticipanteActivity extends AbstractAsyncListActivity {
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
 	private static final int SELECT_PART = 1;
 	private AlertDialog alertDialog;
+
+	private static final int ZBAR_QR_SCANNER_REQUEST = 1;
 	
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -127,9 +131,11 @@ public class BuscarParticipanteActivity extends AbstractAsyncListActivity {
 		mBarcodeButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				//Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				Intent intent = new Intent(getApplicationContext(), SimpleScannerActivity.class);
 				try {
-					startActivityForResult(i, BARCODE_CAPTURE);
+					//startActivityForResult(i, BARCODE_CAPTURE);
+					startActivityForResult(intent, ZBAR_QR_SCANNER_REQUEST);
 				} catch (ActivityNotFoundException e) {
 					Toast t = Toast.makeText(getApplicationContext(),
 							getString(R.string.error, R.string.barcode_error),
@@ -248,8 +254,10 @@ public class BuscarParticipanteActivity extends AbstractAsyncListActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
-		if (requestCode == BARCODE_CAPTURE && intent != null) {
-			String sb = intent.getStringExtra("SCAN_RESULT");
+		//if (requestCode == BARCODE_CAPTURE && intent != null) {
+		if (requestCode == ZBAR_QR_SCANNER_REQUEST && intent != null) {
+			//String sb = intent.getStringExtra("SCAN_RESULT");
+			String sb = intent.getStringExtra(ZBarConstants.SCAN_RESULT);
 			if (sb != null && sb.length() > 0) {
 				try{
 					Integer.parseInt(sb);

@@ -33,6 +33,8 @@ import ni.org.ics.estudios.appmovil.domain.Participante;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.utils.*;
 import ni.org.ics.estudios.appmovil.utils.muestreoanual.ConstantsDB;
+import ni.org.ics.estudios.appmovil.utils.zbar.SimpleScannerActivity;
+import ni.org.ics.estudios.appmovil.utils.zbar.ZBarConstants;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,6 +58,7 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 	private AlertDialog alertDialog;
 	
 	public static final int BARCODE_CAPTURE = 2;
+	private static final int ZBAR_QR_SCANNER_REQUEST = 1;
 
 	private Integer codigo;
 	private Integer codigoComun;
@@ -160,9 +163,13 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 		mBarcodeButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				//Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				//Intent intent = new Intent(getApplicationContext(), ZBarScannerActivity.class);
+				Intent intent = new Intent(getApplicationContext(), SimpleScannerActivity.class);
+				//intent.putExtra(ZBarConstants.SCAN_MODES, ZBarcodeFormat.class);
 				try {
-					startActivityForResult(i, BARCODE_CAPTURE);
+					//startActivityForResult(i, BARCODE_CAPTURE);
+					startActivityForResult(intent, ZBAR_QR_SCANNER_REQUEST);
 				} catch (ActivityNotFoundException e) {
 					Toast t = Toast.makeText(getApplicationContext(),
 							getString(R.string.error, R.string.barcode_error),
@@ -210,8 +217,6 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 		mPartTextView = (TextView) findViewById(R.id.participante);
 		mPartTextView.setVisibility(View.GONE);
 
-
-
 	}
 
 	@Override
@@ -247,10 +252,10 @@ public class SelecPartActivity extends AbstractAsyncListActivity {
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		Integer codigoScanned =0;
-		if (requestCode == BARCODE_CAPTURE && intent != null) {
-			String sb = intent.getStringExtra("SCAN_RESULT");
+		//if (requestCode == BARCODE_CAPTURE && intent != null) {
+		if (requestCode == ZBAR_QR_SCANNER_REQUEST && intent != null) {
+			String sb = intent.getStringExtra(ZBarConstants.SCAN_RESULT);
 			if (sb != null && sb.length() > 0) {
-
 				try{
 					codigoScanned = Integer.parseInt(sb);
 					//CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();

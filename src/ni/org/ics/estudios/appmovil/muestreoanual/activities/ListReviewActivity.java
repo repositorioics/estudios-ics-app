@@ -29,6 +29,7 @@ import ni.org.ics.estudios.appmovil.domain.muestreoanual.*;
 import ni.org.ics.estudios.appmovil.preferences.PreferencesActivity;
 import ni.org.ics.estudios.appmovil.seroprevalencia.adapters.ConsentimientoSAAdapter;
 import ni.org.ics.estudios.appmovil.utils.Constants;
+import ni.org.ics.estudios.appmovil.utils.zbar.SimpleScannerActivity;
 
 import java.util.ArrayList;
 
@@ -70,6 +71,8 @@ public class ListReviewActivity extends ListActivity {
 	private SharedPreferences settings;
 
     private EstudiosAdapter ca;
+
+	private static final int ZBAR_QR_SCANNER_REQUEST = 1;
 
 	@SuppressWarnings("unchecked")
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -187,9 +190,11 @@ public class ListReviewActivity extends ListActivity {
 		mBarcodeButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				//Intent i = new Intent("com.google.zxing.client.android.SCAN");
+				Intent intent = new Intent(getApplicationContext(), SimpleScannerActivity.class);
 				try {
-					startActivityForResult(i, BARCODE_CAPTURE);
+					//startActivityForResult(i, BARCODE_CAPTURE);
+					startActivityForResult(intent, ZBAR_QR_SCANNER_REQUEST);
 				} catch (ActivityNotFoundException e) {
 					Toast t = Toast.makeText(getApplicationContext(),
 							getString(R.string.error, R.string.barcode_error),

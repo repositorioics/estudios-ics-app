@@ -2242,7 +2242,7 @@ public class NewTamizajeActivity extends FragmentActivity implements
                         procesos.setcDatosParto(Constants.NO);
                         procesos.setInfoVacuna(Constants.YES);
                         //Perimetro Abdominal
-                        procesos.setPerimetroAbdominal(Constants.YES);
+                        procesos.setPerimetroAbdominal(Constants.NO);//Se Cabmbia a NO el 29/08/2024
                         procesos.setEsatUsuario(Constants.YES);
                         procesos.setEsatUsuarioCc(Constants.YES);
 

@@ -1392,7 +1392,7 @@ public class NuevoTamizajePersonaActivity extends FragmentActivity implements
                         procesos.setDatosVisita(Constants.YES);
                         procesos.setPesoTalla(Constants.YES);
                         //Perimetro Abdominal
-                        procesos.setPerimetroAbdominal(Constants.YES);
+                        procesos.setPerimetroAbdominal(Constants.NO); //Se Cabmbia a NO el 29/08/2024
                         procesos.setEsatUsuario(Constants.YES);
                         procesos.setEsatUsuarioCc(Constants.YES);
                         //si no pertenece a la pediatrica poner datos de muestra, sino que conserve los datos de muestra actuales
